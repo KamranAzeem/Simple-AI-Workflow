@@ -17,10 +17,10 @@ This file is policy-only. Do not use it as a project context document.
 
 ## Instruction Precedence
 
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in current session > this policy.
+- Resolve conflicts using this order: system/tool safety rules > explicit user request in current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
 - If this policy conflicts with higher-priority safety/tool constraints, follow the higher-priority constraints and explain the limitation.
 
-## Source of Truth
+## Project Reference Files
 
 - Project context and decisions: [ai/context.md](context.md)
 - Live queue and resume point: [ai/next-steps.md](next-steps.md)
@@ -119,6 +119,8 @@ Daily checkpoint checklist template:
 - Git read-only inspection (`git status`, `git log`, `git diff`, `git show`, `git branch`, `git remote`).
 - Process and environment inspection (`ps`, `top`, `jobs`, `env`, `whoami`, `hostname`).
 - Azure CLI read-only queries (`az ... list`, `az ... show`, `az ... get`).
+- Google cloud CLI read-only queries (`gcloud ... list`, `gcloud ... show`, `gcloud ... get`).
+- AWS CLI read-only queries (`awscli ... list`, `awscli ... show`, `awscli ... get`).
 - Docker read-only inspection (`docker ps`, `docker images`, `docker logs`, `docker inspect`).
 - Tool version checks (`dotnet --version`, `npm list`, `node --version`, `which`).
 - Network read-only checks (`curl` GET, `ping`, `nslookup`, `dig`).
@@ -129,17 +131,21 @@ Daily checkpoint checklist template:
 - Keep AI workflow and context artifacts under [ai/](.).
 - Keep [ai/](.) git-ignored and out of commits.
 - Avoid `.github/copilot-instructions.md` for policy or context in this repository.
-- Follow Azure CAF naming conventions for Azure resource names.
+- Follow the relevant cloud provider's official naming best practices (e.g., Azure CAF for Azure). If project-specific conventions are defined in [ai/context.md](context.md), those take precedence.
 
 ## Working Behavior
 
 - Do not hallucinate missing files or directories.
 - Do not modify binary or generated artifacts unless explicitly requested.
 
+## Design Philosophy
+
+- Don't over-engineer solutions; prefer simplicity and pragmatism over unnecessary complexity.
+
 ## Communication and Writing
 
-- Use concise, plain-English instructions.
-- Prefer clear step-by-step guidance for Azure Portal and Azure CLI flows.
+- Express solutions using concise, plain-English instructions.
+- Document Cloud Portal and Cloud CLI flows with clear step-by-step guidance.
 - Use technical terms only when needed for correctness.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
