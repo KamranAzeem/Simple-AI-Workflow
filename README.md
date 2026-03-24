@@ -1,7 +1,7 @@
 # Centralized Policy Management System for smarter AI workflow
 
 - The user will copy the `AGENTS.md` from this repo in the project root of desired directory on local computer.
-- Update the policy URL in the `AGENTS.md` to point to the full web URL of the relevant policy that the user wants to use - found under the `ai/` directory in this repo. e.g. `https://github.com/KamranAzeem/Smart-AI-Workflow/blob/master/ai/ai-policy-cloud.md`
+- Update the policy URL in the `AGENTS.md` to point to the full web URL of the relevant policy that the user wants to use - found under the `ai/` directory in this repo. e.g. `https://raw.githubusercontent.com/KamranAzeem/Smart-AI-Workflow/refs/heads/master/ai/ai-policy-cloud.md`
 - The user (or the AI agent) will create a local directory named `ai/` inside the project root, where the policy files (if any), policy-override files (if any), context files, and session tracking files will be created.
 - If the user wants to modify certain aspects of the policy, then the user can use a local override file for local adjustments - on the local computer. (e.g `ai/ai-policy-override.md`)
 - The `ai/` directory **must** be set to be ignored by `git` in the `.gitignore` file in the project root.
