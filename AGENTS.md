@@ -16,6 +16,20 @@ After reading all accessible files above, acknowledge readiness and await the fi
 
 [ai/README.md](ai/README.md) is for human understanding only. Do not use it as operational authority.
 
+## Policy Authority Clarification
+
+These rules prevent bootstrap ambiguity across assistants.
+
+1. The online main policy URL is authoritative for universal rules:
+   - https://raw.githubusercontent.com/KamranAzeem/Smart-AI-Workflow/refs/heads/master/ai/ai-policy-cloud.md
+2. Local `ai/ai-policy-cloud.md` is fallback only when the online policy is unreachable.
+3. `ai/ai-policy-override.md` is for repository-specific exceptions and must not redefine universal policy authority.
+4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
+5. GitHub Copilot-related files under `.github/` are not bootstrap authority in this repository.
+6. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/`.
+7. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
+
+
 Conventions:
 
 - Keep this file minimal. Do not store project context or policy details here.

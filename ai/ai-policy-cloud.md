@@ -93,6 +93,16 @@ Daily checkpoint checklist template:
 - Verified outcomes are evidence-based: Pass/Fail
 - Next action and pending decision are explicit: Pass/Fail
 
+## Copilot Bootstrap Source Guardrails
+
+For repositories that define `ai/` as the bootstrap state root:
+
+1. During bootstrap, treat `ai/` policy/state files as authoritative context.
+2. Do not treat GitHub Copilot customization files under `.github/` as bootstrap authority unless explicitly allowed by repository bootstrap instructions.
+3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subfolder), not under `.github/`.
+4. Universal policy changes must be made in this online policy source first; local files are fallback/override only.
+5. If bootstrap authority is ambiguous, stop and ask before writing any policy/customization file.
+
 ## Operational Guardrails
 
 - Use a diff-first workflow for proposed edits.
