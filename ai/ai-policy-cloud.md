@@ -47,6 +47,28 @@ This file is policy-only. Do not use it as a project context document.
 - Format: `CP-YYYY-MM-DD-XX`
 - The same checkpoint ID must be present in all required tracking files.
 
+### Immutable Checkpoint Semantics
+
+- A checkpoint ID represents one exact resume state only.
+- If any material resume field changes after a checkpoint is recorded, issue a new checkpoint ID instead of editing existing checkpoint semantics.
+
+Material resume fields:
+- current status
+- last completed action
+- immediate pending decision
+- first action to continue
+- confidence, when it reflects a verification-state change
+
+Consistency rules:
+- For each new checkpoint, update `ai/next-steps.md`, today's `ai/daily-checkpoints/YYYY-MM-DD.md`, and `ai/progress.md` together.
+- Before declaring state healthy, verify both ID consistency and semantic consistency across matching checkpoint entries.
+- If IDs match but resume semantics differ, treat state as inconsistent and repair by issuing a new checkpoint from the latest verified state.
+
+Allowed edits without a new checkpoint ID:
+- typo fixes
+- formatting-only edits
+- non-semantic wording cleanup that does not change meaning
+
 ### Mandatory Checkpoint Procedure
 
 When the user asks for a checkpoint:
@@ -100,7 +122,7 @@ For repositories that define `ai/` as the bootstrap state root:
 1. During bootstrap, treat `ai/` policy/state files as authoritative context.
 2. Do not treat GitHub Copilot customization files under `.github/` as bootstrap authority unless explicitly allowed by repository bootstrap instructions.
 3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subfolder), not under `.github/`.
-4. Universal policy changes must be made in this online policy source first; local files are fallback/override only.
+4. Universal policy changes must be made in this central policy source first; local files are fallback/override only.
 5. If bootstrap authority is ambiguous, stop and ask before writing any policy/customization file.
 
 ## Operational Guardrails
