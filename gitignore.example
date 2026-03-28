@@ -1,0 +1,207 @@
+# AI Assistant Files and Directories
+# This gitignore template includes patterns for common AI assistant tools and files
+
+# ============================================
+# Project-specific AI directories and files
+# ============================================
+
+# Main AI directory for personal AI state (from AGENTS.md/README.md)
+ai/
+
+# Common AI assistant context files (mentioned in README.md)
+CONTEXT.md
+CLAUDE.md
+CHATGPT.md
+COPILOT.md
+AI_CONTEXT.md
+AI_SETUP.md
+
+# AI policy and configuration files
+ai-policy-*.md
+ai-config*.json
+.ai-config*
+.aiconfig
+.ai/
+
+# AI session and progress tracking
+ai-sessions/
+ai-progress/
+ai-checkpoints/
+
+# ============================================
+# GitHub Copilot
+# ============================================
+
+# GitHub Copilot configuration and cache
+.github/copilot/
+.github/copilot-instructions.md
+.github/copilot-chat/
+.copilot/
+.copilot-cache/
+copilot.log
+
+# Local Copilot artifacts (from ai-policy-cloud.md)
+ai/github-copilot/
+
+# ============================================
+# Cursor AI
+# ============================================
+
+.cursor/
+.cursorrules
+.cursor-config.json
+.cursor-history
+.cursor-sessions/
+
+# ============================================
+# Claude/Anthropic
+# ============================================
+
+.anthropic/
+claude/
+claude-config.json
+.claude-sessions/
+.claude-history
+
+# ============================================
+# ChatGPT/OpenAI
+# ============================================
+
+.openai/
+.chatgpt/
+chatgpt-config.json
+.openai-cache/
+.openai-sessions/
+
+# ============================================
+# VS Code AI Extensions
+# ============================================
+
+.vscode/ai/
+.vscode/settings.json.ai
+.vscode/ai-settings.json
+
+# ============================================
+# General AI Assistant Patterns
+# ============================================
+
+# AI-generated code files
+*.ai.*
+*-ai.*
+*_ai.*
+
+# AI session logs
+*.ai.log
+ai-*.log
+*_ai.log
+
+# AI temporary files
+*.tmp.ai
+ai-temp/
+.ai-temp/
+
+# AI model caches and downloads
+.cache/ai/
+.cache/models/
+.models/
+model-cache/
+ai-models/
+
+# Vector databases and embeddings
+.chroma/
+.qdrant/
+.weaviate/
+embeddings/
+vector-db/
+
+# AI training data and datasets
+training-data/
+ai-datasets/
+datasets/ai/
+
+# AI checkpoints and snapshots
+checkpoints/
+*.ckpt
+*.safetensors
+ai-checkpoints/
+
+# Local AI servers and sockets
+ai-server/
+*.ai.sock
+ai.sock
+
+# ============================================
+# Other AI Tools
+# ============================================
+
+# Tabnine
+.tabnine/
+tabnine_config.json
+
+# Codeium
+.codeium/
+codeium.json
+
+# Sourcegraph Cody
+.cody/
+.cody-history
+
+# Amazon CodeWhisperer
+.codewhisperer/
+codewhisperer-config.json
+
+# JetBrains AI Assistant
+.idea/ai/
+.idea/ai-assistant/
+
+# ============================================
+# IDE-specific AI files
+# ============================================
+
+# Visual Studio
+.vs/ai/
+
+# Eclipse
+.metadata/.ai/
+
+# ============================================
+# Operating System AI artifacts
+# ============================================
+
+# macOS
+.DS_Store
+*.DS_Store?
+
+# Windows
+Thumbs.db
+
+# Linux
+*~
+
+# ============================================
+# Backup and temporary files
+# ============================================
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+*.tmp
+*.temp
+
+# Swap files
+*.swp
+*.swo
+
+# ============================================
+# Notes:
+# ============================================
+
+# AGENTS.md is the bootstrap entry point that should be gitignored to keep
+# personal AI bootstrap customizations private. Each user copies AGENTS.md
+# to their project and may customize it for their needs.
+AGENTS.md
+
+# Some teams may want to commit certain AI configuration files for consistency.
+# Review each pattern and adjust according to your team's needs.

@@ -1,16 +1,21 @@
 # Centralized Policy Management System for smarter AI workflow
 
-- The user will copy the `AGENTS.md` from this repo in the project root of desired directory on local computer.
-- Update the policy URL in the `AGENTS.md` to point to the full web URL of the relevant policy that the user wants to use - found under the `ai/` directory in this repo. e.g. `https://raw.githubusercontent.com/KamranAzeem/Smart-AI-Workflow/refs/heads/master/ai/ai-policy-cloud.md`
-- The user (or the AI agent) will create a local directory named `ai/` inside the project root, where the policy files (if any), policy-override files (if any), context files, and session tracking files will be created.
-- If the user wants to modify certain aspects of the policy, then the user can use a local override file for local adjustments - on the local computer. (e.g `ai/ai-policy-override.md`)
-- The `ai/` directory **must** be set to be ignored by `git` in the `.gitignore` file in the project root.
+- Copy the `AGENTS.md` file from this repository to the project root of your desired directory
+- The `AGENTS.md` file contains a reference to the central policy file at `~/Projects/Personal/Smart-AI-Workflow/ai/ai-policy-cloud.md`
+- When an AI assistant reads `AGENTS.md`, it will access the central policy directly from this path
+- The AI assistant will create a local `ai/` directory for state tracking files (checkpoints, progress, context)
+- For repository-specific policy adjustments, create `ai/ai-policy-override.md` (optional)
+- Both `AGENTS.md` and the `ai/` directory should be added to `.gitignore` to keep personal AI state private
+- Any AI-related files (e.g., `CONTEXT.md`, `CLAUDE.md`, etc.) should also be gitignored
 
 ## How to initialize / bootstrap?
-* After you have copied the `AGENTS.md` into your project root, Simply run a `/init` in your AI Assistant shell.
-* The AI assistant will notice the missing `ai/` directory, and the missing files inside it, and will create them automatically.
-* Optionally, you can override aspects of policy by adding a `ai/ai-policy-override.md` file with the policies you want to override. Ask your AI to do this for you, so the AI assistant can correctly write the override policies itself. 
-* Set the `ai/` directory to be ignored in `gitignore`.
+* After copying `AGENTS.md` to your project root, run `/init` in your AI Assistant shell
+* The AI assistant will follow the bootstrap procedure in `AGENTS.md`:
+  - Create `ai/` directory with `daily-checkpoints/` subdirectory
+  - Initialize state tracking files (`next-steps.md`, daily checkpoint, `progress.md`)
+  - Add `ai/` and `AGENTS.md` to `.gitignore`
+* The central policy is accessed directly - no local copying of policy files
+* For custom policy adjustments, create `ai/ai-policy-override.md`
 
 ## Why should the `ai/` directory be set to be ignored in the `.gitignore` file? 
 
