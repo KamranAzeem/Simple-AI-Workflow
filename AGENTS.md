@@ -4,7 +4,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
 
-1. [central main policy file](~/Projects/Personal/Smart-AI-Workflow/ai/ai-policy-cloud.md) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
+1. [central main policy file](~/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
 2. [local main policy file](ai/ai-policy-cloud.md) - fallback if step 1 is unreachable; skip if step 1 succeeded.
 3. [local policy override file](ai/ai-policy-override.md) - rules to override the main policy. **(optional; skip if not present)**
 4. [ai/next-steps.md](ai/next-steps.md) - current resume point and live queue. **(optional; skip if not present)**
@@ -40,7 +40,7 @@ When bootstrapping in a new repository where no AI files exist:
 These rules prevent bootstrap ambiguity across assistants.
 
 1. The central main policy URL is authoritative for universal rules:
-   - `~/Projects/Personal/Smart-AI-Workflow/ai/ai-policy-cloud.md`
+   - `~/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md`
 2. Local `ai/ai-policy-cloud.md` is fallback only when the central main policy is unreachable.
 3. `ai/ai-policy-override.md` is for repository-specific exceptions and must not redefine universal policy authority.
 4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
