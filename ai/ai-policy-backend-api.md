@@ -4,20 +4,20 @@ All edits to this file must be manually approved by the user.
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy
+# AI Assistant Policy for Backend and API Development
 
 This file is policy-only. Do not use it as a project context document.
 
 ## Scope
 
-- Applies to any AI assistant used in this repository.
+- Applies to AI assistants working on backend services, APIs, jobs, workers, and data-access layers.
 - [AGENTS.md](../AGENTS.md) is the only bootstrap entry point.
 - Do not use [ai/README.md](README.md) as operational authority.
 
 ## Instruction Precedence
 
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
-- If this policy conflicts with higher-priority safety/tool constraints, follow the higher-priority constraints and explain the limitation.
+- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
+- If this policy conflicts with higher-priority safety or tool constraints, follow the higher-priority constraints and explain the limitation.
 
 ## Project Reference Files
 
@@ -118,28 +118,26 @@ Daily checkpoint checklist template:
 
 For repositories that define `ai/` as the bootstrap state root:
 
-1. During bootstrap, treat `ai/` policy/state files as authoritative context.
+1. During bootstrap, treat `ai/` policy and state files as authoritative context.
 2. Do not treat GitHub Copilot customization files under `.github/` as bootstrap authority unless explicitly allowed by repository bootstrap instructions.
 3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subdirectory), not under `.github/`.
-4. Universal policy changes must be made in this central policy source first; local files are fallback/override only.
-5. If bootstrap authority is ambiguous, stop and ask before writing any policy/customization file.
+4. Universal policy changes must be made in this central policy source first; local files are fallback or override only.
+5. If bootstrap authority is ambiguous, stop and ask before writing any policy or customization file.
 
 ## Operational Guardrails
 
 - Use a diff-first workflow for proposed edits.
 - Ask for explicit user approval before side-effecting actions.
 - Ask before creating, modifying, or deleting files.
-- Ask before any cloud or infrastructure action (Portal, CLI, IaC, CI/CD).
+- Ask before package installation or dependency changes.
 - Ask before Git write actions (commit, branch, merge, push).
 - Before running `git add` or `git commit`, or when the user asks to commit work, check the files involved for secrets. If any secrets are found or strongly suspected, stop immediately and alert the user clearly.
-- Ask before Docker create/update/delete operations.
-- Ask before kubectl create/update/delete operations.
-- Ask before package installation or dependency changes.
+- Ask before database schema changes, production data changes, or infrastructure-affecting configuration changes.
 
 ## Execution Modes
 
 - `strict` (default): ask first for any write operation.
-- `fast-state` (only after explicit user request for checkpoint/workflow maintenance): may update only:
+- `fast-state` (only after explicit user request for checkpoint or workflow maintenance): may update only:
   - `ai/next-steps.md`
   - `ai/progress.md`
   - `ai/daily-checkpoints/YYYY-MM-DD.md`
@@ -151,13 +149,7 @@ For repositories that define `ai/` as the bootstrap state root:
 - File and directory inspection (`ls`, `cat`, `find`, `grep`, `tree`, `pwd`, `stat`, `wc`, `du`, `df`).
 - Git read-only inspection (`git status`, `git log`, `git diff`, `git show`, `git branch`, `git remote`).
 - Process and environment inspection (`ps`, `top`, `jobs`, `env`, `whoami`, `hostname`).
-- Azure CLI read-only queries (`az ... list`, `az ... show`, `az ... get`).
-- Google Cloud CLI read-only queries (`gcloud ... list`, `gcloud ... show`, `gcloud ... get`).
-- AWS CLI read-only queries (`awscli ... list`, `awscli ... show`, `awscli ... get`).
-- Docker read-only inspection (`docker ps`, `docker images`, `docker logs`, `docker inspect`).
-- Kubernetes CLI read-only queries (`kubectl get`, `kubectl describe`, `kubectl logs`).
-- On the first `kubectl` command in a session, confirm and report the active context (for example, `kubectl config current-context`) so the user knows which cluster is being targeted. For subsequent `kubectl` commands, do not repeat this confirmation unless the user changes, or asks to change, the Kubernetes context.
-- Tool version checks (`dotnet --version`, `npm list`, `node --version`, `which`).
+- Tool version checks (`node --version`, `npm list`, `python --version`, `pip list`, `dotnet --version`, `go version`, `which`).
 - Network read-only checks (`curl` GET, `ping`, `nslookup`, `dig`).
 - If VS Code still shows an Allow button for read-only commands, treat that as runtime behavior, not policy.
 
@@ -166,24 +158,54 @@ For repositories that define `ai/` as the bootstrap state root:
 - Keep AI workflow and context artifacts under [ai/](.).
 - Keep [ai/](.) git-ignored and out of commits.
 - Avoid `.github/copilot-instructions.md` for policy or context in this repository.
-- Follow the relevant cloud provider's official naming best practices (e.g., Azure CAF for Azure). If project-specific conventions are defined in [ai/context.md](context.md), those take precedence.
+- Prefer project-defined conventions in [ai/context.md](context.md) when they exist.
 
-## Working Behavior
+## Backend Working Behavior
 
-- Do not assume files or directories exist when they do not.
+- Do not assume routes, schemas, tables, queues, topics, jobs, environment variables, or service dependencies exist when they do not.
 - Use only letters, digits, hyphens, underscores, and dots when creating file or directory names.
-- Do not modify binary or generated files unless explicitly requested.
+- Do not modify generated files, migration histories, lockfiles, or deployment artifacts unless explicitly requested or required by the task.
 - Place temporary helper files only in the workspace `tmp` directory and keep `tmp` git-ignored.
 - If `tmp` does not exist, create it, add it to `.gitignore`, and inform the user.
 
+## Backend Engineering Standards
+
+- Preserve the existing framework, application structure, logging pattern, dependency injection pattern, and data-access approach unless the user asks for a change.
+- Prefer clear request validation, explicit error handling, and predictable status codes over implicit behavior.
+- Keep API contracts stable. Do not introduce breaking response or request changes without calling them out clearly.
+- Validate inputs at trust boundaries and sanitize data before persistence, logging, or downstream calls.
+- Prefer idempotent operations where retries are likely.
+- Keep authentication, authorization, and permission checks explicit.
+- Avoid hidden side effects in handlers and service methods.
+- Make timeouts, retries, and external service failures visible in code paths that depend on them.
+- Treat migrations and data backfills as operationally sensitive work.
+- Prefer small, composable services and modules with clear responsibilities.
+
+## Data and API Rules
+
+- Prefer schema-first or contract-aware changes when the project already uses them.
+- Keep serialization and deserialization rules explicit.
+- Avoid leaking internal fields, secrets, tokens, or stack traces in API responses.
+- When adding fields to APIs, prefer additive and backward-compatible changes.
+- When changing persistence logic, consider transactions, concurrency, uniqueness, and rollback behavior.
+- Keep observability in mind: structured logs, useful error messages, and traceable request flow should not be afterthoughts.
+
+## Testing and Verification
+
+- Verify changes using the smallest reliable checks available: existing tests, targeted tests, linting, type-checking, or a local build.
+- Prefer tests that cover behavior at boundaries such as handlers, services, and repositories instead of only internal implementation details.
+- When changing APIs, consider request validation, error responses, authorization, and backward compatibility as part of verification.
+- If testing was not possible, say so clearly.
+
 ## Design Philosophy
 
-- Do not over-engineer solutions; prefer simplicity and pragmatism over unnecessary complexity.
+- Do not over-engineer solutions; prefer simple, maintainable service boundaries over clever abstractions.
+- Solve the user problem at the contract, flow, and data-integrity level before reaching for large architectural changes.
 
 ## Communication and Writing
 
 - Express solutions in concise, simple, everyday English. Do not use fancy words.
-- Document Cloud Portal and Cloud CLI flows with clear step-by-step guidance.
+- Explain backend tradeoffs in terms of correctness, security, maintainability, observability, and operational risk.
 - When suggesting shell or CLI commands, provide copy-friendly runnable commands in fenced code blocks, ready to run as written.
 - Use technical terms only when needed for correctness.
 

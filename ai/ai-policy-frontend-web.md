@@ -4,20 +4,20 @@ All edits to this file must be manually approved by the user.
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy
+# AI Assistant Policy for Frontend Web Development
 
 This file is policy-only. Do not use it as a project context document.
 
 ## Scope
 
-- Applies to any AI assistant used in this repository.
+- Applies to AI assistants working on frontend web applications and design systems.
 - [AGENTS.md](../AGENTS.md) is the only bootstrap entry point.
 - Do not use [ai/README.md](README.md) as operational authority.
 
 ## Instruction Precedence
 
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
-- If this policy conflicts with higher-priority safety/tool constraints, follow the higher-priority constraints and explain the limitation.
+- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
+- If this policy conflicts with higher-priority safety or tool constraints, follow the higher-priority constraints and explain the limitation.
 
 ## Project Reference Files
 
@@ -118,28 +118,25 @@ Daily checkpoint checklist template:
 
 For repositories that define `ai/` as the bootstrap state root:
 
-1. During bootstrap, treat `ai/` policy/state files as authoritative context.
+1. During bootstrap, treat `ai/` policy and state files as authoritative context.
 2. Do not treat GitHub Copilot customization files under `.github/` as bootstrap authority unless explicitly allowed by repository bootstrap instructions.
 3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subdirectory), not under `.github/`.
-4. Universal policy changes must be made in this central policy source first; local files are fallback/override only.
-5. If bootstrap authority is ambiguous, stop and ask before writing any policy/customization file.
+4. Universal policy changes must be made in this central policy source first; local files are fallback or override only.
+5. If bootstrap authority is ambiguous, stop and ask before writing any policy or customization file.
 
 ## Operational Guardrails
 
 - Use a diff-first workflow for proposed edits.
 - Ask for explicit user approval before side-effecting actions.
 - Ask before creating, modifying, or deleting files.
-- Ask before any cloud or infrastructure action (Portal, CLI, IaC, CI/CD).
+- Ask before package installation or dependency changes.
 - Ask before Git write actions (commit, branch, merge, push).
 - Before running `git add` or `git commit`, or when the user asks to commit work, check the files involved for secrets. If any secrets are found or strongly suspected, stop immediately and alert the user clearly.
-- Ask before Docker create/update/delete operations.
-- Ask before kubectl create/update/delete operations.
-- Ask before package installation or dependency changes.
 
 ## Execution Modes
 
 - `strict` (default): ask first for any write operation.
-- `fast-state` (only after explicit user request for checkpoint/workflow maintenance): may update only:
+- `fast-state` (only after explicit user request for checkpoint or workflow maintenance): may update only:
   - `ai/next-steps.md`
   - `ai/progress.md`
   - `ai/daily-checkpoints/YYYY-MM-DD.md`
@@ -151,13 +148,7 @@ For repositories that define `ai/` as the bootstrap state root:
 - File and directory inspection (`ls`, `cat`, `find`, `grep`, `tree`, `pwd`, `stat`, `wc`, `du`, `df`).
 - Git read-only inspection (`git status`, `git log`, `git diff`, `git show`, `git branch`, `git remote`).
 - Process and environment inspection (`ps`, `top`, `jobs`, `env`, `whoami`, `hostname`).
-- Azure CLI read-only queries (`az ... list`, `az ... show`, `az ... get`).
-- Google Cloud CLI read-only queries (`gcloud ... list`, `gcloud ... show`, `gcloud ... get`).
-- AWS CLI read-only queries (`awscli ... list`, `awscli ... show`, `awscli ... get`).
-- Docker read-only inspection (`docker ps`, `docker images`, `docker logs`, `docker inspect`).
-- Kubernetes CLI read-only queries (`kubectl get`, `kubectl describe`, `kubectl logs`).
-- On the first `kubectl` command in a session, confirm and report the active context (for example, `kubectl config current-context`) so the user knows which cluster is being targeted. For subsequent `kubectl` commands, do not repeat this confirmation unless the user changes, or asks to change, the Kubernetes context.
-- Tool version checks (`dotnet --version`, `npm list`, `node --version`, `which`).
+- Tool version checks (`node --version`, `npm list`, `pnpm --version`, `yarn --version`, `which`).
 - Network read-only checks (`curl` GET, `ping`, `nslookup`, `dig`).
 - If VS Code still shows an Allow button for read-only commands, treat that as runtime behavior, not policy.
 
@@ -166,24 +157,53 @@ For repositories that define `ai/` as the bootstrap state root:
 - Keep AI workflow and context artifacts under [ai/](.).
 - Keep [ai/](.) git-ignored and out of commits.
 - Avoid `.github/copilot-instructions.md` for policy or context in this repository.
-- Follow the relevant cloud provider's official naming best practices (e.g., Azure CAF for Azure). If project-specific conventions are defined in [ai/context.md](context.md), those take precedence.
+- Prefer project-defined conventions in [ai/context.md](context.md) when they exist.
 
-## Working Behavior
+## Frontend Working Behavior
 
-- Do not assume files or directories exist when they do not.
+- Do not assume files, routes, components, APIs, or design tokens exist when they do not.
 - Use only letters, digits, hyphens, underscores, and dots when creating file or directory names.
-- Do not modify binary or generated files unless explicitly requested.
+- Do not modify generated assets, build artifacts, lockfiles, or snapshot files unless explicitly requested or required by the task.
 - Place temporary helper files only in the workspace `tmp` directory and keep `tmp` git-ignored.
 - If `tmp` does not exist, create it, add it to `.gitignore`, and inform the user.
 
+## Frontend Engineering Standards
+
+- Prefer small, composable components with clear props and limited side effects.
+- Preserve the existing framework, routing model, state management pattern, and styling system unless the user asks for a change.
+- Favor semantic HTML first. Add ARIA only when native HTML semantics are not sufficient.
+- Treat accessibility as a default requirement: keyboard access, focus visibility, labels, alt text, and sufficient contrast must not be optional.
+- Keep loading, empty, error, and success states explicit in user-facing flows.
+- Validate forms on both usability and correctness: clear labels, helpful errors, and predictable submit behavior.
+- Avoid unnecessary client-side state. Prefer derived state, server state, or URL state when appropriate.
+- Keep bundle size and runtime work in mind. Do not add large dependencies for small problems.
+- Respect responsive behavior across mobile and desktop breakpoints.
+- When working in an existing design system, preserve established patterns instead of introducing a new visual language.
+
+## Styling and UI Rules
+
+- Reuse existing design tokens, spacing scales, typography rules, and component primitives before introducing new ones.
+- Avoid one-off CSS and ad hoc overrides when a shared component or token would solve the problem better.
+- Use clear visual hierarchy and readable spacing.
+- Do not hide important actions or status behind hover-only interactions.
+- Prefer stable layouts that avoid unexpected movement during loading and updates.
+
+## Testing and Verification
+
+- Verify user-facing changes in the smallest reliable way available: existing tests, targeted checks, or a local build.
+- Prefer tests that cover behavior visible to users instead of implementation details.
+- When changing interactive UI, consider accessibility, keyboard behavior, validation, and error states as part of verification.
+- If testing was not possible, say so clearly.
+
 ## Design Philosophy
 
-- Do not over-engineer solutions; prefer simplicity and pragmatism over unnecessary complexity.
+- Do not over-engineer solutions; prefer simple, maintainable patterns over clever abstractions.
+- Solve the user problem at the component or flow level first before reaching for large architectural changes.
 
 ## Communication and Writing
 
 - Express solutions in concise, simple, everyday English. Do not use fancy words.
-- Document Cloud Portal and Cloud CLI flows with clear step-by-step guidance.
+- Explain frontend tradeoffs in terms of user impact, maintainability, accessibility, and performance.
 - When suggesting shell or CLI commands, provide copy-friendly runnable commands in fenced code blocks, ready to run as written.
 - Use technical terms only when needed for correctness.
 

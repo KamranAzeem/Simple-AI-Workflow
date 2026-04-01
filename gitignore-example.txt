@@ -1,0 +1,40 @@
+# Example .gitignore entries for local AI workflow files
+# Copy the lines you need into your project's .gitignore file.
+
+
+# Basic principal: 
+#   Do not add any local AI files to your project work - no matter which AI assistant you are using.
+
+# Core local AI workflow state
+ai/
+tmp/
+
+# Optional local-only AI instruction files
+# Ignore these only if you do not want them tracked in the repository.
+AGENTS.md
+AGENTS.local.md
+CLAUDE.md
+CLAUDE.local.md
+GEMINI.md
+
+# Optional local AI assistant state
+.claude/
+.cursor/
+.windsurf/
+.roo/
+.qodo/
+
+# Optional AI assistant rule and config files
+.cursorrules
+.cursorignore
+.windsurfrules
+.rooignore
+.aider.conf.yml
+.aider.input.history
+
+# Optional local prompt or transcript artifacts
+prompts-local/
+chat-logs/
+
+# Optional local scratch files for AI-assisted work
+notes-ai/
