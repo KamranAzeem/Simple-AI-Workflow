@@ -1,4 +1,4 @@
-# Centralized Policy Management System for Smarter AI Workflow
+# Centralized Policy Management System for Simple AI Workflow
 
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
 - The `AGENTS.md` file points to the central policy file path used by this workflow.
