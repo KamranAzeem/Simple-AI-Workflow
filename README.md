@@ -14,6 +14,7 @@
 - Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows.
 - Use `ai-policy-frontend-web.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows.
 - Use `ai-policy-backend-api.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
+- Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks.
 - If the project spans multiple areas, start with the policy that matches the highest-risk work, then add a local override file for project-specific rules.
 
 ## How to initialize / bootstrap?
@@ -31,10 +32,34 @@
 
 ## Why should the `ai/` directory be ignored in `.gitignore`?
 
-- When you interact with AI, the prompts, reasoning, notes, and session state are part of your private working process. Those do not usually belong in the repository.
+- When you interact with AI, the prompts, reasoning, notes, and session state are part of your private thinking/working process. Those do not usually belong in the repository.
 - In team environments, each person may have different notes, reasoning, task lists, and session state. Committing those files would create noise and unnecessary conflicts.
-- Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project deliverables.
+- Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project related files and directories.
+- While interacting with AI assistant, the user may accidentally leak sensitive information to the AI Assistant, such as name of the client, or any other client-related sensitive information about their infrastructure, application design, weaknesses in the system, etc. These are part of normal interaction with the AI assistant during thinking and planning sessions. These must never be part of the repository though.
 
+
+## Checkpoint System
+
+The AI workflow includes a checkpoint system (or journal system) for tracking progress and maintaining state consistency. Checkpoints are automatically created when significant changes are made to AI policy files or when requested by the user using instructions such as **"perform checkpoint"** or simply **"checkpoint"**. 
+
+Though the checkpoint system exists primarily to help AI assistant(s) keep track of progress, next-steps, open questions, etc., the user can also read these files to get an idea of what is going on. These are simple markdown files with easy-to-understand content. 
+
+### Checkpoint Features:
+- **Automatic Creation**: Checkpoints are created during significant workflow activities or when AI state tracking files change
+- **Consistency Verification**: Each checkpoint verifies that all AI tracking files are synchronized
+- **Daily Snapshots**: Daily checkpoint files are stored in `ai/daily-checkpoints/YYYY-MM-DD.md`
+- **Progress Tracking**: The `ai/progress.md` file maintains a chronological log of all checkpoints
+- **Resume Points**: The `ai/next-steps.md` file provides the current resume point for AI assistants
+
+### Checkpoint Format:
+Checkpoints follow the format `CP-YYYY-MM-DD-XX` where:
+- `YYYY-MM-DD`: Date of the checkpoint
+- `XX`: Sequential number for multiple checkpoints on the same day
+
+### Usage:
+- AI assistants automatically create checkpoints during significant workflow activities
+- Users can request checkpoints at any time for state preservation
+- Checkpoints ensure AI assistants can resume work from a known consistent state
 
 ## CLI Tools Used by AI Assistants
 
@@ -53,6 +78,6 @@ These tools are available for Linux, macOS, and Windows. Set them up according t
 - `tldr` — `3.5.0`
 
 ### Notes
-- `tldr` may print dotenv tips; this can be silenced with:
+- `tldr` may print dotenv tips; silence with:
   - `DOTENV_CONFIG_QUIET=true tldr --version`
 
