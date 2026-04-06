@@ -2,17 +2,21 @@
 
 ## Resume Here
 
-- **Checkpoint ID**: CP-2026-04-06-03
-- **Updated Timestamp**: 2026-04-06T15:51:54Z
-- **Current Status**: Active - Temporary files policy update completed
-- **Last Completed Action**: Added temporary files policy to all AI policy files
+- **Checkpoint ID**: CP-2026-04-06-04
+- **Updated Timestamp**: 2026-04-06T16:15:00Z
+- **Current Status**: Active - Communication efficiency policy added
+- **Last Completed Action**: Added communication efficiency for token conservation to all AI policy files
 - **Immediate Pending Decision**: None
 - **First Action to Continue**: Continue with next user instruction
 - **Confidence**: verified
 
 ## Recent Changes
-1. Added temporary files policy to all AI policy files:
-   - **Temporary files**: For user-facing temporary files, use `tmp/` in project root (ensure it's git-ignored). For AI internal work, use system temp (`/tmp` on Linux) or `ai/tmp/`.
+1. Added communication efficiency policy for token conservation to all AI policy files:
+   - **Prioritize token efficiency**: Structure responses to minimize token usage while maintaining clarity and completeness
+   - **Use direct communication**: Avoid unnecessary conversational flourishes and focus on actionable information
+   - **Organize for scannability**: Use clear headings, bullet points, and code blocks
+   - **Reference established context**: Avoid repeating previously established information
+   - **Balance detail level**: Provide sufficient detail without excessive explanation
 2. Updated files:
    - `ai/ai-policy-cloud.md`
    - `ai/ai-policy-backend-api.md`
@@ -30,6 +34,6 @@
 - Frontend Web Policy: [ai/ai-policy-frontend-web.md](ai-policy-frontend-web.md)
 
 ## Notes
-- All policies now include temporary files guidelines for user-facing and AI internal work
+- All policies now include communication efficiency guidelines for token conservation
 - Consistent rules applied across all four policy files
-- Backup created at `/tmp/ai-backup-2026-04-06-155154/`
+- Backup created at `/tmp/ai-backup-2026-04-06-161021/`
