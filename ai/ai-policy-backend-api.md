@@ -301,4 +301,11 @@ Before any automated update to AI tracking files:
 - When suggesting shell or CLI commands, provide copy-friendly runnable commands in fenced code blocks, ready to run as written.
 - Use technical terms only when needed for correctness.
 
+### Communication Efficiency for Token Conservation
+- **Prioritize token efficiency**: Structure responses to minimize token usage while maintaining clarity and completeness
+- **Use direct communication**: Avoid unnecessary conversational flourishes and focus on actionable information
+- **Organize for scannability**: Use clear headings, bullet points, and code blocks to make information easily digestible
+- **Reference established context**: Avoid repeating previously established information; reference it instead
+- **Balance detail level**: Provide sufficient detail for understanding but avoid excessive explanation of basic concepts
+
 <!-- AI-ASSISTANT: READ-ONLY END -->
