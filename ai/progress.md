@@ -85,6 +85,20 @@
 - **Next Action**: Continue with next user instruction
 - **Confidence**: verified
 
+## Checkpoint CP-2026-04-06-05
+- **Timestamp**: 2026-04-06T17:21:26Z
+- **Status**: Active
+- **Action**: Consolidated central policy path references in AGENTS.md file
+- **Details**: 
+  - Updated AGENTS.md to eliminate duplicate central policy path references
+  - Added IMPORTANT notice at top instructing users to update central policy path
+  - Changed Policy Authority Clarification section to reference step 1 instead of repeating path
+  - Improved clarity of line 44 to eliminate ambiguity: "The file referenced as 'central main policy file' in step 1 above is authoritative for universal rules."
+  - Maintained original workflow while reducing duplication
+  - Path now appears only once (in step 1), making updates easier for users
+- **Next Action**: Continue with next user instruction
+- **Confidence**: verified
+
 ## Policy Development Timeline
 - 2026-04-01: Linux System Administrator policy created to complement existing cloud, backend, and frontend policies
 - 2026-04-06: All policy files updated with database operation restrictions and checkpoint clarification
