@@ -100,7 +100,7 @@ Allowed edits without a new checkpoint ID:
 
 ### Mandatory Checkpoint Procedure
 
-When the user asks for a checkpoint:
+When the user asks for a checkpoint (which means update all AI tracking files under the `ai/` directory):
 
 1. Generate a new checkpoint ID.
 2. Update [ai/next-steps.md](next-steps.md) with the latest resume block.
@@ -143,6 +143,23 @@ Daily checkpoint checklist template:
 - Resume block is clear and actionable: Pass/Fail
 - Verified outcomes are evidence-based: Pass/Fail
 - Next action and pending decision are explicit: Pass/Fail
+
+## Operational Guardrails
+
+- Use a diff-first workflow for proposed edits.
+- Ask for explicit user approval before side-effecting actions.
+- Ask before creating, modifying, or deleting files.
+- Ask before any system administration action (user management, service configuration, package installation, etc.).
+- Ask before Git write actions (commit, branch, merge, push).
+- Before running `git add` or `git commit`, or when the user asks to commit work, check the files involved for secrets. If any secrets are found or strongly suspected, stop immediately and alert the user clearly.
+- **Ask before any database operations**: Never perform create/modify/delete operations on database systems, users, passwords, or credentials without explicit permission.
+- **Ask before database data operations**: Never perform insert, update, or delete operations on database tables without explicit permission.
+- **Ask before credential changes**: Never change API keys, passwords, tokens, or any authentication credentials without explicit permission.
+- **Git branch naming**: Use `feature/`, `bugfix/`, `hotfix/`, `release/`, `docs/`, `chore/`, `refactor/`, or `test/` prefixes. Never use abbreviations like `ft./` or `feat./`.
+- **Issue type labels**: Use `defect`, `enhancement`, `documentation`, `technical-debt`, `security`, or `performance`.
+- **Issue size labels**: Use `size: small - 2h`, `size: medium - 4h`, `size: large - 8h`, `size: x-large - 1-2d`, or `size: epic - 3+d`.
+- **Issue priority labels**: Use `priority: p1 - must have`, `priority: p2 - should have`, `priority: p3 - could have`, `priority: p4 - won't have`.
+- **Temporary files**: For user-facing temporary files, use `tmp/` in project root (ensure it's git-ignored). For AI internal work, use system temp (`/tmp` on Linux) or `ai/tmp/`.
 
 ## Security Policy
 
