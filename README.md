@@ -21,7 +21,7 @@
 ## How to initialize / bootstrap?
 
 - After copying `AGENTS.md` into your project root, run `/init` in your AI assistant shell to build the context.
-- If your AI assistant does not support `/init`, use this instruction:
+- If your AI assistant does not support `/init`, use this instruction for first time setup:
   - `bootstrap using AGENTS.md protocol`
 - The AI assistant should follow the bootstrap procedure in `AGENTS.md`:
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
@@ -32,19 +32,35 @@
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 - You can use `gitignore-example.txt` as a guide when adding AI-related ignore rules.
 
-## Why should the `ai/` directory be ignored in `.gitignore`?
+## How to start working in an already initialized/bootstrap project directory?
 
-- When you interact with AI, the prompts, reasoning, notes, and session state are part of your private thinking/working process. Those do not belong in the repository.
-- In team environments, each person may have different notes, reasoning, task lists, and session state. Committing those files would create noise and unnecessary conflicts.
-- Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project related files and directories.
-- While interacting with AI assistant, the user may accidentally leak sensitive information to the AI Assistant, such as name of the client, or any other client-related sensitive information about their infrastructure, application design, weaknesses in the system, etc. These are part of normal interaction with the AI assistant during thinking and planning sessions. These must never be part of the repository though.
+You can use any of the following:
 
+- **"Load AI context from latest checkpoint"**
+- **"Resume work"**
+- **"load AI context"**
+- **"Follow AGENTS.md reading order"**
+- **"Show me the progress so far"**
+- **"Where are we in this project?"**
+
+This will save time, read all AI related files without creating new ones, avoid recreating checkpoints right at the start of your work.
+
+**Note:** If you accidentally execute a `/init` or `bootstrap` command in a project directory that already has some context, then the bootstrap process will not overwrite them. It simply wastes a little bit time in creating new checkpoints. So nothing to worry about.
 
 ## Checkpoint System
 
-The AI workflow includes a checkpoint system (or journal system) for tracking progress and maintaining state consistency. Checkpoints are automatically created during significant workflow activities or when requested by the user using instructions such as **"perform checkpoint"** or simply **"checkpoint"**. 
+Checkpoints save the state of your AI discussions, progress, todos, open questions, and daily work snapshots into tracking files inside the `ai/` directory. This system helps you resume your work from where you left off whenever you restart in a project directory.
 
-Though the checkpoint system exists primarily to help AI assistant(s) keep track of progress, next-steps, open questions, etc., the user can also read these files to get an idea of what is going on. These are simple markdown files with easy-to-understand content. 
+Create checkpoints whenever you complete important activities that you want to track or resume from later. You can create them as often as needed using instructions like:
+
+- **"create checkpoint"**
+- **"update AI tracking"**
+- **"perform checkpoint"** 
+- Simply **"checkpoint"**
+
+These commands generate a new checkpoint ID and update all tracking files, ensuring you can restart your session from the exact point where you left off.
+
+While the checkpoint system primarily helps AI assistants maintain progress tracking, the simple markdown files are also easy for human users to read and understand what's happening in the project.
 
 ### Checkpoint Features:
 - **Automatic Creation**: Checkpoints are created during significant workflow activities or when AI state tracking files change
@@ -52,6 +68,12 @@ Though the checkpoint system exists primarily to help AI assistant(s) keep track
 - **Daily Snapshots**: Daily checkpoint files are stored in `ai/daily-checkpoints/YYYY-MM-DD.md`
 - **Progress Tracking**: The `ai/progress.md` file maintains a chronological log of all checkpoints
 - **Resume Points**: The `ai/next-steps.md` file provides the current resume point for AI assistants
+
+**Key benefits:**
+- Track AI workflow progress and decisions
+- Maintain state consistency across sessions
+- Easy resume capability from any checkpoint
+- Human-readable documentation of project activities
 
 ### Checkpoint Format:
 Checkpoints follow the format `CP-YYYY-MM-DD-XX` where:
@@ -79,7 +101,10 @@ These tools are available for Linux, macOS, and Windows. Set them up according t
 - `fzf` — `0.70.0`
 - `tldr` — `3.5.0`
 
-### Notes
-- `tldr` may print dotenv tips; silence with:
-  - `DOTENV_CONFIG_QUIET=true tldr --version`
 
+## Why should the `ai/` directory be ignored in `.gitignore`?
+
+- When you interact with AI, the prompts, reasoning, notes, and session state are part of your private thinking/working process. Those do not belong in the repository.
+- In team environments, each person may have different notes, reasoning, task lists, and session state. Committing those files would create noise and unnecessary conflicts.
+- Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project related files and directories.
+- While interacting with AI assistant, the user may accidentally leak sensitive information to the AI Assistant, such as name of the client, or any other client-related sensitive information about their infrastructure, application design, weaknesses in the system, etc. These are part of normal interaction with the AI assistant during thinking and planning sessions. These must never be part of the repository though.
