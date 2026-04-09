@@ -20,7 +20,7 @@
 
 ## How to initialize / bootstrap?
 
-- After copying `AGENTS.md` into your project root, run `/init` in your AI assistant shell to build the context.
+- After copying `AGENTS.md` into your project root, run `/init using AGENTS.md` in your AI assistant shell to build the context.
 - If your AI assistant does not support `/init`, use this instruction for first time setup:
   - `bootstrap using AGENTS.md protocol`
 - The AI assistant should follow the bootstrap procedure in `AGENTS.md`:
@@ -108,3 +108,30 @@ These tools are available for Linux, macOS, and Windows. Set them up according t
 - In team environments, each person may have different notes, reasoning, task lists, and session state. Committing those files would create noise and unnecessary conflicts.
 - Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project related files and directories.
 - While interacting with AI assistant, the user may accidentally leak sensitive information to the AI Assistant, such as name of the client, or any other client-related sensitive information about their infrastructure, application design, weaknesses in the system, etc. These are part of normal interaction with the AI assistant during thinking and planning sessions. These must never be part of the repository though.
+
+## Optional adjustment to VScode:
+
+To make future `/init` simpler for new projects, instruct VSCode to honor and use `AGENTS.md` by default. You do it by adding the following section to the VSCode file: `{{VSCODE_USER_PROMPTS_FOLDER}}/init.instructions.md`
+
+Location of this file on different OSes is as follows:
+
+* Linux: `~/.config/Code/User/prompts/init.instructions.md`
+* MacOS: `~/Library/Application Support/Code/User/prompts/init.instructions.md`
+* Windows: `%USERPROFILE%\AppData\Roaming\Code\User\prompts\init.instructions.md`
+
+
+```
+---
+description: Use when bootstrapping a new repository with /init. Always read AGENTS.md first as the single source of truth.
+applyTo: "**"
+---
+
+# /init Bootstrap Guide
+
+When running `/init`, always:
+1. Read AGENTS.md first — it is the single source of truth for AI file locations and policy hierarchy
+2. GitHub Copilot files must go under `ai/github-copilot/`, never workspace root
+3. If policy conflicts with init task, STOP and ask for clarification
+
+Do not create copilot-instructions.md, *.prompt.md, or other GitHub Copilot customizations in workspace root.
+```
