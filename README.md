@@ -10,6 +10,12 @@
 - Both `AGENTS.md` and the `ai/` directory should be ignored by Git to keep personal AI state private.
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
 
+## Presentation Slides
+
+- [Simple-AI-Workflow (ODP)](presentation-slides/Simple-AI-Workflow.odp)
+- [Simple-AI-Workflow (PDF)](presentation-slides/Simple-AI-Workflow.pdf)
+- [Simple-AI-Workflow (PPTX)](presentation-slides/Simple-AI-Workflow.pptx)
+
 ## Which policy should you choose?
 
 - Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows.
