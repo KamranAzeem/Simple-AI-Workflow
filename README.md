@@ -13,9 +13,6 @@
 ## Presentation Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link)
-- [Simple-AI-Workflow (ODP)](presentation-slides/Simple-AI-Workflow.odp)
-- [Simple-AI-Workflow (PDF)](presentation-slides/Simple-AI-Workflow.pdf)
-- [Simple-AI-Workflow (PPTX)](presentation-slides/Simple-AI-Workflow.pptx)
 
 ## Which policy should you choose?
 
