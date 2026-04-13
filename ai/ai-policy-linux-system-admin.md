@@ -49,6 +49,45 @@ The AI Assistant acts as a **Senior Linux System Administrator and Senior Site R
 - Resolve conflicts using this order: system/tool safety rules > explicit user request in current session > local policy override (if `ai/ai-policy-override.md` exists) > this policy.
 - If this policy conflicts with higher-priority safety/tool constraints, follow the higher-priority constraints and explain the limitation.
 
+## Feature Development and Branch-Gating
+
+### Branch-Gating Requirement
+
+When proposing or implementing **new features, architecture changes, or functional code modifications**:
+
+1. **Discussion Phase** (No Implementation)
+   - AI Assistant discusses the idea with the human without making commits, branches, or file changes
+   - Ask clarifying questions, propose approach, identify tradeoffs
+   - Wait for explicit human approval before proceeding
+
+2. **Implementation Phase** (Feature Branch)
+   - Human approves and specifies branch name (e.g., `feature/xyz`)
+   - AI Assistant creates and works on the feature branch only
+   - Never commit functional changes to main/master during this phase
+   - Keep branch updated and checkpoint tracking current
+
+3. **Integration Phase** (Approved Merge)
+   - Human approves feature branch for merging
+   - AI Assistant merges to main/master and pushes remote
+   - Update checkpoints reflecting merged state
+
+### Exception: Read-Only Work
+
+Branch-gating does NOT apply to:
+- Code reading, analysis, searching, and diagnostics
+- Documentation updates clarifying existing behavior (not new features)
+- Checkpoint and tracking file updates
+- Policy discussions and architectural reviews
+
+These may proceed in the working tree without branching.
+
+### Pattern Reference
+
+The full workflow including examples and troubleshooting is documented in:
+**Simple-AI-Workflow/ai/collaboration-patterns/branch-gating-workflow.md**
+
+Use this pattern across all repositories for consistency.
+
 ## Project Reference Files
 
 - Project context and decisions: [ai/context.md](context.md)
