@@ -38,3 +38,9 @@ chat-logs/
 
 # Optional local scratch files for AI-assisted work
 notes-ai/
+
+# GitHub Copilot local artifacts
+.github/copilot/
+.github/copilot-chat/
+.copilot/
+ai/github-copilot/

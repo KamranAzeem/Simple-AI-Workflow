@@ -7,12 +7,15 @@
 - Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-frontend-web.md`, `ai/ai-policy-backend-api.md`, etc.
 - The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, and context.
 - For repository-specific policy adjustments, create `ai/ai-policy-override.md`.
+- Example override template: `ai/ai-policy-override.example.md`.
 - Both `AGENTS.md` and the `ai/` directory should be ignored by Git to keep personal AI state private.
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
 
-## Presentation Slides
+## Docs and Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link)
+- Local docs directory: `docs/`
+- Slide notes/examples in this repository: `docs/aider-token-usage.md`, `docs/MCP-and-its-benefits.md`
 
 ## Which policy should you choose?
 
@@ -27,16 +30,17 @@
 - After copying `AGENTS.md` into your project root, run `/init using AGENTS.md` in your AI assistant shell to build the context.
 - If your AI assistant does not support `/init`, use this instruction for first time setup:
   - `bootstrap using AGENTS.md protocol`
-- The AI assistant should follow the bootstrap procedure in `AGENTS.md`:
+- The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will:
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
   - Initialize the state tracking files such as `next-steps.md`, the daily checkpoint, and `progress.md`.
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The central policy is accessed directly from the path referenced in `AGENTS.md`, so local copying of policy files is not required.
-- Optionally, you can override parts of the policy by adding `ai/ai-policy-override.md`. You can ask the AI assistant to generate this file for you.
+- Optionally, you can override parts of the policy by adding `ai/ai-policy-override.md`.
+- A ready example is available at `ai/ai-policy-override.example.md` (copy and adjust for your local setup).
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 - You can use `gitignore-example.txt` as a guide when adding AI-related ignore rules.
 
-## How to start working in an already initialized/bootstrap project directory?
+## How to start working in an already initialized/bootstrapped project directory?
 
 You can use any of the following:
 
@@ -50,6 +54,18 @@ You can use any of the following:
 This will save time, read all AI related files without creating new ones, avoid recreating checkpoints right at the start of your work.
 
 **Note:** If you accidentally execute a `/init` or `bootstrap` command in a project directory that already has some context, then the bootstrap process will not overwrite them. It simply wastes a little bit time in creating new checkpoints. So nothing to worry about.
+
+## AI Prompt Playbook (Simple Workflow)
+
+Use these short prompts directly when interacting with AI assistants.
+
+1. **"bootstrap with AGENTS.md protocol"** (first-time setup only)
+2. **"load AI context from latest checkpoint and summarize current state"**
+3. **"show me the pending items"**
+4. **"checkpoint"**
+5. **"update the necessary documentation in summarized form for what we just decided about ..."**
+6. **"create the git branch for this fix: bugfix/..."**
+7. **"commit the work done until now in git and then merge the branch into main, push main to remote, and delete the local branch"**
 
 ## Checkpoint System
 
@@ -91,19 +107,23 @@ Checkpoints follow the format `CP-YYYY-MM-DD-XX` where:
 
 ## CLI Tools Used by AI Assistants
 
-These OS CLI tools can be used from inside VS Code chat or directly on the command line. They are useful to have on the local computer. They do not need admin rights, and you can place them in your `~/bin/` directory.
+These tools can be used from inside VS Code chat or directly on the command line. They do not need admin rights and can be placed in your `~/bin/` directory. All are available for Linux, macOS, and Windows.
 
-These tools are available for Linux, macOS, and Windows. Set them up according to your OS.
+**AI-essential** — AI assistants actively invoke these:
 
-- `git`
-- `gh` (Github CLI)
-- `rg` (ripgrep) — `15.1.0`
-- `jq` — `1.8.1`
-- `fd` — `10.4.2`
-- `bat` — `0.26.1`
-- `delta` — `0.19.2`
-- `fzf` — `0.70.0`
-- `tldr` — `3.5.0`
+- `git` — version control
+- `gh` — GitHub CLI (issues, PRs, releases)
+- `rg` — fast file search (ripgrep)
+- `jq` — JSON querying and transformation
+- `yq` — YAML querying and transformation (useful for IaC and cloud config work)
+
+**Optional / human convenience** — useful at the command line but not typically called by AI:
+
+- `fd` — faster alternative to `find`
+- `bat` — syntax-highlighted `cat`
+- `delta` — better `git diff` viewer
+- `fzf` — interactive fuzzy finder
+- `tldr` — simplified man pages
 
 
 ## Why should the `ai/` directory be ignored in `.gitignore`?
