@@ -67,6 +67,8 @@ Use these short prompts directly when interacting with AI assistants.
 6. **"create the git branch for this fix: bugfix/..."**
 7. **"commit the work done until now in git and then merge the branch into main, push main to remote, and delete the local branch"**
 
+> **Why use AI for git operations?** When you ask the AI to commit, it applies the security policy before touching git — scanning the files for secrets (passwords, tokens, keys) before running `git add`, and stopping if anything suspicious is found. This is enforced automatically on every commit, without you having to remember to do it manually.
+
 ## Checkpoint System
 
 Checkpoints save the state of your AI discussions, progress, todos, open questions, and daily work snapshots into tracking files inside the `ai/` directory. This system helps you resume your work from where you left off whenever you restart in a project directory.
