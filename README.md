@@ -1,18 +1,17 @@
 # Centralized Policy Management System for Simple AI Workflow
 
+Objective: **Instead of *chatting* with AI, start *working* with AI**
+
 ## Setup & prerequisites
 
-- **Estimated setup time:** 5–15 minutes.
-- **Difficulty:** Low — basic familiarity with `git` and running small scripts required.
-- **Required tools:** `git`, a POSIX-like shell (Bash / Git Bash), and PowerShell/Core (`pwsh`) on Windows.
-- **Recommended:** `rg` (ripgrep) for fast searches; `jq` for JSON inspection.
-- **Notes:** On Windows, PowerShell's ExecutionPolicy may block script execution; run with a one-time bypass (`-ExecutionPolicy Bypass`) or set a safe scope if you trust the scripts. Always run scripts with the dry-run flag first to preview changes.
+- **Estimated setup time:** Less than five minutes.
+- **Difficulty:** Very low.
+- **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best UX (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
 
-You can keep a local copy of the agents file as `AGENTS.local.md` (ignored by Git) so the policy path can be set to the repository-local `ai/` directory. See `AGENTS.local.md` and `.gitignore` for details.
-
+## Quick start
 - Clone this repository at a central location in your home directory, and make a note of that location.
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
-- The `AGENTS.md` file (now in your project root directory) points to the central policy file-path used by this workflow. Update that path based on where you cloned this repository. (e.g. `/home/username/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md`). Make sure to follow the OS specific way of writing the path. 
+- The `AGENTS.md` file (now in your project root) points to the central policy path; update the path based on where you cloned this repo. Follow OS‑specific path syntax.
 - When an AI assistant reads `AGENTS.md`, it will access the central policy directly from that path.
 - Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-frontend-web.md`, `ai/ai-policy-backend-api.md`, etc.
 - The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, and context.
@@ -22,7 +21,9 @@ You can keep a local copy of the agents file as `AGENTS.local.md` (ignored by Gi
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
 
 - Repository-level AI ignore: this repo supports a repository-root `.aiignore` (canonical) and `.agentignore` (alias). Patterns in that file are honored by AI assistants and must be applied before indexing or loading other repository files. Place the `.aiignore` in the same directory where the `AGENTS.md` file you want to protect is located. See `.aiignore.example` for recommended patterns.
-- Helper scripts (optional): this repository provides `scripts/sync-agents-md.sh` and `scripts/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `scripts/README.md` for usage.
+-- Helper scripts (optional): this repository provides `scripts/sync-agents-md.sh` and `scripts/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `scripts/README.md` for usage.
+
+- Always run helper scripts with `--dry-run`/`-WhatIf` first; on Windows you may need `-ExecutionPolicy Bypass`.
 
 ## Docs and Slides
 
