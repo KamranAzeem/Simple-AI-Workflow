@@ -1,7 +1,7 @@
 # AI Bootstrap Entry Point
 
 **IMPORTANT**: Update the central policy path below when using this file in your project.
-
+ 
 This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
@@ -13,6 +13,7 @@ Read in this order:
 5. Latest file in [ai/daily-checkpoints/](ai/daily-checkpoints/) - daily recovery snapshot. **(optional; skip if not present)**
 6. [ai/progress.md](ai/progress.md) - chronological execution history. **(optional; skip if not present)**
 7. [ai/context.md](ai/context.md) - repository briefing and decisions. **(optional; skip if not present)**
+8. Repository-root AI ignore file: `.aiignore` (canonical) or `.agentignore` (alias) — locate and apply this ignore file before loading or indexing any repository files for context.
 
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
 
@@ -48,7 +49,6 @@ These rules prevent bootstrap ambiguity across assistants.
 5. GitHub Copilot-related files under `.github/` are not bootstrap authority in this repository.
 6. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/`.
 7. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
-
 
 Conventions:
 

@@ -1,5 +1,32 @@
 # Progress Log
 
+## Checkpoint CP-2026-04-13-02
+- **Timestamp**: 2026-04-13T00:00:00Z
+- **Status**: Active
+- **Action**: Committed and pushed all README and policy improvements to remote
+- **Details**:
+  - All work from CP-2026-04-13-01 committed to origin/master (356f158)
+  - Fixed README git security note: changed "scanning staged files" to "scanning the files before `git add`"
+  - All tracking files and git state now synchronized
+- **Next Action**: Continue with next user instruction
+- **Confidence**: verified
+
+## Checkpoint CP-2026-04-13-01
+- **Timestamp**: 2026-04-13T00:00:00Z
+- **Status**: Superseded
+- **Action**: README improvements, policy updates, repository cleanup
+- **Details**:
+  - Added `Feature Development and Branch-Gating` section to all four policy files
+  - Added `AI Prompt Playbook` section to README with essential prompts and git security note
+  - Renamed `presentation-slides/` to `docs/`
+  - Removed `ai/collaboration-patterns/` directory
+  - Consolidated `gitignore.example` into `gitignore-example.txt`; deleted duplicate
+  - Added `ai/ai-policy-override.example.md` with Windows shell priority example
+  - Improved CLI tools section: split into AI-essential vs optional, removed version numbers, added `yq`
+  - Committed changes to git (f572784); additional README edits pending
+- **Next Action**: Push remaining edits (completed by user in CP-2026-04-13-02)
+- **Confidence**: verified
+
 ## Checkpoint CP-2026-04-01-01
 - **Timestamp**: 2026-04-01T00:00:00Z
 - **Status**: Active
