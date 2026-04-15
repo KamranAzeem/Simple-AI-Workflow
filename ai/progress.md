@@ -1,5 +1,28 @@
 # Progress Log
 
+## Checkpoint CP-2026-04-15-01
+- **Timestamp**: 2026-04-15T00:00:00Z
+- **Status**: Active
+- **Action**: Prepared Repository Steward policy and updated README/scripts; pending commit of meta policy
+- **Details**:
+  - Created `ai/ai-policy-meta.md` and added checkpoint contract to make meta policy self-contained
+  - Added `AGENTS.local.md` and updated `.gitignore`
+  - Updated `README.md` quick-start and AI assistant prerequisites
+  - Updated `scripts/README.md` to reflect new messaging and examples
+  - Committed README, scripts, and `.gitignore` locally on `feature/sync-agents-md` (commit e69d464); `ai/ai-policy-meta.md` is uncommitted
+- **Next Action**: Commit `ai/ai-policy-meta.md` locally and run secrets scan before pushing
+- **Confidence**: draft
+
+## Checkpoint CP-2026-04-13-02
+- **Timestamp**: 2026-04-13T00:00:00Z
+- **Status**: Active
+- **Action**: Committed and pushed all README and policy improvements to remote
+- **Details**:
+  - All work from CP-2026-04-13-01 committed to origin/master (356f158)
+  - Fixed README git security note: changed "scanning staged files" to "scanning the files before `git add`"
+  - All tracking files and git state now synchronized
+- **Next Action**: Continue with next user instruction
+- **Confidence**: verified
 ## Checkpoint CP-2026-04-13-02
 - **Timestamp**: 2026-04-13T00:00:00Z
 - **Status**: Active

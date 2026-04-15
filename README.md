@@ -1,8 +1,17 @@
 # Centralized Policy Management System for Simple AI Workflow
 
+Objective: **Instead of *chatting* with AI, start *working* with AI**
+
+## Setup & prerequisites
+
+- **Estimated setup time:** Less than five minutes.
+- **Difficulty:** Very low.
+- **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best UX (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
+
+## Quick start
 - Clone this repository at a central location in your home directory, and make a note of that location.
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
-- The `AGENTS.md` file (now in your project root directory) points to the central policy file-path used by this workflow. Update that path based on where you cloned this repository. (e.g. `/home/username/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md`). Make sure to follow the OS specific way of writing the path. 
+- The `AGENTS.md` file (now in your project root) points to the central policy path; update the path based on where you cloned this repo. Follow OS‑specific path syntax.
 - When an AI assistant reads `AGENTS.md`, it will access the central policy directly from that path.
 - Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-frontend-web.md`, `ai/ai-policy-backend-api.md`, etc.
 - The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, and context.
@@ -10,6 +19,11 @@
 - Example override template: `ai/ai-policy-override.example.md`.
 - Both `AGENTS.md` and the `ai/` directory should be ignored by Git to keep personal AI state private.
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
+
+- Repository-level AI ignore: this repo supports a repository-root `.aiignore` (canonical) and `.agentignore` (alias). Patterns in that file are honored by AI assistants and must be applied before indexing or loading other repository files. Place the `.aiignore` in the same directory where the `AGENTS.md` file you want to protect is located. See `.aiignore.example` for recommended patterns.
+-- Helper scripts (optional): this repository provides `scripts/sync-agents-md.sh` and `scripts/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `scripts/README.md` for usage.
+
+- Always run helper scripts with `--dry-run`/`-WhatIf` first; on Windows you may need `-ExecutionPolicy Bypass`.
 
 ## Docs and Slides
 
@@ -146,7 +160,7 @@ Location of this file on different OSes is as follows:
 * Windows: `%USERPROFILE%\AppData\Roaming\Code\User\prompts\init.instructions.md`
 
 
-```
+```markdown
 ---
 description: Use when bootstrapping a new repository with /init. Always read AGENTS.md first as the single source of truth.
 applyTo: "**"
