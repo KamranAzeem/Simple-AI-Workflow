@@ -1,0 +1,53 @@
+
+# Never ignore the policy documents, they are most important part of this project.
+!ai/ai-policy-*.md
+
+
+# Ignore all other markdown files in the AI directory:
+ai/daily-checkpoints/
+ai/next-steps.md
+ai/progress.md
+ai/context.md
+ai/notes.md
+
+tmp/
+
+# Basic principal: 
+#   Do not add any local AI files to your project work - no matter which AI assistant you are using.
+
+
+
+# Optional local-only AI instruction files
+# Ignore these only if you do not want them tracked in the repository.
+AGENTS.local.md
+CLAUDE.md
+CLAUDE.local.md
+GEMINI.md
+
+# Optional local AI assistant state
+.claude/
+.cursor/
+.windsurf/
+.roo/
+.qodo/
+
+# Optional AI assistant rule and config files
+.cursorrules
+.cursorignore
+.windsurfrules
+.rooignore
+.aider.conf.yml
+.aider.input.history
+
+# Optional local prompt or transcript artifacts
+prompts-local/
+chat-logs/
+
+# Optional local scratch files for AI-assisted work
+notes-ai/
+
+# GitHub Copilot local artifacts
+.github/copilot/
+.github/copilot-chat/
+.copilot/
+ai/github-copilot/
