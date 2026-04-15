@@ -10,6 +10,16 @@
 - **First Action to Continue**: Continue with next user instruction
 - **Confidence**: verified
 
+## Resume Here
+
+- **Checkpoint ID**: CP-2026-04-15-01
+- **Updated Timestamp**: 2026-04-15T00:00:00Z
+- **Current Status**: Active - local edits staged and README/scripts committed; meta policy created (uncommitted)
+- **Last Completed Action**: Committed README, scripts, and .gitignore on branch `feature/sync-agents-md` (commit e69d464)
+- **Immediate Pending Decision**: Commit `ai/ai-policy-meta.md` (Repository Steward policy) and confirm whether to push branch
+- **First Action to Continue**: `git add ai/ai-policy-meta.md && git commit -m "chore: add ai/ai-policy-meta.md (Repository Steward policy)"`
+- **Confidence**: draft
+
 ## Recent Changes
 1. Consolidated central policy path references in AGENTS.md file:
    - **Eliminated duplication**: Central policy path now appears only once (in step 1)
