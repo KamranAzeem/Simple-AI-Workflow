@@ -11,6 +11,9 @@
 - Both `AGENTS.md` and the `ai/` directory should be ignored by Git to keep personal AI state private.
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
 
+- Repository-level AI ignore: this repo supports a repository-root `.aiignore` (canonical) and `.agentignore` (alias). Patterns in that file are honored by AI assistants and must be applied before indexing or loading other repository files. Place the `.aiignore` in the same directory where the `AGENTS.md` file you want to protect is located. See `.aiignore.example` for recommended patterns.
+- Helper scripts (optional): this repository provides `scripts/sync-agents-md.sh` and `scripts/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `scripts/README.md` for usage.
+
 ## Docs and Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link)
@@ -146,7 +149,7 @@ Location of this file on different OSes is as follows:
 * Windows: `%USERPROFILE%\AppData\Roaming\Code\User\prompts\init.instructions.md`
 
 
-```
+```markdown
 ---
 description: Use when bootstrapping a new repository with /init. Always read AGENTS.md first as the single source of truth.
 applyTo: "**"
