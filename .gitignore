@@ -23,6 +23,7 @@ AGENTS.local.md
 CLAUDE.md
 CLAUDE.local.md
 GEMINI.md
+*.local.md
 
 # Optional local AI assistant state
 .claude/

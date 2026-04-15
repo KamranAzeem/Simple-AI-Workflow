@@ -62,19 +62,56 @@ Write-Host "------------------------------------------------------------"
 foreach ($m in $matches) {
   $target = $m.FullName
   # If source is newer than target, copy (or dry-run)
-  # Compare contents (hash) first; if different -> copy, otherwise report already identical
+  # Detect central policy line in target and extract path
+  $policyPattern = '\[central main policy file\]\(([^)]+)\)'
+  $policyMatch = Select-String -Path $target -Pattern $policyPattern -ErrorAction SilentlyContinue | Select-Object -First 1
+  if ($null -ne $policyMatch) {
+    $policyLine = $policyMatch.Line.Trim()
+    if ($policyLine -match $policyPattern) { $policyPath = $matches[1] } else { $policyPath = "(unknown)" }
+  } else {
+    $policyLine = $null
+    $policyPath = "(none)"
+  }
+
+  # Print structured per-target info for readability
+  Write-Host ""
+  Write-Host "Target: $target"
+  Write-Host "Policy file in use: $policyPath"
+
+  # Overwrite the target with the source content while injecting the target's policy path
   try {
-    $srcHash = Get-FileHash -Path $srcPath -Algorithm SHA256
-    $tgtHash = Get-FileHash -Path $target -Algorithm SHA256
-    if ($srcHash.Hash -eq $tgtHash.Hash) {
-      Write-Host "Already identical: $target"
+    $srcContent = Get-Content -Raw -Path $srcPath
+    if ($null -ne $policyLine) {
+      # Replace the parentheses content in the central policy line with the target's path
+      $pattern = '\[central main policy file\]\([^)]+\)'
+      $replacement = "[central main policy file]($policyPath)"
+      if ([regex]::IsMatch($srcContent, $pattern)) {
+        $newContent = [regex]::Replace($srcContent, $pattern, $replacement, 1)
+      } else {
+        # Prepend a canonical policy line followed by the source content
+        $canonical = "[central main policy file]($policyPath) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.`n"
+        $newContent = $canonical + $srcContent
+      }
+
+      if ($WhatIf) {
+        Write-Host ""
+        Write-Host "DRY-RUN: would update $target (while retaining target policy path)"
+      } else {
+        Write-Host ""
+        Write-Host "Updating $target (while retaining target policy path)"
+        try {
+          Set-Content -Path $target -Value $newContent -Force -Encoding UTF8
+        } catch {
+          Write-Warning "Failed to write to $target : $_"
+        }
+      }
     } else {
       if ($WhatIf) {
         Write-Host ""
-        Write-Host "DRY-RUN: would copy (source)/AGENTS.md -> $target"
+        Write-Host "DRY-RUN: would replace $target (no central policy line found)"
       } else {
         Write-Host ""
-        Write-Host "Copying (source)/AGENTS.md -> $target"
+        Write-Host "Replacing $target (no central policy line found)"
         try {
           Copy-Item -Path $srcPath -Destination $target -Force -ErrorAction Stop
         } catch {
@@ -83,11 +120,10 @@ foreach ($m in $matches) {
       }
     }
   } catch {
-    # If hashing fails, fall back to a conservative skip (or dry-run copy)
     if ($WhatIf) {
       Write-Host "DRY-RUN: would copy (source)/AGENTS.md -> $target"
     } else {
-      Write-Host "Skipping (unable to compare): $target"
+      Write-Host "Skipping (unable to process): $target"
     }
   }
 }

@@ -1,5 +1,15 @@
 # Centralized Policy Management System for Simple AI Workflow
 
+## Setup & prerequisites
+
+- **Estimated setup time:** 5–15 minutes.
+- **Difficulty:** Low — basic familiarity with `git` and running small scripts required.
+- **Required tools:** `git`, a POSIX-like shell (Bash / Git Bash), and PowerShell/Core (`pwsh`) on Windows.
+- **Recommended:** `rg` (ripgrep) for fast searches; `jq` for JSON inspection.
+- **Notes:** On Windows, PowerShell's ExecutionPolicy may block script execution; run with a one-time bypass (`-ExecutionPolicy Bypass`) or set a safe scope if you trust the scripts. Always run scripts with the dry-run flag first to preview changes.
+
+You can keep a local copy of the agents file as `AGENTS.local.md` (ignored by Git) so the policy path can be set to the repository-local `ai/` directory. See `AGENTS.local.md` and `.gitignore` for details.
+
 - Clone this repository at a central location in your home directory, and make a note of that location.
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
 - The `AGENTS.md` file (now in your project root directory) points to the central policy file-path used by this workflow. Update that path based on where you cloned this repository. (e.g. `/home/username/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md`). Make sure to follow the OS specific way of writing the path. 
