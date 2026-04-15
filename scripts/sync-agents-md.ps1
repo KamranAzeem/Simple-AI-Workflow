@@ -46,10 +46,10 @@ Write-Host "Searching under: $targetAbs"
 $srcInfo = Get-Item $srcPath
 
 # Collect matches strictly under the canonical target path
-$matches = Get-ChildItem -Path $targetAbs -Recurse -Filter AGENTS.md -File -ErrorAction SilentlyContinue |
+$foundFiles = Get-ChildItem -Path $targetAbs -Recurse -Filter AGENTS.md -File -ErrorAction SilentlyContinue |
   Where-Object { $_.FullName -ne $srcPath -and $_.FullName.StartsWith($targetAbs, [System.StringComparison]::OrdinalIgnoreCase) }
 
-$matchCount = ($matches | Measure-Object).Count
+$matchCount = ($foundFiles | Measure-Object).Count
 if ($matchCount -eq 0) {
   Write-Host "No AGENTS.md files found under $targetAbs"
   exit 0
@@ -59,7 +59,7 @@ Write-Host ""
 Write-Host "Found $matchCount AGENTS.md file(s) under $targetAbs"
 Write-Host "------------------------------------------------------------"
 
-foreach ($m in $matches) {
+foreach ($m in $foundFiles) {
   $target = $m.FullName
   # If source is newer than target, copy (or dry-run)
   # Detect central policy line in target and extract path
@@ -67,18 +67,22 @@ foreach ($m in $matches) {
   $policyMatch = Select-String -Path $target -Pattern $policyPattern -ErrorAction SilentlyContinue | Select-Object -First 1
   if ($null -ne $policyMatch) {
     $policyLine = $policyMatch.Line.Trim()
-    if ($policyLine -match $policyPattern) { $policyPath = $matches[1] } else { $policyPath = "(unknown)" }
+    # Extract the captured policy path from the regex match object
+    if ($policyMatch.Matches.Count -gt 0) {
+      $policyPath = $policyMatch.Matches[0].Groups[1].Value
+    } else {
+      $policyPath = "(unknown)"
+    }
   } else {
     $policyLine = $null
     $policyPath = "(none)"
   }
 
-  # Print structured per-target info for readability
+  # Print structured per-target info for readability (match bash script wording)
   Write-Host ""
-  Write-Host "Target: $target"
+  Write-Host "Target AGENTS.md file: $target"
+  Write-Host ""
   Write-Host "Policy file in use: $policyPath"
-
-  # Overwrite the target with the source content while injecting the target's policy path
   try {
     $srcContent = Get-Content -Raw -Path $srcPath
     if ($null -ne $policyLine) {
@@ -126,4 +130,9 @@ foreach ($m in $matches) {
       Write-Host "Skipping (unable to process): $target"
     }
   }
+  Write-Host ""
+  Write-Host "----------------------------------------------------------------------------"
 }
+
+Write-Host ""
+Write-Host "Done. Processed $matchCount AGENTS.md file(s) under $targetAbs"
