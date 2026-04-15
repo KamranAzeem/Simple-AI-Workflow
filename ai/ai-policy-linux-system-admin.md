@@ -188,6 +188,7 @@ Daily checkpoint checklist template:
 - Use a diff-first workflow for proposed edits.
 - Ask for explicit user approval before side-effecting actions.
 - Ask before creating, modifying, or deleting files.
+- When creating, switching, or working on a git branch, do NOT auto-stage, auto-add, or auto-commit any modified or untracked files. The AI assistant must wait for an explicit human instruction to perform `git add`, `git commit`, or other repository write actions. The assistant may propose a draft commit, a list of files to include, and a suggested commit message, but must not perform the commit without the user's clear consent.
 - Ask before any system administration action (user management, service configuration, package installation, etc.).
 - Ask before Git write actions (commit, branch, merge, push).
 - Before running `git add` or `git commit`, or when the user asks to commit work, check the files involved for secrets. If any secrets are found or strongly suspected, stop immediately and alert the user clearly.

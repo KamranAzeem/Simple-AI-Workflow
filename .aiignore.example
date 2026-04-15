@@ -1,0 +1,52 @@
+# .aiignore.example
+# Example patterns for files/directories AI assistants MUST ignore.
+# Syntax: gitignore-style patterns (glob, !negation, / anchors).
+
+# Private secrets and credentials
+.env
+.env.*
+secret-keys.json
+credentials.json
+secrets/
+
+# Cloud and provider keys
+*.pem
+*.key
+*.pfx
+service-account.json
+
+# Local AI state, temporary, and caches
+ai/
+ai/*
+tmp/
+tmp/*
+*.log
+*.sqlite
+*.db
+
+# Build artifacts and dependencies
+node_modules/
+dist/
+build/
+coverage/
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Archives and large artifacts
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+
+# How to whitelist: prefix with '!' (use with caution and explicit consent)
+# Example: to allow a specific file that would otherwise be ignored
+# !ai/allowlisted-file.txt
+
+# Notes:
+# - Place a single canonical .aiignore at the repository root.
+# - Assistants should apply this file before reading any other repo files.
+# - Only explicit, auditable user consent may override these patterns.

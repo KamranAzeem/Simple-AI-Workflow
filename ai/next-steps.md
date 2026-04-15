@@ -2,10 +2,10 @@
 
 ## Resume Here
 
-- **Checkpoint ID**: CP-2026-04-06-05
-- **Updated Timestamp**: 2026-04-06T17:21:26Z
-- **Current Status**: Active - AGENTS.md central policy path references consolidated
-- **Last Completed Action**: Consolidated central policy path references in AGENTS.md file to eliminate duplication
+- **Checkpoint ID**: CP-2026-04-13-02
+- **Updated Timestamp**: 2026-04-13T00:00:00Z
+- **Current Status**: Active - all README and policy improvements committed and pushed to remote
+- **Last Completed Action**: All README corrections committed and pushed to origin/master (356f158)
 - **Immediate Pending Decision**: None
 - **First Action to Continue**: Continue with next user instruction
 - **Confidence**: verified
