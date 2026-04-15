@@ -8,7 +8,10 @@ ai/daily-checkpoints/
 ai/next-steps.md
 ai/progress.md
 ai/context.md
-ai/notes.md
+ai/notes/**
+ai/tasks/**
+ai/agents/**
+ai/assistant-logs/**
 
 tmp/
 
