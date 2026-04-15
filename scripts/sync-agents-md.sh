@@ -143,36 +143,66 @@ fi
 # Print summary early so user sees what will be affected
 echo
 echo "Found $match_count AGENTS.md file(s) under $TARGET_ABS"
-echo "------------------------------------------------------------"
+echo
+echo "----------------------------------------------------------------------------"
+echo
 
 # Process matches
 for f_abs in "${matches[@]}"; do
   # Compare contents first; if different -> copy, otherwise report already identical
-  if command -v cmp >/dev/null 2>&1; then
-    if cmp -s "$SRC_ABS" "$f_abs"; then
-      echo "Already identical: $f_abs"
+  # Check if target contains the central policy line and extract the policy path
+  policy_line=$(grep -m1 -E '\[central main policy file\]\([^)]*\)' "$f_abs" || true)
+  if [ -n "$policy_line" ]; then
+    policy_path=$(printf '%s' "$policy_line" | sed -n 's/.*\[central main policy file\](\([^)]*\)).*/\1/p')
+  else
+    policy_path="(none)"
+  fi
+
+  # Print structured per-target info for readability
+  echo
+  echo "Target AGENTS.md file: $f_abs"
+  echo
+  echo "Policy file in use: $policy_path"
+
+  # Always overwrite the target with the source content, but if the target defines a
+  # central policy path, inject that path into the copied content. This avoids blind
+  # overwrites of repository-specific policy pointers.
+  src_policy_line=$(grep -m1 -E '\[central main policy file\]\([^)]*\)' "$SRC_ABS" || true)
+
+  tmp=$(mktemp)
+  if [ "$policy_path" != "(none)" ]; then
+    if [ -n "$src_policy_line" ]; then
+      esc_policy_path=$(printf '%s' "$policy_path" | sed 's/[\/&]/\\&/g')
+      sed -E "s|(\[central main policy file\]\()([^)]*)(\))|\1$esc_policy_path\3|" "$SRC_ABS" > "$tmp"
     else
-      if [ $DRY_RUN -eq 1 ]; then
-        echo
-        echo "DRY-RUN: would copy (source)/AGENTS.md -> $f_abs"
-      else
-        echo
-        echo "Copying (source)/AGENTS.md -> $f_abs"
-        cp -f "$SRC_ABS" "$f_abs"
-      fi
+      printf '%s
+'"[central main policy file]($policy_path) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
+" > "$tmp"
+      cat "$SRC_ABS" >> "$tmp"
+    fi
+    if [ $DRY_RUN -eq 1 ]; then
+      echo ""
+      echo "DRY-RUN: would update $f_abs (while retaining target policy path)"
+      rm -f "$tmp"
+    else
+      echo
+      echo "Updating $f_abs (while retaining target policy path)"
+      mv -f "$tmp" "$f_abs"
     fi
   else
-    if diff -q "$SRC_ABS" "$f_abs" >/dev/null 2>&1; then
-      echo "Already identical: $f_abs"
+    if [ $DRY_RUN -eq 1 ]; then
+      echo ""
+      echo "DRY-RUN: would replace $f_abs (no central policy line found)"
     else
-      if [ $DRY_RUN -eq 1 ]; then
-        echo
-        echo "DRY-RUN: would copy (source)/AGENTS.md -> $f_abs"
-      else
-        echo
-        echo "Copying (source)/AGENTS.md -> $f_abs"
-        cp -f "$SRC_ABS" "$f_abs"
-      fi
+      echo
+      echo "Replacing $f_abs (no central policy line found)"
+      cp -f "$SRC_ABS" "$f_abs"
     fi
   fi
+  echo
+  echo "----------------------------------------------------------------------------"
 done
+
+echo
+echo "Done. Processed $match_count AGENTS.md file(s) under $TARGET_ABS"
+echo
