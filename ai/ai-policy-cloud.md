@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
 Updated-by: Gemini
-Last modified: 2026-04-16T13:45:00Z
-Intent: Formalize Agent-to-Agent (A2A) coordination and knowledge sharing.
+Last modified: 2026-04-16T14:40:00Z
+Intent: Upgrade session logging to granular AI Flight Recorder format.
 -->
 ---
 # 🚫 DO NOT MODIFY THIS FILE
@@ -235,16 +235,22 @@ For repositories that define `ai/` as the bootstrap state root:
 <!--
 Created-by: Gemini
 Updated-by: Gemini
-Last modified: 2026-04-16T13:45:00Z
-Intent: Formalize Agent-to-Agent (A2A) coordination and knowledge sharing.
+Last modified: 2026-04-16T14:40:00Z
+Intent: Upgrade session logging to granular AI Flight Recorder format.
 -->
 ---
 ```
 
-### Session Logging
-**Mandate (CLI Assistants only):** Every action-oriented CLI assistant must maintain a record of the current session within the `ai/sessions/` directory, separated by agent name.
+### Session Logging (AI Flight Recorder)
+**Mandate (CLI Assistants only):** Every action-oriented CLI assistant must maintain a granular "Flight Recorder" log of the current session.
+
 - **Path**: `ai/sessions/<agent-name>/`
 - **Pattern**: `<agent-name>-live-session-<YYYY-MM-DD>-<sequence>.md`
+- **Format Requirements**:
+    - **Transaction-Based**: Log every user instruction, major tool execution, and material result.
+    - **Granularity**: Include specific commands run and brief summaries of their output.
+    - **Intent-Driven**: Clearly state the objective of each turn.
+    - **Traceability**: Use the standardized metadata header at the top of the file.
 
 ## Operational Guardrails
 

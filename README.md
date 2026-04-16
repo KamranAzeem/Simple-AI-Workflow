@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T15:15:00Z
+Intent: Comprehensive feature update based on Git history analysis.
+-->
+---
 # Centralized Policy Management System for Simple AI Workflow
 
 Objective: **Instead of *chatting* with AI, start *working* with AI**
@@ -6,7 +13,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 - **Estimated setup time:** Less than five minutes.
 - **Difficulty:** Very low.
-- **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best UX (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
+- **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best user experience (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
 - **Installation method:** No install scripts, no sudo, no admin, no pip, npm, no this, no that! Just *one* `git clone`, and *one* `copy` command.
 
 
@@ -36,6 +43,43 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 |                                      |                    |    └─ main.go       } -- code         |
 +--------------------------------------+                    +---------------------------------------+
 ``` 
+
+
+
+## Key Features
+
+This solution transforms AI from a chat-bot into a structured team member with clear boundaries and rigorous audit trails.
+
+### 1. Centralized Policy Authority
+- **Multi-Domain Support**: Specialized policies for Cloud/Infra, Frontend, Backend, and Linux System Administration.
+- **Hierarchical Overrides**: Apply global rules via central policy while allowing repository-specific exceptions via `ai/ai-policy-override.md`.
+- **Token Efficiency**: Explicit policies for efficient token usage and anti-polling (no assistant watch-loops).
+
+### 2. Standardized Bootstrap Protocol
+- **AGENTS.md Protocol**: A consistent entry point for any AI agent to understand its role, authorities, and reading order.
+- **Zero-Install Setup**: No scripts required; just one `git clone` and one `copy` command to initialize any project.
+- **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across local project directories.
+
+### 3. Autonomous State & Context Management
+- **Checkpoint System**: Persistent tracking of progress, todos, and daily work snapshots in `ai/` to resume work seamlessly.
+- **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
+
+### 4. Standardized Traceability (Metadata Headers)
+- **Audit Trails**: Mandatory file-identification headers (Created-by, Updated-by, Intent) using native comment syntax for every AI-modified file.
+- **Transparency**: Instantly identify the author and purpose of any AI-generated artifact.
+
+### 5. AI Flight Recorder (CLI-Only)
+- **Granular Session Logs**: Transaction-based persistence for CLI agents, capturing every terminal command, tool execution, and result.
+- **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
+
+### 6. Multi-Agent Coordination (Shared Intelligence)
+- **A2A Knowledge Sharing**: Dedicated `ai/shared/` directory for agent-to-agent handoffs, research notes, and coordination locks.
+- **Collaborative Intelligence**: Knowledge-base for technical findings to avoid redundant research across different agents (Gemini, Copilot, etc.).
+
+### 7. Security & Governance
+- **Proactive Secret Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
+- **Strict Boundary Control**: Enforcement of `.aiignore` / `.agentignore` to prevent AI leakage or unauthorized exploration.
+- **Version Control Guardrails**: Policies for branch-gating, issue-labeling, and safe Git operations.
 
 ## Detailed instructions
 

@@ -18,7 +18,7 @@ Read in this order:
 5. Latest file in [ai/daily-checkpoints/](ai/daily-checkpoints/) - daily recovery snapshot. **(optional; skip if not present)**
 6. [ai/progress.md](ai/progress.md) - chronological execution history. **(optional; skip if not present)**
 7. [ai/context.md](ai/context.md) - repository briefing and decisions. **(optional; skip if not present)**
-8. Repository-root AI ignore file: `.aiignore` (canonical) or `.agentignore` (alias) — locate and apply this ignore file before loading or indexing any repository files for context.
+8. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias) — Locate and strictly apply this file as a filtering mechanism. You MUST exclude all directories and files matched by patterns in this file from your awareness, exploration, indexing, and context-building processes.
 
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
 
