@@ -23,7 +23,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 ```text
 +--------------------------------------+                    +---------------------------------------+
-| ( The central location view )        |                    | ( View inside your project directory )|
+| ( The central location view )        |                    | ( Your project directory view)        |
 | .                                    |                    | .                                     |
 | ├─ AGENTS.md                         |                    | ├─ AGENTS.md                          |
 | ├─ ai/                               |                    | ├─ ai/                                |
@@ -31,9 +31,9 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 | │  ├─ ai-policy-cloud.md             | <----------------- | │  ├─ context.md                      |
 | │  ├─ ai-policy-frontend-web.md      |                    | │  ├─ next-steps.md                   |
 | │  └─ ai-policy-linux-system-admin.md|                    | │  └─ progress.md                     |
-| └─ README.md                         |                    | ├─ README.md                          |
-|                                      |                    | └─ src/                               |
-|                                      |                    |    └─ main.go                         |
+| └─ README.md                         |                    | ├─ README.md        } -- your         |
+|                                      |                    | └─ src/             } -- application  |
+|                                      |                    |    └─ main.go       } -- code         |
 +--------------------------------------+                    +---------------------------------------+
 ``` 
 

@@ -51,6 +51,22 @@ Before preparing or executing changes that modify files outside `ai/`:
 - No editing of `ai/` policy files marked read-only by repository maintainers without prior approval.
 - Do not persist secrets or sensitive data to tracked files.
 
+## Monitoring and Long-Running Operations Policy
+
+- **No assistant watch loops**: Do not run monitoring/watch/polling loops directly from the AI assistant.
+- **Script-first monitoring**: If monitoring is required, generate a script for the user to run locally.
+- **Optional logging**: The script may write output to a temporary log file under `tmp/` and should print the log path.
+- **User-run execution model**: The user runs the script and shares success/failure and relevant output/logs with the assistant.
+- **No autonomous loop retries**: Do not keep retrying loop-based checks autonomously in the session.
+- **Bounded checks only**: Any inline check must be one-shot or bounded with a fixed small attempt count and explicit timeout.
+
+## Constraint Acknowledgement and Execution Gate
+
+- **Acknowledge-before-execute**: Before any side-effecting action or multi-step execution, restate the applicable constraints in 3-5 concise bullets.
+- **Proceed gate**: After acknowledgement, wait for explicit user confirmation (for example, `proceed`) before execution.
+- **Violation handling**: If constraints are missed or violated, stop immediately, report the violation, and request user direction.
+- **Model variability rule**: These constraints apply to all AI models equally.
+
 ## Approval & Escalation
 
 - Human approval is required before:
