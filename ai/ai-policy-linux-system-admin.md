@@ -201,6 +201,22 @@ Daily checkpoint checklist template:
 - **Issue priority labels**: Use `priority: p1 - must have`, `priority: p2 - should have`, `priority: p3 - could have`, `priority: p4 - won't have`.
 - **Temporary files**: For user-facing temporary files, use `tmp/` in project root (ensure it's git-ignored). For AI internal work, use system temp (`/tmp` on Linux) or `ai/tmp/`.
 
+### Monitoring and Long-Running Operations Policy
+
+- **No assistant watch loops**: Do not run monitoring/watch/polling loops directly from the AI assistant.
+- **Script-first monitoring**: If monitoring is required, generate a script for the user to run locally.
+- **Optional logging**: The script may write output to a temporary log file under `tmp/` and should print the log path.
+- **User-run execution model**: The user runs the script and shares success/failure and relevant output/logs with the assistant.
+- **No autonomous loop retries**: Do not keep retrying loop-based checks autonomously in the session.
+- **Bounded checks only**: Any inline check must be one-shot or bounded with a fixed small attempt count and explicit timeout.
+
+### Constraint Acknowledgement and Execution Gate
+
+- **Acknowledge-before-execute**: Before any side-effecting action or multi-step execution, restate the applicable constraints in 3-5 concise bullets.
+- **Proceed gate**: After acknowledgement, wait for explicit user confirmation (for example, `proceed`) before execution.
+- **Violation handling**: If constraints are missed or violated, stop immediately, report the violation, and request user direction.
+- **Model variability rule**: These constraints apply to all AI models equally.
+
 ## Security Policy
 
 ### Security Responsibilities
@@ -318,7 +334,7 @@ Before any automated update to AI tracking files:
 ### Communication Efficiency for Token Conservation
 - **Prioritize token efficiency**: Structure responses to minimize token usage while maintaining clarity and completeness
 - **Use direct communication**: Avoid unnecessary conversational flourishes and focus on actionable information
-- **Organize for scannability**: Use clear headings, bullet points, and code blocks to make information easily digestible
+- **Organize for readability and quick scanning**: Use clear headings, bullet points, and code blocks to make information easily digestible
 - **Reference established context**: Avoid repeating previously established information; reference it instead
 - **Balance detail level**: Provide sufficient detail for understanding but avoid excessive explanation of basic concepts
 
