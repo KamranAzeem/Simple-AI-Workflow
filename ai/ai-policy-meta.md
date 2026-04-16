@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T19:55:00Z
+Intent: Update meta policy with A2A coordination rules.
+-->
+---
 # AI Policy — Repository / Meta Workflow
 
 This policy governs AI assistant behavior for the Simple-AI-Workflow repository itself: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
@@ -27,6 +34,30 @@ Hard limits
 - Must not push, open, or merge pull requests without explicit human instruction.
 - Must not disclose secrets or persist them into tracked files or remote locations.
 - Must not run remote destructive actions (cloud infra, DB writes, production deployments) from this repo.
+
+## Standardized Traceability & Metadata
+
+### File Metadata Headers
+**Mandate:** All AI assistants must include a standardized metadata header in every file they create or modify (excluding internal `ai/` tracking files). This header must be at the very top of the file and use the appropriate comment syntax for the file type.
+
+**Header Fields:**
+- `Created-by`: Name of the agent that first generated the file.
+- `Updated-by`: Name of the agent performing the current edit.
+- `Last modified`: ISO-8601 Timestamp.
+- `Intent`: A brief (one-line) description of why the file was created or changed.
+
+**Comment Syntax Mapping:**
+- **Markdown/HTML**: `<!-- ... -->`
+- **Shell/Python/YAML/Config**: `# ...`
+- **JS/TS/C-Style/JSON**: `/* ... */`
+
+## Operational Guardrails
+
+- Use a diff-first workflow for proposed edits.
+- Ask for explicit user approval before side-effecting actions.
+- Ask before creating, modifying, or deleting files.
+- When creating, switching, or working on a git branch, do NOT auto-stage, auto-add, or auto-commit any modified or untracked files. The AI assistant must wait for an explicit human instruction to perform `git add`, `git commit`, or other repository write actions. The assistant may propose a draft commit, a list of files to include, and a suggested commit message, but must not perform the commit without the user's clear consent.
+- Ask before package installation or dependency changes.
 
 ## Allowed Actions (read-first, then act)
 
@@ -122,32 +153,10 @@ Mandatory checkpoint procedure
 5. Re-read and verify checkpoint ID consistency across the three files.
 6. Return a checkpoint receipt containing the checkpoint ID, the files updated, and a one-line resume action.
 
-Required resume block schema for `ai/next-steps.md`
-- checkpoint ID
-- updated timestamp (UTC)
-- current status
-- last completed action
-- immediate pending decision (or `None`)
-- first action to continue
-- confidence (`draft` or `verified`)
-
-Startup consistency and recovery
-- On startup, read `ai/next-steps.md`, the latest dated file in `ai/daily-checkpoints/`, and `ai/progress.md` and compare checkpoint IDs.
-- If IDs differ, report the inconsistency and recover from the latest daily checkpoint.
-- To repair stale tracking files, issue a new checkpoint from the latest verified state.
-
-End-of-day quality gate
-- Before committing any change that concludes a day's work, verify:
-  - Checkpoint ID matches across all required tracking files.
-  - Today's daily checkpoint includes verified outcomes and the next action.
-  - `ai/progress.md` contains a same-day matching checkpoint entry.
-
-Optional automation rules
-- AI may enter `fast-state` to update the required tracking files automatically, but must:
-  1. Create a timestamped backup of the files before modification.
-  2. Verify checkpoint ID consistency after modification.
-  3. Notify the user and provide restore instructions.
-
+## Agent-to-Agent (A2A) Coordination
+1. **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
+2. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+3. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
 
 ## Communication & Writing
 
