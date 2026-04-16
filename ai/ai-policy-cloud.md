@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T13:45:00Z
+Intent: Formalize Agent-to-Agent (A2A) coordination and knowledge sharing.
+-->
+---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file, including during `/init`, repository scanning, or automatic instruction generation.
 All edits to this file must be manually approved by the user.
@@ -92,6 +99,22 @@ Use this pattern across all repositories for consistency.
 - Chronological execution log: [ai/progress.md](progress.md)
 - Daily checkpoint snapshots: [ai/daily-checkpoints/](daily-checkpoints/)
 
+
+## Agent-to-Agent (A2A) Coordination & Knowledge Sharing
+
+To enable seamless collaboration between different AI assistants, a shared knowledge layer is established.
+
+### Shared Directory Structure
+- **Path**: `ai/shared/`
+- **handoffs/**: Brief notes left by an agent at the end of a session to guide the next agent.
+- **knowledge-base/**: Persistent technical findings, research, and error diagnoses shared across all agents.
+- **coordination.md**: Real-time status tracker and development lock file to prevent agent collisions.
+
+### Rules of Engagement
+1. **Metadata Mandatory**: Every file in the shared directory must include the standardized metadata header.
+2. **Atomic Knowledge**: Use one file per specific technical topic or handoff event.
+3. **Read First**: Upon startup, assistants must check `ai/shared/coordination.md` and relevant handoffs before beginning work.
+4. **Non-Volatile Findings**: High-cost research (e.g., complex debugging) must be documented in `knowledge-base/` to save future tokens.
 ## Operational Restart and Checkpoint Contract
 
 ### Source-of-Truth Order
@@ -189,6 +212,39 @@ For repositories that define `ai/` as the bootstrap state root:
 3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subdirectory), not under `.github/`.
 4. Universal policy changes must be made in this central policy source first; local files are fallback/override only.
 5. If bootstrap authority is ambiguous, stop and ask before writing any policy/customization file.
+
+
+## Standardized Traceability & Metadata
+
+### File Metadata Headers
+**Mandate:** All AI assistants must include a standardized metadata header in every file they create or modify (excluding internal `ai/` tracking files). This header must be at the very top of the file and use the appropriate comment syntax for the file type.
+
+**Header Fields:**
+- `Created-by`: Name of the agent that first generated the file.
+- `Updated-by`: Name of the agent performing the current edit.
+- `Last modified`: ISO-8601 Timestamp.
+- `Intent`: A brief (one-line) description of why the file was created or changed.
+
+**Comment Syntax Mapping:**
+- **Markdown/HTML**: `<!-- ... -->`
+- **Shell/Python/YAML/Config**: `# ...`
+- **JS/TS/C-Style/JSON**: `/* ... */`
+
+**Example (Markdown):**
+```markdown
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T13:45:00Z
+Intent: Formalize Agent-to-Agent (A2A) coordination and knowledge sharing.
+-->
+---
+```
+
+### Session Logging
+**Mandate (CLI Assistants only):** Every action-oriented CLI assistant must maintain a record of the current session within the `ai/sessions/` directory, separated by agent name.
+- **Path**: `ai/sessions/<agent-name>/`
+- **Pattern**: `<agent-name>-live-session-<YYYY-MM-DD>-<sequence>.md`
 
 ## Operational Guardrails
 
