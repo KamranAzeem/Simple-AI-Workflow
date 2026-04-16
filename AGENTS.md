@@ -1,7 +1,12 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T14:10:00Z
+Intent: Merge central AGENTS.md updates with local traceability and coordination enhancements.
+-->
+---
 # AI Bootstrap Entry Point
 
-**IMPORTANT**: Update the central policy path below when using this file in your project.
- 
 This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
@@ -25,18 +30,36 @@ When bootstrapping in a new repository where no AI files exist:
 
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
-   - Create required subdirectories: `ai/daily-checkpoints/`
+   - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
+   - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `gemini/`)
 
 2. **Initialize state tracking files**:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
    - Create `ai/progress.md` with initial entry
+   - **CLI Assistants only**: Initialize the first session log in `ai/sessions/<agent-name>/` (Exempt: Chat-centric assistants like VSCode Copilot Chat).
 
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
    - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
 
 4. **Acknowledge readiness** and await first user instruction.
+
+## File Metadata Requirements
+
+All files created or modified by an AI assistant (excluding internal `ai/` tracking files) must include a standardized metadata header.
+
+**Header Format:**
+```markdown
+<comment-syntax>
+Created-by: <Name of Agent>
+Updated-by: <Name of Agent>
+Last modified: <ISO-8601-Timestamp>
+Intent: <Brief description of the change>
+</comment-syntax>
+---
+```
+Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `#` for Shell/Python).
 
 ## Policy Authority Clarification
 
@@ -55,3 +78,4 @@ Conventions:
 - Keep this file minimal. Do not store project context or policy details here.
 - Keep AI workflow/context artifacts under the [ai/](ai/) directory.
 - Keep [ai/](ai/) git-ignored so personal AI state is not committed to git.
+
