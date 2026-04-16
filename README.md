@@ -7,8 +7,38 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 - **Estimated setup time:** Less than five minutes.
 - **Difficulty:** Very low.
 - **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best UX (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
+- **Installation method:** No install scripts, no sudo, no admin, no pip, npm, no this, no that! Just *one* `git clone`, and *one* `copy` command.
+
 
 ## Quick start
+
+* Clone this repository at a central location in your home directory.
+* Copy AGENTS.md into the root of your project directory.
+* Update the central policy path in AGENTS.md in your project directory.
+* Start VScode; in the AI chat window:
+  * “/init using AGENTS.md”,
+  * or,  “bootstrap using AGENTS.md protocol” 
+
+## How it looks like
+
+```text
++--------------------------------------+                    +---------------------------------------+
+| ( The central location view )        |                    | ( View inside your project directory )|
+| .                                    |                    | .                                     |
+| ├─ AGENTS.md                         |                    | ├─ AGENTS.md                          |
+| ├─ ai/                               |                    | ├─ ai/                                |
+| │  ├─ ai-policy-backend-api.md       |                    | │  ├─ ai-policy-override.md           |
+| │  ├─ ai-policy-cloud.md             | <----------------- | │  ├─ context.md                      |
+| │  ├─ ai-policy-frontend-web.md      |                    | │  ├─ next-steps.md                   |
+| │  └─ ai-policy-linux-system-admin.md|                    | │  └─ progress.md                     |
+| └─ README.md                         |                    | ├─ README.md                          |
+|                                      |                    | └─ src/                               |
+|                                      |                    |    └─ main.go                         |
++--------------------------------------+                    +---------------------------------------+
+``` 
+
+## Detailed instructions
+
 - Clone this repository at a central location in your home directory, and make a note of that location.
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
 - The `AGENTS.md` file (now in your project root) points to the central policy path; update the path based on where you cloned this repo. Follow OS‑specific path syntax.
@@ -99,6 +129,7 @@ These commands generate a new checkpoint ID and update all tracking files, ensur
 While the checkpoint system primarily helps AI assistants maintain progress tracking, the simple markdown files are also easy for human users to read and understand what's happening in the project.
 
 ### Checkpoint Features:
+
 - **Automatic Creation**: Checkpoints are created during significant workflow activities or when AI state tracking files change
 - **Consistency Verification**: Each checkpoint verifies that all AI tracking files are synchronized
 - **Daily Snapshots**: Daily checkpoint files are stored in `ai/daily-checkpoints/YYYY-MM-DD.md`
@@ -112,11 +143,13 @@ While the checkpoint system primarily helps AI assistants maintain progress trac
 - Human-readable documentation of project activities
 
 ### Checkpoint Format:
+
 Checkpoints follow the format `CP-YYYY-MM-DD-XX` where:
 - `YYYY-MM-DD`: Date of the checkpoint
 - `XX`: Sequential number for multiple checkpoints on the same day
 
 ### Usage:
+
 - AI assistants automatically create checkpoints during significant workflow activities
 - Users can request checkpoints at any time for state preservation
 - Checkpoints ensure AI assistants can resume work from a known consistent state
