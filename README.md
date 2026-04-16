@@ -29,19 +29,19 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 ## How it looks like
 
 ```text
-+--------------------------------------+                    +---------------------------------------+
-| ( The central location view )        |                    | ( Your project directory view)        |
-| .                                    |                    | .                                     |
-| ├─ AGENTS.md                         |                    | ├─ AGENTS.md                          |
-| ├─ ai/                               |                    | ├─ ai/                                |
-| │  ├─ ai-policy-backend-api.md       |                    | │  ├─ ai-policy-override.md           |
-| │  ├─ ai-policy-cloud.md             | <----------------- | │  ├─ context.md                      |
-| │  ├─ ai-policy-frontend-web.md      |                    | │  ├─ next-steps.md                   |
-| │  └─ ai-policy-linux-system-admin.md|                    | │  └─ progress.md                     |
-| └─ README.md                         |                    | ├─ README.md        } -- your         |
-|                                      |                    | └─ src/             } -- application  |
-|                                      |                    |    └─ main.go       } -- code         |
-+--------------------------------------+                    +---------------------------------------+
++--------------------------------------+                +---------------------------------------+
+| ( The central policy location view ) |                | ( Your project directory view)        |
+| .                                    |                | .                                     |
+| ├─ AGENTS.md                         |                | ├─ AGENTS.md                          |
+| ├─ ai/                               |                | ├─ ai/                                |
+| │  ├─ ai-policy-backend-api.md       |                | │  ├─ ai-policy-override.md           |
+| │  ├─ ai-policy-cloud.md             | <------------- | │  ├─ context.md                      |
+| │  ├─ ai-policy-frontend-web.md      |                | │  ├─ next-steps.md                   |
+| │  └─ ai-policy-linux-system-admin.md|                | │  └─ progress.md                     |
+| └─ README.md                         |                | ├─ README.md        } -- your         |
+|                                      |                | └─ src/             } -- application  |
+|                                      |                |    └─ main.go       } -- code         |
++--------------------------------------+                +---------------------------------------+
 ``` 
 
 
