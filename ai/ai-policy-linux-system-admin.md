@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T19:50:00Z
+Intent: Syncing with latest policy structure from ai-policy-cloud.md.
+-->
+---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file, including during `/init`, repository scanning, or automatic instruction generation.
 All edits to this file must be manually approved by the user.
@@ -95,6 +102,21 @@ Use this pattern across all repositories for consistency.
 - Chronological execution log: [ai/progress.md](progress.md)
 - Daily checkpoint snapshots: [ai/daily-checkpoints/](daily-checkpoints/)
 
+## Agent-to-Agent (A2A) Coordination & Knowledge Sharing
+
+To enable seamless collaboration between different AI assistants, a shared knowledge layer is established.
+
+### Shared Directory Structure
+- **Path**: `ai/shared/`
+- **handoffs/**: Brief notes left by an agent at the end of a session to guide the next agent.
+- **knowledge-base/**: Persistent technical findings, research, and error diagnoses shared across all agents.
+- **coordination.md**: Real-time status tracker and development lock file to prevent agent collisions.
+
+### Rules of Engagement
+1. **Metadata Mandatory**: Every file in the shared directory must include the standardized metadata header.
+2. **Atomic Knowledge**: Use one file per specific technical topic or handoff event.
+3. **Read First**: Upon startup, assistants must check `ai/shared/coordination.md` and relevant handoffs before beginning work.
+4. **Non-Volatile Findings**: High-cost research (e.g., complex debugging) must be documented in `knowledge-base/` to save future tokens.
 ## Operational Restart and Checkpoint Contract
 
 ### Source-of-Truth Order
@@ -158,6 +180,79 @@ When the user asks for a checkpoint (which means update all AI tracking files un
 - last completed action
 - immediate pending decision (or `None`)
 - first action to continue
+- confidence (`draft` or `verified`)
+
+### Startup Consistency and Recovery
+
+- At startup, read `next-steps`, latest daily checkpoint, and `progress`, then compare checkpoint IDs.
+- If IDs differ, report inconsistency and recover from the latest daily checkpoint.
+- Repair stale tracking files to match recovery truth.
+
+### End-of-Day Quality Gate
+
+Before commit:
+
+1. Checkpoint ID matches across all required tracking files.
+2. Resume block is specific and actionable.
+3. Today's daily checkpoint includes verified outcomes and next action.
+4. `ai/progress.md` contains same-day matching checkpoint entry.
+
+Daily checkpoint checklist template:
+
+- Checkpoint ID matches `ai/next-steps.md`: Pass/Fail
+- Checkpoint ID matches `ai/progress.md`: Pass/Fail
+- Resume block is clear and actionable: Pass/Fail
+- Verified outcomes are evidence-based: Pass/Fail
+- Next action and pending decision are explicit: Pass/Fail
+
+## Copilot Bootstrap Source Guardrails
+
+For repositories that define `ai/` as the bootstrap state root:
+
+1. During bootstrap, treat `ai/` policy and state files as authoritative context.
+2. Do not treat GitHub Copilot customization files under `.github/` as bootstrap authority unless explicitly allowed by repository bootstrap instructions.
+3. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/` (or another repo-declared `ai/` subdirectory), not under `.github/`.
+4. Universal policy changes must be made in this central policy source first; local files are fallback or override only.
+5. If bootstrap authority is ambiguous, stop and ask before writing any policy or customization file.
+
+## Standardized Traceability & Metadata
+
+### File Metadata Headers
+**Mandate:** All AI assistants must include a standardized metadata header in every file they create or modify (excluding internal `ai/` tracking files). This header must be at the very top of the file and use the appropriate comment syntax for the file type.
+
+**Header Fields:**
+- `Created-by`: Name of the agent that first generated the file.
+- `Updated-by`: Name of the agent performing the current edit.
+- `Last modified`: ISO-8601 Timestamp.
+- `Intent`: A brief (one-line) description of why the file was created or changed.
+
+**Comment Syntax Mapping:**
+- **Markdown/HTML**: `<!-- ... -->`
+- **Shell/Python/YAML/Config**: `# ...`
+- **JS/TS/C-Style/JSON**: `/* ... */`
+
+**Example (Markdown):**
+```markdown
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-04-16T14:40:00Z
+Intent: Upgrade session logging to granular AI Flight Recorder format.
+-->
+---
+```
+
+### Session Logging (AI Flight Recorder)
+**Mandate (CLI Assistants only):** Every action-oriented CLI assistant must maintain a granular "Flight Recorder" log of the current session.
+
+- **Path**: `ai/sessions/<agent-name>/`
+- **Pattern**: `<agent-name>-live-session-<YYYY-MM-DD>-<sequence>.md`
+- **Format Requirements**:
+    - **Transaction-Based**: Log every user instruction, major tool execution, and material result.
+    - **Granularity**: Include specific commands run and brief summaries of their output.
+    - **Intent-Driven**: Clearly state the objective of each turn.
+    - **Traceability**: Use the standardized metadata header at the top of the file.
+
 - confidence (`draft` or `verified`)
 
 ### Startup Consistency and Recovery
