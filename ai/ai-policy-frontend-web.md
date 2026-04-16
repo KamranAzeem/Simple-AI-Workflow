@@ -76,6 +76,11 @@ Use this pattern across all repositories for consistency.
 
 To enable seamless collaboration between different AI assistants, a shared knowledge layer is established.
 
+### A2A Rules (Mandatory)
+1. **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
+2. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+3. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
+
 ### Shared Directory Structure
 - **Path**: `ai/shared/`
 - **handoffs/**: Brief notes left by an agent at the end of a session to guide the next agent.

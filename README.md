@@ -74,6 +74,10 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ### 6. Multi-Agent Coordination (Shared Intelligence)
 - **A2A Knowledge Sharing**: Dedicated `ai/shared/` directory for agent-to-agent handoffs, research notes, and coordination locks.
+- **A2A Rules**: All agents must follow:
+    - **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
+    - **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+    - **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
 - **Collaborative Intelligence**: Knowledge-base for technical findings to avoid redundant research across different agents (Gemini, Copilot, etc.).
 
 ### 7. Security & Governance

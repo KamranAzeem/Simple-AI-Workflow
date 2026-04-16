@@ -52,3 +52,15 @@ Action-oriented CLI agents maintain a detailed log of every command and tool exe
 4.  **Document**: Save technical research to the `knowledge-base/` to save tokens for future sessions.
 5.  **Handoff**: Leave a note in `handoffs/` if a task is incomplete.
 
+### A2A Rules (Mandatory)
+1.  **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
+2.  **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+3.  **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
+
+*Example: Task Claiming*
+To claim a task, an agent should first read `ai/shared/coordination.md` to see existing locks. If clear:
+1. Append the task ownership to `ai/shared/coordination.md`.
+2. Proceed with the task.
+3. Upon completion, remove the ownership entry.
+
+
