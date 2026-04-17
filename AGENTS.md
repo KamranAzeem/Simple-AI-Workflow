@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-04-16T14:10:00Z
-Intent: Merge central AGENTS.md updates with local traceability and coordination enhancements.
+Updated-by: Cline
+Last modified: 2026-04-17T14:48:00Z
+Intent: Clarify session log creation policy for VSCode plugin assistants
 -->
 ---
 # AI Bootstrap Entry Point
@@ -11,7 +11,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
 
-1. [central main policy file](/home/username/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
+1. [central main policy file](/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-meta.md) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
 2. [local main policy file](ai/ai-policy-cloud.md) - fallback if step 1 is unreachable; skip if step 1 succeeded.
 3. [local policy override file](ai/ai-policy-override.md) - rules to override the main policy. **(optional; skip if not present)**
 4. [ai/next-steps.md](ai/next-steps.md) - current resume point and live queue. **(optional; skip if not present)**
@@ -31,23 +31,29 @@ When bootstrapping in a new repository where no AI files exist:
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
-   - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `gemini/`)
+   - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
    - Create `ai/progress.md` with initial entry
-   - **CLI Assistants only**: Initialize the first session log in `ai/sessions/<agent-name>/` (Exempt: Chat-centric assistants like VSCode Copilot Chat).
+   - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup, incrementing the sequence number (e.g., `aider-live-session-YYYY-MM-DD-01.md`, `-02.md`). (Do not create this directory or file if you are a VSCode chat plugin assistant like "Cline" or "Copilot Chat").
 
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
    - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
 
-4. **Acknowledge readiness** and await first user instruction.
+4. **Operational Readiness Check**:
+   - Check `ai/shared/coordination.md`. If it exists, review active claims.
+   - Scan `ai/shared/handoffs/` for pending tasks.
+   - Index `ai/shared/knowledge-base/` for project-specific patterns.
+   - Report the status of these locations in the final acknowledgement.
 
-## File Metadata Requirements
+5. **Acknowledge readiness** and await first user instruction.
 
-All files created or modified by an AI assistant (excluding internal `ai/` tracking files) must include a standardized metadata header.
+## Multi-Agent Coordination
+Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.md` and `ai/ai-policy-cloud.md` when processing tasks from `ai/shared/handoffs/`. This requires claiming tasks in `ai/shared/coordination.md` to prevent collisions.
+
 
 **Header Format:**
 ```markdown

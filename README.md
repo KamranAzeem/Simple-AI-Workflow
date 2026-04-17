@@ -58,10 +58,12 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 2. Standardized Bootstrap Protocol
 - **AGENTS.md Protocol**: A consistent entry point for any AI agent to understand its role, authorities, and reading order.
 - **Zero-Install Setup**: No scripts required; just one `git clone` and one `copy` command to initialize any project.
+- **Operational Readiness Check**: Automatic scanning of `ai/shared/handoffs/` and `ai/shared/coordination.md` during initialization to pick up existing context.
 - **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across local project directories.
 
 ### 3. Autonomous State & Context Management
 - **Checkpoint System**: Persistent tracking of progress, todos, and daily work snapshots in `ai/` to resume work seamlessly.
+- **Persistent Knowledge Base**: Local wiki in `ai/shared/knowledge-base/` for storing architectural decisions, style guides, and technical findings that persist across sessions.
 - **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
 
 ### 4. Standardized Traceability (Metadata Headers)
@@ -69,16 +71,21 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Transparency**: Instantly identify the author and purpose of any AI-generated artifact.
 
 ### 5. AI Flight Recorder (CLI-Only)
-- **Granular Session Logs**: Transaction-based persistence for CLI agents, capturing every terminal command, tool execution, and result.
+- **Granular Session Logs**: Transaction-based persistence for CLI agents (e.g., Aider, Gemini CLI), capturing every terminal command, tool execution, and result.
+- **Plugin Exemption**: This overhead is automatically skipped for VSCode chat plugins (e.g., Cline, Copilot Chat) to maintain a lean workspace.
 - **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
 
 ### 6. Multi-Agent Coordination (Shared Intelligence)
-- **A2A Knowledge Sharing**: Dedicated `ai/shared/` directory for agent-to-agent handoffs, research notes, and coordination locks.
+- **A2A Knowledge Sharing**: Dedicated `ai/shared/` directory structure:
+    - `handoffs/`: Async task transfers between agents or sessions.
+    - `knowledge-base/`: Persistent repository-specific wisdom and patterns.
+    - `coordination.md`: Real-time status board for task locking and ownership.
+- **Claim & Execute Protocol**: Standardized lifecycle for handoffs (Create -> Claim in coordination.md -> Execute -> Verify & Cleanup).
 - **A2A Rules**: All agents must follow:
     - **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
     - **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
     - **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
-- **Collaborative Intelligence**: Knowledge-base for technical findings to avoid redundant research across different agents (Gemini, Copilot, etc.).
+- **Collaborative Intelligence**: Shared findings avoid redundant research across different agents (Gemini, Copilot, etc.).
 
 ### 7. Security & Governance
 - **Proactive Secret Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
@@ -92,14 +99,14 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - The `AGENTS.md` file (now in your project root) points to the central policy path; update the path based on where you cloned this repo. Follow OS‑specific path syntax.
 - When an AI assistant reads `AGENTS.md`, it will access the central policy directly from that path.
 - Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-frontend-web.md`, `ai/ai-policy-backend-api.md`, etc.
-- The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, and context.
+- The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, context, sessions, and shared handoffs.
 - For repository-specific policy adjustments, create `ai/ai-policy-override.md`.
 - Example override template: `ai/ai-policy-override.example.md`.
 - Both `AGENTS.md` and the `ai/` directory should be ignored by Git to keep personal AI state private.
 - See `gitignore-example.txt` for entries that keep local AI workflow files out of the repository. Add them to the project's `.gitignore` file.
 
 - Repository-level AI ignore: this repo supports a repository-root `.aiignore` (canonical) and `.agentignore` (alias). Patterns in that file are honored by AI assistants and must be applied before indexing or loading other repository files. Place the `.aiignore` in the same directory where the `AGENTS.md` file you want to protect is located. See `.aiignore.example` for recommended patterns.
--- Helper scripts (optional): this repository provides `scripts/sync-agents-md.sh` and `scripts/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `scripts/README.md` for usage.
+-- Helper scripts (optional): this repository provides `support-files/sync-agents-md.sh` and `support-files/sync-agents-md.ps1` as convenience helpers to propagate the canonical `AGENTS.md` into project directories. These tools are optional — you can instead copy `AGENTS.md` using your OS copy commands or GUI if you prefer. See `support-files/README.md` for usage.
 
 - Always run helper scripts with `--dry-run`/`-WhatIf` first; on Windows you may need `-ExecutionPolicy Bypass`.
 
@@ -256,3 +263,4 @@ When running `/init`, always:
 
 Do not create copilot-instructions.md, *.prompt.md, or other GitHub Copilot customizations in workspace root.
 ```
+

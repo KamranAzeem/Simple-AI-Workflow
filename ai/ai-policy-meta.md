@@ -12,7 +12,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 ## Scope
 
 - Applies to any AI assistant acting on or about this repository (`Simple-AI-Workflow`).
-- Covers: `AGENTS.md`, `AGENTS.local.md`, files under `ai/`, `scripts/`, `README.md`, and related docs.
+- Covers: `AGENTS.md`, `AGENTS.local.md`, files under `ai/`, `support-files/`, `README.md`, and related docs.
 - Does NOT cover cloud- or application-specific guidance (see `ai/ai-policy-cloud.md` for cloud work).
 
 ## Purpose
@@ -28,7 +28,7 @@ Responsibilities
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
 - Run local safety checks (secrets scan, basic linting) before preparing commits.
 - Prepare draft commits (staged changes) and suggested commit messages; do NOT perform push/PRs without explicit human approval.
-- When operating scripts that modify multiple repositories (e.g., `scripts/sync-agents-md.*`), prefer `--dry-run` first and produce a per-target report.
+- When operating scripts that modify multiple repositories (e.g., `support-files/sync-agents-md.*`), prefer `--dry-run` first and produce a per-target report.
 
 Hard limits
 - Must not push, open, or merge pull requests without explicit human instruction.
@@ -173,7 +173,7 @@ Mandatory checkpoint procedure
 
 - Bootstrapping: `AGENTS.md`
 - Tracking files: `ai/next-steps.md`, `ai/progress.md`, `ai/daily-checkpoints/`
-- Helper scripts: `scripts/sync-agents-md.sh`, `scripts/sync-agents-md.ps1`
+- Helper scripts: `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`
 
 ---
 
