@@ -106,8 +106,9 @@ To enable seamless collaboration between different AI assistants, a shared knowl
 
 ### A2A Rules (Mandatory)
 1. **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
-2. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
-3. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
+2. **Operational Synthesis (Mandatory)**: Bootstrap is not complete until the agent has synthesized requirements from `ai/ai-policy-cloud.md` and performed an **Operational Readiness Check** on `ai/shared/`.
+3. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+4. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
 
 ### Shared Directory Structure
 - **Path**: `ai/shared/`
@@ -421,9 +422,36 @@ Before any automated update to AI tracking files:
 - Place temporary helper files only in the workspace `tmp` directory and keep `tmp` git-ignored.
 - If `tmp` does not exist, create it, add it to `.gitignore`, and inform the user.
 
-## Design Philosophy
 
-- Do not over-engineer solutions; prefer simplicity and pragmatism over unnecessary complexity.
+## Manual Handoff Creation
+To manually create a handoff task for an AI assistant, follow these steps:
+
+1. **File Location**: Create a new Markdown file in `ai/shared/handoffs/`.
+2. **Naming Convention**: Use a descriptive kebab-case name (e.g., `feature-xyz-handoff.md`).
+3. **Required Format**: Include the standardized metadata header and the following sections:
+   - **Status**: (e.g., `Pending`)
+   - **Assigned To**: (Optional)
+   - **Goal**: Clear description of the objective.
+   - **Requirements**: Specific constraints or steps.
+   - **Reference**: Links to relevant files.
+
+**Language for Instruction**:
+To tell the AI to store a handoff, use: *"Create a handoff task for [task name] with [details] and save it to the handoffs directory."*
+To tell the AI to execute a handoff, use: *"Claim and execute [filename] from the handoffs directory."*
+
+## Knowledge Base Location
+The project's AI knowledge base is stored in `ai/shared/knowledge-base/`. All agents MUST reference this directory as the source of truth for project-specific patterns, style guides, and constraints.
+
+## Handoff Completion & Coordination Directive
+When an agent processes a task from `ai/shared/handoffs/`, it MUST:
+
+1. **Coordination**: Check `ai/shared/coordination.md` and claim ownership before beginning.
+2. **Execution & Verification**: Fully implement the task and perform necessary verification/tests.
+3. **Deletion**: Delete the handoff file AND remove the ownership claim from `ai/shared/coordination.md` immediately upon successful verification.
+4. **Tracking**: Add a dated entry to `ai/progress.md` documenting the completion.
+5. **Documentation**: Ensure relevant documentation in `ai/shared/knowledge-base/` is updated to reflect the completed changes. If no documentation exists, create it.
+
+
 
 ## Communication and Writing
 

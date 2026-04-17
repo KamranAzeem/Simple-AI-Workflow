@@ -108,8 +108,9 @@ To enable seamless collaboration between different AI assistants, a shared knowl
 
 ### A2A Rules (Mandatory)
 1. **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
-2. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
-3. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
+2. **Operational Synthesis (Mandatory)**: Bootstrap is not complete until the agent has synthesized requirements from `ai/ai-policy-cloud.md` and performed an **Operational Readiness Check** on `ai/shared/`.
+3. **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
+4. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
 
 ### Shared Directory Structure
 - **Path**: `ai/shared/`
