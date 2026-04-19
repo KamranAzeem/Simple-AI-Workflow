@@ -11,14 +11,22 @@ This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
 
-1. [central main policy file](/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-meta.md) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
-2. [local main policy file](ai/ai-policy-cloud.md) - fallback if step 1 is unreachable; skip if step 1 succeeded.
-3. [local policy override file](ai/ai-policy-override.md) - rules to override the main policy. **(optional; skip if not present)**
-4. [ai/next-steps.md](ai/next-steps.md) - current resume point and live queue. **(optional; skip if not present)**
-5. Latest file in [ai/daily-checkpoints/](ai/daily-checkpoints/) - daily recovery snapshot. **(optional; skip if not present)**
-6. [ai/progress.md](ai/progress.md) - chronological execution history. **(optional; skip if not present)**
-7. [ai/context.md](ai/context.md) - repository briefing and decisions. **(optional; skip if not present)**
-8. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias) — Locate and strictly apply this file as a filtering mechanism. You MUST exclude all directories and files matched by patterns in this file from your awareness, exploration, indexing, and context-building processes.
+**Central Policy Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/`
+
+### Centralized Authority (Mandatory)
+1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policy Directory**)
+2. [central common policy file](ai-policy-common.md) - (Read from **Central Policy Directory**)
+
+### Local Project State (Repository-Specific)
+3. [local main policy file](ai/ai-policy-<name>.md) - (Fallback if Step 1 is unreachable; skip if Step 1 succeeded)
+4. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
+5. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
+6. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
+7. [progress file](ai/progress.md) - (Chronological history; local only)
+8. [context file](ai/context.md) - (Repository briefing and decisions; optional; skip if not present)
+9. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+
+
 
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
 
@@ -37,7 +45,13 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
    - Create `ai/progress.md` with initial entry
-   - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup, incrementing the sequence number (e.g., `aider-live-session-YYYY-MM-DD-01.md`, `-02.md`). (Do not create this directory or file if you are a VSCode chat plugin assistant like "Cline" or "Copilot Chat").
+   - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup.
+     - **Agent Name**: Use your primary identifier (e.g., `gemini`, `aider`, `copilot`). The name MUST NOT contain spaces or special characters except hyphens (`-`) or underscores (`_`).
+     - **Naming**: `<agent-name>-live-session-YYYY-MM-DD-XX.md` (increment XX).
+       - **Crucial**: Replace `<agent-name>` with your identifier. DO NOT use the literal string "agent" in the filename.
+       - **Session ID**: Immediately after the header, include the active system session ID (usually retrievable via `/stats`). This ensures the log file is programmatically linked to the actual session context.
+       - **Flight Recorder Mandate (Atomic)**: The log acts as the persistent conversational history. Every turn—regardless of whether it involves file changes—MUST be appended to this log file in the same turn, ensuring a complete, continuous record of all reasoning, tool use, and user interaction.
+
 
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
@@ -52,7 +66,7 @@ When bootstrapping in a new repository where no AI files exist:
 5. **Acknowledge readiness** and await first user instruction.
 
 ## Multi-Agent Coordination
-Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.md` and `ai/ai-policy-cloud.md` when processing tasks from `ai/shared/handoffs/`. This requires claiming tasks in `ai/shared/coordination.md` to prevent collisions.
+Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.md` and the [local main policy file](ai/ai-policy-<name>.md) when processing tasks from the [handoffs directory](ai/shared/handoffs/). This requires claiming tasks in the [coordination file](ai/shared/coordination.md) to prevent collisions.
 
 
 **Header Format:**
@@ -71,9 +85,9 @@ Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `
 
 These rules prevent bootstrap ambiguity across assistants.
 
-1. The file referenced as "central main policy file" in step 1 above is authoritative for universal rules.
-2. Local `ai/ai-policy-cloud.md` is fallback only when the central main policy is unreachable.
-3. `ai/ai-policy-override.md` is for repository-specific exceptions and must not redefine universal policy authority.
+1. The files referenced as "central main policy file" and "central common policy file" in step 1 and step 2 above are both authoritative for universal rules.
+2. The file referenced as "local main policy file" in step 3 above is fallback only when the "central main policy file" is unreachable.
+3. The file referenced as "local policy override file" in step 4 above is for repository-specific exceptions and must not redefine universal policy authority.
 4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
 5. GitHub Copilot-related files under `.github/` are not bootstrap authority in this repository.
 6. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/`.
