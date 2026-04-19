@@ -34,13 +34,13 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 | .                                    |                | .                                     |
 | ├─ AGENTS.md                         |                | ├─ AGENTS.md                          |
 | ├─ ai/                               |                | ├─ ai/                                |
-| │  ├─ ai-policy-backend-api.md       |                | │  ├─ ai-policy-override.md           |
+| │  ├─ ai-policy-api-backend.md       |                | │  ├─ ai-policy-override.md           |
 | │  ├─ ai-policy-cloud.md             | <------------- | │  ├─ context.md                      |
-| │  ├─ ai-policy-frontend-web.md      |                | │  ├─ next-steps.md                   |
-| │  └─ ai-policy-linux-system-admin.md|                | │  └─ progress.md                     |
-| └─ README.md                         |                | ├─ README.md        } -- your         |
-|                                      |                | └─ src/             } -- application  |
-|                                      |                |    └─ main.go       } -- code         |
+| │  ├─ ai-policy-common.md            |                | │  ├─ next-steps.md                   |
+| │  ├─ ai-policy-meta.md              |                | │  └─ progress.md                     |
+| │  ├─ ai-policy-web-frontend.md      |                | ├─ README.md        }    your         |
+| │  └─ ai-policy-linux-system-admin.md|                | └─ src/             } -- application  |
+| └─ README.md                         |                |    └─ main.go       }    code         |
 +--------------------------------------+                +---------------------------------------+
 ``` 
 
@@ -71,7 +71,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Transparency**: Instantly identify the author and purpose of any AI-generated artifact.
 
 ### 5. AI Flight Recorder (CLI-Only)
-- **Granular Session Logs**: Transaction-based persistence for CLI agents (e.g., Aider, Gemini CLI), capturing every terminal command, tool execution, and result.
+- **Granular Session Logs**: Transaction-based persistence for CLI agents (AI Flight Recorder), following the strict naming and metadata protocols defined in `AGENTS.md`.
 - **Plugin Exemption**: This overhead is automatically skipped for VSCode chat plugins (e.g., Cline, Copilot Chat) to maintain a lean workspace.
 - **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
 
@@ -98,7 +98,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - Copy `AGENTS.md` from this repository into the root of the target project on your local computer.
 - The `AGENTS.md` file (now in your project root) points to the central policy path; update the path based on where you cloned this repo. Follow OS‑specific path syntax.
 - When an AI assistant reads `AGENTS.md`, it will access the central policy directly from that path.
-- Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-frontend-web.md`, `ai/ai-policy-backend-api.md`, etc.
+- Available example policy files in this repository: `ai/ai-policy-cloud.md`, `ai/ai-policy-web-frontend.md`, `ai/ai-policy-api-backend.md`, `ai/ai-policy-common.md`, etc.
 - The AI assistant will create a local `ai/` directory in your project root directory for state tracking files such as checkpoints, progress, context, sessions, and shared handoffs.
 - For repository-specific policy adjustments, create `ai/ai-policy-override.md`.
 - Example override template: `ai/ai-policy-override.example.md`.
@@ -118,11 +118,12 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ## Which policy should you choose?
 
+- **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts) and is automatically loaded during the bootstrap process as the **central common policy file**.
 - Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows.
-- Use `ai-policy-frontend-web.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows.
-- Use `ai-policy-backend-api.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
+- Use `ai-policy-web-frontend.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows.
+- Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
 - Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks.
-- If the project spans multiple areas, start with the policy that matches the highest-risk work, then add a local override file for project-specific rules.
+- If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **central common policy file** will handle the shared engineering standards automatically.
 
 ## How to initialize / bootstrap?
 
@@ -131,7 +132,8 @@ This solution transforms AI from a chat-bot into a structured team member with c
   - `bootstrap using AGENTS.md protocol`
 - The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will:
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
-  - Initialize the state tracking files such as `next-steps.md`, the daily checkpoint, and `progress.md`.
+  - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
+  - **Start a unique Session Log**: Create a session-specific log file with a unique `Session-ID` for auditability.
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The central policy is accessed directly from the path referenced in `AGENTS.md`, so local copying of policy files is not required.
 - Optionally, you can override parts of the policy by adding `ai/ai-policy-override.md`.
