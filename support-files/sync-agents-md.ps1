@@ -61,66 +61,48 @@ Write-Host "------------------------------------------------------------"
 
 foreach ($m in $foundFiles) {
   $target = $m.FullName
-  # If source is newer than target, copy (or dry-run)
-  # Detect central policy line in target and extract path
-  $policyPattern = '\[central main policy file\]\(([^)]+)\)'
-  $policyMatch = Select-String -Path $target -Pattern $policyPattern -ErrorAction SilentlyContinue | Select-Object -First 1
-  if ($null -ne $policyMatch) {
-    $policyLine = $policyMatch.Line.Trim()
-    # Extract the captured policy path from the regex match object
-    if ($policyMatch.Matches.Count -gt 0) {
-      $policyPath = $policyMatch.Matches[0].Groups[1].Value
-    } else {
-      $policyPath = "(unknown)"
-    }
-  } else {
-    $policyLine = $null
-    $policyPath = "(none)"
-  }
+  
+  # Extract values from target AGENTS.md to preserve them
+  $targetContent = Get-Content -Raw -Path $target
+  
+  $targetCpDir = if ($targetContent -match '\*\*Central Policy Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetMainPolicy = if ($targetContent -match '\[central main policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
+  $targetCommonPolicy = if ($targetContent -match '\[central common policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
 
-  # Print structured per-target info for readability (match bash script wording)
+  # Print structured per-target info for readability
   Write-Host ""
   Write-Host "Target AGENTS.md file: $target"
   Write-Host ""
-  Write-Host "Policy file in use: $policyPath"
+  Write-Host "Values preserved from target (if found):"
+  Write-Host "  Central Policy Directory: $(if ($targetCpDir) { $targetCpDir } else { "(not found, will use source value)" })"
+  Write-Host "  Central Main Policy:      $(if ($targetMainPolicy) { $targetMainPolicy } else { "(not found, will use source value)" })"
+  Write-Host "  Central Common Policy:    $(if ($targetCommonPolicy) { $targetCommonPolicy } else { "(not found, will use source value)" })"
+
   try {
     $srcContent = Get-Content -Raw -Path $srcPath
-    if ($null -ne $policyLine) {
-      # Replace the parentheses content in the central policy line with the target's path
-      $pattern = '\[central main policy file\]\([^)]+\)'
-      $replacement = "[central main policy file]($policyPath)"
-      if ([regex]::IsMatch($srcContent, $pattern)) {
-        $newContent = [regex]::Replace($srcContent, $pattern, $replacement, 1)
-      } else {
-        # Prepend a canonical policy line followed by the source content
-        $canonical = "[central main policy file]($policyPath) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.`n"
-        $newContent = $canonical + $srcContent
-      }
+    $newContent = $srcContent
 
-      if ($WhatIf) {
-        Write-Host ""
-        Write-Host "DRY-RUN: would update $target (while retaining target policy path)"
-      } else {
-        Write-Host ""
-        Write-Host "Updating $target (while retaining target policy path)"
-        try {
-          Set-Content -Path $target -Value $newContent -Force -Encoding UTF8
-        } catch {
-          Write-Warning "Failed to write to $target : $_"
-        }
-      }
+    # Apply preserved values to the source content
+    if ($targetCpDir) {
+      $newContent = [regex]::Replace($newContent, '(\*\*Central Policy Directory\*\*: `)([^`]+)(`)', '$1' + $targetCpDir + '$3')
+    }
+    if ($targetMainPolicy) {
+      $newContent = [regex]::Replace($newContent, '(\[central main policy file\]\()([^)]+)(\))', '$1' + $targetMainPolicy + '$3')
+    }
+    if ($targetCommonPolicy) {
+      $newContent = [regex]::Replace($newContent, '(\[central common policy file\]\()([^)]+)(\))', '$1' + $targetCommonPolicy + '$3')
+    }
+
+    if ($WhatIf) {
+      Write-Host ""
+      Write-Host "DRY-RUN: would update $target (while retaining target-specific policy settings)"
     } else {
-      if ($WhatIf) {
-        Write-Host ""
-        Write-Host "DRY-RUN: would replace $target (no central policy line found)"
-      } else {
-        Write-Host ""
-        Write-Host "Replacing $target (no central policy line found)"
-        try {
-          Copy-Item -Path $srcPath -Destination $target -Force -ErrorAction Stop
-        } catch {
-          Write-Warning "Failed to copy to $target : $_"
-        }
+      Write-Host ""
+      Write-Host "Updating $target (while retaining target-specific policy settings)"
+      try {
+        Set-Content -Path $target -Value $newContent -Force -Encoding UTF8
+      } catch {
+        Write-Warning "Failed to write to $target : $_"
       }
     }
   } catch {

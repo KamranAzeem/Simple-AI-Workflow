@@ -115,10 +115,16 @@ fi
 
 # Find all AGENTS.md files under TARGET_PATH and collect matches strictly under TARGET_ABS
 IFS=$'\n'
-# initialize matches as an empty array to avoid 'unbound variable' under set -u
 matches=()
 while IFS= read -r -d '' f; do
-  f_abs="$f"
+  if command -v realpath >/dev/null 2>&1; then
+    f_abs=$(realpath "$f")
+  elif command -v readlink >/dev/null 2>&1 && readlink -f "$f" >/dev/null 2>&1; then
+    f_abs=$(readlink -f "$f")
+  else
+    f_abs="$f"
+  fi
+  
   # ensure the found file is inside the canonical target path
   case "$f_abs" in
     "$TARGET_ABS"/*) ;;
@@ -149,55 +155,54 @@ echo
 
 # Process matches
 for f_abs in "${matches[@]}"; do
-  # Compare contents first; if different -> copy, otherwise report already identical
-  # Check if target contains the central policy line and extract the policy path
-  policy_line=$(grep -m1 -E '\[central main policy file\]\([^)]*\)' "$f_abs" || true)
-  if [ -n "$policy_line" ]; then
-    policy_path=$(printf '%s' "$policy_line" | sed -n 's/.*\[central main policy file\](\([^)]*\)).*/\1/p')
-  else
-    policy_path="(none)"
-  fi
+  # Extract values from target AGENTS.md to preserve them
+  # 1. Central Policy Directory
+  target_cp_dir=$(grep -m1 -E '\*\*Central Policy Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central Policy Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 2. Central Main Policy File
+  target_main_policy=$(grep -m1 -E '\[central main policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[central main policy file\](\([^)]*\)).*/\1/p' || true)
+  # 3. Central Common Policy File
+  target_common_policy=$(grep -m1 -E '\[central common policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[central common policy file\](\([^)]*\)).*/\1/p' || true)
 
   # Print structured per-target info for readability
   echo
   echo "Target AGENTS.md file: $f_abs"
   echo
-  echo "Policy file in use: $policy_path"
-
-  # Always overwrite the target with the source content, but if the target defines a
-  # central policy path, inject that path into the copied content. This avoids blind
-  # overwrites of repository-specific policy pointers.
-  src_policy_line=$(grep -m1 -E '\[central main policy file\]\([^)]*\)' "$SRC_ABS" || true)
+  echo "Values preserved from target (if found):"
+  echo "  Central Policy Directory: ${target_cp_dir:-"(not found, will use source value)"}"
+  echo "  Central Main Policy:      ${target_main_policy:-"(not found, will use source value)"}"
+  echo "  Central Common Policy:    ${target_common_policy:-"(not found, will use source value)"}"
 
   tmp=$(mktemp)
-  if [ "$policy_path" != "(none)" ]; then
-    if [ -n "$src_policy_line" ]; then
-      esc_policy_path=$(printf '%s' "$policy_path" | sed 's/[\/&]/\\&/g')
-      sed -E "s|(\[central main policy file\]\()([^)]*)(\))|\1$esc_policy_path\3|" "$SRC_ABS" > "$tmp"
-    else
-      printf '%s
-'"[central main policy file]($policy_path) - operating rules and guardrails. If unreachable, then read the local policy file mentioned in the next point.
-" > "$tmp"
-      cat "$SRC_ABS" >> "$tmp"
-    fi
-    if [ $DRY_RUN -eq 1 ]; then
-      echo ""
-      echo "DRY-RUN: would update $f_abs (while retaining target policy path)"
-      rm -f "$tmp"
-    else
-      echo
-      echo "Updating $f_abs (while retaining target policy path)"
-      mv -f "$tmp" "$f_abs"
-    fi
+  
+  # Construct sed command dynamically based on found values
+  sed_args=()
+  if [ -n "$target_cp_dir" ]; then
+    esc_val=$(printf '%s' "$target_cp_dir" | sed 's/[\/&]/\\&/g')
+    sed_args+=("-e" 's|(\*\*Central Policy Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+  fi
+  if [ -n "$target_main_policy" ]; then
+    esc_val=$(printf '%s' "$target_main_policy" | sed 's/[\/&]/\\&/g')
+    sed_args+=("-e" 's|(\[central main policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
+  fi
+  if [ -n "$target_common_policy" ]; then
+    esc_val=$(printf '%s' "$target_common_policy" | sed 's/[\/&]/\\&/g')
+    sed_args+=("-e" 's|(\[central common policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
+  fi
+
+  if [ ${#sed_args[@]} -gt 0 ]; then
+    sed -E "${sed_args[@]}" "$SRC_ABS" > "$tmp"
   else
-    if [ $DRY_RUN -eq 1 ]; then
-      echo ""
-      echo "DRY-RUN: would replace $f_abs (no central policy line found)"
-    else
-      echo
-      echo "Replacing $f_abs (no central policy line found)"
-      cp -f "$SRC_ABS" "$f_abs"
-    fi
+    cp -f "$SRC_ABS" "$tmp"
+  fi
+
+  if [ $DRY_RUN -eq 1 ]; then
+    echo
+    echo "DRY-RUN: would update $f_abs (while retaining target-specific policy settings)"
+    rm -f "$tmp"
+  else
+    echo
+    echo "Updating $f_abs (while retaining target-specific policy settings)"
+    mv -f "$tmp" "$f_abs"
   fi
   echo
   echo "----------------------------------------------------------------------------"
