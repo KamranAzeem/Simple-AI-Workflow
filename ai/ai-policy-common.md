@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-04-19T09:00:00Z
-Intent: Centralize common AI guardrails and contracts to reduce redundancy across specialized policies.
+Last modified: 2026-04-21T11:45:00Z
+Intent: Add API Rate-Limit Mitigation policy to universal guardrails.
 -->
 ---
 # 🚫 DO NOT MODIFY THIS FILE
@@ -43,6 +43,7 @@ When implementing new features, architecture changes, or functional code modific
 ## Standardized Traceability & Metadata
 **Mandate**: Include a metadata header in every created or modified file (excluding `ai/` tracking files).
 - Fields: `Created-by`, `Updated-by`, `Last modified`, `Intent`.
+- **Timestamp Policy**: Always use the human user's local time for all timestamps (ISO-8601 format).
 
 ## Session Logging (Flight Recorder)
 **Mandate (CLI Assistants only)**: Maintain granular, continuous session logs according to the protocol defined in **AGENTS.md**.
@@ -55,6 +56,10 @@ When implementing new features, architecture changes, or functional code modific
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
+- **API Rate-Limit Awareness**:
+    - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
+    - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
+    - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 
 ## Communication Standards
 - **Token Efficiency**: Minimize filler; use direct, actionable language.

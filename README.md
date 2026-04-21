@@ -53,10 +53,12 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 1. Centralized Policy Authority
 - **Multi-Domain Support**: Specialized policies for Cloud/Infra, Frontend, Backend, and Linux System Administration.
 - **Hierarchical Overrides**: Apply global rules via central policy while allowing repository-specific exceptions via `ai/ai-policy-override.md`.
-- **Token Efficiency**: Explicit policies for efficient token usage and anti-polling (no assistant watch-loops).
+- **Modular Personas**: Easily swap the assistant's role (e.g., Engineer, Mentor, Security Specialist) by applying persona templates from `docs/personas/` to your local override file. **Note**: Switching personas only changes the interaction style; all technical guardrails and domain knowledge from the main policies (Cloud, Backend, etc.) remain fully active.
+- **Token Efficiency**: Explicit policies for efficient token usage, API rate-limit awareness (batching/surgical edits), and anti-polling (no assistant watch-loops).
 
 ### 2. Standardized Bootstrap Protocol
 - **AGENTS.md Protocol**: A consistent entry point for any AI agent to understand its role, authorities, and reading order.
+- **Explicit State Loading**: Mandates the loading of existing tracking files (`next-steps.md`, `progress.md`, `context.md`) during initialization to ensure session continuity.
 - **Zero-Install Setup**: No scripts required; just one `git clone` and one `copy` command to initialize any project.
 - **Operational Readiness Check**: Automatic scanning of `ai/shared/handoffs/` and `ai/shared/coordination.md` during initialization to pick up existing context.
 - **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across local project directories.
@@ -65,6 +67,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Checkpoint System**: Persistent tracking of progress, todos, and daily work snapshots in `ai/` to resume work seamlessly.
 - **Persistent Knowledge Base**: Local wiki in `ai/shared/knowledge-base/` for storing architectural decisions, style guides, and technical findings that persist across sessions.
 - **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
+- **Personalization**: Support for `ai/about-human.md` allows you to provide the AI with a profile of your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
 
 ### 4. Standardized Traceability (Metadata Headers)
 - **Audit Trails**: Mandatory file-identification headers (Created-by, Updated-by, Intent) using native comment syntax for every AI-modified file.
@@ -162,8 +165,9 @@ Use these short prompts directly when interacting with AI assistants.
 
 1. **"bootstrap with AGENTS.md protocol"** (first-time setup only)
 2. **"load AI context from latest checkpoint and summarize current state"**
-3. **"show me the pending items"**
-4. **"checkpoint"**
+3. **"re-read policy override"** (to apply persona or shell priority changes)
+4. **"show me the pending items"**
+5. **"checkpoint"**
 5. **"update the necessary documentation in summarized form for what we just decided about ..."**
 6. **"create the git branch for this fix: bugfix/..."**
 7. **"commit the work done until now in git and then merge the branch into main, push main to remote, and delete the local branch"**
