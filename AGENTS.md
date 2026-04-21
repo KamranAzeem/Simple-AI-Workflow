@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Cline
-Last modified: 2026-04-17T14:48:00Z
-Intent: Clarify session log creation policy for VSCode plugin assistants
+Updated-by: Gemini CLI
+Last modified: 2026-04-21T10:45:00Z
+Intent: Integrate ai/about-human.md into bootstrap and operational readiness check.
 -->
 ---
 # AI Bootstrap Entry Point
@@ -11,7 +11,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
 
-**Central Policy Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/`
+**Central Policy Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/`
 
 ### Centralized Authority (Mandatory)
 1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policy Directory**)
@@ -20,11 +20,12 @@ Read in this order:
 ### Local Project State (Repository-Specific)
 3. [local main policy file](ai/ai-policy-<name>.md) - (Fallback if Step 1 is unreachable; skip if Step 1 succeeded)
 4. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
-5. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
-6. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
-7. [progress file](ai/progress.md) - (Chronological history; local only)
-8. [context file](ai/context.md) - (Repository briefing and decisions; optional; skip if not present)
-9. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+5. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only)
+6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
+7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
+8. [progress file](ai/progress.md) - (Chronological history; local only)
+9. [context file](ai/context.md) - (Repository briefing and decisions; optional; local only)
+10. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
 
 
 
@@ -39,12 +40,13 @@ When bootstrapping in a new repository where no AI files exist:
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
-   - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
+   - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
    - Create `ai/progress.md` with initial entry
+   - Create `ai/context.md` with project briefing and decisions (initially minimal; grows with project understanding)
    - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup.
      - **Agent Name**: Use your primary identifier (e.g., `gemini`, `aider`, `copilot`). The name MUST NOT contain spaces or special characters except hyphens (`-`) or underscores (`_`).
      - **Naming**: `<agent-name>-live-session-YYYY-MM-DD-XX.md` (increment XX).
@@ -58,6 +60,7 @@ When bootstrapping in a new repository where no AI files exist:
    - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
 
 4. **Operational Readiness Check**:
+   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read `ai/about-human.md` if present to load user-specific context.
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.
    - Index `ai/shared/knowledge-base/` for project-specific patterns.
@@ -74,11 +77,12 @@ Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.
 <comment-syntax>
 Created-by: <Name of Agent>
 Updated-by: <Name of Agent>
-Last modified: <ISO-8601-Timestamp>
+Last modified: <Local-ISO-8601-Timestamp>
 Intent: <Brief description of the change>
 </comment-syntax>
 ---
 ```
+**Note**: Always use the human user's local time for all timestamps in file headers, session logs, and checkpoints.
 Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `#` for Shell/Python).
 
 ## Policy Authority Clarification
