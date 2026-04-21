@@ -23,7 +23,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 * Copy AGENTS.md into the root of your project directory.
 * Update the central policy path in AGENTS.md in your project directory.
 * Start VScode; in the AI chat window:
-  * “/init using AGENTS.md”,
+  * “/init using AGENTS.md protocol”,
   * or,  “bootstrap using AGENTS.md protocol” 
 
 ## How it looks like
@@ -130,7 +130,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ## How to initialize / bootstrap?
 
-- After copying `AGENTS.md` into your project root, run `/init using AGENTS.md` in your AI assistant shell to build the context.
+- After copying `AGENTS.md` into your project root, run `/init using AGENTS.md protocol` in your AI assistant shell to build the context.
 - If your AI assistant does not support `/init`, use this instruction for first time setup:
   - `bootstrap using AGENTS.md protocol`
 - The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will:
@@ -146,13 +146,14 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ## How to start working in an already initialized/bootstrapped project directory?
 
-You can use any of the following:
+You can use the following simple instruction:
 
-- **"Load AI context from latest checkpoint"**
-- **"Resume work"**
-- **"load AI context"**
-- **"Follow AGENTS.md reading order"**
+- **"Load context using AGENTS.md protocol"**
+
+Then, ask any of the following questions:
+
 - **"Show me the progress so far"**
+- **"Show me the pending tasks"**
 - **"Where are we in this project?"**
 
 This will save time, read all AI related files without creating new ones, avoid recreating checkpoints right at the start of your work.
@@ -163,14 +164,17 @@ This will save time, read all AI related files without creating new ones, avoid 
 
 Use these short prompts directly when interacting with AI assistants.
 
-1. **"bootstrap with AGENTS.md protocol"** (first-time setup only)
-2. **"load AI context from latest checkpoint and summarize current state"**
-3. **"re-read policy override"** (to apply persona or shell priority changes)
-4. **"show me the pending items"**
-5. **"checkpoint"**
-5. **"update the necessary documentation in summarized form for what we just decided about ..."**
-6. **"create the git branch for this fix: bugfix/..."**
-7. **"commit the work done until now in git and then merge the branch into main, push main to remote, and delete the local branch"**
+- **"bootstrap with AGENTS.md protocol"** (first-time setup only)
+- **"Load context using AGENTS.md protocol"**
+- **"load AI context from latest checkpoint and summarize current state"**
+- **"re-read policy override"** (to apply persona or shell priority changes)
+- **"show me the pending items"**
+- **"show me the handoff items"**
+- **"checkpoint"**
+- **"update the necessary documentation in summarized form for what we just decided about ..."**
+- **"update the relevant documentation in summarized form for the tasks we did during this session"**
+- **"create the git branch for this fix: bugfix/..."**
+- **"commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the local branch"**
 
 > **Why use AI for git operations?** When you ask the AI to commit, it applies the security policy before touching git — scanning the files for secrets (passwords, tokens, keys) before running `git add`, and stopping if anything suspicious is found. This is enforced automatically on every commit, without you having to remember to do it manually.
 
