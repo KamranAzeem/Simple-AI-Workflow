@@ -20,11 +20,11 @@ Read in this order:
 ### Local Project State (Repository-Specific)
 3. [local main policy file](ai/ai-policy-<name>.md) - (Fallback if Step 1 is unreachable; skip if Step 1 succeeded)
 4. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
-5. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only)
+5. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only; skip if not present)
 6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
 7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
 8. [progress file](ai/progress.md) - (Chronological history; local only)
-9. [context file](ai/context.md) - (Repository briefing and decisions; optional; local only)
+9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
 10. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
 
 
