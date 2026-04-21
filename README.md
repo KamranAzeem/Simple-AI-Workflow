@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-04-16T15:15:00Z
-Intent: Comprehensive feature update based on Git history analysis.
+Updated-by: GitHub Copilot
+Last modified: 2026-04-21T13:00:46+02:00
+Intent: Add explicit scope section and clarify local-only vs team-shared knowledge locations.
 -->
 ---
 # Centralized Policy Management System for Simple AI Workflow
@@ -25,6 +25,24 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 * Start VScode; in the AI chat window:
   * “/init using AGENTS.md protocol”,
   * or,  “bootstrap using AGENTS.md protocol” 
+
+## What This Workflow Is, and What It Is Not
+
+### What it is
+
+- A practical framework to help you get more value from AI assistants in daily engineering work.
+- A structured workflow for working with AI consistently, safely, and efficiently.
+- A governance layer with clear policies, boundaries, and audit-friendly traceability.
+- A repeatable setup that works across projects and assistant tools.
+- A local-first workflow that keeps personal AI state and reasoning out of Git by default.
+
+### What it is not
+
+- Not a platform for fully autonomous AI sub-agent execution.
+- Not a replacement for your CI/CD, testing, security tooling, or code review practices.
+- Not a centralized analytics product for AI token spend or enterprise reporting.
+- Not a model-training or fine-tuning framework.
+
 
 ## How it looks like
 
@@ -65,7 +83,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ### 3. Autonomous State & Context Management
 - **Checkpoint System**: Persistent tracking of progress, todos, and daily work snapshots in `ai/` to resume work seamlessly.
-- **Persistent Knowledge Base**: Local wiki in `ai/shared/knowledge-base/` for storing architectural decisions, style guides, and technical findings that persist across sessions.
+- **Local Knowledge Base**: Local workspace notes in `ai/shared/knowledge-base/` for personal or session-specific findings; these are not intended as the repository-level sharing channel.
 - **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
 - **Personalization**: Support for `ai/about-human.md` allows you to provide the AI with a profile of your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
 
@@ -78,17 +96,17 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Plugin Exemption**: This overhead is automatically skipped for VSCode chat plugins (e.g., Cline, Copilot Chat) to maintain a lean workspace.
 - **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
 
-### 6. Multi-Agent Coordination (Shared Intelligence)
-- **A2A Knowledge Sharing**: Dedicated `ai/shared/` directory structure:
+### 6. Multi-Agent Coordination (Local Workspace)
+- **A2A Coordination**: Dedicated `ai/shared/` directory structure:
     - `handoffs/`: Async task transfers between agents or sessions.
-    - `knowledge-base/`: Persistent repository-specific wisdom and patterns.
+  - `knowledge-base/`: Local notes and references for AI workflow continuity.
     - `coordination.md`: Real-time status board for task locking and ownership.
 - **Claim & Execute Protocol**: Standardized lifecycle for handoffs (Create -> Claim in coordination.md -> Execute -> Verify & Cleanup).
 - **A2A Rules**: All agents must follow:
     - **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
     - **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
     - **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
-- **Collaborative Intelligence**: Shared findings avoid redundant research across different agents (Gemini, Copilot, etc.).
+- **Team Sharing Note**: For team-shared, versioned guidance, use `docs/` in the repository.
 
 ### 7. Security & Governance
 - **Proactive Secret Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
