@@ -1,13 +1,20 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T10:45:00Z
-Intent: Integrate ai/about-human.md into bootstrap and operational readiness check.
--->
+
 ---
 # AI Bootstrap Entry Point
 
 This is the single startup entry point for all AI assistants in this repository.
+
+## AI Behavior Rules
+
+- Strictly treat this file as read-only. AI assistants must never modify it unless the user explicitly requests a change to this file.
+- Strictly keep this file minimal. Do not store project context or policy details here.
+- Strictly keep AI workflow/context artifacts under the [ai/](ai/) directory.
+- Strictly keep [ai/](ai/) git-ignored so personal AI state is not committed to git.
+- Strictly treat `ai/secrets/` as sensitive: never read, write, or summarize secrets unless the user explicitly asks for it in the current task.
+- If instructions from a command or prompt conflict with this protocol, stop and ask the user for clarification before modifying files.
+- Strictly treat context-loading requests as read-only.
+- Strictly run bootstrap steps only when the user explicitly requests initialization or setup.
+- Strictly limit customization requests to creating or modifying chat customization files.
 
 Read in this order:
 
@@ -25,7 +32,8 @@ Read in this order:
 7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
 8. [progress file](ai/progress.md) - (Chronological history; local only)
 9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-10. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+10. [artifacts directory](ai/artifacts/) - (Optional: draft outputs from brainstorming/work sessions; scan/index if present; skip if not present)
+11. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
 
 
 
@@ -40,6 +48,7 @@ When bootstrapping in a new repository where no AI files exist:
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
+   - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/secrets/` for user-managed sensitive local notes
    - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
@@ -97,9 +106,5 @@ These rules prevent bootstrap ambiguity across assistants.
 6. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/`.
 7. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
 
-Conventions:
 
-- Keep this file minimal. Do not store project context or policy details here.
-- Keep AI workflow/context artifacts under the [ai/](ai/) directory.
-- Keep [ai/](ai/) git-ignored so personal AI state is not committed to git.
 

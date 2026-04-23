@@ -131,11 +131,44 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 - Always run helper scripts with `--dry-run`/`-WhatIf` first; on Windows you may need `-ExecutionPolicy Bypass`.
 
+## Optional: ai/artifacts/ and ai/secrets/
+
+### ai/artifacts/ — Draft Outputs from Work Sessions
+
+The `ai/artifacts/` directory holds draft outputs and deliverables created during brainstorming and working sessions. This is an optional staging area where:
+
+- AI and you collaborate to create draft versions of documents, designs, analyses, or code snippets.
+- Outputs are not yet committed to the main project or documentation.
+- You review and refine drafts before promoting them to `docs/` or the project codebase.
+- Examples: draft slides, prototype architectures, brainstorming notes, experimental code samples.
+
+**Workflow:**
+1. Brainstorm in chat with AI.
+2. Ask AI to save results to `ai/artifacts/[name].md`.
+3. Review and iterate.
+4. When ready, move approved artifacts to `docs/` or project source.
+
+### ai/secrets/ — Sensitive Local Notes (Optional)
+
+The `ai/secrets/` directory is intentionally excluded from automatic AI context loading. Use it for sensitive local notes such as:
+
+- API keys, tokens, or credentials (temporary local use only).
+- Client-specific or project-specific sensitive context.
+- Personal notes on security concerns or vulnerabilities.
+
+**Important Security Notes:**
+- AI assistants **never automatically read** `ai/secrets/` during context loading.
+- Only read it if you explicitly request it in a specific task (e.g., "use the API key from ai/secrets/ to test this endpoint").
+- Do **not** commit `ai/secrets/` to Git. Add it to `.gitignore`.
+- **Preferred alternative:** Use OS-level secret stores (e.g., macOS Keychain, Windows Credential Manager, `pass` on Linux) or environment variables for real credentials.
+- Treat `ai/secrets/` as a temporary convenience, not as a secure vault.
+
 ## Docs and Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link)
 - Local docs directory: `docs/`
 - Slide notes/examples in this repository: `docs/aider-token-usage.md`, `docs/MCP-and-its-benefits.md`
+- Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 
 ## Which policy should you choose?
 
