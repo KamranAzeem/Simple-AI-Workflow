@@ -1,8 +1,9 @@
 <!--
 Created-by: GitHub Copilot
-Updated-by: GitHub Copilot
-Last modified: 2026-04-23T12:35:00+02:00
-Intent: Provide a prompt-first runbook for sequential AI-driven execution of the onboarding exercise.
+Updated-by: Cline
+Last modified: 2026-04-24T20:33:00+02:00
+Intent: Update /init warning to discourage built-in /init command in favor of text prompts.
+
 -->
 ---
 # Example Learning Session Runbook (Prompt-First)
@@ -35,9 +36,10 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
 ### 3. AGENTS.md Configuration
 - Copy `AGENTS.md` from the central Simple-AI-Workflow repository to your example project directory.
 - Open the copied `AGENTS.md` in your example directory.
-- Update the central policy path reference to point to the correct location on your machine:
-  - Windows example: `C:/Users/YourName/Projects/Personal/Simple-AI-Workflow/ai/`
-  - macOS/Linux example: `~/Projects/Personal/Simple-AI-Workflow/ai/`
+- Update the central policy path reference to point to the correct location (**"full/absolute path"**) on your machine:
+  - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/ai/`
+  - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/ai/`
+  - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\ai\`
   - Ensure the path reflects your actual central repository location.
 - Verify the policy files exist at the path you configured (check that `ai-policy-meta.md` and `ai-policy-common.md` are accessible).
 
@@ -70,7 +72,8 @@ Send this prompt:
 bootstrap using AGENTS.md protocol
 ```
 
-**Note:** Do not use the built-in `/init` command. It has extension-specific behavior across AI chat tools.
+**Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompt `"bootstrap using AGENTS.md protocol"` instead — it works the same way everywhere.
+
 
 Expected outcome:
 - The agent will load instructions from AGENTS.md and load necessary policy files.
