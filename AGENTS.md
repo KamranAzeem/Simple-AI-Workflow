@@ -33,7 +33,9 @@ Read in this order:
 8. [progress file](ai/progress.md) - (Chronological history; local only)
 9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
 10. [artifacts directory](ai/artifacts/) - (Optional: draft outputs from brainstorming/work sessions; scan/index if present; skip if not present)
-11. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+11. [notes directory](ai/notes/) - (Optional: raw unpolished notes from human or AI; scan/index if present; skip if not present)
+12. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+
 
 
 
@@ -48,7 +50,8 @@ When bootstrapping in a new repository where no AI files exist:
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
-   - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/secrets/` for user-managed sensitive local notes
+   - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
+
    - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
