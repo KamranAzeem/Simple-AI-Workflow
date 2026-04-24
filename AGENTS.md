@@ -36,9 +36,6 @@ Read in this order:
 11. [notes directory](ai/notes/) - (Optional: raw unpolished notes from human or AI; scan/index if present; skip if not present)
 12. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
 
-
-
-
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
 
 [ai/README.md](ai/README.md) is for human understanding only. Do not use it as operational authority.
@@ -51,7 +48,6 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
    - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
-
    - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
@@ -65,7 +61,6 @@ When bootstrapping in a new repository where no AI files exist:
        - **Crucial**: Replace `<agent-name>` with your identifier. DO NOT use the literal string "agent" in the filename.
        - **Session ID**: Immediately after the header, include the active system session ID (usually retrievable via `/stats`). This ensures the log file is programmatically linked to the actual session context.
        - **Flight Recorder Mandate (Atomic)**: The log acts as the persistent conversational history. Every turn—regardless of whether it involves file changes—MUST be appended to this log file in the same turn, ensuring a complete, continuous record of all reasoning, tool use, and user interaction.
-
 
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
@@ -82,7 +77,6 @@ When bootstrapping in a new repository where no AI files exist:
 
 ## Multi-Agent Coordination
 Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.md` and the [local main policy file](ai/ai-policy-<name>.md) when processing tasks from the [handoffs directory](ai/shared/handoffs/). This requires claiming tasks in the [coordination file](ai/shared/coordination.md) to prevent collisions.
-
 
 **Header Format:**
 ```markdown
@@ -108,6 +102,3 @@ These rules prevent bootstrap ambiguity across assistants.
 5. GitHub Copilot-related files under `.github/` are not bootstrap authority in this repository.
 6. If assistant-specific artifacts are needed for GitHub Copilot, store them under `ai/github-copilot/`.
 7. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
-
-
-
