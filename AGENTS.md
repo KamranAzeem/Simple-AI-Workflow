@@ -48,6 +48,7 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
    - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
+   - **Note**: `ai/github-copilot/` is NOT a bootstrap directory. It is mentioned in the Policy Authority section as a *future storage location* only if GitHub Copilot customization artifacts are needed; create it on-demand, not by default.
    - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
 2. **Initialize state tracking files**:
