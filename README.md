@@ -31,6 +31,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
 * **Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompts above instead.
+* Already initialized and just need to roll out newer AGENTS rules? See [How to upgrade](#how-to-upgrade).
 
 
 ## What This Workflow Is, and What It Is Not
@@ -119,6 +120,50 @@ Then, ask any of the following questions:
 This will save time, read all AI related files without creating new ones, avoid recreating checkpoints right at the start of your work.
 
 **Note:** If you accidentally run `"bootstrap using AGENTS.md protocol"` in a project that already has context, the bootstrap process won't overwrite anything — it just wastes a little time creating new checkpoints. So nothing to worry about.
+
+## How to upgrade
+
+Use this when a newer version of this repository adds new bootstrap features (for example, new directories under `ai/`).
+
+### Step A: Get the latest AGENTS.md in this central repository
+
+1. Pull the latest changes in this repository, using `git pull`.
+2. Verify that `AGENTS.md` contains the new bootstrap rules you want to roll out.
+
+### Step B: Propagate AGENTS.md to your other projects
+
+Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's central policy path.
+
+Linux/macOS/Git Bash (dry-run first):
+
+```bash
+./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
+./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects
+```
+
+Windows PowerShell (dry-run first):
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' -WhatIf }"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
+```
+
+### Step C: Update each project's ai/ structure
+
+Inside each target project, ask your AI assistant to run these two prompts:
+
+- `"load context using AGENTS.md protocol"`
+- `"update the ai directory structure with new features in AGENTS.md without changing existing context/state files"`
+
+This keeps existing files like `ai/context.md`, `ai/next-steps.md`, `ai/progress.md`, and existing checkpoints intact, while creating only missing required/optional directories introduced by newer AGENTS rules.
+
+### Recommended safety check
+
+After upgrade in a target project, quickly confirm:
+
+- `ai/` contains the new directories you expected.
+- Existing state files are still present and unchanged in purpose.
+- No unexpected folders were added.
 
 ## Key Features
 
