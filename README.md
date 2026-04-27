@@ -373,6 +373,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md`
 - VSCode `/init` instructions: `docs/vscode-init-instructions.md`
+- Beginner setup guide (install VS Code, set up Cline and GitHub Copilot examples, configure provider API keys): `docs/vscode-cline-provider-setup-for-beginners.md`
 
 ## Optional: VSCode `/init` Instructions
 
