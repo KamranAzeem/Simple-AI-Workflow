@@ -23,6 +23,8 @@ Expected layout:
 
 `[File browser] [Code editor] [AI chat]`
 
+Need help choosing a provider first? See `docs/ai-provider-selection-guide.md`.
+
 This guide is for non-technical users who want to:
 
 1. Install VS Code
