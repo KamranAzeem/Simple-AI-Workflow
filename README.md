@@ -374,6 +374,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - About the human user template: `docs/about-human.md`
 - VSCode `/init` instructions: `docs/vscode-init-instructions.md`
 - Beginner setup guide (install VS Code, set up Cline and GitHub Copilot examples, configure provider API keys): `docs/vscode-cline-provider-setup-for-beginners.md`
+- AI provider selection guide (cost and usage decision helper): `docs/ai-provider-selection-guide.md`
 
 ## Optional: VSCode `/init` Instructions
 
