@@ -1,8 +1,11 @@
 <!--
 Created-by: Gemini
 Updated-by: Cline
-Last modified: 2026-04-24T20:50:00+02:00
-Intent: Add missing ai-policy-data.md to diagram and policy selection section; fix diagram duplicate line.
+Last modified: 2026-04-26T22:43:00+02:00
+Intent: Change multi-assistant example from relay race to road trip.
+
+
+
 
 
 
@@ -59,10 +62,37 @@ In short: it turns AI from a chat buddy into a **reliable teammate** that follow
 - **Not a reporting dashboard.** It doesn't track how many tokens you spend or generate reports for your manager.
 - **Not an AI training system.** It doesn't train or fine-tune AI models.
 
+### Why this exists — the multi-assistant problem
+
+If you use only one AI assistant, you probably don't need this workflow. Your AI assistant already keeps its own context, and that mostly works fine. But even with a single assistant, you still need to hunt for relevant files in its state directory and understand its file structure — and every AI assistant has a different layout. That's a problem.
+
+The real problem starts when you use **two or more** AI assistants on the same project — either one after the other, or switching between them. Without a shared system:
+
+- Each assistant stores its own state in its own `.agentname/` directory inside your project.
+- After a few switches, you have no idea which context is the latest.
+- Switching assistants means starting from scratch — the new one has no memory of what the previous one did.
+
+This workflow solves that by forcing **every** AI assistant to follow the same protocol when creating or updating context, progress, and next-steps.
+
+**Think of it like a road trip with multiple drivers:**
+
+1. **Gemini** is driving. It uses its free tier, works on the task, and builds up context.
+2. Gemini's quota runs out. Before stopping, it creates a **checkpoint** — saving the current state to `ai/next-steps.md`, `ai/progress.md`, and `ai/context.md`.
+3. **DeepSeek** takes the wheel. You ask it to load context using the same protocol. It reads the same files and continues exactly where Gemini left off.
+4. When you want to switch back, DeepSeek creates another checkpoint. Gemini takes over again.
+
+
+No matter which assistant you use — ChatGPT, Claude, Gemini, DeepSeek, Copilot — they all read from and write to the **same shared context**. The protocol is the same. The files are the same. The state is always consistent.
+
+The result? **Peace of mind.** You know exactly where the AI directory is, you know the file structure, and you can interact efficiently without guessing which assistant's context is current.
+
+> **One protocol. One shared context. Any assistant picks up where the last one left off.**
+
 
 
 
 ## How it looks like
+
 
 ```text
 +--------------------------------------+                +---------------------------------------+
@@ -78,8 +108,6 @@ In short: it turns AI from a chat buddy into a **reliable teammate** that follow
 | │  ├─ ai-policy-web-frontend.md      |                | └─ src/             } -- application  |
 | │  └─ ai-policy-linux-system-admin.md|                |    └─ main.go       }    code         |
 +--------------------------------------+                +---------------------------------------+
-
-
 
 
 ``` 
