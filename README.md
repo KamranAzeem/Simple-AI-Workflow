@@ -359,6 +359,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
 - Use `ai-policy-data.md` when the project is mainly focused on data engineering, ETL pipelines, data processing, analytics, or database-heavy workloads.
 - Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks.
+- Use `ai-policy-mobile-apps.md` when the project is mainly focused on mobile app development (iOS, Android, or cross-platform). See the [mobile app policy guide](docs/ai-policy-mobile-apps-guide.md) for details on what it covers and how to use it.
 
 - If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **central common policy file** will handle the shared engineering standards automatically.
 
@@ -403,6 +404,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - VSCode `/init` instructions: `docs/vscode-init-instructions.md`
 - Beginner setup guide (install VS Code, set up Cline and GitHub Copilot examples, configure provider API keys): `docs/vscode-cline-provider-setup-for-beginners.md`
 - AI provider selection guide (cost and usage decision helper): `docs/ai-provider-selection-guide.md`
+- Mobile app development policy guide (iOS, Android, cross-platform): `docs/ai-policy-mobile-apps-guide.md`
 
 ## Optional: VSCode `/init` Instructions
 
