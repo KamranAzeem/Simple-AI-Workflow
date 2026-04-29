@@ -32,9 +32,11 @@ Read in this order:
 7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
 8. [progress file](ai/progress.md) - (Chronological history; local only)
 9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-10. [artifacts directory](ai/artifacts/) - (Optional: draft outputs from brainstorming/work sessions; scan/index if present; skip if not present)
-11. [notes directory](ai/notes/) - (Optional: raw unpolished notes from human or AI; scan/index if present; skip if not present)
-12. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+10. [artifacts directory](ai/artifacts/) - (Always created at bootstrap; scan/index for draft outputs from brainstorming/work sessions)
+11. [notes directory](ai/notes/) - (Always created at bootstrap; scan/index for raw unpolished notes from human or AI)
+12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read, write, or summarize unless explicitly asked)
+13. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+
 
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
 
@@ -46,8 +48,8 @@ When bootstrapping in a new repository where no AI files exist:
 
 1. **Create the AI directory structure**:
    - Create `ai/` directory in the project root
-   - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`
-   - Optional subdirectories: `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
+   - Create required subdirectories: `ai/daily-checkpoints/`, `ai/sessions/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`, `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
+
    - **Note**: `ai/github-copilot/` is NOT a bootstrap directory. It is mentioned in the Policy Authority section as a *future storage location* only if GitHub Copilot customization artifacts are needed; create it on-demand, not by default.
    - Inside `ai/sessions/`, create a folder named after the current agent (e.g., `aider`, `copilot`, `gemini`). **Skip this for any AI assistant/agent that is a VSCode chat plugin**. 
 
@@ -72,7 +74,10 @@ When bootstrapping in a new repository where no AI files exist:
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.
    - Index `ai/shared/knowledge-base/` for project-specific patterns.
+   - Scan `ai/artifacts/` for draft outputs from previous brainstorming/work sessions.
+   - Scan `ai/notes/` for raw unpolished notes from human or AI.
    - Report the status of these locations in the final acknowledgement.
+
 
 5. **Acknowledge readiness** and await first user instruction.
 
