@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T11:45:00Z
-Intent: Add API Rate-Limit Mitigation policy to universal guardrails.
+Updated-by: Cline
+Last modified: 2026-04-29T20:58:00+02:00
+Intent: Add Generated File Validation policy to universal guardrails.
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -60,6 +61,24 @@ When implementing new features, architecture changes, or functional code modific
     - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
     - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
+- **Generated File Validation**: Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
+    - **Common linters by file type**:
+        - JavaScript/TypeScript: `npx eslint --fix <file>`
+        - Python: `ruff check --fix <file>` (or flake8/pylint)
+        - Go: `gofmt -w <file>` (or `golangci-lint run --fix`)
+        - Rust: `cargo clippy --fix` (or `rustfmt <file>`)
+        - Shell scripts: `shellcheck <file>`
+        - Markdown: `markdownlint --fix <file>`
+        - YAML/JSON: `yamllint <file>` (or `jq . <file>` for JSON validation)
+        - Dockerfile: `hadolint <file>`
+        - Terraform/HCL: `terraform fmt <file>`
+        - SQL: `sqlfluff fix <file>`
+        - CSS/SCSS: `stylelint --fix <file>`
+        - Swift: `swiftlint --fix`
+        - Kotlin: `ktlint -F <file>`
+        - Java: `google-java-format -i <file>` (or checkstyle)
+    - **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
+    - **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
 ## Communication Standards
 - **Token Efficiency**: Minimize filler; use direct, actionable language.

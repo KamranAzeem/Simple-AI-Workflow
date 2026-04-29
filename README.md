@@ -393,7 +393,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 
 ## Docs and Slides
 
-- [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link)
+- [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link) - *The slides are available under Creative Commons license.*
 - Local docs directory: `docs/`
 - Slide notes/examples in this repository: `docs/MCP-and-its-benefits.md`
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
