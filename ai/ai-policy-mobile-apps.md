@@ -1,9 +1,10 @@
 <!--
 Created-by: Cline
 Updated-by: Cline
-Last modified: 2026-04-27T19:41:00+02:00
-Intent: Specialized policy for mobile app development (iOS, Android, cross-platform).
+Last modified: 2026-04-29T21:24:00+02:00
+Intent: Remove universal testing rules now in common policy (deterministic tests, mock deps, test failure modes).
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -77,10 +78,8 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 - **Snapshot Tests**: Cover UI components to detect unintended visual changes across releases.
 
 ### Testing Standards
-- Tests must be deterministic — no flaky tests depending on timing, network availability, or device state.
-- Mock external dependencies (network, database, sensors) in unit tests. Use fakes for in-memory test doubles.
-- Test error states, loading states, and edge cases — not just the happy path.
 - Name tests clearly using the pattern: `[method]_[scenario]_[expectedResult]`.
+
 
 ## Error Handling & Resilience
 

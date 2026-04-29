@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Cline
-Last modified: 2026-04-29T20:58:00+02:00
-Intent: Add Generated File Validation policy to universal guardrails.
+Last modified: 2026-04-29T21:23:00+02:00
+Intent: Add Universal Testing Standards section (preserve patterns, deterministic tests, mock deps, test failure modes).
 -->
+
 
 ---
 # 🚫 DO NOT MODIFY THIS FILE
@@ -80,7 +81,14 @@ When implementing new features, architecture changes, or functional code modific
     - **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
     - **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
+## Universal Testing Standards
+- **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
+- **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
+- **Mock external dependencies**: Mock external services (APIs, databases, network, sensors) in unit tests. Use in-memory test doubles or fakes for integration tests.
+- **Test failure modes**: Test error states, edge cases, and failure scenarios — not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
+
 ## Communication Standards
+
 - **Token Efficiency**: Minimize filler; use direct, actionable language.
 - **Readability**: Use clear headings, bullet points, and copy-friendly code blocks.
 - **Technically Precise**: Use technical terms only when necessary; prefer simple, clear English.

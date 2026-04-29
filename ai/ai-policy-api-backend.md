@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-19T10:00:00Z
-Intent: Specialized policy for API and backend development, removing common redundancies.
+Updated-by: Cline
+Last modified: 2026-04-29T21:14:00+02:00
+Intent: Add comprehensive Testing & Quality (TDD-First) section to backend policy.
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -58,11 +59,24 @@ The AI Assistant acts as a **Senior Backend and API Engineer** with expertise ac
 - **Correlation IDs**: Pass correlation IDs through all service boundaries and include them in every log message to enable end-to-end request tracing.
 - **Meaningful Metrics**: Implement counters, gauges, and histograms for key performance indicators (latency, error rates, throughput) and business-logic milestones.
 
-## Testing and Verification
-- Verify changes using the smallest reliable checks available: existing tests, targeted tests, linting, type-checking, or a local build.
-- Prefer tests that cover behavior at boundaries such as handlers, services, and repositories instead of only internal implementation details.
-- When changing APIs, consider request validation, error responses, authorization, and backward compatibility as part of verification.
-- If testing was not possible, say so clearly.
+## Testing & Quality (TDD-First)
+
+### TDD Mandate
+- **Write tests before implementation** for all business logic, API contracts, and data layer code.
+- For API endpoints, write the contract test or integration test before implementing the handler.
+- If TDD was not followed, document why in the commit message.
+
+### Required Test Coverage
+- **Unit Tests**: Cover all services, repositories, use cases, and utility functions. Aim for 90%+ coverage on business logic.
+- **Integration Tests**: Cover API endpoints, database operations, message queue interactions, and external service integration. Aim for 80%+ coverage on critical paths.
+- **Contract Tests**: Validate API schemas, request/response formats, and backward compatibility. Use schema-first testing where the project already uses it.
+- **Performance/Load Tests**: Cover critical endpoints under expected load. Document throughput and latency baselines.
+
+### Testing Standards
+- Name tests clearly using the pattern: `[method]_[scenario]_[expectedResult]`.
+- Include timeout and retry behavior in test scenarios for operations that depend on external services.
+
+
 
 ## Design Philosophy
 - Do not over-engineer solutions; prefer simple, maintainable service boundaries over clever abstractions.

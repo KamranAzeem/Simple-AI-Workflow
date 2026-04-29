@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-19T10:00:00Z
-Intent: Specialized policy for web frontend development, removing common redundancies.
+Updated-by: Cline
+Last modified: 2026-04-29T21:14:00+02:00
+Intent: Add comprehensive Testing & Quality (TDD-First) section to frontend policy.
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -58,11 +59,24 @@ The AI Assistant acts as a **Senior Frontend Web Developer** with expertise acro
 - **LocalStorage/SessionStorage**: Use local storage for persistent user preferences or session state that doesn't belong in the URL, ensuring sensitive data is never stored unencrypted.
 - **Hybrid Strategy**: Use URL for "what I'm looking at" and LocalStorage for "how I like it".
 
-## Testing and Verification
-- Verify user-facing changes in the smallest reliable way available: existing tests, targeted checks, or a local build.
-- Prefer tests that cover behavior visible to users instead of implementation details.
-- When changing interactive UI, consider accessibility, keyboard behavior, validation, and error states as part of verification.
-- If testing was not possible, say so clearly.
+## Testing & Quality (TDD-First)
+
+### TDD Mandate
+- **Write tests before implementation** for all state management, data fetching logic, and business logic.
+- For UI components, write the test or verification plan before implementing the component.
+- If TDD was not followed, document why in the commit message.
+
+### Required Test Coverage
+- **Unit Tests**: Cover hooks, utilities, state management, and data transformation functions. Aim for 80%+ coverage on business logic.
+- **Integration Tests**: Cover component rendering, user interactions, form submissions, and API integration points. Test key user flows end-to-end.
+- **E2E Tests**: Cover critical user paths (login, navigation, data entry, checkout). Use Playwright or Cypress for browser-based testing.
+- **Visual Regression Tests**: Cover UI components to detect unintended visual changes. Use snapshot testing or screenshot comparison tools.
+
+### Testing Standards
+- Test keyboard navigation, focus management, and screen reader behavior for accessible components.
+- Name tests clearly using the pattern: `[component/function]_[scenario]_[expectedResult]`.
+
+
 
 ## Design Philosophy
 - Do not over-engineer solutions; prefer simple, maintainable patterns over clever abstractions.

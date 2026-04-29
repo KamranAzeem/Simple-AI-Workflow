@@ -355,12 +355,13 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 
 - **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts, generated file validation) and is automatically loaded during the bootstrap process as the **central common policy file**.
 
-- Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows.
-- Use `ai-policy-web-frontend.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows.
-- Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
-- Use `ai-policy-data.md` when the project is mainly focused on data engineering, ETL pipelines, data processing, analytics, or database-heavy workloads.
-- Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks.
-- Use `ai-policy-mobile-apps.md` when the project is mainly focused on mobile app development (iOS, Android, or cross-platform). See the [mobile app policy guide](docs/ai-policy-mobile-apps-guide.md) for details on what it covers and how to use it.
+- Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows. Includes **Testing & Validation** (IaC validation, policy-as-code testing, drift detection).
+- Use `ai-policy-web-frontend.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows. Includes **Testing & Quality (TDD-First)** (unit, integration, E2E, visual regression).
+- Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness. Includes **Testing & Quality (TDD-First)** (unit, integration, contract, performance/load).
+- Use `ai-policy-data.md` when the project is mainly focused on data engineering, ETL pipelines, data processing, analytics, or database-heavy workloads. Includes **Testing & Validation** (pipeline testing, schema validation, data quality, contract testing).
+- Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks. Includes **Testing & Validation** (script testing, configuration testing, idempotency, DR testing).
+- Use `ai-policy-mobile-apps.md` when the project is mainly focused on mobile app development (iOS, Android, or cross-platform). Includes **Testing & Quality (TDD-First)** (unit, UI, integration, snapshot). See the [mobile app policy guide](docs/ai-policy-mobile-apps-guide.md) for details.
+
 
 - If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **central common policy file** will handle the shared engineering standards automatically.
 
