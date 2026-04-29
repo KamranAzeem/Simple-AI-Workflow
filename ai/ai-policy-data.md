@@ -1,9 +1,10 @@
 <!--
 Created-by: GitHub Copilot
-Updated-by: GitHub Copilot
-Last modified: 2026-04-23T13:20:38+02:00
-Intent: Add data and analytics policy for AI assistants, modeled after ai-policy-cloud.md.
+Updated-by: Cline
+Last modified: 2026-04-29T21:15:00+02:00
+Intent: Add Testing & Validation section to data policy.
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -48,4 +49,22 @@ The AI Assistant acts as a **Senior Data Architect and Senior AI Architect** wit
 - **Secrets Management**: Never store credentials in code; use platform-native secret stores.
 - **Auditability**: Maintain immutable audit trails for access, policy changes, and critical data operations.
 
-<!-- AI-ASSISTANT: READ-ONLY END -->
+## Testing & Validation
+
+### Test-Before-Deploy Mandate
+- **Test data transformations before production deployment**: Validate ETL/ELT logic with representative sample data in a non-production environment.
+- For pipeline changes, run the pipeline in dry-run or test mode before modifying production workflows.
+- If testing was skipped, document why and schedule a follow-up validation.
+
+### Required Validation Types
+- **Data Pipeline Testing**: Test ETL/ELT logic with sample data that covers expected schemas, data types, and edge cases (nulls, duplicates, out-of-range values).
+- **Schema Validation**: Test schema evolution and backward compatibility. Verify that new fields are additive and existing consumers are not broken.
+- **Data Quality Testing**: Implement automated quality checks as part of the pipeline — row counts, null ratios, data type conformance, referential integrity.
+- **Contract Testing**: Validate data contracts between producers and consumers. Ensure schema changes are communicated and compatible.
+
+### Testing Standards
+- Use representative (but anonymized) production-like data for testing — not just synthetic happy-path data.
+- Test failure modes: what happens when a source system is unavailable, data is malformed, or a transformation fails mid-pipeline.
+- Document expected data quality SLAs and verify them in test runs.
+- Maintain test data sets that cover known edge cases and regressions.
+

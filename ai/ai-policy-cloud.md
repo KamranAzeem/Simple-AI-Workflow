@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-19T10:00:00Z
-Intent: Slim down cloud policy by removing common redundancies.
+Updated-by: Cline
+Last modified: 2026-04-29T21:15:00+02:00
+Intent: Add Testing & Validation section to cloud policy.
 -->
+
 ---
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
@@ -42,4 +43,23 @@ The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** 
 - **Network Segmentation**: Implement proper VPC/VNet segmentation, firewall rules, and security groups to isolate workloads.
 - **Vulnerability Scanning**: Regularly scan container images and IaC templates for security misconfigurations.
 
-<!-- AI-ASSISTANT: READ-ONLY END -->
+## Testing & Validation
+
+### Test-Before-Apply Mandate
+- **Validate infrastructure changes before applying**: Run `terraform plan`, `terraform validate`, or equivalent dry-run commands before any IaC deployment.
+- For policy-as-code (Sentinel, OPA), write and test policies in isolation before attaching to production workloads.
+- If testing was skipped (e.g., emergency fix), document why and schedule a follow-up validation.
+
+### Required Validation Types
+- **IaC Validation**: Run syntax validation, formatting checks (`terraform fmt`), and static analysis (checkov, tfsec, cfn-lint) on all infrastructure templates before apply.
+- **Policy-as-Code Testing**: Test Sentinel/OPA policies against known-good and known-bad inputs to verify enforcement behavior.
+- **Integration Testing**: Test pipeline deployments in isolated environments (dev/staging) before promoting to production. Verify that infrastructure changes produce the expected state.
+- **Drift Detection**: After deployment, verify that actual infrastructure state matches the declared configuration. Flag and remediate drift.
+
+
+
+### Testing Standards
+- IaC templates must be validated in a non-production environment before production apply.
+- Pipeline changes must be tested in a separate test pipeline or branch before modifying the main deployment pipeline.
+- Document expected outcomes for each validation step (e.g., "terraform plan should show 0 changes after initial apply").
+
