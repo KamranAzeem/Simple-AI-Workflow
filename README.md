@@ -353,7 +353,8 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 
 ## Which policy should you choose?
 
-- **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts) and is automatically loaded during the bootstrap process as the **central common policy file**.
+- **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts, generated file validation) and is automatically loaded during the bootstrap process as the **central common policy file**.
+
 - Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows.
 - Use `ai-policy-web-frontend.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows.
 - Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness.
