@@ -53,7 +53,20 @@ The AI will:
 3. Delete the handoff file and ownership claim upon successful verification.
 4. Record the completion in `ai/progress.md`.
 
-## 3. Coordination & Safety
+## 3. Git Context Enrichment (Automatic)
+The protocol leverages the project's Git history to build a richer understanding of the codebase's evolution without manual data entry.
+
+### How it Works
+1. **Initial Distillation**: During the first bootstrap in a Git repository, the AI distills the last 50-100 commits into a `## Project Evolution & Git History` section in `ai/context.md`.
+2. **Reference Point**: The AI records the latest commit hash (HEAD) in `context.md`.
+3. **Delta Loading**: On every subsequent "load context" operation, the AI identifies new commits since the last recorded hash (`git log <hash>..HEAD`) and loads them into active memory.
+
+### Benefits
+- **Zero-Effort Context**: The AI "remembers" recent changes you made without you having to explain them.
+- **Token Efficiency**: Distilled summaries in `context.md` are much smaller than raw Git logs.
+- **Temporal Awareness**: AI understands the "why" behind architectural shifts by looking at commit messages.
+
+## 4. Coordination & Safety
 - **Coordination**: `ai/shared/coordination.md` prevents multiple agents from conflicting on the same task.
 - **Checkpoints**: Use the command *"Issue a checkpoint"* to update all tracking logs (`next-steps.md`, `progress.md`, daily checkpoints).
 - **Flight Recorder**: Every session is logged in `ai/sessions/gemini/` for traceability.

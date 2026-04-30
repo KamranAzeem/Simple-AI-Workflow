@@ -245,7 +245,14 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Strict Boundary Control**: Enforcement of `.aiignore` / `.agentignore` to prevent AI leakage or unauthorized exploration.
 - **Version Control Guardrails**: Policies for branch-gating, issue-labeling, and safe Git operations.
 
+### 8. Git Context Enrichment (Automatic)
+- **Zero-Effort History**: Automatically distills project Git history into `context.md` during bootstrap.
+- **Delta Awareness**: On every load, the AI identifies new commits since the last session, ensuring it's always up-to-date with your manual changes.
+- **Token Efficiency**: Replaces raw Git logs with distilled summaries, maximizing your context window.
+
 ## AI Prompt Playbook (Simple Workflow)
+
+> **Important**: For advanced patterns (Handoffs, Knowledge Base, Git Enrichment), see the **[Workflow Guide](docs/workflow-guide.md)**.
 
 Use these short prompts directly when interacting with AI assistants.
 
@@ -401,7 +408,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - Slide notes/examples in this repository: `docs/MCP-and-its-benefits.md`
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
-- AI usage guide (handoffs, knowledge base, coordination): `docs/AI_USAGE.md`
+- AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md`
 - VSCode `/init` instructions: `docs/vscode-init-instructions.md`
