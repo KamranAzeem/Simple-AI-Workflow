@@ -22,7 +22,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 - **Estimated setup time:** Less than five minutes.
 - **Difficulty:** Very low.
 - **AI assistant:** An AI assistant is required. Any pricing tier will work; prefer one integrated with the VS Code Chat extension for best user experience (examples: ChatGPT, Claude, DeepSeek, Gemini, GitHub Copilot).
-- **Installation method:** No install scripts, no sudo, no admin, no pip, npm, no this, no that! Just *one* `git clone`, and *one* `copy` command.
+- **Installation method:** No install scripts, no sudo, no admin, no pip, npm, no this, no that! Just *one* `git clone`, and *one* `copy` command. No brittle shell scripts or complex "song and dance" situations.
 
 
 ## Quick start
@@ -207,7 +207,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 2. Standardized Bootstrap Protocol
 - **AGENTS.md Protocol**: A consistent entry point for any AI agent to understand its role, authorities, and reading order.
 - **Explicit State Loading**: Mandates the loading of existing tracking files (`next-steps.md`, `progress.md`, `context.md`) during initialization to ensure session continuity.
-- **Zero-Install Setup**: No scripts required; just one `git clone` and one `copy` command to initialize any project.
+- **Zero-Install & Zero-Script Setup**: No brittle scripts or "song and dance" situation required; just one `git clone` and one `copy` command to initialize any project. The workflow is purely instruction-based and logic-driven.
 - **Operational Readiness Check**: Automatic scanning of `ai/shared/handoffs/` and `ai/shared/coordination.md` during initialization to pick up existing context.
 - **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across local project directories.
 
@@ -249,6 +249,9 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Zero-Effort History**: Automatically distills project Git history into `context.md` during bootstrap.
 - **Delta Awareness**: On every load, the AI identifies new commits since the last session, ensuring it's always up-to-date with your manual changes.
 - **Token Efficiency**: Replaces raw Git logs with distilled summaries, maximizing your context window.
+
+### 9. Native Intelligence (Protocol over Plumbing)
+- **Pure Protocol (No Tooling Lock-in)**: Unlike other frameworks that require specialized CLI tools, Python environments, or complex shell scripts, this workflow is purely instruction-based. It works natively with any LLM that can read files, meaning there’s no "song and dance" setup—just a protocol that the AI follows.
 
 ## AI Prompt Playbook (Simple Workflow)
 
