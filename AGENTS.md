@@ -28,7 +28,7 @@ Read in this order:
 3. [local main policy file](ai/ai-policy-<name>.md) - (Fallback if Step 1 is unreachable; skip if Step 1 succeeded)
 4. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
 5. All files in the [central settings directory](settings/) - (Read from **Central Workflow Directory**; optional; skip if directory is absent or empty)
-6. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only; skip if not present)
+6. [user profile file](ai/about-human.md) - (Optional; AI personal context; only load if present; do not create)
 7. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
 8. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
 9. [progress file](ai/progress.md) - (Chronological history; local only)
