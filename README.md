@@ -409,6 +409,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
+- Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md`
 - VSCode `/init` instructions: `docs/vscode-init-instructions.md`
