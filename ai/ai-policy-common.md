@@ -47,10 +47,6 @@ When implementing new features, architecture changes, or functional code modific
 - Fields: `Created-by`, `Updated-by`, `Last modified`, `Intent`.
 - **Timestamp Policy**: Always use the human user's local time for all timestamps (ISO-8601 format).
 
-## Session Logging (Flight Recorder)
-**Mandate (CLI Assistants only)**: Maintain granular, continuous session logs according to the protocol defined in **AGENTS.md**.
-- **Atomic Requirement**: Every conversational turn MUST be appended to the active session log file in `ai/sessions/` within the same turn as the interaction. This ensures a complete, 1:1 history of all user queries, AI reasoning, tool usage, and results.
-
 
 ## Universal Operational Guardrails
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
