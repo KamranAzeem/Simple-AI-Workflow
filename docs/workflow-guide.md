@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-04-17T20:00:00Z
-Intent: Update AI usage guide to match current system state (git-ignored knowledge base)
+Updated-by: Gemini CLI
+Last modified: 2026-04-30T22:45:00+02:00
+Intent: Add Expertise & Intent Alignment section (Inquiry vs Directive protocol).
 -->
 ---
 # AI Usage Guide: static-website
@@ -66,7 +66,26 @@ The protocol leverages the project's Git history to build a richer understanding
 - **Token Efficiency**: Distilled summaries in `context.md` are much smaller than raw Git logs.
 - **Temporal Awareness**: AI understands the "why" behind architectural shifts by looking at commit messages.
 
-## 4. Coordination & Safety
+## 4. Expertise & Intent Alignment (Review-First)
+To prevent AI assistants from prematurely implementing code changes when you only wanted to ask a question, the workflow enforces a strict intent alignment protocol.
+
+### Directive vs. Inquiry
+The system distinguishes between two types of requests:
+- **Inquiry**: Requests for analysis, advice, observations, or "how-to" explanations.
+- **Directive**: Explicit instructions to perform a task, fix a bug, or implement a feature.
+
+### The "Analyze-Plan-Stop" Rule
+For all **Inquiries**, the AI is mandated to:
+1.  **Analyze**: Share technical thoughts, opinions, and analysis of the problem.
+2.  **Plan**: Propose a specific implementation strategy, including which files will be changed or created.
+3.  **Pause and wait**: The AI MUST NOT proceed with code modifications until it receives an explicit **Directive** from you.
+
+### Benefits
+- **Full Control**: You review the plan before a single line of code is changed.
+- **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
+- **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
+
+## 5. Coordination & Safety
 - **Coordination**: `ai/shared/coordination.md` prevents multiple agents from conflicting on the same task.
 - **Checkpoints**: Use the command *"Issue a checkpoint"* to update all tracking logs (`next-steps.md`, `progress.md`, daily checkpoints).
 - **Flight Recorder**: Every session is logged in `ai/sessions/gemini/` for traceability.
