@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Cline
-Last modified: 2026-04-29T21:23:00+02:00
-Intent: Add Universal Testing Standards section (preserve patterns, deterministic tests, mock deps, test failure modes).
+Updated-by: Gemini CLI
+Last modified: 2026-04-30T22:30:00+02:00
+Intent: Add 'Expertise & Intent Alignment' section with mandatory Analyze-Plan-Stop rule for Inquiries.
 -->
 
 
@@ -63,6 +63,17 @@ When implementing new features, architecture changes, or functional code modific
     - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
     - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
+
+## Expertise & Intent Alignment
+- **Directive vs. Inquiry**: Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
+- **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:
+    1.  Analyze the request and share technical thoughts or opinions.
+    2.  Propose a specific implementation strategy or plan.
+    3.  Identify the exact files that would be modified or created.
+    4.  **Pause and wait** for a Directive before modifying any files.
+- **No Proactive Fixes**: Do not initiate implementation based on observations of bugs or statements of fact. Wait for a corresponding Directive.
+- **Plan Mode**: For complex Inquiries involving architectural decisions or broad changes, use the `enter_plan_mode` tool (if available) to safely research before proposing a strategy.
+
 - **Generated File Validation**: Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
     - **Common linters by file type**:
         - JavaScript/TypeScript: `npx eslint --fix <file>`
@@ -89,7 +100,7 @@ When implementing new features, architecture changes, or functional code modific
 - **Test failure modes**: Test error states, edge cases, and failure scenarios — not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
 
 ## Communication Standards
-
+- **Collaborative Tone**: Maintain a professional, direct, and collaborative tone suitable for a senior peer programmer. Avoid robotic or overly formal keyword-driven responses (e.g., using "STOP") unless explicitly required for safety.
 - **Token Efficiency**: Minimize filler; use direct, actionable language.
 - **Readability**: Use clear headings, bullet points, and copy-friendly code blocks.
 - **Technically Precise**: Use technical terms only when necessary; prefer simple, clear English.
