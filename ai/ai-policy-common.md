@@ -47,12 +47,22 @@ When implementing new features, architecture changes, or functional code modific
 - Fields: `Created-by`, `Updated-by`, `Last modified`, `Intent`.
 - **Timestamp Policy**: Always use the human user's local time for all timestamps (ISO-8601 format).
 
+## AI-Driven Secure Development Practices
+**Mandate**: AI-generated code and infrastructure configurations must inherently adhere to security best practices derived from established threat modeling principles (e.g., STRIDE, OWASP Top 10).
+- This includes, but is not limited to:
+  - Input Validation & Sanitization: To prevent injection attacks (SQLi, XSS).
+  - Secure Authentication & Authorization: Implementing robust user verification and access control.
+  - Principle of Least Privilege: Ensuring processes and users have only the necessary permissions.
+  - Secure Defaults: Configuring systems and code with security in mind from the outset.
+  - Mitigation of Common Vulnerabilities: Addressing threats related to Spoofing, Tampering, Information Disclosure, Denial of Service, and Elevation of Privilege in generated outputs.
+**AI Contextual Security**: The AI shall use the context of the user's request (e.g., feature description, code snippet, infrastructure goal) to infer potential security concerns and generate appropriately secure outputs.
 
 ## Universal Operational Guardrails
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
 - **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
+...
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
