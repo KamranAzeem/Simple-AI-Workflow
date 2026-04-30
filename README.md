@@ -56,11 +56,14 @@ In short: it turns AI from a chat buddy into a **reliable teammate** that follow
 
 ### What it is not
 
-- **Not a team collaboration tool.** This is built for individual developers. If your whole team wants to share AI rules, you'd need something different.
-- **Not an autonomous robot.** The AI won't run on its own, make decisions without asking, or push code without your approval.
-- **Not a replacement** for your existing tools like CI/CD pipelines, testing frameworks, security scanners, or code reviews. Those still do their job.
-- **Not a reporting dashboard.** It doesn't track how many tokens you spend or generate reports for your manager.
-- **Not an AI training system.** It doesn't train or fine-tune AI models.
+- **Not an "Agent Router" or Orchestrator**: It doesn't automatically route tasks between different models or agents. You decide which AI tool to use; the workflow simply ensures they all share the same memory and follow the same rules.
+- **Not an "Agent for Agents" (A4A)**: This isn't a meta-agent layer that manages other agents. It is a set of declarative rules that *any* agent can follow.
+- **Not a "Black Box"**: There are no hidden scripts, complex background processes, or brittle "song and dance" setups. It is a transparent, instruction-based protocol.
+- **Not an autonomous robot**: The AI remains an assistant; it does not run in autonomous loops or make decisions without a human-in-the-loop.
+- **Not a team collaboration tool**: Designed specifically for individual developers to manage their own local context and history.
+- **Not a replacement**: It complements—not replaces—your existing CI/CD pipelines, testing frameworks, and security scanners.
+- **Not an AI training system**: It provides local grounding for context; it does not train or fine-tune AI models.
+- **Not a reporting dashboard**: It doesn't track token spend or generate manager-ready reports.
 
 ### Why this exists — the multi-assistant problem
 
