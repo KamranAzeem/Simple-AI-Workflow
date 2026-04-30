@@ -29,7 +29,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 * Clone this repository at a central location in your home directory.
 * Copy AGENTS.md into the root of your project directory.
-* Update the central policy path in AGENTS.md in your project directory.
+* Update the Central Workflow Directory path in AGENTS.md in your project directory.
 * Start VScode; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
@@ -157,10 +157,11 @@ Use this when a newer version of this repository adds new bootstrap features (fo
 
 1. Pull the latest changes in this repository, using `git pull`.
 2. Verify that `AGENTS.md` contains the new bootstrap rules you want to roll out.
+3. If you use centralized user context, keep personal files under `settings/` in this repository. The directory is git-ignored and remains untouched by pulls.
 
 ### Step B: Propagate AGENTS.md to your other projects
 
-Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's central policy path.
+Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's Central Workflow Directory and central policy file references.
 
 Linux/macOS/Git Bash (dry-run first):
 
@@ -216,7 +217,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Draft Outputs (`ai/artifacts/`)**: A staging area for draft documents, designs, and code snippets created during brainstorming sessions. Review and refine before promoting to `docs/` or the project codebase.
 - **Raw Notes (`ai/notes/`)**: A low-friction place for unpolished thoughts, meeting notes, or random ideas from both humans and AI. No structure required — just dump and go.
 - **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
-- **Personalization**: Support for `ai/about-human.md` allows you to provide the AI with a profile of your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
+- **Personalization**: Support for central user context files under `settings/` (plus local fallback `ai/about-human.md`) allows you to provide the AI with your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
 
 ### 4. Standardized Traceability (Metadata Headers)
 - **Audit Trails**: Mandatory file-identification headers (Created-by, Updated-by, Intent) using native comment syntax for every AI-modified file.

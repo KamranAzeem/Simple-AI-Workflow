@@ -36,12 +36,13 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
 ### 3. AGENTS.md Configuration
 - Copy `AGENTS.md` from the central Simple-AI-Workflow repository to your example project directory.
 - Open the copied `AGENTS.md` in your example directory.
-- Update the central policy path reference to point to the correct location (**"full/absolute path"**) on your machine:
-  - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/ai/`
-  - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/ai/`
-  - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\ai\`
+- Update the **Central Workflow Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
+  - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`
+  - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/`
+  - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
   - Ensure the path reflects your actual central repository location.
-- Verify the policy files exist at the path you configured (check that `ai-policy-meta.md` and `ai-policy-common.md` are accessible).
+- Verify the policy files exist at the path you configured (check that `ai/ai-policy-meta.md` and `ai/ai-policy-common.md` are accessible).
+- Optional: create `settings/about-human.md` in the central workflow directory for shared user context, and keep `ai/about-human.md` in projects only when local overrides are needed.
 
 ### 4. Verification Checklist
 Before starting Step 1, confirm:
@@ -50,7 +51,7 @@ Before starting Step 1, confirm:
 - [ ] You can open a chat window in the IDE and send prompts.
 - [ ] Simple-AI-Workflow repository is cloned to a central location.
 - [ ] AGENTS.md is copied to your example project directory.
-- [ ] AGENTS.md central policy path is updated to your machine's path.
+- [ ] AGENTS.md Central Workflow Directory is updated to your machine's path.
 
 Once all prerequisites are met, proceed to Step 1.
 

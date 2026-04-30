@@ -13,6 +13,10 @@ ai/**
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
 
+# Central settings directory — personal files shared across all projects (e.g. about-human.md).
+# Git-ignored so contents survive git pull without being committed.
+settings/
+
 # Basic principal: 
 #   Do not add any local AI files to your project work - no matter which AI assistant you are using.
 *   Ignore local-only AI instruction files
