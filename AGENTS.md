@@ -58,7 +58,8 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
    - Create `ai/progress.md` with initial entry
-   - Create `ai/context.md` with project briefing and decisions (initially minimal; grows with project understanding)
+   - Create `ai/context.md` with project briefing and decisions.
+     - **Git History Distillation**: If the directory is a Git repository, run `git log -n 50 --oneline` (or similar), distill the history into major milestones, and record them in a `## Project Evolution & Git History` section in `context.md`. Include the current HEAD hash as a reference.
    - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup.
      - **Agent Name**: Use your primary identifier (e.g., `gemini`, `aider`, `copilot`). The name MUST NOT contain spaces or special characters except hyphens (`-`) or underscores (`_`).
      - **Naming**: `<agent-name>-live-session-YYYY-MM-DD-XX.md` (increment XX).
@@ -69,9 +70,11 @@ When bootstrapping in a new repository where no AI files exist:
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
    - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
+     - **Note**: If this is the source repository for the AGENTS.md protocol (e.g., Simple-AI-Workflow), do NOT ignore AGENTS.md.
 
 4. **Operational Readiness Check**:
    - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read all files in the `settings/` directory of the **Central Workflow Directory** if present to load user-specific context. Read `ai/about-human.md` if present for local user-specific context.
+   - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`). Load these recent changes into the active session memory.
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.
    - Index `ai/shared/knowledge-base/` for project-specific patterns.
@@ -83,7 +86,15 @@ When bootstrapping in a new repository where no AI files exist:
 5. **Acknowledge readiness** and await first user instruction.
 
 ## Multi-Agent Coordination
-Agents MUST follow the Handoff Claim & Execute protocol found in `docs/AI_USAGE.md` and the [local main policy file](ai/ai-policy-<name>.md) when processing tasks from the [handoffs directory](ai/shared/handoffs/). This requires claiming tasks in the [coordination file](ai/shared/coordination.md) to prevent collisions.
+Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
+
+### Handoff Claim & Execute Protocol
+1. **Scan**: Check `ai/shared/handoffs/` for pending tasks.
+2. **Claim**: Record ownership in `ai/shared/coordination.md` to prevent collisions.
+3. **Execute**: Implement the requirements.
+4. **Cleanup**: Delete the handoff file and update `ai/progress.md` upon verification.
+
+*For extended guidance, see `docs/workflow-guide.md`.*
 
 **Header Format:**
 ```markdown
