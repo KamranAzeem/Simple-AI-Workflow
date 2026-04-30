@@ -256,9 +256,9 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 9. Native Intelligence (Protocol over Plumbing)
 - **Pure Protocol (No Tooling Lock-in)**: Unlike other frameworks that require specialized CLI tools, Python environments, or complex shell scripts, this workflow is purely instruction-based. It works natively with any LLM that can read files, meaning there’s no "song and dance" setup—just a protocol that the AI follows.
 
-### 10. Expertise & Intent Alignment (Review-First)
-- **Directive vs. Inquiry Logic**: The AI distinguishes between **Directives** (commands to act) and **Inquiries** (requests for info/analysis).
-- **Analyze-Plan-Stop Rule**: For inquiries, the AI is mandated to provide analysis and a plan, then **pause and wait** for approval before touching code. This prevents premature changes and ensures the human stays in control.
+### 10. AI-Driven Secure Development Practices
+- **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures generated code and configurations are secure by default, helping developers, engineers, and security professionals build safer applications and infrastructure.
+
 
 ## AI Prompt Playbook (Simple Workflow)
 

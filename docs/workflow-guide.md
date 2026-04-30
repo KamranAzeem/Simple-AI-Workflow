@@ -85,7 +85,5 @@ For all **Inquiries**, the AI is mandated to:
 - **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
 - **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
 
-## 5. Coordination & Safety
-- **Coordination**: `ai/shared/coordination.md` prevents multiple agents from conflicting on the same task.
-- **Checkpoints**: Use the command *"Issue a checkpoint"* to update all tracking logs (`next-steps.md`, `progress.md`, daily checkpoints).
-- **Flight Recorder**: Every session is logged in `ai/sessions/gemini/` for traceability.
+## 6. AI-Driven Secure Development Practices
+The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
