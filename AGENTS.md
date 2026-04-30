@@ -61,12 +61,7 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/progress.md` with initial entry
    - Create `ai/context.md` with project briefing and decisions.
      - **Git History Distillation**: If the directory is a Git repository, run `git log -n 50 --oneline` (or similar), distill the history into major milestones, and record them in a `## Project Evolution & Git History` section in `context.md`. Include the current HEAD hash as a reference.
-   - **CLI AI Assistants only**: You MUST create a **new** session log file for the **current** session in `ai/sessions/<agent-name>/` at every startup.
-     - **Agent Name**: Use your primary identifier (e.g., `gemini`, `aider`, `copilot`). The name MUST NOT contain spaces or special characters except hyphens (`-`) or underscores (`_`).
-     - **Naming**: `<agent-name>-live-session-YYYY-MM-DD-XX.md` (increment XX).
-       - **Crucial**: Replace `<agent-name>` with your identifier. DO NOT use the literal string "agent" in the filename.
-       - **Session ID**: Immediately after the header, include the active system session ID (usually retrievable via `/stats`). This ensures the log file is programmatically linked to the actual session context.
-       - **Flight Recorder Mandate (Atomic)**: The log acts as the persistent conversational history. Every turn—regardless of whether it involves file changes—MUST be appended to this log file in the same turn, ensuring a complete, continuous record of all reasoning, tool use, and user interaction.
+
 
 3. **Set up gitignore**:
    - Add `ai/` to `.gitignore` in the project root
