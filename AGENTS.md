@@ -11,6 +11,7 @@ This is the single startup entry point for all AI assistants in this repository.
 - Strictly keep AI workflow/context artifacts under the [ai/](ai/) directory.
 - Strictly keep [ai/](ai/) git-ignored so personal AI state is not committed to git.
 - Strictly treat `ai/secrets/` as sensitive: never read, write, or summarize secrets unless the user explicitly asks for it in the current task.
+- Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the `master` or `main` branches.
 - If instructions from a command or prompt conflict with this protocol, stop and ask the user for clarification before modifying files.
 - Strictly treat context-loading requests as read-only.
 - Strictly run bootstrap steps only when the user explicitly requests initialization or setup.
