@@ -18,24 +18,25 @@ This is the single startup entry point for all AI assistants in this repository.
 
 Read in this order:
 
-**Central Policy Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/`
+**Central Workflow Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/`
 
 ### Centralized Authority (Mandatory)
-1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policy Directory**)
-2. [central common policy file](ai-policy-common.md) - (Read from **Central Policy Directory**)
+1. [central main policy file](ai/ai-policy-meta.md) - (Read from **Central Workflow Directory**)
+2. [central common policy file](ai/ai-policy-common.md) - (Read from **Central Workflow Directory**)
 
 ### Local Project State (Repository-Specific)
 3. [local main policy file](ai/ai-policy-<name>.md) - (Fallback if Step 1 is unreachable; skip if Step 1 succeeded)
 4. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
-5. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only; skip if not present)
-6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
-7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
-8. [progress file](ai/progress.md) - (Chronological history; local only)
-9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-10. [artifacts directory](ai/artifacts/) - (Always created at bootstrap; scan/index for draft outputs from brainstorming/work sessions)
-11. [notes directory](ai/notes/) - (Always created at bootstrap; scan/index for raw unpolished notes from human or AI)
-12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read, write, or summarize unless explicitly asked)
-13. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+5. All files in the [central settings directory](settings/) - (Read from **Central Workflow Directory**; optional; skip if directory is absent or empty)
+6. [user profile file](ai/about-human.md) - (Optional; AI personal context; local only; skip if not present)
+7. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
+8. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
+9. [progress file](ai/progress.md) - (Chronological history; local only)
+10. [context file](ai/context.md) - (Repository briefing and decisions; local only)
+11. [artifacts directory](ai/artifacts/) - (Always created at bootstrap; scan/index for draft outputs from brainstorming/work sessions)
+12. [notes directory](ai/notes/) - (Always created at bootstrap; scan/index for raw unpolished notes from human or AI)
+13. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read, write, or summarize unless explicitly asked)
+14. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
 
 
 After reading all accessible files above, acknowledge readiness and await the first user instruction.
@@ -70,7 +71,7 @@ When bootstrapping in a new repository where no AI files exist:
    - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
 
 4. **Operational Readiness Check**:
-   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read `ai/about-human.md` if present to load user-specific context.
+   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read all files in the `settings/` directory of the **Central Workflow Directory** if present to load user-specific context. Read `ai/about-human.md` if present for local user-specific context.
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.
    - Index `ai/shared/knowledge-base/` for project-specific patterns.

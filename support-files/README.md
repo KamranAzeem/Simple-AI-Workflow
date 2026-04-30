@@ -1,6 +1,6 @@
 # Sync AGENTS.md scripts
 
-This folder contains two helper scripts to propagate the canonical `AGENTS.md` into project directories that may contain an older `AGENTS.md` copy, while preserving the "central policy file path" locations in those `AGENTS.md` files. This makes is very easy to find and update all the `AGENTS.md` files, no matter where they are in the target-path that you provide to the script. This is shown below in the test runs.
+This folder contains two helper scripts to propagate the canonical `AGENTS.md` into project directories that may contain an older `AGENTS.md` copy, while preserving the "central workflow directory and central policy file references" locations in those `AGENTS.md` files. This makes is very easy to find and update all the `AGENTS.md` files, no matter where they are in the target-path that you provide to the script. This is shown below in the test runs.
 
 Remember, these tools/scripts are completely optional. If you want, you can instead use your OS (CLI-based) copy commands - or a file manager in the GUI to copy the `AGENTS.md` file to the project/directory of your choice. 
 
@@ -22,8 +22,8 @@ Both scripts compare file contents first and will update a target `AGENTS.md` wh
 
 ## Implementation details
 
-- Bash: compares file contents and injects the target's central policy path using `grep`/`sed` plus `cp`/`mv` for updates; it enforces the `--source` before `--target-path` ordering for safety.
-- PowerShell: reads the source content and performs a regex-based replacement/injection of the central policy line; it uses content-based comparison and write operations rather than an explicit file-hash command.
+- Bash: compares file contents and injects the target's central workflow directory value using `grep`/`sed` plus `cp`/`mv` for updates; it enforces the `--source` before `--target-path` ordering for safety.
+- PowerShell: reads the source content and performs a regex-based replacement/injection of the central workflow directory line; it uses content-based comparison and write operations rather than an explicit file-hash command.
 
 Note: The Bash script enforces positional ordering of `--source` before `--target-path` (see argument notes). The PowerShell script accepts named parameters, so explicit ordering is not required there.
 
@@ -54,25 +54,34 @@ Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target policy path)
+DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md (while retaining target policy path)
+DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
 
-Policy file in use: (none)
+Values preserved from target (if found):
+	Central Workflow Directory: (not found, will use source value)
+	Central Main Policy:      (not found, will use source value)
+	Central Common Policy:    (not found, will use source value)
 
-DRY-RUN: would replace /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (no central policy line found)
+DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
@@ -95,22 +104,31 @@ Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-Updating /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target policy path)
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
+Updating /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-Updating /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md (while retaining target policy path)
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
+Updating /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
 
-Policy file in use: (none)
-Replacing /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (no central policy line found)
+Values preserved from target (if found):
+	Central Workflow Directory: (not found, will use source value)
+	Central Main Policy:      (not found, will use source value)
+	Central Common Policy:    (not found, will use source value)
+Updating /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
@@ -131,25 +149,34 @@ Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target policy path)
+DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md (while retaining target policy path)
+DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
 
-Policy file in use: (none)
+Values preserved from target (if found):
+	Central Workflow Directory: (not found, will use source value)
+	Central Main Policy:      (not found, will use source value)
+	Central Common Policy:    (not found, will use source value)
 
-DRY-RUN: would replace C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (no central policy line found)
+DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
@@ -170,25 +197,34 @@ Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-Updating C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target policy path)
+Updating C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md
 
-Policy file in use: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+Values preserved from target (if found):
+	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
+	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
-Updating C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md (while retaining target policy path)
+Updating C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
 
-Policy file in use: (none)
+Values preserved from target (if found):
+	Central Workflow Directory: (not found, will use source value)
+	Central Main Policy:      (not found, will use source value)
+	Central Common Policy:    (not found, will use source value)
 
-Replacing C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (no central policy line found)
+Updating C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (while retaining target-specific policy settings)
 
 ----------------------------------------------------------------------------
 

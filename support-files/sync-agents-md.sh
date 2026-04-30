@@ -156,8 +156,8 @@ echo
 # Process matches
 for f_abs in "${matches[@]}"; do
   # Extract values from target AGENTS.md to preserve them
-  # 1. Central Policy Directory
-  target_cp_dir=$(grep -m1 -E '\*\*Central Policy Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central Policy Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 1. Central Workflow Directory
+  target_cp_dir=$(grep -m1 -E '\*\*Central Workflow Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central Workflow Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
   # 2. Central Main Policy File
   target_main_policy=$(grep -m1 -E '\[central main policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[central main policy file\](\([^)]*\)).*/\1/p' || true)
   # 3. Central Common Policy File
@@ -168,7 +168,7 @@ for f_abs in "${matches[@]}"; do
   echo "Target AGENTS.md file: $f_abs"
   echo
   echo "Values preserved from target (if found):"
-  echo "  Central Policy Directory: ${target_cp_dir:-"(not found, will use source value)"}"
+  echo "  Central Workflow Directory: ${target_cp_dir:-"(not found, will use source value)"}"
   echo "  Central Main Policy:      ${target_main_policy:-"(not found, will use source value)"}"
   echo "  Central Common Policy:    ${target_common_policy:-"(not found, will use source value)"}"
 
@@ -178,7 +178,7 @@ for f_abs in "${matches[@]}"; do
   sed_args=()
   if [ -n "$target_cp_dir" ]; then
     esc_val=$(printf '%s' "$target_cp_dir" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Central Policy Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\*\*Central Workflow Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_main_policy" ]; then
     esc_val=$(printf '%s' "$target_main_policy" | sed 's/[\/&]/\\&/g')

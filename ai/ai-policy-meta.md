@@ -25,7 +25,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 
 Responsibilities
 - Read and apply repository policy files and the `AGENTS.md` reading order.
-- **Path Resolution**: Use the **Central Policy Directory** defined in `AGENTS.md` to load the meta and common policy files. All other tracking files (next-steps, progress, etc.) MUST be loaded from the local project's `ai/` directory.
+- **Path Resolution**: Use the **Central Workflow Directory** defined in `AGENTS.md` to load the meta and common policy files. All other tracking files (next-steps, progress, etc.) MUST be loaded from the local project's `ai/` directory.
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
 
 - Run local safety checks (secrets scan, basic linting) before preparing commits.
