@@ -23,7 +23,7 @@ When implementing new features, architecture changes, or functional code modific
 1. **Discussion**: Propose and wait for approval.
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
-*Exception*: Read-only work, documentation, and AI tracking files do not require branching.
+*Exception*: Read-only work, documentation, and AI tracking files do not require branching, BUT all state-changing Git operations on `master` or `main` still require explicit per-interaction human approval.
 
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
@@ -55,6 +55,7 @@ When implementing new features, architecture changes, or functional code modific
 ## Universal Operational Guardrails
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
 - **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.
+- **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
