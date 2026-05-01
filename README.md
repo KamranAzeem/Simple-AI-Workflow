@@ -280,6 +280,68 @@ Use these short prompts directly when interacting with AI assistants.
 
 > **Why use AI for git operations?** When you ask the AI to commit, it applies the security policy before touching git — scanning the files for secrets (passwords, tokens, keys) before running `git add`, and stopping if anything suspicious is found. This is enforced automatically on every commit, without you having to remember to do it manually.
 
+## Git is Your Friend — Especially with AI
+
+If you're new to Git or find it intimidating, here's the good news: **your AI assistant handles all the Git operations for you.** You just need to understand one simple strategy that will save you from heartache.
+
+### The Golden Rule
+
+> **No matter how small you perceive your change — make a branch, commit frequently, and squash-merge when done.**
+
+### Why this matters
+
+When working with an AI assistant, things can go wrong:
+- Your editor or IDE might crash mid-edit.
+- The AI might have a glitch while modifying your code files.
+- A tool call could produce unexpected output that corrupts your work.
+
+The result? **Unusable code.** And the pain of repairing it is far greater — and far more stressful — than simply following a disciplined Git workflow.
+
+### The Branch → Commit → Squash-Merge Strategy
+
+```
+1. CREATE A BRANCH
+   └── "AI, create a branch for this fix: feature/my-new-thing"
+
+2. COMMIT FREQUENTLY
+   └── Let the AI auto-commit as you go — no matter how small the step.
+       Each commit is a safe checkpoint you can fall back to.
+
+3. SQUASH-MERGE WHEN DONE
+   └── "AI, commit the work, merge into main, push, and delete the branch"
+       The AI squashes all those tiny commits into one clean,
+       well-described commit on main/master.
+
+4. DELETE THE LOCAL BRANCH
+   └── The AI handles this automatically as part of the merge step.
+```
+
+### Why this works
+
+| Step | Benefit |
+|------|---------|
+| **Branch** | Isolates your work. If something goes wrong, main/master stays clean. |
+| **Frequent commits** | Creates recovery points. A crash loses at most one small step, not hours of work. |
+| **Squash-merge** | Keeps main/master history clean — one feature = one commit. |
+| **AI does it all** | You never type a Git command. Just ask the AI. |
+
+### The one-liner prompt
+
+When you're done with a feature or fix, just say:
+
+> **"Commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the local branch."**
+
+The AI will:
+1. ✅ Scan files for secrets before committing (security policy enforced automatically)
+2. ✅ Commit all changes with a descriptive message
+3. ✅ Squash-merge into main/master
+4. ✅ Push to remote
+5. ✅ Delete the local branch
+
+### Bottom line
+
+> **Git is your safety net. Let the AI be your Git driver. You just enjoy the ride.**
+
 ## Checkpoint System
 
 Checkpoints save the state of your AI discussions, progress, todos, open questions, and daily work snapshots into tracking files inside the `ai/` directory. This system helps you resume your work from where you left off whenever you restart in a project directory.
