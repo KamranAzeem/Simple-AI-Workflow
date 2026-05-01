@@ -22,7 +22,21 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 
 Read in this order:
 
+
+<!-- 
+* Do not remove this comment.
+
+* For any file or directory paths in the lines below.
+  * Only use "full" absolute file or directory path according to your OS.
+  * Do not use any environment variable (e.g. $HOME) .
+  * Do not use "~" in any path .
+  * Do not use any relative path (e.g. ../../some-directory/some-file) .
+-->
+
 **Central Workflow Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
+**Central User AI Directory**: `/home/kamran/.ai/` 
+**Central AI Settings Source**: `/home/kamran/.ai/settings/`
+**Central AI Shared Knowledge Source**: `/home/kamran/.ai/shared-knowledge/`
 
 ### Phase 1: Load Policy Files (Mandatory)
 1. [central main policy file](ai/ai-policy-meta.md) - (Read from **Central Workflow Directory**)
@@ -71,8 +85,6 @@ When bootstrapping in a new repository where no AI files exist:
    - Create `ai/` directory in the project root
    - Create required subdirectories: `ai/daily-checkpoints/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`, `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
 
-   - **Note**: `ai/github-copilot/` is NOT a bootstrap directory. It is mentioned in the Policy Authority section as a *future storage location* only if GitHub Copilot customization artifacts are needed; create it on-demand, not by default.
-
 2. **Initialize state tracking files**:
    - Create `ai/next-steps.md` with initial checkpoint
    - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
@@ -116,8 +128,11 @@ Updated-by: <Name of Agent>
 Last modified: <Local-ISO-8601-Timestamp>
 Intent: <Brief description of the change>
 </comment-syntax>
----
 ```
+
+---
+
+
 **Note**: Always use the human user's local time for all timestamps in file headers, session logs, and checkpoints.
 Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `#` for Shell/Python).
 

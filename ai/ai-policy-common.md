@@ -70,7 +70,12 @@ When implementing new features, architecture changes, or functional code modific
     - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 
-## Expertise & Intent Alignment
+## Global Knowledge Protocol
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST treat files in `Central AI Settings Source` and `Central AI Shared Knowledge Source` as authoritative read-only sources.
+- **Precedence**: Local project configuration files override `Central AI Settings Source` if there is a conflict.
+- **Content Integrity**: The agent MUST NOT modify files within `Central User AI Directory` unless explicitly instructed by a "Promote to Shared" command.
+- **Normalization**: When reading `Central AI Shared Knowledge Source`, the agent should treat these as "lessons learned" to inform its problem-solving process, but not as authoritative codebase logic.
+
 - **Directive vs. Inquiry**: Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
 - **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:
     1.  Analyze the request and share technical thoughts or opinions.

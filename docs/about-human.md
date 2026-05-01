@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-05-01T12:00:00Z
+Intent: Added standard metadata header for traceability.
+-->
+
 # About the Human User
 
 ## Profile
@@ -28,7 +35,7 @@
 
 ## Preferences and Style
 - Communication Style:
-        - Direct, practical, low-fluff communication
+        - Direct, practical, natural, low-fluff communication
         - Clear business and technical tradeoffs
         - Prefer concise answers first, then depth on request
 - Preferred Tools:
@@ -54,4 +61,4 @@
 - Keep recommendations realistic for time-constrained teams with mixed senior opinions.
 - Prefer simple, robust workflows over heavy internal product-building unless there is a clear long-term payoff.
 - Keep sensitive personal details and private contacts out of normal AI outputs unless explicitly requested.
-- Use plain language and avoid unnecessary complexity.
+- Use plain natural language and avoid unnecessary complexity.

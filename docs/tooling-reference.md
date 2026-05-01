@@ -1,3 +1,10 @@
+<!--
+Created-by: Gemini
+Updated-by: Gemini
+Last modified: 2026-05-01T12:00:00Z
+Intent: Added standard metadata header for traceability.
+-->
+
 # AI-Assisted Tooling Reference
 
 This guide outlines the preferred system tools for AI assistants to use when working within this workflow. Installing these tools significantly enhances AI performance, data processing efficiency, and interactive workflows.
