@@ -1,4 +1,3 @@
----
 # AI Bootstrap Entry Point
 
 This is the single startup entry point for all AI assistants in this repository.
@@ -60,24 +59,23 @@ Read in this order:
 12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read unless explicitly asked)
 13. [handoffs directory](ai/shared/handoffs/) - (Scan for pending tasks)
 14. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
-15. [central knowledge base](Central AI Shared Knowledge Source) - (Scan for global knowledge)
+15. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
 16. Repository-root AI ignore file: .aiignore or .agentignore
 
-[...]
+### Phase 5: Initialization & Readiness Check
+17. **Operational Readiness Check**:
+    - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
+    - **Settings Load**: Read files from **Central AI Settings Source** and local `ai/about-human.md` (if present).
+    - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
+    - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
+    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
+    - Check `ai/shared/coordination.md`. If it exists, review active claims.
+    - Scan `ai/shared/handoffs/` for pending tasks.
+    - Scan `ai/artifacts/` for draft outputs.
+    - Scan `ai/notes/` for raw unpolished notes.
+    - Report the status of these locations in the final acknowledgement.
 
-4. **Operational Readiness Check**:
-   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
-   - **Settings Load**: Read files from **Central AI Settings Source** and local `ai/about-human.md` (if present).
-   - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
-   - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
-   - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
-   - Check `ai/shared/coordination.md`. If it exists, review active claims.
-   - Scan `ai/shared/handoffs/` for pending tasks.
-   - Scan `ai/artifacts/` for draft outputs.
-   - Scan `ai/notes/` for raw unpolished notes.
-   - Report the status of these locations in the final acknowledgement.
-
-5. **Acknowledge readiness** and await first user instruction.
+18. **Acknowledge readiness** , provide summary, and await first user instruction.
 
 ## Multi-Agent Coordination
 Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
@@ -101,7 +99,6 @@ Intent: <Brief description of the change>
 ```
 
 ---
-
 
 **Note**: Always use the human user's local time for all timestamps in file headers, session logs, and checkpoints.
 Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `#` for Shell/Python).
