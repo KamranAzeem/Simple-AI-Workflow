@@ -225,7 +225,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
 
 ### 6. Multi-Agent Coordination (Local Workspace)
-- **A2A Coordination**: Dedicated `ai/shared/` directory structure:
+- **A2A Coordination**: Dedicated `ai/shared/` directory structure: [AI Agent Collaboration Guide](docs/ai-agent-collaboration.md)
     - `handoffs/`: Async task transfers between agents or sessions.
   - `knowledge-base/`: Local notes and references for AI workflow continuity.
     - `coordination.md`: Real-time status board for task locking and ownership.
@@ -244,10 +244,10 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 8. Git Context Enrichment (Automatic)
 - **Zero-Effort History**: Automatically distills project Git history into `context.md` during bootstrap.
 - **Delta Awareness**: On every load, the AI identifies new commits since the last session, ensuring it's always up-to-date with your manual changes.
-- **Token Efficiency**: Replaces raw Git logs with distilled summaries, maximizing your context window.
+- **Token Efficiency**: Replaces raw Git logs with distilled summaries, maximizing your context window. [Workflow Guide](docs/workflow-guide.md)
 
 ### 9. Native Intelligence (Protocol over Plumbing)
-- **Pure Protocol (No Tooling Lock-in)**: Unlike other frameworks that require specialized CLI tools, Python environments, or complex shell scripts, this workflow is purely instruction-based. It works natively with any LLM that can read files, meaning there’s no "song and dance" setup—just a protocol that the AI follows.
+- **Pure Protocol (No Tooling Lock-in)**: Unlike other frameworks that require specialized CLI tools, Python environments, or complex shell scripts, this workflow is purely instruction-based. It works natively with any LLM that can read files, meaning there’s no "song and dance" setup—just a protocol that the AI follows. [Workflow Guide](docs/workflow-guide.md)
 
 ### 10. AI-Driven Secure Development Practices
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures generated code and configurations are secure by default, helping developers, engineers, and security professionals build safer applications and infrastructure.
@@ -258,7 +258,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Normalization**: Shared knowledge is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
 
 ### 12. Modular Compliance Framework
-- **Decoupled Registry**: Opt-in regulatory and industry standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) stored in `ai/compliance/`.
+- **Decoupled Registry**: Opt-in regulatory and industry standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) stored in `ai/compliance/`. [Compliance Guide](docs/compliance-guide.md)
 - **Policy Overrides**: Activates specific compliance rules per-project via `ai/ai-policy-override.md`.
 - **Audit-Ready**: Clear documentation and centralized policy enforcement.
 
@@ -447,53 +447,4 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 
 
 - If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **central common policy file** will handle the shared engineering standards automatically.
-
-## CLI Tools Used by AI Assistants
-
-These tools can be used from inside VS Code chat or directly on the command line. They do not need admin rights and can be placed in your `~/bin/` directory. All are available for Linux, macOS, and Windows.
-
-**AI-essential** — AI assistants actively invoke these:
-
-- `git` — version control
-- `gh` — GitHub CLI (issues, PRs, releases)
-- `rg` — fast file search (ripgrep)
-- `jq` — JSON querying and transformation
-- `yq` — YAML querying and transformation (useful for IaC and cloud config work)
-
-**Optional / human convenience** — useful at the command line but not typically called by AI:
-
-- `fd` — faster alternative to `find`
-- `bat` — syntax-highlighted `cat`
-- `delta` — better `git diff` viewer
-- `fzf` — interactive fuzzy finder
-- `tldr` — simplified man pages
-
-## Why should the `ai/` directory be ignored in `.gitignore`?
-
-- When you interact with AI, the prompts, reasoning, notes, and session state are part of your private thinking/working process. Those do not belong in the repository.
-- In team environments, each person may have different notes, reasoning, task lists, and session state. Committing those files would create noise and unnecessary conflicts.
-- Keeping AI support files in a dedicated `ai/` directory helps keep local workflow files separate from the real project related files and directories.
-- While interacting with an AI assistant, you may share sensitive information — client names, infrastructure details, application design, system weaknesses, etc. This is a normal part of thinking and planning sessions. But these details must never end up in the repository.
-
-
-## Docs and Slides
-
-- [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link) - *The slides are available under Creative Commons license.*
-- Local docs directory: `docs/`
-- Slide notes/examples in this repository: `docs/MCP-and-its-benefits.md`
-- Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
-- AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
-- Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
-- AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
-- Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
-- Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
-- About the human user template: `docs/about-human.md`
-- VSCode `/init` instructions: `docs/vscode-init-instructions.md`
-- Beginner setup guide (install VS Code, set up Cline and GitHub Copilot examples, configure provider API keys): `docs/vscode-cline-provider-setup-for-beginners.md`
-- AI provider selection guide (cost and usage decision helper): `docs/ai-provider-selection-guide.md`
-- Mobile app development policy guide (iOS, Android, cross-platform): `docs/ai-policy-mobile-apps-guide.md`
-
-## Optional: VSCode `/init` Instructions
-
-If you prefer using the built-in `/init` command, see [docs/vscode-init-instructions.md](docs/vscode-init-instructions.md) for setup instructions. This is not recommended — text prompts (`"bootstrap using AGENTS.md protocol"` or `"init using AGENTS.md protocol"`) work the same way across all AI tools.
 
