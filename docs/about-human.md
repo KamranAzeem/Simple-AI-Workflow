@@ -35,12 +35,19 @@ Intent: Added standard metadata header for traceability.
 
 ## Preferences and Style
 - Communication Style:
-        - Direct, practical, natural, low-fluff communication
+        - Direct, natural, practical, low-fluff communication
         - Clear business and technical tradeoffs
         - Prefer concise answers first, then depth on request
 - Preferred Tools:
         - Git Bash-first workflow on Windows when practical
         - Fast CLI tooling for search and automation
+
+## Git Commit Conventions
+- Use the full words e.g., "feature" instead of "feat", for branch-name prefix and for the commit prefix.
+- Follow conventional commit structure: <type>(<scope>): <subject>
+- Keep subjects in imperative mood (e.g., "Add feature", not "Added feature").
+- Include a descriptive body if the commit introduces architectural changes or complex logic.
+- Always use feature branches and squash-merge into master.
 
 ## Collaboration Optimization Summary
 1. Keep responses concise, practical, and outcome-focused first; expand depth on request.
@@ -61,4 +68,4 @@ Intent: Added standard metadata header for traceability.
 - Keep recommendations realistic for time-constrained teams with mixed senior opinions.
 - Prefer simple, robust workflows over heavy internal product-building unless there is a clear long-term payoff.
 - Keep sensitive personal details and private contacts out of normal AI outputs unless explicitly requested.
-- Use plain natural language and avoid unnecessary complexity.
+- Use plain language and avoid unnecessary complexity.
