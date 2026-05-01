@@ -45,8 +45,8 @@ Read in this order:
 
 ### Phase 2: Load Optional Context
 3. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
-4. All files in the [central settings directory](settings/) - (Read from **Central Workflow Directory**; optional; skip if directory is absent or empty)
-5. [user profile file](ai/about-human.md) - (Optional; AI personal context; only load if present; do not create)
+4. Load files from **Central AI Settings Source** - (Read-only; global settings)
+5. [user profile file](ai/about-human.md) - (Optional; AI personal context; only load if present)
 
 ### Phase 3: Load State (Mandatory)
 6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
@@ -55,57 +55,26 @@ Read in this order:
 9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
 
 ### Phase 4: Scan Directories (Index contents, do not read every file)
-10. [artifacts directory](ai/artifacts/) - (Always created at bootstrap; scan/index for draft outputs from brainstorming/work sessions)
-11. [notes directory](ai/notes/) - (Always created at bootstrap; scan/index for raw unpolished notes from human or AI)
-12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read, write, or summarize unless explicitly asked)
-13. Repository-root AI ignore file: .aiignore (canonical) or .agentignore (alias)
+10. [artifacts directory](ai/artifacts/) - (Always created at bootstrap)
+11. [notes directory](ai/notes/) - (Always created at bootstrap)
+12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read unless explicitly asked)
+13. [handoffs directory](ai/shared/handoffs/) - (Scan for pending tasks)
+14. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
+15. [central knowledge base](Central AI Shared Knowledge Source) - (Scan for global knowledge)
+16. Repository-root AI ignore file: .aiignore or .agentignore
 
-
-After reading all accessible files above, provide a comprehensive summary and acknowledge readiness. Your summary MUST include the items below. Use this template:
-
-```
-- **Progress so far**: <recently completed tasks from ai/progress.md>
-- **Pending tasks**: <tasks listed in ai/next-steps.md>
-- **Handoffs**: <active tasks from ai/shared/handoffs/>
-- **Knowledge Base**: <documents found in ai/shared/knowledge-base/>
-- **Notes**: <documents found in ai/notes/>
-- **Artifacts**: <items found in ai/artifacts/>
-- **What to do next?**: <proposed next step derived from ai/next-steps.md or general readiness>
-```
-
-Finally, await the first user instruction.
-
-[ai/README.md](ai/README.md) is for human understanding only. Do not use it as operational authority.
-
-## Initial Bootstrap Procedure
-
-When bootstrapping in a new repository where no AI files exist:
-
-1. **Create the AI directory structure**:
-   - Create `ai/` directory in the project root
-   - Create required subdirectories: `ai/daily-checkpoints/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`, `ai/artifacts/` for draft outputs from brainstorming/work sessions, `ai/notes/` for raw unpolished notes from human or AI, `ai/secrets/` for user-managed sensitive local notes
-
-2. **Initialize state tracking files**:
-   - Create `ai/next-steps.md` with initial checkpoint
-   - Create today's daily checkpoint file: `ai/daily-checkpoints/YYYY-MM-DD.md`
-   - Create `ai/progress.md` with initial entry
-   - Create `ai/context.md` with project briefing and decisions.
-     - **Git History Distillation**: If the directory is a Git repository, run `git log -n 50 --oneline` (or similar), distill the history into major milestones, and record them in a `## Project Evolution & Git History` section in `context.md`. Include the current HEAD hash as a reference.
-
-3. **Set up gitignore**:
-   - Add `ai/` to `.gitignore` in the project root
-   - Add `AGENTS.md` to `.gitignore` in the project root (personal bootstrap customization)
-     - **Note**: If this is the source repository for the AGENTS.md protocol (e.g., Simple-AI-Workflow), do NOT ignore AGENTS.md.
+[...]
 
 4. **Operational Readiness Check**:
-   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read all files in the `settings/` directory of the **Central Workflow Directory** if present to load user-specific context. Read `ai/about-human.md` if present for local user-specific context.
+   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
+   - **Settings Load**: Read files from **Central AI Settings Source** and local `ai/about-human.md` (if present).
+   - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
    - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
-   - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`). Load these recent changes into the active session memory.
+   - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.
-   - Index `ai/shared/knowledge-base/` for project-specific patterns.
-   - Scan `ai/artifacts/` for draft outputs from previous brainstorming/work sessions.
-   - Scan `ai/notes/` for raw unpolished notes from human or AI.
+   - Scan `ai/artifacts/` for draft outputs.
+   - Scan `ai/notes/` for raw unpolished notes.
    - Report the status of these locations in the final acknowledgement.
 
 5. **Acknowledge readiness** and await first user instruction.
