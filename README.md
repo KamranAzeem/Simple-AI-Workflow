@@ -4,13 +4,6 @@ Updated-by: Cline
 Last modified: 2026-04-26T22:43:00+02:00
 Intent: Change multi-assistant example from relay race to road trip.
 
-
-
-
-
-
-
-
 -->
 ---
 # Centralized Policy Management System for Simple AI Workflow
@@ -258,6 +251,11 @@ This solution transforms AI from a chat-bot into a structured team member with c
 
 ### 10. AI-Driven Secure Development Practices
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures generated code and configurations are secure by default, helping developers, engineers, and security professionals build safer applications and infrastructure.
+
+### 11. Centralized Knowledge Architecture
+- **Persistent Shared Intelligence**: Leverages `/home/kamran/.ai/` for global settings (`/settings/`) and shared knowledge (`/shared-knowledge/`) that follow you across all projects.
+- **Bootstrapping**: Automatic read-only indexing of shared sources during session initiation.
+- **Normalization**: Shared knowledge is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
 
 
 ## AI Prompt Playbook (Simple Workflow)

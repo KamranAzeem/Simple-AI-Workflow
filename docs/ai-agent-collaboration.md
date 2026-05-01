@@ -18,12 +18,22 @@ In a multi-agent environment, there is a risk of:
 
 ## How It Works
 
-### 1. The Shared Intelligence Layer (`ai/shared/`)
-Located in the git-ignored `ai/` directory, this is the "shared memory" for all assistants.
+## Collaborative Models
 
-- **`ai/shared/handoffs/`**: Shift-change notes. When an agent finishes a task, they leave a note here for whoever comes next.
-- **`ai/shared/knowledge-base/`**: Technical Wiki. Deep dives into errors, architectural findings, or tool-specific quirks (e.g., "How to handle TimescaleDB 2.x to 17 migrations").
-- **`ai/shared/coordination.md`**: The Status Board. Shows who is currently active and what parts of the codebase are currently "locked" for development.
+### 1. Intra-Project Collaboration
+This system enables multiple agents to work on a **single repository** concurrently or sequentially via the git-ignored `ai/shared/` directory.
+
+- **`ai/shared/handoffs/`**: Shift-change notes for specific project tasks.
+- **`ai/shared/knowledge-base/`**: Technical wiki scoped to the specific project's architecture, dependencies, and quirks.
+- **`ai/shared/coordination.md`**: The Status Board for project-level task locking.
+
+### 2. Cross-Project (Centralized) Collaboration
+This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
+
+- **`Central AI Settings Source` (`/home/kamran/.ai/settings/`)**: Stores personal identity-level context (e.g., `about-human.md`) and tool preferences.
+- **`Central AI Shared Knowledge Source` (`/home/kamran/.ai/shared-knowledge/`)**: Stores reusable design patterns, architectural lessons, and technical tips valid across all projects.
+- **Bootstrapping**: Agents automatically index these sources upon session initiation as read-only knowledge providers.
+- **Normalization**: Content here is treated as "lessons learned" to inform decision-making, not as authoritative project-specific logic.
 
 ### 2. Standardized Traceability (Metadata Headers)
 Every file created or modified by an AI includes a header like this:
