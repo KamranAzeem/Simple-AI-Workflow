@@ -99,6 +99,7 @@ When bootstrapping in a new repository where no AI files exist:
 
 4. **Operational Readiness Check**:
    - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file. Read all files in the `settings/` directory of the **Central Workflow Directory** if present to load user-specific context. Read `ai/about-human.md` if present for local user-specific context.
+   - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`). Load these recent changes into the active session memory.
    - Check `ai/shared/coordination.md`. If it exists, review active claims.
    - Scan `ai/shared/handoffs/` for pending tasks.

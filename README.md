@@ -257,6 +257,11 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Bootstrapping**: Automatic read-only indexing of shared sources during session initiation.
 - **Normalization**: Shared knowledge is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
 
+### 12. Modular Compliance Framework
+- **Decoupled Registry**: Opt-in regulatory and industry standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) stored in `ai/compliance/`.
+- **Policy Overrides**: Activates specific compliance rules per-project via `ai/ai-policy-override.md`.
+- **Audit-Ready**: Clear documentation and centralized policy enforcement.
+
 
 ## AI Prompt Playbook (Simple Workflow)
 
@@ -478,6 +483,7 @@ These tools can be used from inside VS Code chat or directly on the command line
 - Slide notes/examples in this repository: `docs/MCP-and-its-benefits.md`
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
+- Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
 - Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
