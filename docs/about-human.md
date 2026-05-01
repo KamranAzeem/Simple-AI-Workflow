@@ -1,32 +1,57 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T11:20:00Z
-Intent: Provide a template for user-specific AI context to improve interaction quality.
--->
----
-# About the Human User (Template)
-
-This file provides the AI assistant with context about the human user to tailor interactions, technical depth, and communication style. 
-
-**Instructions**: Copy this file to `ai/about-human.md` in your project root and fill in the details. The `ai/` directory is git-ignored by default to keep your personal profile private.
+# About the Human User
 
 ## Profile
-- **Name/Handle**: 
-- **Role/Focus**: (e.g., Senior DevOps Engineer, Full-stack Developer, System Admin)
-- **Primary Languages**: (e.g., PowerShell, Python, TypeScript, Bash)
+- Name/Handle: Kamran
+- Personal Email: kamran@wbitt.com
+- Role/Focus: Principal-level platform and cloud engineering leader focused on infrastructure, DevOps, security, and delivery enablement
+- Base: Asker, Norway
+- Primary Languages (human): English, Norwegian, Urdu
+- SSH Public keys: https://gitlab.com/kamranazeem/ssh-public-keys
+- Certifications: OCP DBA (Oracle 8), CCNA, RHCE, CEH, CISSP, CKA, AZ-104
 
 ## Technical Expertise
-- **Expert In**: (Tools/Tech you know deeply)
-- **Familiar With**: (Tools/Tech you use occasionally)
-- **Learning/New To**: (Tools/Tech where you want more explanation)
+- Expert In:
+        - Platform engineering and cloud transformation
+        - Kubernetes and container platforms
+        - DevOps practices, CI/CD, operational automation
+        - Infrastructure and information security governance
+        - Linux systems, networking, and production reliability practices
+        - Architecture documentation and engineering playbook creation
+        - Technical leadership, coaching, and team enablement
+- Familiar With:
+        - AWS, Azure, GCP architecture and operations
+        - Infrastructure as Code and GitOps (Terraform, Kustomize, ArgoCD)
+- Learning/New To:
+        - Bicep authoring depth and advanced ARM-to-Bicep patterns
+        - Azure platform implementation details in current assignment context
+        - PowerShell for repeatable operational workflows
 
-## Preferences & Style
-- **Communication Style**: (e.g., Concise/Technical, Detailed Explanations, Socratic/Teaching)
-- **Preferred Tools**: (e.g., prefers `ripgrep` over `grep`, `PowerShell` over `CMD`)
-- **Coding Standards**: (e.g., prefer functional patterns, strict typing, specific linting rules)
+## Preferences and Style
+- Communication Style:
+        - Direct, practical, low-fluff communication
+        - Clear business and technical tradeoffs
+        - Prefer concise answers first, then depth on request
+- Preferred Tools:
+        - Git Bash-first workflow on Windows when practical
+        - Fast CLI tooling for search and automation
+
+## Collaboration Optimization Summary
+1. Keep responses concise, practical, and outcome-focused first; expand depth on request.
+2. Prefer Git Bash-compatible commands and workflows on this Windows setup.
+3. Prioritize safe, repeatable execution with explicit validation and rollback awareness.
+4. Maintain strict operational hygiene: secrets-aware before git actions, policy-compliant changes, and minimal noise.
+5. Frame recommendations with clear tradeoffs and execution-ready next steps aligned to migration delivery goals.
+
+## Working Style Notes
+- Outcome-driven and structured execution.
+- Prefer reusable patterns over one-off solutions.
+- Values explicit scope, ownership, and decision boundaries in plans.
+- Prefer plain language and low-fluff communication.
 
 ## Workflow Notes
-- (e.g., "I usually work on Windows but deploy to Linux containers.")
-- (e.g., "Don't explain basic Git commands, but do explain complex rebases.")
-- (e.g., "I prefer surgical edits over full file rewrites.")
+- Focus support on deliverables that help consulting impact: proposals, technical positioning, architecture clarity, and execution planning.
+- For decision-heavy tasks, provide explicit assumptions, scope boundaries, and escalation options.
+- Keep recommendations realistic for time-constrained teams with mixed senior opinions.
+- Prefer simple, robust workflows over heavy internal product-building unless there is a clear long-term payoff.
+- Keep sensitive personal details and private contacts out of normal AI outputs unless explicitly requested.
+- Use plain language and avoid unnecessary complexity.
