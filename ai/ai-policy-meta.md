@@ -73,15 +73,23 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 - Any change prepared by the AI must update the [progress file](ai/progress.md) or [next-steps file](ai/next-steps.md) with a short entry describing the change intent and status (drafted, staged, committed).
 - Maintain a local backup of touched AI tracking files before automated updates (timestamped under `tmp/` if available).
 
-## Local vs Canonical Files
-
-- `AGENTS.md`: canonical example checked into the repo and intended as a template/example for users.
-- `AGENTS.local.md`: local-only copy (git-ignored) that points to the repository-local `ai/` policy path. Use this file when working locally so assistants can prefer local policy paths.
-
 ## Suggested Assistant Prompts / Role Hints
 
 - Role name: `Repository Steward`
 - Instruction example: "Act as Repository Steward: run a secrets scan, lint changed scripts, create a staged commit with the proposed patch, and provide the commit message. Do not push."
+
+## References
+
+- Bootstrapping: `AGENTS.md`
+- Tracking files: `ai/next-steps.md`, `ai/progress.md`, `ai/daily-checkpoints/`
+- Helper scripts: `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`
+
+---
+
+This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/progress.md`.
+icy changes in the [progress file](ai/progress.md).
+ss.md).
+secrets scan, lint changed scripts, create a staged commit with the proposed patch, and provide the commit message. Do not push."
 
 ## References
 

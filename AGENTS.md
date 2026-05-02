@@ -47,35 +47,30 @@ Read in this order:
 4. Load files from **Central AI Settings Source** - (Read-only; global settings)
 5. [user profile file](ai/about-human.md) - (Optional; AI personal context; only load if present)
 
-### Phase 3: Load State (Mandatory)
+### Phase 3: Load State & Knowledge Base
 6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
 7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
 8. [progress file](ai/progress.md) - (Chronological history; local only)
 9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
+10. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
+11. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
+12. Repository-root AI ignore file: .aiignore or .agentignore
 
-### Phase 4: Scan Directories (Index contents, do not read every file)
-10. [artifacts directory](ai/artifacts/) - (Always created at bootstrap)
-11. [notes directory](ai/notes/) - (Always created at bootstrap)
-12. [secrets directory](ai/secrets/) - (Always created at bootstrap; never read unless explicitly asked)
-13. [handoffs directory](ai/shared/handoffs/) - (Scan for pending tasks)
-14. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
-15. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
-16. Repository-root AI ignore file: .aiignore or .agentignore
-
-### Phase 5: Initialization & Readiness Check
-17. **Operational Readiness Check**:
+### Phase 4: Operational Readiness Check
+13. **Initialize & Index**:
     - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
-    - **Settings Load**: Read files from **Central AI Settings Source** and local `ai/about-human.md` (if present).
     - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
     - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
     - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
-    - Check `ai/shared/coordination.md`. If it exists, review active claims.
-    - Scan `ai/shared/handoffs/` for pending tasks.
-    - Scan `ai/artifacts/` for draft outputs.
-    - Scan `ai/notes/` for raw unpolished notes.
+    - **Directory Scan**:
+        - Scan `ai/artifacts/` for draft outputs.
+        - Scan `ai/notes/` for raw unpolished notes.
+        - Scan `ai/secrets/` (If present; never read contents unless explicitly asked).
+        - Scan `ai/shared/handoffs/` for pending tasks.
+        - Check `ai/shared/coordination.md`. If it exists, review active claims.
     - Report the status of these locations in the final acknowledgement.
 
-18. **Acknowledge readiness** , provide summary, and await first user instruction.
+14. **Acknowledge readiness**, provide summary, and await first user instruction.
 
 ## Multi-Agent Coordination
 Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
