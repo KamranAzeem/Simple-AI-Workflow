@@ -431,6 +431,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 ## Docs and Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link) - *The slides are available under Creative Commons license.*
+- [Simple-AI-Workflow (Markdown slides)](docs/simple-ai-workflow-slides.md) - Local Markdown version of the presentation (Marp-compatible)
 - Local docs directory: `docs/`
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
