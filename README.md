@@ -121,7 +121,6 @@ The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will
 
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
   - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
-  - **Start a unique Session Log**: Create a session-specific log file with a unique `Session-ID` for auditability.
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The central policy is accessed directly from the path referenced in `AGENTS.md`, so local copying of policy files is not required.
 - Optionally, you can override parts of the policy by adding `ai/ai-policy-override.md`.
@@ -219,12 +218,7 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Audit Trails**: Mandatory file-identification headers (Created-by, Updated-by, Intent) using native comment syntax for every AI-modified file.
 - **Transparency**: Instantly identify the author and purpose of any AI-generated artifact.
 
-### 5. AI Flight Recorder (CLI-Only)
-- **Granular Session Logs**: Transaction-based persistence for CLI agents (AI Flight Recorder), following the strict naming and metadata protocols defined in `AGENTS.md`.
-- **Plugin Exemption**: This overhead is automatically skipped for VS Code chat plugins (e.g., Cline, Copilot Chat) to keep your workspace lean. Some plugins may still create a session log despite this — if you notice one, just ask it to stop.
-- **Audit Stability**: Provides a stable historical record that survives terminal buffer resets.
-
-### 6. Multi-Agent Coordination (Local Workspace)
+### 5. Multi-Agent Coordination (Local Workspace)
 - **A2A Coordination**: Dedicated `ai/shared/` directory structure: [AI Agent Collaboration Guide](docs/ai-agent-collaboration.md)
     - `handoffs/`: Async task transfers between agents or sessions.
   - `knowledge-base/`: Local notes and references for AI workflow continuity.

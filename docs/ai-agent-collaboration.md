@@ -50,9 +50,6 @@ This allows you to look at any file and instantly know **who** changed it and **
 ### 3. Shared Policy Baseline (`ai/ai-policy-common.md`)
 All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **central common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
 
-### 4. Session Logging (`ai/sessions/`)
-Action-oriented CLI agents maintain a detailed log of every command and tool execution (AI Flight Recorder). The strict naming convention, `Session-ID` requirement, and transaction-based logging rules are defined in the **AGENTS.md** bootstrap protocol. This ensures a granular, programmatically-accessible audit trail for all changes.
-
 ## Human Guidance: How to Interacting with AI Agents
 - **Check the Progress**: Read `ai/progress.md` and `ai/next-steps.md` to see the high-level status.
 - **Check the Coordination**: Look at `ai/shared/coordination.md` to see what the AI is currently focusing on.
