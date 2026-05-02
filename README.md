@@ -443,6 +443,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
 - Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
+- Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
 - Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md`
