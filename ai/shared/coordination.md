@@ -12,3 +12,4 @@ Pending tasks:
 - project-manager-role.md — (Very low priority) Design Project Manager persona/policy for cross-project overview and visualization
 - multi-agent-runbook-slides.md — Create example run-book and slides for multiple agents working on the same project
 - marketable-product-packaging.md — (Exploratory) Research packaging this protocol as a marketable training product
+- shared-knowledge-enhancements.md — Implement Cleansing Protocol, Promotion Workflow, and Seed Content for central shared knowledge base.

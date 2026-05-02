@@ -31,3 +31,4 @@ Intent: Checkpoint CP-2026-05-02-01
 2026-05-02: CP-2026-05-02-04 — Promoted slide deck to docs/, added "Talk to AI Like a Person" slide, created 5 handoffs (reorganize-ai-directory, auto-lint, project-manager-role, multi-agent-runbook-slides, marketable-product-packaging), closed review-slide-deck and cross-project-shared-knowledge handoffs.
 
 2026-05-02: CP-2026-05-02-05 — Directory reorganization complete: policies consolidated, configuration centralized, policies decoupled for modularity.
+2026-05-02: CP-2026-05-02-06 — Permanent protocol validation system, policy influence docs, documentation cleanup.
