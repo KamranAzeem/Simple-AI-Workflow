@@ -17,7 +17,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 - Applies to any AI assistant used in this repository for cloud and platform engineering tasks.
 - **Bootstrap Entry**: The [AGENTS.md](../AGENTS.md) file is the only bootstrap entry point.
 - **Central Authority**: Universal guardrails are defined in the "central main policy file" and "central common policy file". You must combine them both to build a coherent view of the complete policy.
-- **Path Resolution**: Use the **Central Workflow Directory** defined in `AGENTS.md` to resolve the central workflow path.
+- **Path Resolution**: Use the **Central Policies Directory** defined in `AGENTS.md` to resolve the central workflow path.
 
 ## Role: Cloud and Platform Engineer
 The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** with expertise across:

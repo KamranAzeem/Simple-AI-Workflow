@@ -55,7 +55,7 @@ Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -66,7 +66,7 @@ DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -77,7 +77,7 @@ DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/local-ai-server-fe
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: (not found, will use source value)
+	Central Policies Directory: (not found, will use source value)
 	Central Main Policy:      (not found, will use source value)
 	Central Common Policy:    (not found, will use source value)
 
@@ -105,7 +105,7 @@ Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 Updating /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target-specific policy settings)
@@ -115,7 +115,7 @@ Updating /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while re
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 Updating /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGENTS.md (while retaining target-specific policy settings)
@@ -125,7 +125,7 @@ Updating /c/Users/kamran.azeem/Projects/Personal/local-ai-server-feasibility/AGE
 Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: (not found, will use source value)
+	Central Policies Directory: (not found, will use source value)
 	Central Main Policy:      (not found, will use source value)
 	Central Common Policy:    (not found, will use source value)
 Updating /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (while retaining target-specific policy settings)
@@ -150,7 +150,7 @@ Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -161,7 +161,7 @@ DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -172,7 +172,7 @@ DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\local-ai-server-fe
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: (not found, will use source value)
+	Central Policies Directory: (not found, will use source value)
 	Central Main Policy:      (not found, will use source value)
 	Central Common Policy:    (not found, will use source value)
 
@@ -198,7 +198,7 @@ Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -209,7 +209,7 @@ Updating C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while re
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
+	Central Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
 	Central Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
 	Central Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
 
@@ -220,7 +220,7 @@ Updating C:\Users\kamran.azeem\Projects\Personal\local-ai-server-feasibility\AGE
 Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
 
 Values preserved from target (if found):
-	Central Workflow Directory: (not found, will use source value)
+	Central Policies Directory: (not found, will use source value)
 	Central Main Policy:      (not found, will use source value)
 	Central Common Policy:    (not found, will use source value)
 

@@ -25,25 +25,8 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 
 Responsibilities
 - Read and apply repository policy files and the `AGENTS.md` reading order.
-- **Path Resolution**: Use the **Central Workflow Directory** defined in `AGENTS.md` to load the meta and common policy files. All other tracking files (next-steps, progress, etc.) MUST be loaded from the local project's `ai/` directory.
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
-
 - Run local safety checks (secrets scan, basic linting) before preparing commits.
-- Prepare draft commits (staged changes) and suggested commit messages; do NOT perform push/PRs without explicit human approval.
-- When operating scripts that modify multiple repositories (e.g., `support-files/sync-agents-md.*`), prefer `--dry-run` first and produce a per-target report.
-
-Hard limits
-- Must not push, open, or merge pull requests without explicit human instruction.
-- Must not disclose secrets or persist them into tracked files or remote locations.
-- Must not run remote destructive actions (cloud infra, DB writes, production deployments) from this repo.
-
-## Allowed Actions (read-first, then act)
-
-- File inspection and search across the repo.
-- Propose and prepare edits to policy and documentation files (diff-first). Present changes as a patch or staged commit list.
-- Update AI tracking files under fast-state rules (as defined in the [central common policy file](ai/ai-policy-common.md)).
-- Run local checks: `rg` pattern scans for secrets, shellcheck/lint for scripts, basic markdown link checks.
-- Execute scripts locally only in dry-run mode by default; require explicit human approval for real runs.
 
 ## Required Pre-action Checks
 

@@ -22,7 +22,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 * Clone this repository at a central location in your home directory.
 * Copy AGENTS.md into the root of your project directory.
-* Update the Central Workflow Directory path in AGENTS.md in your project directory.
+* Update the Central Policies Directory path in AGENTS.md in your project directory.
 * Start VScode; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
@@ -156,7 +156,7 @@ Use this when a newer version of this repository adds new bootstrap features (fo
 
 ### Step B: Propagate AGENTS.md to your other projects
 
-Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's Central Workflow Directory and central policy file references.
+Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's Central Policies Directory and central policy file references.
 
 Linux/macOS/Git Bash (dry-run first):
 
@@ -193,7 +193,12 @@ After upgrade in a target project, quickly confirm:
 
 This solution transforms AI from a chat-bot into a structured team member with clear boundaries and rigorous audit trails.
 
-### 1. Centralized Policy Authority
+### 1. Automated Protocol Validation
+- **System Integrity**: A built-in validation suite (`support-files/validate-protocol.sh`) verifies the bootstrap protocol, path availability, tracking file integrity, and metadata adherence on demand.
+- **Compliance Coverage**: Automatically checks existence and readability of all mandatory core and compliance policies.
+- **Continuous Reliability**: Ensures the AI always operates from a known-good state, preventing protocol drift as the repository evolves.
+
+### 2. Centralized Policy Authority
 - **Multi-Domain Support**: Specialized policies for Cloud/Infra, Frontend, Backend, and Linux System Administration.
 - **Hierarchical Overrides**: Apply global rules via central policy while allowing repository-specific exceptions via `ai/ai-policy-override.md`.
 - **Modular Personas**: Easily swap the assistant's role (e.g., Engineer, Mentor, Security Specialist) by applying persona templates from `docs/personas/` to your local override file. **Note**: Switching personas only changes the interaction style; all technical guardrails and domain knowledge from the main policies (Cloud, Backend, etc.) remain fully active.
@@ -437,6 +442,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
 - Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
+- Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
 - Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md`

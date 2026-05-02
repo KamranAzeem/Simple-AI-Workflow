@@ -15,7 +15,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 This file contains the universal operating rules for all AI assistants in this repository.
 
 ## Instruction Precedence
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > the [local policy override file](ai/ai-policy-override.md) > specialized policy > this [central common policy file](ai/ai-policy-common.md).
+- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > the Local Policy Override file > specialized policy > this Central Common Policy file.
 
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement

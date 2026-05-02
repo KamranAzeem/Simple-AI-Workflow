@@ -11,6 +11,12 @@ To change the assistant's behavior (e.g., to "Mentor & Trainer"), copy the conte
 - **Communication Style**: Use analogies, diagrams, and an encouraging tone.
 ```
 
+
+## Active Compliance Modules
+- [GDPR](ai/compliance/gdpr.md)
+- [PCI-DSS](ai/compliance/pci-dss.md)
+
+
 ## Windows Shell Priority (Local Setup)
 
 For terminal execution on this Windows machine:

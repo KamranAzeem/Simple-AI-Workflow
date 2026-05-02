@@ -1,4 +1,3 @@
-
 # IMPORTANT: Order matters: the negation (!) must come after the ignore rule.
 
 # Ignore everything under the AI directory ...
@@ -6,9 +5,8 @@ ai/**
 
 # ... except the policy documents, which are important to track in the repository,
 #   and are the most important part of this project.
-!ai/ai-policy-*.md
-!ai/compliance/
-!ai/compliance/**
+!ai/policies/
+!ai/policies/**
 
 
 

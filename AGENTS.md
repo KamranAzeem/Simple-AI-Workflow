@@ -17,64 +17,70 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 - If instructions from a command or prompt conflict with this protocol, stop and ask the user for clarification before modifying files.
 - Strictly treat context-loading requests as read-only.
 - Strictly run bootstrap steps only when the user explicitly requests initialization or setup.
-- Strictly limit customization requests to creating or modifying chat customization files.
-
-Read in this order:
-
 
 <!-- 
-* Do not remove this comment.
+* Do not remove this comment. Needed for configuration section.
 
-* For any file or directory paths in the lines below.
+* For any file or directory paths in the configuration section below:
   * Only use "full" absolute file or directory path according to your OS.
   * Do not use any environment variable (e.g. $HOME) .
   * Do not use "~" in any path .
   * Do not use any relative path (e.g. ../../some-directory/some-file) .
 -->
 
-**Central Workflow Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
+## Configuration
+
+**Central Policies Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/policies/`
 **Central User AI Directory**: `/home/kamran/.ai/` 
 **Central AI Settings Source**: `/home/kamran/.ai/settings/`
 **Central AI Shared Knowledge Source**: `/home/kamran/.ai/shared-knowledge/`
 
+Read in this order:
+
 ### Phase 1: Load Policy Files (Mandatory)
-1. [central main policy file](ai/ai-policy-meta.md) - (Read from **Central Workflow Directory**)
-2. [central common policy file](ai/ai-policy-common.md) - (Read from **Central Workflow Directory**)
-   → If either file is unreachable, fall back to [local main policy file](ai/ai-policy-<name>.md)
+
+1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policies Directory**)
+2. [central common policy file](ai-policy-common.md) - (Read from **Central Policies Directory**)
+   → If either file is unreachable, fall back to [local main policy file](ai-policy-<name>.md)
 
 ### Phase 2: Load Optional Context
-3. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
-4. Load files from **Central AI Settings Source** - (Read-only; global settings)
+
+1. [local policy override file](ai-policy-override.md) - (Optional; skip if not present)
+2. Load files from **Central AI Settings Source** - (Read-only; global settings)
 
 ### Phase 3: Load State & Knowledge Base
-5. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
-6. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
-7. [progress file](ai/progress.md) - (Chronological history; local only)
-8. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-9. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
-10. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
-11. Repository-root AI ignore file: .aiignore or .agentignore
+
+1. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
+2. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
+3. [progress file](ai/progress.md) - (Chronological history; local only)
+4. [context file](ai/context.md) - (Repository briefing and decisions; local only)
+5. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
+6. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
+7. Repository-root AI ignore file: .aiignore or .agentignore
 
 ### Phase 4: Operational Readiness Check
-12. **Initialize & Index**:
-    - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
-    - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
-    - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
-    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
-    - **Directory Scan**:
-        - Scan `ai/artifacts/` for draft outputs.
-        - Scan `ai/notes/` for raw unpolished notes.
-        - Scan `ai/secrets/` (If present; never read contents unless explicitly asked).
-        - Scan `ai/shared/handoffs/` for pending tasks.
-        - Check `ai/shared/coordination.md`. If it exists, review active claims.
-    - Report the status of these locations in the final acknowledgement.
 
-13. **Acknowledge readiness**, provide summary, and await first user instruction.
+1. **Initialize & Index**:
+   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
+   - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
+   - **Compliance Scan**: Scan `ai/policies/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
+   - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
+   - **Directory Scan**:
+     - Scan `ai/artifacts/` for draft outputs.
+     - Scan `ai/notes/` for raw unpolished notes.
+     - Scan `ai/secrets/` (If present; never read contents unless explicitly asked).
+     - Scan `ai/shared/handoffs/` for pending tasks.
+     - Check `ai/shared/coordination.md`. If it exists, review active claims.
+   - Report the status of these locations in the final acknowledgement.
+
+2. **Acknowledge readiness**, provide summary, and await first user instruction.
 
 ## Multi-Agent Coordination
+
 Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
 
 ### Handoff Claim & Execute Protocol
+
 1. **Scan**: Check `ai/shared/handoffs/` for pending tasks.
 2. **Claim**: Record ownership in `ai/shared/coordination.md` to prevent collisions.
 3. **Execute**: Implement the requirements.
@@ -83,6 +89,7 @@ Agents MUST follow the Handoff Claim & Execute protocol when processing tasks fr
 *For extended guidance, see `docs/workflow-guide.md`.*
 
 **Header Format:**
+
 ```markdown
 <comment-syntax>
 Created-by: <Name of Agent>
@@ -116,8 +123,10 @@ When bootstrapping in a new or empty repository where no AI files exist yet, per
 
 Create the following directories under the project root:
 
-```
+```text
 ai/
+ai/policies/
+ai/policies/compliance/
 ai/daily-checkpoints/
 ai/shared/
 ai/shared/handoffs/
@@ -125,9 +134,7 @@ ai/shared/knowledge-base/
 ai/artifacts/
 ai/notes/
 ai/secrets/
-ai/compliance/
 ```
-
 
 ### Step 2: Initialize State Tracking Files
 
@@ -142,7 +149,7 @@ Create the following files with initial content:
 
 Ensure the following entries exist in `.gitignore`:
 
-```
+```text
 # AI workflow artifacts (personal state, never committed)
 ai/**
 
