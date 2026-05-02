@@ -434,6 +434,21 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - **Preferred alternative:** Use OS-level secret stores (e.g., macOS Keychain, Windows Credential Manager, `pass` on Linux) or environment variables for real credentials.
 - Treat `ai/secrets/` as a temporary convenience, not as a secure vault.
 
+## Docs and Slides
+
+- [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link) - *The slides are available under Creative Commons license.*
+- Local docs directory: `docs/`
+- Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
+- AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
+- Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
+- AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
+- Preferred AI tooling reference & installation: [docs/tooling-reference.md](docs/tooling-reference.md)
+- Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
+- About the human user template: `docs/about-human.md`
+- Beginner setup guide (install VS Code, set up Cline and GitHub Copilot examples, configure provider API keys): `docs/vscode-cline-provider-setup-for-beginners.md`
+- AI provider selection guide (cost and usage decision helper): `docs/ai-provider-selection-guide.md`
+- Mobile app development policy guide (iOS, Android, cross-platform): `docs/ai-policy-mobile-apps-guide.md`
+
 ## Which policy should you choose?
 
 - **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts, generated file validation) and is automatically loaded during the bootstrap process as the **central common policy file**.
