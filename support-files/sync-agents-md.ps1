@@ -65,7 +65,7 @@ foreach ($m in $foundFiles) {
   # Extract values from target AGENTS.md to preserve them
   $targetContent = Get-Content -Raw -Path $target
   
-  $targetCpDir = if ($targetContent -match '\*\*Central Workflow Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetCpDir = if ($targetContent -match '\*\*Central Policies Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
   $targetMainPolicy = if ($targetContent -match '\[central main policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
   $targetCommonPolicy = if ($targetContent -match '\[central common policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
   $targetUserAiDir = if ($targetContent -match '\*\*Central User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
@@ -77,7 +77,7 @@ foreach ($m in $foundFiles) {
   Write-Host "Target AGENTS.md file: $target"
   Write-Host ""
   Write-Host "Values preserved from target (if found):"
-  Write-Host "  Central Workflow Directory: $(if ($targetCpDir) { $targetCpDir } else { "(not found, will use source value)" })"
+  Write-Host "  Central Policies Directory: $(if ($targetCpDir) { $targetCpDir } else { "(not found, will use source value)" })"
   Write-Host "  Central Main Policy:      $(if ($targetMainPolicy) { $targetMainPolicy } else { "(not found, will use source value)" })"
   Write-Host "  Central Common Policy:    $(if ($targetCommonPolicy) { $targetCommonPolicy } else { "(not found, will use source value)" })"
   Write-Host "  Central User AI Directory: $(if ($targetUserAiDir) { $targetUserAiDir } else { "(not found, will use source value)" })"
@@ -90,7 +90,7 @@ foreach ($m in $foundFiles) {
 
     # Apply preserved values to the source content
     if ($targetCpDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Central Workflow Directory\*\*: `)([^`]+)(`)', '$1' + $targetCpDir + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Central Policies Directory\*\*: `)([^`]+)(`)', '$1' + $targetCpDir + '$3')
     }
     if ($targetMainPolicy) {
       $newContent = [regex]::Replace($newContent, '(\[central main policy file\]\()([^)]+)(\))', '$1' + $targetMainPolicy + '$3')

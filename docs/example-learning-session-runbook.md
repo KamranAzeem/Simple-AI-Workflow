@@ -36,7 +36,7 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
 ### 3. AGENTS.md Configuration
 - Copy `AGENTS.md` from the central Simple-AI-Workflow repository to your example project directory.
 - Open the copied `AGENTS.md` in your example directory.
-- Update the **Central Workflow Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
+- Update the **Central Policies Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
   - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`
   - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/`
   - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
@@ -51,7 +51,7 @@ Before starting Step 1, confirm:
 - [ ] You can open a chat window in the IDE and send prompts.
 - [ ] Simple-AI-Workflow repository is cloned to a central location.
 - [ ] AGENTS.md is copied to your example project directory.
-- [ ] AGENTS.md Central Workflow Directory is updated to your machine's path.
+- [ ] AGENTS.md Central Policies Directory is updated to your machine's path.
 
 Once all prerequisites are met, proceed to Step 1.
 
