@@ -7,6 +7,9 @@ ai/**
 # ... except the policy documents, which are important to track in the repository,
 #   and are the most important part of this project.
 !ai/ai-policy-*.md
+!ai/compliance/
+!ai/compliance/**
+
 
 
 

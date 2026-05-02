@@ -45,19 +45,18 @@ Read in this order:
 ### Phase 2: Load Optional Context
 3. [local policy override file](ai/ai-policy-override.md) - (Optional; skip if not present)
 4. Load files from **Central AI Settings Source** - (Read-only; global settings)
-5. [user profile file](ai/about-human.md) - (Optional; AI personal context; only load if present)
 
 ### Phase 3: Load State & Knowledge Base
-6. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
-7. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
-8. [progress file](ai/progress.md) - (Chronological history; local only)
-9. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-10. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
-11. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
-12. Repository-root AI ignore file: .aiignore or .agentignore
+5. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
+6. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
+7. [progress file](ai/progress.md) - (Chronological history; local only)
+8. [context file](ai/context.md) - (Repository briefing and decisions; local only)
+9. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
+10. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
+11. Repository-root AI ignore file: .aiignore or .agentignore
 
 ### Phase 4: Operational Readiness Check
-13. **Initialize & Index**:
+12. **Initialize & Index**:
     - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
     - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
     - **Compliance Scan**: Scan `ai/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
@@ -70,7 +69,7 @@ Read in this order:
         - Check `ai/shared/coordination.md`. If it exists, review active claims.
     - Report the status of these locations in the final acknowledgement.
 
-14. **Acknowledge readiness**, provide summary, and await first user instruction.
+13. **Acknowledge readiness**, provide summary, and await first user instruction.
 
 ## Multi-Agent Coordination
 Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
@@ -108,3 +107,53 @@ These rules prevent bootstrap ambiguity across assistants.
 4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
 5. **Agent-specific dot-directories (e.g., `.claude/`, `.gemini/`, `.github/`, `.copilot/`) are NOT bootstrap authority.** The AI assistant must not load its own agent-specific context, state, or configuration files from these directories during bootstrap or context loading. All shared context must come from the `ai/` directory and the files listed in the reading order above.
 6. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
+
+## Initial Bootstrap Procedure (Fresh Directory Setup)
+
+When bootstrapping in a new or empty repository where no AI files exist yet, perform these steps **before** executing the reading order above:
+
+### Step 1: Create the AI Directory Structure
+
+Create the following directories under the project root:
+
+```
+ai/
+ai/daily-checkpoints/
+ai/shared/
+ai/shared/handoffs/
+ai/shared/knowledge-base/
+ai/artifacts/
+ai/notes/
+ai/secrets/
+ai/compliance/
+```
+
+
+### Step 2: Initialize State Tracking Files
+
+Create the following files with initial content:
+
+1. **`ai/next-steps.md`** — Contains the initial checkpoint ID (e.g., `CP-YYYY-MM-DD-01`).
+2. **`ai/daily-checkpoints/YYYY-MM-DD.md`** — Today's checkpoint file with the initial checkpoint entry.
+3. **`ai/progress.md`** — Chronological history with the initial bootstrap entry.
+4. **`ai/context.md`** — Project briefing with repository structure, key design decisions, and current state. Start minimal; grow with project understanding.
+
+### Step 3: Set Up Gitignore
+
+Ensure the following entries exist in `.gitignore`:
+
+```
+# AI workflow artifacts (personal state, never committed)
+ai/**
+
+# Personal bootstrap customization
+AGENTS.md
+```
+
+- If `.gitignore` does not exist, create it.
+- If the entries already exist, skip this step.
+- Respect existing `.gitignore` content — only add missing entries.
+
+### Step 4: Proceed to Reading Order
+
+Once the directory structure, tracking files, and gitignore are in place, execute the standard reading order (Phase 1 through Phase 4) defined above.
