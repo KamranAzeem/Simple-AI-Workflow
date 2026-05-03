@@ -13,3 +13,7 @@ Pending tasks:
 - multi-agent-runbook-slides.md — Create example run-book and slides for multiple agents working on the same project
 - marketable-product-packaging.md — (Exploratory) Research packaging this protocol as a marketable training product
 - shared-knowledge-enhancements.md — Implement Cleansing Protocol, Promotion Workflow, and Seed Content for central shared knowledge base.
+- secure-agents-md.md — Strengthen AGENTS.md to prevent AI modification and prevent hallucinations.
+- fix-git-ignore.md — Update .gitignore to exclude daily state files for user-mode users.
+- implement-test-harness.md — Create temporary project test harness for protocol validation.
+- review-slide-deck.md — (Review task) Pending.

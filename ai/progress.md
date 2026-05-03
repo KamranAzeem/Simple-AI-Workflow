@@ -33,3 +33,5 @@ Intent: Checkpoint CP-2026-05-02-01
 2026-05-02: CP-2026-05-02-05 — Directory reorganization complete: policies consolidated, configuration centralized, policies decoupled for modularity.
 2026-05-02: CP-2026-05-02-06 — Permanent protocol validation system, policy influence docs, documentation cleanup.
 2026-05-02: Updated README.md with safer upgrade instructions and removed obsolete settings reference.
+2026-05-02: Completed handoff 'improve-readme-upgrade.md': Verified README upgrade instructions and confirmed cleanup.
+2026-05-02: CP-2026-05-02-07 — Finalized coordination mandates and synchronized board.
