@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-04-16T13:50:00Z
-Intent: Document the AI agent collaboration and coordination system for human and AI reference.
+Updated-by: Gemini CLI
+Last modified: 2026-05-02T22:50:00Z
+Intent: Document Refined Handoff Protocol and Conditional Autonomy rules.
 -->
 ---
 # AI Agent Collaboration & Coordination System
@@ -26,6 +26,17 @@ This system enables multiple agents to work on a **single repository** concurren
 - **`ai/shared/handoffs/`**: Shift-change notes for specific project tasks.
 - **`ai/shared/knowledge-base/`**: Technical wiki scoped to the specific project's architecture, dependencies, and quirks.
 - **`ai/shared/coordination.md`**: The Status Board for project-level task locking.
+
+### Handoff Protocol & Conditional Autonomy
+To ensure safety while allowing progress across AI sessions, the system uses a **Refined Handoff Protocol**:
+
+1.  **Valid Handoff Definition**: A handoff is only valid if it contains a `## Verification` (or `## Validation`) section with objective, executable steps to confirm completion.
+2.  **Refusal Mandate**: AI assistants MUST refuse to process any handoff lacking this section to prevent unverified autonomous work.
+3.  **Conditional Autonomy**: AI assistants are permitted to autonomously squash-merge a feature branch to `master`/`main` ONLY if:
+    - They are working on a dedicated feature branch.
+    - ALL verification steps in the handoff pass with zero errors.
+    - All coordination state (coordination.md, progress.md) is updated correctly.
+    *Otherwise, human approval is mandatory before any merge.*
 
 ### 2. Cross-Project (Centralized) Collaboration
 This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
@@ -66,11 +77,13 @@ All assistants share a mandatory set of operational rules and contracts (branch-
 1.  **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
 2.  **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
 3.  **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
-
-*Example: Task Claiming*
-To claim a task, an agent should first read `ai/shared/coordination.md` to see existing locks. If clear:
-1. Append the task ownership to `ai/shared/coordination.md`.
-2. Proceed with the task.
-3. Upon completion, remove the ownership entry.
+4.  **Handoff Claim & Execute Lifecycle**:
+    - **Scan**: Check `ai/shared/handoffs/` for pending tasks.
+    - **Validate**: Confirm the handoff is "Valid" (contains Verification section).
+    - **Claim**: Record ownership in `ai/shared/coordination.md`.
+    - **Execute**: Work on a feature branch.
+    - **Verify**: Run all verification steps.
+    - **Finalize**: Merge to master (if autonomy conditions met) and update `ai/progress.md`.
+    - **Cleanup**: Delete the handoff file and clear the claim in `ai/shared/coordination.md`.
 
 

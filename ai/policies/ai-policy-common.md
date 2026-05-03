@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-04-30T22:30:00+02:00
-Intent: Add 'Expertise & Intent Alignment' section with mandatory Analyze-Plan-Stop rule for Inquiries.
+Last modified: 2026-05-02T22:50:00Z
+Intent: Implement Refined Handoff Protocol (Conditional Autonomy) and Valid Handoff Mandate.
 -->
 
 
@@ -25,10 +25,22 @@ When implementing new features, architecture changes, or functional code modific
 3. **Integration**: Merge only after human approval.
 *Exception*: Read-only work, documentation, and AI tracking files do not require branching, BUT all state-changing Git operations on `master` or `main` still require explicit per-interaction human approval.
 
+### Conditional Autonomy for Handoffs
+AI assistants are authorized to autonomously merge a feature branch to `master`/`main` **ONLY IF** all of the following conditions are met:
+1. The task is being processed from a handoff file in `ai/shared/handoffs/`.
+2. The handoff file contains a `## Verification` section with objective, executable validation steps.
+3. ALL verification steps pass with zero errors (verified via shell command output).
+4. The `ai/shared/coordination.md` board is updated (claimed before, cleared after).
+5. The `ai/progress.md` file is updated with the completion entry.
+*If any condition is not met, human approval is mandatory for the merge.*
+
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
 2. **Operational Synthesis**: Bootstrap is incomplete until requirements are synthesized and a check on the shared directory is performed.
 3. **Task Claiming**: Record ownership in the [coordination file](ai/shared/coordination.md) before starting tasks.
+4. **Valid Handoff Definition & Refusal Mandate**:
+    - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
+    - **Refusal Mandate**: AI assistants MUST refuse to process any handoff that lacks this section. They must inform the user: "This handoff lacks a Verification section and cannot be processed autonomously per ai-policy-common.md."
 
 ## Operational Restart and Checkpoint Contract
 ### Source-of-Truth Order
