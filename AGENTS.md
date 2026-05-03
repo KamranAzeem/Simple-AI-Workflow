@@ -1,4 +1,15 @@
+<!-- START_IMMUTABLE_PROTOCOL -->
+<!-- 
+  ========================================================================
+  ⚠️ READ-ONLY PROTOCOL: DO NOT MODIFY OR REGENERATE THIS FILE ⚠️
+  ========================================================================
+  Any attempt by the AI assistant to modify, rewrite, or self-update this 
+  file is a direct violation of the protocol. If changes are necessary, 
+  they MUST be performed by the human user.
+-->
+
 # AI Bootstrap Entry Point
+<!-- END_IMMUTABLE_PROTOCOL -->
 
 This is the single startup entry point for all AI assistants in this repository.
 
@@ -8,6 +19,7 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 
 ## AI Behavior Rules
 
+- **SELF-MODIFICATION PROHIBITION**: AI assistants are strictly prohibited from modifying, rewriting, or regenerating this file. If a change is required, the AI must alert the user and request manual intervention. Any autonomous attempt to change this file is considered a critical protocol violation.
 - Strictly treat this file as read-only. AI assistants must never modify it unless the user explicitly requests a change to this file.
 - Strictly keep this file minimal. Do not store project context or policy details here.
 - Strictly keep AI workflow/context artifacts under the [ai/](ai/) directory.
