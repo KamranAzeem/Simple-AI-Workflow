@@ -18,7 +18,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 - **Installation method:** No install scripts, no sudo, no admin, no pip, npm, no this, no that! Just *one* `git clone`, and *one* `copy` command. No brittle shell scripts or complex "song and dance" situations.
 
 
-## Quick start
+## Quick Start (Initial Setup)
 
 * Clone this repository at a central location in your home directory.
 * Copy AGENTS.md into the root of your project directory.
@@ -28,6 +28,14 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * `"init using AGENTS.md protocol"`
 * **Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompts above instead.
 * Already initialized and just need to roll out newer AGENTS rules? See [How to upgrade](#how-to-upgrade).
+
+
+## Use this workflow with a new project?
+
+1. Copy `AGENTS.md` from the central workflow location to the root of your new project.
+2. Open the copied `AGENTS.md` and update the **Configuration** section to match your environment, and ensure the policy file references align with the project's nature (e.g., Web vs. Cloud).
+3. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
+4. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
 
 
 ## What This Workflow Is, and What It Is Not
