@@ -1,9 +1,10 @@
 <!--
 Created-by: Gemini
 Updated-by: Gemini CLI
-Last modified: 2026-05-02T10:30:00+02:00
-Intent: Checkpoint CP-2026-05-02-01
+Last modified: 2026-05-02T23:45:00Z
+Intent: Record progress for ignoring policy override.
 -->
+---
 ---
 2026-04-19: Initial bootstrap of AI workflow, session logs, and tracking files.
 2026-04-24: CP-2026-04-24-01 — README reorganization, documentation cleanup, /init warnings, missing policy/docs fixes.
@@ -38,3 +39,4 @@ Intent: Checkpoint CP-2026-05-02-01
 2026-05-02: Completed handoff 'update-config-docs.md': Updated README.md to reference multi-line configuration section.
 2026-05-02: Completed handoff 'secure-agents-md.md': Hardened AGENTS.md with immutability warnings and strict self-modification prohibition.
 2026-05-02: Completed handoff 'refined-handoff-protocol.md': Implemented Conditional Autonomy and Verification requirements.
+2026-05-02: Ignored 'ai/policies/ai-policy-override.md' in git to prevent user overrides from being committed.
