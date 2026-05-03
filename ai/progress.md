@@ -36,3 +36,4 @@ Intent: Checkpoint CP-2026-05-02-01
 2026-05-02: Completed handoff 'improve-readme-upgrade.md': Verified README upgrade instructions and confirmed cleanup.
 2026-05-02: CP-2026-05-02-07 — Finalized coordination mandates and synchronized board.
 2026-05-02: Completed handoff 'update-config-docs.md': Updated README.md to reference multi-line configuration section.
+2026-05-02: Completed handoff 'secure-agents-md.md': Hardened AGENTS.md with immutability warnings and strict self-modification prohibition.
