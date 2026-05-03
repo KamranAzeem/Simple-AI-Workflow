@@ -152,7 +152,6 @@ Use this when a newer version of this repository adds new bootstrap features (fo
 
 1. Pull the latest changes in this repository, using `git pull`.
 2. Verify that `AGENTS.md` contains the new bootstrap rules you want to roll out.
-3. If you use centralized user context, keep personal files under `settings/` in this repository. The directory is git-ignored and remains untouched by pulls.
 
 ### Step B: Propagate AGENTS.md to your other projects
 
@@ -172,7 +171,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync
 powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
 ```
 
-### Step C: Update each project's ai/ structure
+### Step C: Adjust Configuration
+
+After copying the new `AGENTS.md`, manually open it in your project root and update the **Configuration** section:
+
+1. Ensure the `Central Policies Directory` path correctly points to the central location on your machine.
+2. Verify all other paths in the configuration match your current project structure.
+
+### Step D: Update each project's ai/ structure
 
 Inside each target project, ask your AI assistant to run these two prompts:
 
