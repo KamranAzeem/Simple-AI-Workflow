@@ -17,3 +17,4 @@ Pending tasks:
 - fix-git-ignore.md — Update .gitignore to exclude daily state files for user-mode users.
 - implement-test-harness.md — Create temporary project test harness for protocol validation.
 - review-slide-deck.md — (Review task) Pending.
+- update-config-docs.md — Update documentation to reflect multi-line configuration structure in AGENTS.md.

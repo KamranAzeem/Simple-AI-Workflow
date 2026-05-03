@@ -22,7 +22,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 * Clone this repository at a central location in your home directory.
 * Copy AGENTS.md into the root of your project directory.
-* Update the Central Policies Directory path in AGENTS.md in your project directory.
+* Update the Configuration section in AGENTS.md in your project directory (ensure all paths are correctly set for your environment).
 * Start VScode; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
