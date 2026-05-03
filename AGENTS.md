@@ -75,20 +75,17 @@ Read in this order:
 
 2. **Acknowledge readiness**, provide summary, and await first user instruction.
 
-## Multi-Agent Coordination
+## Finalization Protocol
 
-Agents MUST follow the Handoff Claim & Execute protocol when processing tasks from the [handoffs directory](ai/shared/handoffs/).
+Before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the `master` or `main` branches, the AI assistant MUST:
 
-### Handoff Claim & Execute Protocol
+1.  **Stop**: Halt all autonomous actions.
+2.  **Request Authorization**: Explicitly state: "Finalization: Ready to commit [Files/Changes]. Shall I proceed?"
+3.  **Wait**: Do not perform the action until the user responds with "Yes, proceed" or an equivalent explicit authorization.
 
-1. **Scan**: Check `ai/shared/handoffs/` for pending tasks.
-2. **Claim**: Record ownership in `ai/shared/coordination.md` to prevent collisions.
-3. **Execute**: Implement the requirements.
-4. **Cleanup**: Delete the handoff file and update `ai/progress.md` upon verification.
+Any assistant that proceeds without this confirmation is in direct violation of the protocol.
 
-*For extended guidance, see `docs/workflow-guide.md`.*
-
-**Header Format:**
+## Header Format
 
 ```markdown
 <comment-syntax>
