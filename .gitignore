@@ -8,6 +8,9 @@ ai/**
 !ai/policies/
 !ai/policies/**
 
+# Ignore the local policy override file (users should create their own).
+ai/policies/ai-policy-override.md
+
 
 
 

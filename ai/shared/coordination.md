@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
 Updated-by: Gemini CLI
-Last modified: 2026-05-02T23:10:00Z
-Intent: Synchronize coordination board after handoff completion.
+Last modified: 2026-05-02T23:45:00Z
+Intent: Synchronize coordination board after ignoring policy override.
 -->
 ---
 Active claims:
