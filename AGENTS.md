@@ -9,7 +9,6 @@
 -->
 
 # AI Bootstrap Entry Point
-<!-- END_IMMUTABLE_PROTOCOL -->
 
 This is the single startup entry point for all AI assistants in this repository.
 
@@ -173,3 +172,4 @@ AGENTS.md
 ### Step 4: Proceed to Reading Order
 
 Once the directory structure, tracking files, and gitignore are in place, execute the standard reading order (Phase 1 through Phase 4) defined above.
+<!-- END_IMMUTABLE_PROTOCOL -->
