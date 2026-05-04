@@ -32,11 +32,15 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 <!-- 
 * Do not remove this comment. Needed for configuration section.
 
-* For any file or directory paths in the configuration section below:
+* For any file or directory paths in the configuration section below: 
   * Only use "full" absolute file or directory path according to your OS.
   * Do not use any environment variable (e.g. $HOME) .
   * Do not use "~" in any path .
   * Do not use any relative path (e.g. ../../some-directory/some-file) .
+  * User must manually create the following directories:
+    * $HOME/.ai/settings
+    * $HOME/.ai/shared-knowledge
+  * User should copy docs/about-human.md and docs/tooling-reference.md under $HOME/.ai/settings/ directory and adjust these files.
 -->
 
 ## Configuration
