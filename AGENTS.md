@@ -125,7 +125,7 @@ These rules prevent bootstrap ambiguity across assistants.
 2. The file referenced as "local main policy file" in step 3 above is fallback only when the "central main policy file" is unreachable.
 3. The file referenced as "local policy override file" in step 4 above is for repository-specific exceptions and must not redefine universal policy authority.
 4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
-5. **Agent-specific dot-directories (e.g., `.claude/`, `.gemini/`, `.github/`, `.copilot/`) are NOT bootstrap authority.** The AI assistant must not load its own agent-specific context, state, or configuration files from these directories during bootstrap or context loading. All shared context must come from the `ai/` directory and the files listed in the reading order above.
+5. **Agent-specific dot-directories (e.g., `.abacusai/`, `.claude/`, `.gemini/`, `.github/`, `.copilot/`, `.cursor/`) are NOT bootstrap authority.** The AI assistant must not load its own agent-specific context, state, or configuration files from these directories during bootstrap or context loading, and must not create such directories during any operation. All shared context must come from the `ai/` directory and the files listed in the reading order above.
 6. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
 
 ## Initial Bootstrap Procedure (Fresh Directory Setup)
