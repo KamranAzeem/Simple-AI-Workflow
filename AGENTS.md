@@ -27,6 +27,7 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 - Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the `master` or `main` branches.
 - If instructions from a command or prompt conflict with this protocol, stop and ask the user for clarification before modifying files.
 - Strictly treat context-loading requests as read-only.
+- Strictly load AGENTS.md from the current working directory (PWD) only. Do not scan subdirectories for additional AGENTS.md files, and do not read or load any other AGENTS.md files from any other locations. If AGENTS.md is not found in PWD, report it missing and stop.
 - Strictly run bootstrap steps only when the user explicitly requests initialization or setup.
 
 <!-- 
