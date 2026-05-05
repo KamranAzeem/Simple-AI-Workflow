@@ -21,13 +21,17 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 ## Quick Start (Initial Setup)
 
 * Clone this repository at a central location in your home directory.
-* Copy AGENTS.md into the root of your project directory.
-* Update the Configuration section in AGENTS.md in your project directory (ensure all paths are correctly set for your environment).
-* Start VScode; in the AI chat window, use one of these two prompts:
+* **Mandatory One-Time Setup**: Create the central AI directory structure on your machine:
+  * Create `$HOME/.ai/`
+  * Create `$HOME/.ai/settings/`
+  * Create `$HOME/.ai/shared-knowledge/`
+  * (Optional) Copy `docs/about-human.md` and `docs/tooling-reference.md` into `$HOME/.ai/settings/` and personalize them.
+* Copy `AGENTS.md` into the root of your project directory.
+* Update the **Configuration** section in the project-local `AGENTS.md` (ensure `Central Policies Directory` and `Central User AI Directory` point to your local paths).
+* Start VS Code; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
 * **Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompts above instead.
-* Already initialized and just need to roll out newer AGENTS rules? See [How to upgrade](#how-to-upgrade).
 
 
 ## Use this workflow with a new project?
@@ -202,6 +206,22 @@ After upgrade in a target project, quickly confirm:
 - `ai/` contains the new directories you expected.
 - Existing state files are still present and unchanged in purpose.
 - No unexpected folders were added.
+
+## Unified AI Customization (`ai-customization.md`)
+
+This is the **"Single Dial"** for tailoring the AI to your specific project needs. It replaces the legacy `ai-policy-override.md` with a more flexible, list-based format.
+
+Use `ai-customization.md` to:
+1.  **Compose Expertise**: Mix and match technical domains (e.g., `Expertise: [cloud, api-backend]`).
+2.  **Activate Traits**: Add functional personas (e.g., `Traits: [mentor, reviewer]`).
+3.  **Enable Compliance**: Opt-in to regulatory standards (e.g., `Compliance: [gdpr, soc2]`).
+
+See the **[AI Customization Guide](docs/ai-customization-guide.md)** for full instructions and multi-role examples.
+
+The AI assistant reads this file during the context-loading phase and automatically applies the corresponding policies and behaviors.
+
+
+---
 
 ## Key Features
 
