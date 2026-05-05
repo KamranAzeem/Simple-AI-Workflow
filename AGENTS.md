@@ -12,11 +12,13 @@
 
 This is the single startup entry point for all AI assistants in this repository.
 
-## ⚠️ File Access Rule (Override)
+## 1. Fundamental Directives (Rules of Engagement)
+
+### ⚠️ File Access Rule (Override)
 
 AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **MUST COMPLETELY DISREGARD** `.gitignore` and any other ignore patterns. If these primary tools are blocked due to ignore patterns, the AI **MUST IMMEDIATELY SWITCH** to unrestricted alternative tools (e.g., `bash -c 'cat <file>'`, `bash -c 'ls -a <dir>'`, `find`) to perform read and write operations in ignored locations. Unrestricted access to AI state and project data in git-ignored directories must be ensured without obstruction.
 
-## AI Behavior Rules
+### AI Behavior Rules
 
 - **SELF-MODIFICATION PROHIBITION**: AI assistants are strictly prohibited from modifying, rewriting, or regenerating this file. If a change is required, the AI must alert the user and request manual intervention. Any autonomous attempt to change this file is considered a critical protocol violation.
 - Strictly treat this file as read-only. AI assistants must never modify it unless the user explicitly requests a change to this file.
@@ -29,6 +31,8 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 - Strictly treat context-loading requests as read-only.
 - Strictly load AGENTS.md from the current working directory (PWD) only. Do not scan subdirectories for additional AGENTS.md files, and do not read or load any other AGENTS.md files from any other locations. If AGENTS.md is not found in PWD, report it missing and stop.
 - Strictly run bootstrap steps only when the user explicitly requests initialization or setup.
+
+## 2. Configuration & Environment
 
 <!-- 
 * Do not remove this comment. Needed for configuration section.
@@ -44,65 +48,88 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
   * User should copy docs/about-human.md and docs/tooling-reference.md under $HOME/.ai/settings/ directory and adjust these files.
 -->
 
-## Configuration
+### Configuration
 
 **Central Policies Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/policies/`
-**Central User AI Directory**: `/home/kamran/.ai/` 
-**Central AI Settings Source**: `/home/kamran/.ai/settings/`
-**Central AI Shared Knowledge Source**: `/home/kamran/.ai/shared-knowledge/`
+**Central User AI Directory**: `/home/kamran/.ai/`
 
-Read in this order:
+### Path Format Requirements (Windows)
 
-### Phase 1: Load Policy Files (Mandatory)
+This instruction applies to AI assistants running on Windows.
+
+File-manipulation tools (`read_file`, `write_file`, `list_dir`) require absolute Windows-style paths (`C:\path\to\file`). Configuration paths in this file use POSIX style (`/c/Users/...`) for shell compatibility.
+
+**AI directive**: When reading configuration paths from this file and passing them to file-manipulation tools, convert POSIX paths to Windows absolute paths:
+- `/c/Users/kamran.azeem/` → `C:\Users\kamran.azeem\`
+
+This applies regardless of whether the user is running Git Bash or PowerShell.
+
+## 3. Operational Procedures
+
+### Procedure 1: Context Loading & Structural Upgrade
+
+Perform these phases in order whenever the user requests "load context":
+
+#### Phase 1: Load Mandatory Policies
 
 1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policies Directory**)
 2. [central common policy file](ai-policy-common.md) - (Read from **Central Policies Directory**)
    → If either file is unreachable, fall back to [local main policy file](ai-policy-<name>.md)
 
-### Phase 2: Load Optional Context
+#### Phase 2: Structural Integrity & Auto-Upgrade
 
-1. [local policy override file](ai-policy-override.md) - (Optional; skip if not present)
-2. Load files from **Central AI Settings Source** - (Read-only; global settings)
+The AI assistant MUST ensure the local `ai/` structure is correct. If any directory or mandatory file is missing, the AI MUST autonomously create it:
+1. **Directories**: Ensure `ai/`, `ai/policies/`, `ai/daily-checkpoints/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`, `ai/artifacts/`, `ai/notes/`, `ai/secrets/` exist.
+2. **Mandatory Files**: Ensure `ai/next-steps.md`, `ai/progress.md`, and `ai/context.md` exist. If missing, initialize them using the templates in the Bootstrap procedure.
+3. **Central Settings**: Ensure `settings/` and `shared-knowledge/` exist under the **Central User AI Directory**. Create them if missing.
 
-### Phase 3: Load State & Knowledge Base
+#### Phase 3: Load Customization & State
 
-1. [next-steps file](ai/next-steps.md) - (Current resume point; local only)
-2. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/) - (Recovery snapshot; local only)
-3. [progress file](ai/progress.md) - (Chronological history; local only)
-4. [context file](ai/context.md) - (Repository briefing and decisions; local only)
-5. [local knowledge base](ai/shared/knowledge-base/) - (Scan for local knowledge)
-6. Load files from **Central AI Shared Knowledge Source** - (Scan for global knowledge)
-7. Repository-root AI ignore file: .aiignore or .agentignore
+1. [local customization file](ai-customization.md) - (Optional; replaces `ai-policy-override.md`)
+2. Load files from `settings/` subfolder in **Central User AI Directory** (Global settings).
+3. [next-steps file](ai/next-steps.md) - (Current resume point).
+4. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/).
+5. [progress file](ai/progress.md) - (Chronological history).
+6. [context file](ai/context.md) - (Repository briefing and decisions).
+7. [local knowledge base](ai/shared/knowledge-base/).
+8. Load files from `shared-knowledge/` subfolder in **Central User AI Directory**.
+9. Repository-root AI ignore file: .aiignore or .agentignore.
 
-### Phase 4: Operational Readiness Check
+#### Phase 4: Operational Readiness Check
 
 1. **Initialize & Index**:
-   - **Load State**: Read `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and the latest daily checkpoint file.
-   - **Knowledge Base Indexing**: Scan and index local [local knowledge base](ai/shared/knowledge-base/) and **Central AI Shared Knowledge Source**.
-   - **Compliance Scan**: Scan `ai/policies/compliance/`. If `ai/ai-policy-override.md` contains an "Active Compliance Modules" list, load the specified modules as high-priority, read-only policies.
+   - **Load State**: Read and summarize the state files loaded in Phase 3.
+   - **Knowledge Base Indexing**: Scan and index local and central knowledge sources.
+   - **Compliance Scan**: Scan `ai/policies/compliance/`. If `ai-customization.md` contains active compliance modules, load them as high-priority, read-only policies.
    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
-   - **Directory Scan**:
-     - Scan `ai/artifacts/` for draft outputs.
-     - Scan `ai/notes/` for raw unpolished notes.
-     - Scan `ai/secrets/` (If present; never read contents unless explicitly asked).
-     - Scan `ai/shared/handoffs/` for pending tasks.
-     - Check `ai/shared/coordination.md`. If it exists, review active claims.
-   - Report the status of these locations in the final acknowledgement.
-
+   - **Directory Scan**: Scan `ai/artifacts/`, `ai/notes/`, `ai/secrets/`, and `ai/shared/handoffs/`.
 2. **Acknowledge readiness**, provide summary, and await first user instruction.
 
-## Finalization Protocol
+### Procedure 2: Initial Bootstrap (Fresh Setup)
+
+When bootstrapping in a new/empty repository, perform these steps **before** executing the Context Loading procedure:
+
+1. **Create Directory Structure**: Create all directories listed in the "Structural Integrity" check.
+2. **Initialize State Files**:
+   - `ai/next-steps.md`: Initial checkpoint ID (e.g., `CP-YYYY-MM-DD-01`).
+   - `ai/daily-checkpoints/YYYY-MM-DD.md`: Today's checkpoint with initial entry.
+   - `ai/progress.md`: Chronological history with bootstrap entry.
+   - `ai/context.md`: Project briefing with repository structure and current state.
+3. **Set Up Gitignore**: Ensure `ai/**` and `AGENTS.md` are in `.gitignore`.
+4. **Proceed**: Execute the Context Loading procedure (Procedure 1).
+
+## 4. Operational Standards
+
+### Finalization Protocol
 
 Before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the `master` or `main` branches, the AI assistant MUST:
-
 1.  **Stop**: Halt all autonomous actions.
 2.  **Request Authorization**: Explicitly state: "Finalization: Ready to commit [Files/Changes]. Shall I proceed?"
 3.  **Wait**: Do not perform the action until the user responds with "Yes, proceed" or an equivalent explicit authorization.
 
-Any assistant that proceeds without this confirmation is in direct violation of the protocol.
+### Header Format
 
-## Header Format
-
+Standard metadata header for all created/modified files (excluding `ai/` tracking files):
 ```markdown
 <comment-syntax>
 Created-by: <Name of Agent>
@@ -111,70 +138,15 @@ Last modified: <Local-ISO-8601-Timestamp>
 Intent: <Brief description of the change>
 </comment-syntax>
 ```
+*Always use the human user's local time for all timestamps.*
 
----
+## 5. Appendices
 
-**Note**: Always use the human user's local time for all timestamps in file headers, session logs, and checkpoints.
-Use the appropriate comment syntax for the file type (e.g., `<!-- -->` for MD, `#` for Shell/Python).
+### Policy Authority Clarification
 
-## Policy Authority Clarification
+1. Central main and common policy files are authoritative for universal rules.
+2. Local customization (`ai-customization.md`) is for repository-specific extensions/traits.
+3. **Agent-specific dot-directories (e.g., `.gemini/`, `.cursor/`) are NOT bootstrap authority.** The AI assistant must not load context from or create such directories. All shared context must come from the `ai/` directory.
+4. In case of conflict, stop and ask the user for clarification.
 
-These rules prevent bootstrap ambiguity across assistants.
-
-1. The files referenced as "central main policy file" and "central common policy file" in step 1 and step 2 above are both authoritative for universal rules.
-2. The file referenced as "local main policy file" in step 3 above is fallback only when the "central main policy file" is unreachable.
-3. The file referenced as "local policy override file" in step 4 above is for repository-specific exceptions and must not redefine universal policy authority.
-4. During bootstrap in this repository, prefer `ai/` policy/state files as context authority.
-5. **Agent-specific dot-directories (e.g., `.abacusai/`, `.claude/`, `.gemini/`, `.github/`, `.copilot/`, `.cursor/`) are NOT bootstrap authority.** The AI assistant must not load its own agent-specific context, state, or configuration files from these directories during bootstrap or context loading, and must not create such directories during any operation. All shared context must come from the `ai/` directory and the files listed in the reading order above.
-6. If there is any conflict between policy sources, stop and ask for clarification before writing or changing policy/customization files.
-
-## Initial Bootstrap Procedure (Fresh Directory Setup)
-
-When bootstrapping in a new or empty repository where no AI files exist yet, perform these steps **before** executing the reading order above:
-
-### Step 1: Create the AI Directory Structure
-
-Create the following directories under the project root:
-
-```text
-ai/
-ai/policies/
-ai/policies/compliance/
-ai/daily-checkpoints/
-ai/shared/
-ai/shared/handoffs/
-ai/shared/knowledge-base/
-ai/artifacts/
-ai/notes/
-ai/secrets/
-```
-
-### Step 2: Initialize State Tracking Files
-
-Create the following files with initial content:
-
-1. **`ai/next-steps.md`** — Contains the initial checkpoint ID (e.g., `CP-YYYY-MM-DD-01`).
-2. **`ai/daily-checkpoints/YYYY-MM-DD.md`** — Today's checkpoint file with the initial checkpoint entry.
-3. **`ai/progress.md`** — Chronological history with the initial bootstrap entry.
-4. **`ai/context.md`** — Project briefing with repository structure, key design decisions, and current state. Start minimal; grow with project understanding.
-
-### Step 3: Set Up Gitignore
-
-Ensure the following entries exist in `.gitignore`:
-
-```text
-# AI workflow artifacts (personal state, never committed)
-ai/**
-
-# Personal bootstrap customization
-AGENTS.md
-```
-
-- If `.gitignore` does not exist, create it.
-- If the entries already exist, skip this step.
-- Respect existing `.gitignore` content — only add missing entries.
-
-### Step 4: Proceed to Reading Order
-
-Once the directory structure, tracking files, and gitignore are in place, execute the standard reading order (Phase 1 through Phase 4) defined above.
 <!-- END_IMMUTABLE_PROTOCOL -->
