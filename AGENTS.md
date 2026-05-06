@@ -57,10 +57,12 @@ This instruction applies to AI assistants running on Windows.
 
 File-manipulation tools (`read_file`, `write_file`, `list_dir`) require absolute Windows-style paths (`C:\path\to\file`). Configuration paths in this file use POSIX style (`/c/Users/...`) for shell compatibility.
 
-**AI directive**: When reading configuration paths from this file and passing them to file-manipulation tools, convert POSIX paths to Windows absolute paths:
-- `/c/Users/kamran.azeem/` → `C:\Users\kamran.azeem\`
+**AI directive**: When reading configuration paths from this file and passing them to file-manipulation tools, convert POSIX paths to Windows absolute paths using these patterns:
+<!-- Users: Do not modify the examples below. They are strictly generic pattern instructions for the AI. -->
+- Git Bash POSIX: `/c/Users/<username>/` → `C:\Users\<username>\`
+- WSL POSIX: `/mnt/c/Users/<username>/` → `C:\Users\<username>\`
 
-This applies regardless of whether the user is running Git Bash or PowerShell.
+This applies regardless of whether the user is running Git Bash, WSL, or PowerShell.
 
 ## 3. Operational Procedures
 
@@ -69,10 +71,7 @@ This applies regardless of whether the user is running Git Bash or PowerShell.
 Perform these phases in order whenever the user requests "load context":
 
 #### Phase 1: Load Mandatory Policies
-
-1. [central main policy file](ai-policy-meta.md) - (Read from **Central Policies Directory**)
-2. [central common policy file](ai-policy-common.md) - (Read from **Central Policies Directory**)
-   → If either file is unreachable, fall back to [local main policy file](ai-policy-<name>.md)
+1. [central common policy file](ai-policy-common.md) - (Read from **Central Policies Directory**)
 
 #### Phase 2: Structural Integrity & Auto-Upgrade
 
