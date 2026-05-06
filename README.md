@@ -108,7 +108,7 @@ The result? **Peace of mind.** You know exactly where the AI directory is, you k
 | .                                    |                | .                                     |
 | ├─ AGENTS.md                         |                | ├─ AGENTS.md                          |
 | ├─ ai/                               |                | ├─ ai/                                |
-| │  ├─ ai-policy-api-backend.md       |                | │  ├─ ai-policy-override.md           |
+| │  ├─ ai-policy-api-backend.md       |                | │  ├─ ai-customization.md             |
 | │  ├─ ai-policy-cloud.md             | <------------- | │  ├─ context.md                      |
 | │  ├─ ai-policy-common.md            |                | │  ├─ next-steps.md                   |
 | │  ├─ ai-policy-data.md              |                | │  └─ progress.md                     |
@@ -135,8 +135,8 @@ The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will
   - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The central policy is accessed directly from the path referenced in `AGENTS.md`, so local copying of policy files is not required.
-- Optionally, you can override parts of the policy by adding `ai/ai-policy-override.md`.
-- A ready example is available at `ai/ai-policy-override.example.md` (copy and adjust for your local setup).
+- Optionally, you can customize the policy by adding `ai/ai-customization.md`.
+- A ready example is available at `ai-customization-example.md` (copy and adjust for your local setup).
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 - You can use `gitignore-example.txt` as a guide when adding AI-related ignore rules.
 

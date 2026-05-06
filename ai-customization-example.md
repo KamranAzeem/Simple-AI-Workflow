@@ -13,7 +13,7 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 
 ## Active Expertise
 <!-- List technical domains to load from the central policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps -->
+<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta -->
 
 - cloud
 - api-backend
