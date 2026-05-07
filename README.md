@@ -36,10 +36,23 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 ## Use this workflow with a new project?
 
+You can use the following sequence to on-board an existing project with this workflow.
+
 1. Copy `AGENTS.md` from the central workflow location to the root of your new project.
-2. Open the copied `AGENTS.md` and update the **Configuration** section to match your environment, and ensure the policy file references align with the project's nature (e.g., Web vs. Cloud).
-3. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
-4. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
+2. Open the copied `AGENTS.md` and update the **Configuration** section to match your environment.
+3. *Optional, but useful*: Create ai/ai-customization.md file with the "policy"/"role" you want AI to use for this project. e.g. "cloud", "backend-api", etc. See [AI customization guide](docs/ai-ai-customization-guide.md) .
+4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
+5. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
+
+### Updating the AI Protocol (`AGENTS.md`)
+
+To keep your project's AI workflows synchronized with the latest features, follow these steps:
+
+1.  **Checkpoint**: Before updating, perform a final "checkpoint" of your current work and close your IDE.
+2.  **Pull Updates**: Pull the latest changes into your central `Simple-AI-Workflow` repository / directory.
+3.  **Update `AGENTS.md`**: Run the provided helper script in `support-files/` to copy the updated `AGENTS.md` to your project directory. 
+    *   *Note: This script is designed to preserve your existing project-specific configuration section. Please verify that your configuration remains intact after running the script.*
+4.  **Load Context**: Re-open your IDE and initiate the session by typing: `"load context using AGENTS.md protocol"` in your AI chat extension. This will automatically align your local `ai/` directory structure with the updated protocol.
 
 
 ## What This Workflow Is, and What It Is Not
