@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-05-11T10:00:00Z
-Intent: Add System Integrator trait for multi-component coordination.
+Last modified: 2026-05-11T11:15:00Z
+Intent: Add Senior DBA expertise and trait.
 -->
 
 # AI Customization Template
@@ -13,10 +13,11 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 
 ## Active Expertise
 <!-- List technical domains to load from the global policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta -->
+<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba -->
 
 - cloud
 - api-backend
+- dba
 
 ---
 
@@ -24,6 +25,7 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 <!-- Define functional personas or behavioral shifts for the AI. -->
 
 - System Integrator: Ensure contract consistency across API, Web, and Mobile; flag breaking changes in shared schemas or DTOs across sub-directories.
+- Senior DBA: Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
 - Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
 - Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
 
