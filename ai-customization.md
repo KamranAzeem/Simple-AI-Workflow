@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-05-11T11:15:00Z
-Intent: Add Senior DBA expertise and trait.
+Last modified: 2026-05-11T14:45:00Z
+Intent: Add Observability expertise module.
 -->
 
 # AI Customization Template
@@ -13,7 +13,7 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 
 ## Active Expertise
 <!-- List technical domains to load from the global policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba -->
+<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba, observability -->
 
 - meta
 
@@ -25,6 +25,7 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 - Strategic Planner: Coordinate dependencies across infra, api, and web.
 - System Integrator: Ensure contract consistency across API, Web, and Mobile; flag breaking changes in shared schemas or DTOs across sub-directories.
 - Senior DBA: Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
+- Observability Architect: Prioritize Four Golden Signals, log correlation, and actionable alerting.
 - Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
 - Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
 
