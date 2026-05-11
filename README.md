@@ -507,6 +507,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - Use `ai-policy-api-backend.md` when the project is mainly focused on backend services, APIs, data handling, jobs, workers, and operational correctness. Includes **Testing & Quality (TDD-First)** (unit, integration, contract, performance/load).
 - Use `ai-policy-data.md` when the project is mainly focused on data engineering, ETL pipelines, data processing, analytics, or database-heavy workloads. Includes **Testing & Validation** (pipeline testing, schema validation, data quality, contract testing).
 - Use `ai-policy-linux-system-admin.md` when the project is mainly focused on Linux system administration and SRE tasks. Includes **Testing & Validation** (script testing, configuration testing, idempotency, DR testing).
+- Use `ai-policy-dba.md` when the project is focused on Database Administration (MySQL, Postgres, Oracle, MSSQL, MongoDB). Includes **Expert Operational Standards** (HA/DR, performance tuning, destructive operation guardrails, lifecycle management).
 - Use `ai-policy-mobile-apps.md` when the project is mainly focused on mobile app development (iOS, Android, or cross-platform). Includes **Testing & Quality (TDD-First)** (unit, UI, integration, snapshot). See the [mobile app policy guide](docs/ai-policy-mobile-apps-guide.md) for details.
 
 

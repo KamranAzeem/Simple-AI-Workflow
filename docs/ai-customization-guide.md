@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-05-05T14:10:00Z
-Intent: Provide a guide for the Unified AI Customization system.
+Last modified: 2026-05-11T11:25:00Z
+Intent: Include DBA in the customization guide naming conventions.
 -->
 
 # AI Customization Guide
@@ -84,6 +84,7 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | :--- | :--- | :--- |
 | **Expertise** | `cloud` | `ai-policy-cloud.md` |
 | **Expertise** | `web-frontend` | `ai-policy-web-frontend.md` |
+| **Expertise** | `dba` | `ai-policy-dba.md` |
 | **Expertise** | `meta` | `ai-policy-meta.md` |
 | **Compliance**| `gdpr` | `compliance/gdpr.md` |
 | **Compliance**| `hipaa` | `compliance/hipaa.md` |
