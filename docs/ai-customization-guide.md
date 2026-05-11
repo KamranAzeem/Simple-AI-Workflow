@@ -85,6 +85,7 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Expertise** | `cloud` | `ai-policy-cloud.md` |
 | **Expertise** | `web-frontend` | `ai-policy-web-frontend.md` |
 | **Expertise** | `dba` | `ai-policy-dba.md` |
+| **Expertise** | `observability` | `ai-policy-observability.md` |
 | **Expertise** | `meta` | `ai-policy-meta.md` |
 | **Compliance**| `gdpr` | `compliance/gdpr.md` |
 | **Compliance**| `hipaa` | `compliance/hipaa.md` |
