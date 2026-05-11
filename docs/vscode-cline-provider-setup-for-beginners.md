@@ -149,7 +149,7 @@ Fix:
 
 - Never paste API keys into project source files.
 - Never commit keys to Git.
-- Prefer environment variables or local secret stores when possible.
+- Prefer environment variables or global secret stores when possible.
 - Rotate keys immediately if accidentally exposed.
 
 ## Quick Copy Prompts for Support

@@ -8,22 +8,16 @@ ai/**
 !ai/policies/
 !ai/policies/**
 
-# Ignore the local policy override file (users should create their own).
-ai/policies/ai-policy-override.md
-
-
-
-
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
 
-# Central settings directory — personal files shared across all projects (e.g. about-human.md).
+# Global settings directory — personal files shared across all projects (e.g. about-human.md).
 # Git-ignored so contents survive git pull without being committed.
 settings/
 
 # Basic principal: 
-#   Do not add any local AI files to your project work - no matter which AI assistant you are using.
-*   Ignore local-only AI instruction files
+#   Do not add any project AI files to your project work - no matter which AI assistant you are using.
+*   Ignore project-specific AI instruction files
 AGENTS.local.md
 CLAUDE.md
 CLAUDE.local.md

@@ -26,7 +26,7 @@ It helps you:
 
 - **Get more useful answers** — AI knows your project's rules and preferences
 - **Keep things consistent** — same setup across projects and AI tools
-- **Stay organized** — conversations, notes, and progress saved locally
+- **Stay organized** — conversations, notes, and progress saved in the project directory
 - **Keep private stuff private** — all AI notes stay in `ai/`, out of the repo
 
 > Turns AI from a chat buddy into a **reliable teammate** that follows your rules. Just for you.
@@ -72,19 +72,19 @@ Tools and workflows should be simple to use. You shouldn't need to spend a lifet
 
 ---
 
-# Why Local AI is Better Than Web AI
+# Why IDE AI is Better Than Web AI
 
 ## The Context Problem with Web Interfaces
 - Web AI (ChatGPT, Gemini web) knows **only what you tell it** in a long prompt
 - No memory of previous sessions — you start from scratch every time
 - Limited file uploads — can't give it your full project
 
-## The Local AI Advantage
+## The IDE AI Advantage
 - Runs **inside your project directory** — has access to **all your files**
 - Builds a **much richer context** from your actual codebase
 - You write **smaller prompts** — the AI already knows the project
 
-> Web AI = you explain everything. Local AI = it already knows.
+> Web AI = you explain everything. IDE AI = it already knows.
 
 ---
 
@@ -109,7 +109,7 @@ Think of AI as your **doctor** or your **therapist**.
 |-------|-------------|
 | 0 | Not using AI |
 | 1 | Browser-based interaction (ChatGPT, Gemini web) |
-| 2 | AI chat assistant in local editor (VS Code, etc.) |
+| 2 | AI chat assistant in project editor (VS Code, etc.) |
 | 3 | CLI-based interaction (copilot, claude, gemini, etc.) |
 | 4 | Creating or using MCPs, Skills, etc. |
 | 5 | Creating AI Agents that do tasks on your behalf |
@@ -125,9 +125,9 @@ Think of AI as your **doctor** or your **therapist**.
 - **Scattered State**: One AI assistant = mostly fine, but tracking is buried in tool-specific logs
 - **Two+ assistants** on the same project = chaos. Whose context is current?
 
-## The Solution: Local Grounding
+## The Solution: Project-Level Grounding
 - **Instant Onboarding**: One protocol (AGENTS.md) replaces lengthy setup prompts
-- **Predictable Behavior**: Every assistant follows the same local rules and guardrails
+- **Predictable Behavior**: Every assistant follows the same project rules and guardrails
 - **One shared context** — all assistants read/write the same files
 - **Permanent Memory**: Project state lives in `ai/`. AI knows where it left off
 - **Future-Proof**: Switch between IDE, CLI, or web chat without losing a beat
@@ -186,7 +186,7 @@ Think of AI as your **doctor** or your **therapist**.
 
 ```
 my-project/
-├── AGENTS.md          ← Points to central policy
+├── AGENTS.md          ← Points to global policy
 ├── ai/                ← AI context + state (git-ignored)
 │   ├── context.md
 │   ├── next-steps.md
@@ -197,7 +197,7 @@ my-project/
 │   ├── shared/
 │   │   ├── coordination.md
 │   │   ├── handoffs/
-│   │   └── knowledge-base/
+│   │   └── project-knowledge/
 ├── .git/
 ├── README.md
 ├── docs/
@@ -246,7 +246,7 @@ your plan in                Process the handoff files
 "artifacts/".               one by one, ensuring that
                             you follow information
                             from the shared
-                            knowledge-base.
+                            project-knowledge.
 
                             Update relevant
                             documentation as you
@@ -286,11 +286,11 @@ This is the single startup entry point for all AI assistants...
 
 Read in this order:
 
-**Central Policy Directory**: `/path/to/Simple-AI-Workflow/ai/`
+**Global Policies Directory**: `/path/to/Simple-AI-Workflow/ai/`  
+### Global Authority (Mandatory)
 
-### Centralized Authority (Mandatory)
-1. [central main policy file](ai-policy-cloud.md)
-2. [central common policy file](ai-policy-common.md)
+1. [global main policy file](ai-policy-cloud.md)
+2. [global common policy file](ai-policy-common.md)
 
 After reading all accessible files above, acknowledge readiness...
 ```
@@ -309,7 +309,7 @@ After reading all accessible files above, acknowledge readiness...
 
 ---
 
-# The Central Policy Files
+# The Global Policy Files
 
 ```
 ~/Simple-AI-Workflow/
@@ -337,7 +337,7 @@ Pick the policy that matches your project type.
 - **Plug-n-Play** — Place AGENTS.md in any directory and start using AI
 - **Acts as your Personal Project Manager** for each repository
 - **Standardized Traceability** — Metadata headers on every AI-modified file
-- **Centralized Policy Authority** — Cloud, Data, Web, Mobile, Linux — token & API efficiency
+- **Global Policy Authority** — Cloud, Data, Web, Mobile, Linux — token & API efficiency
 - **Analyze-Plan-Stop** — Mandatory pause for human directive before implementation
 - **Multi-Agent Coordination** — A2A collaboration, knowledge base, handoffs
 - **AI-Driven Secure Development** — Security best practices from threat modeling (STRIDE)
@@ -354,16 +354,16 @@ Pick the policy that matches your project type.
 - **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
 - **About Human (`ai/about-human.md`)** — AI learns your skills and preferences
 - **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
-- **Policy Override** — `ai/ai-policy-override.md` for local exceptions
+- **Project Override** — `ai/ai-policy-override.md` for project exceptions
 - **Daily Snapshots** — Automated history of work and decisions
 
 ---
 
 # Quick Setup
 
-1. **Clone** this repo to a central location (e.g. `~/Projects/Personal/Simple-AI-Workflow/`)
+1. **Clone** this repo to a global location (e.g. `~/Projects/Personal/Simple-AI-Workflow/`)
 2. **Copy** `AGENTS.md` into your project root
-3. **Update** the central policy path in `AGENTS.md`
+3. **Update** the global policy path in `AGENTS.md`
 4. **Start VS Code** and type in the AI chat:
 
    ```
@@ -410,7 +410,7 @@ Checkpoints save AI state so you can resume later.
 
 # Bring Updates from Upstream
 
-1. **Pull** recent changes from GitHub/Simple-AI-Workflow in your central policy location
+1. **Pull** recent changes from GitHub/Simple-AI-Workflow in your global policy location
 2. **Run** `sync-agents-md.sh` to propagate the new AGENTS.md to all your projects
 3. **Open** the project in VS Code
 4. **Ask AI**: `"load context, and update the structure of the ai/ directory to comply with AGENTS.md"`
@@ -451,7 +451,7 @@ One AI "brain" sees everything across all your projects.
 │   ├── shared/
 │   │   ├── coordination.md
 │   │   ├── handoffs/
-│   │   └── knowledge-base/
+│   │   └── project-knowledge/
 │   ├── secrets/
 │   ├── context.md
 │   ├── next-steps.md
@@ -533,7 +533,7 @@ These are just some of the headings — the Do's and Don'ts.
 
 ---
 
-# Anatomy of a Central Policy File
+# Anatomy of a Global Policy File
 
 ```
 # DO NOT MODIFY THIS FILE
@@ -583,16 +583,16 @@ Write in the AI chat window (example):
 
 > "I usually work as 'Windows Administrator', and manage some infrastructure on Azure. So, using ai-policy-cloud.md as guideline, create a new AI policy file for me, tailored for the type of work I do. Name the policy-file as ai-policy-windows.md"
 
-Then inspect the file thoroughly. When you're happy, place it at a central location and use it through your AGENTS.md file.
+Then inspect the file thoroughly. When you're happy, place it at a global location and use it through your AGENTS.md file.
 
 ---
 
 # Example of ai-policy-override.md
 
 ```markdown
-# AI Policy Override
+# AI Project Override
 
-## Windows Shell Priority (Local Setup)
+## Windows Shell Priority (Project Setup)
 
 For terminal execution on this Windows machine:
 
@@ -605,7 +605,7 @@ For terminal execution on this Windows machine:
 
 ---
 
-# Central Location for All Policies
+# Global Location for All Policies
 
 ```
 ~/Projects/Personal/Simple-AI-Workflow/ai/
@@ -617,7 +617,7 @@ For terminal execution on this Windows machine:
 └── ai-policy-mobile-apps.md
 ```
 
-Central location enables easy access and maintenance across all your projects.
+Global location enables easy access and maintenance across all your projects.
 
 ---
 
@@ -709,7 +709,7 @@ When working with AI, things can go wrong:
        Each commit = a safe fallback point
 
 3. SQUASH-MERGE WHEN DONE
-   └── "AI, document all work, commit, merge into main, push, delete local branch"
+   └── "AI, document all work, commit, merge into main, push, delete project branch"
        All tiny commits → one clean commit on main
 
 4. AI DOES IT ALL
@@ -729,14 +729,14 @@ When working with AI, things can go wrong:
 
 ## The One-Liner Prompt
 
-> **"Commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the local branch."**
+> **"Commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the project branch."**
 
 The AI will:
 1. ✅ Scan files for secrets before committing
 2. ✅ Commit with a descriptive message
 3. ✅ Squash-merge into main/master
 4. ✅ Push to remote
-5. ✅ Delete the local branch
+5. ✅ Delete the project branch
 
 > **Git is your safety net. Let the AI be your Git driver. You just enjoy the ride.**
 
@@ -756,7 +756,7 @@ The AI will:
 # Quick Setup
 
 1. Follow [github.com/KamranAzeem/Simple-AI-Workflow](https://github.com/KamranAzeem/Simple-AI-Workflow)
-2. **Clone** this repo to a central location (e.g. `~/Projects/Personal/Simple-AI-Workflow/`)
+2. **Clone** this repo to a global location (e.g. `~/Projects/Personal/Simple-AI-Workflow/`)
 3. **Copy** `AGENTS.md` into your target project root
 4. **Update** the absolute path for the appropriate policy file in `AGENTS.md`
 5. **Write** in the AI chat window:
@@ -765,7 +765,7 @@ The AI will:
    "bootstrap using AGENTS.md protocol"
    ```
 
-> You have full control over your local copy.
+> You have full control over your project copy.
 
 ---
 

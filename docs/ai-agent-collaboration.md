@@ -20,11 +20,11 @@ In a multi-agent environment, there is a risk of:
 
 ## Collaborative Models
 
-### 1. Intra-Project Collaboration
+### 1. Project-Specific Collaboration
 This system enables multiple agents to work on a **single repository** concurrently or sequentially via the git-ignored `ai/shared/` directory.
 
 - **`ai/shared/handoffs/`**: Shift-change notes for specific project tasks.
-- **`ai/shared/knowledge-base/`**: Technical wiki scoped to the specific project's architecture, dependencies, and quirks.
+- **`ai/shared/project-knowledge/`**: Technical wiki scoped to the specific project's architecture, dependencies, and quirks.
 - **`ai/shared/coordination.md`**: The Status Board for project-level task locking.
 
 ### Handoff Protocol & Conditional Autonomy
@@ -38,11 +38,11 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
     - All coordination state (coordination.md, progress.md) is updated correctly.
     *Otherwise, human approval is mandatory before any merge.*
 
-### 2. Cross-Project (Centralized) Collaboration
+### 2. Global (Cross-Project) Collaboration
 This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
 
-- **`Central AI Settings Source` (`/home/kamran/.ai/settings/`)**: Stores personal identity-level context (e.g., `about-human.md`) and tool preferences.
-- **`Central AI Shared Knowledge Source` (`/home/kamran/.ai/shared-knowledge/`)**: Stores reusable design patterns, architectural lessons, and technical tips valid across all projects.
+- **`Global Settings Source` (`/home/kamran/.ai/settings/`)**: Stores personal identity-level context (e.g., `about-human.md`) and tool preferences.
+- **`Global Knowledge Source` (`/home/kamran/.ai/global-knowledge/`)**: Stores reusable design patterns, architectural lessons, and technical tips valid across all projects.
 - **Bootstrapping**: Agents automatically index these sources upon session initiation as read-only knowledge providers.
 - **Normalization**: Content here is treated as "lessons learned" to inform decision-making, not as authoritative project-specific logic.
 
@@ -59,7 +59,7 @@ Intent: Explanation of the change.
 This allows you to look at any file and instantly know **who** changed it and **why**.
 
 ### 3. Shared Policy Baseline (`ai/ai-policy-common.md`)
-All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **central common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
+All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **global common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
 
 ## Human Guidance: How to Interacting with AI Agents
 - **Check the Progress**: Read `ai/progress.md` and `ai/next-steps.md` to see the high-level status.
@@ -69,8 +69,8 @@ All assistants share a mandatory set of operational rules and contracts (branch-
 ## Agent Guidance: How to Collaborate
 1.  **Bootstrap**: Follow `AGENTS.md` protocol.
 2.  **Announce**: Update `ai/shared/coordination.md` when starting a session.
-3.  **Learn**: Read recent files in `ai/shared/knowledge-base/` and `ai/shared/handoffs/`.
-4.  **Document**: Save technical research to the `knowledge-base/` to save tokens for future sessions.
+3.  **Learn**: Read recent files in `ai/shared/project-knowledge/` and `ai/shared/handoffs/`.
+4.  **Document**: Save technical research to the `project-knowledge/` to save tokens for future sessions.
 5.  **Handoff**: Leave a note in `handoffs/` if a task is incomplete.
 
 ### A2A Rules (Mandatory)

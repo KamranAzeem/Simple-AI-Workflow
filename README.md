@@ -6,7 +6,7 @@ Intent: Change multi-assistant example from relay race to road trip.
 
 -->
 ---
-# Centralized Policy Management System for Simple AI Workflow
+# Global Policy Management System for Simple AI Workflow
 
 Objective: **Instead of *chatting* with AI, start *working* with AI**
 
@@ -20,14 +20,14 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 ## Quick Start (Initial Setup)
 
-* Clone this repository at a central location in your home directory.
-* **Mandatory One-Time Setup**: Create the central AI directory structure on your machine:
+* Clone this repository at a global location in your home directory.
+* **Mandatory One-Time Setup**: Create the global AI directory structure on your machine:
   * Create `$HOME/.ai/`
   * Create `$HOME/.ai/settings/`
-  * Create `$HOME/.ai/shared-knowledge/`
+  * Create `$HOME/.ai/project-knowledge/`
   * (Optional) Copy `docs/about-human.md` and `docs/tooling-reference.md` into `$HOME/.ai/settings/` and personalize them.
 * Copy `AGENTS.md` into the root of your project directory.
-* Update the **Configuration** section in the project-local `AGENTS.md` (ensure `Central Policies Directory` and `Central User AI Directory` point to your local paths).
+* Update the **Configuration** section in the project `AGENTS.md` (ensure `Global Policies Directory` and `Global User AI Directory` point to your global paths).
 * Start VS Code; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
   * `"init using AGENTS.md protocol"`
@@ -38,9 +38,9 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 You can use the following sequence to on-board an existing project with this workflow.
 
-1. Copy `AGENTS.md` from the central workflow location to the root of your new project.
+1. Copy `AGENTS.md` from the global workflow location to the root of your new project.
 2. Open the copied `AGENTS.md` and update the **Configuration** section to match your environment.
-3. *Optional, but useful*: Create ai/ai-customization.md file with the "policy"/"role" you want AI to use for this project. e.g. "cloud", "backend-api", etc. See [AI customization guide](docs/ai-ai-customization-guide.md) .
+3. *Optional, but useful*: Create ai/ai-customization.md file with the "policy"/"role" you want AI to use for this project. e.g. "cloud", "backend-api", etc. See [AI customization guide](docs/ai-customization-guide.md) .
 4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
 5. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
 
@@ -49,10 +49,10 @@ You can use the following sequence to on-board an existing project with this wor
 To keep your project's AI workflows synchronized with the latest features, follow these steps:
 
 1.  **Checkpoint**: Before updating, perform a final "checkpoint" of your current work and close your IDE.
-2.  **Pull Updates**: Pull the latest changes into your central `Simple-AI-Workflow` repository / directory.
+2.  **Pull Updates**: Pull the latest changes into your global `Simple-AI-Workflow` repository / directory.
 3.  **Update `AGENTS.md`**: Run the provided helper script in `support-files/` to copy the updated `AGENTS.md` to your project directory. 
     *   *Note: This script is designed to preserve your existing project-specific configuration section. Please verify that your configuration remains intact after running the script.*
-4.  **Load Context**: Re-open your IDE and initiate the session by typing: `"load context using AGENTS.md protocol"` in your AI chat extension. This will automatically align your local `ai/` directory structure with the updated protocol.
+4.  **Load Context**: Re-open your IDE and initiate the session by typing: `"load context using AGENTS.md protocol"` in your AI chat extension. This will automatically align your project `ai/` directory structure with the updated protocol.
 
 
 ## What This Workflow Is, and What It Is Not
@@ -65,9 +65,9 @@ It helps you:
 
 - **Get more useful answers** from your AI assistant — because it now knows your project's rules and your preferences.
 - **Keep things consistent** — the same setup works across all your projects, and across different AI tools (ChatGPT, Claude, Copilot, etc.).
-- **Stay organized** — your AI conversations, notes, and progress are saved locally so you can pick up where you left off.
+- **Stay organized** — your AI conversations, notes, and progress are saved in the project directory so you can pick up where you left off.
 - **Stay safe** — the AI checks for secrets (passwords, API keys) before committing anything to Git.
-- **Keep your private stuff private** — all AI-related notes stay in your local `ai/` folder, out of the repository.
+- **Keep your private stuff private** — all AI-related notes stay in your project `ai/` folder, out of the repository.
 
 In short: it turns AI from a chat buddy into a **reliable teammate** that follows your rules. Just for you.
 
@@ -78,9 +78,9 @@ In short: it turns AI from a chat buddy into a **reliable teammate** that follow
 - **Not an "Agent for Agents" (A4A)**: This isn't a meta-agent layer that manages other agents. It is a set of declarative rules that *any* agent can follow.
 - **Not a "Black Box"**: There are no hidden scripts, complex background processes, or brittle "song and dance" setups. It is a transparent, instruction-based protocol.
 - **Not an autonomous robot**: The AI remains an assistant; it does not run in autonomous loops or make decisions without a human-in-the-loop.
-- **Not a team collaboration tool**: Designed specifically for individual developers to manage their own local context and history.
+- **Not a team collaboration tool**: Designed specifically for individual developers to manage their own project context and history.
 - **Not a replacement**: It complements—not replaces—your existing CI/CD pipelines, testing frameworks, and security scanners.
-- **Not an AI training system**: It provides local grounding for context; it does not train or fine-tune AI models.
+- **Not an AI training system**: It provides project-specific grounding for context; it does not train or fine-tune AI models.
 - **Not a reporting dashboard**: It doesn't track token spend or generate manager-ready reports.
 
 ### Why this exists — the multi-assistant problem
@@ -117,7 +117,7 @@ The result? **Peace of mind.** You know exactly where the AI directory is, you k
 
 ```text
 +--------------------------------------+                +---------------------------------------+
-| ( The central policy location view ) |                | ( Your project directory view)        |
+| ( The global policy location view ) |                | ( Your project directory view)        |
 | .                                    |                | .                                     |
 | ├─ AGENTS.md                         |                | ├─ AGENTS.md                          |
 | ├─ ai/                               |                | ├─ ai/                                |
@@ -147,9 +147,9 @@ The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
   - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
-- The central policy is accessed directly from the path referenced in `AGENTS.md`, so local copying of policy files is not required.
+- The global policy is accessed directly from the path referenced in `AGENTS.md`, so manual copying of policy files is not required.
 - Optionally, you can customize the policy by adding `ai/ai-customization.md`.
-- A ready example is available at `ai-customization-example.md` (copy and adjust for your local setup).
+- A ready example is available at `ai-customization-example.md` (copy and adjust for your project setup).
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 - You can use `gitignore-example.txt` as a guide when adding AI-related ignore rules.
 
@@ -173,14 +173,14 @@ This will save time, read all AI related files without creating new ones, avoid 
 
 Use this when a newer version of this repository adds new bootstrap features (for example, new directories under `ai/`).
 
-### Step A: Get the latest AGENTS.md in this central repository
+### Step A: Get the latest AGENTS.md in this global repository
 
 1. Pull the latest changes in this repository, using `git pull`.
 2. Verify that `AGENTS.md` contains the new bootstrap rules you want to roll out.
 
 ### Step B: Propagate AGENTS.md to your other projects
 
-Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's Central Policies Directory and central policy file references.
+Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's Global Policies Directory and global policy file references.
 
 Linux/macOS/Git Bash (dry-run first):
 
@@ -200,7 +200,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync
 
 After copying the new `AGENTS.md`, manually open it in your project root and update the **Configuration** section:
 
-1. Ensure the `Central Policies Directory` path correctly points to the central location on your machine.
+1. Ensure the `Global Policies Directory` path correctly points to the global location on your machine.
 2. Verify all other paths in the configuration match your current project structure.
 
 ### Step D: Update each project's ai/ structure
@@ -222,7 +222,7 @@ After upgrade in a target project, quickly confirm:
 
 ## Unified AI Customization (`ai-customization.md`)
 
-This is the **"Single Dial"** for tailoring the AI to your specific project needs. It replaces the legacy `ai-policy-override.md` with a more flexible, list-based format.
+This is the **"Single Dial"** for tailoring the AI to your specific project needs. It uses a flexible, list-based format for project customization.
 
 Use `ai-customization.md` to:
 1.  **Compose Expertise**: Mix and match technical domains (e.g., `Expertise: [cloud, api-backend]`).
@@ -245,10 +245,10 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Compliance Coverage**: Automatically checks existence and readability of all mandatory core and compliance policies.
 - **Continuous Reliability**: Ensures the AI always operates from a known-good state, preventing protocol drift as the repository evolves.
 
-### 2. Centralized Policy Authority
+### 2. Global Policy Authority
 - **Multi-Domain Support**: Specialized policies for Cloud/Infra, Frontend, Backend, and Linux System Administration.
-- **Hierarchical Overrides**: Apply global rules via central policy while allowing repository-specific exceptions via `ai/ai-policy-override.md`.
-- **Modular Personas**: Easily swap the assistant's role (e.g., Engineer, Mentor, Security Specialist) by applying persona templates from `docs/personas/` to your local override file. **Note**: Switching personas only changes the interaction style; all technical guardrails and domain knowledge from the main policies (Cloud, Backend, etc.) remain fully active.
+- **Layered Customization**: Apply global rules via global policy while allowing repository-specific tailoring via `ai/ai-customization.md`.
+- **Modular Personas**: Easily swap the assistant's role (e.g., Engineer, Mentor, Security Specialist) by applying persona templates from `docs/personas/` to your project customization file. **Note**: Switching personas only changes the interaction style; all technical guardrails and domain knowledge from the main policies (Cloud, Backend, etc.) remain fully active.
 - **Token Efficiency**: Explicit policies for efficient token usage, API rate-limit awareness (batching/surgical edits), and anti-polling (no assistant watch-loops).
 
 ### 2. Standardized Bootstrap Protocol
@@ -256,24 +256,24 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Explicit State Loading**: Mandates the loading of existing tracking files (`next-steps.md`, `progress.md`, `context.md`) during initialization to ensure session continuity.
 - **Zero-Install & Zero-Script Setup**: No brittle scripts or "song and dance" situation required; just one `git clone` and one `copy` command to initialize any project. The workflow is purely instruction-based and logic-driven.
 - **Operational Readiness Check**: Automatic scanning of `ai/shared/handoffs/` and `ai/shared/coordination.md` during initialization to pick up existing context.
-- **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across local project directories.
+- **Environment Parity**: Aligned synchronization scripts (Bash and PowerShell) to propagate `AGENTS.md` across project directories.
 
 ### 3. Autonomous State & Context Management
 - **Checkpoint System**: Persistent tracking of progress, todos, and daily work snapshots in `ai/` to resume work seamlessly.
-- **Local Knowledge Base**: Local workspace notes in `ai/shared/knowledge-base/` for personal or session-specific findings; these are not intended as the repository-level sharing channel.
+- **Project Knowledge**: Project workspace notes in `ai/shared/project-knowledge/` for personal or session-specific findings; these are not intended as the repository-level sharing channel.
 - **Draft Outputs (`ai/artifacts/`)**: A staging area for draft documents, designs, and code snippets created during brainstorming sessions. Review and refine before promoting to `docs/` or the project codebase.
 - **Raw Notes (`ai/notes/`)**: A low-friction place for unpolished thoughts, meeting notes, or random ideas from both humans and AI. No structure required — just dump and go.
 - **Context Preservation**: Strategic resume points (`next-steps.md`, `progress.md`, `context.md`) ensure agents never "forget" the mission.
-- **Personalization**: Support for central user context files under `settings/` (plus local fallback `ai/about-human.md`) allows you to provide the AI with your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
+- **Personalization**: Support for global user context files under `settings/` (plus project fallback `ai/about-human.md`) allows you to provide the AI with your skills, experience, and communication preferences for more tailored assistance (see `docs/about-human.md` for a template).
 
 ### 4. Standardized Traceability (Metadata Headers)
 - **Audit Trails**: Mandatory file-identification headers (Created-by, Updated-by, Intent) using native comment syntax for every AI-modified file.
 - **Transparency**: Instantly identify the author and purpose of any AI-generated artifact.
 
-### 5. Multi-Agent Coordination (Local Workspace)
+### 5. Multi-Agent Coordination (Project Workspace)
 - **A2A Coordination**: Dedicated `ai/shared/` directory structure: [AI Agent Collaboration Guide](docs/ai-agent-collaboration.md)
     - `handoffs/`: Async task transfers between agents or sessions.
-  - `knowledge-base/`: Local notes and references for AI workflow continuity.
+  - `project-knowledge/`: Project notes and references for AI workflow continuity.
     - `coordination.md`: Real-time status board for task locking and ownership.
 - **Claim & Execute Protocol**: Standardized lifecycle for handoffs (Create -> Claim in coordination.md -> Execute -> Verify & Cleanup).
 - **A2A Rules**: All agents must follow:
@@ -298,15 +298,15 @@ This solution transforms AI from a chat-bot into a structured team member with c
 ### 10. AI-Driven Secure Development Practices
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures generated code and configurations are secure by default, helping developers, engineers, and security professionals build safer applications and infrastructure.
 
-### 11. Centralized Knowledge Architecture
-- **Persistent Shared Intelligence**: Leverages `/home/kamran/.ai/` for global settings (`/settings/`) and shared knowledge (`/shared-knowledge/`) that follow you across all projects.
+### 11. Global Knowledge Architecture
+- **Persistent Shared Intelligence**: Leverages `/home/kamran/.ai/` for global settings (`/settings/`) and **Global Knowledge** (`/global-knowledge/`) that follow you across all projects.
 - **Bootstrapping**: Automatic read-only indexing of shared sources during session initiation.
-- **Normalization**: Shared knowledge is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
+- **Normalization**: **Global Knowledge** is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
 
 ### 12. Modular Compliance Framework
 - **Decoupled Registry**: Opt-in regulatory and industry standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) stored in `ai/compliance/`. [Compliance Guide](docs/compliance-guide.md)
 - **Policy Overrides**: Activates specific compliance rules per-project via `ai/ai-policy-override.md`.
-- **Audit-Ready**: Clear documentation and centralized policy enforcement.
+- **Audit-Ready**: Clear documentation and global policy enforcement.
 
 
 ## AI Prompt Playbook (Simple Workflow)
@@ -325,7 +325,7 @@ Use these short prompts directly when interacting with AI assistants.
 - **"update the necessary documentation in summarized form for what we just decided about ..."**
 - **"update the relevant documentation in summarized form for the tasks we did during this session"**
 - **"create the git branch for this fix: bugfix/..."**
-- **"commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the local branch"**
+- **"commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the project branch"**
 
 > **Why use AI for git operations?** When you ask the AI to commit, it applies the security policy before touching git — scanning the files for secrets (passwords, tokens, keys) before running `git add`, and stopping if anything suspicious is found. This is enforced automatically on every commit, without you having to remember to do it manually.
 
@@ -361,7 +361,7 @@ The result? **Unusable code.** And the pain of repairing it is far greater — a
        The AI squashes all those tiny commits into one clean,
        well-described commit on main/master.
 
-4. DELETE THE LOCAL BRANCH
+4. DELETE THE PROJECT BRANCH
    └── The AI handles this automatically as part of the merge step.
 ```
 
@@ -378,14 +378,14 @@ The result? **Unusable code.** And the pain of repairing it is far greater — a
 
 When you're done with a feature or fix, just say:
 
-> **"Commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the local branch."**
+> **"Commit the work done until now in the current git branch, and then merge the branch into main, push main to remote, and delete the project branch."**
 
 The AI will:
 1. ✅ Scan files for secrets before committing (security policy enforced automatically)
 2. ✅ Commit all changes with a descriptive message
 3. ✅ Squash-merge into main/master
 4. ✅ Push to remote
-5. ✅ Delete the local branch
+5. ✅ Delete the project branch
 
 ### Bottom line
 
@@ -465,11 +465,11 @@ The `ai/artifacts/` directory holds draft outputs and deliverables created durin
 4. When ready, move approved artifacts to `docs/` or project source.
 
 
-### ai/secrets/ — Sensitive Local Notes (Optional)
+### ai/secrets/ — Sensitive Project Notes (Optional)
 
-The `ai/secrets/` directory is intentionally excluded from automatic AI context loading. Use it for sensitive local notes such as:
+The `ai/secrets/` directory is intentionally excluded from automatic AI context loading. Use it for sensitive project notes such as:
 
-- API keys, tokens, or credentials (temporary local use only).
+- API keys, tokens, or credentials (temporary project use only).
 - Client-specific or project-specific sensitive context.
 - Personal notes on security concerns or vulnerabilities.
 
@@ -483,8 +483,8 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 ## Docs and Slides
 
 - [Simple-AI-Workflow (GoogleSlides/Live/up-to-date)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link) - *The slides are available under Creative Commons license.*
-- [Simple-AI-Workflow (Markdown slides)](docs/simple-ai-workflow-slides.md) - Local Markdown version of the presentation (Marp-compatible)
-- Local docs directory: `docs/`
+- [Simple-AI-Workflow (Markdown slides)](docs/simple-ai-workflow-slides.md) - Project Markdown version of the presentation (Marp-compatible)
+- Project docs directory: `docs/`
 - Hands-on prompt-first learning session runbook: `docs/example-learning-session-runbook.md`
 - AI agent collaboration and coordination guide: `docs/ai-agent-collaboration.md`
 - Compliance & Regulatory Framework Guide: `docs/compliance-guide.md`
@@ -500,7 +500,7 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 
 ## Which policy should you choose?
 
-- **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts, generated file validation) and is automatically loaded during the bootstrap process as the **central common policy file**.
+- **`ai-policy-common.md`**: This is the **mandatory shared baseline** for all AI assistants. It contains universal guardrails (branch-gating, A2A coordination, checkpoint contracts, generated file validation) and is automatically loaded during the bootstrap process as the **global common policy file**.
 
 - Use `ai-policy-cloud.md` when the project is mostly infrastructure, cloud automation, deployment, platform operations, or mixed cloud workflows. Includes **Testing & Validation** (IaC validation, policy-as-code testing, drift detection).
 - Use `ai-policy-web-frontend.md` when the project is mainly focused on frontend web applications, UI work, accessibility, design systems, and user-facing flows. Includes **Testing & Quality (TDD-First)** (unit, integration, E2E, visual regression).
@@ -510,5 +510,5 @@ The `ai/secrets/` directory is intentionally excluded from automatic AI context 
 - Use `ai-policy-mobile-apps.md` when the project is mainly focused on mobile app development (iOS, Android, or cross-platform). Includes **Testing & Quality (TDD-First)** (unit, UI, integration, snapshot). See the [mobile app policy guide](docs/ai-policy-mobile-apps-guide.md) for details.
 
 
-- If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **central common policy file** will handle the shared engineering standards automatically.
+- If the project spans multiple areas, start with the specialized policy that matches the highest-risk work; the **global common policy file** will handle the shared engineering standards automatically.
 

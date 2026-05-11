@@ -15,14 +15,14 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 <!-- List technical domains to load from the global policies directory. -->
 <!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta -->
 
-- cloud
-- api-backend
+- meta
 
 ---
 
 ## Active Traits
 <!-- Define functional personas or behavioral shifts for the AI. -->
 
+- Strategic Planner: Coordinate dependencies across infra, api, and web.
 - Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
 - Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
 
@@ -33,11 +33,12 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 <!-- Available: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa -->
 
 - gdpr
-
+- iso-27001
 ---
 
-## Example: The Architect Setup
 <!-- 
+
+## Example: The Architect Setup
 Use this configuration at a group-level directory to manage multiple sub-projects.
 
 ## Active Expertise

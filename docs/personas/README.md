@@ -14,7 +14,7 @@ This repository uses a **hierarchical inheritance** model for AI policies. This 
 When an AI assistant initializes, it reads files in the order defined in `AGENTS.md`. This creates a cumulative context:
 
 1.  **Domain Policies** (e.g., `ai-policy-cloud.md`): These define the **Knowledge Base** and **Guardrails** (Terraform, AWS standards, security rules).
-2.  **Persona Overrides** (via `ai/ai-policy-override.md`): These define the **Operational Mode** (Mentor, Architect, Security Specialist).
+2.  **Persona Overrides** (via `ai/ai-customization.md`): These define the **Operational Mode** (Mentor, Architect, Security Specialist).
 
 ### Key Concept: Stacking, not Replacing
 Switching to a "Mentor" persona **does not disable** the Cloud policy. Instead, it overlays new instructions on *how* to deliver that cloud knowledge.
@@ -30,7 +30,7 @@ Switching to a "Mentor" persona **does not disable** the Cloud policy. Instead, 
 
 1.  Browse the templates in `docs/personas/`.
 2.  Copy the `## Role`, `## Responsibilities`, and `## Communication Style` sections from your chosen template.
-3.  Paste them into your local `ai/ai-policy-override.md` file.
+3.  Paste them into your local `ai/ai-customization.md` file.
 4.  The assistant will adopt the new persona after the next context load. 
 
 **Note on Refreshing**: If you update the override file while a chat session is already active, you must tell the assistant to refresh its instructions by using the prompt: **"load AI context"** or **"re-read policy override"**.
