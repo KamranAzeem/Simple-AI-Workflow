@@ -83,7 +83,7 @@ Each platform gets its own section with framework preferences, language conventi
 ## How to Use
 
 ### Step 1: Set up AGENTS.md
-Copy `AGENTS.md` into your mobile project's root directory and update the central policy path to point to your Simple-AI-Workflow clone.
+Copy `AGENTS.md` into your mobile project's root directory and update the global policy path to point to your Simple-AI-Workflow clone.
 
 ### Step 2: Bootstrap
 In your AI assistant, run:
@@ -100,7 +100,7 @@ Or simply start working and the AI will detect your platform from the project fi
 
 ## How It Integrates with the Common Policy
 
-The mobile policy works **on top of** the [central common policy file](../ai/ai-policy-common.md). It does not replace it.
+The mobile policy works **on top of** the [global common policy file](../ai/ai-policy-common.md). It does not replace it.
 
 | Common Policy Rule | Mobile Policy Adds |
 |-------------------|-------------------|
@@ -111,7 +111,7 @@ The mobile policy works **on top of** the [central common policy file](../ai/ai-
 | API rate-limit awareness | (inherits from common) |
 
 **Instruction precedence** (from the common policy):
-> system/tool safety > explicit user request > local override > **specialized policy (mobile)** > common policy
+> system/tool safety > explicit user request > project override > **specialized policy (mobile)** > common policy
 
 This means the mobile policy's rules take priority over the common policy when there's overlap.
 

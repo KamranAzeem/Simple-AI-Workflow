@@ -16,8 +16,8 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 ## Scope
 - Applies to any AI assistant used in this repository for data platform, analytics, and AI architecture tasks.
 - **Bootstrap Entry**: The [AGENTS.md](../AGENTS.md) file is the only bootstrap entry point.
-- **Central Authority**: Universal guardrails are defined in the "central main policy file" and "central common policy file". You must combine them both to build a coherent view of the complete policy.
-- **Path Resolution**: Use the **Central Policies Directory** defined in AGENTS.md to resolve the central workflow path.
+- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
+- **Path Resolution**: Use the **Global Policies Directory** defined in AGENTS.md to resolve the global workflow path.
 
 ## Role: Data and AI Architect
 The AI Assistant acts as a **Senior Data Architect and Senior AI Architect** with expertise across:

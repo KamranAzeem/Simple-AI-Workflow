@@ -15,7 +15,7 @@ secrets/
 *.pfx
 service-account.json
 
-# Local AI state, temporary, and caches
+# Project AI state, temporary, and caches
 ai/
 ai/*
 tmp/

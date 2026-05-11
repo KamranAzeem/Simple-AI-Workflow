@@ -156,30 +156,30 @@ echo
 # Process matches
 for f_abs in "${matches[@]}"; do
   # Extract values from target AGENTS.md to preserve them
-  # 1. Central Policies Directory
-  target_cp_dir=$(grep -m1 -E '\*\*Central Policies Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central Policies Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
-  # 2. Central Main Policy File
-  target_main_policy=$(grep -m1 -E '\[central main policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[central main policy file\](\([^)]*\)).*/\1/p' || true)
-  # 3. Central Common Policy File
-  target_common_policy=$(grep -m1 -E '\[central common policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[central common policy file\](\([^)]*\)).*/\1/p' || true)
-  # 4. Central User AI Directory
-  target_user_ai_dir=$(grep -m1 -E '\*\*Central User AI Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central User AI Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
-  # 5. Central AI Settings Source
-  target_settings_src=$(grep -m1 -E '\*\*Central AI Settings Source\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central AI Settings Source\*\*: `\([^`]*\)`.*/\1/p' || true)
-  # 6. Central AI Shared Knowledge Source
-  target_shared_knowledge_src=$(grep -m1 -E '\*\*Central AI Shared Knowledge Source\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Central AI Shared Knowledge Source\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 1. Global Policies Directory
+  target_cp_dir=$(grep -m1 -E '\*\*Global Policies Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global Policies Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 2. Global Main Policy File
+  target_main_policy=$(grep -m1 -E '\[global main policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[global main policy file\](\([^)]*\)).*/\1/p' || true)
+  # 3. Global Common Policy File
+  target_common_policy=$(grep -m1 -E '\[global common policy file\]\([^)]+\)' "$f_abs" | sed -n 's/.*\[global common policy file\](\([^)]*\)).*/\1/p' || true)
+  # 4. Global User AI Directory
+  target_user_ai_dir=$(grep -m1 -E '\*\*Global User AI Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global User AI Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 5. Global AI Settings Source
+  target_settings_src=$(grep -m1 -E '\*\*Global AI Settings Source\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global AI Settings Source\*\*: `\([^`]*\)`.*/\1/p' || true)
+  # 6. Global Knowledge Source
+  target_shared_knowledge_src=$(grep -m1 -E '\*\*Global Knowledge Source\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global Knowledge Source\*\*: `\([^`]*\)`.*/\1/p' || true)
 
   # Print structured per-target info for readability
   echo
   echo "Target AGENTS.md file: $f_abs"
   echo
   echo "Values preserved from target (if found):"
-  echo "  Central Policies Directory: ${target_cp_dir:-"(not found, will use source value)"}"
-  echo "  Central Main Policy:      ${target_main_policy:-"(not found, will use source value)"}"
-  echo "  Central Common Policy:    ${target_common_policy:-"(not found, will use source value)"}"
-  echo "  Central User AI Directory:${target_user_ai_dir:-"(not found, will use source value)"}"
-  echo "  Central AI Settings Source:  ${target_settings_src:-"(not found, will use source value)"}"
-  echo "  Central AI Shared Knowledge Source: ${target_shared_knowledge_src:-"(not found, will use source value)"}"
+  echo "  Global Policies Directory: ${target_cp_dir:-"(not found, will use source value)"}"
+  echo "  Global Main Policy:      ${target_main_policy:-"(not found, will use source value)"}"
+  echo "  Global Common Policy:    ${target_common_policy:-"(not found, will use source value)"}"
+  echo "  Global User AI Directory:${target_user_ai_dir:-"(not found, will use source value)"}"
+  echo "  Global AI Settings Source:  ${target_settings_src:-"(not found, will use source value)"}"
+  echo "  Global Knowledge Source: ${target_shared_knowledge_src:-"(not found, will use source value)"}"
 
   tmp=$(mktemp)
   
@@ -187,27 +187,27 @@ for f_abs in "${matches[@]}"; do
   sed_args=()
   if [ -n "$target_cp_dir" ]; then
     esc_val=$(printf '%s' "$target_cp_dir" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Central Policies Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\*\*Global Policies Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_main_policy" ]; then
     esc_val=$(printf '%s' "$target_main_policy" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\[central main policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\[global main policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_common_policy" ]; then
     esc_val=$(printf '%s' "$target_common_policy" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\[central common policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\[global common policy file\]\()([^)]*)(\))|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_user_ai_dir" ]; then
     esc_val=$(printf '%s' "$target_user_ai_dir" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Central User AI Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\*\*Global User AI Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_settings_src" ]; then
     esc_val=$(printf '%s' "$target_settings_src" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Central AI Settings Source\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\*\*Global AI Settings Source\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_shared_knowledge_src" ]; then
     esc_val=$(printf '%s' "$target_shared_knowledge_src" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Central AI Shared Knowledge Source\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+    sed_args+=("-e" 's|(\*\*Global Knowledge Source\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
 
   if [ ${#sed_args[@]} -gt 0 ]; then

@@ -65,24 +65,24 @@ foreach ($m in $foundFiles) {
   # Extract values from target AGENTS.md to preserve them
   $targetContent = Get-Content -Raw -Path $target
   
-  $targetCpDir = if ($targetContent -match '\*\*Central Policies Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
-  $targetMainPolicy = if ($targetContent -match '\[central main policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
-  $targetCommonPolicy = if ($targetContent -match '\[central common policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
-  $targetUserAiDir = if ($targetContent -match '\*\*Central User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
-  $targetSettingsSrc = if ($targetContent -match '\*\*Central AI Settings Source\*\*: `([^`]+)`') { $Matches[1] } else { $null }
-  $targetSharedKnowledgeSrc = if ($targetContent -match '\*\*Central AI Shared Knowledge Source\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetCpDir = if ($targetContent -match '\*\*Global Policies Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetMainPolicy = if ($targetContent -match '\[global main policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
+  $targetCommonPolicy = if ($targetContent -match '\[global common policy file\]\(([^)]+)\)') { $Matches[1] } else { $null }
+  $targetUserAiDir = if ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetSettingsSrc = if ($targetContent -match '\*\*Global AI Settings Source\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetSharedKnowledgeSrc = if ($targetContent -match '\*\*Global Knowledge Source\*\*: `([^`]+)`') { $Matches[1] } else { $null }
 
   # Print structured per-target info for readability
   Write-Host ""
   Write-Host "Target AGENTS.md file: $target"
   Write-Host ""
   Write-Host "Values preserved from target (if found):"
-  Write-Host "  Central Policies Directory: $(if ($targetCpDir) { $targetCpDir } else { "(not found, will use source value)" })"
-  Write-Host "  Central Main Policy:      $(if ($targetMainPolicy) { $targetMainPolicy } else { "(not found, will use source value)" })"
-  Write-Host "  Central Common Policy:    $(if ($targetCommonPolicy) { $targetCommonPolicy } else { "(not found, will use source value)" })"
-  Write-Host "  Central User AI Directory: $(if ($targetUserAiDir) { $targetUserAiDir } else { "(not found, will use source value)" })"
-  Write-Host "  Central AI Settings Source:  $(if ($targetSettingsSrc) { $targetSettingsSrc } else { "(not found, will use source value)" })"
-  Write-Host "  Central AI Shared Knowledge Source: $(if ($targetSharedKnowledgeSrc) { $targetSharedKnowledgeSrc } else { "(not found, will use source value)" })"
+  Write-Host "  Global Policies Directory: $(if ($targetCpDir) { $targetCpDir } else { "(not found, will use source value)" })"
+  Write-Host "  Global Main Policy:      $(if ($targetMainPolicy) { $targetMainPolicy } else { "(not found, will use source value)" })"
+  Write-Host "  Global Common Policy:    $(if ($targetCommonPolicy) { $targetCommonPolicy } else { "(not found, will use source value)" })"
+  Write-Host "  Global User AI Directory: $(if ($targetUserAiDir) { $targetUserAiDir } else { "(not found, will use source value)" })"
+  Write-Host "  Global AI Settings Source:  $(if ($targetSettingsSrc) { $targetSettingsSrc } else { "(not found, will use source value)" })"
+  Write-Host "  Global Knowledge Source: $(if ($targetSharedKnowledgeSrc) { $targetSharedKnowledgeSrc } else { "(not found, will use source value)" })"
 
   try {
     $srcContent = Get-Content -Raw -Path $srcPath
@@ -90,22 +90,22 @@ foreach ($m in $foundFiles) {
 
     # Apply preserved values to the source content
     if ($targetCpDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Central Policies Directory\*\*: `)([^`]+)(`)', '$1' + $targetCpDir + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Global Policies Directory\*\*: `)([^`]+)(`)', '$1' + $targetCpDir + '$3')
     }
     if ($targetMainPolicy) {
-      $newContent = [regex]::Replace($newContent, '(\[central main policy file\]\()([^)]+)(\))', '$1' + $targetMainPolicy + '$3')
+      $newContent = [regex]::Replace($newContent, '(\[global main policy file\]\()([^)]+)(\))', '$1' + $targetMainPolicy + '$3')
     }
     if ($targetCommonPolicy) {
-      $newContent = [regex]::Replace($newContent, '(\[central common policy file\]\()([^)]+)(\))', '$1' + $targetCommonPolicy + '$3')
+      $newContent = [regex]::Replace($newContent, '(\[global common policy file\]\()([^)]+)(\))', '$1' + $targetCommonPolicy + '$3')
     }
     if ($targetUserAiDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Central User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserAiDir + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Global User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserAiDir + '$3')
     }
     if ($targetSettingsSrc) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Central AI Settings Source\*\*: `)([^`]+)(`)', '$1' + $targetSettingsSrc + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Global AI Settings Source\*\*: `)([^`]+)(`)', '$1' + $targetSettingsSrc + '$3')
     }
     if ($targetSharedKnowledgeSrc) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Central AI Shared Knowledge Source\*\*: `)([^`]+)(`)', '$1' + $targetSharedKnowledgeSrc + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Global Knowledge Source\*\*: `)([^`]+)(`)', '$1' + $targetSharedKnowledgeSrc + '$3')
     }
 
     if ($WhatIf) {

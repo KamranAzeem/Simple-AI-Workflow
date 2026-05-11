@@ -48,8 +48,20 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
 
 ### Configuration
 
-**Central Policies Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/policies/`
-**Central User AI Directory**: `/home/kamran/.ai/`
+**Global Policies Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/ai/policies/`
+**Global User AI Directory**: `/home/kamran/.ai/`
+
+
+
+<!-- USERS MUST NOT MODIFY: START - Internal system configuration items -->
+
+
+**Project Customization File**: `ai/ai-customization.md`
+**Project Policy Directory**: `ai/policies/` 
+**Project Knowledge Directory**: `ai/shared/project-knowledge/` 
+**Global Knowledge Directory**: (Read from **Global User AI Directory**)/global-knowledge/ 
+
+<!-- USERS MUST NOT MODIFY: END - Internal system configuration items -->
 
 ### Path Format Requirements (Windows)
 
@@ -71,33 +83,36 @@ This applies regardless of whether the user is running Git Bash, WSL, or PowerSh
 Perform these phases in order whenever the user requests "load context":
 
 #### Phase 1: Load Mandatory Policies
-1. [central common policy file](ai-policy-common.md) - (Read from **Central Policies Directory**)
+1. [global common policy file](ai-policy-common.md) - (Read from **Global Policies Directory**)
 
 #### Phase 2: Structural Integrity & Auto-Upgrade
 
-The AI assistant MUST ensure the local `ai/` structure is correct. If any directory or mandatory file is missing, the AI MUST autonomously create it:
-1. **Directories**: Ensure `ai/`, `ai/policies/`, `ai/daily-checkpoints/`, `ai/shared/handoffs/`, `ai/shared/knowledge-base/`, `ai/artifacts/`, `ai/notes/`, `ai/secrets/` exist.
-2. **Mandatory Files**: Ensure `ai/next-steps.md`, `ai/progress.md`, and `ai/context.md` exist. If missing, initialize them using the templates in the Bootstrap procedure.
-3. **Central Settings**: Ensure `settings/` and `shared-knowledge/` exist under the **Central User AI Directory**. Create them if missing.
+The AI assistant MUST ensure the project `ai/` structure is correct. If any directory or mandatory file is missing, the AI MUST autonomously create it:
+1. **Directories**: Ensure `ai/`, `ai/policies/`, `ai/daily-checkpoints/`, `ai/shared/handoffs/`, `ai/shared/project-knowledge/`, `ai/artifacts/`, `ai/notes/`, `ai/secrets/` exist.
+2. **Mandatory Files**: Ensure `ai/next-steps.md`, `ai/progress.md`, and `ai/context.md` exist. If missing, initialize them as defined in the Bootstrap procedure.
+3. **Global Settings**: Ensure `settings/` and `global-knowledge/` exist under the **Global User AI Directory**. Create them if missing.
 
 #### Phase 3: Load Customization & State
 
-1. [local customization file](ai-customization.md) - (Optional; replaces `ai-policy-override.md`)
-2. Load files from `settings/` subfolder in **Central User AI Directory** (Global settings).
+1. **Project Customization File** - (Optional; read from defined configuration)
+2. Load files from `settings/` subfolder in **Global User AI Directory** (Global settings).
 3. [next-steps file](ai/next-steps.md) - (Current resume point).
 4. Latest file in the [daily-checkpoints directory](ai/daily-checkpoints/).
 5. [progress file](ai/progress.md) - (Chronological history).
 6. [context file](ai/context.md) - (Repository briefing and decisions).
-7. [local knowledge base](ai/shared/knowledge-base/).
-8. Load files from `shared-knowledge/` subfolder in **Central User AI Directory**.
+7. **Project Knowledge Directory** - (Project knowledge base).
+8. Load files from **Global Knowledge Directory** - (Global knowledge).
 9. Repository-root AI ignore file: .aiignore or .agentignore.
 
 #### Phase 4: Operational Readiness Check
 
 1. **Initialize & Index**:
    - **Load State**: Read and summarize the state files loaded in Phase 3.
-   - **Knowledge Base Indexing**: Scan and index local and central knowledge sources.
-   - **Compliance Scan**: Scan `ai/policies/compliance/`. If `ai-customization.md` contains active compliance modules, load them as high-priority, read-only policies.
+   - **Knowledge Base Indexing**: Scan and index project and global knowledge sources.
+   - **Policy & Compliance Discovery**: 
+     - Scan the **Global Policies Directory** (including `compliance/` subfolder). 
+     - If the **Project Customization File** defines active modules, load them as high-priority, read-only policies.
+     - **Project Additions**: Recursively scan the **Project Policy Directory** (`ai/policies/`). Automatically load any discovered policies and compliance files. These are loaded *after* global policies and do not need to be listed in customization.
    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
    - **Directory Scan**: Scan `ai/artifacts/`, `ai/notes/`, `ai/secrets/`, and `ai/shared/handoffs/`.
 2. **Acknowledge readiness**, provide summary, and await first user instruction.
@@ -126,12 +141,15 @@ Before performing ANY state-changing Git operation (add, commit, push, merge, et
 
 ### Header Format
 
-Standard metadata header for all created/modified files (excluding `ai/` tracking files):
+Standard metadata header for all created/modified files (excluding `ai/` tracking files). 
+
+**Mandate**: This header MUST ONLY be applied to files within the `ai/` directory. Do not add headers to files in the repository root or other subdirectories. If a file is promoted from the `ai/` directory to the project codebase, any AI-generated metadata header MUST be removed from the target file.
+
 ```markdown
 <comment-syntax>
 Created-by: <Name of Agent>
 Updated-by: <Name of Agent>
-Last modified: <Local-ISO-8601-Timestamp>
+Last modified: <Project-ISO-8601-Timestamp>
 Intent: <Brief description of the change>
 </comment-syntax>
 ```
@@ -141,8 +159,8 @@ Intent: <Brief description of the change>
 
 ### Policy Authority Clarification
 
-1. Central main and common policy files are authoritative for universal rules.
-2. Local customization (`ai-customization.md`) is for repository-specific extensions/traits.
+1. Global main and common policy files are authoritative for universal rules.
+2. Project customization (`ai-customization.md`) is for repository-specific extensions/traits.
 3. **Agent-specific dot-directories (e.g., `.gemini/`, `.cursor/`) are NOT bootstrap authority.** The AI assistant must not load context from or create such directories. All shared context must come from the `ai/` directory.
 4. In case of conflict, stop and ask the user for clarification.
 

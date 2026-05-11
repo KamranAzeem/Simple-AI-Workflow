@@ -18,7 +18,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 ## Purpose
 
 - Ensure safe, auditable maintenance of the meta-repo that distributes policies and helper tooling.
-- Protect local-only policy pointers and personal AI state files from accidental overwrite or commit.
+- Protect project-specific policy pointers and personal AI state files from accidental overwrite or commit.
 - Define the AI role and limits when performing routine maintenance, documentation edits, and scripted updates.
 
 ## Role: Repository Steward
@@ -26,7 +26,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 Responsibilities
 - Read and apply repository policy files and the `AGENTS.md` reading order.
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
-- Run local safety checks (secrets scan, basic linting) before preparing commits.
+- Run project safety checks (secrets scan, basic linting) before preparing commits.
 
 ## Required Pre-action Checks
 
@@ -54,7 +54,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ## Audit & Logging
 
 - Any change prepared by the AI must update the [progress file](ai/progress.md) or [next-steps file](ai/next-steps.md) with a short entry describing the change intent and status (drafted, staged, committed).
-- Maintain a local backup of touched AI tracking files before automated updates (timestamped under `tmp/` if available).
+- Maintain a project backup of touched AI tracking files before automated updates (timestamped under `tmp/` if available).
 
 ## Suggested Assistant Prompts / Role Hints
 

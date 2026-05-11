@@ -3,13 +3,13 @@
 
 
 # Basic principal: 
-#   Do not add any local AI files to your project work - no matter which AI assistant you are using.
+#   Do not add any project AI files to your project work - no matter which AI assistant you are using.
 
-# Core local AI workflow state
+# Core project AI workflow state
 ai/
 tmp/
 
-# Optional local-only AI instruction files
+# Optional project-specific AI instruction files
 # Ignore these only if you do not want them tracked in the repository.
 AGENTS.md
 AGENTS.local.md
@@ -17,7 +17,7 @@ CLAUDE.md
 CLAUDE.local.md
 GEMINI.md
 
-# Optional local AI assistant state
+# Optional project AI assistant state
 .claude/
 .cursor/
 .windsurf/
@@ -32,11 +32,11 @@ GEMINI.md
 .aider.conf.yml
 .aider.input.history
 
-# Optional local prompt or transcript artifacts
+# Optional project prompt or transcript artifacts
 prompts-local/
 chat-logs/
 
-# Optional local scratch files for AI-assisted work
+# Optional project scratch files for AI-assisted work
 notes-ai/
 
 # GitHub Copilot local artifacts

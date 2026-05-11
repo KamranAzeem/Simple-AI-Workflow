@@ -9,14 +9,21 @@ Intent: Add Expertise & Intent Alignment section (Inquiry vs Directive protocol)
 
 This guide explains how to interact with AI assistants in this repository and how to manage the AI state tracking files.
 
-## 1. AI Knowledge Base (`ai/shared/knowledge-base/`)
+## 1. Project Knowledge (`ai/shared/project-knowledge/`)
 All persistent AI reasoning, style guides, and project-specific patterns are stored here.
-- **Location**: `/ai/shared/knowledge-base/` (Git-ignored)
-- **Status**: Non-version-controlled. Each contributor builds their own local knowledge base.
+- **Location**: `/ai/shared/project-knowledge/` (Git-ignored)
+- **Status**: Non-version-controlled. Each contributor builds their own project knowledge base.
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
 - **Policy**: AI assistants treat this directory as the source of truth for repository standards.
 
-## 2. Task Handoffs (`ai/shared/handoffs/`)
+## 2. Global Knowledge (Cross-Project)
+Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
+- **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
+- **Status**: Personal persistent memory that follow you into every project.
+- **Usage**: Automatically loaded as read-only context during initialization.
+- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work.
+
+## 3. Task Handoffs (`ai/shared/handoffs/`)
 Used for transferring specific tasks and context between AI assistants or sessions.
 
 ### How to Create a Handoff Task

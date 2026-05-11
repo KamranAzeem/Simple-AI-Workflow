@@ -29,29 +29,29 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
   - Test the connection by opening a chat in the IDE and sending a simple message.
 
 ### 2. Simple-AI-Workflow Repository
-- Clone the [Simple-AI-Workflow](https://github.com/kamran-azeem/Simple-AI-Workflow) repository to a central location on your machine.
+- Clone the [Simple-AI-Workflow](https://github.com/kamran-azeem/Simple-AI-Workflow) repository to a global location on your machine.
 - Example: `~/Projects/Simple-AI-Workflow` or `C:\Users\YourName\Projects\Simple-AI-Workflow`
-- This central location is your reference copy for policies and protocol.
+- This global location is your reference copy for policies and protocol.
 
 ### 3. AGENTS.md Configuration
-- Copy `AGENTS.md` from the central Simple-AI-Workflow repository to your example project directory.
+- Copy `AGENTS.md` from the global Simple-AI-Workflow repository to your example project directory.
 - Open the copied `AGENTS.md` in your example directory.
-- Update the **Central Policies Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
+- Update the **Global Policies Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
   - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`
   - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/`
   - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
-  - Ensure the path reflects your actual central repository location.
+  - Ensure the path reflects your actual global repository location.
 - Verify the policy files exist at the path you configured (check that `ai/ai-policy-meta.md` and `ai/ai-policy-common.md` are accessible).
-- Optional: create `settings/about-human.md` in the central workflow directory for shared user context, and keep `ai/about-human.md` in projects only when local overrides are needed.
+- Optional: create `settings/about-human.md` in the global workflow directory for shared user context, and keep `ai/about-human.md` in projects only when project overrides are needed.
 
 ### 4. Verification Checklist
 Before starting Step 1, confirm:
 - [ ] IDE is installed and AI chat extension is visible in the UI.
 - [ ] AI extension is authenticated and ready (test with a simple message).
 - [ ] You can open a chat window in the IDE and send prompts.
-- [ ] Simple-AI-Workflow repository is cloned to a central location.
+- [ ] Simple-AI-Workflow repository is cloned to a global location.
 - [ ] AGENTS.md is copied to your example project directory.
-- [ ] AGENTS.md Central Policies Directory is updated to your machine's path.
+- [ ] AGENTS.md Global Policies Directory is updated to your machine's path.
 
 Once all prerequisites are met, proceed to Step 1.
 
@@ -105,7 +105,7 @@ Expected outcome:
 Send this prompt:
 
 ```text
-Create ai/tasks/todo.md with: create aboutus page, create contactus page, local test, branch cleanup.
+Create ai/tasks/todo.md with: create aboutus page, create contactus page, project test, branch cleanup.
 ```
 
 Expected outcome:
@@ -179,11 +179,11 @@ Expected outcome:
 Send this prompt:
 
 ```text
-Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/shared/knowledge-base: minimal-page-pattern.md and branch-squash-merge-pattern.md. Show paths.
+Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/shared/project-knowledge: minimal-page-pattern.md and branch-squash-merge-pattern.md. Show paths.
 ```
 
 Expected outcome:
-- 1 handoff + 2 knowledge-base files created.
+- 1 handoff + 2 project-knowledge files created.
 
 The user then inspects the newly created files, and uses the handoff file to create a new task for AI.
 

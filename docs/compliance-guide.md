@@ -13,9 +13,9 @@ This guide explains how to integrate regulatory and industry-standard compliance
 Compliance modules are decoupled, opt-in policies stored in `ai/compliance/`. They are not automatically applied to projects, ensuring your workflow remains lean and relevant.
 
 ## How to Activate Compliance Modules
-To enable a compliance policy for a project, update your local `ai/ai-policy-override.md` file:
+To enable a compliance policy for a project, update your project `ai/ai-customization.md` file:
 
-1. Open `ai/ai-policy-override.md` (create it if it doesn't exist).
+1. Open `ai/ai-customization.md` (create it if it doesn't exist).
 2. Add the **Active Compliance Modules** section:
 
 ```markdown

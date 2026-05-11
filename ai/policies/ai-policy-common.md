@@ -15,7 +15,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 This file contains the universal operating rules for all AI assistants in this repository.
 
 ## Instruction Precedence
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > the Local Policy Override file > specialized policy > this Central Common Policy file.
+- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > the Project Policy Override file > specialized policy > this Global Common Policy file.
 
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
@@ -83,10 +83,10 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 
 ## Global Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST treat files in `Central AI Settings Source` and `Central AI Shared Knowledge Source` as authoritative read-only sources.
-- **Precedence**: Local project configuration files override `Central AI Settings Source` if there is a conflict.
-- **Content Integrity**: The agent MUST NOT modify files within `Central User AI Directory` unless explicitly instructed by a "Promote to Shared" command.
-- **Normalization**: When reading `Central AI Shared Knowledge Source`, the agent should treat these as "lessons learned" to inform its problem-solving process, but not as authoritative codebase logic.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST treat files in `Global AI Settings Source` and `Global Knowledge Source` as authoritative read-only sources.
+- **Precedence**: Project configuration files override `Global AI Settings Source` if there is a conflict.
+- **Content Integrity**: The agent MUST NOT modify files within `Global User AI Directory` unless explicitly instructed by a "Promote to Shared" command.
+- **Normalization**: When reading `Global Knowledge Source`, the agent should treat these as "lessons learned" to inform its problem-solving process, but not as authoritative codebase logic.
 
 - **Directive vs. Inquiry**: Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
 - **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:

@@ -7,16 +7,16 @@ Intent: Provide a guide for the Unified AI Customization system.
 
 # AI Customization Guide
 
-The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI assistant to a specific project, directory, or group of projects. It replaces the legacy `ai-policy-override.md` with a more flexible "soft composition" model.
+The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI assistant to a specific project, directory, or group of projects. It uses a flexible "soft composition" model for project customization.
 
 ## Why Customization?
-Different projects require different expertise (Cloud vs. Frontend), different behaviors (Mentor vs. Reviewer), and different regulatory standards (GDPR vs. SOC2). Instead of having one massive policy, we "compose" the AI's persona locally using this file.
+Different projects require different expertise (Cloud vs. Frontend), different behaviors (Mentor vs. Reviewer), and different regulatory standards (GDPR vs. SOC2). Instead of having one massive policy, we "compose" the AI's persona in the project directory using this file.
 
 ---
 
 ## 1. Composing Expertise (Technical Roles)
 
-Use the `## Active Expertise` section to load domain-specific policies from the **Central Policies Directory**.
+Use the `## Active Expertise` section to load domain-specific policies from the **Global Policies Directory**.
 
 **Example:**
 ```markdown
@@ -24,7 +24,7 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 - cloud
 - api-backend
 ```
-**How it works**: The AI assistant will look for `ai-policy-cloud.md` and `ai-policy-api-backend.md` in the central directory and load them as additive layers.
+**How it works**: The AI assistant will look for `ai-policy-cloud.md` and `ai-policy-api-backend.md` in the global directory and load them as additive layers.
 
 ---
 
@@ -43,7 +43,7 @@ Use the `## Active Traits` section to define *how* the AI should behave. These a
 
 ## 3. Enabling Compliance (Regulatory Standards)
 
-Use the `## Required Compliance` section to load compliance modules from the central repository without copying them locally.
+Use the `## Required Compliance` section to load compliance modules from the global repository without copying them in the project directory.
 
 **Example:**
 ```markdown
@@ -51,7 +51,7 @@ Use the `## Required Compliance` section to load compliance modules from the cen
 - gdpr
 - iso-27001
 ```
-**How it works**: The AI will look for `compliance/gdpr.md` and `compliance/iso-27001.md` in the central policies folder.
+**How it works**: The AI will look for `compliance/gdpr.md` and `compliance/iso-27001.md` in the global policies folder.
 
 ---
 
@@ -93,4 +93,4 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 ## Best Practices
 1.  **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.
 2.  **Explicit Traits**: Be specific with your traits. Instead of just "Teacher," say "Teacher: Focus on explaining Bicep syntax."
-3.  **No Local Copies**: Never copy the `ai-policy-*.md` or `compliance/*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest central standards.
+3.  **No Project Copies**: Never copy the `ai-policy-*.md` or `compliance/*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest global standards.
