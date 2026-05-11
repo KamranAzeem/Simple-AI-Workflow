@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
 Updated-by: Gemini CLI
-Last modified: 2026-05-05T14:15:00Z
-Intent: Template for the ai-customization.md file.
+Last modified: 2026-05-11T10:00:00Z
+Intent: Add System Integrator trait for multi-component coordination.
 -->
 
 # AI Customization Template
@@ -23,6 +23,7 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 <!-- Define functional personas or behavioral shifts for the AI. -->
 
 - Strategic Planner: Coordinate dependencies across infra, api, and web.
+- System Integrator: Ensure contract consistency across API, Web, and Mobile; flag breaking changes in shared schemas or DTOs across sub-directories.
 - Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
 - Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
 
@@ -48,6 +49,7 @@ Use this configuration at a group-level directory to manage multiple sub-project
 
 ## Active Traits
 - Strategic Planner: Coordinate dependencies across infra, api, and web.
+- System Integrator: Ensure contract consistency across API, Web, and Mobile.
 - Mentor: Provide high-signal architectural feedback.
 
 ## Required Compliance
