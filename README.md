@@ -25,7 +25,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * Create `$HOME/.ai/`
   * Create `$HOME/.ai/settings/`
   * Create `$HOME/.ai/project-knowledge/`
-  * (Optional) Copy `docs/about-human.md` and `docs/tooling-reference.md` into `$HOME/.ai/settings/` and personalize them.
+  * (Optional) Copy `docs/about-human.md` and `docs/tools-preferences.md` into `$HOME/.ai/settings/` and personalize them.
 * Copy `AGENTS.md` into the root of your project directory.
 * Update the **Configuration** section in the project `AGENTS.md` (ensure `Global Policies Directory` and `Global User AI Directory` point to your global paths).
 * Start VS Code; in the AI chat window, use one of these two prompts:
@@ -64,9 +64,8 @@ This is a **personal starter kit** — built for **one developer** (you), not fo
 It helps you:
 
 - **Get more useful answers** from your AI assistant — because it now knows your project's rules and your preferences.
-- **Keep things consistent** — the same setup works across all your projects, and across different AI tools (ChatGPT, Claude, Copilot, etc.).
+- **Centralized context** — the same setup works across all your projects, and across different AI tools (ChatGPT, Claude, Copilot, etc.).
 - **Stay organized** — your AI conversations, notes, and progress are saved in the project directory so you can pick up where you left off.
-- **Stay safe** — the AI checks for secrets (passwords, API keys) before committing anything to Git.
 - **Keep your private stuff private** — all AI-related notes stay in your project `ai/` folder, out of the repository.
 
 In short: it turns AI from a chat buddy into a **reliable teammate** that follows your rules. Just for you.
@@ -149,7 +148,7 @@ The AI assistant will follow the bootstrap procedure in `AGENTS.md`, and it will
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The global policy is accessed directly from the path referenced in `AGENTS.md`, so manual copying of policy files is not required.
 - Optionally, you can customize the policy by adding `ai/ai-customization.md`.
-- A ready example is available at `ai-customization-example.md` (copy and adjust for your project setup).
+- A ready example is available at `ai-customization-guide.md` (copy and adjust for your project setup).
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 - You can use `gitignore-example.txt` as a guide when adding AI-related ignore rules.
 
@@ -201,14 +200,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync
 After copying the new `AGENTS.md`, manually open it in your project root and update the **Configuration** section:
 
 1. Ensure the `Global Policies Directory` path correctly points to the global location on your machine.
-2. Verify all other paths in the configuration match your current project structure.
+2. Ensure the `Global User AI Diretory` path correctly points to `/home/username/.ai/` (or an equivalent) directory on your computer.
 
 ### Step D: Update each project's ai/ structure
 
 Inside each target project, ask your AI assistant to run these two prompts:
 
 - `"load context using AGENTS.md protocol"`
-- `"update the ai directory structure with new features in AGENTS.md without changing existing context/state files"`
 
 This keeps existing files like `ai/context.md`, `ai/next-steps.md`, `ai/progress.md`, and existing checkpoints intact, while creating only missing required/optional directories introduced by newer AGENTS rules.
 
@@ -303,10 +301,10 @@ This solution transforms AI from a chat-bot into a structured team member with c
 - **Bootstrapping**: Automatic read-only indexing of shared sources during session initiation.
 - **Normalization**: **Global Knowledge** is treated as informative "lessons learned," maintaining clear boundaries from authoritative project source code.
 
-### 12. Modular Compliance Framework
-- **Decoupled Registry**: Opt-in regulatory and industry standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) stored in `ai/compliance/`. [Compliance Guide](docs/compliance-guide.md)
-- **Policy Overrides**: Activates specific compliance rules per-project via `ai/ai-policy-override.md`.
+### 12. Compliance Intelligence
+- **AI-Native Compliance**: Compliance standards (ISO 27001, SOC2, GDPR, CCPA, PCI-DSS, HIPAA) are handled through the AI's built-in knowledge — no on-disk compliance files needed. List standards in `ai/ai-customization.md` and the AI applies relevant requirements contextually. [Compliance Guide](docs/compliance-guide.md)
 - **Audit-Ready**: Clear documentation and global policy enforcement.
+
 
 
 ## AI Prompt Playbook (Simple Workflow)
@@ -318,7 +316,8 @@ Use these short prompts directly when interacting with AI assistants.
 - **"bootstrap with AGENTS.md protocol"** (first-time setup only)
 - **"Load context using AGENTS.md protocol"**
 - **"load AI context from latest checkpoint and summarize current state"**
-- **"re-read policy override"** (to apply persona or shell priority changes)
+- **"load AI context"** (to apply persona or customization changes)
+
 - **"show me the pending items"**
 - **"show me the handoff items"**
 - **"checkpoint"**

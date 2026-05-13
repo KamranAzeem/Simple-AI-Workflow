@@ -354,7 +354,8 @@ Pick the policy that matches your project type.
 - **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
 - **About Human (`ai/about-human.md`)** — AI learns your skills and preferences
 - **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
-- **Project Override** — `ai/ai-policy-override.md` for project exceptions
+- **Project Customization** — `ai/ai-customization.md` for project-specific tailoring
+- **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
 - **Daily Snapshots** — Automated history of work and decisions
 
 ---
@@ -500,7 +501,7 @@ $ wc -l ai-policy-*.md
   40 ai-policy-linux-system-admin.md
   96 ai-policy-meta.md
  181 ai-policy-mobile-apps.md
-  22 ai-policy-override.example.md
+  22 ai-customization-example.md
   71 ai-policy-web-frontend.md
 ```
 
@@ -587,12 +588,12 @@ Then inspect the file thoroughly. When you're happy, place it at a global locati
 
 ---
 
-# Example of ai-policy-override.md
+# Example of ai-customization.md
 
 ```markdown
-# AI Project Override
+# AI Project Customization
 
-## Windows Shell Priority (Project Setup)
+## Windows Shell Priority (Local Setup)
 
 For terminal execution on this Windows machine:
 
@@ -881,6 +882,144 @@ Install your preferred AI assistant CLI:
 
 ## Simple Static Website
 ### (Using Gemini CLI + IDE / Basic Text Editor)
+
+---
+
+# Part 6: Multi-Agent Collaboration
+
+---
+
+# The Problem: One Project, Multiple Assistants, Chaos
+
+```
+Agent A (Gemini)          Agent B (Claude)         Agent C (DeepSeek)
+    │                          │                          │
+    ├─ Creates index.html      ├─ Creates about.html      ├─ Reviews everything
+    ├─ Sets up CSS             ├─ Creates contact.html    ├─ Finds inconsistencies
+    ├─ Initializes git         └─ ? (doesn't know         └─ Fixes issues
+    └─ Creates handoff            what Agent A did)           └─ Finalizes
+                                       │
+                                       ▼
+                              Duplicate work, conflicting
+                              styles, lost context
+```
+
+**Without shared context, each assistant starts from zero.**
+
+---
+
+# The Solution: Shared Context via AGENTS.md + ai/
+
+```
+                    ┌──────────────────────┐
+                    │   Shared Context      │
+                    │   (ai/ directory)     │
+                    │                       │
+                    │  ├─ context.md        │
+                    │  ├─ next-steps.md     │
+                    │  ├─ progress.md       │
+                    │  ├─ coordination.md   │
+                    │  └─ handoffs/         │
+                    └──────────┬───────────┘
+                               │
+              ┌────────────────┼────────────────┐
+              │                │                │
+              ▼                ▼                ▼
+        Agent A           Agent B           Agent C
+        (Gemini)          (Claude)          (DeepSeek)
+```
+
+**One shared state. Any assistant picks up where the last left off.**
+
+---
+
+# How Handoffs Work
+
+```
+┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐
+│  CREATE  │ ──► │  CLAIM   │ ──► │ EXECUTE  │ ──► │ CLEANUP  │
+└──────────┘     └──────────┘     └──────────┘     └──────────┘
+     │               │                │                │
+     ▼               ▼                ▼                ▼
+ Write task       Record in        Implement        Delete handoff
+ in handoffs/   coordination.md   requirements     Clear claim in
+ with intent,                      and verify      coordination.md
+ requirements,                     against
+ and verification                  verification
+ steps                             steps
+```
+
+**Each handoff is a self-contained task with clear entry and exit criteria.**
+
+---
+
+# Coordination.md — The Task Board
+
+```
+# Coordination Board
+
+## Active Tasks
+| Task | Owner | Status | Started |
+|------|-------|--------|---------|
+| Project foundation | Agent A (Gemini) | ✅ Complete | 10:00 |
+| Create about + contact pages | Agent B (Claude) | 🔄 In Progress | 10:30 |
+| Review and finalize | Agent C (DeepSeek) | ⏳ Pending | — |
+
+## Handoffs
+- `agent-b-create-pages.md` → Claimed by Agent B
+- `agent-c-review.md` → Pending
+```
+
+**Prevents duplicate work. Shows who did what, and what's next.**
+
+---
+
+# Scenario Overview: 3 Agents, 1 Website
+
+```
+Agent A (Gemini)          Agent B (Claude)         Agent C (DeepSeek)
+─────────────────         ─────────────────        ─────────────────
+  10:00 Bootstrap         10:30 Load context        11:00 Load context
+  10:05 Git init          10:32 Claim handoff       11:02 Claim handoff
+  10:10 index.html        10:35 Create about.html   11:05 Review pages
+  10:15 coordination.md  10:40 Create contact.html 11:10 Fix issues
+  10:20 Create handoff   10:45 Create handoff      11:15 Finalize
+  10:25 Checkpoint       10:50 Checkpoint          11:20 Checkpoint
+```
+
+**Three assistants. One project. Zero conflicts.**
+
+---
+
+# The Flow: Create → Extend → Review
+
+## Agent A Creates the Foundation
+```
+index.html + CSS + git init + coordination.md + handoff
+```
+
+## Agent B Extends with New Pages
+```
+Reads handoff → Creates about.html + contact.html → Creates next handoff
+```
+
+## Agent C Reviews and Finalizes
+```
+Reads handoff → Reviews all pages → Fixes issues → Marks complete
+```
+
+**Each agent focuses on what it does best, guided by shared state.**
+
+---
+
+# Key Takeaways
+
+- **Shared context** (`ai/`) is the backbone of multi-agent collaboration
+- **Handoffs** provide clear task boundaries with built-in verification
+- **Coordination.md** prevents duplicate work and shows real-time status
+- **Checkpoints** let any assistant resume where another left off
+- **No special tooling** — just AGENTS.md, `ai/`, and standard AI chat
+- **Scales naturally** from 2 to N assistants on the same project
 
 ---
 

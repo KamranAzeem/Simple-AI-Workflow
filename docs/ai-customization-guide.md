@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-05-11T11:25:00Z
-Intent: Include DBA in the customization guide naming conventions.
--->
-
 # AI Customization Guide
 
 The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI assistant to a specific project, directory, or group of projects. It uses a flexible "soft composition" model for project customization.
@@ -32,11 +25,21 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 
 Use the `## Active Traits` section to define *how* the AI should behave. These are not external files; they are behavioral directives adopted for the session.
 
+**Note:** Only select *one* that best suits you to assign to the AI assistant.
+
 **Example:**
+
 ```markdown
+
 ## Active Traits
-- Teacher/Trainer: Explain the 'why' behind every code change and suggest learning resources.
-- Skeptical Reviewer: Challenge my assumptions and look for edge cases in every logic block.
+
+- System Integrator: Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile); flag breaking changes in shared schemas or DTOs.
+- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components.
+- Senior DBA: Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
+- Observability Architect: Prioritize Four Golden Signals, log correlation, and actionable alerting.
+- Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
+- Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
+
 ```
 
 ---
@@ -46,12 +49,14 @@ Use the `## Active Traits` section to define *how* the AI should behave. These a
 Use the `## Required Compliance` section to load compliance modules from the global repository without copying them in the project directory.
 
 **Example:**
+
 ```markdown
 ## Required Compliance
 - gdpr
 - iso-27001
 ```
-**How it works**: The AI will look for `compliance/gdpr.md` and `compliance/iso-27001.md` in the global policies folder.
+
+**How it works**: The AI uses its built-in knowledge to apply the relevant requirements for each listed standard. No on-disk compliance files are needed.
 
 ---
 
@@ -67,7 +72,8 @@ If you are an **Architect** managing a group-level directory that contains multi
 - web-frontend # For the UI components
 
 ## Active Traits
-- Strategic Planner: Focus on cross-project dependencies and architectural consistency.
+- System Integrator: Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile).
+- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines.
 - Mentor: Help the team grow by providing high-signal architectural feedback.
 
 ## Required Compliance
@@ -87,12 +93,12 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Expertise** | `dba` | `ai-policy-dba.md` |
 | **Expertise** | `observability` | `ai-policy-observability.md` |
 | **Expertise** | `meta` | `ai-policy-meta.md` |
-| **Compliance**| `gdpr` | `compliance/gdpr.md` |
-| **Compliance**| `hipaa` | `compliance/hipaa.md` |
+| **Compliance**| `gdpr` | (AI built-in knowledge) |
+| **Compliance**| `hipaa` | (AI built-in knowledge) |
 
 ---
 
 ## Best Practices
 1.  **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.
 2.  **Explicit Traits**: Be specific with your traits. Instead of just "Teacher," say "Teacher: Focus on explaining Bicep syntax."
-3.  **No Project Copies**: Never copy the `ai-policy-*.md` or `compliance/*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest global standards.
+3.  **No Project Copies**: Never copy the `ai-policy-*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest global standards.

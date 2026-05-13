@@ -111,7 +111,8 @@ The mobile policy works **on top of** the [global common policy file](../ai/ai-p
 | API rate-limit awareness | (inherits from common) |
 
 **Instruction precedence** (from the common policy):
-> system/tool safety > explicit user request > project override > **specialized policy (mobile)** > common policy
+> system/tool safety > explicit user request > project customization > **specialized policy (mobile)** > common policy
+
 
 This means the mobile policy's rules take priority over the common policy when there's overlap.
 

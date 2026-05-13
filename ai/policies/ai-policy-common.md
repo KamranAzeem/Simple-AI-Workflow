@@ -14,9 +14,6 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
-## Instruction Precedence
-- Resolve conflicts using this order: system/tool safety rules > explicit user request in the current session > the Project Policy Override file > specialized policy > this Global Common Policy file.
-
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
 When implementing new features, architecture changes, or functional code modifications:
@@ -81,6 +78,15 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
     - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
+
+## Compliance Intelligence
+- **No On-Disk Compliance Files**: Compliance standards (e.g., GDPR, SOC2, HIPAA, PCI-DSS, ISO-27001, CCPA) are NOT stored as on-disk files. When the **Project Customization File** (`ai/ai-customization.md`) lists required compliance standards under `## Required Compliance`, the AI assistant MUST use its built-in knowledge (or web search if available) to apply the relevant requirements, guardrails, and best practices for each listed standard.
+- **Contextual Application**: The AI shall infer which compliance controls are relevant based on the task context (e.g., data handling, user authentication, logging, access control) and apply them without requiring explicit rule files.
+- **No Directory Scanning**: The AI MUST NOT scan for or attempt to load compliance files from any directory. Compliance is handled entirely through AI intelligence.
+- **Compliance Validation Guard**: When reading `## Required Compliance` from the **Project Customization File**, the AI MUST validate each listed standard against its built-in knowledge of recognized compliance frameworks. If a listed name is NOT a recognized compliance standard (e.g., `dora` is a DevOps metrics framework, not a compliance regulation), the AI MUST:
+  1. Inform the user that the name is not a recognized compliance standard.
+  2. Refuse to apply it as compliance requirements.
+  3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard — review and remove`) — but only with the user's explicit approval.
 
 ## Global Knowledge Protocol
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST treat files in `Global AI Settings Source` and `Global Knowledge Source` as authoritative read-only sources.

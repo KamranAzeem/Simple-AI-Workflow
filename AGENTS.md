@@ -43,7 +43,7 @@ AI assistant file access tools (`read_file`, `write_file`, `list_directory`) **M
   * Do not use "~" in any path , as AI assistants treat it differently and they get confused.
   * Do not use any relative path (e.g. ../../some-directory/some-file) .
   * User must manually create the "$HOME/.ai/" directory on the OS (using CLI or some file-manager):
-  * User should copy docs/about-human.md and docs/tooling-reference.md under $HOME/.ai/settings/ directory and adjust these files.
+  * User should copy docs/about-human.md and docs/tools-preferences.md under $HOME/.ai/settings/ directory and adjust these files.
 -->
 
 ### Configuration
@@ -102,7 +102,7 @@ The AI assistant MUST ensure the project `ai/` structure is correct. If any dire
 6. [context file](ai/context.md) - (Repository briefing and decisions).
 7. **Project Knowledge Directory** - (Project knowledge base).
 8. Load files from **Global Knowledge Directory** - (Global knowledge).
-9. Repository-root AI ignore file: .aiignore or .agentignore.
+9. Repository-root AI ignore file: .aiignore or .agentignore (to exclude matching paths from file operations).
 
 #### Phase 4: Operational Readiness Check
 
@@ -110,9 +110,10 @@ The AI assistant MUST ensure the project `ai/` structure is correct. If any dire
    - **Load State**: Read and summarize the state files loaded in Phase 3.
    - **Knowledge Base Indexing**: Scan and index project and global knowledge sources.
    - **Policy & Compliance Discovery**: 
-     - Scan the **Global Policies Directory** (including `compliance/` subfolder). 
+     - Scan the **Global Policies Directory**.
      - If the **Project Customization File** defines active modules, load them as high-priority, read-only policies.
-     - **Project Additions**: Recursively scan the **Project Policy Directory** (`ai/policies/`). Automatically load any discovered policies and compliance files. These are loaded *after* global policies and do not need to be listed in customization.
+     - **Project Additions**: Recursively scan the **Project Policy Directory** (`ai/policies/`). Automatically load any discovered policies. These are loaded *after* global policies and do not need to be listed in customization.
+     - **Compliance Intelligence**: If the **Project Customization File** lists compliance standards (e.g., `gdpr`, `soc2`, `hipaa`), the AI assistant MUST use its built-in knowledge (or web search if available) to apply the relevant requirements. No on-disk compliance files are needed or loaded. **Validation**: The AI MUST first validate each listed name against its built-in knowledge of recognized compliance frameworks. Unrecognized names trigger the Compliance Validation Guard (see ai-policy-common.md).
    - **Git Delta Check**: If a Git repository, retrieve the last summarized hash from `context.md` and read the "delta" (`git log <hash>..HEAD --oneline`).
    - **Directory Scan**: Scan `ai/artifacts/`, `ai/notes/`, `ai/secrets/`, and `ai/shared/handoffs/`.
 2. **Acknowledge readiness**, provide summary, and await first user instruction.

@@ -8,18 +8,13 @@ set -e
 
 echo "--- Starting Protocol Validation ---"
 
-# 1. Bootstrap & Policy/Compliance Verification
-echo "[1/4] Verifying policy/compliance paths..."
+# 1. Bootstrap & Policy Verification
+echo "[1/4] Verifying policy paths..."
 REQUIRED_FILES=(
     "ai/policies/ai-policy-meta.md"
     "ai/policies/ai-policy-common.md"
-    "ai/policies/compliance/ccpa.md"
-    "ai/policies/compliance/gdpr.md"
-    "ai/policies/compliance/hipaa.md"
-    "ai/policies/compliance/iso-27001.md"
-    "ai/policies/compliance/pci-dss.md"
-    "ai/policies/compliance/soc2.md"
 )
+
 
 for file in "${REQUIRED_FILES[@]}"; do
     if [ ! -f "$file" ]; then
