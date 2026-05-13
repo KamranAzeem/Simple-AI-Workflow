@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-05-01T12:00:00Z
-Intent: Added standard metadata header for traceability.
--->
-
 # About the Human User
 
 ## Profile
@@ -15,6 +8,7 @@ Intent: Added standard metadata header for traceability.
 - Primary Languages (human): English, Norwegian, Urdu
 - SSH Public keys: https://gitlab.com/kamranazeem/ssh-public-keys
 - Certifications: OCP DBA (Oracle 8), CCNA, RHCE, CEH, CISSP, CKA, AZ-104
+- Computer Operating System and Environment: Linux - Fedora 43
 
 ## Technical Expertise
 - Expert In:
@@ -41,6 +35,15 @@ Intent: Added standard metadata header for traceability.
 - Preferred Tools:
         - Git Bash-first workflow on Windows when practical
         - Fast CLI tooling for search and automation
+
+## Client-Facing Documents and Ticket Updates
+
+- **Voice:** Use "we" (not "I") when writing to clients or customers — these communications represent the team, not an individual. Use "I" only for internal team updates where personal context is appropriate.
+- **Direct address:** Write directly to the recipient using "you" and "your". Never refer to the client in third person (e.g., never "the client should confirm" — use "please confirm").
+- **No tables:** Ticket systems and Teams channels render markdown tables poorly or not at all. Use bullet points instead.
+- **No markdown headings:** Teams and web-based ticket systems handle headings inconsistently. Use plain paragraphs and bullet points only.
+- **No decorative symbols:** Do not use tick marks, cross-outs, arrows, emoji, or other non-keyboard symbols. Use plain text alternatives such as [PASSED], [FAILED], [PENDING], [IN PROGRESS], etc.
+- **Human language:** Keep the tone natural and direct. Avoid over-formal or robotic phrasing. Low-fluff, but warm enough to read as written by a person.
 
 ## Git Commit Conventions
 - Use the full words e.g., "feature" instead of "feat", for branch-name prefix and for the commit prefix.
