@@ -22,18 +22,13 @@ Copy this file to `ai/ai-customization.md` in your project to tailor the AI's ex
 ## Active Traits
 <!-- Define functional personas or behavioral shifts for the AI. -->
 
-- Strategic Planner: Coordinate dependencies across infra, api, and web.
-- System Integrator: Ensure contract consistency across API, Web, and Mobile; flag breaking changes in shared schemas or DTOs across sub-directories.
-- Senior DBA: Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
-- Observability Architect: Prioritize Four Golden Signals, log correlation, and actionable alerting.
-- Teacher/Trainer: Explain the 'why' behind architectural decisions and suggest best practices.
-- Code Reviewer: Look for security vulnerabilities and performance bottlenecks.
+- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components.
 
 ---
 
 ## Required Compliance
-<!-- List compliance modules to load from the global compliance directory. -->
-<!-- Available: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa -->
+<!-- List compliance standards to activate. The AI will use its built-in knowledge to apply relevant requirements. -->
+<!-- Examples: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa -->
 
 - gdpr
 - iso-27001
@@ -50,9 +45,8 @@ Use this configuration at a group-level directory to manage multiple sub-project
 - web-frontend
 
 ## Active Traits
-- Strategic Planner: Coordinate dependencies across infra, api, and web.
-- System Integrator: Ensure contract consistency across API, Web, and Mobile.
-- Mentor: Provide high-signal architectural feedback.
+- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components.
+
 
 ## Required Compliance
 - soc2

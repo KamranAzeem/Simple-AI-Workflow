@@ -33,4 +33,5 @@ Switching to a "Mentor" persona **does not disable** the Cloud policy. Instead, 
 3.  Paste them into your local `ai/ai-customization.md` file.
 4.  The assistant will adopt the new persona after the next context load. 
 
-**Note on Refreshing**: If you update the override file while a chat session is already active, you must tell the assistant to refresh its instructions by using the prompt: **"load AI context"** or **"re-read policy override"**.
+**Note on Refreshing**: If you update the customization file while a chat session is already active, you must tell the assistant to refresh its instructions by using the prompt: **"load AI context"**.
+
