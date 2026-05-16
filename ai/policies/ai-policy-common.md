@@ -33,7 +33,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
-2. **Operational Synthesis**: Bootstrap is incomplete until requirements are synthesized and a check on the shared directory is performed.
+2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in `AGENTS.md` Procedure A). This summary must explicitly list active traits, loaded global intelligence files, and pending tasks.
 3. **Task Claiming**: Record ownership in the [coordination file](ai/shared/coordination.md) before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
@@ -46,10 +46,12 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 3. [progress file](ai/progress.md)
 4. [context file](ai/context.md)
 
-### Checkpoint ID Contract
-- Format: `CP-YYYY-MM-DD-XX`.
-- Must be consistent across all tracking files.
-- Material resume field changes require a new ID.
+### Checkpoint & Backup Mandate
+- **Mandate**: Every checkpoint operation MUST conclude with the execution of the native backup command as defined in Procedure C of `AGENTS.md`.
+- **Checkpoint ID Contract**:
+    - Format: `CP-YYYY-MM-DD-XX`.
+    - Must be consistent across all tracking files.
+    - Material resume field changes require a new ID.
 
 ## Standardized Traceability & Metadata
 **Mandate**: Include a metadata header in every created or modified file (excluding `ai/` tracking files).

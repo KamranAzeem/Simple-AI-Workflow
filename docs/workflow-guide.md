@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
 Updated-by: Gemini CLI
-Last modified: 2026-04-30T22:45:00+02:00
-Intent: Add Expertise & Intent Alignment section (Inquiry vs Directive protocol).
+Last modified: 2026-05-14T14:45:00Z
+Intent: Add Idiot-Proof Protocol and Native Backups features.
 -->
 ---
 # AI Usage Guide: static-website
@@ -92,5 +92,30 @@ For all **Inquiries**, the AI is mandated to:
 - **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
 - **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
 
-## 6. AI-Driven Secure Development Practices
+## 5. Idiot-Proof Protocol (Low-IQ Compatibility)
+### Structural Guardrails
+Models with lower instruction-following capability (e.g., smaller or "lite" models) sometimes treat protocols as suggestions, leading to accidental re-initialization or overwriting of context files. This workflow implements high-visibility structural cues to prevent this:
+- **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
+- **Immutable Loading**: Procedure A (Load Context) is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
+- **No-Overwrite Mandates**: Procedure A (Structural Integrity) forbids overwriting existing files, ensuring project history is never accidentally wiped.
+- **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
+- **Proof-of-Load Summary**: The AI must explicitly list every global file read and every active trait found, providing empirical evidence of a successful bootstrap.
+
+### Benefits
+- **Reliability**: Use lower-cost models without risking project state.
+- **Consistency**: The same protocol works safely across any IQ tier.
+- **Visibility**: You know exactly what intelligence the AI has loaded before you start work.
+
+## 6. Native Checkpoint Backups
+### Automatic State Archiving
+To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow mandates a backup of the `ai/` directory during every checkpoint.
+- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md`.
+- **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
+- **Policy Enforcement**: The `ai/policies/ai-policy-common.md` mandates that this backup is the final step of any checkpoint operation.
+
+### Benefits
+- **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.
+- **History Preservation**: Maintains a granular history of the AI's "brain" and project context over time.
+
+## 7. AI-Driven Secure Development Practices
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
