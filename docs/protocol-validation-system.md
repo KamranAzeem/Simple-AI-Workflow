@@ -5,7 +5,7 @@ Establish a permanent testing and maintenance system for the AGENTS.md bootstrap
 
 ## Proposed Strategy
 1. **Bootstrap & Compliance Verification**:
-   - Verify the existence and readability of all core, common, and compliance policy files (`ai/policies/` and `ai/policies/compliance/`).
+   - Verify the existence and readability of all core and common policy files (`ai/policies/`).
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
    - Verify readability and format of tracking files (`next-steps.md`, `progress.md`, `context.md`).
@@ -21,7 +21,7 @@ Establish a permanent testing and maintenance system for the AGENTS.md bootstrap
 ## Implementation Steps
 - **Step 1**: Create `docs/protocol-validation-system.md` from this plan.
 - **Step 2**: Create `support-files/validate-protocol.sh` that implements:
-    - Path existence checks for all mandatory policies and compliance files.
+    - Path existence checks for all mandatory policies.
     - Readability checks using `cat`.
     - Metadata header parsing to verify existence of required fields.
     - Integration of `markdownlint` checks for policies.
@@ -30,7 +30,7 @@ Establish a permanent testing and maintenance system for the AGENTS.md bootstrap
 
 ## Verification
 - Success will be defined as:
-  - All policy/compliance files present and readable.
+  - All policy files present and readable.
   - All files passing `markdownlint` (or documented exceptions).
   - All metadata headers confirmed present and valid.
   - Checkpoint cycle successfully completed.
