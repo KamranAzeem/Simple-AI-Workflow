@@ -1,3 +1,5 @@
+<!-- Save this file as $HOME/.ai/settings/about-human.md -->
+
 # About the Human User
 
 ## Profile
@@ -5,36 +7,36 @@
 - Personal Email: kamran@wbitt.com
 - Role/Focus: Principal-level platform and cloud engineering leader focused on infrastructure, DevOps, security, and delivery enablement
 - Base: Asker, Norway
-- Primary Languages (human): English, Norwegian, Urdu
+- Primary Languages (human): English
 - SSH Public keys: https://gitlab.com/kamranazeem/ssh-public-keys
 - Certifications: OCP DBA (Oracle 8), CCNA, RHCE, CEH, CISSP, CKA, AZ-104
-- Computer Operating System and Environment: Linux - Fedora 43
+- Computer Operating System and Environment: Linux - Fedora 44
 
 ## Technical Expertise
 - Expert In:
-        - Platform engineering and cloud transformation
-        - Kubernetes and container platforms
-        - DevOps practices, CI/CD, operational automation
-        - Infrastructure and information security governance
-        - Linux systems, networking, and production reliability practices
-        - Architecture documentation and engineering playbook creation
-        - Technical leadership, coaching, and team enablement
+  - Platform engineering and cloud transformation
+  - Kubernetes and container platforms
+  - DevOps practices, CI/CD, operational automation
+  - Infrastructure and information security governance
+  - Linux systems, networking, and production reliability practices
+  - Architecture documentation and engineering playbook creation
+  - Technical leadership, coaching, and team enablement
 - Familiar With:
-        - AWS, Azure, GCP architecture and operations
-        - Infrastructure as Code and GitOps (Terraform, Kustomize, ArgoCD)
+  - AWS, Azure, GCP architecture and operations
+  - Infrastructure as Code and GitOps (Terraform, Kustomize, ArgoCD)
 - Learning/New To:
-        - Bicep authoring depth and advanced ARM-to-Bicep patterns
-        - Azure platform implementation details in current assignment context
-        - PowerShell for repeatable operational workflows
+  - Bicep authoring depth and advanced ARM-to-Bicep patterns
+  - Azure platform implementation details in current assignment context
+  - PowerShell for repeatable operational workflows
 
 ## Preferences and Style
 - Communication Style:
-        - Direct, natural, practical, low-fluff communication
-        - Clear business and technical tradeoffs
-        - Prefer concise answers first, then depth on request
+  - Direct, natural, practical, low-fluff communication
+  - Clear business and technical tradeoffs
+  - Prefer concise answers first, then depth on request
 - Preferred Tools:
-        - Git Bash-first workflow on Windows when practical
-        - Fast CLI tooling for search and automation
+  - Git Bash-first workflow on Windows when practical
+  - Fast CLI tooling for search and automation
 
 ## Client-Facing Documents and Ticket Updates
 
@@ -50,14 +52,14 @@
 - Follow conventional commit structure: <type>(<scope>): <subject>
 - Keep subjects in imperative mood (e.g., "Add feature", not "Added feature").
 - Include a descriptive body if the commit introduces architectural changes or complex logic.
-- Always use feature branches and squash-merge into master.
+- Always use feature branches and squash-merge into master, when task finishes.
 
 ## Collaboration Optimization Summary
-1. Keep responses concise, practical, and outcome-focused first; expand depth on request.
-2. Prefer Git Bash-compatible commands and workflows on this Windows setup.
-3. Prioritize safe, repeatable execution with explicit validation and rollback awareness.
-4. Maintain strict operational hygiene: secrets-aware before git actions, policy-compliant changes, and minimal noise.
-5. Frame recommendations with clear tradeoffs and execution-ready next steps aligned to migration delivery goals.
+- Keep responses concise, practical, and outcome-focused first; expand depth on request.
+- Prefer Git Bash-compatible commands and workflows on this Windows setup.
+- Prioritize safe, repeatable execution with explicit validation and rollback awareness.
+- Maintain strict operational hygiene: secrets-aware before git actions, policy-compliant changes, and minimal noise.
+- Frame recommendations with clear tradeoffs and execution-ready next steps aligned to migration delivery goals.
 
 ## Working Style Notes
 - Outcome-driven and structured execution.
