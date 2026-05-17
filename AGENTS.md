@@ -15,14 +15,16 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ## TIER 1: CONFIGURATION
 
-**Global AI Framework Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
+**Global AI Workflow Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
 **Global User AI Directory**: `[HOME]/.ai/`
 
 **Path Normalization & Inference Rules**:
 - **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `C:\Users\username` on Windows).
 - **Dynamic Paths**: All paths below are derived from the two bases above. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
 
-**Global AI Policies Directory**: (Global AI Framework Directory)/ai/policies/
+<!-- Human user must not touch/modify the lines below -->
+
+**Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
 **Global AI Backup Directory**: (Global User AI Directory)/backups/
 
@@ -54,11 +56,11 @@ This is the single startup entry point for all AI assistants in this repository.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. AI is forbidden from modifying any file content during this phase.
 
-1.  **Framework Access**: Read [ai-policy-common.md](ai-policy-common.md) from the **Global AI Policies Directory**.
-2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups). Only propose `mkdir -p` (or OS equivalent) for **missing** items.
+1.  **Workflow Access**: Read [ai-policy-common.md](ai-policy-common.md) from the **Global AI Policies Directory**.
+2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups). Verify `ai/shared/coordination.md` exists. Only propose `mkdir -p` or file creation for **missing** items.
 3.  **Discovery**: Run `ls -R` (or OS equivalent) on **Global User AI Directory** and the project `ai/` directory.
-4.  **Loading**: Read Project Customization, all discovered Global Settings/Knowledge, and the 4 State Files (`next-steps.md`, latest checkpoint, `progress.md`, `context.md`).
-5.  **Policy Scan**: Recursively scan and load all policies from **Global AI Policies Directory** and **Project Policy Directory**.
+4.  **Loading**: Read Project Customization, all discovered Global Settings/Knowledge, and the 4 State Files (`next-steps.md`, latest checkpoint, `progress.md`, `context.md`). Read `ai/shared/coordination.md`.
+5.  **Policy Scan**: Recursively scan and load all policies from **Global AI Workflow Directory** and **Project Policy Directory**.
 6.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
     - (a) Active Expertise modules and Traits found in customization.
     - (b) Full list of filenames read from **Global User AI Directory**.
@@ -67,7 +69,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
-1.  **Execute Procedure A, Step 2** (Audit/Create directories).
+1.  **Execute Procedure A, Step 2** (Audit/Create directories and `ai/shared/coordination.md`).
 2.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
 3.  **Git Setup**: Ensure `ai/**` and `AGENTS.md` are in `.gitignore`.
 4.  **Finalize**: Proceed to Procedure A.

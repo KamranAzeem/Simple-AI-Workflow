@@ -1,15 +1,15 @@
 #!/bin/bash
 # Created-by: Gemini CLI
 # Updated-by: Gemini CLI
-# Last modified: 2026-05-14T14:15:00Z
-# Intent: Comprehensive 8-Point Protocol Integrity Check (v2.0)
+# Last modified: 2026-05-17T15:30:00Z
+# Intent: Comprehensive 9-Point Protocol Integrity Check (v3.0)
 
 set -e
 
-echo "--- Starting Protocol Validation v2.0 ---"
+echo "--- Starting Protocol Validation v3.0 ---"
 
 # 1. AGENTS.md Anchors & Hardening
-echo "[1/8] Verifying AGENTS.md hardening..."
+echo "[1/9] Verifying AGENTS.md hardening..."
 if ! grep -q "⚠️ STOP: READ-ONLY PROTOCOL" AGENTS.md; then
     echo "Error: Immortality Header missing in AGENTS.md"
     exit 1
@@ -21,9 +21,9 @@ fi
 echo "Hardening anchors verified."
 
 # 2. Configuration Mapping
-echo "[2/8] Verifying configuration entries..."
+echo "[2/9] Verifying configuration entries..."
 CONFIG_KEYS=(
-    "Global AI Policies Directory"
+    "Global AI Workflow Directory"
     "Global User AI Directory"
     "Global AI Backup Directory"
 )
@@ -36,7 +36,7 @@ done
 echo "Configuration mapping verified."
 
 # 3. Global Structure
-echo "[3/8] Verifying global directory structure..."
+echo "[3/9] Verifying global directory structure..."
 # Resolve ~/.ai from the config if possible, else use default. Target the specific config line.
 GLOBAL_DIR="/home/kamran/.ai"
 # Handle the case where it might be a literal path in the script
@@ -51,7 +51,7 @@ done
 echo "Global structure checked."
 
 # 4. Project Structure
-echo "[4/8] Verifying project AI directory structure..."
+echo "[4/9] Verifying project AI directory structure..."
 PROJECT_SUBS=(
     "policies" "daily-checkpoints" "shared/handoffs" 
     "shared/project-knowledge" "artifacts" "notes" "secrets"
@@ -64,8 +64,16 @@ for sub in "${PROJECT_SUBS[@]}"; do
 done
 echo "Project structure verified."
 
-# 5. Policy Baseline
-echo "[5/8] Verifying policy baseline (10 modular policies)..."
+# 5. Coordination Board
+echo "[5/9] Verifying Coordination Board existence..."
+if [ ! -f "ai/shared/coordination.md" ]; then
+    echo "Error: Mandatory file ai/shared/coordination.md missing."
+    exit 1
+fi
+echo "Coordination Board verified."
+
+# 6. Policy Baseline
+echo "[6/9] Verifying policy baseline (10 modular policies)..."
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "mobile-apps" "dba" "observability"
@@ -78,8 +86,8 @@ for p in "${POLICIES[@]}"; do
 done
 echo "Policy baseline verified."
 
-# 6. Metadata Positioning
-echo "[6/8] Verifying metadata positioning (Top-of-File)..."
+# 7. Metadata Positioning
+echo "[7/9] Verifying metadata positioning (Top-of-File)..."
 # Check if first line of a policy contains the comment start
 if ! head -n 1 ai/policies/ai-policy-common.md | grep -q "<comment-syntax>\|<!--"; then
     echo "Error: Metadata header not at absolute top of ai/policies/ai-policy-common.md"
@@ -87,16 +95,16 @@ if ! head -n 1 ai/policies/ai-policy-common.md | grep -q "<comment-syntax>\|<!--
 fi
 echo "Metadata positioning verified."
 
-# 7. Git Safety
-echo "[7/8] Verifying Git safety (.gitignore)..."
+# 8. Git Safety
+echo "[8/9] Verifying Git safety (.gitignore)..."
 if ! grep -q "ai/" .gitignore; then
     echo "Error: 'ai/' directory not found in .gitignore."
     exit 1
 fi
 echo "Git safety verified."
 
-# 8. Checkpoint & Backup Cycle
-echo "[8/8] Testing Checkpoint & Backup cycle..."
+# 9. Checkpoint & Backup Cycle
+echo "[9/9] Testing Checkpoint & Backup cycle..."
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M)
 BACKUP_DIR="$GLOBAL_DIR/backups"
 TEST_BACKUP="$BACKUP_DIR/VALIDATION_TEST_$TIMESTAMP.tar.gz"
@@ -117,4 +125,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v2.0 Completed Successfully ---"
+echo "--- Protocol Validation v3.0 Completed Successfully ---"
