@@ -132,25 +132,25 @@ for f_abs in "${matches[@]}"; do
   echo "Target: $f_abs"
   
   # Extract Base Directories
-  target_fw_dir=$(grep -m1 -E '\*\*Global AI Framework Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global AI Framework Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
+  target_wf_dir=$(grep -m1 -E '\*\*Global AI (Framework|Workflow) Directory\*\*: `[^`]+`' "$f_abs" | sed -n -E 's/.*\*\*Global AI (Framework\|Workflow) Directory\*\*: `([^`]*)`.*/\2/p' || true)
   target_user_dir=$(grep -m1 -E '\*\*Global User AI Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global User AI Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
 
   # Fallback to older nomenclature if not found
-  if [ -z "$target_fw_dir" ]; then
-    target_fw_dir=$(grep -m1 -E '\*\*Global Policies Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global Policies Directory\*\*: `\([^`]*\)\/ai\/policies\/.*/\1/p' || true)
+  if [ -z "$target_wf_dir" ]; then
+    target_wf_dir=$(grep -m1 -E '\*\*Global Policies Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global Policies Directory\*\*: `\([^`]*\)\/ai\/policies\/.*/\1/p' || true)
   fi
   if [ -z "$target_user_dir" ]; then
     target_user_dir=$(grep -m1 -E '\*\*Global User AI Directory\*\*: `[^`]+`' "$f_abs" | sed -n 's/.*\*\*Global User AI Directory\*\*: `\([^`]*\)`.*/\1/p' || true)
   fi
 
-  echo "  Preserved Framework Dir: ${target_fw_dir:-"(using source)"}"
+  echo "  Preserved Workflow Dir: ${target_wf_dir:-"(using source)"}"
   echo "  Preserved User AI Dir:   ${target_user_dir:-"(using source)"}"
 
   tmp=$(mktemp)
   sed_args=()
-  if [ -n "$target_fw_dir" ]; then
-    esc_val=$(printf '%s' "$target_fw_dir" | sed 's/[\/&]/\\&/g')
-    sed_args+=("-e" 's|(\*\*Global AI Framework Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
+  if [ -n "$target_wf_dir" ]; then
+    esc_val=$(printf '%s' "$target_wf_dir" | sed 's/[\/&]/\\&/g')
+    sed_args+=("-e" 's|(\*\*Global AI Workflow Directory\*\*: `)([^`]+)(`.*)|\1'"$esc_val"'\3|')
   fi
   if [ -n "$target_user_dir" ]; then
     esc_val=$(printf '%s' "$target_user_dir" | sed 's/[\/&]/\\&/g')

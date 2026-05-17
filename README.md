@@ -27,7 +27,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * (Optional) Copy `docs/about-human.md` and `docs/tools-preferences.md` into `$HOME/.ai/settings/` and personalize them.
 * Copy `AGENTS.md` into the root of your project directory.
 * Update the **TIER 1: CONFIGURATION** section in the project `AGENTS.md`:
-  * Ensure `Global AI Framework Directory` points to the absolute path of this cloned repository.
+  * Ensure `Global AI Workflow Directory` points to the absolute path of this cloned repository.
   * Ensure `Global User AI Directory` points to your `[HOME]/.ai/` path.
 * Start VS Code; in the AI chat window, use one of these two prompts:
   * `"bootstrap using AGENTS.md protocol"`
@@ -42,8 +42,8 @@ You can use the following sequence to on-board an existing project with this wor
 1. Copy `AGENTS.md` from the global workflow location to the root of your new project.
 2. Open the copied `AGENTS.md` and update the **TIER 1: CONFIGURATION** section to match your environment.
 3. *Optional, but useful*: Create `ai/ai-customization.md` file with the "Expertise", "Traits", or "Compliance" modules you want AI to use for this project. See [AI customization guide](docs/ai-customization-guide.md) .
-4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI (Executes **Procedure B**).
-5. After every important task, remember to perform a checkpoint (**Procedure C**); after any AI or computer restart, use `"load context using AGENTS.md protocol"` (**Procedure A**) to resume.
+4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
+5. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
 
 ### Updating the AI Protocol (`AGENTS.md`)
 
@@ -223,10 +223,10 @@ The AI assistant reads this file during the context-loading phase (**Procedure A
 
 ## Key Features
 
-### 1. "Layer Cake" Protocol Structure
-- **Trigger-Keyed Procedures**: Replaces prose with clear, linear instructions for "Load Context" (Procedure A), "Bootstrap" (Procedure B), and "Checkpoint" (Procedure C).
-- **Relocatable Configuration**: Uses dynamic path inference from two base directories (Framework and User Home), making the system portable across machines and OSs.
-- **Idiot-Proof Guardrails**: Structured structural cues and immutable mandates ensure even lower-capability models can safely bootstrap without destroying state.
+### 1. Structured Protocol
+- **Outcome-Oriented Procedures**: Uses clear, linear instructions for "Load Context", "Bootstrap", and "Checkpoint".
+- **Relocatable Configuration**: Uses dynamic path inference from two base directories (Workflow and User Home), making the system portable across machines and OSs.
+- **Reliable Guardrails**: Structured structural cues and immutable mandates ensure even lower-capability models can safely bootstrap without destroying state.
 
 ### 2. Automated Protocol Validation
 - **System Integrity**: A built-in validation suite (`support-files/validate-protocol.sh`) verifies the bootstrap protocol, path availability, and metadata adherence on demand.
@@ -266,3 +266,6 @@ The AI assistant reads this file during the context-loading phase (**Procedure A
 - About the human user template: `docs/about-human.md`
 - Beginner setup guide: `docs/vscode-cline-provider-setup-for-beginners.md`
 - Mobile app development policy guide: `docs/ai-policy-mobile-apps-guide.md`
+ent policy guide: `docs/ai-policy-mobile-apps-guide.md`
+pps-guide.md`
+ent policy guide: `docs/ai-policy-mobile-apps-guide.md`

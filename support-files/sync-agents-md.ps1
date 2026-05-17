@@ -61,27 +61,27 @@ foreach ($m in $foundFiles) {
   $targetContent = Get-Content -Raw -Path $target
   
   # Extract Base Directories
-  $targetFwDir = if ($targetContent -match '\*\*Global AI Framework Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
+  $targetWfDir = if ($targetContent -match '\*\*Global AI (Framework|Workflow) Directory\*\*: `([^`]+)`') { $Matches[2] } else { $null }
   $targetUserDir = if ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
 
   # Fallback to older nomenclature
-  if (-not $targetFwDir -and ($targetContent -match '\*\*Global Policies Directory\*\*: `([^`]+)`')) {
+  if (-not $targetWfDir -and ($targetContent -match '\*\*Global Policies Directory\*\*: `([^`]+)`')) {
      $oldPath = $Matches[1]
-     $targetFwDir = $oldPath -replace '\\ai\\policies\\?$', '' -replace '/ai/policies/?$', ''
+     $targetWfDir = $oldPath -replace '\\ai\\policies\\?$', '' -replace '/ai/policies/?$', ''
   }
   if (-not $targetUserDir -and ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`')) {
      $targetUserDir = $Matches[1]
   }
 
-  Write-Host "  Preserved Framework Dir: $(if ($targetFwDir) { $targetFwDir } else { "(using source)" })"
+  Write-Host "  Preserved Workflow Dir: $(if ($targetWfDir) { $targetWfDir } else { "(using source)" })"
   Write-Host "  Preserved User AI Dir:   $(if ($targetUserDir) { $targetUserDir } else { "(using source)" })"
 
   try {
     $srcContent = Get-Content -Raw -Path $srcPath
     $newContent = $srcContent
 
-    if ($targetFwDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Global AI Framework Directory\*\*: `)([^`]+)(`)', '$1' + $targetFwDir + '$3')
+    if ($targetWfDir) {
+      $newContent = [regex]::Replace($newContent, '(\*\*Global AI Workflow Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$3')
     }
     if ($targetUserDir) {
       $newContent = [regex]::Replace($newContent, '(\*\*Global User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserDir + '$3')
