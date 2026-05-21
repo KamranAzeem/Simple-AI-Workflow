@@ -34,6 +34,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Native Backups** — Automatic cross-platform state archiving during every checkpoint
 - **Project Knowledge Sync** — Key findings, decisions, and discoveries are written to `project-knowledge/` at every checkpoint
 - **Daily Snapshots** — Automated history of work and decisions
+- **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
 
 ---
 
@@ -69,6 +70,25 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Unique Naming**: `{parent}_{project}_{timestamp}`
 
 > **Zero-Script Reliability.** Your project history is always protected.
+
+---
+
+# On-Demand Peer Review
+
+## How it works
+- Say `"peer review"` — the AI switches to an objective reviewer role
+- Scans the full file set (not just a diff); saves a structured report to `ai/code-review-reports/`
+- Each report is severity-classified: **Critical / Major / Minor / Suggestions**
+- Ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**
+- Previous reports are never overwritten; each round gets a new numbered file
+
+## Why multiple rounds are normal
+- The AI reviews the **full file set** on every pass — not just the latest diff
+- Fixing one issue can make a different pattern visible in the next pass
+- Diff-based tools (e.g. GitHub Copilot PR review) see only the new diff on each push, requiring many more rounds to converge
+- Expect 2–4 rounds for a thorough review; this is by design
+
+> **Full-file-set review. Every round. No blind spots.**
 
 ---
 ... (rest of slides) ...

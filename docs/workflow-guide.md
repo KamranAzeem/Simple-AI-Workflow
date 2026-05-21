@@ -140,6 +140,9 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 - Each round creates a new numbered report. Previous reports are never overwritten.
 - The AI notes which previous issues were resolved at the start of each new report.
 
+### Why multiple review rounds are normal
+The AI reviews the **full file set** on every pass — not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
+
 ### Exiting reviewer mode
 Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI returns to its normal role.
 
