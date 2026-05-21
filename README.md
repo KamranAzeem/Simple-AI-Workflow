@@ -141,7 +141,7 @@ Use one of these two text prompts in your AI assistant:
 
 **Important:** Do not use the built-in `/init` command. It is specific to each AI tool and behaves differently across assistants. The two text prompts above work the same way everywhere.
 
-The AI assistant will follow **Procedure B** in `AGENTS.md`, and it will:
+The AI assistant will follow the bootstrap instructions in `AGENTS.md`, and it will:
 
   - Create the `ai/` directory with the `daily-checkpoints/` subdirectory.
   - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
@@ -154,7 +154,7 @@ The AI assistant will follow **Procedure B** in `AGENTS.md`, and it will:
 
 You can use the following simple instruction:
 
-- **"Load context using AGENTS.md protocol"** (Executes **Procedure A**)
+- **"Load context using AGENTS.md protocol"** (runs the context-loading sequence)
 
 Then, ask any of the following questions:
 
@@ -216,7 +216,7 @@ Use `ai-customization.md` to:
 
 See the **[AI Customization Guide](docs/ai-customization-guide.md)** for full instructions and multi-role examples.
 
-The AI assistant reads this file during the context-loading phase (**Procedure A**) and automatically applies the corresponding policies and behaviors.
+The AI assistant reads this file during the context-loading phase and automatically applies the corresponding policies and behaviors.
 
 
 ---

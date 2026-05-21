@@ -46,8 +46,8 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 
 ## The Solution: Structural Guardrails
 - **Immortality Headers**: High-visibility `⚠️ STOP` header prevents AI from modifying the protocol
-- **Immutable Loading**: Procedure A (Load Context) is explicitly flagged as **READ-ONLY**
-- **No-Overwrite Mandates**: Procedure A (Structural Integrity) forbids overwriting existing files
+- **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**
+- **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files
 - **Recursive Discovery**: AI must `ls -R` the **Global User AI Directory** to find all intelligence
 - **Proof-of-Load**: AI must explicitly list every global file read before acknowledgement
 
