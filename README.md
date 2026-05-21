@@ -5,7 +5,7 @@ Last modified: 2026-05-21T00:00:00+02:00
 Intent: Replace protocol-section "TIER" references with plain language section names throughout README.
 -->
 ---
-# Global Policy Management System for Simple AI Workflow
+# Simple AI Workflow
 
 Objective: **Instead of *chatting* with AI, start *working* with AI**
 
