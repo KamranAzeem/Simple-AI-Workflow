@@ -88,6 +88,12 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - Diff-based tools (e.g. GitHub Copilot PR review) see only the new diff on each push, requiring many more rounds to converge
 - Expect 2–4 rounds for a thorough review; this is by design
 
+## vs. GitHub Copilot PR Reviewer
+- Push branch → wait for review → copy comments out of GitHub → paste into local AI → fix → push again → repeat
+- Each push triggers a diff-only review — issues outside the changed lines are invisible
+- After 15+ rounds you may still not have a full-codebase verdict
+- With this workflow: everything stays in your local chat — no push, no copy-paste, full file set every time
+
 > **Full-file-set review. Every round. No blind spots.**
 
 ---
