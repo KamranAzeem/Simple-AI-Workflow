@@ -143,6 +143,9 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 ### Why multiple review rounds are normal
 The AI reviews the **full file set** on every pass — not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
 
+### Compared to GitHub Copilot PR reviewer
+Using GitHub Copilot's pull request reviewer involves a frustrating cycle: push your branch, wait for Copilot to review the diff, copy the review comments out of GitHub, paste them into your local AI chat to understand and fix them, apply the fixes, push again, and repeat. Each push triggers a new diff-only review that cannot see issues outside the changed lines. After many rounds, you still may not have a full-codebase verdict. With this workflow's peer review, the entire loop stays in your local AI chat window — no push required, no copy-pasting between tools, and the AI scans the full file set every time.
+
 ### Exiting reviewer mode
 Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI returns to its normal role.
 
