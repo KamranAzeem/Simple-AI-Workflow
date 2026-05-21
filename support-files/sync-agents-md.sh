@@ -87,6 +87,11 @@ else
   SRC_ABS="$SRC_DIR/$(basename "$SOURCE")"
 fi
 
+if [ ! -d "$TARGET_PATH" ]; then
+  echo "Error: --target-path is not a directory: $TARGET_PATH" >&2
+  exit 2
+fi
+
 if command -v realpath >/dev/null 2>&1; then
   TARGET_ABS=$(realpath "$TARGET_PATH")
 elif command -v readlink >/dev/null 2>&1 && readlink -f "$TARGET_PATH" >/dev/null 2>&1; then
@@ -98,7 +103,6 @@ fi
 echo "Source: $SRC_ABS"
 echo "Searching under: $TARGET_ABS"
 
-IFS=$'\n'
 matches=()
 while IFS= read -r -d '' f; do
   if command -v realpath >/dev/null 2>&1; then

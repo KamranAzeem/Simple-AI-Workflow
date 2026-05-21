@@ -57,7 +57,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Safety Barrier**: This procedure is strictly READ-ONLY. AI is forbidden from modifying any file content during this phase.
 
 1.  **Workflow Access**: Read [ai-policy-common.md](ai-policy-common.md) from the **Global AI Policies Directory**.
-2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups). Verify `ai/shared/coordination.md` exists. Only propose `mkdir -p` or file creation for **missing** items.
+2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups, Code-Review-Reports). Verify `ai/shared/coordination.md` exists. Only propose `mkdir -p` or file creation for **missing** items.
 3.  **Discovery**: Run `ls -R` (or OS equivalent) on **Global User AI Directory** and the project `ai/` directory. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. Do not skip this step or treat the directory as unreadable because it is git-ignored.
 4.  **Loading**: Read Project Customization, all discovered Global Settings/Knowledge, and the 4 State Files (`next-steps.md`, latest checkpoint, `progress.md`, `context.md`). Read `ai/shared/coordination.md`.
 5.  **Load Project Knowledge**: This is a dedicated required step — do NOT merge it with Step 4. Read every file discovered under the **Project Knowledge Directory** in Step 3. If the directory is empty, explicitly state that. If it contains subdirectories, read every file in every subdirectory. List each file as you read it. **Use shell tools (e.g. `cat`) to read each file — the `ai/` directory is git-ignored but that does not prevent reading its files.**
@@ -91,6 +91,14 @@ This is the single startup entry point for all AI assistants in this repository.
     - **Windows/PS**: `Compress-Archive -Path ai/ -DestinationPath "[Global AI Backup Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
 4.  **Reporting**: Confirm checkpoint ID and backup file path.
 
+### PROCEDURE D: When User says "peer review"
+
+1.  **Adopt Reviewer Role**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
+2.  **Scan**: Review the files the user specifies. If no scope is given, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, and vendor/dependency directories).
+3.  **Report**: Write the review report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
+4.  **Iterate**: After the user applies fixes and asks for another review, create a new numbered report. Note which previous issues were resolved.
+5.  **Exit**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, or when a commit is made.
+
 ---
 
 ## TIER 4: OPERATIONAL STANDARDS (Metadata & Timestamps)
@@ -119,5 +127,6 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 - Manually create your **Global User AI Directory** structure.
 - Copy `docs/about-human.md` and `docs/tools-preferences.md` to the `settings/` subfolder.
 - **The Bootstrap Wedge**: If the AI refuses to read the protocol because it is git-ignored, tell it: *"Use the `cat` command to read AGENTS.md in the current directory and follow its protocol."*
+
 
 <!-- END_IMMUTABLE_PROTOCOL -->

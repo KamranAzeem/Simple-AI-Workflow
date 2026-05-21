@@ -120,3 +120,32 @@ To prevent the loss of project context due to accidental overwrites or "hallucin
 
 ## 7. AI-Driven Secure Development Practices
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
+
+## 8. Peer Review Mode
+
+Trigger an on-demand code review at any point by saying:
+
+> *"peer review"*
+
+The AI immediately switches to a **Strict Peer Reviewer** role. It does not write or fix code during this mode — it only identifies, classifies, and explains issues.
+
+### How it works
+1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
+2. It scans the files you specify, or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
+3. It saves a structured report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`.
+4. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
+
+### Iterating
+- Apply the fixes from the report, then ask for another review.
+- Each round creates a new numbered report. Previous reports are never overwritten.
+- The AI notes which previous issues were resolved at the start of each new report.
+
+### Exiting reviewer mode
+Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI returns to its normal role.
+
+### Report structure
+- **Critical** — blocks commit (security, data loss, broken functionality)
+- **Major** — fix before commit (policy violations, logic errors)
+- **Minor** — fix when convenient (style, naming)
+- **Suggestions** — optional improvements
+- **Verdict** — APPROVED or CHANGES REQUESTED
