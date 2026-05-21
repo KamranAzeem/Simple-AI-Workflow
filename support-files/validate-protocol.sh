@@ -18,6 +18,10 @@ if ! grep -q "### PROCEDURE A: When User says \"load context\"" AGENTS.md; then
     echo "Error: Procedure A Read-Only mandate missing."
     exit 1
 fi
+if ! grep -q "### PROCEDURE D: When User says \"peer review\"" AGENTS.md; then
+    echo "Error: Procedure D (Peer Review) anchor missing in AGENTS.md."
+    exit 1
+fi
 echo "Hardening anchors verified."
 
 # 2. Configuration Mapping
@@ -52,6 +56,7 @@ echo "[4/9] Verifying project AI directory structure..."
 PROJECT_SUBS=(
     "policies" "daily-checkpoints" "shared/handoffs" 
     "shared/project-knowledge" "artifacts" "notes" "secrets"
+    "code-review-reports"
 )
 for sub in "${PROJECT_SUBS[@]}"; do
     if [ ! -d "ai/$sub" ]; then
@@ -70,10 +75,11 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/9] Verifying policy baseline (10 modular policies)..."
+echo "[6/9] Verifying policy baseline (11 modular policies)..."
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "mobile-apps" "dba" "observability"
+    "code-review"
 )
 for p in "${POLICIES[@]}"; do
     if [ ! -f "ai/policies/ai-policy-$p.md" ]; then
@@ -107,6 +113,7 @@ BACKUP_DIR="$GLOBAL_DIR/backups"
 TEST_BACKUP="$BACKUP_DIR/VALIDATION_TEST_$TIMESTAMP.tar.gz"
 
 # Simulate Checkpoint File
+trap 'rm -f ai/daily-checkpoints/VALIDATION_TEST.md' EXIT
 touch ai/daily-checkpoints/VALIDATION_TEST.md
 
 # Run Backup One-liner (Simplified for validation)
@@ -115,8 +122,6 @@ tar -czf "$TEST_BACKUP" ai/ > /dev/null 2>&1
 if [ -f "$TEST_BACKUP" ]; then
     echo "Native backup successful: $(basename "$TEST_BACKUP")"
     rm "$TEST_BACKUP"
-    rm ai/daily-checkpoints/VALIDATION_TEST.md
-    echo "Cleanup successful."
 else
     echo "Error: Native backup failed. Ensure $BACKUP_DIR exists."
     exit 1

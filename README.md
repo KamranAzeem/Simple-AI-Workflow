@@ -119,7 +119,7 @@ The result? **Peace of mind.** You know exactly where the AI directory is, you k
 +--------------------------------------+                +---------------------------------------+
 | ( The global framework location )    |                | ( Your project directory view)        |
 | .                                    |                | .                                     |
-| ├─ AGENTS.md (Canonical)             |                | ├─ AGENTS.md (Copy)                   |
+| ├─ AGENTS.md (Primary)               |                | ├─ AGENTS.md (Copy)                   |
 | ├─ ai/                               |                | ├─ ai/                                |
 | │  ├─ policies/                      | <------------- | │  ├─ ai-customization.md             |
 | │  │  ├─ ai-policy-common.md         |                | │  ├─ context.md                      |
@@ -251,6 +251,11 @@ The AI assistant reads this file during the context-loading phase (**Procedure A
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling (STRIDE, OWASP Top 10).
 - **Proactive Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
 
+### 8. Peer Review Mode
+- **On-Demand Code Review**: Trigger a strict peer review at any time by saying `"peer review"`. The AI switches to an objective reviewer role — no code writing, analysis and reporting only.
+- **Structured Reports**: Each review is saved to `ai/code-review-reports/` with a severity-classified report (Critical / Major / Minor / Suggestions) and a clear **APPROVED** or **CHANGES REQUESTED** verdict.
+- **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
+
 ---
 
 ## Docs and Slides
@@ -266,6 +271,3 @@ The AI assistant reads this file during the context-loading phase (**Procedure A
 - About the human user template: `docs/about-human.md`
 - Beginner setup guide: `docs/vscode-cline-provider-setup-for-beginners.md`
 - Mobile app development policy guide: `docs/ai-policy-mobile-apps-guide.md`
-ent policy guide: `docs/ai-policy-mobile-apps-guide.md`
-pps-guide.md`
-ent policy guide: `docs/ai-policy-mobile-apps-guide.md`

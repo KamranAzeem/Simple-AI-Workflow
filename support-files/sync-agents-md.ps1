@@ -8,7 +8,7 @@
   Updated for "Layer Cake" protocol (v3.0)
 
 USAGE
-  ./sync-agents-md.ps1 -Source ../AGENTS.md -Root C:\Projects -WhatIf
+  ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
 #>
 
 param(
@@ -54,6 +54,8 @@ Write-Host ""
 Write-Host "Found $matchCount AGENTS.md file(s)"
 Write-Host "------------------------------------------------------------"
 
+$srcContent = Get-Content -Raw -Path $srcPath
+
 foreach ($m in $foundFiles) {
   $target = $m.FullName
   Write-Host "Target: $target"
@@ -69,15 +71,11 @@ foreach ($m in $foundFiles) {
      $oldPath = $Matches[1]
      $targetWfDir = $oldPath -replace '\\ai\\policies\\?$', '' -replace '/ai/policies/?$', ''
   }
-  if (-not $targetUserDir -and ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`')) {
-     $targetUserDir = $Matches[1]
-  }
 
   Write-Host "  Preserved Workflow Dir: $(if ($targetWfDir) { $targetWfDir } else { "(using source)" })"
   Write-Host "  Preserved User AI Dir:   $(if ($targetUserDir) { $targetUserDir } else { "(using source)" })"
 
   try {
-    $srcContent = Get-Content -Raw -Path $srcPath
     $newContent = $srcContent
 
     if ($targetWfDir) {
@@ -91,7 +89,7 @@ foreach ($m in $foundFiles) {
       Write-Host "  DRY-RUN: would update $target"
     } else {
       Write-Host "  Updating $target"
-      Set-Content -Path $target -Value $newContent -Force -Encoding UTF8
+      [System.IO.File]::WriteAllText($target, $newContent, [System.Text.UTF8Encoding]::new($false))
     }
   } catch {
     Write-Warning "  Failed to process $target : $_"
