@@ -96,6 +96,8 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
 
+> **Note — Peer Review (`code-review`)**: You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
+
 ---
 
 ## Best Practices

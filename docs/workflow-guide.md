@@ -97,8 +97,8 @@ For all **Inquiries**, the AI is mandated to:
 ### Structural Guardrails
 Models with lower instruction-following capability (e.g., smaller or "lite" models) sometimes treat protocols as suggestions, leading to accidental re-initialization or overwriting of context files. This workflow implements high-visibility structural cues to prevent this:
 - **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
-- **Immutable Loading**: Procedure A (Load Context) is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
-- **No-Overwrite Mandates**: Procedure A (Structural Integrity) forbids overwriting existing files, ensuring project history is never accidentally wiped.
+- **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
+- **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
 - **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list every global file read and every active trait found, providing empirical evidence of a successful bootstrap.
 
