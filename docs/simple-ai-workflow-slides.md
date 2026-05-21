@@ -1,8 +1,8 @@
 <!--
 Created-by: Cline
-Updated-by: Gemini CLI
-Last modified: 2026-05-14T14:45:00Z
-Intent: Add Recursive Discovery and Proof-of-Load features to slides.
+Updated-by: GitHub Copilot
+Last modified: 2026-05-21T00:00:00+02:00
+Intent: Fix stale 'final step' checkpoint reference; add Project Knowledge Sync feature.
 -->
 ---
 # Simple AI Workflow
@@ -32,6 +32,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
 - **Idiot-Proof Protocol** — Structural guardrails for safe use with lower-capability "lite" models
 - **Native Backups** — Automatic cross-platform state archiving during every checkpoint
+- **Project Knowledge Sync** — Key findings, decisions, and discoveries are written to `project-knowledge/` at every checkpoint
 - **Daily Snapshots** — Automated history of work and decisions
 
 ---
@@ -63,7 +64,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 
 ## The Solution: Built-in Archiving
 - **Native CLI One-Liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
-- **Automatic Execution**: Mandated as the final step of every checkpoint
+- **Automatic Execution**: Runs at every checkpoint; project knowledge is reviewed and updated first
 - **Global Storage**: Saved to `~/.ai/backups/` for easy recovery
 - **Unique Naming**: `{parent}_{project}_{timestamp}`
 

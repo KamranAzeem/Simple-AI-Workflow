@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-05-02T22:50:00Z
-Intent: Implement Refined Handoff Protocol (Conditional Autonomy) and Valid Handoff Mandate.
+Updated-by: GitHub Copilot
+Last modified: 2026-05-21T00:00:00+02:00
+Intent: Add mandatory project-knowledge update mandate to checkpoint contract, aligned with AGENTS.md Procedure C Step 2.
 -->
 
 
@@ -47,7 +47,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 4. [context file](ai/context.md)
 
 ### Checkpoint & Backup Mandate
-- **Mandate**: Every checkpoint operation MUST conclude with the execution of the native backup command as defined in Procedure C of `AGENTS.md`.
+- **Mandate**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 2 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Mandate**: Every checkpoint operation MUST include the execution of the native backup command as defined in Procedure C of `AGENTS.md`.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.

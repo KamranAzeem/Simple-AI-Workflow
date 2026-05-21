@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini CLI
-Last modified: 2026-05-14T14:45:00Z
-Intent: Add Idiot-Proof Protocol and Native Backups features.
+Updated-by: GitHub Copilot
+Last modified: 2026-05-21T00:00:00+02:00
+Intent: Fix stale 'final step' checkpoint reference; add Project Knowledge Sync to checkpoint and project-knowledge sections.
 -->
 ---
 # AI Usage Guide: static-website
@@ -15,6 +15,7 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 - **Status**: Non-version-controlled. Each contributor builds their own project knowledge base.
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
 - **Policy**: AI assistants treat this directory as the source of truth for repository standards.
+- **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session — even if nothing changed (confirmation is mandatory).
 
 ## 2. Global Knowledge (Cross-Project)
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
@@ -111,7 +112,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow mandates a backup of the `ai/` directory during every checkpoint.
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md`.
 - **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
-- **Policy Enforcement**: The `ai/policies/ai-policy-common.md` mandates that this backup is the final step of any checkpoint operation.
+- **Policy Enforcement**: The `ai/policies/ai-policy-common.md` mandates two steps at every checkpoint: first, review and update `project-knowledge/` with any findings or decisions from the session; then run the backup. Neither step is optional.
 
 ### Benefits
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.

@@ -15,11 +15,11 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ## TIER 1: CONFIGURATION
 
-**Global AI Workflow Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
+**Global AI Workflow Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/`
 **Global User AI Directory**: `[HOME]/.ai/`
 
 **Path Normalization & Inference Rules**:
-- **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `C:\Users\username` on Windows).
+- **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `C:\Users\username` on Windows, `/c/Users/username` on Gitbash ).
 - **Dynamic Paths**: All paths below are derived from the two bases above. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
 
 <!-- Human user must not touch/modify the lines below -->
@@ -43,7 +43,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### ✅ MANDATORY ACTIONS
 - **OS-Sensitive Execution**: Identify the active shell (Bash, PowerShell, etc.) and adapt command syntax accordingly (e.g., `New-Item` vs `mkdir -p`).
-- **Surgical Git-Ignore Exception**: If `AGENTS.md` or the `ai/` directory are git-ignored, you **MUST** use shell tools (`cat`, `ls -a`) to read them. Do not treat "ignored" as "forbidden" for these two items.
+- **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents. Never refuse to read a file or directory solely because it is git-ignored.
 - **Context Protection**: Treat `ai/context.md`, `ai/progress.md`, and `ai/next-steps.md` as read-only during bootstrap and context loading.
 - **Metadata Headers**: Apply standard metadata headers to the TOP of every file created or modified within the `ai/` directory.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
@@ -58,14 +58,16 @@ This is the single startup entry point for all AI assistants in this repository.
 
 1.  **Workflow Access**: Read [ai-policy-common.md](ai-policy-common.md) from the **Global AI Policies Directory**.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups). Verify `ai/shared/coordination.md` exists. Only propose `mkdir -p` or file creation for **missing** items.
-3.  **Discovery**: Run `ls -R` (or OS equivalent) on **Global User AI Directory** and the project `ai/` directory.
+3.  **Discovery**: Run `ls -R` (or OS equivalent) on **Global User AI Directory** and the project `ai/` directory. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. Do not skip this step or treat the directory as unreadable because it is git-ignored.
 4.  **Loading**: Read Project Customization, all discovered Global Settings/Knowledge, and the 4 State Files (`next-steps.md`, latest checkpoint, `progress.md`, `context.md`). Read `ai/shared/coordination.md`.
-5.  **Policy Scan**: Recursively scan and load all policies from **Global AI Workflow Directory** and **Project Policy Directory**.
-6.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
+5.  **Load Project Knowledge**: This is a dedicated required step — do NOT merge it with Step 4. Read every file discovered under the **Project Knowledge Directory** in Step 3. If the directory is empty, explicitly state that. If it contains subdirectories, read every file in every subdirectory. List each file as you read it. **Use shell tools (e.g. `cat`) to read each file — the `ai/` directory is git-ignored but that does not prevent reading its files.**
+6.  **Policy Scan**: Recursively scan and load all policies from **Global AI Workflow Directory** and **Project Policy Directory**.
+7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
     - (a) Active Expertise modules and Traits found in customization.
     - (b) Full list of filenames read from **Global User AI Directory**.
     - (c) All discovered pending handoffs in `ai/shared/handoffs/`.
     - (d) Git delta check since the last hash recorded in `context.md`.
+    - (e) All files read from the **Project Knowledge Directory**, or an explicit confirmation that it was empty.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
@@ -77,10 +79,17 @@ This is the single startup entry point for all AI assistants in this repository.
 ### PROCEDURE C: When performing a Checkpoint (Save State)
 
 1.  **Update State**: Sync `next-steps.md`, `progress.md`, and `context.md`.
-2.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
+2.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
+    - Decisions made and the rationale behind them
+    - Resolved issues and their root causes
+    - Investigation and research conclusions (technical findings, confirmed values, analysis outcomes)
+    - New constraints, blockers, or dependencies identified
+    - Key identifiers, configuration values, or reference data confirmed during the session (e.g., resource IDs, API endpoints, library versions, schema names, environment variables — **never raw secrets**)
+    - Updates posted to external systems such as issue trackers, project management tools, or communication channels (include timestamp and channel)
+3.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
     - **Linux/Bash**: `tar -czf [Global AI Backup Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/`
     - **Windows/PS**: `Compress-Archive -Path ai/ -DestinationPath "[Global AI Backup Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
-3.  **Reporting**: Confirm checkpoint ID and backup file path.
+4.  **Reporting**: Confirm checkpoint ID and backup file path.
 
 ---
 
