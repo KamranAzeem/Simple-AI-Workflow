@@ -1,8 +1,8 @@
 #!/bin/bash
 # Created-by: Gemini CLI
-# Updated-by: Gemini CLI
-# Last modified: 2026-05-17T15:30:00Z
-# Intent: Comprehensive 9-Point Protocol Integrity Check (v3.0)
+# Updated-by: GitHub Copilot
+# Last modified: 2026-05-21T00:00:00+02:00
+# Intent: Fix hardcoded Linux home path; use $HOME for portability across Linux, macOS, and Git Bash on Windows.
 
 set -e
 
@@ -37,10 +37,7 @@ echo "Configuration mapping verified."
 
 # 3. Global Structure
 echo "[3/9] Verifying global directory structure..."
-# Resolve ~/.ai from the config if possible, else use default. Target the specific config line.
-GLOBAL_DIR="/home/kamran/.ai"
-# Handle the case where it might be a literal path in the script
-[ -z "$GLOBAL_DIR" ] && GLOBAL_DIR="/home/kamran/.ai"
+GLOBAL_DIR="$HOME/.ai"
 
 GLOBAL_SUBS=("settings" "global-knowledge" "backups")
 for sub in "${GLOBAL_SUBS[@]}"; do

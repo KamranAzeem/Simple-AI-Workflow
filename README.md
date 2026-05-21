@@ -1,8 +1,8 @@
 <!--
 Created-by: Gemini
-Updated-by: Gemini CLI
-Last modified: 2026-05-15T21:15:00+02:00
-Intent: Refactor README for "Layer Cake" protocol v3.0 nomenclature and structure.
+Updated-by: GitHub Copilot
+Last modified: 2026-05-21T00:00:00+02:00
+Intent: Replace protocol-section "TIER" references with plain language section names throughout README.
 -->
 ---
 # Global Policy Management System for Simple AI Workflow
@@ -26,7 +26,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * Create `$HOME/.ai/global-knowledge/`
   * (Optional) Copy `docs/about-human.md` and `docs/tools-preferences.md` into `$HOME/.ai/settings/` and personalize them.
 * Copy `AGENTS.md` into the root of your project directory.
-* Update the **TIER 1: CONFIGURATION** section in the project `AGENTS.md`:
+* Update the **CONFIGURATION** section in the project `AGENTS.md`:
   * Ensure `Global AI Workflow Directory` points to the absolute path of this cloned repository.
   * Ensure `Global User AI Directory` points to your `[HOME]/.ai/` path.
 * Start VS Code; in the AI chat window, use one of these two prompts:
@@ -40,7 +40,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 You can use the following sequence to on-board an existing project with this workflow.
 
 1. Copy `AGENTS.md` from the global workflow location to the root of your new project.
-2. Open the copied `AGENTS.md` and update the **TIER 1: CONFIGURATION** section to match your environment.
+2. Open the copied `AGENTS.md` and update the **CONFIGURATION** section to match your environment.
 3. *Optional, but useful*: Create `ai/ai-customization.md` file with the "Expertise", "Traits", or "Compliance" modules you want AI to use for this project. See [AI customization guide](docs/ai-customization-guide.md) .
 4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
 5. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
@@ -52,7 +52,7 @@ To keep your project's AI workflows synchronized with the latest features, follo
 1.  **Checkpoint**: Before updating, perform a final "checkpoint" of your current work.
 2.  **Pull Updates**: Pull the latest changes into your global `Simple-AI-Workflow` repository.
 3.  **Update `AGENTS.md`**: Run the provided helper script in `support-files/` to copy the updated `AGENTS.md` to your project directory. 
-    *   *Note: This script is designed to preserve your existing project-specific TIER 1 configuration. Please verify that your configuration remains intact after running the script.*
+    *   *Note: This script is designed to preserve your existing project-specific configuration. Please verify that your configuration remains intact after running the script.*
 4.  **Load Context**: Re-open your IDE and initiate the session by typing: `"load context using AGENTS.md protocol"` in your AI chat extension. This will automatically align your project `ai/` directory structure with the updated protocol.
 
 
@@ -173,11 +173,11 @@ Use this when a newer version of this repository adds new protocol features.
 ### Step A: Get the latest AGENTS.md in this global repository
 
 1. Pull the latest changes in this repository, using `git pull`.
-2. Verify that `AGENTS.md` contains the new tiers or procedures you want to roll out.
+2. Verify that `AGENTS.md` contains the new sections or procedures you want to roll out.
 
 ### Step B: Propagate AGENTS.md to your other projects
 
-Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's **TIER 1** configuration.
+Use the helper scripts in `support-files/` to update `AGENTS.md` across your project folders while preserving each target project's **CONFIGURATION** section.
 
 Linux/macOS/Git Bash (dry-run first):
 
@@ -195,7 +195,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync
 
 ### Step C: Adjust Configuration (If needed)
 
-If the new protocol introduced new base variables in **TIER 1**, manually update them in your project `AGENTS.md`.
+If the new protocol introduced new base variables in the **CONFIGURATION** section, manually update them in your project `AGENTS.md`.
 
 ### Step D: Update each project's context
 
