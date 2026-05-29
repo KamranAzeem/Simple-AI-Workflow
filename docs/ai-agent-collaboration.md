@@ -46,25 +46,12 @@ This architecture provides a persistent, cross-project "Shared Intelligence" lay
 - **Bootstrapping**: Agents automatically index these sources upon session initiation as read-only knowledge providers.
 - **Normalization**: Content here is treated as "lessons learned" to inform decision-making, not as authoritative project-specific logic.
 
-### 2. Standardized Traceability (Metadata Headers)
-Every file created or modified by an AI includes a header like this:
-```markdown
-<!--
-Created-by: AgentName
-Updated-by: AgentName
-Last modified: YYYY-MM-DD
-Intent: Explanation of the change.
--->
-```
-This allows you to look at any file and instantly know **who** changed it and **why**.
-
 ### 3. Shared Policy Baseline (`ai/ai-policy-common.md`)
 All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **global common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
 
 ## Human Guidance: How to Interacting with AI Agents
 - **Check the Progress**: Read `ai/progress.md` and `ai/next-steps.md` to see the high-level status.
 - **Check the Coordination**: Look at `ai/shared/coordination.md` to see what the AI is currently focusing on.
-- **Audit the Files**: Check the headers at the top of files to verify AI-generated content.
 
 ## Agent Guidance: How to Collaborate
 1.  **Bootstrap**: Follow `AGENTS.md` protocol.

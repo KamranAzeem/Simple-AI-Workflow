@@ -3,9 +3,8 @@
   Sync AGENTS.md from a source into project directories that contain an older AGENTS.md
 
 .DESCRIPTION
-  Recursively finds files named AGENTS.md under a root path and replaces them while 
+  Recursively finds files named AGENTS.md under a root path and replaces them while
   preserving target-specific base directory settings.
-  Updated for "Layer Cake" protocol (v3.0)
 
 USAGE
   ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
@@ -59,14 +58,15 @@ $srcContent = Get-Content -Raw -Path $srcPath
 foreach ($m in $foundFiles) {
   $target = $m.FullName
   Write-Host "Target: $target"
-  
+
   $targetContent = Get-Content -Raw -Path $target
-  
-  # Extract Base Directories
+
+  # Extract preserved config values.
+  # Alternation (Framework|Workflow) for backward compatibility with older files.
   $targetWfDir = if ($targetContent -match '\*\*Global AI (Framework|Workflow) Directory\*\*: `([^`]+)`') { $Matches[2] } else { $null }
   $targetUserDir = if ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
 
-  # Fallback to older nomenclature
+  # Fallback: older files used "Global Policies Directory" instead of Workflow Dir
   if (-not $targetWfDir -and ($targetContent -match '\*\*Global Policies Directory\*\*: `([^`]+)`')) {
      $oldPath = $Matches[1]
      $targetWfDir = $oldPath -replace '\\ai\\policies\\?$', '' -replace '/ai/policies/?$', ''
@@ -79,7 +79,7 @@ foreach ($m in $foundFiles) {
     $newContent = $srcContent
 
     if ($targetWfDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Global AI Workflow Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$3')
+      $newContent = [regex]::Replace($newContent, '(\*\*Global AI (Framework|Workflow) Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$3')
     }
     if ($targetUserDir) {
       $newContent = [regex]::Replace($newContent, '(\*\*Global User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserDir + '$3')

@@ -6,10 +6,10 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v3.0 ---"
+echo "--- Starting Protocol Validation v3.1 ---"
 
 # 1. AGENTS.md Anchors & Hardening
-echo "[1/9] Verifying AGENTS.md hardening..."
+echo "[1/8] Verifying AGENTS.md hardening..."
 if ! grep -q "⚠️ STOP: READ-ONLY PROTOCOL" AGENTS.md; then
     echo "Error: Immortality Header missing in AGENTS.md"
     exit 1
@@ -25,7 +25,7 @@ fi
 echo "Hardening anchors verified."
 
 # 2. Configuration Mapping
-echo "[2/9] Verifying configuration entries..."
+echo "[2/8] Verifying configuration entries..."
 CONFIG_KEYS=(
     "Global AI Workflow Directory"
     "Global User AI Directory"
@@ -40,7 +40,7 @@ done
 echo "Configuration mapping verified."
 
 # 3. Global Structure
-echo "[3/9] Verifying global directory structure..."
+echo "[3/8] Verifying global directory structure..."
 GLOBAL_DIR="$HOME/.ai"
 
 GLOBAL_SUBS=("settings" "global-knowledge" "backups")
@@ -52,7 +52,7 @@ done
 echo "Global structure checked."
 
 # 4. Project Structure
-echo "[4/9] Verifying project AI directory structure..."
+echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
     "policies" "daily-checkpoints" "shared/handoffs" 
     "shared/project-knowledge" "artifacts" "notes" "secrets"
@@ -67,7 +67,7 @@ done
 echo "Project structure verified."
 
 # 5. Coordination Board
-echo "[5/9] Verifying Coordination Board existence..."
+echo "[5/8] Verifying Coordination Board existence..."
 if [ ! -f "ai/shared/coordination.md" ]; then
     echo "Error: Mandatory file ai/shared/coordination.md missing."
     exit 1
@@ -75,7 +75,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/9] Verifying policy baseline (11 modular policies)..."
+echo "[6/8] Verifying policy baseline (11 modular policies)..."
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "mobile-apps" "dba" "observability"
@@ -89,25 +89,16 @@ for p in "${POLICIES[@]}"; do
 done
 echo "Policy baseline verified."
 
-# 7. Metadata Positioning
-echo "[7/9] Verifying metadata positioning (Top-of-File)..."
-# Check if first line of a policy contains the comment start
-if ! head -n 1 ai/policies/ai-policy-common.md | grep -q "<comment-syntax>\|<!--"; then
-    echo "Error: Metadata header not at absolute top of ai/policies/ai-policy-common.md"
-    exit 1
-fi
-echo "Metadata positioning verified."
-
-# 8. Git Safety
-echo "[8/9] Verifying Git safety (.gitignore)..."
+# 7. Git Safety
+echo "[7/8] Verifying Git safety (.gitignore)..."
 if ! grep -q "ai/" .gitignore; then
     echo "Error: 'ai/' directory not found in .gitignore."
     exit 1
 fi
 echo "Git safety verified."
 
-# 9. Checkpoint & Backup Cycle
-echo "[9/9] Testing Checkpoint & Backup cycle..."
+# 8. Checkpoint & Backup Cycle
+echo "[8/8] Testing Checkpoint & Backup cycle..."
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M)
 BACKUP_DIR="$GLOBAL_DIR/backups"
 TEST_BACKUP="$BACKUP_DIR/VALIDATION_TEST_$TIMESTAMP.tar.gz"
@@ -127,4 +118,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v3.0 Completed Successfully ---"
+echo "--- Protocol Validation v3.1 Completed Successfully ---"

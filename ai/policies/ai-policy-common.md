@@ -1,12 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: GitHub Copilot
-Last modified: 2026-05-21T00:00:00+02:00
-Intent: Add mandatory project-knowledge update mandate to checkpoint contract, aligned with AGENTS.md Procedure C Step 2.
--->
-
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
@@ -41,6 +32,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Operational Restart and Checkpoint Contract
 ### Source-of-Truth Order
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the "load context" procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
+
 1. [next-steps file](ai/next-steps.md)
 2. Latest daily checkpoint in the [daily-checkpoints directory](ai/daily-checkpoints/)
 3. [progress file](ai/progress.md)
@@ -53,11 +46,6 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.
     - Material resume field changes require a new ID.
-
-## Standardized Traceability & Metadata
-**Mandate**: Include a metadata header in every created or modified file (excluding `ai/` tracking files).
-- Fields: `Created-by`, `Updated-by`, `Last modified`, `Intent`.
-- **Timestamp Policy**: Always use the human user's local time for all timestamps (ISO-8601 format).
 
 ## AI-Driven Secure Development Practices
 **Mandate**: AI-generated code and infrastructure configurations must inherently adhere to security best practices derived from established threat modeling principles (e.g., STRIDE, OWASP Top 10).
@@ -97,6 +85,12 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Content Integrity**: The agent MUST NOT modify files within `Global User AI Directory` unless explicitly instructed by a "Promote to Shared" command.
 - **Normalization**: When reading `Global Knowledge Source`, the agent should treat these as "lessons learned" to inform its problem-solving process, but not as authoritative codebase logic.
 
+## Project Knowledge Protocol
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST read every file in the **Project Knowledge Directory** (`ai/shared/project-knowledge/`) as defined in AGENTS.md Procedure A Step 5. This is a mandatory, non-mergeable step.
+- **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 2) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
+- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+
 - **Directive vs. Inquiry**: Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
 - **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:
     1.  Analyze the request and share technical thoughts or opinions.
@@ -130,6 +124,15 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
 - **Mock external dependencies**: Mock external services (APIs, databases, network, sensors) in unit tests. Use in-memory test doubles or fakes for integration tests.
 - **Test failure modes**: Test error states, edge cases, and failure scenarios — not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
+
+## Universal Engineering Standards
+- **SOLID Principles**: Apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion to all object-oriented code. These are non-negotiable for maintainable, testable systems.
+- **DRY (Don't Repeat Yourself)**: Every piece of knowledge must have a single, unambiguous, authoritative representation within a system. Extract duplication into shared abstractions, but avoid over-abstracting before patterns emerge.
+- **YAGNI (You Ain't Gonna Need It)**: Do not add functionality until it is actually needed. Speculative generality increases complexity without proven value.
+- **Twelve-Factor App**: Follow the Twelve-Factor methodology for all services — codebase, dependencies, config, backing services, build/release/run, processes, port binding, concurrency, disposability, dev/prod parity, logs, and admin processes. These principles apply to any service that runs in a managed runtime, including mobile backends and web APIs.
+- **Trunk-Based Development**: Use short-lived feature branches branched from and merged back to `main`/`master` frequently (at least once per day). This enables continuous integration, reduces merge conflicts, and supports CI/CD pipelines. Avoid long-lived feature branches and complex branching models.
+- **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
+- **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
 
 ## Communication Standards
 - **Collaborative Tone**: Maintain a professional, direct, and collaborative tone suitable for a senior peer programmer. Avoid robotic or overly formal keyword-driven responses (e.g., using "STOP") unless explicitly required for safety.

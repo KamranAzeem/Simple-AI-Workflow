@@ -5,7 +5,7 @@ Last modified: 2026-05-21T00:00:00+02:00
 Intent: Fix stale 'final step' checkpoint reference; add Project Knowledge Sync to checkpoint and project-knowledge sections.
 -->
 ---
-# AI Usage Guide: static-website
+# AI Usage Guide
 
 This guide explains how to interact with AI assistants in this repository and how to manage the AI state tracking files.
 
@@ -121,7 +121,29 @@ To prevent the loss of project context due to accidental overwrites or "hallucin
 ## 7. AI-Driven Secure Development Practices
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
 
-## 8. Peer Review Mode
+## 8. Universal Engineering Standards
+The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Universal Engineering Standards** section that applies across all domains:
+
+- **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion — non-negotiable for maintainable OO code.
+- **DRY (Don't Repeat Yourself)**: Every piece of knowledge has a single, authoritative representation. Extract duplication into shared abstractions, but avoid over-abstracting before patterns emerge.
+- **YAGNI (You Ain't Gonna Need It)**: Do not add functionality until it is actually needed.
+- **Twelve-Factor App**: Codebase, dependencies, config, backing services, build/release/run, processes, port binding, concurrency, disposability, dev/prod parity, logs, admin processes.
+- **Trunk-Based Development**: Short-lived feature branches merged to `main`/`master` frequently (at least daily).
+- **Semantic Versioning**: MAJOR.MINOR.PATCH for all published packages and APIs.
+- **Conventional Commits**: Structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) for automated changelog generation.
+
+These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
+
+## 9. AI Customization & Curated Traits
+The `ai/ai-customization.md` file is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
+
+- **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`).
+- **Active Traits**: Select one behavioral persona from the curated catalog in [`docs/ai-customization-guide.md`](docs/ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
+- **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge — no on-disk compliance files needed.
+
+See the [AI Customization Guide](docs/ai-customization-guide.md) for the full catalog and multi-role examples.
+
+## 10. Peer Review Mode
 
 Trigger an on-demand code review at any point by saying:
 

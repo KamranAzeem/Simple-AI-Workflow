@@ -229,7 +229,7 @@ The AI assistant reads this file during the context-loading phase and automatica
 - **Reliable Guardrails**: Structured structural cues and immutable mandates ensure even lower-capability models can safely bootstrap without destroying state.
 
 ### 2. Automated Protocol Validation
-- **System Integrity**: A built-in validation suite (`support-files/validate-protocol.sh`) verifies the bootstrap protocol, path availability, and metadata adherence on demand.
+- **System Integrity**: A built-in validation suite (`support-files/validate-protocol.sh`) verifies the bootstrap protocol, path availability, and structural integrity on demand.
 - **Continuous Reliability**: Ensures the AI always operates from a known-good state.
 
 ### 3. Native Checkpoint Backups
@@ -239,19 +239,23 @@ The AI assistant reads this file during the context-loading phase and automatica
 ### 4. Surgical Git-Ignore Exceptions
 - **Shell-Force Access**: Specifically authorizes the AI to use shell tools (`cat`, `ls`) to read `AGENTS.md` and the `ai/` folder even if they are git-ignored, bypassing common AI safety refusals while respecting ignore rules for the rest of the project.
 
-### 5. Multi-Domain Global Policies
-- **Modular Expertise**: Specialized policies for Cloud, Frontend, Backend, Data, DBA, Observability, and Linux SysAdmin.
-- **Standardized Traceability**: Mandatory file-identification headers (Created-by, Updated-by, Intent) for every AI-modified file.
+### 5. Project Knowledge Protocol
+- **Mandatory Sync at Checkpoint**: The AI is required to review and update `ai/shared/project-knowledge/` at every checkpoint, capturing decisions, findings, and discoveries — even if nothing changed (confirmation is mandatory).
+- **Persistent Reasoning**: Key identifiers, configuration values, and architectural decisions are written to the project knowledge base so they survive across sessions and agents.
 
-### 6. Multi-Agent Coordination
+### 6. Multi-Domain Global Policies
+- **Modular Expertise**: Specialized policies for Cloud, Frontend, Backend, Data, DBA, Observability, and Linux SysAdmin.
+- **Universal Engineering Standards**: Built-in SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, Semantic Versioning, and Conventional Commits — applied across all domains.
+
+### 7. Multi-Agent Coordination
 - **Handoff Lifecycle**: Standardized async task transfers between agents or sessions via `ai/shared/handoffs/`.
 - **Coordination Board**: Real-time status board (`ai/shared/coordination.md`) for task locking and ownership in multi-agent environments.
 
-### 7. AI-Driven Secure Development
+### 8. AI-Driven Secure Development
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling (STRIDE, OWASP Top 10).
 - **Proactive Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
 
-### 8. Peer Review Mode
+### 9. Peer Review Mode
 - **On-Demand Code Review**: Trigger a strict peer review at any time by saying `"peer review"`. The AI switches to an objective reviewer role — no code writing, analysis and reporting only.
 - **Structured Reports**: Each review is saved to `ai/code-review-reports/` with a severity-classified report (Critical / Major / Minor / Suggestions) and a clear **APPROVED** or **CHANGES REQUESTED** verdict.
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
