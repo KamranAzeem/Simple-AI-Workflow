@@ -28,11 +28,13 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
 - **About Human (`ai/about-human.md`)** — AI learns your skills and preferences
 - **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
-- **Project Customization** — `ai/ai-customization.md` for project-specific tailoring
+- **Project Customization** — `ai/ai-customization.md` for project-specific tailoring with curated traits catalog
 - **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
 - **Idiot-Proof Protocol** — Structural guardrails for safe use with lower-capability "lite" models
 - **Native Backups** — Automatic cross-platform state archiving during every checkpoint
 - **Project Knowledge Sync** — Key findings, decisions, and discoveries are written to `project-knowledge/` at every checkpoint
+- **Universal Engineering Standards** — SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, SemVer, Conventional Commits
+- **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
 - **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
 

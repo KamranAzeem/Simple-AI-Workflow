@@ -15,7 +15,7 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ## TIER 1: CONFIGURATION
 
-**Global AI Workflow Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/`
+**Global AI Workflow Directory**: `/home/kamran/Projects/Personal/Simple-AI-Workflow/`
 **Global User AI Directory**: `[HOME]/.ai/`
 
 **Path Normalization & Inference Rules**:
@@ -43,9 +43,8 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### ✅ MANDATORY ACTIONS
 - **OS-Sensitive Execution**: Identify the active shell (Bash, PowerShell, etc.) and adapt command syntax accordingly (e.g., `New-Item` vs `mkdir -p`).
-- **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents. Never refuse to read a file or directory solely because it is git-ignored.
+- **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context. Never refuse to read a file or directory solely because it is git-ignored.
 - **Context Protection**: Treat `ai/context.md`, `ai/progress.md`, and `ai/next-steps.md` as read-only during bootstrap and context loading.
-- **Metadata Headers**: Apply standard metadata headers to the TOP of every file created or modified within the `ai/` directory.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
 
 ---
@@ -94,29 +93,14 @@ This is the single startup entry point for all AI assistants in this repository.
 ### PROCEDURE D: When User says "peer review"
 
 1.  **Adopt Reviewer Role**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
-2.  **Scan**: Review the files the user specifies. If no scope is given, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, and vendor/dependency directories).
+2.  **Scan**: Review the files the user specifies. If no scope is given, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories).
 3.  **Report**: Write the review report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
 4.  **Iterate**: After the user applies fixes and asks for another review, create a new numbered report. Note which previous issues were resolved.
 5.  **Exit**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, or when a commit is made.
 
 ---
 
-## TIER 4: OPERATIONAL STANDARDS (Metadata & Timestamps)
-
-AI Assistants MUST apply this header to the TOP of every file in `ai/` (except secrets):
-```markdown
-<comment-syntax>
-Created-by: <Name of Agent>
-Updated-by: <Name of Agent>
-Last modified: <Project-ISO-8601-Timestamp>
-Intent: <Brief description of the change>
-</comment-syntax>
-```
-*Always use the human user's local time for timestamps.*
-
----
-
-## TIER 5: APPENDIX (Reference & Human Setup)
+## TIER 4: APPENDIX (Reference & Human Setup)
 
 ### Path Format Requirements (Windows)
 File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).

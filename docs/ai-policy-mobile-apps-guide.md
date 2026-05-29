@@ -106,7 +106,6 @@ The mobile policy works **on top of** the [global common policy file](../ai/ai-p
 |-------------------|-------------------|
 | Check for secrets before commit | Platform-specific secure storage rules |
 | Branch-gating for features | (inherits from common) |
-| Metadata headers on new files | (inherits from common) |
 | No side effects without approval | (inherits from common) |
 | API rate-limit awareness | (inherits from common) |
 
@@ -120,7 +119,7 @@ This means the mobile policy's rules take priority over the common policy when t
 
 1. User: *"Build a login screen for my Android app"*
 2. AI loads context via AGENTS.md
-3. AI applies common policy (branch-gating, metadata headers, secrets awareness)
+3. AI applies common policy (branch-gating, secrets awareness)
 4. AI applies mobile policy:
    - Uses Jetpack Compose (Android guidance)
    - Follows MVVM with unidirectional data flow
