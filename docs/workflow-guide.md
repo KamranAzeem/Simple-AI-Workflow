@@ -128,12 +128,12 @@ When a session begins from a condensed/compacted conversation summary (rather th
 - **Context integrity**: Prevents stale pre-compaction data from corrupting the fresh session.
 - **Safety net**: Missed processes are caught before any code changes.
 
-## 7. Native Checkpoint Backups
-### Automatic State Archiving
-To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow mandates a backup of the `ai/` directory during every checkpoint.
-- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md`.
+## 7. Native AI State Backups
+### On-Demand Archiving
+To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
+- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` Procedure F.
 - **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
-- **Policy Enforcement**: The `ai/policies/ai-policy-common.md` mandates two steps at every checkpoint: first, review and update `project-knowledge/` with any findings or decisions from the session; then run the backup. Neither step is optional.
+- **Not automatic**: Backups are **not** part of the checkpoint procedure (Procedure C). They are a separate procedure (Procedure F) invoked only by explicit user request.
 
 ### Benefits
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.
