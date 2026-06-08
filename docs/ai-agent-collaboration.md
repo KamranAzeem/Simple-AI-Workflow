@@ -16,8 +16,6 @@ In a multi-agent environment, there is a risk of:
 3.  **Knowledge Loss**: Valuable technical discoveries being lost between sessions.
 4.  **Context Waste**: Spending excessive tokens to re-explain the same context to different agents.
 
-## How It Works
-
 ## Collaborative Models
 
 ### 1. Project-Specific Collaboration
@@ -46,7 +44,7 @@ This architecture provides a persistent, cross-project "Shared Intelligence" lay
 - **Bootstrapping**: Agents automatically index these sources upon session initiation as read-only knowledge providers.
 - **Normalization**: Content here is treated as "lessons learned" to inform decision-making, not as authoritative project-specific logic.
 
-### 3. Shared Policy Baseline (`ai/ai-policy-common.md`)
+### 3. Shared Policy Baseline (`ai/policies/ai-policy-common.md`)
 All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **global common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
 
 ## Human Guidance: How to Interacting with AI Agents

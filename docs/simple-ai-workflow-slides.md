@@ -37,6 +37,8 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
 - **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
+- **Session Resume (Compacted Context)** — Auto-reloads all rules, policies, and knowledge when resuming from a condensed summary
+- **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
 
 ---
 
