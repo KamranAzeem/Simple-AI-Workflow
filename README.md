@@ -260,6 +260,15 @@ The AI assistant reads this file during the context-loading phase and automatica
 - **Structured Reports**: Each review is saved to `ai/code-review-reports/` with a severity-classified report (Critical / Major / Minor / Suggestions) and a clear **APPROVED** or **CHANGES REQUESTED** verdict.
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
 
+### 10. Session Resume (Compacted Context)
+- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads all standing rules, policies, and knowledge before responding — no manual "load context" needed.
+- **Context Integrity**: The condensed summary is treated as the sole authoritative source for current state, preventing stale data from corrupting the fresh context.
+- **Gap Detection**: If the summary indicates a module was completed without TDD or peer review, the AI flags this before touching any code.
+
+### 11. PWD-Only Scope
+- **Project Isolation**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage.
+- **Safe Multi-Project Use**: Each project maintains its own isolated AI state, even when multiple projects exist under the same parent directory.
+
 ---
 
 ## Docs and Slides

@@ -99,6 +99,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
+- **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
 - **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list every global file read and every active trait found, providing empirical evidence of a successful bootstrap.
 
@@ -107,7 +108,27 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Consistency**: The same protocol works safely across any IQ tier.
 - **Visibility**: You know exactly what intelligence the AI has loaded before you start work.
 
-## 6. Native Checkpoint Backups
+## 6. Session Resume (Compacted Context)
+
+When a session begins from a condensed/compacted conversation summary (rather than a fresh "load context"), the AI automatically runs a **Post-Condensation Recovery** procedure before responding to your first request.
+
+### How it works
+1. The AI detects it is resuming from a compacted summary (identified by structured headings like "Conversation Overview", "Technical Foundation", etc.).
+2. It reloads all standing rules from the **Project Customization File** and **Global AI Policies Directory**.
+3. It reloads all project knowledge files and applicable policies.
+4. It outputs a brief confirmation of what was loaded and flags any gaps (e.g., a module completed without TDD or peer review).
+
+### Key rules
+- **Read-only**: No files are created, modified, or deleted during this procedure.
+- **No state files**: The AI does not read `context.md`, `progress.md`, `next-steps.md`, or checkpoints — the condensed summary is the sole authoritative source for current state.
+- **Gap detection**: If the summary shows work was completed without required processes (TDD, peer review), the AI raises this before proceeding.
+
+### Benefits
+- **Zero-touch resume**: No need to say "load context" after every condensation.
+- **Context integrity**: Prevents stale pre-compaction data from corrupting the fresh session.
+- **Safety net**: Missed processes are caught before any code changes.
+
+## 7. Native Checkpoint Backups
 ### Automatic State Archiving
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow mandates a backup of the `ai/` directory during every checkpoint.
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md`.
@@ -118,10 +139,10 @@ To prevent the loss of project context due to accidental overwrites or "hallucin
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.
 - **History Preservation**: Maintains a granular history of the AI's "brain" and project context over time.
 
-## 7. AI-Driven Secure Development Practices
+## 8. AI-Driven Secure Development Practices
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
 
-## 8. Universal Engineering Standards
+## 9. Universal Engineering Standards
 The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Universal Engineering Standards** section that applies across all domains:
 
 - **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion — non-negotiable for maintainable OO code.
