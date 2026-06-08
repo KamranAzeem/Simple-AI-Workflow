@@ -34,6 +34,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 ### Source-of-Truth Order
 **Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the "load context" procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
+**Exception — Post-Condensation Recovery**: When Procedure E is active (session resumed from a condensed summary), the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
+
 1. [next-steps file](ai/next-steps.md)
 2. Latest daily checkpoint in the [daily-checkpoints directory](ai/daily-checkpoints/)
 3. [progress file](ai/progress.md)
@@ -91,7 +93,10 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 2) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 
-- **Directive vs. Inquiry**: Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
+## Operational Standards
+
+### Directive vs. Inquiry
+Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
 - **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:
     1.  Analyze the request and share technical thoughts or opinions.
     2.  Propose a specific implementation strategy or plan.
@@ -100,7 +105,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **No Proactive Fixes**: Do not initiate implementation based on observations of bugs or statements of fact. Wait for a corresponding Directive.
 - **Plan Mode**: For complex Inquiries involving architectural decisions or broad changes, use the `enter_plan_mode` tool (if available) to safely research before proposing a strategy.
 
-- **Generated File Validation**: Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
+### Generated File Validation
+Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
     - **Common linters by file type**:
         - JavaScript/TypeScript: `npx eslint --fix <file>`
         - Python: `ruff check --fix <file>` (or flake8/pylint)
