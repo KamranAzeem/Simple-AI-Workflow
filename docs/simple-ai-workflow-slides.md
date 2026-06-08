@@ -67,9 +67,9 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - Relying on manual backups is unreliable and slow
 - "Dumb" models need a forced safety net
 
-## The Solution: Built-in Archiving
+## The Solution: On-Demand Archiving
 - **Native CLI One-Liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
-- **Automatic Execution**: Runs at every checkpoint; project knowledge is reviewed and updated first
+- **On-Demand Trigger**: Run by saying "backup ai" or "backup ai state" (Procedure F) — not automatic at checkpoints
 - **Global Storage**: Saved to `~/.ai/backups/` for easy recovery
 - **Unique Naming**: `{parent}_{project}_{timestamp}`
 

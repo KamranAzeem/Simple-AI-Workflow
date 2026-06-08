@@ -39,9 +39,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 3. [progress file](ai/progress.md)
 4. [context file](ai/context.md)
 
-### Checkpoint & Backup Mandate
-- **Mandate**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 2 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
-- **Mandate**: Every checkpoint operation MUST include the execution of the native backup command as defined in Procedure C of `AGENTS.md`.
+### Checkpoint & Backup Procedures
+- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 2 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Backup (Procedure F)**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.
