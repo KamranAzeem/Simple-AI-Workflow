@@ -101,7 +101,11 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### PROCEDURE E: Post-Condensation Recovery (Auto-Triggered)
 
-**Trigger**: Runs automatically at the start of any session that opens from a condensed/compacted conversation summary. Detection: the conversation context begins with a structured multi-section summary (identifiable by headings such as "Conversation Overview", "Technical Foundation", "Codebase Status", etc.) rather than a fresh first user message in an empty thread.
+**Trigger**: Runs automatically when a session resumes from a condensed/compacted conversation summary. Before responding to the user's first message, perform this self-check:
+
+1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
+2. If such a summary exists AND the user's first message is not a direct task request (i.e., it reads as a system-generated status block rather than a human instruction), then condensation has occurred.
+3. Execute the steps below before addressing the user's request.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
 
