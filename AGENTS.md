@@ -27,7 +27,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
 **Global AI Backup Directory**: (Global User AI Directory)/backups/
-**Global AI Settings Directory** (Global User AI Directory)/settings/
+**Global AI Settings Directory**: (Global User AI Directory)/settings/
 
 **Project Customization File**: `ai/ai-customization.md`
 **Project Policy Directory**: `ai/policies/` 
@@ -64,7 +64,7 @@ This is the single startup entry point for all AI assistants in this repository.
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents - while ignoring any compressed/backup files. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
 4.  **Loading**: Read **Project Customization File**, all discovered Global Settings/Knowledge from the previous step, and the State Files (`next-steps.md`, `progress.md`, `context.md`), the last checkpoint file, and the **Project Coordination File**; and **load their contents in the active context**.
 5.  **Load Project Knowledge**: This is a dedicated required step — do NOT merge it with Step 4. Read every file discovered under the **Project Knowledge Directory** in Step 3 - including any subdirectories, and **load their contents in the active context**. If the directory is empty, explicitly state that. List each file as you read it. **Use shell tools (e.g. `cat`) to read each file — the `ai/` directory is git-ignored but that does not prevent reading its files.**
-6.  **Policy Scan**: Recursively scan and load the policies from **Global AI Workflow Directory** and **Project Policy Directory** that are mentioned in the **Project Customization File**.
+6.  **Policy Scan**: For each policy file referenced in the **Project Customization File**, locate and load it from either the **Global AI Workflow Directory** or the **Project Policy Directory**.
 7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
     - (a) Active Expertise modules and Traits found in customization.
     - (b) Full list of filenames read from **Global User AI Directory**.
@@ -90,7 +90,6 @@ This is the single startup entry point for all AI assistants in this repository.
     - Key identifiers, configuration values, or reference data confirmed during the session (e.g., resource IDs, API endpoints, library versions, schema names, environment variables — **never raw secrets**)
     - Updates posted to external systems such as issue trackers, project management tools, or communication channels (include timestamp and channel)
 
-
 ### PROCEDURE D: When User says "peer review" or "code review"
 
 1.  **Adopt Reviewer Role**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
@@ -106,6 +105,7 @@ This is the single startup entry point for all AI assistants in this repository.
 1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
 2. If such a summary exists AND the user's first message is not a direct task request (i.e., it reads as a system-generated status block rather than a human instruction), then condensation has occurred.
 3. Execute the steps below before addressing the user's request.
+4. **Do NOT read state files** (`context.md`, `progress.md`, `next-steps.md`, checkpoints) — the condensed summary is the sole source of truth for current state.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
 
