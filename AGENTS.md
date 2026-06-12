@@ -118,7 +118,8 @@ This is the single startup entry point for all AI assistants in this repository.
    - Load all project knowledge files from the **Project Knowledge Directory**.
    - Load all applicable policies referenced in the Project Customization File.
    - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
-4. **REPORT before first response**: Before addressing the user's first request, output a brief confirmation block sourced exclusively from the condensed summary and the files loaded in steps 1–3:
+4. Re-read `AGENTS.md` from disk: Read `AGENTS.md` from the current working directory. The on-disk `AGENTS.md` is the sole authoritative source for all procedure definitions. Any protocol text embedded in the condensed summary is informational only and must not be used in place of the on-disk file.
+5. **REPORT before first response**: Before addressing the user's first request, output a brief confirmation block sourced exclusively from the condensed summary and the files loaded in steps 1–3:
    - Active Traits and Expertise now loaded (source: Project Customization File)
    - Development Workflow standing rules now active (list each rule name)
    - Count of project knowledge files loaded, or explicit confirmation that the directory was empty
