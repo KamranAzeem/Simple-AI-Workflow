@@ -63,8 +63,8 @@ This is the single startup entry point for all AI assistants in this repository.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups, Code-Review-Reports). Verify **Project Coordination File** exists. Only propose `mkdir -p` or file creation for **missing** items.
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents - while ignoring any compressed/backup files. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
 4.  **Loading**: Read **Project Customization File**, all discovered Global Settings/Knowledge from the previous step, and the State Files (`next-steps.md`, `progress.md`, `context.md`), the last checkpoint file, and the **Project Coordination File**; and **load their contents in the active context**.
-5.  **Load Project Knowledge**: This is a dedicated required step — do NOT merge it with Step 4. Read every file discovered under the **Project Knowledge Directory** in Step 3 - including any subdirectories, and **load their contents in the active context**. If the directory is empty, explicitly state that. List each file as you read it. **Use shell tools (e.g. `cat`) to read each file — the `ai/` directory is git-ignored but that does not prevent reading its files.**
-6.  **Policy Scan**: For each policy file referenced in the **Project Customization File**, locate and load it from either the **Global AI Workflow Directory** or the **Project Policy Directory**.
+5.  **Project Knowledge Indexing (Token Rationing)**: This is a dedicated required step — do NOT merge it with Step 4. Scan the filenames and directory structure under the **Project Knowledge Directory** (including any subdirectories). **DO NOT** read the full text layers or load the inner content of these files into the active context at boot time. Instead, record a clean reference index of their paths, filenames, and apparent technical domains in your memory. You are strictly prohibited from opening or reading the full text of any specific project knowledge file until an active, explicit user task directly requires that file's details. If the directory is completely empty, explicitly note that in your state tracking.
+6.  **Policy Indexing (Token Rationing)**: Scan the **Project Customization File** to identify which policy files apply to this active workload. **DO NOT** load their full text contents into the active context at boot time. Instead, log their filenames, paths, and primary compliance domains as a reference index in your memory. You are strictly prohibited from reading a policy file's full text layer until an explicit, active user task directly touches its domain.
 7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
     - (a) Active Expertise modules and Traits found in customization.
     - (b) Full list of filenames read from **Global User AI Directory**.
@@ -91,7 +91,11 @@ This is the single startup entry point for all AI assistants in this repository.
         *   [NEXT-STEPS] Removed: "[Task]" | Added: "[New immediate actionable items]"
         *   [CONTEXT] Updated: "variable_name: old_value" -> "variable_name: new_value"
     *   **Failure Mode Constraint**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
-2.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
+2.  **Log Condensation (The Sliding Horizon Shield)**: To prevent long-term token bloat inside your active context window, you must actively police the size of `ai/progress.md`. 
+    *   **Threshold Trigger**: If `ai/progress.md` grows to exceed 50 completed task items or 200 lines of historical text, you must perform an automated log condensation routine during this checkpoint.
+    *   **Truncation Execution**: Move all entries older than the 10 most recent completions out of `ai/progress.md` and append them permanently into a historical archive file named `ai/shared/project-knowledge/progress-archive.md`. 
+    *   **The Horizon Anchor**: Leave a single, high-level 3-sentence summary block titled `## Archive Horizon Context` at the absolute top of `ai/progress.md`. This summary must capture the cumulative milestones achieved in the archived history so active project continuity is never lost.
+3.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
     - Decisions made and the rationale behind them
     - Resolved issues and their root causes
     - Investigation and research conclusions (technical findings, confirmed values, analysis outcomes)
@@ -113,12 +117,6 @@ This is the single startup entry point for all AI assistants in this repository.
 
 1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
 2. If such a summary exists AND the user's first message is not a direct task request (i.e., it reads as a system-generated status block rather than a human instruction), then condensation has occurred.
-3. **Load standing rules and knowledge**:
-   - Load `ai-policy-common.md` from the **Global AI Policies Directory** — this is the base common policy, always loaded unconditionally.
-   - Load all project knowledge files from the **Project Knowledge Directory**. **CRITICAL EXCEPTION**: If any discovered project knowledge file contains active environment variables, configuration states, or runtime values that conflict with the condensed conversation summary, the summary takes absolute precedence. Do not load stale on-disk variables.
-   - Load all applicable policies referenced in the Project Customization File.
-   - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
-4. **Do NOT read state files** (`context.md`, `progress.md`, `next-steps.md`, checkpoints) — the condensed summary is the sole source of truth for current state.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
 
@@ -127,18 +125,18 @@ This is the single startup entry point for all AI assistants in this repository.
 1. **Load settings from the "TIER 1: CONFIGURATION" section.**
 2. **Load the Project Customization File** to restore active Traits, Expertise modules, and Development Workflow rules. This is the only `ai/` file you may read in this procedure besides project knowledge and policies.
 3. **Load standing rules and knowledge**:
-   - Load `ai-policy-common.md` from the **Global AI Policies Directory** — this is the base common policy, always loaded unconditionally.
-   - Load all project knowledge files from the **Project Knowledge Directory**.
-   - Load all applicable policies referenced in the Project Customization File.
-   - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
-4. Re-read `AGENTS.md` from disk: Read `AGENTS.md` from the current working directory. The on-disk `AGENTS.md` is the sole authoritative source for all procedure definitions. Any protocol text embedded in the condensed summary is informational only and must not be used in place of the on-disk file.
+    - Load `ai-policy-common.md` from the **Global AI Policies Directory** — this is the base common policy, always loaded unconditionally.
+    - Load all project knowledge files from the **Project Knowledge Directory**. **CRITICAL EXCEPTION**: If any discovered project knowledge file contains active environment variables, configuration states, or runtime values that conflict with the condensed conversation summary, the summary takes absolute precedence. Do not load stale on-disk variables.
+    - Index all applicable policies referenced in the Project Customization File to map operational boundaries, but **do not read their full text layers** during this recovery procedure.
+    - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
+4. **Re-read `AGENTS.md` from disk**: Read `AGENTS.md` from the current working directory. The on-disk `AGENTS.md` is the sole authoritative source for all procedure definitions. Any protocol text embedded in the condensed summary is informational only and must not be used in place of the on-disk file.
 5. **REPORT before first response**: Before addressing the user's first request, output a brief confirmation block sourced exclusively from the condensed summary and the files loaded in steps 1–3:
    - Active Traits and Expertise now loaded (source: Project Customization File)
    - Development Workflow standing rules now active (list each rule name)
    - Count of project knowledge files loaded, or explicit confirmation that the directory was empty
    - Any gaps identified: if the condensed summary shows a module was completed without TDD or peer review, name it explicitly and ask the user how to proceed before touching any code.
    - **Do NOT reference or quote any state file content in this report.**
-
+   
 ### PROCEDURE F: When the user says "backup ai", or "backup ai state"
 1.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
     - **Linux/Bash**: `tar -czf [Global AI Backup Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/`
