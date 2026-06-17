@@ -81,7 +81,16 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### PROCEDURE C: When performing a Checkpoint (Save State)
 
-1.  **Update State**: Sync `next-steps.md`, `progress.md`, and `context.md`.
+1.  **Update State (The Atomic Write Protocol)**: Sync `progress.md`, `next-steps.md`, and `context.md`. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
+    *   **Sequential Execution Order**: Stage your changes in memory and write them to disk in this strict sequence:
+        1. 📂 `ai/progress.md` (The Past): Log the completed activity, architectural decisions, or milestone reached first.
+        2. 📂 `ai/next-steps.md` (The Future): Instantly pop the completed task off the backlog and append/sequence the next atomic actions.
+        3. 📂 `ai/context.md` (The Present): Update any active environment variables, structural modifications, or status flags.
+    *   **Transaction Log Requirement**: Every time you save state or finish a checkpoint execution loop, append a standardized transaction summary directly into your chat output using this exact text format:
+        *   [PROGRESS] Added: "[Brief description of what was completed]"
+        *   [NEXT-STEPS] Removed: "[Task]" | Added: "[New immediate actionable items]"
+        *   [CONTEXT] Updated: "variable_name: old_value" -> "variable_name: new_value"
+    *   **Failure Mode Constraint**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
 2.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
     - Decisions made and the rationale behind them
     - Resolved issues and their root causes
@@ -104,7 +113,11 @@ This is the single startup entry point for all AI assistants in this repository.
 
 1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
 2. If such a summary exists AND the user's first message is not a direct task request (i.e., it reads as a system-generated status block rather than a human instruction), then condensation has occurred.
-3. Execute the steps below before addressing the user's request.
+3. **Load standing rules and knowledge**:
+   - Load `ai-policy-common.md` from the **Global AI Policies Directory** — this is the base common policy, always loaded unconditionally.
+   - Load all project knowledge files from the **Project Knowledge Directory**. **CRITICAL EXCEPTION**: If any discovered project knowledge file contains active environment variables, configuration states, or runtime values that conflict with the condensed conversation summary, the summary takes absolute precedence. Do not load stale on-disk variables.
+   - Load all applicable policies referenced in the Project Customization File.
+   - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
 4. **Do NOT read state files** (`context.md`, `progress.md`, `next-steps.md`, checkpoints) — the condensed summary is the sole source of truth for current state.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
