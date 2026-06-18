@@ -20,7 +20,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Handoff Protocol** — Seamlessly switch between IDE, CLI, and Web Chat
 - **Notes (`ai/notes/`)** — Unpolished thoughts, meeting notes, random ideas
 - **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
-- **About Human (`ai/about-human.md`)** — AI learns your skills and preferences
+- **Global Settings** (`~/.ai/settings/global-user-settings.md`) — AI learns your skills, tool preferences, and cross-project context
 - **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
 - **Project Customization** — `ai/ai-customization.md` for project-specific tailoring with curated traits catalog
 - **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
@@ -31,11 +31,12 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
 - **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
-- **Session Resume (Compacted Context)** — Auto-reloads all rules, policies, and knowledge when resuming from a condensed summary
+- **Session Resume (Compacted Context)** — Fully loads standing rules; rebuilds JIT indexes for policies and knowledge when resuming from a condensed summary
 - **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
 - **Token Rationing Shield** — JIT indexing keeps boot context lean; policies and knowledge load only when an active task needs them
 - **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
 - **Atomic Write Protocol** — Checkpoint state writes are sequential and transactional; partial writes abort automatically with a transaction log in chat
+- **Protocol Developer Mode** — When working on the protocol itself, AI detects the context, mandates a full load of `protocol-decisions.md`, and enforces end-user-perspective path authoring in policy files
 
 ---
 
@@ -51,7 +52,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files
 - **Recursive Discovery**: AI must `ls -R` the **Global User AI Directory** to find all intelligence
-- **Proof-of-Load**: AI must explicitly list every global file read before acknowledgement
+- **Proof-of-Load**: AI must explicitly list Settings files fully loaded and Knowledge files indexed before proceeding
 
 > **Safe execution across any IQ tier.** Use lower-cost models without risking project state.
 
@@ -107,7 +108,8 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - Not all files are needed for every task
 
 ## The Solution: JIT Indexing
-- **Reference Index at Boot**: Project knowledge and policies are indexed by filename and domain — full content loads only when a task needs it
+- **Global Knowledge indexed at boot**: `~/.ai/global-knowledge/` files — indexed by filename and domain, full content loads only when a task needs it
+- **Project Knowledge indexed at boot**: `ai/shared/project-knowledge/` files — same index-only approach
 - **Lazy Policy Loading**: Only policies relevant to the active task are read in full
 - **On-Demand Depth**: Domain-specific knowledge loads precisely when needed, not speculatively
 

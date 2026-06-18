@@ -7,7 +7,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Scope
 - Applies to AI assistants working on mobile applications for iOS, Android, or cross-platform frameworks (Flutter, React Native, .NET MAUI, Kotlin Multiplatform).
-- **Bootstrap Entry**: The [AGENTS.md](../AGENTS.md) file is the only bootstrap entry point.
+- **Bootstrap Entry**: The `AGENTS.md` file in the project root is the only bootstrap entry point.
 - **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 - **Path Resolution**: Use the **Global AI Policies Directory** defined in `AGENTS.md` to resolve the global workflow path.
 

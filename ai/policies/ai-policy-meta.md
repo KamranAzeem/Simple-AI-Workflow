@@ -1,3 +1,8 @@
+# 🚫 DO NOT MODIFY THIS FILE
+The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
+
+<!-- AI-ASSISTANT: READ-ONLY START -->
+
 # AI Policy — Repository / Meta Workflow
 
 This policy governs AI assistant behavior for the Simple-AI-Workflow repository itself: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
@@ -5,7 +10,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 ## Scope
 
 - Applies to any AI assistant acting on or about this repository (`Simple-AI-Workflow`).
-- Covers: `AGENTS.md`, `AGENTS.local.md`, files under `ai/`, `support-files/`, `README.md`, and related docs.
+- Covers: `AGENTS.md`, files under `ai/`, `support-files/`, `README.md`, and related docs.
 - Does NOT cover cloud- or application-specific guidance (see `ai/ai-policy-cloud.md` for cloud work).
 
 ## Purpose
@@ -25,10 +30,11 @@ Responsibilities
 
 Before preparing or executing changes that modify files outside the `ai/` directory:
 
-1. Run a secrets scan focused on files to be changed.
-2. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
-3. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
-4. Present a concise summary and proposed commit message; wait for human approval to stage/commit.
+1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project Knowledge Directory** before making any change to `AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
+2. Run a secrets scan focused on files to be changed.
+3. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
+4. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
+5. Present a concise summary and proposed commit message; wait for human approval to stage/commit.
 
 ## Forbidden Actions
 
@@ -46,7 +52,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 
 ## Audit & Logging
 
-- Any change prepared by the AI must update the [progress file](ai/progress.md) or [next-steps file](ai/next-steps.md) with a short entry describing the change intent and status (drafted, staged, committed).
+- Any change prepared by the AI must update `ai/progress.md` or `ai/next-steps.md` with a short entry describing the change intent and status (drafted, staged, committed).
 - Maintain a project backup of touched AI tracking files before automated updates (timestamped under `tmp/` if available).
 
 ## Suggested Assistant Prompts / Role Hints
@@ -63,3 +69,5 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ---
 
 This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/progress.md`.
+
+<!-- AI-ASSISTANT: READ-ONLY END -->

@@ -13,9 +13,9 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 ## 2. Global Knowledge (Cross-Project)
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
 - **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
-- **Status**: Personal persistent memory that follow you into every project.
-- **Usage**: Automatically loaded as read-only context during initialization.
-- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work.
+- **Status**: Personal persistent memory that follows you into every project.
+- **Usage**: Indexed at initialization (filenames and apparent domains recorded; full content is **not** loaded at boot). Full content is loaded on demand when an active task requires it — see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
+- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Because only the index is loaded at boot, use descriptive filenames — see **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
 
 ## 3. Task Handoffs (`ai/shared/handoffs/`)
 Used for transferring specific tasks and context between AI assistants or sessions.
@@ -94,7 +94,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
 - **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
 - **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
-- **Proof-of-Load Summary**: The AI must explicitly list every global file read and every active trait found, providing empirical evidence of a successful bootstrap.
+- **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
 
 ### Benefits
 - **Reliability**: Use lower-cost models without risking project state.
@@ -107,8 +107,8 @@ When a session begins from a condensed/compacted conversation summary (rather th
 
 ### How it works
 1. The AI detects it is resuming from a compacted summary (identified by structured headings like "Conversation Overview", "Technical Foundation", etc.).
-2. It reloads all standing rules from the **Project Customization File** and **Global AI Policies Directory**.
-3. It reloads all project knowledge files and applicable policies.
+2. It fully loads `ai-policy-common.md` (the universal base policy) and the **Project Customization File** to restore active Traits, Expertise, and Development Workflow rules.
+3. It builds a JIT index of project knowledge files and applicable policies (filenames and apparent domains — not full text). Full content is loaded on demand when a task requires it.
 4. It outputs a brief confirmation of what was loaded and flags any gaps (e.g., a module completed without TDD or peer review).
 
 ### Key rules
@@ -152,10 +152,10 @@ These standards are loaded automatically as part of the common policy baseline a
 The `ai/ai-customization.md` file is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`).
-- **Active Traits**: Select one behavioral persona from the curated catalog in [`docs/ai-customization-guide.md`](docs/ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
+- **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
 - **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge — no on-disk compliance files needed.
 
-See the [AI Customization Guide](docs/ai-customization-guide.md) for the full catalog and multi-role examples.
+See the [AI Customization Guide](ai-customization-guide.md) for the full catalog and multi-role examples.
 
 ## 12. Peer Review Mode
 
@@ -197,8 +197,9 @@ Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI re
 At boot (the "load context" procedure), the AI does not eagerly load all project knowledge and policy files into its active context window. Instead it builds a lightweight JIT (Just-In-Time) reference index.
 
 ### How it works
-1. **Project Knowledge Indexing**: The AI scans filenames and directory structure under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full file contents are only read when a task explicitly requires them.
-2. **Policy Indexing**: The AI identifies which policy files apply based on `ai/ai-customization.md`, then logs their names and domains as a reference. Full policy text is only loaded when an active task touches that domain.
+1. **Global Knowledge Indexing**: The AI scans filenames under `~/.ai/global-knowledge/` and records a reference index — paths, filenames, and apparent domains. Full file contents are only read when a task explicitly requires them.
+2. **Project Knowledge Indexing**: The AI scans filenames and directory structure under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full file contents are only read when a task explicitly requires them.
+3. **Policy Indexing**: The AI identifies which policy files apply based on `ai/ai-customization.md`, then logs their names and domains as a reference. Full policy text is only loaded when an active task touches that domain.
 
 ### Benefits
 - **Token Efficiency**: Avoids loading large background documents into every session, freeing context window space for active work.

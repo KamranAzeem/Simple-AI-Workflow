@@ -17,7 +17,7 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
   * Create `$HOME/.ai/`
   * Create `$HOME/.ai/settings/`
   * Create `$HOME/.ai/global-knowledge/`
-  * (Optional) Copy `docs/about-human.md` and `docs/tools-preferences.md` into `$HOME/.ai/settings/` and personalize them.
+  * (Optional) Create `global-user-settings.md` in `$HOME/.ai/settings/` and personalize it with your skills, tool preferences, and cross-project context. Use `docs/about-human.md` and `docs/tools-preferences.md` in this repository as starting templates.
 * Copy `AGENTS.md` into the root of your project directory.
 * Update the **CONFIGURATION** section in the project `AGENTS.md`:
   * Ensure `Global AI Workflow Directory` points to the absolute path of this cloned repository.
@@ -311,7 +311,7 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
 
 ### 10. Session Resume (Compacted Context)
-- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads all standing rules, policies, and knowledge before responding — no manual "load context" needed.
+- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads standing rules and rebuilds JIT indexes for policies and knowledge before responding — no manual "load context" needed.
 - **Context Integrity**: The condensed summary is treated as the sole authoritative source for current state, preventing stale data from corrupting the fresh context.
 - **Gap Detection**: If the summary indicates a module was completed without TDD or peer review, the AI flags this before touching any code.
 
@@ -320,12 +320,17 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Safe Multi-Project Use**: Each project maintains its own isolated AI state, even when multiple projects exist under the same parent directory.
 
 ### 12. Token Rationing (Context Shielding)
-- **JIT Indexing**: At boot, project knowledge and policy files are indexed as lightweight reference lists — full content only loads when an active task explicitly requires it. Prevents unnecessary token bloat on every "load context".
+- **JIT Indexing**: At boot, global knowledge, project knowledge, and policy files are all indexed as lightweight reference lists — full content only loads when an active task explicitly requires it. Prevents unnecessary token bloat on every "load context".
 - **Lazy Policy Loading**: Policy files are mapped by domain at startup; only the policies relevant to the active task are read in full.
 
 ### 13. Atomic Checkpoint Protocol
 - **Atomic Write Protocol**: Checkpoint state is written in strict sequence — `progress.md` → `next-steps.md` → `context.md` — with a Transaction Log output confirming every write. If data is missing, the write aborts entirely.
 - **Log Condensation (Sliding Horizon)**: When `ai/progress.md` exceeds 50 items or 200 lines, older entries are automatically archived to `ai/shared/project-knowledge/progress-archive.md`, keeping the 10 most recent. An "Archive Horizon Context" summary remains anchored at the top.
+
+### 14. Protocol Developer Mode
+- **Self-Maintaining Protocol**: When the current working directory matches the **Global AI Workflow Directory**, the AI detects it is working on the protocol itself, not a user project.
+- **Mandatory Pre-load**: Before modifying any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or anything under `ai/`), the AI must fully load `protocol-decisions.md` — bypassing JIT loading, because past decisions are authoritative constraints, not optional context.
+- **Path Authoring Rule**: Any path or file reference written into policy files must be authored from the end-user's project root perspective, not from the protocol repository's internal directory structure.
 
 ---
 
@@ -337,8 +342,11 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
 - Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
 - Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
-- Preferred AI tooling reference & installation: [docs/tools-preferences.md](docs/tools-preferences.md)
+- Preferred AI tooling reference & installation: [docs/tools-preferences.md](docs/tools-preferences.md) *(legacy template — see `global-user-settings.md` for the recommended approach)*
+- AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
+- Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
+- Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
-- About the human user template: `docs/about-human.md`
+- About the human user template: `docs/about-human.md` *(legacy template — see `global-user-settings.md` for the recommended approach)*
 - Beginner setup guide: `docs/vscode-cline-provider-setup-for-beginners.md`
 - Mobile app development policy guide: `docs/ai-policy-mobile-apps-guide.md`

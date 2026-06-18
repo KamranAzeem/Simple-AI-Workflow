@@ -79,9 +79,11 @@ foreach ($m in $foundFiles) {
     $newContent = $srcContent
 
     if ($targetWfDir) {
-      $newContent = [regex]::Replace($newContent, '(\*\*Global AI (Framework|Workflow) Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$3')
+      # Groups: $1=prefix+opening-backtick, $2=Framework|Workflow, $3=old-path, $4=closing-backtick
+      $newContent = [regex]::Replace($newContent, '(\*\*Global AI (Framework|Workflow) Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$4')
     }
     if ($targetUserDir) {
+      # Groups: $1=prefix+opening-backtick, $2=old-path, $3=closing-backtick
       $newContent = [regex]::Replace($newContent, '(\*\*Global User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserDir + '$3')
     }
 
