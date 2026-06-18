@@ -64,7 +64,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
-...
+- **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. `replace_string_in_file`, `create_file`) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
