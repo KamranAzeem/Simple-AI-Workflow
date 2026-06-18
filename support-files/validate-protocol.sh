@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.0 ---"
+echo "--- Starting Protocol Validation v4.1 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -36,6 +36,14 @@ if ! grep -q "Sliding Horizon Shield" AGENTS.md; then
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
     echo "Error: Token Rationing steps missing from Procedure A in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Knowledge Indexing" AGENTS.md; then
+    echo "Error: Knowledge Indexing step missing from Procedure A in AGENTS.md (must cover both Global and Project Knowledge)."
+    exit 1
+fi
+if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
+    echo "Error: Global AI Knowledge Directory reference missing from Knowledge Indexing step in AGENTS.md."
     exit 1
 fi
 echo "Hardening anchors verified."
@@ -99,6 +107,10 @@ echo "Coordination Board verified."
 
 # 6. Policy Baseline
 echo "[6/8] Verifying policy baseline (11 modular policies)..."
+# NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
+# Policy files use project-root-relative paths and TIER 1 anchor references that are
+# correct from the end user's project root — they will always appear broken when checked
+# from inside the protocol repo. See protocol-decisions.md "No markdown hyperlinks" entry.
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "mobile-apps" "dba" "observability"
@@ -141,4 +153,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.0 Completed Successfully ---"
+echo "--- Protocol Validation v4.1 Completed Successfully ---"

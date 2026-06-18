@@ -25,7 +25,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
 2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in `AGENTS.md` Procedure A). This summary must explicitly list active traits, loaded global intelligence files, and pending tasks.
-3. **Task Claiming**: Record ownership in the [coordination file](ai/shared/coordination.md) before starting tasks.
+3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
     - **Refusal Mandate**: AI assistants MUST refuse to process any handoff that lacks this section. They must inform the user: "This handoff lacks a Verification section and cannot be processed autonomously per ai-policy-common.md."
@@ -36,10 +36,10 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 **Exception — Post-Condensation Recovery**: When Procedure E is active (session resumed from a condensed summary), the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
 
-1. [next-steps file](ai/next-steps.md)
-2. Latest daily checkpoint in the [daily-checkpoints directory](ai/daily-checkpoints/)
-3. [progress file](ai/progress.md)
-4. [context file](ai/context.md)
+1. `ai/next-steps.md`
+2. Latest daily checkpoint in `ai/daily-checkpoints/`
+3. `ai/progress.md`
+4. `ai/context.md`
 
 ### Checkpoint & Backup Procedures
 - **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 2 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
@@ -73,7 +73,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 
 ## Compliance Intelligence
-- **No On-Disk Compliance Files**: Compliance standards (e.g., GDPR, SOC2, HIPAA, PCI-DSS, ISO-27001, CCPA) are NOT stored as on-disk files. When the **Project Customization File** (`ai/ai-customization.md`) lists required compliance standards under `## Required Compliance`, the AI assistant MUST use its built-in knowledge (or web search if available) to apply the relevant requirements, guardrails, and best practices for each listed standard.
+- **No On-Disk Compliance Files**: Compliance standards (e.g., GDPR, SOC2, HIPAA, PCI-DSS, ISO-27001, CCPA) are NOT stored as on-disk files. When the **Project Customization File** lists required compliance standards under `## Required Compliance`, the AI assistant MUST use its built-in knowledge (or web search if available) to apply the relevant requirements, guardrails, and best practices for each listed standard.
 - **Contextual Application**: The AI shall infer which compliance controls are relevant based on the task context (e.g., data handling, user authentication, logging, access control) and apply them without requiring explicit rule files.
 - **No Directory Scanning**: The AI MUST NOT scan for or attempt to load compliance files from any directory. Compliance is handled entirely through AI intelligence.
 - **Compliance Validation Guard**: When reading `## Required Compliance` from the **Project Customization File**, the AI MUST validate each listed standard against its built-in knowledge of recognized compliance frameworks. If a listed name is NOT a recognized compliance standard (e.g., `dora` is a DevOps metrics framework, not a compliance regulation), the AI MUST:
@@ -82,13 +82,14 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
   3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard — review and remove`) — but only with the user's explicit approval.
 
 ## Global Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST treat files in `Global AI Settings Source` and `Global Knowledge Source` as authoritative read-only sources.
-- **Precedence**: Project configuration files override `Global AI Settings Source` if there is a conflict.
-- **Content Integrity**: The agent MUST NOT modify files within `Global User AI Directory` unless explicitly instructed by a "Promote to Shared" command.
-- **Normalization**: When reading `Global Knowledge Source`, the agent should treat these as "lessons learned" to inform its problem-solving process, but not as authoritative codebase logic.
+- **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
+- **Bootstrapping & Load Context — Knowledge (Index Only)**: Files in the **Global AI Knowledge Directory** are subject to Token Rationing. At boot, the agent MUST scan filenames and record a reference index (path, filename, apparent domain). **DO NOT** read the full content of any Global Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge.
+- **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
+- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by a "Promote to Shared" command.
+- **Normalization**: When loading Global Knowledge files (on demand), treat them as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST read every file in the **Project Knowledge Directory** (`ai/shared/project-knowledge/`) as defined in AGENTS.md Procedure A Step 5. This is a mandatory, non-mergeable step.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project Knowledge Directory** as defined in AGENTS.md Procedure A Step 5. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 2) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."

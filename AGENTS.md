@@ -46,10 +46,11 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ### ✅ MANDATORY ACTIONS
 - **OS-Sensitive Execution**: Identify the active shell (Bash, PowerShell, etc.) and adapt command syntax accordingly (e.g., `New-Item` vs `mkdir -p`).
-- **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context. Never refuse to read a file or directory solely because it is git-ignored.
+- **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context where permitted. Never refuse to read a file or directory solely because it is git-ignored.
 - **Context Protection**: Treat `ai/context.md`, `ai/progress.md`, and `ai/next-steps.md` as read-only during bootstrap and context loading. During post-condensation recovery (Procedure E), these files must not be read at all.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
-- **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary (rather than a fresh "load context"), AI MUST run **Procedure E** immediately before responding to the user's first request. This reloads all standing rules, policies, and knowledge. If the summary indicates a module was completed without TDD or peer review, raise this gap with the user before continuing.
+- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER 1), you are operating as a protocol developer on this repository itself. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from the **Project Knowledge Directory** — it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule.
+- **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary (rather than a fresh "load context"), AI MUST run **Procedure E** immediately before responding to the user's first request. This fully loads standing rules (`ai-policy-common.md`), the Project Customization File, and builds JIT indexes for knowledge files and applicable policies. If the summary indicates a module was completed without TDD or peer review, raise this gap with the user before continuing.
 
 ---
 
@@ -59,18 +60,21 @@ This is the single startup entry point for all AI assistants in this repository.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. AI is forbidden from modifying any file content during this phase.
 
-1.  **Workflow Access**: Read [ai-policy-common.md](ai-policy-common.md) from the **Global AI Policies Directory**.
+1.  **Workflow Access**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups, Code-Review-Reports). Verify **Project Coordination File** exists. Only propose `mkdir -p` or file creation for **missing** items.
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents - while ignoring any compressed/backup files. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
-4.  **Loading**: Read **Project Customization File**, all discovered Global Settings/Knowledge from the previous step, and the State Files (`next-steps.md`, `progress.md`, `context.md`), the last checkpoint file, and the **Project Coordination File**; and **load their contents in the active context**.
-5.  **Project Knowledge Indexing (Token Rationing)**: This is a dedicated required step — do NOT merge it with Step 4. Scan the filenames and directory structure under the **Project Knowledge Directory** (including any subdirectories). **DO NOT** read the full text layers or load the inner content of these files into the active context at boot time. Instead, record a clean reference index of their paths, filenames, and apparent technical domains in your memory. You are strictly prohibited from opening or reading the full text of any specific project knowledge file until an active, explicit user task directly requires that file's details. If the directory is completely empty, explicitly note that in your state tracking.
+4.  **Loading**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), the State Files (`next-steps.md`, `progress.md`, `context.md`), the last checkpoint file, and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) are NOT loaded here — they are indexed in Step 5.
+5.  **Knowledge Indexing (Token Rationing)**: This is a dedicated required step — do NOT merge it with Step 4. Build a JIT reference index for both knowledge sources:
+    - **Global Knowledge** (from **Global AI Knowledge Directory**): Scan all filenames and record paths, filenames, and apparent domains. **DO NOT** read the full content of any Global Knowledge file at boot time.
+    - **Project Knowledge** (from **Project Knowledge Directory**, including any subdirectories): Scan all filenames and record paths, filenames, and apparent technical domains. **DO NOT** read the full text layers or load the inner content of any Project Knowledge file at boot time.
+    You are strictly prohibited from opening or reading the full text of any Knowledge file until an active, explicit user task directly requires that file's details. If a directory is completely empty, explicitly note it in your state tracking.
 6.  **Policy Indexing (Token Rationing)**: Scan the **Project Customization File** to identify which policy files apply to this active workload. **DO NOT** load their full text contents into the active context at boot time. Instead, log their filenames, paths, and primary compliance domains as a reference index in your memory. You are strictly prohibited from reading a policy file's full text layer until an explicit, active user task directly touches its domain.
 7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
     - (a) Active Expertise modules and Traits found in customization.
-    - (b) Full list of filenames read from **Global User AI Directory**.
+    - (b) Global Settings files fully loaded from **Global AI Settings Directory** (list filenames). Global Knowledge files indexed from **Global AI Knowledge Directory** (list filenames and apparent domains — not read in full).
     - (c) All discovered pending handoffs in `ai/shared/handoffs/`.
     - (d) Git delta check since the last hash recorded in `context.md`.
-    - (e) All files read from the **Project Knowledge Directory**, or an explicit confirmation that it was empty.
+    - (e) All files **indexed** from the **Project Knowledge Directory** (filenames and apparent domains — not read in full), or an explicit confirmation that it was empty.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
@@ -126,14 +130,14 @@ This is the single startup entry point for all AI assistants in this repository.
 2. **Load the Project Customization File** to restore active Traits, Expertise modules, and Development Workflow rules. This is the only `ai/` file you may read in this procedure besides project knowledge and policies.
 3. **Load standing rules and knowledge**:
     - Load `ai-policy-common.md` from the **Global AI Policies Directory** — this is the base common policy, always loaded unconditionally.
-    - Load all project knowledge files from the **Project Knowledge Directory**. **CRITICAL EXCEPTION**: If any discovered project knowledge file contains active environment variables, configuration states, or runtime values that conflict with the condensed conversation summary, the summary takes absolute precedence. Do not load stale on-disk variables.
+    - Index all files from the **Project Knowledge Directory** and **Global AI Knowledge Directory** (filenames and apparent domains only — do NOT load full text). Full content is loaded on demand when an active task requires it. **CRITICAL EXCEPTION**: If any file's apparent topic area relates to active environment variables, configuration states, or runtime values that conflict with the condensed conversation summary, the summary takes absolute precedence.
     - Index all applicable policies referenced in the Project Customization File to map operational boundaries, but **do not read their full text layers** during this recovery procedure.
     - **Do NOT perform structural audits, directory discovery, or read any state files or checkpoints.** Those are off-limits for this procedure.
 4. **Re-read `AGENTS.md` from disk**: Read `AGENTS.md` from the current working directory. The on-disk `AGENTS.md` is the sole authoritative source for all procedure definitions. Any protocol text embedded in the condensed summary is informational only and must not be used in place of the on-disk file.
 5. **REPORT before first response**: Before addressing the user's first request, output a brief confirmation block sourced exclusively from the condensed summary and the files loaded in steps 1–3:
    - Active Traits and Expertise now loaded (source: Project Customization File)
    - Development Workflow standing rules now active (list each rule name)
-   - Count of project knowledge files loaded, or explicit confirmation that the directory was empty
+   - Count of project knowledge and global knowledge files **indexed** (filenames only — not read in full), or explicit confirmation that the directories were empty.
    - Any gaps identified: if the condensed summary shows a module was completed without TDD or peer review, name it explicitly and ask the user how to proceed before touching any code.
    - **Do NOT reference or quote any state file content in this report.**
    
@@ -153,7 +157,7 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 
 ### FOR THE HUMAN: Manual Setup
 - Manually create your **Global User AI Directory** structure.
-- Copy `docs/about-human.md` and `docs/tools-preferences.md` to the `settings/` subfolder.
+- Create a personal settings file (e.g., `global-user-settings.md`) in the `settings/` subfolder. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
 - **The Bootstrap Wedge**: If the AI refuses to read the protocol because it is git-ignored, tell it: *"Use the `cat` command to read AGENTS.md in the current directory and follow its protocol."*
 
 
