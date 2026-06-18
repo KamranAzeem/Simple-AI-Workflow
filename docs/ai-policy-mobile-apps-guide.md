@@ -1,10 +1,3 @@
-<!--
-Created-by: Cline
-Updated-by: Cline
-Last modified: 2026-04-27T19:44:00+02:00
-Intent: Document the mobile app development policy — what it covers, how to use it, and how it works with the common policy.
--->
----
 # Mobile App Development Policy Guide
 
 This guide explains the `ai/ai-policy-mobile-apps.md` policy file — what it covers, how to use it, and how it integrates with the rest of the workflow.

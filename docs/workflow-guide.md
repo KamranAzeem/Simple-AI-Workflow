@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: GitHub Copilot
-Last modified: 2026-05-21T00:00:00+02:00
-Intent: Fix stale 'final step' checkpoint reference; add Project Knowledge Sync to checkpoint and project-knowledge sections.
--->
----
 # AI Usage Guide
 
 This guide explains how to interact with AI assistants in this repository and how to manage the AI state tracking files.
@@ -61,7 +54,7 @@ The AI will:
 3. Delete the handoff file and ownership claim upon successful verification.
 4. Record the completion in `ai/progress.md`.
 
-## 3. Git Context Enrichment (Automatic)
+## 4. Git Context Enrichment (Automatic)
 The protocol leverages the project's Git history to build a richer understanding of the codebase's evolution without manual data entry.
 
 ### How it Works
@@ -74,7 +67,7 @@ The protocol leverages the project's Git history to build a richer understanding
 - **Token Efficiency**: Distilled summaries in `context.md` are much smaller than raw Git logs.
 - **Temporal Awareness**: AI understands the "why" behind architectural shifts by looking at commit messages.
 
-## 4. Expertise & Intent Alignment (Review-First)
+## 5. Expertise & Intent Alignment (Review-First)
 To prevent AI assistants from prematurely implementing code changes when you only wanted to ask a question, the workflow enforces a strict intent alignment protocol.
 
 ### Directive vs. Inquiry
@@ -93,7 +86,7 @@ For all **Inquiries**, the AI is mandated to:
 - **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
 - **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
 
-## 5. Idiot-Proof Protocol (Low-IQ Compatibility)
+## 6. Idiot-Proof Protocol (Low-IQ Compatibility)
 ### Structural Guardrails
 Models with lower instruction-following capability (e.g., smaller or "lite" models) sometimes treat protocols as suggestions, leading to accidental re-initialization or overwriting of context files. This workflow implements high-visibility structural cues to prevent this:
 - **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
@@ -108,7 +101,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Consistency**: The same protocol works safely across any IQ tier.
 - **Visibility**: You know exactly what intelligence the AI has loaded before you start work.
 
-## 6. Session Resume (Compacted Context)
+## 7. Session Resume (Compacted Context)
 
 When a session begins from a condensed/compacted conversation summary (rather than a fresh "load context"), the AI automatically runs a **Post-Condensation Recovery** procedure before responding to your first request.
 
@@ -128,7 +121,7 @@ When a session begins from a condensed/compacted conversation summary (rather th
 - **Context integrity**: Prevents stale pre-compaction data from corrupting the fresh session.
 - **Safety net**: Missed processes are caught before any code changes.
 
-## 7. Native AI State Backups
+## 8. Native AI State Backups
 ### On-Demand Archiving
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` Procedure F.
@@ -139,10 +132,10 @@ To prevent the loss of project context due to accidental overwrites or "hallucin
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.
 - **History Preservation**: Maintains a granular history of the AI's "brain" and project context over time.
 
-## 8. AI-Driven Secure Development Practices
+## 9. AI-Driven Secure Development Practices
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
 
-## 9. Universal Engineering Standards
+## 10. Universal Engineering Standards
 The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Universal Engineering Standards** section that applies across all domains:
 
 - **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion — non-negotiable for maintainable OO code.
@@ -155,7 +148,7 @@ The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Uni
 
 These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
 
-## 9. AI Customization & Curated Traits
+## 11. AI Customization & Curated Traits
 The `ai/ai-customization.md` file is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`).
@@ -164,7 +157,7 @@ The `ai/ai-customization.md` file is the **"Single Dial"** for tailoring the AI 
 
 See the [AI Customization Guide](docs/ai-customization-guide.md) for the full catalog and multi-role examples.
 
-## 10. Peer Review Mode
+## 12. Peer Review Mode
 
 Trigger an on-demand code review at any point by saying:
 
@@ -198,3 +191,32 @@ Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI re
 - **Minor** — fix when convenient (style, naming)
 - **Suggestions** — optional improvements
 - **Verdict** — APPROVED or CHANGES REQUESTED
+
+## 13. Token Rationing & JIT Context Loading
+
+At boot (the "load context" procedure), the AI does not eagerly load all project knowledge and policy files into its active context window. Instead it builds a lightweight JIT (Just-In-Time) reference index.
+
+### How it works
+1. **Project Knowledge Indexing**: The AI scans filenames and directory structure under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full file contents are only read when a task explicitly requires them.
+2. **Policy Indexing**: The AI identifies which policy files apply based on `ai/ai-customization.md`, then logs their names and domains as a reference. Full policy text is only loaded when an active task touches that domain.
+
+### Benefits
+- **Token Efficiency**: Avoids loading large background documents into every session, freeing context window space for active work.
+- **Fast Boot**: "Load context" is faster because only the required minimum is read at startup.
+- **On-Demand Depth**: When a task requires domain-specific knowledge, the relevant policy or knowledge file is loaded in full at that point.
+
+## 14. Atomic Write Protocol & Log Condensation
+
+### Atomic Write Protocol
+The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
+
+1. **Sequential Writes**: State is written in strict order — `ai/progress.md` (past) → `ai/next-steps.md` (future) → `ai/context.md` (present). Never in a different order.
+2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window — showing exactly what was written to each file and what values changed.
+3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
+
+### Log Condensation (Sliding Horizon)
+To prevent `ai/progress.md` from growing unbounded and consuming context window space:
+
+- **Threshold Trigger**: When `ai/progress.md` exceeds 50 completed items or 200 lines, log condensation runs automatically during the next checkpoint.
+- **Archive**: Entries older than the 10 most recent are moved to `ai/shared/project-knowledge/progress-archive.md`.
+- **Horizon Anchor**: A single 3-sentence "Archive Horizon Context" block at the top of `ai/progress.md` summarizes what was archived, preserving project continuity without the full history.

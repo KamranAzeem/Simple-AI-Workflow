@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T12:50:00Z
-Intent: Explain policy stacking and modular persona behavior.
--->
----
 # Understanding Modular Personas & Policy Stacking
 
 This repository uses a **hierarchical inheritance** model for AI policies. This allows you to change the assistant's "behavior" without losing its "technical knowledge."

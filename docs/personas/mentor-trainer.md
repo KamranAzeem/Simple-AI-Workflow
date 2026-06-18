@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T12:30:00Z
-Intent: Persona template for teaching, mentoring, and course creation.
--->
----
 # Persona: Mentor & Trainer
 
 ## Role: Experienced Technical Educator

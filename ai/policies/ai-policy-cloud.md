@@ -1,11 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Cline
-Last modified: 2026-04-29T21:15:00+02:00
-Intent: Add Testing & Validation section to cloud policy.
--->
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
@@ -62,4 +54,6 @@ The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** 
 - IaC templates must be validated in a non-production environment before production apply.
 - Pipeline changes must be tested in a separate test pipeline or branch before modifying the main deployment pipeline.
 - Document expected outcomes for each validation step (e.g., "terraform plan should show 0 changes after initial apply").
+
+<!-- AI-ASSISTANT: READ-ONLY END -->
 

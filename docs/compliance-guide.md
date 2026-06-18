@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-05-01T14:30:00Z
-Intent: Guide for opting into compliance and regulatory modules.
--->
-
 # Compliance & Regulatory Framework Guide
 
 This guide explains how to integrate regulatory and industry-standard compliance policies into your project using the modular Compliance Registry.

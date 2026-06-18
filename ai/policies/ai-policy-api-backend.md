@@ -1,11 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Cline
-Last modified: 2026-04-29T21:14:00+02:00
-Intent: Add comprehensive Testing & Quality (TDD-First) section to backend policy.
--->
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 

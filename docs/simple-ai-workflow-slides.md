@@ -1,9 +1,3 @@
-<!--
-Created-by: Cline
-Updated-by: GitHub Copilot
-Last modified: 2026-05-21T00:00:00+02:00
-Intent: Fix stale 'final step' checkpoint reference; add Project Knowledge Sync feature.
--->
 ---
 # Simple AI Workflow
 ## From Chatting with AI, to Working with AI
@@ -31,7 +25,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Project Customization** — `ai/ai-customization.md` for project-specific tailoring with curated traits catalog
 - **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
 - **Idiot-Proof Protocol** — Structural guardrails for safe use with lower-capability "lite" models
-- **Native Backups** — Automatic cross-platform state archiving during every checkpoint
+- **Native Backups** — On-demand cross-platform state archiving; say `"backup ai"` to trigger (not automatic at checkpoints)
 - **Project Knowledge Sync** — Key findings, decisions, and discoveries are written to `project-knowledge/` at every checkpoint
 - **Universal Engineering Standards** — SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, SemVer, Conventional Commits
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
@@ -39,6 +33,9 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
 - **Session Resume (Compacted Context)** — Auto-reloads all rules, policies, and knowledge when resuming from a condensed summary
 - **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
+- **Token Rationing Shield** — JIT indexing keeps boot context lean; policies and knowledge load only when an active task needs them
+- **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
+- **Atomic Write Protocol** — Checkpoint state writes are sequential and transactional; partial writes abort automatically with a transaction log in chat
 
 ---
 
@@ -101,4 +98,34 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 > **Full-file-set review. Every round. No blind spots.**
 
 ---
-... (rest of slides) ...
+
+# Token Rationing Shield
+
+## The Problem: Context Window Bloat
+- Loading all project knowledge and policies at boot consumes context window space for every session
+- Large knowledge bases make every "load context" slower and more token-intensive
+- Not all files are needed for every task
+
+## The Solution: JIT Indexing
+- **Reference Index at Boot**: Project knowledge and policies are indexed by filename and domain — full content loads only when a task needs it
+- **Lazy Policy Loading**: Only policies relevant to the active task are read in full
+- **On-Demand Depth**: Domain-specific knowledge loads precisely when needed, not speculatively
+
+> **Lean context. Fast boot. Full depth when it matters.**
+
+---
+
+# Atomic Checkpoint Protocol
+
+## The Problem: Partial Writes & Context Drift
+- A checkpoint interrupted mid-write leaves state files inconsistent
+- Unbounded progress logs bloat the context window over time
+- Writing one file without immediately updating the others causes context drift
+
+## The Solution: Atomic Writes & Sliding Horizon
+- **Sequential Writes**: `progress.md` → `next-steps.md` → `context.md` — strict order, always
+- **Transaction Log**: Every checkpoint outputs a confirmation block in chat — what was written and what changed
+- **Abort on Missing Data**: If data is incomplete, the write aborts; the gap is reported to the user
+- **Sliding Horizon**: When `progress.md` exceeds 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
+
+> **Consistent state. Every checkpoint. No silent failures.**

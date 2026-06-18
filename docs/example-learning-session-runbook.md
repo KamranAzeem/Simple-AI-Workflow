@@ -1,11 +1,3 @@
-<!--
-Created-by: GitHub Copilot
-Updated-by: Cline
-Last modified: 2026-04-24T20:33:00+02:00
-Intent: Update /init warning to discourage built-in /init command in favor of text prompts.
-
--->
----
 # Example Learning Session Runbook (Prompt-First)
 
 This runbook is a sequence of simple prompts the user sends to AI.

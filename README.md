@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: GitHub Copilot
-Last modified: 2026-05-21T00:00:00+02:00
-Intent: Replace protocol-section "TIER" references with plain language section names throughout README.
--->
----
 # Simple AI Workflow
 
 Objective: **Instead of *chatting* with AI, start *working* with AI**
@@ -233,7 +226,7 @@ The AI assistant reads this file during the context-loading phase and automatica
 - **Continuous Reliability**: Ensures the AI always operates from a known-good state.
 
 ### 3. Native Checkpoint Backups
-- **Automatic State Archiving**: Native, cross-platform one-liners automatically archive the `ai/` directory to a global backup folder during every checkpoint.
+- **On-Demand Archiving**: Native, cross-platform one-liners archive the `ai/` directory to a global backup folder. Triggered on demand by saying `"backup ai"` or `"backup ai state"` — not automatic at checkpoints.
 - **Zero-Script Reliability**: Built directly into the protocol to ensure your project history is protected.
 
 ### 4. Surgical Git-Ignore Exceptions
@@ -268,6 +261,14 @@ The AI assistant reads this file during the context-loading phase and automatica
 ### 11. PWD-Only Scope
 - **Project Isolation**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage.
 - **Safe Multi-Project Use**: Each project maintains its own isolated AI state, even when multiple projects exist under the same parent directory.
+
+### 12. Token Rationing (Context Shielding)
+- **JIT Indexing**: At boot, project knowledge and policy files are indexed as lightweight reference lists — full content only loads when an active task explicitly requires it. Prevents unnecessary token bloat on every "load context".
+- **Lazy Policy Loading**: Policy files are mapped by domain at startup; only the policies relevant to the active task are read in full.
+
+### 13. Atomic Checkpoint Protocol
+- **Atomic Write Protocol**: Checkpoint state is written in strict sequence — `progress.md` → `next-steps.md` → `context.md` — with a Transaction Log output confirming every write. If data is missing, the write aborts entirely.
+- **Log Condensation (Sliding Horizon)**: When `ai/progress.md` exceeds 50 items or 200 lines, older entries are automatically archived to `ai/shared/project-knowledge/progress-archive.md`, keeping the 10 most recent. An "Archive Horizon Context" summary remains anchored at the top.
 
 ---
 

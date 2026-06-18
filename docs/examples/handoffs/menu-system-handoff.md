@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini
-Last modified: 2026-04-17T18:46:00Z
-Intent: Example handoff file
--->
----
 # Handoff: Menu System Implementation
 - **Status**: Pending
 - **Assigned To**: [Agent Name]
