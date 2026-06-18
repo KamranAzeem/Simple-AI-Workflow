@@ -115,6 +115,31 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 
 ---
 
+# Use Verbose File Names
+
+## Why It Matters
+- The AI does not load all knowledge files at boot — it builds a lightweight index instead
+- The **filename is the lookup key**: when a task requires specific knowledge, the AI maps the task to the most relevant file by name
+- A vague name like `notes.md` is invisible to this process — the AI cannot confidently map any task to it
+- A descriptive name like `azure-postgresql-migration-decisions.md` is unambiguous
+
+## The Rule
+- Name every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` to clearly describe its content
+- Use kebab-case: `project-name-topic-subtopic.md`
+- Ask: could a colleague guess what this file contains from the name alone? If not, rename it
+
+## Good vs Poor Examples
+
+| Poor | Good |
+|---|---|
+| `decisions.md` | `api-versioning-strategy-and-breaking-change-policy.md` |
+| `notes.md` | `ks5-order-module-sql-schema-constraints.md` |
+| `architecture.md` | `azure-cli-subscription-context-fix.md` |
+
+> **The filename is the lookup key. Make it count.**
+
+---
+
 # Atomic Checkpoint Protocol
 
 ## The Problem: Partial Writes & Context Drift
