@@ -159,6 +159,37 @@ This will save time, read all AI related files without creating new ones, avoid 
 
 **Note:** If you accidentally run `"bootstrap using AGENTS.md protocol"` in a project that already has context, the bootstrap process won't overwrite anything — it just performs an existence audit.
 
+## Keeping Context Healthy (Avoiding Context Rot)
+
+Over a long session, an AI assistant's working knowledge gradually degrades. State files describe completed work that was never cleaned up, the context window fills up and pushes out older decisions, and rules that were clearly in view at the start of the session become invisible by the end. This is called **context rot**.
+
+### The "load context" command — which form to use
+
+There are two forms:
+
+- **`"load context using AGENTS.md protocol"`** — full form. Explicitly names the protocol file. Use this at the start of every new session, after a restart, or after switching to a different AI tool. Reliable across all models and capability tiers.
+- **`"load context"`** — shorthand. Fine once the AI already knows about AGENTS.md (e.g. mid-session), but a fresh or weaker model may not connect those words to the correct procedure without the explicit anchor.
+
+**Rule of thumb**: always use the full form at the start of a session.
+
+### What this workflow already protects against
+
+| Rot type | Built-in defence |
+|---|---|
+| Stale state files | Atomic Write Protocol — all 3 state files sync together or not at all |
+| Progress log bloat | Sliding Horizon Shield — archives `progress.md` when it exceeds 50 items or 200 lines |
+| Compacted summary drift | Post-Condensation Recovery (Procedure E) — reloads rules from disk, not from the summary |
+| Protocol amnesia | Proof-of-Load at every "load context"; AGENTS.md re-read mandated in Procedure E |
+| Knowledge base staleness | Mandatory project-knowledge sync at every checkpoint |
+
+### Habits that prevent the rest
+
+- **Checkpoint frequently.** After each logical unit of work — a feature, a fix, a review cycle — run a checkpoint. Don't wait until end of day.
+- **Keep sessions shorter.** When you notice the AI repeating questions it already answered or losing track of earlier constraints, that's the signal: checkpoint and start a fresh session with `"load context using AGENTS.md protocol"`.
+- **Use the full load-context form at every restart.** Even with automatic Post-Condensation Recovery, the explicit `"load context using AGENTS.md protocol"` command runs the full procedure and is more reliable.
+- **Keep `context.md` lean.** It should hold the current operating state, not a history log. History belongs in `progress.md` and `ai/shared/project-knowledge/`.
+- **Review `next-steps.md` at session start.** It should contain the current checkpoint ID and any immediate next action — not a long list of stale items.
+
 ## How to upgrade
 
 Use this when a newer version of this repository adds new protocol features.
