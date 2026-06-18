@@ -129,3 +129,32 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Sliding Horizon**: When `progress.md` exceeds 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
 
 > **Consistent state. Every checkpoint. No silent failures.**
+
+---
+
+# Keeping Context Healthy
+
+## What is Context Rot?
+- Over a long session, AI working knowledge degrades — stale state, token pressure, forgotten rules
+- The AI starts contradicting earlier decisions or re-asking questions it already answered
+- Left unchecked, it erodes the reliability of every output
+
+## Built-in Defences in This Workflow
+- **Atomic Write Protocol** — state files sync together or not at all; no partial writes
+- **Sliding Horizon Shield** — `progress.md` auto-archives when it exceeds 50 items or 200 lines
+- **Post-Condensation Recovery** — reloads rules from disk after any context compaction
+- **Proof-of-Load** — AI must confirm every file it read before starting work
+- **Mandatory knowledge sync** — project decisions are written to `project-knowledge/` at every checkpoint
+
+## The "Load Context" Command
+- **Full form**: `"load context using AGENTS.md protocol"` — use this at the start of every session
+- **Shorthand**: `"load context"` — fine mid-session; unreliable for fresh or weaker models
+- **Rule**: always use the full form at the start of a new session or after a restart
+
+## Habits That Prevent the Rest
+- Checkpoint after each logical unit of work — not just at end of day
+- When the AI loses track of context, checkpoint and start a fresh session
+- Keep `context.md` lean — current state only, not a history log
+- Review `next-steps.md` at session start — trim stale items before working
+
+> **Checkpoint often. Session short. Context stays clean.**
