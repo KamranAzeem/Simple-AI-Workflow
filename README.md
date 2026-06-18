@@ -245,6 +245,32 @@ The AI assistant reads this file during the context-loading phase and automatica
 
 ---
 
+## Use Verbose File Names for Knowledge and Notes
+
+When you create files under `ai/shared/project-knowledge/`, `~/.ai/global-knowledge/`, or `ai/notes/`, **use long, descriptive names that clearly state what the file contains**.
+
+Good examples:
+- `azure-postgresql-flexible-server-migration-decisions.md`
+- `ks5-order-module-sql-schema-constraints.md`
+- `api-versioning-strategy-and-breaking-change-policy.md`
+
+Poor examples:
+- `decisions.md`
+- `notes.md`
+- `architecture.md`
+
+**Why this matters — JIT loading:**
+
+The AI assistant does not load all knowledge files into context at boot time. Loading large files at startup wastes context window space and slows down every session. Instead, the protocol builds a lightweight index at startup — recording just the filenames and their apparent topics — and only reads a file's full content when an active task requires that specific knowledge.
+
+This means the filename *is* the lookup key. A descriptive name like `azure-cli-subscription-context-fix.md` tells the AI exactly what to fetch when you ask about Azure CLI subscription issues. A vague name like `notes.md` is invisible — the AI cannot confidently map a task to it without reading it, which defeats the purpose of JIT loading.
+
+The same principle applies to global knowledge files in `~/.ai/global-knowledge/`. They are loaded the same way: indexed by name at boot, fetched on demand by task context.
+
+**Rule of thumb**: if a colleague couldn't guess what the file contains from its name alone, rename it.
+
+---
+
 ## Key Features
 
 ### 1. Structured Protocol
