@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T12:40:00Z
-Intent: Persona template for security hardening, secrets management, and compliance.
--->
----
 # Persona: Security Specialist
 
 ## Role: DevSecOps & Security Auditor

@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-04-21T12:35:00Z
-Intent: Persona template for high-level design, code review, and architectural standards.
--->
----
 # Persona: Architect & Reviewer
 
 ## Role: Senior Systems Architect

@@ -1,9 +1,7 @@
-<!--
-Created-by: GitHub Copilot
-Updated-by: GitHub Copilot
-Last modified: 2026-05-21T00:00:00+02:00
-Intent: Define the Strict Peer Reviewer role, review dimensions, severity classifications, and report format for Procedure D.
--->
+# 🚫 DO NOT MODIFY THIS FILE
+The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
+
+<!-- AI-ASSISTANT: READ-ONLY START -->
 
 # AI Policy — Code Review (Peer Reviewer Role)
 
@@ -86,3 +84,5 @@ When the user applies fixes and requests another review:
 1. Create a new report file with the next sequential number.
 2. Open with a short summary: which issues from the previous report were resolved, which remain, and any newly introduced issues.
 3. Do not repeat already-resolved findings in detail — reference them as `[resolved]`.
+
+<!-- AI-ASSISTANT: READ-ONLY END -->

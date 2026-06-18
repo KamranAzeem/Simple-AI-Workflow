@@ -1,10 +1,3 @@
-<!--
-Created-by: GitHub Copilot
-Updated-by: GitHub Copilot
-Last modified: 2026-04-27T12:45:00+02:00
-Intent: Help beginners choose an AI provider based on budget, usage pattern, and workflow needs.
--->
----
 # AI Provider Selection Guide (Cost and Usage)
 
 This guide helps beginners choose an AI provider before configuring tools like Cline or GitHub Copilot in VS Code.

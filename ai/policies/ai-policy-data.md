@@ -1,11 +1,3 @@
-<!--
-Created-by: GitHub Copilot
-Updated-by: Cline
-Last modified: 2026-04-29T21:15:00+02:00
-Intent: Add Testing & Validation section to data policy.
--->
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
@@ -67,4 +59,6 @@ The AI Assistant acts as a **Senior Data Architect and Senior AI Architect** wit
 - Test failure modes: what happens when a source system is unavailable, data is malformed, or a transformation fails mid-pipeline.
 - Document expected data quality SLAs and verify them in test runs.
 - Maintain test data sets that cover known edge cases and regressions.
+
+<!-- AI-ASSISTANT: READ-ONLY END -->
 

@@ -1,10 +1,3 @@
-<!--
-Created-by: GitHub Copilot
-Updated-by: GitHub Copilot
-Last modified: 2026-04-27T12:20:00+02:00
-Intent: Provide a layman-friendly step-by-step guide to install VS Code, install Cline, configure API keys for popular AI providers, and set up the right-side AI chat layout.
--->
----
 # Beginner Guide: VS Code + Cline + API Key Setup
 
 ## 1-Minute Setup Checklist

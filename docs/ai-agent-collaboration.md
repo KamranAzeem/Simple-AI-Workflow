@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini CLI
-Last modified: 2026-05-02T22:50:00Z
-Intent: Document Refined Handoff Protocol and Conditional Autonomy rules.
--->
----
 # AI Agent Collaboration & Coordination System
 
 This document explains how different AI assistants (Gemini, Copilot, ChatGPT, etc.) collaborate, share knowledge, and coordinate their actions within this repository.

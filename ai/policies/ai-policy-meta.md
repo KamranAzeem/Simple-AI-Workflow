@@ -1,10 +1,3 @@
-<!--
-Created-by: Gemini
-Updated-by: Gemini CLI
-Last modified: 2026-04-19T10:00:00Z
-Intent: Slim down meta policy by offloading common guardrails to ai-policy-common.md.
--->
----
 # AI Policy — Repository / Meta Workflow
 
 This policy governs AI assistant behavior for the Simple-AI-Workflow repository itself: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
@@ -70,18 +63,3 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ---
 
 This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/progress.md`.
-icy changes in the [progress file](ai/progress.md).
-ss.md).
-secrets scan, lint changed scripts, create a staged commit with the proposed patch, and provide the commit message. Do not push."
-
-## References
-
-- Bootstrapping: `AGENTS.md`
-- Tracking files: `ai/next-steps.md`, `ai/progress.md`, `ai/daily-checkpoints/`
-- Helper scripts: `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`
-
----
-
-This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/progress.md`.
-icy changes in the [progress file](ai/progress.md).
-ss.md).

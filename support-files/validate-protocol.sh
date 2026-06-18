@@ -1,12 +1,8 @@
 #!/bin/bash
-# Created-by: Gemini CLI
-# Updated-by: GitHub Copilot
-# Last modified: 2026-05-21T00:00:00+02:00
-# Intent: Fix hardcoded Linux home path; use $HOME for portability across Linux, macOS, and Git Bash on Windows.
 
 set -e
 
-echo "--- Starting Protocol Validation v3.1 ---"
+echo "--- Starting Protocol Validation v4.0 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -15,11 +11,31 @@ if ! grep -q "⚠️ STOP: READ-ONLY PROTOCOL" AGENTS.md; then
     exit 1
 fi
 if ! grep -q "### PROCEDURE A: When User says \"load context\"" AGENTS.md; then
-    echo "Error: Procedure A Read-Only mandate missing."
+    echo "Error: Procedure A anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "### PROCEDURE D: When User says \"peer review\"" AGENTS.md; then
     echo "Error: Procedure D (Peer Review) anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "### PROCEDURE E: Post-Condensation Recovery" AGENTS.md; then
+    echo "Error: Procedure E (Post-Condensation Recovery) anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "### PROCEDURE F: When the user says \"backup ai\"" AGENTS.md; then
+    echo "Error: Procedure F (Backup) anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Atomic Write Protocol" AGENTS.md; then
+    echo "Error: Atomic Write Protocol missing from Procedure C in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Sliding Horizon Shield" AGENTS.md; then
+    echo "Error: Log Condensation / Sliding Horizon Shield missing from Procedure C in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Token Rationing" AGENTS.md; then
+    echo "Error: Token Rationing steps missing from Procedure A in AGENTS.md."
     exit 1
 fi
 echo "Hardening anchors verified."
@@ -29,7 +45,14 @@ echo "[2/8] Verifying configuration entries..."
 CONFIG_KEYS=(
     "Global AI Workflow Directory"
     "Global User AI Directory"
+    "Global AI Policies Directory"
+    "Global AI Knowledge Directory"
     "Global AI Backup Directory"
+    "Global AI Settings Directory"
+    "Project Customization File"
+    "Project Policy Directory"
+    "Project Knowledge Directory"
+    "Project Coordination File"
 )
 for key in "${CONFIG_KEYS[@]}"; do
     if ! grep -q "$key" AGENTS.md; then
@@ -118,4 +141,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v3.1 Completed Successfully ---"
+echo "--- Protocol Validation v4.0 Completed Successfully ---"

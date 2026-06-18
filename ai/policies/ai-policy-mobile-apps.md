@@ -1,11 +1,3 @@
-<!--
-Created-by: Cline
-Updated-by: Cline
-Last modified: 2026-04-29T21:24:00+02:00
-Intent: Remove universal testing rules now in common policy (deterministic tests, mock deps, test failure modes).
--->
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 

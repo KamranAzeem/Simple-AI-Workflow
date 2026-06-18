@@ -1,11 +1,3 @@
-<!--
-Created-by: Gemini CLI
-Updated-by: Gemini CLI
-Last modified: 2026-05-11T14:30:00Z
-Intent: Initial creation of the Observability & Reliability Architect policy.
--->
-
----
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
@@ -16,7 +8,8 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 ## Scope
 - Applies to any AI assistant used in this repository for Observability (Logging, Metrics, Tracing) tasks.
 - **Bootstrap Entry**: The [AGENTS.md](../AGENTS.md) file is the only bootstrap entry point.
-- **Global Authority**: Universal guardrails are defined in `ai-policy-common.md`.
+- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
+- **Path Resolution**: Use the **Global AI Policies Directory** defined in `AGENTS.md` to resolve the global workflow path.
 
 ## Role: Observability Architect
 The AI Assistant acts as a **Senior Observability Architect** with mastery across:
@@ -57,3 +50,5 @@ Every critical service dashboard and alerting suite MUST monitor the following:
 ## 4. Testing & Validation
 - **Synthetic Checks**: Propose synthetic monitoring for critical user journeys (e.g., login, checkout).
 - **SLO/SLI Validation**: Periodically audit that alerts are actually mapped to user-facing service impact.
+
+<!-- AI-ASSISTANT: READ-ONLY END -->
