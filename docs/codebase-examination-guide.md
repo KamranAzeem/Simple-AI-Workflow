@@ -100,14 +100,7 @@ Large refactors are risky, so this module leans on guardrails the workflow alrea
 
 ## 6. How to Activate
 
-Add the expertise keyword to your project's customization file:
-
-```text
-## Active Expertise
-- codebase-examination
-```
-
-The policy loads on demand (JIT), so it adds nothing to your boot context until you opt in. Remove the line when you're done to keep the active policy set lean.
+Say `"codebase examination"` or `"examine this codebase"` in your AI chat. The policy is loaded on demand (see Procedure G in `AGENTS.md`) — it is not loaded or indexed at boot time, just like the peer review mode.
 
 ---
 

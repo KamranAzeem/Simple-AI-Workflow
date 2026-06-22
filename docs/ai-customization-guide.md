@@ -93,12 +93,13 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Expertise** | `web-frontend` | `ai-policy-web-frontend.md` |
 | **Expertise** | `dba` | `ai-policy-dba.md` |
 | **Expertise** | `observability` | `ai-policy-observability.md` |
-| **Expertise** | `codebase-examination` | `ai-policy-codebase-examination.md` |
 | **Expertise** | `meta` | `ai-policy-meta.md` |
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
 
 > **Note — Peer Review (`code-review`)**: You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
+>
+> **Note — Codebase Examination (`codebase-examination`)**: Same behavior as peer review — say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded or indexed at boot.
 
 ---
 

@@ -339,7 +339,7 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Source Code Carve-Out**: Application and source-code files are explicitly exempt and must follow their language/framework idioms (`Button.tsx`, `user.rb`, `models.py`) — verbose names would break imports, autoloading, and routing.
 
 ### 16. Codebase Examination Mode
-- **On-Demand Expertise**: Add `codebase-examination` to `ai/ai-customization.md` to load a policy for examining (and optionally refactoring) a codebase that is too large to fit in the context window — application code, infrastructure-as-code, or database schemas.
+- **On-Demand Activation**: Say `"codebase examination"` or `"examine this codebase"` to activate the policy for examining (and optionally refactoring) a codebase that is too large to fit in the context window — application code, infrastructure-as-code, or database schemas.
 - **Disk-as-Memory + Tiered JIT Loading**: Understanding is persisted to project-knowledge as a tiered skeleton map (repo map → module signatures → full files), loaded just-in-time so the active context stays bounded no matter how large the codebase — or its map.
 - **Lightweight by Design**: Uses only the assistant's native file tools (`grep_search`, `read_file`); no vector databases, embeddings, or external indexing tools. Reuses branch-gating, TDD, and peer review as the safety net.
 

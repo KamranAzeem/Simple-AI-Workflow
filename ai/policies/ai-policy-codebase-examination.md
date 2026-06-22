@@ -8,7 +8,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 ## Scope
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.
 - **Domain-neutral**: This policy applies equally to application source code (PHP, Node.js, Python, Go, etc.), infrastructure-as-code (Terraform, Bicep, CloudFormation, Kubernetes manifests), and database structures (schemas, migrations, stored procedures).
-- **On-demand activation**: This is an opt-in expertise module. Add `codebase-examination` to the `## Active Expertise` list in the **Project Customization File** when you want it loaded. It is not loaded by default.
+- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see Procedure G in the `AGENTS.md` file in the project root). This policy is not loaded or indexed at boot time.
 - **Bootstrap Entry**: The `AGENTS.md` file in the project root is the only bootstrap entry point.
 - **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 - **Path Resolution**: Use the **Global AI Policies Directory** defined in `AGENTS.md` to resolve the global workflow path.
