@@ -1,10 +1,11 @@
 # Project Context
 
-## Latest Checkpoint: CP-2026-06-22-02
-- **Current Branch**: master (HEAD: 888bdf6) — clean, up to date with origin/master
-- **Last Summarized Hash**: 888bdf6
+## Latest Checkpoint: CP-2026-06-22-03
+- **Current Branch**: master (HEAD: 0ca1d36) — uncommitted changes (docs/policy edits)
+- **Last Summarized Hash**: 0ca1d36
 
 ## Session Summary (2026-06-22)
+- **Codebase Examination → triggered procedure**: Changed from "opt-in Active Expertise" to "Procedure G trigger" (same pattern as code-review). Updated policy, README, docs/guide, docs/customization-guide, slides. AGENTS.md Procedure G addition provided for manual application.
 - **Verbose file-naming rule (binding)**: Added to ai-policy-common.md — AI-generated knowledge/docs/workflow files use descriptive kebab-case (filename = JIT lookup key); application/source code explicitly exempt (follows language/framework idioms). README section updated with the carve-out.
 - **Codebase Examination expertise (on-demand)**: New ai-policy-codebase-examination.md (keyword `codebase-examination`) + docs/codebase-examination-guide.md. Domain-neutral; Disk-as-Memory + three-tier JIT loading; four-phase Map/Plan/Perform/Reconcile; lightweight (no vector DBs/external tools); reuses branch-gating/TDD/peer-review.
 - **Docs/tooling**: README Key Features #15/#16 + Docs-list de-dup; slides More Features bullets; ai-customization-guide.md expertise table; validate-protocol.sh policy baseline 11 -> 12 (all checks pass).

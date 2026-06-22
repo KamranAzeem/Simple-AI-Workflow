@@ -200,6 +200,19 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ## 2026-06-22 — Session CP-2026-06-22-02
 
+### Codebase Examination — changed from "opt-in expertise" to "triggered procedure"
+
+- **Decision**: Changed `ai-policy-codebase-examination.md` activation from "add `codebase-examination` to `## Active Expertise`" to a procedure-triggered pattern matching how `ai-policy-code-review.md` works (zero boot-time visibility).
+- **Rationale**: Listing it in Active Expertise causes Procedure A Step 6 to index it at boot time and Step 7 to list it in the Proof-of-Load report. The user wants no boot-time presence — same as code-review, which is only activated by a trigger phrase ("peer review" / "code review").
+- **Changes applied**:
+  1. `ai/policies/ai-policy-codebase-examination.md`: On-demand activation paragraph now references Procedure G — not Active Expertise.
+  2. `AGENTS.md`: Procedure G added to TIER 3 (Triggered Procedures) — loads the policy when user says "examine this codebase" or "codebase examination".
+  3. `protocol-decisions.md`: This entry.
+  4. `README.md` line 342: Updated to reference "codebase examination" trigger phrase instead of Active Expertise.
+- **What did NOT change**: `validate-protocol.sh` — policy file still exists, baseline stays at 12. Procedure G is not anchor-checked by the validator (same as Procedure D was before it was added; can be added later if desired).
+- **Documents updated**: `docs/codebase-examination-guide.md` and `docs/ai-customization-guide.md` now reference the trigger phrase, not the Active Expertise list.
+- **Branch**: Applied directly on master as a protocol-development change with human approval.
+
 ### ai/shared/ added to git version control
 - **Decision**: Add `!ai/shared/` and `!ai/shared/**` exceptions to `.gitignore` so `ai/shared/project-knowledge/protocol-decisions.md` and `ai/shared/coordination.md` are tracked in git.
 - **Rationale**: `protocol-decisions.md` is protocol design documentation with the same character as files in `docs/` — authoritative decisions and rules going forward. Losing it on a machine move is a real cost that the on-demand backup procedure does not reliably prevent. `coordination.md` is safe to track (resets to "no tasks claimed"). `ai/shared/handoffs/` (currently empty) will also be tracked automatically if files are added.

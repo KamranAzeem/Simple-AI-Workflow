@@ -146,6 +146,13 @@ This is the single startup entry point for all AI assistants in this repository.
     - **Linux/Bash**: `tar -czf [Global AI Backup Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/`
     - **Windows/PS**: `Compress-Archive -Path ai/ -DestinationPath "[Global AI Backup Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
 2.  **Reporting**: Confirm checkpoint ID and backup file path.
+
+### PROCEDURE G: When the user says "examine this codebase" or "codebase examination"
+
+1.  Load `ai/policies/ai-policy-codebase-examination.md` for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
+2.  Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
+3.  Return to normal role when the examination session concludes.
+
 ---
 
 ## TIER 4: APPENDIX (Reference & Human Setup)
