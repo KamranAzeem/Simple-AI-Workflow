@@ -1,17 +1,7 @@
-# IMPORTANT: Order matters: the negation (!) must come after the ignore rule.
-
-# Ignore everything under the AI directory ...
-ai/**
-
-# ... except the policy documents, which are important to track in the repository,
-#   and are the most important part of this project.
-!ai/policies/
-!ai/policies/**
-
-# ... and except the shared directory, which contains protocol design decisions
-#   and coordination files that are specific to this workflow repository (not user projects).
-!ai/shared/
-!ai/shared/**
+# Track everything under the AI directory except secrets.
+# ai/secrets/ is for local credentials and tokens — never committed.
+ai/secrets/
+ai/secrets/**
 
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/

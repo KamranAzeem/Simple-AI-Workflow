@@ -44,12 +44,6 @@ Activated by **Procedure D** in `AGENTS.md`. Rules for this role:
 (NN = sequential number starting at 01, incrementing per review within the session)
 
 ```markdown
-<!--
-Created-by: <AI assistant name>
-Last modified: <timestamp>
-Intent: Peer review report — <scope summary>
--->
-
 # Peer Review Report
 
 **Date**: YYYY-MM-DD HH:MM
