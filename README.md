@@ -247,7 +247,7 @@ The AI assistant reads this file during the context-loading phase and automatica
 
 ## Use Verbose File Names for Knowledge and Notes
 
-When you create files under `ai/shared/project-knowledge/`, `~/.ai/global-knowledge/`, or `ai/notes/`, **use long, descriptive names that clearly state what the file contains**.
+When you (or the AI) create files under `ai/shared/project-knowledge/`, `~/.ai/global-knowledge/`, `ai/notes/`, `ai/artifacts/`, `ai/shared/handoffs/`, or `docs/`, **use long, descriptive kebab-case names that clearly state what the file contains**. This is also a binding rule for the AI itself — see the *Verbose File Naming* guardrail in `ai/policies/ai-policy-common.md`, which requires every AI-generated file to follow this convention by default.
 
 Good examples:
 - `azure-postgresql-flexible-server-migration-decisions.md`
@@ -268,6 +268,8 @@ This means the filename *is* the lookup key. A descriptive name like `azure-cli-
 The same principle applies to global knowledge files in `~/.ai/global-knowledge/`. They are loaded the same way: indexed by name at boot, fetched on demand by task context.
 
 **Rule of thumb**: if a colleague couldn't guess what the file contains from its name alone, rename it.
+
+**Application/source code is the exception.** This verbose convention is for *knowledge, documentation, and workflow artifacts* — where the filename is the AI's lookup key. It does **not** apply to application code. Source files must follow their language and framework idioms (`Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`), because the AI navigates code by structure, imports, and symbol search — not by guessing contents from the filename — and verbose names there would break imports, autoloading, and routing. This split is enforced by the *Verbose File Naming* guardrail in `ai/policies/ai-policy-common.md`.
 
 ---
 
@@ -332,6 +334,15 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Mandatory Pre-load**: Before modifying any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or anything under `ai/`), the AI must fully load `protocol-decisions.md` — bypassing JIT loading, because past decisions are authoritative constraints, not optional context.
 - **Path Authoring Rule**: Any path or file reference written into policy files must be authored from the end-user's project root perspective, not from the protocol repository's internal directory structure.
 
+### 15. Verbose AI File Naming
+- **Filename as Lookup Key**: A binding guardrail requires the AI to give every knowledge, documentation, and workflow file it creates a verbose, descriptive, kebab-case name — so JIT indexing can map a task to the right file from the name alone.
+- **Source Code Carve-Out**: Application and source-code files are explicitly exempt and must follow their language/framework idioms (`Button.tsx`, `user.rb`, `models.py`) — verbose names would break imports, autoloading, and routing.
+
+### 16. Codebase Examination Mode
+- **On-Demand Expertise**: Add `codebase-examination` to `ai/ai-customization.md` to load a policy for examining (and optionally refactoring) a codebase that is too large to fit in the context window — application code, infrastructure-as-code, or database schemas.
+- **Disk-as-Memory + Tiered JIT Loading**: Understanding is persisted to project-knowledge as a tiered skeleton map (repo map → module signatures → full files), loaded just-in-time so the active context stays bounded no matter how large the codebase — or its map.
+- **Lightweight by Design**: Uses only the assistant's native file tools (`grep_search`, `read_file`); no vector databases, embeddings, or external indexing tools. Reuses branch-gating, TDD, and peer review as the safety net.
+
 ---
 
 ## Docs and Slides
@@ -343,9 +354,7 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
 - Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
 - Preferred AI tooling reference & installation: [docs/tools-preferences.md](docs/tools-preferences.md) *(legacy template — see `global-user-settings.md` for the recommended approach)*
-- AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
-- Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
-- Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
+- Codebase Examination Guide (examining/refactoring large codebases): [docs/codebase-examination-guide.md](docs/codebase-examination-guide.md)
 - Persona templates (Mentor, Architect, Security Specialist): `docs/personas/`
 - About the human user template: `docs/about-human.md` *(legacy template — see `global-user-settings.md` for the recommended approach)*
 - Beginner setup guide: `docs/vscode-cline-provider-setup-for-beginners.md`

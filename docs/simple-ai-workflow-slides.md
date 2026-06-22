@@ -37,6 +37,8 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
 - **Atomic Write Protocol** — Checkpoint state writes are sequential and transactional; partial writes abort automatically with a transaction log in chat
 - **Protocol Developer Mode** — When working on the protocol itself, AI detects the context, mandates a full load of `protocol-decisions.md`, and enforces end-user-perspective path authoring in policy files
+- **Verbose AI File Naming** — AI gives knowledge/docs/workflow files descriptive kebab-case names (filename = JIT lookup key); application/source code is exempt and follows language/framework idioms
+- **Codebase Examination Mode** — On-demand `codebase-examination` expertise to examine/refactor codebases larger than the context window using a tiered, disk-backed skeleton map; no vector DBs or external tools
 
 ---
 

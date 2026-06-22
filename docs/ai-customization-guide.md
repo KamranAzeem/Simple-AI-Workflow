@@ -93,6 +93,7 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Expertise** | `web-frontend` | `ai-policy-web-frontend.md` |
 | **Expertise** | `dba` | `ai-policy-dba.md` |
 | **Expertise** | `observability` | `ai-policy-observability.md` |
+| **Expertise** | `codebase-examination` | `ai-policy-codebase-examination.md` |
 | **Expertise** | `meta` | `ai-policy-meta.md` |
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
