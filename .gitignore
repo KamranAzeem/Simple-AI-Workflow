@@ -8,6 +8,11 @@ ai/**
 !ai/policies/
 !ai/policies/**
 
+# ... and except the shared directory, which contains protocol design decisions
+#   and coordination files that are specific to this workflow repository (not user projects).
+!ai/shared/
+!ai/shared/**
+
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
 
