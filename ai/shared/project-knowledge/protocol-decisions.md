@@ -195,3 +195,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Finding**: The first draft of `docs/codebase-examination-guide.md` used "Procedure D" and the `Inquiry`/`Directive`/`Analyze-Plan-Stop` jargon — violating the CP-2026-05-21-03 decision (no internal labels in README or `docs/`).
 - **Resolution**: Caught by peer review (review-01, CHANGES REQUESTED); rephrased to plain language; review-02 APPROVED.
 - **Reinforced rule**: Policy files (`ai/policies/*.md`) MAY use procedure/tier labels (they are internal); files under `docs/` and README MUST use plain language. This split is now exercised by the codebase-examination policy (uses "Procedure D") vs its guide (plain language).
+
+---
+
+## 2026-06-22 — Session CP-2026-06-22-02
+
+### ai/shared/ added to git version control
+- **Decision**: Add `!ai/shared/` and `!ai/shared/**` exceptions to `.gitignore` so `ai/shared/project-knowledge/protocol-decisions.md` and `ai/shared/coordination.md` are tracked in git.
+- **Rationale**: `protocol-decisions.md` is protocol design documentation with the same character as files in `docs/` — authoritative decisions and rules going forward. Losing it on a machine move is a real cost that the on-demand backup procedure does not reliably prevent. `coordination.md` is safe to track (resets to "no tasks claimed"). `ai/shared/handoffs/` (currently empty) will also be tracked automatically if files are added.
+- **Why gitignore-example.txt is unchanged**: The template is for user projects, where `ai/` is intentionally fully private-local by default. Users' `ai/shared/project-knowledge/` can contain sensitive material (API endpoints, DB schemas, internal architecture decisions). The template stays `ai/**` with no exceptions.
+- **Pattern used**: Matches the existing `!ai/policies/` / `!ai/policies/**` exception pattern already in `.gitignore`.
+- **Commit**: `888bdf6` on master, pushed to origin.
