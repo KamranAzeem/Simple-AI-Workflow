@@ -120,7 +120,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Trigger**: Runs automatically when a session resumes from a condensed/compacted conversation summary. Before responding to the user's first message, perform this self-check:
 
 1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
-2. If such a summary exists AND the user's first message is not a direct task request (i.e., it reads as a system-generated status block rather than a human instruction), then condensation has occurred.
+2. If such a summary exists, condensation has occurred — run this procedure **unconditionally**, regardless of what the user's first message contains. If the first message is a direct task request, run the procedure silently (suppress the report output) and then respond to the task. Do NOT skip this procedure because the first message looks operational.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
 
