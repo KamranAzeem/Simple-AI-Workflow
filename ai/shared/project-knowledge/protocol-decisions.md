@@ -218,4 +218,20 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Rationale**: `protocol-decisions.md` is protocol design documentation with the same character as files in `docs/` — authoritative decisions and rules going forward. Losing it on a machine move is a real cost that the on-demand backup procedure does not reliably prevent. `coordination.md` is safe to track (resets to "no tasks claimed"). `ai/shared/handoffs/` (currently empty) will also be tracked automatically if files are added.
 - **Why gitignore-example.txt is unchanged**: The template is for user projects, where `ai/` is intentionally fully private-local by default. Users' `ai/shared/project-knowledge/` can contain sensitive material (API endpoints, DB schemas, internal architecture decisions). The template stays `ai/**` with no exceptions.
 - **Pattern used**: Matches the existing `!ai/policies/` / `!ai/policies/**` exception pattern already in `.gitignore`.
+
+---
+
+## 2026-06-29 — Session CP-2026-06-29-01
+
+### State File Proof-of-Read — fresh-read requirement added to Procedure A and Procedure C
+
+- **Problem**: AI in production session reported progress.md last entry as 23 June when entries from 24th and 25th existed. When challenged, the AI admitted it "scanned too quickly and only saw the last few lines." Classic failure mode: AI summarises from conversation memory instead of reading the file fresh.
+- **Decision**: Add three protocol guardrails to AGENTS.md:
+  1. **Procedure A Step 4 sub-bullet** (`State File Proof-of-Read`): After loading the three state files, the AI must record the line count and the most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`) from each file's content. The CP identifier must be consistent across all three state files and the latest checkpoint file. If any file cannot be read, stop and report before continuing.
+  2. **Procedure A Step 7 bullet (f)**: The Proof-of-Load report must include, for each state file: line count and most recent CP identifier, read fresh from file content.
+  3. **Procedure C Step 1 sub-bullet** (`Fresh-Read Before Write`): Before staging any checkpoint write, the AI must read the current on-disk content of all three state files fresh. Do not write from a cached or summarised version held in the active context window.
+- **Why CP identifier, not a date field**: The state files contain no standalone date fields — the date is embedded in the checkpoint ID format (`CP-YYYY-MM-DD-NN`). Using the CP identifier as the date marker is unambiguous, extractable from content, and consistent across all three files and checkpoint files. An AI must read the file to know it.
+- **Why line count**: A line count is an instant verifiable signal. If the AI reports 15 lines but `wc -l` shows 35, the partial-read bug is immediately visible. It is not a perfect proof, but it is fast to spot-check.
+- **"Held in context" wording fix**: First draft of Fresh-Read Before Write said "held in context" — "context" clashes with `context.md` (the state file name). Fixed to "held in the active context window".
+- **Peer review outcome**: round-01 CHANGES REQUESTED (2 Minor: date ambiguity, context wording); fixes applied; round-02 APPROVED.
 - **Commit**: `888bdf6` on master, pushed to origin.

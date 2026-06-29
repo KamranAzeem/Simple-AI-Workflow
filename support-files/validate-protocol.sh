@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.1 ---"
+echo "--- Starting Protocol Validation v4.2 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -44,6 +44,14 @@ if ! grep -q "Knowledge Indexing" AGENTS.md; then
 fi
 if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
     echo "Error: Global AI Knowledge Directory reference missing from Knowledge Indexing step in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "State File Proof-of-Read" AGENTS.md; then
+    echo "Error: State File Proof-of-Read guarantee missing from Procedure A Step 4 in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Fresh-Read Before Write" AGENTS.md; then
+    echo "Error: Fresh-Read Before Write guarantee missing from Procedure C Step 1 in AGENTS.md."
     exit 1
 fi
 echo "Hardening anchors verified."
@@ -153,4 +161,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.1 Completed Successfully ---"
+echo "--- Protocol Validation v4.2 Completed Successfully ---"
