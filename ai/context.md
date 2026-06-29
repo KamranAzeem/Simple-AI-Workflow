@@ -1,10 +1,14 @@
 # Project Context
 
-## Latest Checkpoint: CP-2026-06-22-04
-- **Current Branch**: master (HEAD: 984647c) — clean, up to date
-- **Last Summarized Hash**: 984647c
+## Latest Checkpoint: CP-2026-06-29-01
+- **Current Branch**: master (HEAD: 9a873bd) — uncommitted changes: AGENTS.md modified, 2 review reports untracked
+- **Last Summarized Hash**: 9a873bd
 
-## Session Summary (2026-06-22)
+## Session Summary (2026-06-29)
+- **State File Proof-of-Read**: Added three protocol guardrails to AGENTS.md — (1) sub-bullet in Procedure A Step 4 requiring fresh read with CP identifier + line count as proof marker and consistency check across state files and latest checkpoint; (2) bullet (f) in Step 7 Proof-of-Load; (3) Fresh-Read Before Write sub-bullet in Procedure C Step 1 preventing writes from cached/summarised context window state.
+- **Motivation**: Concrete bug from another session where AI reported progress.md last entry as 23 June when 24th and 25th entries existed — AI admitted it "scanned too quickly."
+- **Peer review**: round-01 CHANGES REQUESTED (2 Minor: CP date ambiguity in Step 4/7, "context" wording clash with context.md filename) → fixes applied → round-02 APPROVED.
+- **Pending commit**: AGENTS.md + ai/code-review-reports/2026-06-29_review-01.md + ai/code-review-reports/2026-06-29_review-02.md
 - **Codebase Examination → triggered procedure**: Changed from "opt-in Active Expertise" to "Procedure G trigger" (same pattern as code-review). Updated policy, README, docs/guide, docs/customization-guide, slides. AGENTS.md Procedure G added.
 - **AI tracking cleanup**: Moved useful notes to project-knowledge and docs; tracked pre-existing project knowledge files; deleted stale checkpoints, code review reports, and processed notes.
 - **Verbose file-naming rule (binding)**: Added to ai-policy-common.md — AI-generated knowledge/docs/workflow files use descriptive kebab-case (filename = JIT lookup key); application/source code explicitly exempt (follows language/framework idioms). README section updated with the carve-out.

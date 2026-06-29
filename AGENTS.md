@@ -64,6 +64,7 @@ This is the single startup entry point for all AI assistants in this repository.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories (Policies, Checkpoints, Handoffs, Artifacts, Notes, Secrets, Settings, Global-Knowledge, Backups, Code-Review-Reports). Verify **Project Coordination File** exists. Only propose `mkdir -p` or file creation for **missing** items.
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents - while ignoring any compressed/backup files. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
 4.  **Loading**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), the State Files (`next-steps.md`, `progress.md`, `context.md`), the last checkpoint file, and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) are NOT loaded here — they are indexed in Step 5.
+    *   **State File Proof-of-Read**: After loading the three state files (`progress.md`, `next-steps.md`, `context.md`), record the line count and the most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`) as read from each file's content — this serves as the date marker. The CP identifier must be consistent across all three state files and the latest checkpoint file. Do not use filesystem metadata. Do not summarise from memory — read the files fresh. If any file cannot be read, stop and report it before continuing.
 5.  **Knowledge Indexing (Token Rationing)**: This is a dedicated required step — do NOT merge it with Step 4. Build a JIT reference index for both knowledge sources:
     - **Global Knowledge** (from **Global AI Knowledge Directory**): Scan all filenames and record paths, filenames, and apparent domains. **DO NOT** read the full content of any Global Knowledge file at boot time.
     - **Project Knowledge** (from **Project Knowledge Directory**, including any subdirectories): Scan all filenames and record paths, filenames, and apparent technical domains. **DO NOT** read the full text layers or load the inner content of any Project Knowledge file at boot time.
@@ -75,6 +76,7 @@ This is the single startup entry point for all AI assistants in this repository.
     - (c) All discovered pending handoffs in `ai/shared/handoffs/`.
     - (d) Git delta check since the last hash recorded in `context.md`.
     - (e) All files **indexed** from the **Project Knowledge Directory** (filenames and apparent domains — not read in full), or an explicit confirmation that it was empty.
+    - (f) For each of the three state files (`progress.md`, `next-steps.md`, `context.md`): line count and most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`), read fresh from file content.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
@@ -86,6 +88,7 @@ This is the single startup entry point for all AI assistants in this repository.
 ### PROCEDURE C: When performing a Checkpoint (Save State)
 
 1.  **Update State (The Atomic Write Protocol)**: Sync `progress.md`, `next-steps.md`, and `context.md`. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
+    *   **Fresh-Read Before Write**: Before staging any changes, read the current on-disk content of all three state files fresh. Do not write from a cached or summarised version held in the active context window.
     *   **Sequential Execution Order**: Stage your changes in memory and write them to disk in this strict sequence:
         1. 📂 `ai/progress.md` (The Past): Log the completed activity, architectural decisions, or milestone reached first.
         2. 📂 `ai/next-steps.md` (The Future): Instantly pop the completed task off the backlog and append/sequence the next atomic actions.
