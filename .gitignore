@@ -1,7 +1,10 @@
-# Track everything under the AI directory except secrets.
+# Track everything under the AI directory except secrets and local review reports.
 # ai/secrets/ is for local credentials and tokens — never committed.
 ai/secrets/
 ai/secrets/**
+# ai/code-review-reports/ contains session-local peer review artefacts — not committed.
+ai/code-review-reports/
+ai/code-review-reports/**
 
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
