@@ -31,9 +31,9 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
 - **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
-- **Session Resume (Compacted Context)** — Fully loads standing rules; rebuilds JIT indexes for policies and knowledge when resuming from a condensed summary
+- **Session Resume (Compacted Context)** — Fully loads standing rules, all Global Knowledge, and active policies; re-indexes project knowledge when resuming from a condensed summary
 - **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
-- **Token Rationing Shield** — JIT indexing keeps boot context lean; policies and knowledge load only when an active task needs them
+- **Token Rationing Shield** — Settings, Global Knowledge, and active policies are always fully loaded; large Project Knowledge files are indexed at boot and loaded on demand
 - **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
 - **Atomic Write Protocol** — Checkpoint state writes are sequential and transactional; partial writes abort automatically with a transaction log in chat
 - **Protocol Developer Mode** — When working on the protocol itself, AI detects the context, mandates a full load of `protocol-decisions.md`, and enforces end-user-perspective path authoring in policy files
@@ -54,7 +54,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files
 - **Recursive Discovery**: AI must `ls -R` the **Global User AI Directory** to find all intelligence
-- **Proof-of-Load**: AI must explicitly list Settings files fully loaded and Knowledge files indexed before proceeding
+- **Proof-of-Load**: AI must explicitly list Settings and Global Knowledge files fully loaded and Project Knowledge files indexed before proceeding
 
 > **Safe execution across any IQ tier.** Use lower-cost models without risking project state.
 
@@ -105,15 +105,15 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 # Token Rationing Shield
 
 ## The Problem: Context Window Bloat
-- Loading all project knowledge and policies at boot consumes context window space for every session
+- Loading every large knowledge file at boot consumes context window space in every session
 - Large knowledge bases make every "load context" slower and more token-intensive
 - Not all files are needed for every task
 
-## The Solution: JIT Indexing
-- **Global Knowledge indexed at boot**: `~/.ai/global-knowledge/` files — indexed by filename and domain, full content loads only when a task needs it
-- **Project Knowledge indexed at boot**: `ai/shared/project-knowledge/` files — same index-only approach
-- **Lazy Policy Loading**: Only policies relevant to the active task are read in full
-- **On-Demand Depth**: Domain-specific knowledge loads precisely when needed, not speculatively
+## The Solution: Scoped Token Rationing
+- **Global Knowledge fully loaded at boot**: `~/.ai/global-knowledge/` files — small set, loaded in full so the AI never guesses at a lesson it never read
+- **Active policies fully loaded at boot**: every policy referenced in `ai/ai-customization.md` — the AI cannot follow a rule it hasn't read
+- **Project Knowledge indexed at boot**: `ai/shared/project-knowledge/` files — index-only; large files load on demand
+- **On-Demand Depth**: Project Knowledge loads precisely when a task needs it, not speculatively
 
 > **Lean context. Fast boot. Full depth when it matters.**
 
@@ -122,7 +122,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 # Use Verbose File Names
 
 ## Why It Matters
-- The AI does not load all knowledge files at boot — it builds a lightweight index instead
+- The AI does not load large project knowledge files at boot — it builds a lightweight index instead
 - The **filename is the lookup key**: when a task requires specific knowledge, the AI maps the task to the most relevant file by name
 - A vague name like `notes.md` is invisible to this process — the AI cannot confidently map any task to it
 - A descriptive name like `azure-postgresql-migration-decisions.md` is unambiguous

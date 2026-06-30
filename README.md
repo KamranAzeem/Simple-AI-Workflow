@@ -261,11 +261,11 @@ Poor examples:
 
 **Why this matters — JIT loading:**
 
-The AI assistant does not load all knowledge files into context at boot time. Loading large files at startup wastes context window space and slows down every session. Instead, the protocol builds a lightweight index at startup — recording just the filenames and their apparent topics — and only reads a file's full content when an active task requires that specific knowledge.
+The AI assistant does not load large project knowledge files into context at boot time. Loading large files at startup wastes context window space and slows down every session. Instead, the protocol builds a lightweight index of project knowledge at startup — recording just the filenames and their apparent topics — and only reads a file's full content when an active task requires that specific knowledge.
 
 This means the filename *is* the lookup key. A descriptive name like `azure-cli-subscription-context-fix.md` tells the AI exactly what to fetch when you ask about Azure CLI subscription issues. A vague name like `notes.md` is invisible — the AI cannot confidently map a task to it without reading it, which defeats the purpose of JIT loading.
 
-The same principle applies to global knowledge files in `~/.ai/global-knowledge/`. They are loaded the same way: indexed by name at boot, fetched on demand by task context.
+Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so they are loaded **in full** at boot rather than indexed — the AI always has them available. Verbose naming still matters most for project knowledge, which is indexed at boot and fetched on demand.
 
 **Rule of thumb**: if a colleague couldn't guess what the file contains from its name alone, rename it.
 
@@ -302,6 +302,7 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 ### 7. Multi-Agent Coordination
 - **Handoff Lifecycle**: Standardized async task transfers between agents or sessions via `ai/shared/handoffs/`.
 - **Coordination Board**: Real-time status board (`ai/shared/coordination.md`) for task locking and ownership in multi-agent environments.
+- **Single-Writer State Ownership**: The three state files are the canonical project narrative, written only by the project-root orchestrator. Sub-agents and role-based team members never write them — they report via the coordination board (the awareness channel), handoffs, and role-scoped knowledge; the orchestrator reconciles those into the state files at each checkpoint.
 
 ### 8. AI-Driven Secure Development
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling (STRIDE, OWASP Top 10).
@@ -313,7 +314,7 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
 
 ### 10. Session Resume (Compacted Context)
-- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads standing rules and rebuilds JIT indexes for policies and knowledge before responding — no manual "load context" needed.
+- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads standing rules, all Global Knowledge, and active policies, and re-indexes project knowledge before responding — no manual "load context" needed.
 - **Context Integrity**: The condensed summary is treated as the sole authoritative source for current state, preventing stale data from corrupting the fresh context.
 - **Gap Detection**: If the summary indicates a module was completed without TDD or peer review, the AI flags this before touching any code.
 
@@ -322,8 +323,8 @@ The same principle applies to global knowledge files in `~/.ai/global-knowledge/
 - **Safe Multi-Project Use**: Each project maintains its own isolated AI state, even when multiple projects exist under the same parent directory.
 
 ### 12. Token Rationing (Context Shielding)
-- **JIT Indexing**: At boot, global knowledge, project knowledge, and policy files are all indexed as lightweight reference lists — full content only loads when an active task explicitly requires it. Prevents unnecessary token bloat on every "load context".
-- **Lazy Policy Loading**: Policy files are mapped by domain at startup; only the policies relevant to the active task are read in full.
+- **Scoped JIT Indexing**: Token Rationing applies only to **Project Knowledge**, which can be large (e.g. repo-scan snapshots). Those files are indexed as a lightweight reference list at boot and loaded in full only when an active task requires it.
+- **Full Load for Operational Context**: Settings, Global Knowledge, the common policy, and every policy referenced in `ai/ai-customization.md` are loaded **in full** at boot — the AI never acts on rules or lessons it hasn't actually read.
 
 ### 13. Atomic Checkpoint Protocol
 - **Atomic Write Protocol**: Checkpoint state is written in strict sequence — `progress.md` → `next-steps.md` → `context.md` — with a Transaction Log output confirming every write. If data is missing, the write aborts entirely.

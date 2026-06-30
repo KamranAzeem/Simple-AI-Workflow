@@ -1,6 +1,11 @@
-CP-2026-06-29-01
+CP-2026-06-30-03
 
 ## Pending
-- [ ] Commit AGENTS.md changes and 2 new review reports for CP-2026-06-29-01
-- [ ] Consider syncing the updated AGENTS.md / new policy to other projects using `support-files/sync-agents-md.sh` (note: sync script copies AGENTS.md only; new policy files live in the global workflow repo and are referenced by name)
-- [ ] (Optional) Review `ai/sessions/` directory — it exists but is not referenced in any policy or doc; document its purpose or remove it
+- [ ] Optional: sync updated AGENTS.md to other projects via `support-files/sync-agents-md.sh` (sync copies AGENTS.md only; policy files live in this workflow repo)
+- [ ] Human (when ready): push master to origin — this session did NOT push per instruction.
+- [ ] Deferred (breaking — design as one coherent change later): Procedure E precedence rework so resume may read the latest checkpoint's single-writer-authoritative state instead of trusting only the lossy summary.
+- [ ] Deferred (separate project): AI-team dispatcher/watcher runtime (role lifecycle, watch-spawned execution) and per-agent status files for true parallelism. Not part of the protocol contract.
+- [ ] REVISIT WHEN PARALLEL (Scenario B from CP-2026-06-30-02): Before running multiple AI agents/sessions that may write the three state files *concurrently*, adopt the per-agent-status-file model (one file per agent under `ai/shared/coordination/`, orchestrator reconciles). The current cooperative board is not race-safe for simultaneous writes; today's single-orchestrator model only holds when writes are serialized in time. Sequential role-switching in one session (Scenario A) is already safe and needs nothing.
+- [ ] Future (not now): discuss whether to add TLD.md / LLD.md to bound protocol scope and size
+- [ ] Decide fate of untracked `ai/plans/agents-md-context-reload-improvements.md` (source plan with inflated project-knowledge-count framing) — delete or annotate post-merge
+- [ ] (Optional, carried) Review `ai/sessions/` directory — exists but not referenced in any policy or doc; document its purpose or remove it

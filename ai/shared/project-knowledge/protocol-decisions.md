@@ -235,3 +235,66 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **"Held in context" wording fix**: First draft of Fresh-Read Before Write said "held in context" — "context" clashes with `context.md` (the state file name). Fixed to "held in the active context window".
 - **Peer review outcome**: round-01 CHANGES REQUESTED (2 Minor: date ambiguity, context wording); fixes applied; round-02 APPROVED.
 - **Commit**: `888bdf6` on master, pushed to origin.
+
+---
+
+## 2026-06-30 — Session CP-2026-06-30-01 (branch `feature/boot-full-load-policies-and-global-knowledge`)
+
+### Full-load active policies and Global Knowledge at boot — Token Rationing re-scoped to Project Knowledge only
+
+- **Problem**: The prior model (extended on 2026-06-18-03) applied JIT index-only loading to *both* Global Knowledge and the active policy files. This meant the AI booted with only the *names* of the policies and lessons that govern its behaviour, and was expected to load them "on demand". In practice an AI cannot know which trigger maps to which policy without first reading the policy — so deferring policy loading silently produced behaviour driven by rules the AI had never read. The same applied to Global Knowledge ("lessons learned" the AI never actually saw).
+- **Decision**: At boot (Procedure A) and on post-condensation recovery (Procedure E), the AI now loads in **full**: Settings, all Global Knowledge files, the common policy (`ai-policy-common.md`), and **every** policy referenced in the Project Customization File. **Token Rationing is retained but re-scoped to Project Knowledge only** — those files can be large (e.g. historical repo-scan snapshots) and are still shell-indexed at boot and loaded on demand.
+- **Reverses**: The Global-Knowledge portion of the 2026-06-18-03 decision ("Step 5 now covers both Global and Project Knowledge with JIT index-only semantics") and the policy-indexing portion of Procedure A. Project Knowledge index-only behaviour from that session is **kept**.
+- **Rationale**:
+  - **Robustness over token thrift for operational files**: The cost of a few hundred lines of policy/lesson text at boot is far lower than the cost of the AI applying wrong or missing rules it never read. Token Rationing still earns its keep where files are genuinely large and not always needed — Project Knowledge.
+  - **Global Knowledge is intentionally small**: A full load is cheap and removes the "guessing at a lesson it never read" failure mode.
+  - **Deferred policy loading is self-defeating**: The AI cannot map a task to a policy by name alone; the policy text *is* the mapping.
+- **Files changed on this branch**:
+  - `AGENTS.md`: TIER 2 Session Resume bullet; Procedure A Step 5 renamed `Knowledge Indexing` → `Knowledge Loading` (Global Knowledge full text; Project Knowledge keeps Token Rationing); Step 6 renamed `Policy Indexing` → `Policy Loading` with a "deliberate exception to Token Rationing" design note; Step 7 bullet (b) wording (`fully loaded`); Procedure C new Step 4 `Context Re-affirmation After Checkpoint` made **condition-gated** (reload only when context was condensed); Procedure E Step 3 full-loads common policy + Global Knowledge + Settings + referenced policies and shell-indexes Project Knowledge, with `[Reloading key files into context...]` announcements; Procedure E Step 5 references "steps 1–4", `fully loaded` wording, direct-task one-liner suppression.
+  - `ai/policies/ai-policy-common.md`: Global Knowledge Protocol `Index Only` → `Full Load`; two stale `Procedure C Step 2` → `Step 3` cross-reference fixes.
+  - `support-files/validate-protocol.sh`: v4.2 → v4.3; anchor check `Knowledge Indexing` → `Knowledge Loading`; added `Policy Loading` anchor check; kept `Token Rationing` anchor check (still present, scoped to Project Knowledge).
+  - Docs (`README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`): updated Token Rationing / JIT sections, Session Resume features, and Proof-of-Load wording to the new model.
+- **Token Rationing anchor preserved**: The validator still greps for `Token Rationing` because the concept lives on for Project Knowledge — the term was deliberately *not* removed from AGENTS.md.
+- **Source plan correction**: The originating plan (`ai/plans/agents-md-context-reload-improvements.md`) claimed ~27 project-knowledge files with large repo-scan snapshots; the actual count in this repo is 4 small files (the large-snapshot concern was imported from another workspace). The change set keeps Token Rationing for Project Knowledge on principle (files *can* be large elsewhere / in user projects), independent of this repo's current size.
+- **Constraints honoured**: Protocol Developer Mode (protocol-decisions.md fully pre-loaded); no inline machine paths (TIER 1 anchors only); no markdown hyperlinks in policy files; immutable markers preserved; AGENTS.md authored from the end-user project-root perspective.
+- **Branch**: `feature/boot-full-load-policies-and-global-knowledge` — not merged to master (user handles merge/push).
+
+---
+
+## 2026-06-30 — Session CP-2026-06-30-02 (same branch)
+
+### State file single-writer ownership, memory→disk checkpoint direction, and reconcile semantics
+
+- **Full discussion captured in**: `multi-agent-state-ownership-and-checkpoint-model.md` (Project Knowledge). This entry is the decision summary.
+- **Problem**: A design discussion clarified four intertwined questions — context freshness/integrity, checkpoint direction, state-file ownership, and multi-agent state. The prior "Fresh-Read Before Write" wording (CP-2026-06-29-01) implied the AI should distrust its memory and re-read state files at checkpoint, which is backwards: in a normal session the AI's in-memory view is the freshest, and a naive re-read risks weak models overwriting fresh deltas with a stale disk copy.
+- **Decisions**:
+  1. **Checkpoint direction is memory → disk.** A checkpoint serialises fresh in-memory state INTO the three files; it is a write-down, not a discovery read.
+  2. **The pre-write read is a reconcile, not a refresh.** It exists only to (a) preserve `progress.md`'s append-only history and (b) detect drift from another agent or condensation. Fresh in-memory deltas are authoritative for new/changed content; same-item conflicts → stop and flag.
+  3. **State files are single-writer (orchestrator-owned).** Only the project-root orchestrator writes `context.md`/`progress.md`/`next-steps.md`.
+  4. **Awareness vs. authorship.** Agents that need to know what others are doing READ the coordination board; they do not write the state files to gain awareness. Awareness = read the board; canonical narrative = orchestrator writes. This dissolves the "long-running team-mates must write state" objection.
+  5. **Checkpoint is two-phase**: inbound reconcile (read board + handoffs) → outbound write (memory → state files).
+  6. **Protocol vs. runtime boundary**: the protocol defines the *contract* (ownership, message formats, reconcile); the AI-team *runtime* (dispatcher/watcher/role lifecycle) is a separate project and must NOT be built into AGENTS.md. A role can be persistent in identity but ephemeral in execution (watch-spawned), which makes the single-writer rule uniform across execution models.
+- **Implemented today (non-breaking, this branch)**:
+  - `AGENTS.md`: TIER 2 new mandatory action **State File Single-Writer Ownership**; Procedure C Step 1 added **Write Direction (memory → disk)**, reframed **Fresh-Read Before Write** as a reconcile with precedence, added **Inbound Reconcile (multi-agent)**; Procedure E Step 3 added a coordination-board read on resume (board is not a state file; state files stay off-limits).
+  - `ai/shared/coordination.md`: added **Ownership Model** section; fixed keystone **Clear** step (was "update `ai/progress.md`" → now "record completion on the board; do NOT write state files"); added cooperative-coordination caveat.
+  - `ai/policies/ai-policy-common.md`: new **State File Ownership Protocol** subsection.
+  - `support-files/validate-protocol.sh`: v4.3 → v4.4; new `Single-Writer` anchor check; fixed a stale "Knowledge Indexing step" error string → "Knowledge Loading step".
+  - `README.md`: Multi-Agent Coordination feature augmented with single-writer state-ownership bullet.
+- **Keystone correction**: The old `coordination.md` told every sub-agent to "update `ai/progress.md`" on clear — the exact multi-writer-on-state-files pattern. That line is now removed in favour of board-only reporting.
+- **Explicitly deferred (would be breaking / out of scope)**:
+  - **Procedure E precedence rework** — letting Procedure E read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) rather than trusting only the summary. Reverses a deliberate safety rule; design as one coherent change later.
+  - **AI-team runtime** (dispatcher/watcher/role lifecycle) — separate project.
+  - **Per-agent status files** robust-concurrency variant — adopt only when real parallelism is needed.
+- **Non-breaking confirmation**: all existing validator anchors retained (`Fresh-Read Before Write`, `Atomic Write Protocol`, `Token Rationing`, `Knowledge Loading`, `Policy Loading`, etc.); the `Fresh-Read Before Write` phrase was deliberately preserved as the anchor while its body was reframed.
+- **Branch**: `feature/boot-full-load-policies-and-global-knowledge` — still not merged to master (user handles merge/push).
+
+---
+
+## 2026-06-30 — Session CP-2026-06-30-03 (finalize / merge)
+
+### Single-writer clarification (session vs role) + Scenario B revisit trigger + branch merged
+
+- **Session-not-role clarification**: A user question exposed an ambiguity — the single-writer rule listed role names (developer, security, document-controller) that a human might *switch the same session into*, which could be misread as "a session in developer role may not write state files." Clarified in `AGENTS.md` TIER 2 and mirrored in `ai-policy-common.md`: **ownership is by session/process identity, not role label.** One owning session switching role-hats is still the orchestrator and writes the state files normally; the prohibition targets **separate** sub-agent sessions/processes.
+- **Scenario A (sequential role-switch in one session)**: explicitly safe — one writer wearing different hats.
+- **Scenario B (concurrent sessions writing the *same* state files)**: deliberately **not blessed** — the cooperative board is read-before-write, not a lock, so simultaneous writes can lose updates. Recorded as an explicit **revisit-when-parallel trigger** (adopt per-agent status files under `ai/shared/coordination/` when real parallelism is introduced) in design note §7 and `next-steps.md`. Concurrent writes to *distinct* role-scoped knowledge files remain fine.
+- **Merge**: the whole branch (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) squash-merged into master as one commit; feature branch deleted; **not pushed** to origin per user instruction. Final peer review review-04 APPROVED. Validator v4.4.

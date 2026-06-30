@@ -26,8 +26,8 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
 3.  **Conditional Autonomy**: AI assistants are permitted to autonomously squash-merge a feature branch to `master`/`main` ONLY if:
     - They are working on a dedicated feature branch.
     - ALL verification steps in the handoff pass with zero errors.
-    - All coordination state (coordination.md, progress.md) is updated correctly.
-    *Otherwise, human approval is mandatory before any merge.*
+    - The coordination board (`coordination.md`) is updated correctly.
+    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`progress.md`, `next-steps.md`, `context.md`) itself per the single-writer rule (`AGENTS.md` TIER 2). A sub-agent that is **not** the orchestrator does not merge or write the state files — it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
 
 ### 2. Global (Cross-Project) Collaboration
 This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
@@ -61,7 +61,7 @@ All assistants share a mandatory set of operational rules and contracts (branch-
     - **Claim**: Record ownership in `ai/shared/coordination.md`.
     - **Execute**: Work on a feature branch.
     - **Verify**: Run all verification steps.
-    - **Finalize**: Merge to master (if autonomy conditions met) and update `ai/progress.md`.
+    - **Finalize**: If the Conditional Autonomy conditions are met, the agent is acting as the orchestrator for that branch — merge to master and reconcile the state files. If not, record completion on `ai/shared/coordination.md` and leave the three state files for the project-root orchestrator (single-writer rule).
     - **Cleanup**: Delete the handoff file and clear the claim in `ai/shared/coordination.md`.
 
 
