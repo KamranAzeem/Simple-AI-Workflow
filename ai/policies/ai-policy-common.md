@@ -127,6 +127,12 @@ Before presenting any generated file to the user, run the appropriate linter/val
     - **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
     - **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
+### CLI Command Accuracy
+Before presenting any shell or CLI command to the user, verify the following:
+1. **Exact parameter names and flags**: Check `<tool> <subcommand> --help` output or the tool's official online documentation. Do not rely on memory — flag and option names differ across tools, versions, and vendors. A plausible-sounding flag that does not exist is worse than no command at all.
+2. **Resource identifiers**: Never guess or infer subscription IDs, resource names, resource group names, connection strings, or similar identifiers. Derive them from live tool queries or from values explicitly confirmed in the current session context.
+3. **If a parameter cannot be verified**: State this explicitly. Instruct the user to confirm the correct value before running the command rather than presenting an unverified placeholder.
+
 ## Universal Testing Standards
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
