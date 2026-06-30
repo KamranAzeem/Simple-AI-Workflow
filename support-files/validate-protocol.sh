@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.2 ---"
+echo "--- Starting Protocol Validation v4.4 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -38,12 +38,16 @@ if ! grep -q "Token Rationing" AGENTS.md; then
     echo "Error: Token Rationing steps missing from Procedure A in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Knowledge Indexing" AGENTS.md; then
-    echo "Error: Knowledge Indexing step missing from Procedure A in AGENTS.md (must cover both Global and Project Knowledge)."
+if ! grep -q "Knowledge Loading" AGENTS.md; then
+    echo "Error: Knowledge Loading step missing from Procedure A in AGENTS.md (must cover both Global and Project Knowledge)."
+    exit 1
+fi
+if ! grep -q "Policy Loading" AGENTS.md; then
+    echo "Error: Policy Loading step missing from Procedure A in AGENTS.md (referenced policies must be fully loaded at boot)."
     exit 1
 fi
 if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
-    echo "Error: Global AI Knowledge Directory reference missing from Knowledge Indexing step in AGENTS.md."
+    echo "Error: Global AI Knowledge Directory reference missing from Knowledge Loading step in AGENTS.md."
     exit 1
 fi
 if ! grep -q "State File Proof-of-Read" AGENTS.md; then
@@ -52,6 +56,10 @@ if ! grep -q "State File Proof-of-Read" AGENTS.md; then
 fi
 if ! grep -q "Fresh-Read Before Write" AGENTS.md; then
     echo "Error: Fresh-Read Before Write guarantee missing from Procedure C Step 1 in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Single-Writer" AGENTS.md; then
+    echo "Error: State File Single-Writer Ownership rule missing from TIER 2 in AGENTS.md."
     exit 1
 fi
 echo "Hardening anchors verified."
@@ -161,4 +169,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.2 Completed Successfully ---"
+echo "--- Protocol Validation v4.4 Completed Successfully ---"

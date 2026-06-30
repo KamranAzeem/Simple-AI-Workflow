@@ -14,8 +14,8 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
 - **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
 - **Status**: Personal persistent memory that follows you into every project.
-- **Usage**: Indexed at initialization (filenames and apparent domains recorded; full content is **not** loaded at boot). Full content is loaded on demand when an active task requires it — see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
-- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Because only the index is loaded at boot, use descriptive filenames — see **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
+- **Usage**: Loaded in full at initialization (this set is intentionally small). Token Rationing — index-at-boot, load-on-demand — applies to larger **Project Knowledge** files, not to Global Knowledge; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
+- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify — the filename is also the lookup key for index-only Project Knowledge — see **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
 
 ## 3. Task Handoffs (`ai/shared/handoffs/`)
 Used for transferring specific tasks and context between AI assistants or sessions.
@@ -108,7 +108,7 @@ When a session begins from a condensed/compacted conversation summary (rather th
 ### How it works
 1. The AI detects it is resuming from a compacted summary (identified by structured headings like "Conversation Overview", "Technical Foundation", etc.).
 2. It fully loads `ai-policy-common.md` (the universal base policy) and the **Project Customization File** to restore active Traits, Expertise, and Development Workflow rules.
-3. It builds a JIT index of project knowledge files and applicable policies (filenames and apparent domains — not full text). Full content is loaded on demand when a task requires it.
+3. It fully loads all Global Knowledge files and every applicable policy file referenced in the customization file, and builds a shell-discovered index of project knowledge files (filenames and apparent domains — full text loaded on demand). Large project knowledge files stay index-only to keep context lean.
 4. It outputs a brief confirmation of what was loaded and flags any gaps (e.g., a module completed without TDD or peer review).
 
 ### Key rules
@@ -194,17 +194,17 @@ Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI re
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI does not eagerly load all project knowledge and policy files into its active context window. Instead it builds a lightweight JIT (Just-In-Time) reference index.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, Global Knowledge, the common policy, and every policy referenced in `ai/ai-customization.md`. It applies **Token Rationing** only where files can be large and are not always needed: **Project Knowledge**.
 
 ### How it works
-1. **Global Knowledge Indexing**: The AI scans filenames under `~/.ai/global-knowledge/` and records a reference index — paths, filenames, and apparent domains. Full file contents are only read when a task explicitly requires them.
-2. **Project Knowledge Indexing**: The AI scans filenames and directory structure under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full file contents are only read when a task explicitly requires them.
-3. **Policy Indexing**: The AI identifies which policy files apply based on `ai/ai-customization.md`, then logs their names and domains as a reference. Full policy text is only loaded when an active task touches that domain.
+1. **Global Knowledge — full load**: The AI loads the full text of every file under `~/.ai/global-knowledge/`. This set is intentionally small, so a full load is cheap and guarantees the AI never guesses at a lesson it never read.
+2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai/ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
+3. **Project Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
-- **Token Efficiency**: Avoids loading large background documents into every session, freeing context window space for active work.
-- **Fast Boot**: "Load context" is faster because only the required minimum is read at startup.
-- **On-Demand Depth**: When a task requires domain-specific knowledge, the relevant policy or knowledge file is loaded in full at that point.
+- **Robustness first**: Operational rules (policies, lessons) are always in context — the AI never acts on rules it hasn't read.
+- **Token Efficiency where it counts**: Large Project Knowledge files are not loaded speculatively, keeping the boot context lean.
+- **On-Demand Depth**: When a task needs a specific Project Knowledge file, it is loaded in full at that point.
 
 ## 14. Atomic Write Protocol & Log Condensation
 

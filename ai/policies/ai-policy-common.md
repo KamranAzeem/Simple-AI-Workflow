@@ -42,7 +42,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 4. `ai/context.md`
 
 ### Checkpoint & Backup Procedures
-- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 2 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 3 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
 - **Backup (Procedure F)**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
@@ -84,16 +84,22 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Global Knowledge Protocol
 - **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
-- **Bootstrapping & Load Context — Knowledge (Index Only)**: Files in the **Global AI Knowledge Directory** are subject to Token Rationing. At boot, the agent MUST scan filenames and record a reference index (path, filename, apparent domain). **DO NOT** read the full content of any Global Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge.
+- **Bootstrapping & Load Context — Knowledge (Full Load)**: Files in the **Global AI Knowledge Directory** are loaded in FULL at boot. This set is intentionally small, so Token Rationing does NOT apply to it — a full load is cheap and prevents the agent from guessing at lessons it never read. (Token Rationing still governs large Project Knowledge files — see the Project Knowledge Protocol.)
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
 - **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by a "Promote to Shared" command.
-- **Normalization**: When loading Global Knowledge files (on demand), treat them as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
+- **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project Knowledge Directory** as defined in AGENTS.md Procedure A Step 5. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 2) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 3) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+
+## State File Ownership Protocol
+- **Single-Writer Rule**: The three state files (`ai/context.md`, `ai/progress.md`, `ai/next-steps.md`) are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write the state files.
+- **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the coordination board (`ai/shared/coordination.md`); it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
+- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (per AGENTS.md Procedure C Step 1).
+- **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve append-only history and detect drift — never a refresh that overwrites fresh work with a stale disk copy.
 
 ## Operational Standards
 

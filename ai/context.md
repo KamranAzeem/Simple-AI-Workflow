@@ -1,8 +1,39 @@
 # Project Context
 
+## Latest Checkpoint: CP-2026-06-30-03
+- **Current Branch**: `master` — feature branch `feature/boot-full-load-policies-and-global-knowledge` squash-merged into master and deleted. NOT pushed to origin (user handles push).
+- **Last Summarized Hash**: (set at next master sync)
+
+## Session Summary (2026-06-30, third checkpoint — finalize/merge)
+- **Merged**: the full boot-full-load + single-writer-ownership + checkpoint-reconcile + doc-alignment work squash-merged to master as one commit; feature branch deleted; not pushed.
+- **Single-writer clarified (session, not role)**: AGENTS.md TIER 2 and ai-policy-common.md now state state-file ownership is by session/process identity — one session switching role-hats (manager → developer → document-controller) is still the orchestrator and writes the state files normally; the prohibition targets separate sub-agent sessions/processes.
+- **Scenario B deferred with a trigger**: concurrent sessions writing the *same* state files is not race-safe under the cooperative board; the per-agent-status-file model is the recorded revisit-when-parallel path (design note §7, next-steps).
+- **Validation/review**: validate-protocol.sh green at v4.4; peer review review-04 APPROVED (final merge-readiness).
+
+## Latest Checkpoint: CP-2026-06-30-02
+- **Current Branch**: `feature/boot-full-load-policies-and-global-knowledge` (off master) — committed on branch, NOT merged to master (awaiting human review/merge/push)
+- **Last Summarized Hash**: (set at next master sync)
+
+## Session Summary (2026-06-30, second checkpoint)
+- **Multi-agent state ownership + checkpoint direction (repo-level contract)**: The three state files (`context.md`/`progress.md`/`next-steps.md`) are now formally **single-writer** — written only by the project-root orchestrator. Sub-agents and role-based team members never write them; they report via the coordination board (the awareness channel), handoffs, and role-scoped Project Knowledge. The orchestrator **reconciles** those into the state files at checkpoint.
+- **Checkpoint direction is memory → disk**: a checkpoint serialises the orchestrator's fresh in-memory context into the state files. The pre-write "Fresh-Read Before Write" is reframed as a **reconcile** (preserve append-only history + detect drift), not a memory refresh; fresh in-memory deltas win; same-item conflicts stop and flag.
+- **Scope discipline**: implemented the protocol *contract* only. The AI-team *runtime* (dispatcher/watcher/role lifecycle, per-agent status files) and the Procedure E precedence rework (resume reading latest-checkpoint state) are deliberately **deferred** (the latter would be breaking).
+- **Files**: AGENTS.md (TIER 2 single-writer MANDATORY ACTION; Procedure C Step 1 Write Direction + reconcile + Inbound Reconcile; Procedure E Step 3 board read); coordination.md (Ownership Model + Clear keystone fix + concurrency caveat); ai-policy-common.md (State File Ownership Protocol subsection); validate-protocol.sh v4.3→v4.4 (Single-Writer anchor + stale-string fix); README feature #7 bullet; new design note multi-agent-state-ownership-and-checkpoint-model.md; protocol-decisions.md CP-2026-06-30-02 entry.
+- **Validation**: validate-protocol.sh all 8 checks pass at v4.4. **Peer review**: review-03 APPROVED (1 Minor doc-consistency follow-up flagged, out of today's protocol scope).
+
+## Latest Checkpoint: CP-2026-06-30-01
+- **Current Branch**: `feature/boot-full-load-policies-and-global-knowledge` (off master) — committed on branch, NOT merged to master (awaiting human review/merge/push)
+- **Last Summarized Hash**: (set at next master sync)
+
+## Session Summary (2026-06-30)
+- **Context-loading model change (repo-level)**: Token Rationing is now scoped to **Project Knowledge only**. At boot (Procedure A) and on post-condensation recovery (Procedure E), the AI **full-loads** Settings, all Global Knowledge, the common policy, and every active policy referenced in the customization file. Project Knowledge remains shell-indexed at boot and loaded on demand.
+- **Reverses** the Global-Knowledge JIT portion of CP-2026-06-18-03 (which had extended index-only loading to Global Knowledge and policies). Project Knowledge index-only behaviour from that session is kept.
+- **Files**: AGENTS.md (Procedure A Step 5 Knowledge Loading + Step 6 Policy Loading with design note + Step 4/7b wording + TIER 2 Session Resume + Procedure C condition-gated Step 4 + Procedure E Step 3/5); ai-policy-common.md (Global Knowledge Full Load + Procedure C Step 2→3 fixes); validate-protocol.sh v4.3 (Knowledge Loading + Policy Loading anchors, Token Rationing anchor retained); README/workflow-guide/slides docs; protocol-decisions.md 2026-06-30 entry.
+- **Validation**: validate-protocol.sh all 8 checks pass at v4.3.
+- **Peer review**: round-01 CHANGES REQUESTED (1 Major: AGENTS.md Step 4 stale "indexed in Step 5") → fixed → round-02 APPROVED.
+
 ## Latest Checkpoint: CP-2026-06-29-01
-- **Current Branch**: master (HEAD: 9a873bd) — uncommitted changes: AGENTS.md modified, 2 review reports untracked
-- **Last Summarized Hash**: 9a873bd
+- **Branch (at that time)**: master (HEAD: 9a873bd)
 
 ## Session Summary (2026-06-29)
 - **State File Proof-of-Read**: Added three protocol guardrails to AGENTS.md — (1) sub-bullet in Procedure A Step 4 requiring fresh read with CP identifier + line count as proof marker and consistency check across state files and latest checkpoint; (2) bullet (f) in Step 7 Proof-of-Load; (3) Fresh-Read Before Write sub-bullet in Procedure C Step 1 preventing writes from cached/summarised context window state.
