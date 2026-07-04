@@ -362,3 +362,35 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Git state**: master, 11 commits ahead of origin, NOT pushed
 - **Policy count**: 14 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher)
 - **Sync scripts tested**: migration from old `ai/` layout → root verified end-to-end
+
+---
+
+## 2026-07-04 — Session CP-2026-07-04-04 (final checkpoint — release and cleanup)
+
+### v2.0.0 GitHub release
+- Tagged and published v2.0.0 on GitHub with full changelog covering 40 commits since v1.0.0.
+- Release title: "Customization at root, auto-migration, Humanized Output".
+- All 8 peer reviews (review-04 through review-10) completed.
+
+### Bootstrap audit/creation separation
+- Procedure A Step 2: changed from "Only propose `mkdir -p` for missing items" to "Only report missing items — do not create them."
+- Procedure B: split into separate audit (Step 1) and creation (Step 2) steps. Fixes AI getting stuck on silent `mkdir -p` output during load context.
+
+### Archive and backup exclusions added to TIER 2
+- Archive File Exclusion: all find/ls commands skip `*.tar*` and `*.zip` files.
+- Backup Directory Exclusion: `~/.ai/backups/` is never scanned, listed, or read.
+
+### Compliance directory references removed
+- All separate mentions of **Project Compliance Policies Directory** removed from Procedure A Step 7b, Procedure C Step 4, and Procedure E Step 3. The recursive find on the parent directory already covers it.
+
+### README diagram updated
+- Replaced the old wide two-column ASCII diagram with a compact side-by-side tree view using standard ASCII characters. Displays Simple-AI-Workflow vs Your Project with `-->` relationship arrow.
+
+## Key configuration values (end of session)
+
+- **Validator version**: v4.5
+- **Commits since v1.0.0**: 40
+- **Git state**: master, 22 commits ahead of origin, NOT pushed
+- **Tags**: v1.0.0 (old), v2.0.0 (current)
+- **Release**: v2.0.0 published on GitHub
+- **Policy count**: 14 modular policies
