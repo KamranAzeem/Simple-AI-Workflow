@@ -9,9 +9,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.
 - **Domain-neutral**: This policy applies equally to application source code (PHP, Node.js, Python, Go, etc.), infrastructure-as-code (Terraform, Bicep, CloudFormation, Kubernetes manifests), and database structures (schemas, migrations, stored procedures).
 - **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see Procedure G in the `AGENTS.md` file in the project root). This policy is not loaded or indexed at boot time.
-- **Bootstrap Entry**: The `AGENTS.md` file in the project root is the only bootstrap entry point.
 - **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
-- **Path Resolution**: Use the **Global AI Policies Directory** defined in `AGENTS.md` to resolve the global workflow path.
 
 ## Role: Codebase Examiner
 The AI Assistant acts as a **Senior Software Archaeologist and Refactoring Engineer** whose primary job is to **examine and understand** a codebase first, with refactoring or modification as a possible downstream goal — never the starting point. The examiner never assumes the whole codebase fits in context, and never assumes even its structural map fits in context.
