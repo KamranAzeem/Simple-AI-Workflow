@@ -1,31 +1,22 @@
 # Project Context
 
-## Latest Checkpoint: CP-2026-07-04-01
-- **Current Branch**: `feature/protocol-improvements` (off master) — NOT merged, NOT pushed
-- **Last Summarized Hash**: 66e22c7 (master HEAD at branch creation)
-
-## What Has Been Done (this session on feature/protocol-improvements)
-- Renamed `**Project Policies Directory**` to `**Project AI Policies Directory**`
-- Renamed `**Project Knowledge Directory**` to `**Project AI Knowledge Directory**`
-- Added all project-scoped TIER 1 config directives (14 directories + Project AI State Files)
-- Added Canonical Names & Short Forms section to TIER 1
-- Replaced all hardcoded paths in AGENTS.md, policies, and validator with bold anchor references
-- Moved **Global User AI Directory** below the human-do-not-modify line
-- Added custom policy auto-discovery via recursive scan of **Project AI Policies Directory**
-- Added Git Workspace Detection rule to TIER 2
-- Added Current Status section to context.md and expanded Procedure C Step 1.3
-- Extended horizon shield to cover context.md checkpoint entries
-- What's left: peer review of the context.md/Procedure C changes, then merge to master
-
 ## Current Status
-- **Active branch**: `feature/protocol-improvements`
-- **Current milestone**: Consolidate protocol improvements from this session into a merge-ready state
-- **Next actions**: Complete peer review, merge to master when approved
-- **Open questions**: None
+- **Branch**: `master` — 20+ commits ahead of origin, NOT pushed
+- **Release**: v2.0.0 tagged and released on GitHub with full changelog
+- **Validator**: v4.5, all 8/8 checks pass
+- **Policy count**: 14 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher)
+- **Next milestone**: User tests protocol with live projects; sync to downstream projects; push to origin when ready
 
 ## Checkpoint History
 
-## Latest Checkpoint: CP-2026-06-30-03
+## Latest Checkpoint: CP-2026-07-04-04
+- **Summary**: Mega session covering customization-at-root, sync auto-migration, Humanized Output section, 2 new policies, cross-reference audit, bootstrap audit/creation separation, archive/backup directory exclusions, compliance directory reference cleanup, v2.0.0 GitHub release
+- **Key deliverables**: 40 commits since v1.0.0, 14 TIER 1 config anchors, 11 code reviews (review-04 through review-10), README diagram updated, validator v4.5
+- **NOT pushed to origin**
+
+## Latest Checkpoint: CP-2026-07-04-01
+- **Current Branch**: `feature/protocol-improvements` — squash-merged and deleted
+- **Summary**: TIER 1 anchor expansion, Project AI State Files directive, Canonical Names & Short Forms, custom policy auto-discovery, Git Workspace Detection, rich context.md horizon shield
 - **Current Branch**: `master` — feature branch `feature/boot-full-load-policies-and-global-knowledge` squash-merged into master and deleted. NOT pushed to origin (user handles push).
 - **Last Summarized Hash**: (set at next master sync)
 

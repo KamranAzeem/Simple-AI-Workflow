@@ -1,7 +1,7 @@
-CP-2026-06-30-03
+CP-2026-07-04-04
 
 ## Pending
-- [ ] Optional: sync updated AGENTS.md to other projects via `support-files/sync-agents-md.sh` (sync copies AGENTS.md only; policy files live in this workflow repo)
+- [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`
 - [ ] Human (when ready): push master to origin — this session did NOT push per instruction.
 - [ ] Deferred (breaking — design as one coherent change later): Procedure E precedence rework so resume may read the latest checkpoint's single-writer-authoritative state instead of trusting only the lossy summary.
 - [ ] Deferred (separate project): AI-team dispatcher/watcher runtime (role lifecycle, watch-spawned execution) and per-agent status files for true parallelism. Not part of the protocol contract.
