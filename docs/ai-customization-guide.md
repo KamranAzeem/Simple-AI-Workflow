@@ -17,7 +17,7 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 - cloud
 - api-backend
 ```
-**How it works**: The AI assistant will look for `ai-policy-cloud.md` and `ai-policy-api-backend.md` in the global directory and load them as additive layers.
+**How it works**: The AI assistant will look for a matching file in the global directory using two patterns — `ai-policy-<name>.md` first, then `<name>.md` — and load all matched files as additive layers.
 
 ---
 
