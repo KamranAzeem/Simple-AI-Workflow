@@ -112,19 +112,12 @@ The result? **Peace of mind.** You know exactly where the AI directory is, you k
 ## How it works
 
 ```
-┌─ Global AI Workflow ────────────────────┐
-│  AGENTS.md          ai/policies/        │
-│  support-files/     docs/               │
-│  sync-agents-md.sh  (14 policy files)   │
-└──────────────────────┬──────────────────┘
-                       │
-               sync-agents-md.sh
-                       │
-                       ▼
-┌─ Your Project ──────────────────────────┐
-│  AGENTS.md           ai-customization.md│
-│  ai/ (tracking)      src/ (your code)   │
-└──────────────────────────────────────────┘
+   Simple-AI-Workflow/              Your Project/
+   |-- AGENTS.md                    |-- AGENTS.md
+   |-- ai-customization.md          |-- ai-customization.md
+   |-- ai/policies/          -->    |-- ai/
+   |-- docs/                        |-- src/
+   |-- support-files/               |-- ...
 ```
 
 ## How to initialize / bootstrap?
