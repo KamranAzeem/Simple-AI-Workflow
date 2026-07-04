@@ -71,7 +71,7 @@ CONFIG_KEYS=(
     "Global User AI Directory"
     "Global AI Policies Directory"
     "Global AI Knowledge Directory"
-    "Global AI Backup Directory"
+    "Global AI Backups Directory"
     "Global AI Settings Directory"
     "Project Artifacts Directory"
     "Project Code Review Reports Directory"

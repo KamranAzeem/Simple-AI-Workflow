@@ -25,7 +25,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Global User AI Directory**: `[HOME]/.ai/`
 **Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
-**Global AI Backup Directory**: (Global User AI Directory)/backups/
+**Global AI Backups Directory**: (Global User AI Directory)/backups/
 **Global AI Settings Directory**: (Global User AI Directory)/settings/
 
 **Project Artifacts Directory**: `ai/artifacts/`
@@ -69,7 +69,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary (rather than a fresh "load context"), AI MUST run **Procedure E** immediately before responding to the user's first request. This fully loads standing rules (`ai-policy-common.md`), the Project Customization File, all Global Knowledge files, and every policy file referenced in the Project Customization File, and builds a live shell-discovered index of Project Knowledge files. If the summary indicates a module was completed without TDD or peer review, raise this gap with the user before continuing.
 - **Git Workspace Detection**: Before offering git operations on the project root, scan for `.git` subdirectories within the project tree (excluding `ai/`). If any `.git` directory is found, the root is part of a larger git workspace — do not treat it as a git repo itself. Do not offer `git init`, run `git log` on the root, or propose git operations that assume the root is independently tracked. Users may also define explicit workspace rules in the **Project Customization File**.
 - **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
-- **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backup Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
+- **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
 
 ---
 
@@ -87,7 +87,7 @@ The following short forms are recognized as equivalents to their canonical direc
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project AI Knowledge Directory**
     - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**
-    - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backup Directory**
+    - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
     Verify **Project Coordination File** exists. Only report missing items — do not create them.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents — excluding compressed and archive files per the **Archive File Exclusion** rule in TIER 2. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
