@@ -109,25 +109,23 @@ The result? **Peace of mind.** You know exactly where the AI directory is, you k
 
 
 
-## How it looks like
+## How it works
 
-
-```text
-+--------------------------------------+                +---------------------------------------+
-| ( The global framework location )    |                | ( Your project directory view)        |
-| .                                    |                | .                                     |
-| ├─ AGENTS.md (Primary)               |                | ├─ AGENTS.md (Copy)                   |
-| ├─ ai/                               |                | ├─ ai/                                |
-| │  ├─ policies/                      | <------------- | │  ├─ ai-customization.md             |
-| │  │  ├─ ai-policy-common.md         |                | │  ├─ context.md                      |
-| │  │  ├─ ai-policy-cloud.md          |                | │  ├─ next-steps.md                   |
-| │  │  └─ ...                         |                | │  └─ progress.md                     |
-| │  └─ shared/                        |                | ├─ README.md        }    your         |
-| └─ support-files/                    |                | └─ src/             } -- application  |
-+--------------------------------------+                +---------------------------------------+
-
-
-``` 
+```
+┌─ Global AI Workflow ────────────────────┐
+│  AGENTS.md          ai/policies/        │
+│  support-files/     docs/               │
+│  sync-agents-md.sh  (14 policy files)   │
+└──────────────────────┬──────────────────┘
+                       │
+               sync-agents-md.sh
+                       │
+                       ▼
+┌─ Your Project ──────────────────────────┐
+│  AGENTS.md           ai-customization.md│
+│  ai/ (tracking)      src/ (your code)   │
+└──────────────────────────────────────────┘
+```
 
 ## How to initialize / bootstrap?
 
