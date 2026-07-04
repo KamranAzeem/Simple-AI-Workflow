@@ -15,10 +15,10 @@ When implementing new features, architecture changes, or functional code modific
 
 ### Conditional Autonomy for Handoffs
 AI assistants are authorized to autonomously merge a feature branch to `master`/`main` **ONLY IF** all of the following conditions are met:
-1. The task is being processed from a handoff file in `ai/shared/handoffs/`.
+1. The task is being processed from a handoff file in **Project Handoffs Directory**.
 2. The handoff file contains a `## Verification` section with objective, executable validation steps.
 3. ALL verification steps pass with zero errors (verified via shell command output).
-4. The `ai/shared/coordination.md` board is updated (claimed before, cleared after).
+4. The **Project Coordination File** board is updated (claimed before, cleared after).
 5. The `ai/progress.md` file is updated with the completion entry.
 *If any condition is not met, human approval is mandatory for the merge.*
 
@@ -37,12 +37,12 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 **Exception — Post-Condensation Recovery**: When Procedure E is active (session resumed from a condensed summary), the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
 
 1. `ai/next-steps.md`
-2. Latest daily checkpoint in `ai/daily-checkpoints/`
+2. Latest daily checkpoint in **Project Daily Checkpoints Directory**
 3. `ai/progress.md`
 4. `ai/context.md`
 
 ### Checkpoint & Backup Procedures
-- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project Knowledge Directory** as defined in Procedure C Step 3 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in Procedure C Step 3 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
 - **Backup (Procedure F)**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
@@ -65,7 +65,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. `replace_string_in_file`, `create_file`) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
-- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file — whether requested by the user or on its own initiative — it MUST give the file a verbose, descriptive, kebab-case name that lets the file's purpose be inferred from the name alone (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; words separated by hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (project-knowledge, handoffs, notes, artifacts, code-review-reports) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. **Source code is exempt**: application and source-code files — and their tests, configs, and framework-dictated files — MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`), never the verbose knowledge-file style, which would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search — not by inferring contents from the filename — so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
+- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file — whether requested by the user or on its own initiative — it MUST give the file a verbose, descriptive, kebab-case name that lets the file's purpose be inferred from the name alone (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; words separated by hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. **Source code is exempt**: application and source-code files — and their tests, configs, and framework-dictated files — MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`), never the verbose knowledge-file style, which would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search — not by inferring contents from the filename — so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
@@ -90,14 +90,14 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project Knowledge Directory** as defined in AGENTS.md Procedure A Step 5. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in AGENTS.md Procedure A Step 5. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 3) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 
 ## State File Ownership Protocol
-- **Single-Writer Rule**: The three state files (`ai/context.md`, `ai/progress.md`, `ai/next-steps.md`) are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write the state files.
-- **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the coordination board (`ai/shared/coordination.md`); it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
+- **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
+- **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
 - **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (per AGENTS.md Procedure C Step 1).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve append-only history and detect drift — never a refresh that overwrites fresh work with a stale disk copy.
 

@@ -1,5 +1,30 @@
 # Project Context
 
+## Latest Checkpoint: CP-2026-07-04-01
+- **Current Branch**: `feature/protocol-improvements` (off master) — NOT merged, NOT pushed
+- **Last Summarized Hash**: 66e22c7 (master HEAD at branch creation)
+
+## What Has Been Done (this session on feature/protocol-improvements)
+- Renamed `**Project Policies Directory**` to `**Project AI Policies Directory**`
+- Renamed `**Project Knowledge Directory**` to `**Project AI Knowledge Directory**`
+- Added all project-scoped TIER 1 config directives (14 directories + Project AI State Files)
+- Added Canonical Names & Short Forms section to TIER 1
+- Replaced all hardcoded paths in AGENTS.md, policies, and validator with bold anchor references
+- Moved **Global User AI Directory** below the human-do-not-modify line
+- Added custom policy auto-discovery via recursive scan of **Project AI Policies Directory**
+- Added Git Workspace Detection rule to TIER 2
+- Added Current Status section to context.md and expanded Procedure C Step 1.3
+- Extended horizon shield to cover context.md checkpoint entries
+- What's left: peer review of the context.md/Procedure C changes, then merge to master
+
+## Current Status
+- **Active branch**: `feature/protocol-improvements`
+- **Current milestone**: Consolidate protocol improvements from this session into a merge-ready state
+- **Next actions**: Complete peer review, merge to master when approved
+- **Open questions**: None
+
+## Checkpoint History
+
 ## Latest Checkpoint: CP-2026-06-30-03
 - **Current Branch**: `master` — feature branch `feature/boot-full-load-policies-and-global-knowledge` squash-merged into master and deleted. NOT pushed to origin (user handles push).
 - **Last Summarized Hash**: (set at next master sync)

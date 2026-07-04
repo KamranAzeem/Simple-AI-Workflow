@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.4 ---"
+echo "--- Starting Protocol Validation v4.5 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -73,10 +73,21 @@ CONFIG_KEYS=(
     "Global AI Knowledge Directory"
     "Global AI Backup Directory"
     "Global AI Settings Directory"
-    "Project Customization File"
-    "Project Policy Directory"
-    "Project Knowledge Directory"
+    "Project Artifacts Directory"
+    "Project Code Review Reports Directory"
+    "Project Compliance Policies Directory"
     "Project Coordination File"
+    "Project Customization File"
+    "Project Daily Checkpoints Directory"
+    "Project Handoffs Directory"
+    "Project AI Knowledge Directory"
+    "Project Notes Directory"
+    "Project Pending Directory"
+    "Project Plans Directory"
+    "Project AI Policies Directory"
+    "Project Secrets Directory"
+    "Project Shared Directory"
+    "Project AI State Files"
 )
 for key in "${CONFIG_KEYS[@]}"; do
     if ! grep -q "$key" AGENTS.md; then
@@ -101,9 +112,9 @@ echo "Global structure checked."
 # 4. Project Structure
 echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
-    "policies" "daily-checkpoints" "shared/handoffs" 
-    "shared/project-knowledge" "artifacts" "notes" "secrets"
-    "code-review-reports"
+    "artifacts" "code-review-reports" "daily-checkpoints" "notes"
+    "pending" "plans" "policies" "policies/compliance" "secrets"
+    "shared" "shared/handoffs" "shared/project-knowledge"
 )
 for sub in "${PROJECT_SUBS[@]}"; do
     if [ ! -d "ai/$sub" ]; then
@@ -169,4 +180,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.4 Completed Successfully ---"
+echo "--- Protocol Validation v4.5 Completed Successfully ---"

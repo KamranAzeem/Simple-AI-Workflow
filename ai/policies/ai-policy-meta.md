@@ -30,7 +30,7 @@ Responsibilities
 
 Before preparing or executing changes that modify files outside the `ai/` directory:
 
-1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project Knowledge Directory** before making any change to `AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
+1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** before making any change to `AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
 2. Run a secrets scan focused on files to be changed.
 3. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
 4. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
@@ -63,7 +63,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ## References
 
 - Bootstrapping: `AGENTS.md`
-- Tracking files: `ai/next-steps.md`, `ai/progress.md`, `ai/daily-checkpoints/`
+- Tracking files: `ai/next-steps.md`, `ai/progress.md`, **Project Daily Checkpoints Directory**
 - Helper scripts: `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`
 
 ---

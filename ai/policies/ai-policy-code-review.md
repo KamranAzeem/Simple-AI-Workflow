@@ -40,7 +40,7 @@ Activated by **Procedure D** in `AGENTS.md`. Rules for this role:
 
 ## Report Format
 
-**Filename**: `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`
+**Filename**: **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md
 (NN = sequential number starting at 01, incrementing per review within the session)
 
 ```markdown
