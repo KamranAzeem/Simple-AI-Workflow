@@ -22,7 +22,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
 - **Global Settings** (`~/.ai/settings/global-user-settings.md`) — AI learns your skills, tool preferences, and cross-project context
 - **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
-- **Project Customization** — `ai/ai-customization.md` for project-specific tailoring with curated traits catalog
+- **Project Customization** — `ai-customization.md` at project root for project-specific tailoring with curated traits catalog
 - **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
 - **Idiot-Proof Protocol** — Structural guardrails for safe use with lower-capability "lite" models
 - **Native Backups** — On-demand cross-platform state archiving; say `"backup ai"` to trigger (not automatic at checkpoints)
@@ -111,7 +111,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 
 ## The Solution: Scoped Token Rationing
 - **Global Knowledge fully loaded at boot**: `~/.ai/global-knowledge/` files — small set, loaded in full so the AI never guesses at a lesson it never read
-- **Active policies fully loaded at boot**: every policy referenced in `ai/ai-customization.md` — the AI cannot follow a rule it hasn't read
+- **Active policies fully loaded at boot**: every policy referenced in `ai-customization.md` — the AI cannot follow a rule it hasn't read
 - **Project Knowledge indexed at boot**: `ai/shared/project-knowledge/` files — index-only; large files load on demand
 - **On-Demand Depth**: Project Knowledge loads precisely when a task needs it, not speculatively
 

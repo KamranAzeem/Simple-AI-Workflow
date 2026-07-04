@@ -297,4 +297,20 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Session-not-role clarification**: A user question exposed an ambiguity — the single-writer rule listed role names (developer, security, document-controller) that a human might *switch the same session into*, which could be misread as "a session in developer role may not write state files." Clarified in `AGENTS.md` TIER 2 and mirrored in `ai-policy-common.md`: **ownership is by session/process identity, not role label.** One owning session switching role-hats is still the orchestrator and writes the state files normally; the prohibition targets **separate** sub-agent sessions/processes.
 - **Scenario A (sequential role-switch in one session)**: explicitly safe — one writer wearing different hats.
 - **Scenario B (concurrent sessions writing the *same* state files)**: deliberately **not blessed** — the cooperative board is read-before-write, not a lock, so simultaneous writes can lose updates. Recorded as an explicit **revisit-when-parallel trigger** (adopt per-agent status files under `ai/shared/coordination/` when real parallelism is introduced) in design note §7 and `next-steps.md`. Concurrent writes to *distinct* role-scoped knowledge files remain fine.
+
+---
+
+## 2026-07-04 — Session CP-2026-07-04-01
+
+### ai-customization.md moved to project root
+
+- **Problem**: Bootstrap required editing two files (AGENTS.md for workflow directory, `ai/ai-customization.md` for personalization) — one buried inside `ai/`. The bootstrap procedure had unnecessary friction (create `ai/`, copy file into it, exit, reload).
+- **Decision**: Move the customization file from `ai/ai-customization.md` to `ai-customization.md` at the project root (sibling of `AGENTS.md`). Move `**Global AI Workflow Directory**` from AGENTS.md TIER 1 into the customization file — AGENTS.md becomes entirely read-only.
+- **Why root**: Single location, visible at project root, simpler bootstrap. The AI does not hunt for the file — it checks one fixed location. If the old `ai/ai-customization.md` exists, the AI instructs the user to add the workflow directory and move it.
+- **No fallback scanning**: The AI does not scan directories. If the file is missing, it guides the user through first-time setup (show template, explain config, optionally suggest cloning the repo).
+- **Chicken-and-egg**: Resolved by adding Procedure A Step 0 (Customization Discovery) — the AI reads the customization file first, extracts the workflow directory, then resolves all derived TIER 1 paths.
+- **No impact on loading behavior**: All 10+ references to `**Project Customization File`** use the TIER 1 anchor — changing one line in TIER 1 propagates everywhere. Procedure A Steps 4/6/7b, Procedure E Step 2, etc. all auto-adapt.
+- **Stale references fixed**: Procedure E Step 2 "only `ai/` file" wording updated. Procedure F backup commands now include `ai-customization.md`.
+- **Files changed**: AGENTS.md (TIER 1, Procedures A/B/E/F), `ai-customization.md` (new at root), `docs/ai-customization.md` (template updated), `.gitignore`, README, docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, docs/compliance-guide.md, docs/personas/README.md.
+- **Bootstrap simplified**: Copy `docs/ai-customization.md` → `ai-customization.md`, edit one file, run "load context". No more `mkdir -p ai/`, no exit-and-reload.
 - **Merge**: the whole branch (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) squash-merged into master as one commit; feature branch deleted; **not pushed** to origin per user instruction. Final peer review review-04 APPROVED. Validator v4.4.

@@ -46,6 +46,9 @@ chat-logs/
 # ignore local scratch files for AI-assisted work
 notes-ai/
 
+# Project customization file — sits at project root, git-ignored per project
+ai-customization.md
+
 
 # IMPORTANT: Order matters: the negation (!) must come after the ignore rule.
 

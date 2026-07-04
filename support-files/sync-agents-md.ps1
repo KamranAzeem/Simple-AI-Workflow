@@ -1,10 +1,13 @@
 <#
 .SYNOPSIS
-  Sync AGENTS.md from a source into project directories that contain an older AGENTS.md
+  Sync AGENTS.md from a source into project directories, then ensure each
+  target has a properly configured ai-customization.md at its project root.
+  Automatically migrates from the old ai/ai-customization.md location.
 
 .DESCRIPTION
-  Recursively finds files named AGENTS.md under a root path and replaces them while
-  preserving target-specific base directory settings.
+  Recursively finds files named AGENTS.md under a root path and replaces them
+  while updating the target's ai-customization.md with the correct workflow
+  directory path derived from the source location.
 
 USAGE
   ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
@@ -37,7 +40,10 @@ try {
   exit 2
 }
 
+$workflowDir = Split-Path -Parent $srcPath
+
 Write-Host "Source: $srcPath"
+Write-Host "Workflow directory: $workflowDir"
 Write-Host "Searching under: $targetAbs"
 
 $foundFiles = Get-ChildItem -Path $targetAbs -Recurse -Filter AGENTS.md -File -ErrorAction SilentlyContinue |
@@ -53,49 +59,133 @@ Write-Host ""
 Write-Host "Found $matchCount AGENTS.md file(s)"
 Write-Host "------------------------------------------------------------"
 
-$srcContent = Get-Content -Raw -Path $srcPath
+function Get-ConfigSection {
+  param([string]$WorkflowDir)
+  @"
+
+## AI Workflow Configuration
+
+<!-- Configuring this directory is mandatory. Point it to your Simple-AI-Workflow clone. -->
+
+**Global AI Workflow Directory**: $WorkflowDir
+
+See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+"@
+}
+
+function Get-DefaultCustomizationFile {
+  param([string]$WorkflowDir)
+  @"
+# AI Customization
+
+## AI Workflow Configuration
+
+<!-- Configuring this directory is mandatory. Point it to your Simple-AI-Workflow clone. -->
+
+**Global AI Workflow Directory**: $WorkflowDir
+
+See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+
+## Active Expertise
+- web-frontend
+
+## Active Traits
+- System Integrator: Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile); flag breaking changes in shared schemas or DTOs.
+
+## Required Compliance
+- gdpr
+- iso-27001
+"@
+}
+
+function Ensure-CustomizationFile {
+  param([string]$ProjectRoot, [string]$WorkflowDir)
+
+  $customizationFile = Join-Path -Path $ProjectRoot -ChildPath "ai-customization.md"
+  $oldFile = Join-Path -Path $ProjectRoot -ChildPath "ai/ai-customization.md"
+  $bakFile = Join-Path -Path $ProjectRoot -ChildPath "ai-customization.md.bak"
+  $configHeader = "## AI Workflow Configuration"
+  $configLinePattern = '\*\*Global AI Workflow Directory\*\*:'
+
+  # CASE A: old ai/ location exists
+  if (Test-Path -Path $oldFile -PathType Leaf) {
+    if (Test-Path -Path $customizationFile -PathType Leaf) {
+      Write-Host "  WARNING: both $oldFile and $customizationFile exist."
+      Write-Host "  Renaming $oldFile to ai-customization.md.bak"
+      if (-not $WhatIf) {
+        Move-Item -Path $oldFile -Destination $bakFile -Force
+      }
+    } else {
+      Write-Host "  Moving $oldFile to $customizationFile and adding config section"
+      if (-not $WhatIf) {
+        Move-Item -Path $oldFile -Destination $customizationFile -Force
+        $content = Get-Content -Raw -Path $customizationFile
+        $configSection = Get-ConfigSection -WorkflowDir $WorkflowDir
+        # Insert config section after the first line (# AI Customization)
+        $lines = $content -split "`n"
+        if ($lines.Count -ge 1) {
+          $newContent = $lines[0] + $configSection + "`n" + ($lines[1..($lines.Count-1)] -join "`n")
+          [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
+        }
+      }
+    }
+    return
+  }
+
+  # CASE C: root customization file exists
+  if (Test-Path -Path $customizationFile -PathType Leaf) {
+    $content = Get-Content -Raw -Path $customizationFile
+    if ($content -match $configHeader) {
+      # Check if the path is correct
+      $expectedLine = "**Global AI Workflow Directory**: $WorkflowDir"
+      if ($content -match [regex]::Escape($expectedLine)) {
+        Write-Host "  ai-customization.md: config path is correct"
+      } else {
+        Write-Host "  ai-customization.md: updating workflow directory path"
+        if (-not $WhatIf) {
+          $newContent = $content -replace "$configLinePattern .*", "**Global AI Workflow Directory**: $WorkflowDir"
+          [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
+        }
+      }
+    } else {
+      Write-Host "  ai-customization.md: adding config section"
+      if (-not $WhatIf) {
+        $configSection = Get-ConfigSection -WorkflowDir $WorkflowDir
+        $lines = $content -split "`n"
+        if ($lines.Count -ge 1) {
+          $newContent = $lines[0] + $configSection + "`n" + ($lines[1..($lines.Count-1)] -join "`n")
+          [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
+        }
+      }
+    }
+    return
+  }
+
+  # CASE D: no customization file exists — create one
+  Write-Host "  ai-customization.md: creating with default configuration"
+  if (-not $WhatIf) {
+    $defaultContent = Get-DefaultCustomizationFile -WorkflowDir $WorkflowDir
+    [System.IO.File]::WriteAllText($customizationFile, $defaultContent, [System.Text.UTF8Encoding]::new($false))
+  }
+}
 
 foreach ($m in $foundFiles) {
   $target = $m.FullName
+  $targetRoot = Split-Path -Parent $target
   Write-Host "Target: $target"
 
-  $targetContent = Get-Content -Raw -Path $target
-
-  # Extract preserved config values.
-  # Alternation (Framework|Workflow) for backward compatibility with older files.
-  $targetWfDir = if ($targetContent -match '\*\*Global AI (Framework|Workflow) Directory\*\*: `([^`]+)`') { $Matches[2] } else { $null }
-  $targetUserDir = if ($targetContent -match '\*\*Global User AI Directory\*\*: `([^`]+)`') { $Matches[1] } else { $null }
-
-  # Fallback: older files used "Global Policies Directory" instead of Workflow Dir
-  if (-not $targetWfDir -and ($targetContent -match '\*\*Global Policies Directory\*\*: `([^`]+)`')) {
-     $oldPath = $Matches[1]
-     $targetWfDir = $oldPath -replace '\\ai\\policies\\?$', '' -replace '/ai/policies/?$', ''
+  # Step 1: Copy source AGENTS.md to target (no path manipulation needed)
+  if ($WhatIf) {
+    Write-Host "  DRY-RUN: would update $target from source"
+    Write-Host "  (AGENTS.md sync)"
+  } else {
+    [System.IO.File]::WriteAllText($target, $srcContent, [System.Text.UTF8Encoding]::new($false))
+    Write-Host "  AGENTS.md synced"
   }
 
-  Write-Host "  Preserved Workflow Dir: $(if ($targetWfDir) { $targetWfDir } else { "(using source)" })"
-  Write-Host "  Preserved User AI Dir:   $(if ($targetUserDir) { $targetUserDir } else { "(using source)" })"
+  # Step 2: Ensure ai-customization.md has correct workflow directory
+  Ensure-CustomizationFile -ProjectRoot $targetRoot -WorkflowDir $workflowDir
 
-  try {
-    $newContent = $srcContent
-
-    if ($targetWfDir) {
-      # Groups: $1=prefix+opening-backtick, $2=Framework|Workflow, $3=old-path, $4=closing-backtick
-      $newContent = [regex]::Replace($newContent, '(\*\*Global AI (Framework|Workflow) Directory\*\*: `)([^`]+)(`)', '$1' + $targetWfDir + '$4')
-    }
-    if ($targetUserDir) {
-      # Groups: $1=prefix+opening-backtick, $2=old-path, $3=closing-backtick
-      $newContent = [regex]::Replace($newContent, '(\*\*Global User AI Directory\*\*: `)([^`]+)(`)', '$1' + $targetUserDir + '$3')
-    }
-
-    if ($WhatIf) {
-      Write-Host "  DRY-RUN: would update $target"
-    } else {
-      Write-Host "  Updating $target"
-      [System.IO.File]::WriteAllText($target, $newContent, [System.Text.UTF8Encoding]::new($false))
-    }
-  } catch {
-    Write-Warning "  Failed to process $target : $_"
-  }
   Write-Host "------------------------------------------------------------"
 }
 

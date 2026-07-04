@@ -1,6 +1,14 @@
-<!-- Copy this file to `ai/ai-customization.md` in your project to tailor the AI's expertise and behavior. -->
+<!-- Copy this file to `ai-customization.md` in your project root (sibling of AGENTS.md). -->
 
 # AI Customization
+
+## AI Workflow Configuration
+
+<!-- Set this to the absolute path of your Simple-AI-Workflow clone. -->
+
+**Global AI Workflow Directory**: /path/to/Simple-AI-Workflow
+
+See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
 
 ---
 

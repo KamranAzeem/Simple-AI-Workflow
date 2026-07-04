@@ -15,14 +15,13 @@ This is the single startup entry point for all AI assistants in this repository.
 
 ## TIER 1: CONFIGURATION
 
-**Global AI Workflow Directory**: `/c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/`
-
 **Path Normalization & Inference Rules**:
 - **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `C:\Users\username` on Windows, `/c/Users/username` on Gitbash ).
-- **Dynamic Paths**: All paths below are derived from the base above. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
+- **Dynamic Paths**: All paths below are derived from **Global AI Workflow Directory** (resolved at boot from **Project Customization File**) and **Global User AI Directory**. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
 
 <!-- Human user must not touch/modify the lines below -->
 
+**Global AI Workflow Directory**: resolved from **Project Customization File** at boot
 **Global User AI Directory**: `[HOME]/.ai/`
 **Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
@@ -33,7 +32,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Project Code Review Reports Directory**: `ai/code-review-reports/`
 **Project Compliance Policies Directory**: `ai/policies/compliance/`
 **Project Coordination File**: `ai/shared/coordination.md`
-**Project Customization File**: `ai/ai-customization.md`
+**Project Customization File**: `ai-customization.md`
 **Project Daily Checkpoints Directory**: `ai/daily-checkpoints/`
 **Project Handoffs Directory**: `ai/shared/handoffs/`
 **Project AI Knowledge Directory**: `ai/shared/project-knowledge/`
@@ -78,6 +77,10 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. AI is forbidden from modifying any file content during this phase.
 
+0.  **Customization Discovery**: Check for **Project Customization File** at project root (`ai-customization.md`):
+    - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory`**. If the section is missing, inform the user and stop.
+    - If the old `ai/ai-customization.md` exists instead → inform the user: "Your customization file is in the old `ai/` directory. Add a `## AI Workflow Configuration` section with a `**Global AI Workflow Directory**` entry, then move it to the project root as `ai-customization.md`." Then **stop** — do not proceed with context loading.
+    - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `~/Projects/Simple-AI-Workflow` from its GitHub URL. Then **stop** — do not proceed with context loading.
 1.  **Workflow Access**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project AI Knowledge Directory**
@@ -106,9 +109,10 @@ The following short forms are recognized as equivalents to their canonical direc
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
 1.  **Execute Procedure A, Step 2** (Audit/Create directories and **Project Coordination File**).
-2.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
-3.  **Git Setup**: Ensure `ai/**` and `AGENTS.md` are in `.gitignore`.
-4.  **Finalize**: Proceed to Procedure A.
+2.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
+3.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
+4.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
+5.  **Finalize**: Proceed to Procedure A.
 
 ### PROCEDURE C: When performing a Checkpoint (Save State)
 
@@ -164,7 +168,7 @@ The following short forms are recognized as equivalents to their canonical direc
 **Precedence Rule**: The condensed summary is the **sole authoritative source** for current task state, progress, and next steps. It supersedes **Project AI State Files** and checkpoints. AI MUST NOT read these state files during this procedure — not to verify, not to cross-reference, not for any reason. Reading them would inject stale pre-compaction data and silently corrupt the fresh context.
 
 1. **Load settings from the "TIER 1: CONFIGURATION" section.**
-2. **Load the Project Customization File** to restore active Traits, Expertise modules, and Development Workflow rules. This is the only `ai/` file you may read in this procedure besides project knowledge and policies.
+2. **Load the Project Customization File** to restore active Traits, Expertise modules, and Development Workflow rules. This is the only customization file you may read in this procedure besides project knowledge and policies.
 3. **Load standing rules and knowledge**:
     - Announce to the user: **[Reloading key files into context...]**
     - Load the FULL TEXT of `ai-policy-common.md` from the **Global AI Policies Directory** — the base common policy, always loaded unconditionally.
@@ -187,8 +191,8 @@ The following short forms are recognized as equivalents to their canonical direc
    
 ### PROCEDURE F: When the user says "backup ai", or "backup ai state"
 1.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
-    - **Linux/Bash**: `tar -czf [Global AI Backup Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/`
-    - **Windows/PS**: `Compress-Archive -Path ai/ -DestinationPath "[Global AI Backup Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
+    - **Linux/Bash**: `tar -czf [Global AI Backup Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/ ai-customization.md`
+    - **Windows/PS**: `Compress-Archive -Path ai/, ai-customization.md -DestinationPath "[Global AI Backup Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
 2.  **Reporting**: Confirm checkpoint ID and backup file path.
 
 ### PROCEDURE G: When the user says "examine this codebase" or "codebase examination"

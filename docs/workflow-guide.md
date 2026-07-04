@@ -149,7 +149,7 @@ The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Uni
 These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
 
 ## 11. AI Customization & Curated Traits
-The `ai/ai-customization.md` file is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
+The `ai-customization.md` file at the project root is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`).
 - **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
@@ -194,11 +194,11 @@ Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI re
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, Global Knowledge, the common policy, and every policy referenced in `ai/ai-customization.md`. It applies **Token Rationing** only where files can be large and are not always needed: **Project Knowledge**.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, Global Knowledge, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** only where files can be large and are not always needed: **Project Knowledge**.
 
 ### How it works
 1. **Global Knowledge — full load**: The AI loads the full text of every file under `~/.ai/global-knowledge/`. This set is intentionally small, so a full load is cheap and guarantees the AI never guesses at a lesson it never read.
-2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai/ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
+2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
 3. **Project Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
