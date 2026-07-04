@@ -94,9 +94,9 @@ The following short forms are recognized as equivalents to their canonical direc
     - **Global Knowledge** (from **Global AI Knowledge Directory**): Load the FULL TEXT of every file. This set is intentionally small, so a full load is cheap and removes the risk of the AI guessing at lessons it never read. Do NOT index-only.
     - **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories): Project Knowledge remains subject to **Token Rationing** — these files can be large (e.g. historical repo-scan snapshots or archives). Run a shell command (`find` or `ls -R`) to discover all filenames and record paths, filenames, and apparent technical domains as a reference index. **DO NOT** load the full text of any Project Knowledge file at boot time; load it on demand when an active task requires it.
     If a directory is completely empty, explicitly note it in your state tracking.
-6.  **Policy Loading**: Scan the **Project Customization File** for the `## Active Expertise` section. For each listed expertise name, locate the matching policy file in the **Global AI Policies Directory**:
-    - Try `ai-policy-<name>.md` first (standard naming convention).
-    - If not found, try `<name>.md` (fallback for files without the prefix).
+6.  **Policy Loading**: Scan the **Project Customization File** for the `## Active Expertise` section.
+    - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
+    - Locate matching files in the **Global AI Policies Directory** using a recursive shell command (`find` or equivalent).
     - Load the FULL TEXT of every matched file.
     Do NOT defer policy loading to "on demand" — the AI cannot follow a rule it has not read.
     Then run a recursive shell command (`find` or equivalent) on **Project AI Policies Directory** to discover all `.md` files the user placed there. Load the FULL TEXT of every discovered file. These are user-created custom policies that must be loaded at boot even though they are not listed in the Project Customization File.
