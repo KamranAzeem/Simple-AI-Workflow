@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # sync-agents-md.sh
-# Copy the canonical AGENTS.md into project directories, preserving each
-# target's CONFIGURATION section (Workflow Dir and User AI Dir).
+# Copy the canonical AGENTS.md into project directories, then ensure each
+# target has a properly configured ai-customization.md at its project root.
+# Automatically migrates from the old ai/ai-customization.md location.
 set -euo pipefail
 
 usage() {
@@ -48,11 +49,12 @@ if [ ! -d "$TARGET_PATH" ]; then
   echo "Target path is not a directory: $TARGET_PATH" >&2; exit 2
 fi
 
-# Resolve absolute paths
 SRC_ABS=$(cd "$(dirname "$SOURCE")" && pwd -P)/$(basename "$SOURCE")
 TARGET_ABS=$(cd "$TARGET_PATH" && pwd -P)
+WORKFLOW_DIR=$(dirname "$SRC_ABS")
 
 echo "Source: $SRC_ABS"
+echo "Workflow directory: $WORKFLOW_DIR"
 echo "Searching under: $TARGET_ABS"
 
 # Find all AGENTS.md files under target, excluding the source itself
@@ -72,49 +74,128 @@ fi
 echo "Found $match_count AGENTS.md file(s)"
 echo "----------------------------------------------------------------------------"
 
+# Generate the config section snippet with the correct workflow path
+make_config_section() {
+  cat <<EOF
+
+## AI Workflow Configuration
+
+<!-- Configuring this directory is mandatory. Point it to your Simple-AI-Workflow clone. -->
+
+**Global AI Workflow Directory**: $WORKFLOW_DIR
+
+See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+EOF
+}
+
+# Ensure ai-customization.md at a project root has the correct config
+ensure_customization_file() {
+  local project_root="$1"
+  local customization_file="$project_root/ai-customization.md"
+  local old_file="$project_root/ai/ai-customization.md"
+  local bak_file="$project_root/ai-customization.md.bak"
+
+  # CASE A: old ai/ location exists
+  if [ -f "$old_file" ]; then
+    if [ -f "$customization_file" ]; then
+      echo "  WARNING: both $old_file and $customization_file exist."
+      echo "  Renaming $old_file to ai-customization.md.bak"
+      if [ $DRY_RUN -eq 0 ]; then
+        mv "$old_file" "$project_root/ai-customization.md.bak"
+      fi
+    else
+      echo "  Moving $old_file to $customization_file and adding config section"
+      if [ $DRY_RUN -eq 0 ]; then
+        mv "$old_file" "$customization_file"
+        # Prepend config section after the # AI Customization title
+        local tmp
+        tmp=$(mktemp)
+        {
+          head -1 "$customization_file"
+          make_config_section
+          tail -n +2 "$customization_file"
+        } > "$tmp"
+        mv "$tmp" "$customization_file"
+      fi
+    fi
+    return
+  fi
+
+  # CASE C: root customization file exists
+  if [ -f "$customization_file" ]; then
+    if grep -q '^## AI Workflow Configuration' "$customization_file"; then
+      # Section exists — extract current path and compare
+      local current_dir
+      current_dir=$(grep "^\*\*Global AI Workflow Directory\*\*:" "$customization_file" | head -1 | sed 's/^\*\*Global AI Workflow Directory\*\*: //')
+      if [ "$current_dir" = "$WORKFLOW_DIR" ]; then
+        echo "  ai-customization.md: config path is correct"
+      else
+        echo "  ai-customization.md: updating workflow directory path (was: $current_dir)"
+        if [ $DRY_RUN -eq 0 ]; then
+          local escaped_dir
+          escaped_dir=$(printf '%s' "$WORKFLOW_DIR" | sed 's/[&\]/\\&/g')
+          sed -i -E 's#^(\*\*Global AI Workflow Directory\*\*): .*#\1: '"$escaped_dir"'#' "$customization_file"
+        fi
+      fi
+    else
+      echo "  ai-customization.md: adding config section"
+      if [ $DRY_RUN -eq 0 ]; then
+        local tmp
+        tmp=$(mktemp)
+        {
+          head -1 "$customization_file"
+          make_config_section
+          tail -n +2 "$customization_file"
+        } > "$tmp"
+        mv "$tmp" "$customization_file"
+      fi
+    fi
+    return
+  fi
+
+  # CASE D: no customization file exists — create one
+  echo "  ai-customization.md: creating with default configuration"
+  if [ $DRY_RUN -eq 0 ]; then
+    cat > "$customization_file" <<CUSTEOF
+# AI Customization
+
+## AI Workflow Configuration
+
+<!-- Configuring this directory is mandatory. Point it to your Simple-AI-Workflow clone. -->
+
+**Global AI Workflow Directory**: $WORKFLOW_DIR
+
+See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+
+## Active Expertise
+- web-frontend
+
+## Active Traits
+- System Integrator: Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile); flag breaking changes in shared schemas or DTOs.
+
+## Required Compliance
+- gdpr
+- iso-27001
+CUSTEOF
+  fi
+}
+
 for f_abs in "${matches[@]}"; do
+  target_root=$(dirname "$f_abs")
   echo "Target: $f_abs"
 
-  # Extract preserved config values from the target file.
-  # Uses capturing group for alternation; back-references \1 and \3
-  # are used in the replacement pattern below.
-  target_wf_dir=$(sed -n -E 's/.*\*\*Global AI (Framework|Workflow) Directory\*\*: `([^`]*)`.*/\2/p' "$f_abs" | head -1 || true)
-
-  target_user_dir=$(sed -n -E 's/.*\*\*Global User AI Directory\*\*: `([^`]*)`.*/\1/p' "$f_abs" | head -1 || true)
-
-  # Fallback: older files used "Global Policies Directory" instead of Workflow Dir
-  if [ -z "$target_wf_dir" ]; then
-    target_wf_dir=$(sed -n -E 's/.*\*\*Global Policies Directory\*\*: `([^`]*)`.*/\1/p' "$f_abs" | head -1 || true)
-    # Strip the /ai/policies/ suffix to get the workflow directory
-    target_wf_dir="${target_wf_dir%/ai/policies}"
-  fi
-
-  echo "  Preserved Workflow Dir: ${target_wf_dir:-(using source)}"
-  echo "  Preserved User AI Dir:   ${target_user_dir:-(using source)}"
-
-  tmp=$(mktemp)
-  cp -f "$SRC_ABS" "$tmp"
-
-  if [ -n "$target_wf_dir" ]; then
-    # Escape only & and \ for sed replacement (delimiter is # so / is safe)
-    esc_val=$(printf '%s' "$target_wf_dir" | sed 's/[&\]/\\&/g')
-    # Use # as delimiter to avoid conflict with | inside alternation groups.
-    # Single-quote the pattern to avoid backtick interpretation by bash.
-    # The $esc_val is injected by breaking out of single quotes.
-    sed -i -E 's#(\*\*Global AI (Framework|Workflow) Directory\*\*: `)[^`]+(`)#\1'"${esc_val}"'\3#' "$tmp"
-  fi
-  if [ -n "$target_user_dir" ]; then
-    esc_val=$(printf '%s' "$target_user_dir" | sed 's/[&\]/\\&/g')
-    sed -i -E 's#(\*\*Global User AI Directory\*\*: `)[^`]+(`)#\1'"${esc_val}"'\2#' "$tmp"
-  fi
-
+  # Step 1: Copy source AGENTS.md to target (no path manipulation needed)
   if [ $DRY_RUN -eq 1 ]; then
-    echo "  DRY-RUN: would update $f_abs"
-    rm -f "$tmp"
+    echo "  DRY-RUN: would update $f_abs from source"
+    echo "  (AGENTS.md sync)"
   else
-    echo "  Updating $f_abs"
-    mv -f "$tmp" "$f_abs"
+    cp -f "$SRC_ABS" "$f_abs"
+    echo "  AGENTS.md synced"
   fi
+
+  # Step 2: Ensure ai-customization.md has correct workflow directory
+  ensure_customization_file "$target_root"
+
   echo "----------------------------------------------------------------------------"
 done
 

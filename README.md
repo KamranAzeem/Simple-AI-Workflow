@@ -1,5 +1,7 @@
 # Simple AI Workflow
 
+> **⚠️ Important for existing users**: The customization file has moved from `ai/ai-customization.md` to `ai-customization.md` at the project root. If you have an existing `ai/ai-customization.md`, add a `## AI Workflow Configuration` section with your `**Global AI Workflow Directory**` and move the file to the root. See the [migration guide](docs/ai-customization-guide.md) for details.
+
 Objective: **Instead of *chatting* with AI, start *working* with AI**
 
 ## Setup & prerequisites
@@ -33,8 +35,8 @@ Objective: **Instead of *chatting* with AI, start *working* with AI**
 You can use the following sequence to on-board an existing project with this workflow.
 
 1. Copy `AGENTS.md` from the global workflow location to the root of your new project.
-2. Open the copied `AGENTS.md` and update the **CONFIGURATION** section to match your environment.
-3. *Optional, but useful*: Create `ai/ai-customization.md` file with the "Expertise", "Traits", or "Compliance" modules you want AI to use for this project. See [AI customization guide](docs/ai-customization-guide.md) .
+2. Copy `docs/ai-customization.md` to `ai-customization.md` at the project root and update the **Global AI Workflow Directory** to point to your workflow clone.
+3. *Optional*: Add "Expertise", "Traits", or "Compliance" modules to `ai-customization.md` to tailor the AI to your project. See [AI customization guide](docs/ai-customization-guide.md).
 4. In your project root, run the prompt: `"bootstrap using AGENTS.md protocol"` to set up the directory for AI.
 5. After every important task, remember to perform a checkpoint; after any AI or computer restart, use `"load context using AGENTS.md protocol"` to resume.
 
@@ -44,8 +46,10 @@ To keep your project's AI workflows synchronized with the latest features, follo
 
 1.  **Checkpoint**: Before updating, perform a final "checkpoint" of your current work.
 2.  **Pull Updates**: Pull the latest changes into your global `Simple-AI-Workflow` repository.
-3.  **Update `AGENTS.md`**: Run the provided helper script in `support-files/` to copy the updated `AGENTS.md` to your project directory. 
-    *   *Note: This script is designed to preserve your existing project-specific configuration. Please verify that your configuration remains intact after running the script.*
+3.  **Run the sync script**: Execute the sync script from your workflow repository, pointing it at your projects directory:
+    - **Linux**: `bash /path/to/Simple-AI-Workflow/support-files/sync-agents-md.sh --source /path/to/Simple-AI-Workflow/AGENTS.md --target-path ~/Projects`
+    - **Windows**: `.\sync-agents-md.ps1 -Source C:\Simple-AI-Workflow\AGENTS.md -TargetPath C:\Users\You\Projects`
+    The script copies the updated `AGENTS.md` to each project and ensures each has a properly configured `ai-customization.md` — migrating from the old `ai/` layout if needed.
 4.  **Load Context**: Re-open your IDE and initiate the session by typing: `"load context using AGENTS.md protocol"` in your AI chat extension. This will automatically align your project `ai/` directory structure with the updated protocol.
 
 
@@ -140,7 +144,7 @@ The AI assistant will follow the bootstrap instructions in `AGENTS.md`, and it w
   - Initialize state tracking files (`next-steps.md`, daily checkpoint, and `progress.md`).
   - Add `ai/` and `AGENTS.md` to `.gitignore`.
 - The global policies are accessed directly from the path referenced in `AGENTS.md`, so manual copying of policy files is not required.
-- Optionally, you can customize the behavior by adding `ai/ai-customization.md`.
+- Optionally, you can customize the behavior by adding `ai-customization.md`.
 - Ensure the `ai/` directory is ignored in `.gitignore`.
 
 ## How to start working in an already initialized/bootstrapped project directory?
@@ -285,7 +289,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **Continuous Reliability**: Ensures the AI always operates from a known-good state.
 
 ### 3. Native Checkpoint Backups
-- **On-Demand Archiving**: Native, cross-platform one-liners archive the `ai/` directory to a global backup folder. Triggered on demand by saying `"backup ai"` or `"backup ai state"` — not automatic at checkpoints.
+- **On-Demand Archiving**: Native, cross-platform one-liners archive the `ai/` directory and `ai-customization.md` to a global backup folder. Triggered on demand by saying `"backup ai"` or `"backup ai state"` — not automatic at checkpoints.
 - **Zero-Script Reliability**: Built directly into the protocol to ensure your project history is protected.
 
 ### 4. Surgical Git-Ignore Exceptions
@@ -302,7 +306,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 ### 7. Multi-Agent Coordination
 - **Handoff Lifecycle**: Standardized async task transfers between agents or sessions via `ai/shared/handoffs/`.
 - **Coordination Board**: Real-time status board (`ai/shared/coordination.md`) for task locking and ownership in multi-agent environments.
-- **Single-Writer State Ownership**: The three state files are the canonical project narrative, written only by the project-root orchestrator. Sub-agents and role-based team members never write them — they report via the coordination board (the awareness channel), handoffs, and role-scoped knowledge; the orchestrator reconciles those into the state files at each checkpoint.
+- **Single-Writer State Ownership**: **Project AI State Files** are the canonical project narrative, written only by the project-root orchestrator. Sub-agents and role-based team members never write them — they report via the coordination board (the awareness channel), handoffs, and role-scoped knowledge; the orchestrator reconciles those into the state files at each checkpoint.
 
 ### 8. AI-Driven Secure Development
 - **Implicit Security**: The AI inherently applies secure coding and infrastructure best practices derived from threat modeling (STRIDE, OWASP Top 10).
@@ -324,11 +328,12 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 
 ### 12. Token Rationing (Context Shielding)
 - **Scoped JIT Indexing**: Token Rationing applies only to **Project Knowledge**, which can be large (e.g. repo-scan snapshots). Those files are indexed as a lightweight reference list at boot and loaded in full only when an active task requires it.
-- **Full Load for Operational Context**: Settings, Global Knowledge, the common policy, and every policy referenced in `ai/ai-customization.md` are loaded **in full** at boot — the AI never acts on rules or lessons it hasn't actually read.
+- **Full Load for Operational Context**: Settings, Global Knowledge, the common policy, and every policy referenced in `ai-customization.md` are loaded **in full** at boot — the AI never acts on rules or lessons it hasn't actually read.
 
 ### 13. Atomic Checkpoint Protocol
-- **Atomic Write Protocol**: Checkpoint state is written in strict sequence — `progress.md` → `next-steps.md` → `context.md` — with a Transaction Log output confirming every write. If data is missing, the write aborts entirely.
-- **Log Condensation (Sliding Horizon)**: When `ai/progress.md` exceeds 50 items or 200 lines, older entries are automatically archived to `ai/shared/project-knowledge/progress-archive.md`, keeping the 10 most recent. An "Archive Horizon Context" summary remains anchored at the top.
+- **Atomic Write Protocol**: Checkpoint state is written in strict sequence — `progress.md` (Past) → `next-steps.md` (Future) → `context.md` (Present) — with a Transaction Log output confirming every write. If data is missing, the write aborts entirely.
+- **Rich Context Dashboard**: `context.md` maintains a `## Current Status` section as a living dashboard — active branch, milestone, key identifiers, environment state, and open questions — without duplicating completed tasks or pending task lists.
+- **Log Condensation (Sliding Horizon)**: When `ai/progress.md` exceeds 50 items or 200 lines, older entries are automatically archived to `ai/shared/project-knowledge/progress-archive.md`, keeping the 10 most recent. When `ai/context.md` exceeds 10 checkpoint entries, keep the 5 most recent and archive the rest to `ai/shared/project-knowledge/context-archive.md`.
 
 ### 14. Protocol Developer Mode
 - **Self-Maintaining Protocol**: When the current working directory matches the **Global AI Workflow Directory**, the AI detects it is working on the protocol itself, not a user project.
@@ -343,6 +348,21 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **On-Demand Activation**: Say `"codebase examination"` or `"examine this codebase"` to activate the policy for examining (and optionally refactoring) a codebase that is too large to fit in the context window — application code, infrastructure-as-code, or database schemas.
 - **Disk-as-Memory + Tiered JIT Loading**: Understanding is persisted to project-knowledge as a tiered skeleton map (repo map → module signatures → full files), loaded just-in-time so the active context stays bounded no matter how large the codebase — or its map.
 - **Lightweight by Design**: Uses only the assistant's native file tools (`grep_search`, `read_file`); no vector databases, embeddings, or external indexing tools. Reuses branch-gating, TDD, and peer review as the safety net.
+
+### 17. Custom Policy Auto-Discovery
+- **Drop-In Policies**: Any `.md` file dropped into `ai/policies/` or `ai/policies/compliance/` is automatically discovered, loaded in full at boot, and acknowledged in the proof-of-load report — no need to list it in the customization file.
+- **Recursive Scan**: The AI runs a recursive `find` on **Project AI Policies Directory** at boot, re-affirmation, and post-condensation recovery, ensuring user-created governance and framework policies are always active.
+- **Compliance Directory**: `ai/policies/compliance/` is covered automatically by the recursive scan — dedicated subdirectory for framework-specific rules.
+
+### 18. Git Workspace Detection
+- **Multi-Repo Awareness**: Before offering git operations on the project root, the AI scans for `.git` subdirectories. If any are found, the root is recognized as part of a larger git workspace — not a repo itself.
+- **Prevents Incorrect Operations**: The AI will not offer `git init`, run `git log` on the root, or propose git operations that assume the root is independently tracked.
+
+### 19. Automatic Sync with Migration
+- **One-Command Sync**: The `sync-agents-md.sh` (Linux) and `sync-agents-md.ps1` (Windows) scripts copy the canonical `AGENTS.md` to all project targets and configure each project's `ai-customization.md` in one pass — no manual path swapping.
+- **Automatic Migration**: When run against a project with the old `ai/ai-customization.md` layout, the script automatically moves the file to the project root, injects the `## AI Workflow Configuration` section with the correct workflow directory, and preserves all existing expertise, traits, and compliance settings. If both old and new files exist, the old one is renamed to `.bak` with a warning.
+- **Idempotent Updates**: If the target already has a root-level `ai-customization.md` with a working config, the script verifies the workflow directory path and updates it only if needed. No unnecessary changes.
+- **Free From Song and Dance**: No more editing `AGENTS.md` for each project, no more copy-paste into nested `ai/` directories, no more exit-and-reload ceremony.
 
 ---
 
