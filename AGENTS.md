@@ -88,7 +88,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project AI Knowledge Directory**
     - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**
     - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backup Directory**
-    Verify **Project Coordination File** exists. Only propose `mkdir -p` or file creation for **missing** items.
+    Verify **Project Coordination File** exists. Only report missing items — do not create them.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents — excluding compressed and archive files per the **Archive File Exclusion** rule in TIER 2. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
 4.  **Loading**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) are NOT loaded here — they are loaded in full in Step 5.
@@ -115,11 +115,12 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
-1.  **Execute Procedure A, Step 2** (Audit/Create directories and **Project Coordination File**).
-2.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
-3.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
-4.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
-5.  **Finalize**: Proceed to Procedure A.
+1.  **Audit directories**: Run Procedure A, Step 2 (Structural Audit) to identify missing directories and files.
+2.  **Create missing directories and files**: Run `mkdir -p` for all directories found missing in the audit, and create the **Project Coordination File** if it is missing.
+3.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
+4.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
+5.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
+6.  **Finalize**: Proceed to Procedure A.
 
 ### PROCEDURE C: When performing a Checkpoint (Save State)
 
