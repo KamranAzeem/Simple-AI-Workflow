@@ -99,7 +99,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - If not found, try `<name>.md` (fallback for files without the prefix).
     - Load the FULL TEXT of every matched file.
     Do NOT defer policy loading to "on demand" — the AI cannot follow a rule it has not read.
-    Then run a recursive shell command (`find` or equivalent) on **Project AI Policies Directory** to discover all `.md` files the user placed there. Load the FULL TEXT of every discovered file. These are user-created custom policies that must be loaded at boot even though they are not listed in the Project Customization File. Compliance policy files under **Project Compliance Policies Directory** are covered automatically by the recursive scan.
+    Then run a recursive shell command (`find` or equivalent) on **Project AI Policies Directory** to discover all `.md` files the user placed there. Load the FULL TEXT of every discovered file. These are user-created custom policies that must be loaded at boot even though they are not listed in the Project Customization File.
 
     > **Design note (deliberate exception to Token Rationing)**: Loading referenced policy files in full at boot is an intentional exception to the Token-Rationing principle. The cost of a few hundred lines of policy text is far lower than the cost of the AI applying wrong or missing rules because it guessed at policy content. Token Rationing still applies to large Project Knowledge files (repo-scan snapshots, historical archives) — never to the operational policy files that govern AI behaviour.
 7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
