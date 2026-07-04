@@ -1,6 +1,6 @@
 # Simple AI Workflow
 
-> **⚠️ Important for existing users**: The customization file has moved from `ai/ai-customization.md` to `ai-customization.md` at the project root. If you have an existing `ai/ai-customization.md`, add a `## AI Workflow Configuration` section with your `**Global AI Workflow Directory**` and move the file to the root. See the [migration guide](docs/ai-customization-guide.md) for details.
+> **⚠️ Important for existing users**: The customization file has moved from `ai/ai-customization.md` to `ai-customization.md` at the project root. Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) against your projects — it will detect the old file, move it to root, inject the required config section, and update the workflow path automatically. Or, follow the [manual steps](docs/ai-customization-guide.md).
 
 Objective: **Instead of *chatting* with AI, start *working* with AI**
 
