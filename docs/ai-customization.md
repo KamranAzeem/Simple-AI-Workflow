@@ -14,7 +14,7 @@ See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customiz
 
 ## Active Expertise
 <!-- List technical domains to load from the global policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba, observability -->
+<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba, observability, accounting, academic-researcher -->
 
 - web-frontend
 

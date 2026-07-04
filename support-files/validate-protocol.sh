@@ -142,6 +142,7 @@ POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "mobile-apps" "dba" "observability"
     "code-review" "codebase-examination"
+    "accounting" "academic-researcher"
 )
 for p in "${POLICIES[@]}"; do
     if [ ! -f "ai/policies/ai-policy-$p.md" ]; then
