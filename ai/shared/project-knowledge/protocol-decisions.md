@@ -314,3 +314,51 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Files changed**: AGENTS.md (TIER 1, Procedures A/B/E/F), `ai-customization.md` (new at root), `docs/ai-customization.md` (template updated), `.gitignore`, README, docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, docs/compliance-guide.md, docs/personas/README.md.
 - **Bootstrap simplified**: Copy `docs/ai-customization.md` → `ai-customization.md`, edit one file, run "load context". No more `mkdir -p ai/`, no exit-and-reload.
 - **Merge**: the whole branch (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) squash-merged into master as one commit; feature branch deleted; **not pushed** to origin per user instruction. Final peer review review-04 APPROVED. Validator v4.4.
+
+---
+
+## 2026-07-04 — Session CP-2026-07-04-02 (protocol audit and humanization)
+
+### Humanized Output section added to common policy
+- **Problem**: AI-generated text has detectable patterns — em dashes, overused vocabulary (delve, pivotal, underscore, tapestry), boilerplate, faux analysis, negative parallelisms. These make output sound robotic.
+- **Decision**: Added `## Humanized Output` section to `ai-policy-common.md` with rules for sentence structure (max 15 words), vocabulary (banned AI-tell words), tone (write like a senior engineer), patterns to kill (em dashes, rule of three, hedging stacks, fake analysis), and writing style by medium.
+- **Later consolidated**: Merged with the adjacent `## Communication Standards` section — kept 3 preamble bullets, made Humanized Output a `###` subsection.
+- **Always active**: Lives in common policy, loaded at every boot unconditionally.
+
+### New domain policies: accounting and academic-researcher
+- Created `ai-policy-accounting.md` covering GAAP/IFRS, bookkeeping, tax compliance, audit support.
+- Created `ai-policy-academic-researcher.md` covering literature review, research design, statistical analysis, publishing ethics.
+- Both follow existing policy structure and are listed in the validator POLICIES array.
+
+### Policy expertise name resolution made flexible
+- **Problem**: Procedure A Step 6 said "scan the customization file to identify which policy files apply" but didn't specify how to map expertise names to filenames. AIs with `linux-system-admin` listed would not find `ai-policy-linux-system-admin.md`.
+- **Fix**: Step 6 now has an explicit two-try resolution: try `ai-policy-<name>.md` first, then `<name>.md` as fallback. Uses recursive `find` on **Global AI Policies Directory**.
+- **Why two-try**: Handles both the standard naming convention and future files without the `ai-policy-` prefix (e.g., `wrc.md`).
+
+### Compliance directory references removed from procedures
+- **Problem**: The recursive find on **Project AI Policies Directory** already reaches `ai/policies/compliance/`, but separate mentions of **Project Compliance Policies Directory** in Steps 7b, C Step 4, and E Step 3 caused the AI to explicitly scan for and ask permission to read compliance files.
+- **Fix**: Removed all separate mentions. **Project Compliance Policies Directory** remains defined in TIER 1 (for directory existence checks) but is not independently scanned.
+
+### gitignore check for ai-customization.md added to Structural Audit
+- Procedure A Step 2 now checks `.gitignore` for `ai-customization.md` after the directory audit and informs the user if absent.
+
+### Sync scripts rewritten for auto-migration
+- `sync-agents-md.sh` and `sync-agents-md.ps1` now handle four cases at each target:
+  - Old `ai/ai-customization.md` found → migrate to root, inject config section
+  - Both old and root exist → warn, rename old to `.bak`
+  - Root file exists → verify/update workflow directory path
+  - Neither exists → create from template with defaults
+- Workflow directory automatically derived from source AGENTS.md location.
+
+### Cross-reference audit complete
+- All 11 procedure/step references in policy files verified against current AGENTS.md — every tag connects to the correct target. No broken references.
+
+### Boilerplate removal
+- Duplicate `Bootstrap Entry` and `Path Resolution` lines removed from all 11 domain policies. A global note in `ai-policy-common.md` applies to all policies as replacement.
+
+## Key configuration values confirmed this session
+
+- **Validator version**: v4.5
+- **Git state**: master, 11 commits ahead of origin, NOT pushed
+- **Policy count**: 14 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher)
+- **Sync scripts tested**: migration from old `ai/` layout → root verified end-to-end
