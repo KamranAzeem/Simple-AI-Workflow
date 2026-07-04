@@ -143,7 +143,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### No markdown hyperlinks in policy files — two-context link rule
 - **Decision**: Policy files (`ai/policies/*.md`) and `AGENTS.md` MUST NOT contain markdown hyperlinks `[text](path)`. All file references must use either **Bold Anchor Name** (for files defined in TIER 1 Configuration) or `` `backtick/path` `` (for well-known state files).
-- **Rationale**: Policy files live in the **Global AI Policies Directory** (`Simple-AI-Workflow/ai/policies/`) but are read by an AI operating in the **user's project root** (e.g., `~/Projects/Innofactor/elmera/`). A relative path like `../shared/coordination.md` resolves correctly inside the protocol repo but resolves to a completely wrong location in the user's project — or nowhere at all. The TIER 1 Configuration anchors (`**Project Coordination File**`, `**Project Knowledge Directory**`, etc.) are the correct indirection mechanism: they are resolved by the AI against the TIER 1 definitions, not against the filesystem.
+- **Rationale**: Policy files live in the **Global AI Policies Directory** (`Simple-AI-Workflow/ai/policies/`) but are read by an AI operating in the **user's project root** (e.g., `~/Projects/Innofactor/elmera/`). A relative path like `../shared/coordination.md` resolves correctly inside the protocol repo but resolves to a completely wrong location in the user's project — or nowhere at all. The TIER 1 Configuration anchors (`**Project Coordination File**`, `**Project AI Knowledge Directory**`, etc.) are the correct indirection mechanism: they are resolved by the AI against the TIER 1 definitions, not against the filesystem.
 - **Two contexts rule**: When editing this repository as the protocol developer, your working directory IS the protocol repo. But all policy files must be authored from the user's perspective — their working directory is their own project root. Any path in a policy file is evaluated in the user's project root, not in this repo.
 - **What to use**:
   - TIER 1 anchor → `**Anchor Name**` (e.g., `**Project Coordination File**`, `**Global AI Policies Directory**`)
@@ -165,7 +165,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Redundant inline paths alongside TIER 1 anchors — removed
 - **Decision**: Remove all hardcoded inline paths that appeared alongside TIER 1 bold anchor references in `ai-policy-common.md`.
-- **Removed**: `` (`~/.ai/settings/`) `` next to `**Global AI Settings Directory**`; `` (`~/.ai/global-knowledge/`) `` next to `**Global AI Knowledge Directory**`; `` (`ai/shared/project-knowledge/`) `` next to `**Project Knowledge Directory**`; `` (`ai/ai-customization.md`) `` next to `**Project Customization File**`.
+- **Removed**: `` (`~/.ai/settings/`) `` next to `**Global AI Settings Directory**`; `` (`~/.ai/global-knowledge/`) `` next to `**Global AI Knowledge Directory**`; `` (`ai/shared/project-knowledge/`) `` next to `**Project AI Knowledge Directory**`; `` (`ai/ai-customization.md`) `` next to `**Project Customization File**`.
 - **Rationale**: The anchor is the single source of truth for the path. Repeating the path inline creates two sources that can drift. The anchor resolves against TIER 1 Configuration; the inline path cannot be kept in sync automatically.
 
 ### sync-agents-md.ps1 regex back-reference bug — fixed
