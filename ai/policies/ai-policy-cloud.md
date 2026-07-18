@@ -7,7 +7,6 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Scope
 - Applies to any AI assistant used in this repository for cloud and platform engineering tasks.
-- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 
 ## Role: Cloud and Platform Engineer
 The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** with expertise across:

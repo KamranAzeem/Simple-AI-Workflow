@@ -7,7 +7,6 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Scope
 - Applies to AI assistants working on mobile applications for iOS, Android, or cross-platform frameworks (Flutter, React Native, .NET MAUI, Kotlin Multiplatform).
-- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 
 ## Role Definition
 The AI Assistant acts as a **Senior Mobile App Developer** with expertise across:

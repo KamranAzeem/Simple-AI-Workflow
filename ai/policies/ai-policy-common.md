@@ -5,7 +5,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
-> **Applies to all domain policies**: All policies are activated through `AGENTS.md` Procedure A (Policy Loading). Paths resolve using the **Global AI Policies Directory** defined in `AGENTS.md` TIER 1.
+> **Applies to all domain policies**: All policies are activated through the AGENTS.md bootstrap procedure (Procedure A). Paths resolve using the **Global AI Policies Directory** defined in `AGENTS.md` TIER 1.
 
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
@@ -21,12 +21,12 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 2. The handoff file contains a `## Verification` section with objective, executable validation steps.
 3. ALL verification steps pass with zero errors (verified via shell command output).
 4. The **Project Coordination File** board is updated (claimed before, cleared after).
-5. The `ai/progress.md` file is updated with the completion entry.
+5. The **Project Coordination File** board is updated with the completion entry — the orchestrator folds it into `ai/progress.md` at checkpoint.
 *If any condition is not met, human approval is mandatory for the merge.*
 
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
-2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in `AGENTS.md` Procedure A). This summary must explicitly list active traits, loaded global intelligence files, and pending tasks.
+2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the AGENTS.md bootstrap procedure (Procedure A)). This summary must explicitly list active traits, loaded Global Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
@@ -34,9 +34,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Operational Restart and Checkpoint Contract
 ### Source-of-Truth Order
-**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the "load context" procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the bootstrap procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
-**Exception — Post-Condensation Recovery**: When Procedure E is active (session resumed from a condensed summary), the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
+**Exception — Post-Condensation Recovery**: When the post-condensation recovery procedure (Procedure E) is active, the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
 
 1. `ai/next-steps.md`
 2. Latest daily checkpoint in **Project Daily Checkpoints Directory**
@@ -44,8 +44,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 4. `ai/context.md`
 
 ### Checkpoint & Backup Procedures
-- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in Procedure C Step 3 of `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
-- **Backup (Procedure F)**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
+- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update step (AGENTS.md Procedure C). This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Backup (Procedure F)**: Backups are a **separate, on-demand procedure** triggered by the backup procedure. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.
@@ -66,7 +66,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
-- **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. `replace_string_in_file`, `create_file`) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
+- **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
 - **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file — whether requested by the user or on its own initiative — it MUST give the file a verbose, descriptive, kebab-case name that lets the file's purpose be inferred from the name alone (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; words separated by hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. **Source code is exempt**: application and source-code files — and their tests, configs, and framework-dictated files — MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`), never the verbose knowledge-file style, which would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search — not by inferring contents from the filename — so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
@@ -88,19 +88,19 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
 - **Bootstrapping & Load Context — Knowledge (Full Load)**: Files in the **Global AI Knowledge Directory** are loaded in FULL at boot. This set is intentionally small, so Token Rationing does NOT apply to it — a full load is cheap and prevents the agent from guessing at lessons it never read. (Token Rationing still governs large Project Knowledge files — see the Project Knowledge Protocol.)
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
-- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by a "Promote to Shared" command.
+- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user.
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in AGENTS.md Procedure A Step 5. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the bootstrap procedure (AGENTS.md Procedure A). Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (per AGENTS.md Procedure C Step 3) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update step in AGENTS.md Procedure C) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 
 ## State File Ownership Protocol
 - **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
-- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (per AGENTS.md Procedure C Step 1).
+- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in AGENTS.md Procedure C).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve append-only history and detect drift — never a refresh that overwrites fresh work with a stale disk copy.
 
 ## Operational Standards
@@ -113,7 +113,7 @@ Distinguish between **Directives** (unambiguous requests for action or implement
     3.  Identify the exact files that would be modified or created.
     4.  **Pause and wait** for a Directive before modifying any files.
 - **No Proactive Fixes**: Do not initiate implementation based on observations of bugs or statements of fact. Wait for a corresponding Directive.
-- **Plan Mode**: For complex Inquiries involving architectural decisions or broad changes, use the `enter_plan_mode` tool (if available) to safely research before proposing a strategy.
+- **Plan Mode**: For complex Inquiries involving architectural decisions or broad changes, research thoroughly and present a proposed strategy with specific file changes before implementing.
 
 ### Generated File Validation
 Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
@@ -155,6 +155,36 @@ Before presenting any shell or CLI command to the user, verify the following:
 - **Trunk-Based Development**: Use short-lived feature branches branched from and merged back to `main`/`master` frequently (at least once per day). This enables continuous integration, reduces merge conflicts, and supports CI/CD pipelines. Avoid long-lived feature branches and complex branching models.
 - **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
 - **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
+
+## Design Documentation Standards
+
+### Mandatory Design Artifacts
+At the start of each session, the AI MUST check for the following design documents in the **Project AI Knowledge Directory**. If any are missing, inform the user with a brief summary of benefits and ask whether to create them.
+
+- **PRD** (Product Requirements Document): Problem, target users, success criteria, and scope. Prevents building the wrong thing.
+- **HLD** (High-Level Design): System architecture, component decomposition, module boundaries, and technology choices. Provides the implementation roadmap.
+- **LLD** (Low-Level Design): Detailed designs per component — classes, interfaces, data flows, APIs, database schemas. Bridges between architecture and code.
+- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Prevents repeated debate and preserves institutional knowledge.
+
+### Naming Convention
+Follow the Verbose File Naming rule from Universal Operational Guardrails. File names MUST identify the project or sub-project they belong to. Kebab-case with descriptive prefix and document-type suffix:
+
+- `<project-or-subproject>-prd.md` — e.g. `identity-service-prd.md`
+- `<project-or-subproject>-hld.md` — e.g. `checkout-flow-hld.md`
+- `<project-or-subproject>-lld.md` — e.g. `payment-worker-lld.md`
+- `<project-or-subproject>-adr-<nnn>-<short-description>.md` — e.g. `checkout-adr-001-use-stripe.md`
+
+### Supplementary Documents (Consider Also)
+Create these when the project's complexity warrants them:
+
+- **API Specification** (OpenAPI/AsyncAPI): Contract-first service boundaries.
+- **Data Model / ERD**: Schema definitions, entity relationships, and data flow.
+- **Security Architecture**: Threat model, auth flows, authorization model, data protection controls.
+- **Deployment Architecture**: Infrastructure topology, release strategy, environment map, CI/CD overview.
+- **Glossary**: Shared domain terminology to align humans and AI on project-specific language.
+
+### Update Discipline
+Update design documents alongside the code they describe. A PRD or HLD left untouched after significant changes becomes misleading — treat documentation drift as a code smell.
 
 ## Communication Standards
 - **Collaborative Tone**: Maintain a professional, direct, and collaborative tone suitable for a senior peer programmer. Avoid robotic or overly formal keyword-driven responses (e.g., using "STOP") unless explicitly required for safety.

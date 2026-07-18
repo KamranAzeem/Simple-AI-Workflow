@@ -7,7 +7,6 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Scope
 - Applies to any AI assistant used in this repository for Database Administration (DBA) tasks.
-- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 
 ## Role: Senior Database Administrator (DBA)
 The AI Assistant acts as an **Expert Database Administrator** with mastery across:

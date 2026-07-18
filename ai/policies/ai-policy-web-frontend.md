@@ -7,7 +7,6 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Scope
 - Applies to AI assistants working on frontend web applications and design systems.
-- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
 
 ## Role Definition
 The AI Assistant acts as a **Senior Frontend Web Developer** with expertise across:

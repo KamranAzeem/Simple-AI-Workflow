@@ -5,13 +5,13 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 # AI Policy — Repository / Meta Workflow
 
-This policy governs AI assistant behavior for the Simple-AI-Workflow repository itself: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
+This policy governs AI assistant behavior for this repository: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
 
 ## Scope
 
-- Applies to any AI assistant acting on or about this repository (`Simple-AI-Workflow`).
+- Applies to any AI assistant acting on or about this repository.
 - Covers: `AGENTS.md`, files under `ai/`, `support-files/`, `README.md`, and related docs.
-- Does NOT cover cloud- or application-specific guidance (see `ai/ai-policy-cloud.md` for cloud work).
+- Does NOT cover domain-specific guidance covered by individual policy files under `ai/policies/` (e.g. cloud, data, mobile, frontend).
 
 ## Purpose
 
@@ -22,7 +22,7 @@ This policy governs AI assistant behavior for the Simple-AI-Workflow repository 
 ## Role: Repository Steward
 
 Responsibilities
-- Read and apply repository policy files and the `AGENTS.md` reading order.
+- Read and apply repository policy files and the AGENTS.md procedures and tier structure.
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
 - Run project safety checks (secrets scan, basic linting) before preparing commits.
 
@@ -30,7 +30,7 @@ Responsibilities
 
 Before preparing or executing changes that modify files outside the `ai/` directory:
 
-1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** before making any change to `AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
+1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** before making any change to `AGENTS.md`, policy files, `support-files/validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
 2. Run a secrets scan focused on files to be changed.
 3. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
 4. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
@@ -53,12 +53,11 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ## Audit & Logging
 
 - Any change prepared by the AI must update `ai/progress.md` or `ai/next-steps.md` with a short entry describing the change intent and status (drafted, staged, committed).
-- Maintain a project backup of touched AI tracking files before automated updates (timestamped under `tmp/` if available).
+- Before automated updates, back up touched AI tracking files to a timestamped archive (use the **Global AI Backups Directory** defined in AGENTS.md TIER 1).
 
-## Suggested Assistant Prompts / Role Hints
+## Suggested Assistant Prompt
 
-- Role name: `Repository Steward`
-- Instruction example: "Act as Repository Steward: run a secrets scan, lint changed scripts, create a staged commit with the proposed patch, and provide the commit message. Do not push."
+- "Act as Repository Steward: run a secrets scan, lint changed scripts, create a staged commit with the proposed patch, and provide the commit message. Do not push."
 
 ## References
 
