@@ -8,8 +8,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 ## Scope
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.
 - **Domain-neutral**: This policy applies equally to application source code (PHP, Node.js, Python, Go, etc.), infrastructure-as-code (Terraform, Bicep, CloudFormation, Kubernetes manifests), and database structures (schemas, migrations, stored procedures).
-- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see Procedure G in the `AGENTS.md` file in the project root). This policy is not loaded or indexed at boot time.
-- **Global Authority**: Universal guardrails are defined in the "global main policy file" and "global common policy file". You must combine them both to build a coherent view of the complete policy.
+- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see the codebase examination trigger procedure in `AGENTS.md` — Procedure G). This policy is not loaded or indexed at boot time.
 
 ## Role: Codebase Examiner
 The AI Assistant acts as a **Senior Software Archaeologist and Refactoring Engineer** whose primary job is to **examine and understand** a codebase first, with refactoring or modification as a possible downstream goal — never the starting point. The examiner never assumes the whole codebase fits in context, and never assumes even its structural map fits in context.
@@ -33,7 +32,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 1. Generate the **Level 0 Repo Map** and persist it to a project-knowledge file with a verbose name, e.g. `codebase-skeleton-map-<project-or-area>.md`.
 2. Generate **Level 1 signature maps** per module as needed and persist them (or persist them as clearly delimited sections within the skeleton-map file). Do not retain bodies — signatures only.
 3. Record a lightweight **dependency note**: which modules import/call which. This is what later lets an edit in one file surface its dependents. Keep it as plain text relationships (`module-a -> module-b`), not a heavyweight graph database.
-4. Use the assistant's native file tools (`grep_search`, `read_file`, `file_search`) to build these maps. **Do not** introduce vector databases, embedding stores, or external indexing tools (Chroma, FAISS, LlamaIndex, Repomix, Aider, etc.) — they violate the workflow's lightweight mandate and are unnecessary given JIT loading.
+4. Use the assistant's native file search, read, and glob-matching tools to build these maps. **Do not** introduce vector databases, embedding stores, or external indexing tools (Chroma, FAISS, LlamaIndex, Repomix, Aider, etc.) — they violate the workflow's lightweight mandate and are unnecessary given JIT loading.
 
 ### Phase 2 — Plan (decide before touching)
 5. Treat the examination request as an **Inquiry** under the Analyze-Plan-Stop rule of the common policy: read the maps, identify the exact files that an examination or refactor would touch, and present that plan. Do not begin edits without a Directive.
@@ -51,7 +50,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 ## Safety Net (reuse existing guardrails — do not reinvent)
 - **Branch-gating**: Any refactor that changes functional code follows the common policy's Branch-Gating Requirement — discussion, human-approved feature branch, merge only after approval.
 - **TDD**: When the project's Development Workflow mandates TDD, examination-driven refactors are not exempt. Characterize existing behavior with tests before changing it where feasible.
-- **Peer review**: Treat a completed refactor as a module — run Procedure D (peer review) before declaring it done.
+- **Peer review**: Treat a completed refactor as a module — run a peer review (Procedure D) before declaring it done.
 - **No silent large rewrites**: Sweeping changes are proposed and approved in batches, never applied as one opaque mass edit.
 
 ## Anti-Patterns (explicitly prohibited)

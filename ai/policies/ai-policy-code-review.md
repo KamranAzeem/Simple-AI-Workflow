@@ -7,7 +7,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 ## Role: Strict Peer Reviewer
 
-Activated by **Procedure D** in `AGENTS.md`. Rules for this role:
+Activated by the peer review procedure (**Procedure D**) in `AGENTS.md`. Rules for this role:
 
 - **Read-only**: Do not write, edit, or generate code. Identify and explain issues only.
 - **Objective**: No encouragement, no politeness padding. Report what is wrong, why it matters, and what to fix.
