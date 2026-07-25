@@ -291,7 +291,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **Persistent Reasoning**: Key identifiers, configuration values, and architectural decisions are written to the project knowledge base so they survive across sessions and agents.
 
 ### 6. Multi-Domain Global Policies
-- **Modular Expertise**: Specialized policies for Cloud, Frontend, Backend, Data, DBA, Observability, and Linux SysAdmin.
+- **Modular Expertise**: Specialized policies for Cloud, Frontend, Backend, Data, DBA, Observability, Linux SysAdmin, and Career Coaching.
 - **Universal Engineering Standards**: Built-in SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, Semantic Versioning, and Conventional Commits — applied across all domains.
 
 ### 7. Multi-Agent Coordination

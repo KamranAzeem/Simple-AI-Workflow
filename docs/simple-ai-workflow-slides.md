@@ -39,6 +39,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Protocol Developer Mode** — When working on the protocol itself, AI detects the context, mandates a full load of `protocol-decisions.md`, and enforces end-user-perspective path authoring in policy files
 - **Verbose AI File Naming** — AI gives knowledge/docs/workflow files descriptive kebab-case names (filename = JIT lookup key); application/source code is exempt and follows language/framework idioms
 - **Codebase Examination Mode** — Activated by saying `"codebase examination"` or `"examine this codebase"`; uses tiered, disk-backed skeleton maps; no vector DBs or external tools
+- **Career Coaching Policy** — Dedicated policy for job search strategy, resume/cover letter optimization, interview prep (STAR method), and career transition narrative
 
 ---
 

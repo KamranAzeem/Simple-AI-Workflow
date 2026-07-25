@@ -386,6 +386,31 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### README diagram updated
 - Replaced the old wide two-column ASCII diagram with a compact side-by-side tree view using standard ASCII characters. Displays Simple-AI-Workflow vs Your Project with `-->` relationship arrow.
 
+## 2026-07-25 — Session CP-2026-07-25-01
+
+### Career coaching policy: single-file consolidation
+- **Decision**: The four proposed expertise names (`executive-recruitment`, `resume-optimization`, `interview-coaching`, `career-strategy`) were consolidated into a **single policy file** (`ai-policy-career-coaching.md`) with one canonical expertise keyword: `career-coaching`.
+- **Rationale**: All four sub-domains share the same persona traits, engagement style, and standards (ATS compliance, conciseness). A single policy avoids duplicating shared content, reduces maintenance surface, and matches the modular pattern used by other domain policies. Users add one expertise name instead of four.
+- **Outcome**: Policy created at `ai/policies/ai-policy-career-coaching.md` (93 lines). README, customization guide, slides, and validate-protocol.sh updated.
+
+### Pre-existing missing directories created
+- **Decision**: Created `ai/plans/` and `ai/policies/compliance/` — both are listed as mandatory project directories in the TIER 1 config but were missing. Created during checkpoint validation to pass `validate-protocol.sh` checks.
+- **Note**: `ai/plans/` had been flagged in next-steps.md as "Decide fate of untracked ai/plans/agents-md-context-reload-improvements.md" — the referenced file was never written to disk; creating the directory resolves the pending item.
+
+## 2026-07-25 — Session CP-2026-07-25-02
+
+### Academic-researcher policy: internationalized rewrite
+- **Decision**: Replaced the 48-line generic `ai-policy-academic-researcher.md` with a comprehensive 342-line policy sourced from a friend's draft, then stripped of all India/UGC-specific content (UGC 2018 regulations, UGC-CARE, DPDP Act, similarity thresholds) and any single-domain hardcoding (removed Container/Kubernetes Security as primary focus).
+- **Rationale**: The original policy was too thin to guide serious research. The friend's draft had excellent depth across source quality, research workflow, statistics, ethics, and publishing but was scoped to one country and one domain. Making it international and domain-neutral makes it useful for any researcher globally.
+- **Outcome**: Policy at `ai/policies/ai-policy-academic-researcher.md` (342 lines, 22 sections + appendix). Retained frameworks: Singapore Statement, ALLEA, ORI, UK Concordat, Australian Code, COPE, ICMJE, Helsinki, Belmont, Menlo, FAIR, GDPR. Validator v4.5 all 8/8 pass. Peer review review-02 APPROVED.
+
+## 2026-07-25 — Session CP-2026-07-25-03 (High-effort review pass)
+
+### Post-rewrite fixes from high-effort review
+- **Issue 1**: Stale cross-reference on line 16 referencing "§21" (AI Operating Boundaries) — the section was renumbered to §20 during the rewrite. Fixed.
+- **Issue 2**: Hardcoded "Claude, Anthropic" in the example AI-disclosure statement (line 155). Changed to `[Tool/Vendor]` placeholder so the template works regardless of which AI assistant the user runs.
+- **Validation**: All 8/8 checks pass after fixes.
+
 ## Key configuration values (end of session)
 
 - **Validator version**: v4.5
@@ -393,4 +418,4 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Git state**: master, 22 commits ahead of origin, NOT pushed
 - **Tags**: v1.0.0 (old), v2.0.0 (current)
 - **Release**: v2.0.0 published on GitHub
-- **Policy count**: 14 modular policies
+- **Policy count**: 15 modular policies

@@ -4,7 +4,7 @@
 - **Branch**: `master` — 20+ commits ahead of origin, NOT pushed
 - **Release**: v2.0.0 tagged and released on GitHub with full changelog
 - **Validator**: v4.5, all 8/8 checks pass
-- **Policy count**: 14 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher)
+- **Policy count**: 15 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **Next milestone**: User tests protocol with live projects; sync to downstream projects; push to origin when ready
 
 ## Checkpoint History
@@ -13,6 +13,21 @@
 - **Summary**: Mega session covering customization-at-root, sync auto-migration, Humanized Output section, 2 new policies, cross-reference audit, bootstrap audit/creation separation, archive/backup directory exclusions, compliance directory reference cleanup, v2.0.0 GitHub release
 - **Key deliverables**: 40 commits since v1.0.0, 14 TIER 1 config anchors, 11 code reviews (review-04 through review-10), README diagram updated, validator v4.5
 - **NOT pushed to origin**
+
+## Latest Checkpoint: CP-2026-07-25-01
+- **Current Branch**: `master` — uncommitted working tree changes
+- **Summary**: Processed ai/notes/notes.md — created ai-policy-career-coaching.md (consolidates resume, cover letter, interview prep, career strategy, executive recruitment into one policy). Updated README, customization guide, slides, validation script. Created missing ai/plans/ and ai/policies/compliance/ directories. Validator v4.5 all 8/8 pass. Peer review review-01 APPROVED. Uncommitted working tree.
+- **Key deliverables**: 1 new policy (career-coaching), 5 doc files updated, 2 missing dirs created
+
+## Latest Checkpoint: CP-2026-07-25-02
+- **Current Branch**: `master` — uncommitted working tree changes
+- **Summary**: Rewrote ai-policy-academic-researcher.md — adopted friend's comprehensive draft (48→342 lines), internationalized: removed all India/UGC-specific content (UGC 2018 regs, UGC-CARE, DPDP Act), generalized domain focus from Container/Kubernetes Security to generic empirical research. Kept all international frameworks, full research workflow, source quality standards, statistical analysis, and publishing lifecycle. Validator v4.5 all 8/8 pass. Peer review review-02 APPROVED.
+- **Key deliverables**: 1 policy fully rewritten (academic-researcher), 2 notes processed
+
+## Latest Checkpoint: CP-2026-07-25-03
+- **Current Branch**: `master` — uncommitted working tree changes
+- **Summary**: High-effort review of all session work. Fixed two issues in ai-policy-academic-researcher.md: stale cross-reference (§21→§20) and hardcoded tool name in AI-disclosure example (→ [Tool/Vendor]). Validator v4.5 all 8/8 pass.
+- **Key deliverables**: 2 bug fixes in policy file, no new files
 
 ## Latest Checkpoint: CP-2026-07-04-01
 - **Current Branch**: `feature/protocol-improvements` — squash-merged and deleted
