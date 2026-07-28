@@ -173,8 +173,8 @@ There are two forms:
 |---|---|
 | Stale state files | Atomic Write Protocol — all 3 state files sync together or not at all |
 | Progress log bloat | Sliding Horizon Shield — archives `progress.md` when it exceeds 50 items or 200 lines |
-| Compacted summary drift | Post-Condensation Recovery (Procedure E) — reloads rules from disk, not from the summary |
-| Protocol amnesia | Proof-of-Load at every "load context"; AGENTS.md re-read mandated in Procedure E |
+| Compacted summary drift | Post-Condensation Recovery — reloads rules from disk, not from the summary |
+| Protocol amnesia | Proof-of-Load at every "load context"; AGENTS.md re-read mandated by Post-Condensation Recovery |
 | Knowledge base staleness | Mandatory project-knowledge sync at every checkpoint |
 
 ### Habits that prevent the rest
@@ -182,6 +182,7 @@ There are two forms:
 - **Checkpoint frequently.** After each logical unit of work — a feature, a fix, a review cycle — run a checkpoint. Don't wait until end of day.
 - **Keep sessions shorter.** When you notice the AI repeating questions it already answered or losing track of earlier constraints, that's the signal: checkpoint and start a fresh session with `"load context using AGENTS.md protocol"`.
 - **Use the full load-context form at every restart.** Even with automatic Post-Condensation Recovery, the explicit `"load context using AGENTS.md protocol"` command runs the full procedure and is more reliable.
+- **Set up the post-condensation reload trigger once.** A long session can be auto-summarized, which may drop the standing rules your assistant had loaded. A one-time, per-assistant memory note re-arms the reload; see the [per-assistant setup guide](docs/post-condensation-reload-trigger-setup.md). After any summary, asking "did you run the post-condensation reload?" is the reliable final check.
 - **Keep `context.md` lean.** It should hold the current operating state, not a history log. History belongs in `progress.md` and `ai/shared/project-knowledge/`.
 - **Review `next-steps.md` at session start.** It should contain the current checkpoint ID and any immediate next action — not a long list of stale items.
 
@@ -314,6 +315,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads standing rules, all Global Knowledge, and active policies, and re-indexes project knowledge before responding — no manual "load context" needed.
 - **Context Integrity**: The condensed summary is treated as the sole authoritative source for current state, preventing stale data from corrupting the fresh context.
 - **Gap Detection**: If the summary indicates a module was completed without TDD or peer review, the AI flags this before touching any code.
+- **External re-arm trigger**: Because a condensation can drop `AGENTS.md` itself, a one-time per-assistant memory or custom-instruction note re-arms the recovery. See the [per-assistant setup guide](docs/post-condensation-reload-trigger-setup.md).
 
 ### 11. PWD-Only Scope
 - **Project Isolation**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage.
@@ -365,6 +367,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - [Simple-AI-Workflow (Markdown slides)](docs/simple-ai-workflow-slides.md) - Project Markdown version of the presentation (Marp-compatible)
 - Project docs directory: `docs/`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
+- Post-condensation reload trigger setup (per-assistant): [docs/post-condensation-reload-trigger-setup.md](docs/post-condensation-reload-trigger-setup.md)
 - Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
 - Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
 - Preferred AI tooling reference & installation: [docs/tools-preferences.md](docs/tools-preferences.md) *(legacy template — see `global-user-settings.md` for the recommended approach)*

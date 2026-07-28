@@ -121,6 +121,24 @@ When a session begins from a condensed/compacted conversation summary (rather th
 - **Context integrity**: Prevents stale pre-compaction data from corrupting the fresh session.
 - **Safety net**: Missed processes are caught before any code changes.
 
+### Why it still needs a small external trigger (a necessary evil)
+
+`AGENTS.md` is one of the things a condensation can drop, so it cannot reliably
+tell the assistant to reload itself. The re-arming instruction has to live in a
+layer the assistant re-reads every turn: its own persistent memory or always-on
+custom instructions. That layer differs per assistant and lives outside every
+repository, in your personal settings. Keeping one short note there is a
+deliberate trade-off, kept out of the tool-agnostic protocol on purpose.
+
+Set this up once for your assistant of choice using the per-assistant guide,
+`post-condensation-reload-trigger-setup.md`.
+
+The honest target is high reliability with a loud, visible signal, not a hard
+guarantee. The reload announces itself as the first line of the first reply
+after condensation; if you do not see that line, the reload was skipped. The
+final backstop is you: after any summary, ask "did you run the post-condensation
+reload?" before trusting the next answer.
+
 ## 8. Native AI State Backups
 ### On-Demand Archiving
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
