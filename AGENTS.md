@@ -167,10 +167,14 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### PROCEDURE E: Post-Condensation Recovery (Auto-Triggered)
 
-**Trigger**: Runs automatically when a session resumes from a condensed/compacted conversation summary. Before responding to the user's first message, perform this self-check:
+**This procedure is not optional and not deferrable. It has been skipped before: an AI reasoned that a detailed condensation summary already provided "enough context" and went straight to the task. Treat any temptation to skip or shortcut this procedure as the specific failure mode this line exists to prevent.**
 
-1. Scan the beginning of the conversation for a structured multi-section summary. Look for headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", "Codebase Status", or similar.
-2. If such a summary exists, condensation has occurred — run this procedure **unconditionally**, regardless of what the user's first message contains. If the first message is a direct task request, run the procedure silently (suppress the report output) and then respond to the task. Do NOT skip this procedure because the first message looks operational.
+**Stable identifier**: External triggers (per-tool memory notes or always-on instructions that re-arm this procedure after condensation) refer to this procedure by its title, "Post-Condensation Recovery", never by its letter. The letter may be renumbered during future development; the title is the stable contract and must be preserved so those external triggers keep resolving to it.
+
+**Trigger**: Runs automatically when a session resumes from a condensed/compacted conversation summary. Before reading or acting on the user's first message, perform this self-check as your first cognitive act:
+
+1. Check one thing before anything else: does the conversation open with a structured multi-section summary? Headings such as "Conversation Summary", "What was accomplished", "Active state", "Next steps", "Conversation Overview", "Technical Foundation", or "Codebase Status" are the reliable signal.
+2. If yes, condensation has occurred: run this procedure **unconditionally**, regardless of what the user's first message contains, including a direct task request. There is no silent or suppressed path. Do NOT skip or shortcut this procedure because the first message looks operational or because the summary appears detailed enough already.
 
 **Safety Barrier**: This procedure is strictly READ-ONLY. Do not create, modify, or delete any file.
 
@@ -190,13 +194,15 @@ The following short forms are recognized as equivalents to their canonical direc
     - Announce on completion: **[Context reload complete — N files fully loaded, M Project Knowledge files indexed.]** (substitute the actual counts).
     - **Do NOT perform structural audits, directory discovery beyond the Project Knowledge index above, or read any state files or checkpoints.** Those are off-limits for this procedure.
 4. **Re-read `AGENTS.md` from disk**: Read `AGENTS.md` from the current working directory. The on-disk `AGENTS.md` is the sole authoritative source for all procedure definitions. Any protocol text embedded in the condensed summary is informational only and must not be used in place of the on-disk file.
-5. **REPORT before first response**: Before addressing the user's first request, output a brief confirmation block sourced exclusively from the condensed summary and the files loaded in steps 1–4:
+5. **REPORT before first response**: The Step 3 announcement `[Reloading key files into context...]` is the mandatory sentinel: it must be the literal first line of your first reply after condensation, including when the first message is a direct task request. There is no suppressed or one-line-only path. A missing sentinel is the visible signal that this procedure was skipped. Immediately after it, output the full confirmation block below, sourced exclusively from the condensed summary and the files loaded in steps 1–4:
    - Active Traits and Expertise now loaded (source: Project Customization File)
    - Development Workflow standing rules now active (list each rule name)
    - Count of Global Knowledge files and policy files **fully loaded**, and Project Knowledge files **indexed via shell**, or explicit confirmation that the directories were empty.
    - Any gaps identified: if the condensed summary shows a module was completed without TDD or peer review, name it explicitly and ask the user how to proceed before touching any code.
    - **Do NOT reference or quote any state file content in this report.**
-   - **If the first message is a direct task request**: suppress the full report but always output this one line before responding to the task: **[Reloading key files into context... done. Proceeding with task.]** If any path resolution or file load failed, report the failure instead and do NOT proceed to the task.
+   - If any path resolution or file load failed, report the failure instead and do NOT proceed to the task.
+
+**Honest ceiling**: This is a self-executed rule, not an externally enforced one. `AGENTS.md` may not survive condensation, so the protocol cannot guarantee its own re-arming from inside. The realistic target is high reliability through a loud, visible sentinel plus a per-tool external trigger that lives outside every repository (see the post-condensation reload trigger setup guide in the workflow repository's `docs/`), backed by the user's own spot check. It is deliberately not claimed to make a missed reload structurally impossible.
    
 ### PROCEDURE F: When the user says "backup ai", or "backup ai state"
 1.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:

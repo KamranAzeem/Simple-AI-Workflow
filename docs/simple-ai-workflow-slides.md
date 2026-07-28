@@ -173,7 +173,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 ## Built-in Defences in This Workflow
 - **Atomic Write Protocol** — state files sync together or not at all; no partial writes
 - **Sliding Horizon Shield** — `progress.md` auto-archives when it exceeds 50 items or 200 lines
-- **Post-Condensation Recovery** — reloads rules from disk after any context compaction
+- **Post-Condensation Recovery** — reloads rules from disk after any context compaction; needs a small per-tool external trigger to re-arm reliably (see the reload-trigger setup guide)
 - **Proof-of-Load** — AI must confirm every file it read before starting work
 - **Mandatory knowledge sync** — project decisions are written to `project-knowledge/` at every checkpoint
 
@@ -185,6 +185,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 ## Habits That Prevent the Rest
 - Checkpoint after each logical unit of work — not just at end of day
 - When the AI loses track of context, checkpoint and start a fresh session
+- Set up the per-tool reload trigger once; after any summary, ask "did you run the post-condensation reload?" before trusting the next answer
 - Keep `context.md` lean — current state only, not a history log
 - Review `next-steps.md` at session start — trim stale items before working
 
