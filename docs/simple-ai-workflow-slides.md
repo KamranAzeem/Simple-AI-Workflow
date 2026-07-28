@@ -30,7 +30,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Universal Engineering Standards** — SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, SemVer, Conventional Commits
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
-- **Peer Review Mode** — On-demand full-file-set code review with structured, severity-classified reports
+- **Peer Review Mode** — On-demand full-file-set code review (including PR reviews) with structured, severity-classified reports
 - **Session Resume (Compacted Context)** — Fully loads standing rules, all Global Knowledge, and active policies; re-indexes project knowledge when resuming from a condensed summary
 - **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
 - **Token Rationing Shield** — Settings, Global Knowledge, and active policies are always fully loaded; large Project Knowledge files are indexed at boot and loaded on demand
@@ -81,9 +81,10 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 # On-Demand Peer Review
 
 ## How it works
-- Say `"peer review"` — the AI switches to an objective reviewer role
-- Scans the full file set (not just a diff); saves a structured report to `ai/code-review-reports/`
-- Each report is severity-classified: **Critical / Major / Minor / Suggestions**
+- Say `"peer review"`, `"code review"`, or `"PR review"` — the AI switches to an objective reviewer role
+- For a named PR: fetches latest, resolves source/target branches, diffs source against target
+- Scans the full file or module the change touches (not just a diff); checks live state when available; saves a structured report to `ai/code-review-reports/`
+- Each report is severity-classified: **Critical / Major / Minor / Suggestions / Not Checked**
 - Ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**
 - Previous reports are never overwritten; each round gets a new numbered file
 

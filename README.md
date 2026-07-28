@@ -304,8 +304,10 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **Proactive Scanning**: Mandatory file validation before any Git commit or infrastructure operation.
 
 ### 9. Peer Review Mode
-- **On-Demand Code Review**: Trigger a strict peer review at any time by saying `"peer review"`. The AI switches to an objective reviewer role — no code writing, analysis and reporting only.
-- **Structured Reports**: Each review is saved to `ai/code-review-reports/` with a severity-classified report (Critical / Major / Minor / Suggestions) and a clear **APPROVED** or **CHANGES REQUESTED** verdict.
+- **On-Demand Code Review**: Trigger a strict peer review at any time by saying `"peer review"`, `"code review"`, or `"PR review"`. The AI switches to an objective reviewer role — no code writing, analysis and reporting only.
+- **PR-Aware**: For a named PR, the AI fetches the latest remote refs, resolves the source and target branches, and diffs source against target before reviewing — not the local working tree.
+- **Scope Discipline**: Reviews never stop at the diff. The AI examines the full file or module the change touches, checks live or runtime state when tooling allows, and states plainly what it did **not** check rather than omitting it silently.
+- **Structured Reports**: Each review is saved to `ai/code-review-reports/` with a severity-classified report (Critical / Major / Minor / Suggestions / Not Checked) and a clear **APPROVED** or **CHANGES REQUESTED** verdict.
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
 
 ### 10. Session Resume (Compacted Context)

@@ -419,3 +419,61 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Tags**: v1.0.0 (old), v2.0.0 (current)
 - **Release**: v2.0.0 published on GitHub
 - **Policy count**: 15 modular policies
+
+## 2026-07-28 — Ad hoc protocol-developer session (code review scope discipline)
+
+### PR review added as a trigger phrase for Procedure D
+- **Decision**: Changed the Procedure D header in `AGENTS.md` from `When User says "peer review" or "code review"` to `When User says "peer review", "code review", or "PR review"`.
+- **Rationale**: A real review session on a customer repo showed the AI treating "review this PR" as a plain diff read instead of invoking the full peer-reviewer role and report format. Users naturally say "PR review" as often as "code review". The validator only checks the string prefix `### PROCEDURE D: When User says "peer review"`, so this change does not break `validate-protocol.sh`.
+
+### Scope Discipline section added to ai-policy-code-review.md
+- **Decision**: Added a `## Scope Discipline: Do Not Narrow to the Diff` section, placed after the `Role: Strict Peer Reviewer` bullet list and before `Review Dimensions`.
+- **Finding that drove this**: During a live PR review (Azure Firewall Policy rule collection, `VDC_p-we1net-network`), the AI reviewed only the diff and missed two things a colleague (Damian) caught: (1) a pre-existing dead rule in the same rule collection the diff touched (an ACR rule using the Redis port, 6380, instead of 443, clearly a copy-paste), and (2) ~13,000 daily firewall denies against the touched subnet visible only in live Log Analytics telemetry, not in the repo.
+- **Root cause identified**: The AI scoped the review to "the PR's diff" instead of "the diff plus the surrounding file/collection plus live state and telemetry for what the change touches". The first miss (dead rule) was pure scope narrowing (the AI had already read the block, but did not analyze it because it was outside the diff). The second miss (firewall denies) was a capability gap. No tool call to Log Analytics was attempted.
+- **Rule added**: Reviews must (1) review the diff, (2) examine the full file or module the diff touches for pre-existing issues, (3) check live or runtime state relevant to what the code represents when access and tooling allow (examples given for IaC, database, API, and application-config domains), (4) check observability signals for the touched component when available, and (5) state plainly what was not checked rather than omitting it silently. Deliberately written domain-neutral (not just network-specific) per user instruction not to make the rule too narrow.
+- **Companion change**: Added a `## Not Checked` section to the report format template (between `Suggestions` and `Verdict`), so item 5 above is enforced by the report structure itself, not left as an unverified aspiration.
+- **Style note**: New prose in both files avoids em dashes per the Humanized Output rule in `ai-policy-common.md`, even though older content in this repo predates that rule and still uses them.
+- **Files changed**: `AGENTS.md` (Procedure D header), `ai/policies/ai-policy-code-review.md` (Scope Discipline section, Activated-by line, Not Checked report section), this file.
+- **Not done in this session**: No full checkpoint was run in this repo (this was a short protocol-developer edit made from a different project's session, not a `load context` session against Simple-AI-Workflow). No commit was made; changes are on disk only, pending the user's own review and commit.
+
+## 2026-07-28 — Self-review of the above changes, and fix cycle (review-01 / review-02)
+
+### Peer review triggered on the AI's own just-edited protocol files
+- **Decision**: Ran Procedure D against `AGENTS.md` and `ai-policy-code-review.md` themselves, applying the newly-written Scope Discipline rule recursively to the files that introduced it.
+- **Finding (review-01, CHANGES REQUESTED)**: 2 Major issues, both the same root cause — "PR review" was added as a Procedure D trigger phrase, but no step anywhere defined the actual mechanics (fetch latest, resolve source/target branch, diff source against target) needed to perform one. The Iteration Protocol had the matching gap for a second review pass on a PR (no re-fetch step). 3 Minor issues: the "Role exits ... when a commit is made" condition doesn't clearly cover PR-only reviews where the AI never commits; the "Scoped" bullet didn't cross-reference the new Scope Discipline section; pre-existing em-dash counts (35 in `AGENTS.md`, 14 in the policy file) predate the Humanized Output rule and were left alone. 1 Suggestion: optional PR identifier in the report filename.
+- **Fix applied**: `AGENTS.md` Procedure D gained a new Step 2 ("Resolve the PR (PR review only)": fetch remote refs, resolve source/target branches, diff source against target before scanning), with steps renumbered 1–6. `ai-policy-code-review.md` Iteration Protocol now opens with a re-fetch step for the PR case. The Role exits bullet now covers "or, for a PR review, when the PR is merged or closed." The Scoped bullet now points at Scope Discipline. The Report Format now documents the optional `review-01_PR53929.md` filename convention.
+- **Outcome (review-02, APPROVED)**: All 5 findings from review-01 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed. No new issues found.
+- **Files changed**: `AGENTS.md` (Procedure D), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), `ai/code-review-reports/2026-07-28_review-01.md` and `2026-07-28_review-02.md` (new), this file.
+- **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
+
+## 2026-07-28 — Evidence-Based Reasoning (No-Assumption Rule) added to common policy
+
+### New universal guardrail against invented facts
+- **Decision**: Added a `### Evidence-Based Reasoning (No-Assumption Rule)` subsection to `ai-policy-common.md`, under `## Operational Standards`, directly after `### CLI Command Accuracy`.
+- **Problem reported by the user**: Repeated real-world cases of the AI assuming facts not in evidence — inventing infrastructure components that do not exist, attributing statements or actions to people who were never mentioned, and basing recommendations on those assumptions.
+- **Why common policy, not code-review policy**: The user has seen this failure across many task types (migration plans, PR reviews, general analysis), not just code review. A narrow fix in `ai-policy-code-review.md` would not cover the general case. Common policy is always loaded, so the rule applies everywhere without needing a trigger phrase.
+- **Why placed next to CLI Command Accuracy**: That existing rule already implements a narrow version of the same idea (never guess subscription IDs, resource names — verify via live query or confirmed context). The new rule explicitly generalizes it: "the same failure mode ... generalized to every kind of claim, not just command flags and resource identifiers."
+- **Rule content**: (1) never invent people, teams, infrastructure, config values, file contents, or past decisions not backed by context/project knowledge/a live query, and never attribute statements or actions to people never mentioned; (2) verify before asserting, by checking active context, **Project AI Knowledge Directory**, and live codebase/environment; (3) if no evidence exists anywhere, say so plainly and ask the user, rather than filling the gap with a guess; (4) be ready to cite the source of any fact-based recommendation.
+- **Not done in this session**: No commit made yet; change is on disk only, pending the user's review and commit decision. `validate-protocol.sh` not extended with a new anchor check for this rule (not requested; existing 8 checks still pass).
+
+## 2026-07-28 — Peer review of ai-policy-common.md, fix cycle (review-03 / review-04)
+
+### READ-ONLY markers were missing from the flagship policy file
+- **Finding (review-03, CHANGES REQUESTED)**: `ai-policy-common.md` was the only one of 15 policy files missing the `<!-- AI-ASSISTANT: READ-ONLY START -->` / `<!-- AI-ASSISTANT: READ-ONLY END -->` markers required by the 2026-06-18 (CP-2026-06-18-01) structural convention. `validate-protocol.sh` never caught this because it only checks `AGENTS.md`'s own banner text, not the per-policy-file markers.
+- **Fix applied**: Added both markers to `ai-policy-common.md` (START after the `DO NOT MODIFY` guard, END at end of file). Extended `validate-protocol.sh` Step 6 (Policy Baseline) to grep every file in the `POLICIES` array for both markers, failing the check if either is missing. Bumped validator to v4.6.
+- **Minor findings also resolved**:
+  - The "Verbose File Naming" bullet (a ~200-word run-on paragraph) was split into shorter sentences, consistent with the file's own Humanized Output rule.
+  - Reviewed the "robust" flag from review-03 with the user: **decision reversed** — "robust" is a normal, useful word and should not be banned. Removed it from the `#### Words to Use and Avoid` banned-word list rather than removing its use at line 59 ("Implementing robust user verification and access control"). The banned-word list itself was the thing that was wrong, not the usage.
+  - Pre-existing em-dash count (34) left untouched, same rationale as prior sessions: predates the Humanized Output rule, out of scope for a targeted fix pass.
+- **Outcome (review-04)**: All Major and addressable Minor findings from review-03 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed (with the new marker check now active and passing).
+- **Files changed**: `ai/policies/ai-policy-common.md` (markers, word-list, paragraph split), `support-files/validate-protocol.sh` (v4.5 → v4.6, new marker check in Step 6), `ai/code-review-reports/2026-07-28_review-03.md` and `2026-07-28_review-04.md` (new), this file.
+- **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
+
+## 2026-07-28 — Documentation sync for today's Procedure D / policy changes, then commit
+
+### README, workflow-guide, and slides updated to match Procedure D and policy changes
+- **Decision**: Updated `README.md` (§9 Peer Review Mode), `docs/workflow-guide.md` (§12 Peer Review Mode), `docs/simple-ai-workflow-slides.md` (feature bullet list and the "On-Demand Peer Review" slide), and `docs/ai-customization-guide.md` (Peer Review note) to reflect today's changes: the `"PR review"` trigger phrase, PR resolution mechanics (fetch latest, resolve source/target branches, diff source against target), the Scope Discipline behavior (don't stop at the diff), and the new `Not Checked` report section.
+- **Why**: These docs already documented Peer Review Mode in detail before today's changes; leaving them saying only `"peer review"` with diff-only scanning would make them stale and misleading relative to the actual protocol behavior.
+- **Not touched**: `docs/protocol-validation-system.md` (high-level design blueprint, does not enumerate specific checks or version numbers, so the new READ-ONLY marker check and v4.6 bump did not require an edit there). No other doc files referenced the old wording.
+- **Verification**: `validate-protocol.sh` re-run in full after doc edits, 8/8 passed.
+- **Session-end state**: All of today's work (Procedure D PR mechanics, Scope Discipline, Evidence-Based Reasoning rule, READ-ONLY marker fix + validator hardening, four review reports, and this documentation sync) is being committed to `master` in one commit at the user's explicit request.

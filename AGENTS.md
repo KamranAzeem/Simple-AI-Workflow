@@ -156,13 +156,14 @@ The following short forms are recognized as equivalents to their canonical direc
     - Announce on completion: **[Context re-affirmation complete.]**
     If context is still healthy and the operational files are already loaded, skip the reload and state explicitly that it was not needed.
 
-### PROCEDURE D: When User says "peer review" or "code review"
+### PROCEDURE D: When User says "peer review", "code review", or "PR review"
 
 1.  **Adopt Reviewer Role**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
-2.  **Scan**: Review the files the user specifies. If no scope is given, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories).
-3.  **Report**: Write the review report to **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
-4.  **Iterate**: After the user applies fixes and asks for another review, create a new numbered report. Note which previous issues were resolved.
-5.  **Exit**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, or when a commit is made.
+2.  **Resolve the PR (PR review only)**: When the trigger is a named PR (a PR number, URL, or branch), first fetch the latest remote refs (`git fetch --all --prune` or equivalent), then resolve the PR's source and target branches. Diff source against target, not the local working tree, before doing anything else. If the source branch is not found locally, fetch it explicitly by name.
+3.  **Scan**: Review the diffed files (PR review) or the files the user specifies (general review). If no scope is given for a general review, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories). In both cases, follow the Scope Discipline section of `ai-policy-code-review.md` — do not stop at the diff.
+4.  **Report**: Write the review report to **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
+5.  **Iterate**: After fixes are applied, locally or as new commits pushed to the PR branch, and another review is requested, re-fetch first if reviewing a PR, then create a new numbered report. Note which previous issues were resolved.
+6.  **Exit**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, when a commit is made, or, for a PR review, when the PR is merged or closed.
 
 ### PROCEDURE E: Post-Condensation Recovery (Auto-Triggered)
 

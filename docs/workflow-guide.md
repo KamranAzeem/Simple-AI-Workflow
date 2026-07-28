@@ -161,15 +161,17 @@ See the [AI Customization Guide](ai-customization-guide.md) for the full catalog
 
 Trigger an on-demand code review at any point by saying:
 
-> *"peer review"*
+> *"peer review"*, *"code review"*, or *"PR review"*
 
 The AI immediately switches to a **Strict Peer Reviewer** role. It does not write or fix code during this mode — it only identifies, classifies, and explains issues.
 
 ### How it works
 1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
-2. It scans the files you specify, or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
-3. It saves a structured report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`.
-4. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
+2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target — not the local working tree.
+3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
+4. It does not stop at the diff: it examines the full file or module the change touches, checks live or runtime state when tooling allows, and states plainly what it did not check.
+5. It saves a structured report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`.
+6. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
 
 ### Iterating
 - Apply the fixes from the report, then ask for another review.
@@ -183,13 +185,14 @@ The AI reviews the **full file set** on every pass — not just the latest diff.
 Using GitHub Copilot's pull request reviewer involves a frustrating cycle: push your branch, wait for Copilot to review the diff, copy the review comments out of GitHub, paste them into your local AI chat to understand and fix them, apply the fixes, push again, and repeat. Each push triggers a new diff-only review that cannot see issues outside the changed lines. After many rounds, you still may not have a full-codebase verdict. With this workflow's peer review, the entire loop stays in your local AI chat window — no push required, no copy-pasting between tools, and the AI scans the full file set every time.
 
 ### Exiting reviewer mode
-Say `"done reviewing"`, get an **APPROVED** verdict, or make a commit. The AI returns to its normal role.
+Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR review, see the PR merged or closed. The AI returns to its normal role.
 
 ### Report structure
 - **Critical** — blocks commit (security, data loss, broken functionality)
 - **Major** — fix before commit (policy violations, logic errors)
 - **Minor** — fix when convenient (style, naming)
 - **Suggestions** — optional improvements
+- **Not Checked** — what was out of scope or not verified (other files, live telemetry, and so on), stated plainly rather than omitted
 - **Verdict** — APPROVED or CHANGES REQUESTED
 
 ## 13. Token Rationing & JIT Context Loading
