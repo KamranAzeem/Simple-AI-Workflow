@@ -139,7 +139,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 | Poor | Good |
 |---|---|
 | `decisions.md` | `api-versioning-strategy-and-breaking-change-policy.md` |
-| `notes.md` | `ks5-order-module-sql-schema-constraints.md` |
+| `notes.md` | `orders-service-sql-schema-constraints.md` |
 | `architecture.md` | `azure-cli-subscription-context-fix.md` |
 
 > **The filename is the lookup key. Make it count.**

@@ -247,7 +247,7 @@ When you (or the AI) create files under `ai/shared/project-knowledge/`, `~/.ai/g
 
 Good examples:
 - `azure-postgresql-flexible-server-migration-decisions.md`
-- `ks5-order-module-sql-schema-constraints.md`
+- `orders-service-sql-schema-constraints.md`
 - `api-versioning-strategy-and-breaking-change-policy.md`
 
 Poor examples:
