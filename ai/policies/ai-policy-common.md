@@ -1,5 +1,6 @@
 # 🚫 DO NOT MODIFY THIS FILE
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
+<!-- AI-ASSISTANT: READ-ONLY START -->
 
 # AI Assistant Policy — Common Guardrails & Contracts
 
@@ -67,7 +68,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
-- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file — whether requested by the user or on its own initiative — it MUST give the file a verbose, descriptive, kebab-case name that lets the file's purpose be inferred from the name alone (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; words separated by hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. **Source code is exempt**: application and source-code files — and their tests, configs, and framework-dictated files — MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`), never the verbose knowledge-file style, which would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search — not by inferring contents from the filename — so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
+- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file, whether requested by the user or on its own initiative, it MUST give the file a verbose, descriptive, kebab-case name. The name must let the file's purpose be inferred without opening it (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; separate words with hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. **Source code is exempt**: application and source-code files, and their tests, configs, and framework-dictated files, MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`). Never use the verbose knowledge-file style for source code; it would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search, not by inferring contents from the filename, so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
@@ -141,6 +142,13 @@ Before presenting any shell or CLI command to the user, verify the following:
 2. **Resource identifiers**: Never guess or infer subscription IDs, resource names, resource group names, connection strings, or similar identifiers. Derive them from live tool queries or from values explicitly confirmed in the current session context.
 3. **If a parameter cannot be verified**: State this explicitly. Instruct the user to confirm the correct value before running the command rather than presenting an unverified placeholder.
 
+### Evidence-Based Reasoning (No-Assumption Rule)
+The same failure mode as CLI Command Accuracy above, generalized to every kind of claim, not just command flags and resource identifiers.
+1. **Never invent**: Do not invent people, teams, infrastructure components, configuration values, file contents, or past decisions that are not backed by the current context, project knowledge, or a live query. Do not attribute statements, actions, or opinions to people who were never mentioned.
+2. **Verify before asserting**: Before stating a fact or basing a recommendation on it, check the active conversation context, **Project AI Knowledge Directory** (loading the relevant indexed file on demand), and the live codebase or environment (search, file reads, or tool queries).
+3. **No evidence, say so**: If no evidence exists anywhere, say this plainly and ask the user for the missing fact. Do not fill the gap with a plausible-sounding guess.
+4. **Show your source**: Be ready to point to where a fact-based recommendation came from (a file, a query result, something you said), not present it as simply known.
+
 ## Universal Testing Standards
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
@@ -202,7 +210,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 
 #### Words to Use and Avoid
 - Use everyday words: `use` not `utilize`, `help` not `facilitate`, `show` not `demonstrate`, `try` not `endeavour`, `to` not `in order to`, `because` not `due to the fact that`.
-- Never use these AI-tell words: `delve`, `pivotal`, `robust`, `underscore`, `testament`, `tapestry`, `showcase`, `vibrant`, `boasts` (meaning "has"), `meticulous`, `intricate`, `landscape` (as an abstract noun), `foster`, `garner`, `interplay`, `bolster`.
+- Never use these AI-tell words: `delve`, `pivotal`, `underscore`, `testament`, `tapestry`, `showcase`, `vibrant`, `boasts` (meaning "has"), `meticulous`, `intricate`, `landscape` (as an abstract noun), `foster`, `garner`, `interplay`, `bolster`.
 - Do not start sentences with `Additionally`, `Furthermore`, `Moreover`, or `Consequently`.
 - Use `You`, `We`, and `I` naturally. You are a person helping another person, not a manual.
 - Be specific, not abstract. Say "costs $12/month" not "incurs incremental operational expenditure."
@@ -235,3 +243,4 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 
 #### Why This Matters
 AI-generated text has a tell. It is too perfect, too polite, and too generic. Human writing has rough edges. It gets to the point faster. It uses simpler words. This section exists so your output sounds like it came from a knowledgeable person — not a language model.
+<!-- AI-ASSISTANT: READ-ONLY END -->

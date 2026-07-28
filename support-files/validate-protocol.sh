@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.5 ---"
+echo "--- Starting Protocol Validation v4.6 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -146,8 +146,17 @@ POLICIES=(
     "career-coaching"
 )
 for p in "${POLICIES[@]}"; do
-    if [ ! -f "ai/policies/ai-policy-$p.md" ]; then
+    POLICY_FILE="ai/policies/ai-policy-$p.md"
+    if [ ! -f "$POLICY_FILE" ]; then
         echo "Error: Policy file ai-policy-$p.md missing."
+        exit 1
+    fi
+    if ! grep -q "READ-ONLY START" "$POLICY_FILE"; then
+        echo "Error: ai-policy-$p.md missing READ-ONLY START marker."
+        exit 1
+    fi
+    if ! grep -q "READ-ONLY END" "$POLICY_FILE"; then
+        echo "Error: ai-policy-$p.md missing READ-ONLY END marker."
         exit 1
     fi
 done
@@ -182,4 +191,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.5 Completed Successfully ---"
+echo "--- Protocol Validation v4.6 Completed Successfully ---"
