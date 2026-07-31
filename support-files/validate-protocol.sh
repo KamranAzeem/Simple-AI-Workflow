@@ -18,8 +18,8 @@ if ! grep -q "### PROCEDURE D: When User says \"peer review\"" AGENTS.md; then
     echo "Error: Procedure D (Peer Review) anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Post-Condensation Recovery" AGENTS.md; then
-    echo "Error: Post-Condensation Recovery procedure anchor missing in AGENTS.md."
+if ! grep -q "Post-Compaction Recovery" AGENTS.md; then
+    echo "Error: Post-Compaction Recovery procedure anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "### PROCEDURE F: When the user says \"backup ai\"" AGENTS.md; then

@@ -173,16 +173,16 @@ There are two forms:
 |---|---|
 | Stale state files | Atomic Write Protocol — all 3 state files sync together or not at all |
 | Progress log bloat | Sliding Horizon Shield — archives `progress.md` when it exceeds 50 items or 200 lines |
-| Compacted summary drift | Post-Condensation Recovery — reloads rules from disk, not from the summary |
-| Protocol amnesia | Proof-of-Load at every "load context"; AGENTS.md re-read mandated by Post-Condensation Recovery |
+| Compacted summary drift | Post-Compaction Recovery — reloads rules from disk, not from the summary |
+| Protocol amnesia | Proof-of-Load at every "load context"; AGENTS.md re-read mandated by Post-Compaction Recovery |
 | Knowledge base staleness | Mandatory project-knowledge sync at every checkpoint |
 
 ### Habits that prevent the rest
 
 - **Checkpoint frequently.** After each logical unit of work — a feature, a fix, a review cycle — run a checkpoint. Don't wait until end of day.
 - **Keep sessions shorter.** When you notice the AI repeating questions it already answered or losing track of earlier constraints, that's the signal: checkpoint and start a fresh session with `"load context using AGENTS.md protocol"`.
-- **Use the full load-context form at every restart.** Even with automatic Post-Condensation Recovery, the explicit `"load context using AGENTS.md protocol"` command runs the full procedure and is more reliable.
-- **Set up the post-condensation reload trigger once.** A long session can be auto-summarized, which may drop the standing rules your assistant had loaded. A one-time, per-assistant memory note re-arms the reload; see the [per-assistant setup guide](docs/post-condensation-reload-trigger-setup.md). After any summary, asking "did you run the post-condensation reload?" is the reliable final check.
+- **Use the full load-context form at every restart.** Even with automatic Post-Compaction Recovery, the explicit `"load context using AGENTS.md protocol"` command runs the full procedure and is more reliable.
+- **Set up the post-compaction reload trigger once.** A long session can be auto-summarized, which may drop the standing rules your assistant had loaded. For VS Code/Copilot, a `PreCompact` hook at `~/.copilot/hooks/` warns you before every compaction. For other tools, a one-time per-assistant memory note works. See the [per-assistant setup guide](docs/post-compaction-reload-trigger-setup.md). After any summary, asking "did you run the post-compaction reload?" is the reliable final check.
 - **Keep `context.md` lean.** It should hold the current operating state, not a history log. History belongs in `progress.md` and `ai/shared/project-knowledge/`.
 - **Review `next-steps.md` at session start.** It should contain the current checkpoint ID and any immediate next action — not a long list of stale items.
 
@@ -312,10 +312,10 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - **Iterative**: Run as many review rounds as needed. Each round produces a new numbered report; previous reports are never overwritten.
 
 ### 10. Session Resume (Compacted Context)
-- **Post-Condensation Recovery**: When resuming from a condensed conversation summary, the AI automatically reloads standing rules, all Global Knowledge, and active policies, and re-indexes project knowledge before responding — no manual "load context" needed.
-- **Context Integrity**: The condensed summary is treated as the sole authoritative source for current state, preventing stale data from corrupting the fresh context.
-- **Gap Detection**: If the summary indicates a module was completed without TDD or peer review, the AI flags this before touching any code.
-- **External re-arm trigger**: Because a condensation can drop `AGENTS.md` itself, a one-time per-assistant memory or custom-instruction note re-arms the recovery. See the [per-assistant setup guide](docs/post-condensation-reload-trigger-setup.md).
+- **Post-Compaction Recovery**: When the conversation is compacted (the "Compacted conversation" label), the AI re-reads standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory before responding, with no manual "load context" needed.
+- **Additive, not destructive**: The reload only adds rule and config files. It never wipes the working conversation, so it is safe to run automatically or on request.
+- **Context Integrity**: The AI does not read the three state files during recovery; the compaction summary already in context stays the source of truth for task state.
+- **External re-arm trigger**: Because a compaction can drop `AGENTS.md` itself, a mechanical re-arm is needed. For VS Code/Copilot, a `PreCompact` hook at `~/.copilot/hooks/` provides this. For other tools, a per-assistant memory or custom-instruction note works. See the [per-assistant setup guide](docs/post-compaction-reload-trigger-setup.md).
 
 ### 11. PWD-Only Scope
 - **Project Isolation**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage.
@@ -346,7 +346,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 
 ### 17. Custom Policy Auto-Discovery
 - **Drop-In Policies**: Any `.md` file dropped into `ai/policies/` or `ai/policies/compliance/` is automatically discovered, loaded in full at boot, and acknowledged in the proof-of-load report — no need to list it in the customization file.
-- **Recursive Scan**: The AI runs a recursive `find` on **Project AI Policies Directory** at boot, re-affirmation, and post-condensation recovery, ensuring user-created governance and framework policies are always active.
+- **Recursive Scan**: The AI runs a recursive `find` on **Project AI Policies Directory** at boot, re-affirmation, and post-compaction recovery, ensuring user-created governance and framework policies are always active.
 - **Compliance Directory**: `ai/policies/compliance/` is covered automatically by the recursive scan — dedicated subdirectory for framework-specific rules.
 
 ### 18. Git Workspace Detection
@@ -367,7 +367,7 @@ Global knowledge files in `~/.ai/global-knowledge/` are a small, curated set, so
 - [Simple-AI-Workflow (Markdown slides)](docs/simple-ai-workflow-slides.md) - Project Markdown version of the presentation (Marp-compatible)
 - Project docs directory: `docs/`
 - AI usage guide (handoffs, knowledge base, coordination, git enrichment): [docs/workflow-guide.md](docs/workflow-guide.md)
-- Post-condensation reload trigger setup (per-assistant): [docs/post-condensation-reload-trigger-setup.md](docs/post-condensation-reload-trigger-setup.md)
+- Post-compaction reload trigger setup (per-assistant): [docs/post-compaction-reload-trigger-setup.md](docs/post-compaction-reload-trigger-setup.md)
 - Protocol Validation System Guide: [docs/protocol-validation-system.md](docs/protocol-validation-system.md)
 - Policy Influence on Quality & Safety: [docs/policy-influence-on-ai-work.md](docs/policy-influence-on-ai-work.md)
 - Preferred AI tooling reference & installation: [docs/tools-preferences.md](docs/tools-preferences.md) *(legacy template — see `global-user-settings.md` for the recommended approach)*

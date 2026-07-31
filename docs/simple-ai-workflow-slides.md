@@ -31,7 +31,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
 - **Daily Snapshots** — Automated history of work and decisions
 - **Peer Review Mode** — On-demand full-file-set code review (including PR reviews) with structured, severity-classified reports
-- **Session Resume (Compacted Context)** — Fully loads standing rules, all Global Knowledge, and active policies; re-indexes project knowledge when resuming from a condensed summary
+- **Session Resume (Compacted Context)** — Re-reads standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory when the conversation is compacted; additive reload that never wipes the working thread
 - **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
 - **Token Rationing Shield** — Settings, Global Knowledge, and active policies are always fully loaded; large Project Knowledge files are indexed at boot and loaded on demand
 - **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
@@ -173,7 +173,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 ## Built-in Defences in This Workflow
 - **Atomic Write Protocol** — state files sync together or not at all; no partial writes
 - **Sliding Horizon Shield** — `progress.md` auto-archives when it exceeds 50 items or 200 lines
-- **Post-Condensation Recovery** — reloads rules from disk after any context compaction; needs a small per-tool external trigger to re-arm reliably (see the reload-trigger setup guide)
+- **Post-Compaction Recovery** — reloads rules from disk after any context compaction; for VS Code/Copilot a `PreCompact` hook provides a mechanical re-arm; for other tools a one-time memory note works (see the reload-trigger setup guide)
 - **Proof-of-Load** — AI must confirm every file it read before starting work
 - **Mandatory knowledge sync** — project decisions are written to `project-knowledge/` at every checkpoint
 
@@ -185,8 +185,43 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 ## Habits That Prevent the Rest
 - Checkpoint after each logical unit of work — not just at end of day
 - When the AI loses track of context, checkpoint and start a fresh session
-- Set up the per-tool reload trigger once; after any summary, ask "did you run the post-condensation reload?" before trusting the next answer
+- Set up the per-tool reload trigger once; after any summary, ask "did you run the post-compaction reload?" before trusting the next answer
 - Keep `context.md` lean — current state only, not a history log
 - Review `next-steps.md` at session start — trim stale items before working
 
 > **Checkpoint often. Session short. Context stays clean.**
+
+---
+
+# Post-Compaction Recovery
+
+## What happens
+
+Context windows fill up. The assistant compacts the conversation — replacing full history
+with a compressed summary. Without recovery, the standing rules loaded at session start
+(AGENTS.md, policies, Global Knowledge) are gone.
+
+## How the recovery works
+
+The AI re-reads all standing rules from disk. The compaction summary and task state are
+never touched — only the rules reload.
+
+```
+   Session Start          Mid-Session          After Compaction      After Recovery
+
+┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
+│ ■ AGENTS.md      │  │ ■ AGENTS.md      │  │ compacted        │  │ compacted        │
+│ ■ Policies       │  │ ■ Policies       │  │ conversation     │  │ conversation     │
+│ ■ Global Knowl.  │  │ ■ Global Knowl.  │  ├──────────────────┤  ├──────────────────┤
+├──────────────────┤  ├──────────────────┤  │                  │  │ ■ AGENTS.md      │
+│                  │  │ code, diffs,     │  │                  │  │ ■ Policies       │
+│                  │  │ searches,        │  │ active work +    │  │ ■ Global Knowl.  │
+│ active work +    │  │ conversation...  │  │ free space       │  ├──────────────────┤
+│ free space       │  │ tool outputs...  │  │                  │  │ active work      │
+│                  │  ├──────────────────┤  │                  │  │ (current) +      │
+│                  │  │ ↑ compacted here │  │                  │  │ free space       │
+│                  │  │  (limited free)  │  │                  │  │                  │
+└──────────────────┘  └──────────────────┘  └──────────────────┘  └──────────────────┘
+```
+
+> Rules reload. Task state preserved. Session continues.

@@ -37,7 +37,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 ### Source-of-Truth Order
 **Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the bootstrap procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
-**Exception — Post-Condensation Recovery**: When the post-condensation recovery procedure (Procedure E) is active, the condensed summary is the **sole authoritative source** and supersedes all state files below. Do not read state files during Procedure E.
+**Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** (Procedure E) is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Procedure E.
 
 1. `ai/next-steps.md`
 2. Latest daily checkpoint in **Project Daily Checkpoints Directory**
