@@ -36,7 +36,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 
 ### Phase 2 — Plan (decide before touching)
 5. Treat the examination request as an **Inquiry** under the Analyze-Plan-Stop rule of the common policy: read the maps, identify the exact files that an examination or refactor would touch, and present that plan. Do not begin edits without a Directive.
-6. If the goal is refactoring, examination findings and the change plan must be written to disk (project-knowledge or an artifact) before any code changes, so they survive context condensation.
+6. If the goal is refactoring, examination findings and the change plan must be written to disk (project-knowledge or an artifact) before any code changes, so they survive context compaction.
 
 ### Phase 3 — Perform (bounded batches)
 7. Process work in **small batches** (a handful of files per pass) sized to the active context window — not the whole codebase at once.
@@ -57,7 +57,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 - Loading the entire codebase (or its full skeleton) into context "just in case".
 - Standing up a vector store, embeddings pipeline, or external code-graph tool for this purpose.
 - Treating `AGENTS.md` as a code skeleton map — in this repository `AGENTS.md` is the protocol entry point, not a code map.
-- Holding examination state only in the conversation; it must be persisted to disk to survive condensation.
+- Holding examination state only in the conversation; it must be persisted to disk to survive compaction.
 - Beginning refactors before the examination map and change plan exist on disk.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

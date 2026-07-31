@@ -1,4 +1,8 @@
-CP-2026-07-25-03
+CP-2026-07-31-01
+
+## Immediate
+- [ ] Commit remaining uncommitted changes: README.md, docs/simple-ai-workflow-slides.md, ai/notes/notes.md, ai/notes/compaction-trigger-problem.md
+- [ ] Merge feature/post-compaction-recovery-rename into master (human approval required)
 
 ## Pending
 - [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`

@@ -1,13 +1,18 @@
 # Project Context
 
 ## Current Status
-- **Branch**: `master` — 20+ commits ahead of origin, NOT pushed
+- **Branch**: `feature/post-compaction-recovery-rename` — 3 commits ahead of master (58f22a4, 4465a54, 36de4b6), NOT merged; uncommitted docs changes in working tree
 - **Release**: v2.0.0 tagged and released on GitHub with full changelog
-- **Validator**: v4.5, all 8/8 checks pass
+- **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 15 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
-- **Next milestone**: User tests protocol with live projects; sync to downstream projects; push to origin when ready
+- **Next milestone**: commit remaining docs changes, merge feature branch to master, then push to origin
 
 ## Checkpoint History
+
+## Latest Checkpoint: CP-2026-07-31-01
+- **Current Branch**: `feature/post-compaction-recovery-rename` — 3 commits ahead of master, uncommitted working tree
+- **Summary**: Post-Compaction Recovery work: renamed Procedure E, simplified to additive reload, concrete compaction signals added to AGENTS.md (literal "Compacted conversation", `<conversation-summary>` XML, machine-generated summary), PreCompact hook at `~/.copilot/hooks/compaction-recovery.json` created, Proof-of-Load Step 7(a) widened to all sections, user memory trigger deleted, README/slides/setup-guide updated, new Post-Compaction Recovery slide with context-window diagrams added to slides, standalone problem-description note saved.
+- **Key deliverables**: 3 commits, validator v4.6 8/8, 5 review reports written (review-01 through review-05 on 2026-07-31), uncommitted docs batch pending
 
 ## Latest Checkpoint: CP-2026-07-04-04
 - **Summary**: Mega session covering customization-at-root, sync auto-migration, Humanized Output section, 2 new policies, cross-reference audit, bootstrap audit/creation separation, archive/backup directory exclusions, compliance directory reference cleanup, v2.0.0 GitHub release

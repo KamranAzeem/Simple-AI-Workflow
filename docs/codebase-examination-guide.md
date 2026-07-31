@@ -60,7 +60,7 @@ A smaller window only means **smaller batches and more passes** — never a hard
 
 ### Phase 2 — Plan (decide before touching)
 5. Analyse first: read the maps, identify the exact files an examination or refactor would touch, and present that list. Wait for your go-ahead before editing anything.
-6. If refactoring is the goal, write findings and the change plan to disk before any code change — so they survive context condensation.
+6. If refactoring is the goal, write findings and the change plan to disk before any code change — so they survive context compaction.
 
 ### Phase 3 — Perform (bounded batches)
 7. Process work in small batches (a handful of files per pass) sized to the active window — not the whole codebase at once.

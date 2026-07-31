@@ -103,27 +103,25 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 
 ## 7. Session Resume (Compacted Context)
 
-When a session begins from a condensed/compacted conversation summary (rather than a fresh "load context"), the AI automatically runs a **Post-Condensation Recovery** procedure before responding to your first request.
+When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the AI runs the **Post-Compaction Recovery** procedure before responding to your next request.
 
 ### How it works
-1. The AI detects it is resuming from a compacted summary (identified by structured headings like "Conversation Overview", "Technical Foundation", etc.).
-2. It fully loads `ai-policy-common.md` (the universal base policy) and the **Project Customization File** to restore active Traits, Expertise, and Development Workflow rules.
-3. It fully loads all Global Knowledge files and every applicable policy file referenced in the customization file, and builds a shell-discovered index of project knowledge files (filenames and apparent domains — full text loaded on demand). Large project knowledge files stay index-only to keep context lean.
-4. It outputs a brief confirmation of what was loaded and flags any gaps (e.g., a module completed without TDD or peer review).
+1. The AI notices the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary it did not write.
+2. It re-reads `AGENTS.md`, the **Project Customization File**, all Global Settings and Global Knowledge files, and the policy files (the common policy plus the ones your customization file names).
+3. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
+4. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
 
 ### Key rules
-- **Read-only**: No files are created, modified, or deleted during this procedure.
-- **No state files**: The AI does not read `context.md`, `progress.md`, `next-steps.md`, or checkpoints — the condensed summary is the sole authoritative source for current state.
-- **Gap detection**: If the summary shows work was completed without required processes (TDD, peer review), the AI raises this before proceeding.
+- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time — automatically or when you ask for it.
+- **No state files**: The AI does not read `context.md`, `progress.md`, `next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
 
 ### Benefits
-- **Zero-touch resume**: No need to say "load context" after every condensation.
-- **Context integrity**: Prevents stale pre-compaction data from corrupting the fresh session.
-- **Safety net**: Missed processes are caught before any code changes.
+- **Zero-touch resume**: No need to say "load context" after a compaction.
+- **Context integrity**: The reload restores your standing rules without disturbing the live thread.
 
 ### Why it still needs a small external trigger (a necessary evil)
 
-`AGENTS.md` is one of the things a condensation can drop, so it cannot reliably
+`AGENTS.md` is one of the things a compaction can drop, so it cannot reliably
 tell the assistant to reload itself. The re-arming instruction has to live in a
 layer the assistant re-reads every turn: its own persistent memory or always-on
 custom instructions. That layer differs per assistant and lives outside every
@@ -131,12 +129,12 @@ repository, in your personal settings. Keeping one short note there is a
 deliberate trade-off, kept out of the tool-agnostic protocol on purpose.
 
 Set this up once for your assistant of choice using the per-assistant guide,
-`post-condensation-reload-trigger-setup.md`.
+`post-compaction-reload-trigger-setup.md`.
 
 The honest target is high reliability with a loud, visible signal, not a hard
 guarantee. The reload announces itself as the first line of the first reply
-after condensation; if you do not see that line, the reload was skipped. The
-final backstop is you: after any summary, ask "did you run the post-condensation
+after a compaction; if you do not see that line, the reload was skipped. The
+final backstop is you: after any summary, ask "did you run the post-compaction
 reload?" before trusting the next answer.
 
 ## 8. Native AI State Backups

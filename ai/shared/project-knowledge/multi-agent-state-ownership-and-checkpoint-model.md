@@ -24,7 +24,7 @@ The AI's active in-memory context is the freshest source of truth for what was a
 ### 2.2 The pre-write read is a reconcile, not a memory refresh
 "Read before write" is retained but reframed. Its only purposes are:
 - **(a) Preserve append-only history**: `progress.md` is an append/archive ledger (Procedure C Step 2). A blind memory-driven write could drop existing lines; the read prevents that.
-- **(b) Detect drift**: another agent, or context condensation, may have changed the files since the AI last saw them.
+- **(b) Detect drift**: another agent, or context compaction, may have changed the files since the AI last saw them.
 
 **Precedence**: fresh in-memory deltas are authoritative for new/changed content; the disk read must never overwrite fresh work with a stale cached/summarised copy. Genuine same-item conflicts → stop and flag, do not silently pick one.
 

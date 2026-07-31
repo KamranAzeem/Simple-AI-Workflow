@@ -512,3 +512,64 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Docs updated**: `README.md` (delabeled the two context-rot table cells from "Procedure E" to the title, added a habit bullet, a Session Resume bullet linking the setup guide, and a Docs-and-Slides index entry for the new guide), `docs/workflow-guide.md` (§7 new subsection), `docs/simple-ai-workflow-slides.md` (honest-ceiling caveat on the Post-Condensation Recovery defence bullet plus a reload-backstop habit; the live Google Slides deck is already behind the markdown and will be reconciled separately, not this session), this file.
 - **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
 
+## 2026-07-31 — Procedure E renamed to Post-Compaction Recovery and simplified to an additive reload
+
+### Title change: "Post-Condensation Recovery" → "Post-Compaction Recovery"
+- **Problem (vocabulary mismatch)**: The harness labels a compacted thread "Compacted conversation", while the procedure was named after "condensation". There was no lexical bridge, so the AI could fail to recognise the trigger moment. The word "condensation" also collides with Procedure C Step 2 "Log Condensation (The Sliding Horizon Shield)", an unrelated `progress.md`-archiving feature.
+- **Decision**: Renamed the procedure title to **Post-Compaction Recovery** to match the harness term. This **updates, not contradicts**, the 2026-07-28 "identify by title, not by letter" decision: the title is still the stable external identifier and still a maintained contract, so the rename had to be applied atomically across `AGENTS.md`, the validator anchor, the external memory trigger, the setup guide, and all docs, or the external triggers stop resolving. The letter (E) remains free to renumber.
+- **Not renamed**: Procedure C Step 2 "Log Condensation / Sliding Horizon Shield" was deliberately left untouched — it is a different concept (log archiving, not conversation recovery).
+
+### Body simplified and made additive (non-destructive)
+- **Problem (harmful voluntary runs)**: The prior body carried conditional carve-outs, a first-cognitive-act boolean, a precedence essay, a multi-bullet report, and an honest-ceiling essay. It was over-complicated, and running it without a real compaction risked overwriting live context.
+- **Decision**: Reframed the procedure as a purely **additive reload**. It loads only static rule/config files — `AGENTS.md`, the customization file, global settings, global knowledge, and the policy files — and it never reads the three state files. Because it only adds files and never wipes the working thread, it is safe to run automatically or on explicit request; no "do not run unless compaction" guard is needed. The one hard rule is the single guard: **never read `ai/progress.md`, `ai/context.md`, `ai/next-steps.md`, or any daily checkpoint** — the compaction summary already in context is the source of truth for task state.
+- **Coordination board loaded, shared indexed**: Step 6 now **reads the Project Coordination File in full** (multi-agent awareness) and builds a filename-only index of the rest of the Project Shared Directory (handoffs, project knowledge), loaded on demand. Previously project knowledge alone was indexed; the scope is now the whole shared directory.
+- **Dropped**: the 2026-07-28 anti-skip hardening prose (suppression-path removal narrative, first-cognitive-act boolean, honest-ceiling essay). The user judged the silent-skip risk acceptable given the loud first-line sentinel and the external trigger, and preferred a short, readable procedure.
+- **Sentinel retained**: `[Reloading key files into context...]` is still the mandatory literal first line of the first reply after a compaction.
+
+### TIER 1 anchors made bold everywhere
+- **Decision**: Every reference to a TIER 1 path variable in the procedure and touched policy/doc text now uses the bold anchor form (**Project Customization File**, **Global AI Settings Directory**, **Project Coordination File**, etc.) so the AI cannot miss them.
+
+### Files renamed
+- `docs/post-condensation-reload-trigger-setup.md` → `docs/post-compaction-reload-trigger-setup.md` (via `git mv`, history preserved), contents retitled and the generic trigger block rewritten to key on the "Compacted conversation" signal with additive-safe framing.
+- User-memory external trigger `post-condensation-reload-trigger.md` → `post-compaction-recovery-trigger.md`, rewritten to a single signal-plus-steps definition that identifies the procedure by its new title and states the reload is always safe because it only adds files.
+
+### Validator
+- `support-files/validate-protocol.sh` anchor changed from the title string `Post-Condensation Recovery` to `Post-Compaction Recovery`. Version unchanged (v4.6), check count stays 8 (precedent: 2026-07-28 anchor change kept the version). Re-run after the change to confirm 8/8.
+
+### Files changed
+- `AGENTS.md` (TIER 2 Context Protection + Session Resume, Procedure C Steps 1 and 4, Procedure E fully rewritten), `support-files/validate-protocol.sh`, `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-codebase-examination.md`, `docs/codebase-examination-guide.md`, `docs/workflow-guide.md` (§7), `README.md`, `docs/simple-ai-workflow-slides.md`, the two renamed files above, this file.
+- **Commits**: 58f22a4 (rename + simplify, 11 files), 4465a54 (Proof-of-Load Step 7(a) widened), 36de4b6 (PreCompact hook + concrete signals + memory trigger deleted + setup guide update). See the following entry for the full record of the second and third commits.
+
+## 2026-07-31 — Concrete compaction signals, PreCompact hook, and doc updates
+
+### Compaction signals made syntactically detectable
+- **Problem**: AGENTS.md trigger language was vague ("tell-tale signs"); the AI had to reason about the provenance of a session summary, which led to missed detections on two documented occasions.
+- **Decision**: Replace vague language with three concrete syntactic signals in both TIER 2 Session Resume and Procedure E Trigger: (1) the literal text `"Compacted conversation"` in the transcript; (2) a `<conversation-summary>` XML block in the active context; (3) the session opening with a machine-generated multi-section summary the AI did not write.
+- **Rationale**: Syntactic pattern matching is more reliable than provenance inference. The `<conversation-summary>` XML tag is a structural Copilot marker that cannot appear in normal conversation.
+
+### User memory trigger file deleted
+- **Decision**: Deleted `/memories/post-compaction-recovery-trigger.md`.
+- **Rationale**: Empirically failed on two documented occasions (2026-07-30 mid-session; 2026-07-31 session-start). AGENTS.md is already always-on in VS Code, so the memory file provided no additional coverage. Root cause is compliance (text instructions are declarative, not imperative); a duplicate at the same level does not fix a compliance problem.
+
+### PreCompact hook as mechanical re-arm layer
+- **Decision**: Created `~/.copilot/hooks/compaction-recovery.json` (user-level, all workspaces) using the VS Code `PreCompact` hook event, outputting a `systemMessage` warning.
+- **Rationale**: The PreCompact hook fires before every mid-session compaction and shows the message to the user at the right moment — no AI text-instruction compliance needed. Documented in `docs/post-compaction-reload-trigger-setup.md` with a new hooks section and updated per-assistant table row.
+- **Known ceiling**: No `PostCompact` hook exists in VS Code. The PreCompact warning + human backstop covers the gap.
+
+### Proof-of-Load Step 7(a): report all customization file sections
+- **Decision**: Changed to "report each one explicitly, whatever sections the file contains" for full coverage. Commit 4465a54.
+
+### Stable identifier note simplified
+- **Decision**: Simplified the Procedure E "Stable identifier" paragraph to reference the validator anchor, setup guide, and hook configurations — removing the stale mention of the deleted external trigger file.
+
+### Docs and notes
+- `README.md`: two stale "memory note" references updated to mention the PreCompact hook
+- `docs/simple-ai-workflow-slides.md`: new "Post-Compaction Recovery" slide added with three-panel context-window ASCII diagram (Session Start / Mid-Session / After Recovery); stale reference updated
+- `ai/notes/compaction-trigger-problem.md`: new standalone note with problem description and question for other AI tooling communities
+- Uncommitted at checkpoint: README.md, slides.md, ai/notes/notes.md, ai/notes/compaction-trigger-problem.md
+
+### Post-Compaction Recovery slide diagram (final form)
+- **Decision**: Four-box context-window diagram in the slide: Session Start / Mid-Session / After Compaction / After Recovery. The "After Compaction" box (new) is the key teaching moment — it shows the compacted conversation at the top but NO rules cells, making visually explicit that the rules were lost. "After Recovery" shows compacted conversation + rules reloaded + active work, restoring the complete picture.
+- **Diagram evolution**: Started as 3 boxes (start/mid/after-recovery); user added "After Compaction" as an intermediate state to show the gap before recovery. All 4 boxes normalized to 13 rows for bottom-border alignment.
+- **Files**: `docs/simple-ai-workflow-slides.md` (Post-Compaction Recovery slide, diagram replaced)
+
