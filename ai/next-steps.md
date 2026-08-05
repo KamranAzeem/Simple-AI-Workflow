@@ -1,8 +1,9 @@
-CP-2026-07-31-01
+CP-2026-08-02-01
 
-## Immediate
-- [ ] Commit remaining uncommitted changes: README.md, docs/simple-ai-workflow-slides.md, ai/notes/notes.md, ai/notes/compaction-trigger-problem.md
-- [ ] Merge feature/post-compaction-recovery-rename into master (human approval required)
+## Pending
+- [ ] Process notes.md: document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (see notes.md for full spec)
+- [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`
+- [ ] Human (when ready): push master to origin — already pushed as of f61a680
 
 ## Pending
 - [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`
