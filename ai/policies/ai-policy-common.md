@@ -6,7 +6,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
-> **Applies to all domain policies**: All policies are activated through the AGENTS.md bootstrap procedure (Procedure A). Paths resolve using the **Global AI Policies Directory** defined in `AGENTS.md` TIER 1.
+> **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the **Global AI Policies Directory** defined in the configuration section of `AGENTS.md`.
 
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
@@ -27,7 +27,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
-2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the AGENTS.md bootstrap procedure (Procedure A)). This summary must explicitly list active traits, loaded Global Knowledge files, and pending tasks.
+2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the `AGENTS.md` bootstrap procedure). This summary must explicitly list active traits, loaded Global Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
@@ -35,9 +35,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Operational Restart and Checkpoint Contract
 ### Source-of-Truth Order
-**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the bootstrap procedure (AGENTS.md Procedure A) and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
-**Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** (Procedure E) is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Procedure E.
+**Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
 
 1. `ai/next-steps.md`
 2. Latest daily checkpoint in **Project Daily Checkpoints Directory**
@@ -45,8 +45,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 4. `ai/context.md`
 
 ### Checkpoint & Backup Procedures
-- **Checkpoint Mandate (Procedure C)**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update step (AGENTS.md Procedure C). This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
-- **Backup (Procedure F)**: Backups are a **separate, on-demand procedure** triggered by the backup procedure. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
+- **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.
@@ -93,15 +93,30 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the bootstrap procedure (AGENTS.md Procedure A). Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and non-mergeable with Step 4.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update step in AGENTS.md Procedure C) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+
+### Ticket File Scope
+Files under a `tickets/` subdirectory of the **Project AI Knowledge Directory** represent the status exchange that flows through the customer ticket system (Jira, etc.). They contain:
+- Decisions and outcomes communicated through the ticket
+- Blockers raised and resolved, as visible to the customer
+- References to PRs, builds, and key identifiers as they appear in ticket comments
+- Closing conditions and final status
+
+They do NOT contain:
+- Technical investigation notes, CLI output, or diagnostic data
+- Step-by-step runbooks or command sequences
+- AI model handover notes or session diary entries
+- Any content not directly shared with or by the customer through the ticket
+
+All such content belongs in named project knowledge files. When creating or updating a ticket file, apply this boundary strictly. Existing content that violates it must be migrated to the appropriate knowledge file, not left in place.
 
 ## State File Ownership Protocol
 - **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
-- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in AGENTS.md Procedure C).
+- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve append-only history and detect drift — never a refresh that overwrites fresh work with a stale disk copy.
 
 ## Operational Standards
@@ -118,23 +133,24 @@ Distinguish between **Directives** (unambiguous requests for action or implement
 
 ### Generated File Validation
 Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
-    - **Common linters by file type**:
-        - JavaScript/TypeScript: `npx eslint --fix <file>`
-        - Python: `ruff check --fix <file>` (or flake8/pylint)
-        - Go: `gofmt -w <file>` (or `golangci-lint run --fix`)
-        - Rust: `cargo clippy --fix` (or `rustfmt <file>`)
-        - Shell scripts: `shellcheck <file>`
-        - Markdown: `markdownlint --fix <file>`
-        - YAML/JSON: `yamllint <file>` (or `jq . <file>` for JSON validation)
-        - Dockerfile: `hadolint <file>`
-        - Terraform/HCL: `terraform fmt <file>`
-        - SQL: `sqlfluff fix <file>`
-        - CSS/SCSS: `stylelint --fix <file>`
-        - Swift: `swiftlint --fix`
-        - Kotlin: `ktlint -F <file>`
-        - Java: `google-java-format -i <file>` (or checkstyle)
-    - **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
-    - **If linter is unavailable**: Note it clearly and suggest the user installs it.
+
+- **Common linters by file type**:
+    - JavaScript/TypeScript: `npx eslint --fix <file>`
+    - Python: `ruff check --fix <file>` (or flake8/pylint)
+    - Go: `gofmt -w <file>` (or `golangci-lint run --fix`)
+    - Rust: `cargo clippy --fix` (or `rustfmt <file>`)
+    - Shell scripts: `shellcheck <file>`
+    - Markdown: `markdownlint --fix <file>`
+    - YAML/JSON: `yamllint <file>` (or `jq . <file>` for JSON validation)
+    - Dockerfile: `hadolint <file>`
+    - Terraform/HCL: `terraform fmt <file>`
+    - SQL: `sqlfluff fix <file>`
+    - CSS/SCSS: `stylelint --fix <file>`
+    - Swift: `swiftlint --fix`
+    - Kotlin: `ktlint -F <file>`
+    - Java: `google-java-format -i <file>` (or checkstyle)
+- **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
+- **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
 ### CLI Command Accuracy
 Before presenting any shell or CLI command to the user, verify the following:

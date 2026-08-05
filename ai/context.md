@@ -1,18 +1,23 @@
 # Project Context
 
 ## Current Status
-- **Branch**: `feature/post-compaction-recovery-rename` — 3 commits ahead of master (58f22a4, 4465a54, 36de4b6), NOT merged; uncommitted docs changes in working tree
+- **Branch**: `master` — clean, synced with origin (HEAD: f61a680)
 - **Release**: v2.0.0 tagged and released on GitHub with full changelog
 - **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 15 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
-- **Next milestone**: commit remaining docs changes, merge feature branch to master, then push to origin
+- **Next milestone**: process notes.md Kilo Code todo; sync AGENTS.md to other projects
 
 ## Checkpoint History
 
+## Latest Checkpoint: CP-2026-08-02-01
+- **Current Branch**: `master` — clean, synced with origin (f61a680)
+- **Summary**: Research session — investigated Kilo Code context condensing for PostCompact hook equivalents. No hooks found; AGENTS.md always-on as system instructions (survives compaction by architecture). Decided human backstop is sufficient; no slash command needed. Todo added to notes.md for Kilo Code documentation updates. feature/post-compaction-recovery-rename squash-merged and pushed.
+- **Key deliverables**: notes.md todo added; no commits this session (notes.md change only)
+
 ## Latest Checkpoint: CP-2026-07-31-01
-- **Current Branch**: `feature/post-compaction-recovery-rename` — 3 commits ahead of master, uncommitted working tree
-- **Summary**: Post-Compaction Recovery work: renamed Procedure E, simplified to additive reload, concrete compaction signals added to AGENTS.md (literal "Compacted conversation", `<conversation-summary>` XML, machine-generated summary), PreCompact hook at `~/.copilot/hooks/compaction-recovery.json` created, Proof-of-Load Step 7(a) widened to all sections, user memory trigger deleted, README/slides/setup-guide updated, new Post-Compaction Recovery slide with context-window diagrams added to slides, standalone problem-description note saved.
-- **Key deliverables**: 3 commits, validator v4.6 8/8, 5 review reports written (review-01 through review-05 on 2026-07-31), uncommitted docs batch pending
+- **Current Branch**: `feature/post-compaction-recovery-rename` — squash-merged to master as f61a680
+- **Summary**: Post-Compaction Recovery work: renamed Procedure E, simplified to additive reload, concrete compaction signals added, PreCompact hook created, Proof-of-Load widened, user memory trigger deleted, README/slides/setup-guide updated, new Post-Compaction Recovery slide with four-box context-window diagram.
+- **Key deliverables**: 4 commits (58f22a4, 4465a54, 36de4b6, e6ea76d), validator v4.6 8/8
 
 ## Latest Checkpoint: CP-2026-07-04-04
 - **Summary**: Mega session covering customization-at-root, sync auto-migration, Humanized Output section, 2 new policies, cross-reference audit, bootstrap audit/creation separation, archive/backup directory exclusions, compliance directory reference cleanup, v2.0.0 GitHub release
