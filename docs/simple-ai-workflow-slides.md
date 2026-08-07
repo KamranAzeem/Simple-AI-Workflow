@@ -40,6 +40,113 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Verbose AI File Naming** — AI gives knowledge/docs/workflow files descriptive kebab-case names (filename = JIT lookup key); application/source code is exempt and follows language/framework idioms
 - **Codebase Examination Mode** — Activated by saying `"codebase examination"` or `"examine this codebase"`; uses tiered, disk-backed skeleton maps; no vector DBs or external tools
 - **Career Coaching Policy** — Dedicated policy for job search strategy, resume/cover letter optimization, interview prep (STAR method), and career transition narrative
+- **Windows System Admin Policy** — Covers Windows Server, Active Directory, Group Policy, PowerShell automation, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
+
+---
+
+# How Does This Compare to Copilot, Claude, ChatGPT, and Cursor?
+
+## The Black Box Problem
+
+Every AI assistant stores its context in its own hidden way:
+
+- **Copilot** — memory in VS Code's internal storage and `/memories/` files; VS Code-only
+- **Claude** — `CLAUDE.md` at project root + Claude Projects on Anthropic's servers
+- **ChatGPT** — automatic Memory in your OpenAI account; AI decides what to save
+- **Cursor** — `.cursor/rules` inside the project; invisible to every other tool
+
+They are black boxes of different shades. Some darker than others.
+
+**The core problem**: the state belongs to the tool, not to you.
+
+Switch tools and you start from scratch. The new assistant has no idea what the previous one knew.
+
+> **One tool = one box. Two tools = two boxes. No shared memory. Ever.**
+
+---
+
+# How Major AI Tools Store Context
+
+| What you need | Copilot | Claude | ChatGPT | Cursor |
+|---|---|---|---|---|
+| Project instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions | `.cursor/rules` |
+| User preferences | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions | User rules (in settings) |
+| Per-project customization | No | No | Projects | No |
+| Domain expertise / rules | `SKILLS.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections |
+| Progress tracking | None | Claude Projects history | Projects | None |
+| Pending tasks | None | None | None | None |
+| Project knowledge / decisions | None | Uploaded files | Uploaded files | None |
+| Cross-project lessons | None | Manual | Automatic, opaque | None |
+| Post-summary recovery | `PreCompact` hook | None | None | None |
+
+---
+
+# Simple AI Workflow — The Same Table
+
+| What you need | Simple AI Workflow |
+|---|---|
+| Project instructions | `AGENTS.md` — works with any tool, any editor |
+| User preferences | `~/.ai/settings/global-user-settings.md` |
+| Per-project customization | `ai-customization.md` |
+| Domain expertise / rules | 16 modular policies in `ai/policies/` |
+| Progress tracking | `ai/progress.md` |
+| Pending tasks | `ai/next-steps.md` |
+| Project knowledge / decisions | `ai/shared/project-knowledge/` |
+| Cross-project lessons | `~/.ai/global-knowledge/` — explicit, structured |
+| Post-summary recovery | Post-Compaction Recovery — automatic |
+| Multi-tool handoffs | `ai/shared/handoffs/` |
+| Compliance enforcement | `ai/policies/compliance/` + AI built-in knowledge |
+| Peer code review | `"peer review"` — saved reports in `ai/code-review-reports/` |
+| Protocol self-validation | `validate-protocol.sh` |
+| Sync across all your projects | `sync-agents-md.sh` / `.ps1` |
+
+> **One set of files. Any assistant reads them. Everything in plain sight.**
+
+---
+
+# Why Simple AI Workflow Wins on Portability
+
+## Switch AI tools without losing anything
+- Open any assistant, type `"load context using AGENTS.md protocol"`
+- It reads the same files the previous assistant was using
+- Copilot → Claude → ChatGPT → back to Copilot: zero re-work
+
+## Change editors, OS, or machines — zero setup
+- Files live in your project directory. That's it.
+- VS Code → terminal → JetBrains — same files, same workflow
+- Linux → macOS → Windows — nothing changes
+- Copilot memory: VS Code only. Claude Projects: Anthropic's servers. ChatGPT Memory: your OpenAI account.
+- **Simple AI Workflow: just files. They go wherever you go.**
+
+## Moving to a new machine
+- Run `"backup ai"` — archives the entire `ai/` directory to `~/.ai/backups/`
+- Or set up `ai/` as its own private git repo (common for architects and platform engineers managing multiple projects)
+- `git clone` and you are straight back to work
+
+> **Your context is yours. Not the tool's. Not the cloud's. Yours.**
+
+---
+
+# The Trade-Off — And Why It Is Worth It
+
+## What native tools do better
+- ChatGPT Memory saves things automatically — zero effort
+- Copilot's instructions are injected automatically — no prompt needed
+- Claude reads `CLAUDE.md` without being asked
+
+## What Simple AI Workflow asks of you
+- `"load context using AGENTS.md protocol"` — start of every session
+- `"checkpoint"` — after each task
+- `"update project knowledge"` — when a decision is made
+- `"backup ai"` — when you want a backup
+
+## Why that friction is actually good
+- Typing `"checkpoint"` forces a pause. You review what was done.
+- `"update project knowledge"` makes you ask: *what did we decide, and is it written down?*
+- The commands are friction — but they are **productive friction**.
+- And unlike native automation, **you always know exactly what was saved and why**.
+
+> **Less magic. More control. More discipline. Better results.**
 
 ---
 

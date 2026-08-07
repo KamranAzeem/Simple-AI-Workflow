@@ -97,6 +97,7 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Expertise** | `accounting` | `ai-policy-accounting.md` |
 | **Expertise** | `academic-researcher` | `ai-policy-academic-researcher.md` |
 | **Expertise** | `career-coaching` | `ai-policy-career-coaching.md` |
+| **Expertise** | `windows-system-admin` | `ai-policy-windows-system-admin.md` |
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
 
