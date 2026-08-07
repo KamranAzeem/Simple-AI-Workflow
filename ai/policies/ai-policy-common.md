@@ -182,21 +182,75 @@ The same failure mode as CLI Command Accuracy above, generalized to every kind o
 
 ## Design Documentation Standards
 
+### Document Flow
+Design documentation follows this sequence. Each document feeds the next:
+
+`notes → vision → PRD → HLD → LLD → ADRs → delivery ledger`
+
+Start with raw notes. Distil them into a vision. Use the vision to write a formal PRD. Derive architecture from the PRD. Detail the implementation in the LLD. Record significant decisions as ADRs. Track what has been built against those documents in the delivery ledger.
+
 ### Mandatory Design Artifacts
 At the start of each session, the AI MUST check for the following design documents in the **Project AI Knowledge Directory**. If any are missing, inform the user with a brief summary of benefits and ask whether to create them.
 
-- **PRD** (Product Requirements Document): Problem, target users, success criteria, and scope. Prevents building the wrong thing.
-- **HLD** (High-Level Design): System architecture, component decomposition, module boundaries, and technology choices. Provides the implementation roadmap.
-- **LLD** (Low-Level Design): Detailed designs per component — classes, interfaces, data flows, APIs, database schemas. Bridges between architecture and code.
-- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Prevents repeated debate and preserves institutional knowledge.
+- **Vision**: A short, plain-language document that captures what you want to build and why, written before any formal documentation. Distilled from raw notes. Sections: What, Why, Goals, Out of scope. One to two pages maximum.
+- **PRD** (Product Requirements Document): Problem, target users, success criteria, and scope. Each requirement is assigned a unique `REQ-NNN` ID. Prevents building the wrong thing.
+- **HLD** (High-Level Design): System architecture, component decomposition, module boundaries, and technology choices. Each component is assigned a unique `HLD-NNN` ID. Provides the implementation roadmap.
+- **LLD** (Low-Level Design): Detailed designs per component — classes, interfaces, data flows, APIs, database schemas. Each item is assigned a unique `LLD-NNN` ID. Bridges between architecture and code.
+- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Each ADR is assigned a unique `ADR-NNN` ID. Prevents repeated debate and preserves institutional knowledge.
+- **Delivery Ledger**: A living cross-reference document that tracks which design items (by ID) have been implemented and released. Created as soon as implementation begins against any design document. Updated at every checkpoint. See Delivery Ledger section below.
+
+### ID Convention
+Every requirement, component, and design item gets a unique ID the moment it is written. IDs are sequential within each document, starting at `001`. Never reuse or delete an ID — if an item is cancelled, mark it `[CANCELLED]` in the ledger and leave the ID in place.
+
+| Document | ID prefix | Example |
+|---|---|---|
+| PRD requirement | `REQ-NNN` | `REQ-001` |
+| HLD component | `HLD-NNN` | `HLD-003` |
+| LLD item | `LLD-NNN` | `LLD-012` |
+| ADR | `ADR-NNN` | `ADR-001` |
 
 ### Naming Convention
 Follow the Verbose File Naming rule from Universal Operational Guardrails. File names MUST identify the project or sub-project they belong to. Kebab-case with descriptive prefix and document-type suffix:
 
+- `<project-or-subproject>-vision.md` — e.g. `identity-service-vision.md`
 - `<project-or-subproject>-prd.md` — e.g. `identity-service-prd.md`
 - `<project-or-subproject>-hld.md` — e.g. `checkout-flow-hld.md`
 - `<project-or-subproject>-lld.md` — e.g. `payment-worker-lld.md`
 - `<project-or-subproject>-adr-<nnn>-<short-description>.md` — e.g. `checkout-adr-001-use-stripe.md`
+- `<project-or-subproject>-delivery-ledger.md` — e.g. `identity-service-delivery-ledger.md`
+
+### Delivery Ledger
+The delivery ledger is a mandatory tracking document. Create it when implementation begins against any design document. It lives in the **Project AI Knowledge Directory** alongside the design documents it references.
+
+The ledger has one section per design document. Each row references an item by its ID:
+
+```markdown
+## PRD Requirements
+
+| ID      | Description             | Status      | Released in |
+|---------|-------------------------|-------------|-------------|
+| REQ-001 | User registration       | Done        | v1.0        |
+| REQ-002 | Password reset          | In Progress | —           |
+| REQ-003 | Social login            | Not Started | —           |
+
+## HLD Components
+
+| ID      | Component               | Status      | Released in |
+|---------|-------------------------|-------------|-------------|
+| HLD-001 | Auth service            | Done        | v1.0        |
+| HLD-002 | Notification pipeline   | In Progress | —           |
+
+## LLD Items
+
+| ID      | Item                    | Status      | Released in |
+|---------|-------------------------|-------------|-------------|
+| LLD-001 | JWT token generation    | Done        | v1.0        |
+| LLD-002 | Email template engine   | Not Started | —           |
+```
+
+Valid status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
+
+**AI checkpoint obligation**: At every checkpoint, review the delivery ledger and update the status of any items completed or progressed during the session. If the ledger does not exist yet and a design document does, prompt the user to create it.
 
 ### Supplementary Documents (Consider Also)
 Create these when the project's complexity warrants them:

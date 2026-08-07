@@ -41,6 +41,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Codebase Examination Mode** — Activated by saying `"codebase examination"` or `"examine this codebase"`; uses tiered, disk-backed skeleton maps; no vector DBs or external tools
 - **Career Coaching Policy** — Dedicated policy for job search strategy, resume/cover letter optimization, interview prep (STAR method), and career transition narrative
 - **Windows System Admin Policy** — Covers Windows Server, Active Directory, Group Policy, PowerShell automation, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
+- **Design Documentation Flow** — Structured document stack: Vision → PRD → HLD → LLD → ADRs → Delivery Ledger; ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`); AI checks for missing docs and updates the ledger at every checkpoint
 
 ---
 
@@ -225,6 +226,33 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - **On-Demand Depth**: Project Knowledge loads precisely when a task needs it, not speculatively
 
 > **Lean context. Fast boot. Full depth when it matters.**
+
+---
+
+# Design Documentation Flow
+
+## The Stack
+
+```
+notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
+```
+
+| Document | What it is |
+|---|---|
+| **Vision** | What you want to build and why. Plain language. 1–2 pages. |
+| **PRD** | Requirements with `REQ-NNN` IDs. Defines scope and success criteria. |
+| **HLD** | Architecture and components with `HLD-NNN` IDs. |
+| **LLD** | Detailed per-component design with `LLD-NNN` IDs. |
+| **ADRs** | Significant decisions with `ADR-NNN` IDs and full rationale. |
+| **Delivery Ledger** | Tracks which IDs are done, in progress, or not started. |
+
+## How the AI helps
+- Checks for missing documents at the start of every session and prompts to create them
+- Assigns IDs when generating requirements, components, or design items
+- Updates the delivery ledger at every checkpoint
+- Treats documentation drift as a code smell — flags design docs that lag behind the code
+
+> **Start with notes. End with a clear record of what was built and why.**
 
 ---
 
