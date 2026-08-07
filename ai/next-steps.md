@@ -9,5 +9,5 @@ CP-2026-08-05-01
 - [ ] (Breaking — design as one coherent change later): Procedure E precedence rework so resume may read the latest checkpoint's single-writer-authoritative state instead of trusting only the lossy summary.
 - [ ] (Separate project): AI-team dispatcher/watcher runtime (role lifecycle, watch-spawned execution) and per-agent status files for true parallelism. Not part of the protocol contract.
 - [ ] REVISIT WHEN PARALLEL (Scenario B from CP-2026-06-30-02): Before running multiple AI agents/sessions that may write the three state files *concurrently*, adopt the per-agent-status-file model (one file per agent under `ai/shared/coordination/`, orchestrator reconciles). The current cooperative board is not race-safe for simultaneous writes; today's single-orchestrator model only holds when writes are serialized in time. Sequential role-switching in one session (Scenario A) is already safe and needs nothing.
-- [ ] Future (not now): discuss whether to add TLD.md / LLD.md to bound protocol scope and size
+- [ ] (Resolved 2026-08-08): TLD is not a standard document — was confusion with HLD. No addition needed. Vision + PRD + HLD + LLD + ADRs is the complete stack.
 - [ ] (Optional, carried) Review `ai/sessions/` directory — exists but not referenced in any policy or doc; document its purpose or remove it

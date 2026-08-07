@@ -240,3 +240,32 @@ To prevent `ai/progress.md` from growing unbounded and consuming context window 
 - **Threshold Trigger**: When `ai/progress.md` exceeds 50 completed items or 200 lines, log condensation runs automatically during the next checkpoint.
 - **Archive**: Entries older than the 10 most recent are moved to `ai/shared/project-knowledge/progress-archive.md`.
 - **Horizon Anchor**: A single 3-sentence "Archive Horizon Context" block at the top of `ai/progress.md` summarizes what was archived, preserving project continuity without the full history.
+
+## 15. Design Documentation Flow
+
+When building software, designing a system, or setting up infrastructure, the AI follows a structured document flow. Each document feeds the next.
+
+```
+notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
+```
+
+| Document | Purpose |
+|---|---|
+| **Notes** | Raw thoughts, ideas, and requirements — no structure required |
+| **Vision** | Short plain-language document: what you want to build and why. One to two pages. Written before any formal documentation. |
+| **PRD** | Product Requirements Document — problem, target users, success criteria, scope. Each requirement gets a unique `REQ-NNN` ID. |
+| **HLD** | High-Level Design — architecture, components, technology choices. Each component gets a `HLD-NNN` ID. |
+| **LLD** | Low-Level Design — detailed per-component design: classes, interfaces, APIs, schemas. Each item gets a `LLD-NNN` ID. |
+| **ADRs** | Architecture Decision Records — context and rationale for each significant decision. Each gets an `ADR-NNN` ID. |
+| **Delivery Ledger** | Tracks which design items (by ID) have been implemented and released. Updated at every checkpoint. |
+
+All design documents live in `ai/shared/project-knowledge/` and follow the verbose naming convention:
+
+- `<project>-vision.md`
+- `<project>-prd.md`
+- `<project>-hld.md`
+- `<project>-lld.md`
+- `<project>-adr-<nnn>-<short-description>.md`
+- `<project>-delivery-ledger.md`
+
+At the start of each session, the AI checks for these documents and prompts you to create any that are missing. At every checkpoint, it updates the delivery ledger to reflect what was built during the session.

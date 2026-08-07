@@ -196,6 +196,7 @@ For a full breakdown of how concepts translate between Copilot, Claude, ChatGPT,
 - **Auto-sync script** — push `AGENTS.md` to all your projects in one command, with automatic migration from the old layout.
 - **Protocol validator** — `support-files/validate-protocol.sh` checks that everything is wired up correctly.
 - **Post-compaction recovery** — when a session is auto-summarized, the AI reloads its rules from disk automatically, without losing your working context.
+- **Design documentation flow** — structured stack: Vision → PRD → HLD → LLD → ADRs → Delivery Ledger. ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). AI checks for missing docs at session start and updates the ledger at every checkpoint.
 - **Atomic checkpoint protocol** — all three state files are always written together. Partial writes don't happen.
 - **Context shielding** — large project knowledge files are indexed at startup and loaded on demand. Small global files are always fully loaded.
 
