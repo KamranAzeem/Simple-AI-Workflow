@@ -573,3 +573,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Diagram evolution**: Started as 3 boxes (start/mid/after-recovery); user added "After Compaction" as an intermediate state to show the gap before recovery. All 4 boxes normalized to 13 rows for bottom-border alignment.
 - **Files**: `docs/simple-ai-workflow-slides.md` (Post-Compaction Recovery slide, diagram replaced)
 
+---
+
+## 2026-08-05 — Session CP-2026-08-05-01
+
+### Policy files must not use procedure letters or step numbers
+
+- **Decision**: Policy files (`ai/policies/*.md`) must not reference procedure letters (e.g. "Procedure A", "Procedure C") or step numbers (e.g. "Step 4"). These are internal `AGENTS.md` labels that silently break if procedures are renumbered or renamed.
+- **Rule going forward**: All references to `AGENTS.md` procedures or steps in policy files must use plain descriptive phrases: "the `AGENTS.md` bootstrap procedure", "the checkpoint knowledge update steps in `AGENTS.md`", etc. Using the procedure's own stable title (e.g. "Post-Compaction Recovery") is fine — it is a maintained external identifier, not a positional label.
+- **Files changed**: `ai/policies/ai-policy-common.md` (9 occurrences fixed), this file.
+- **Commit**: `e82729c` on master. Validator v4.6, 8/8 pass.
+

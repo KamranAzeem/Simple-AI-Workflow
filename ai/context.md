@@ -1,13 +1,18 @@
 # Project Context
 
 ## Current Status
-- **Branch**: `master` — clean, synced with origin (HEAD: f61a680)
+- **Branch**: `master` — 1 commit ahead of origin (HEAD: e82729c)
 - **Release**: v2.0.0 tagged and released on GitHub with full changelog
 - **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 15 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **Next milestone**: process notes.md Kilo Code todo; sync AGENTS.md to other projects
 
 ## Checkpoint History
+
+## Latest Checkpoint: CP-2026-08-05-01
+- **Current Branch**: `master` — 1 commit ahead of origin (HEAD: e82729c)
+- **Summary**: Fixed ai-policy-common.md fragile internal-label references. Removed all procedure-letter (A/C/E/F), step-number (Step 4), and TIER-1 references; replaced with plain phrases. Fixed Generated File Validation list indentation. Committed to master (e82729c). Validator v4.6 8/8.
+- **Key deliverables**: 1 commit (e82729c), ai-policy-common.md fixed, next-steps.md duplicate sections cleaned up
 
 ## Latest Checkpoint: CP-2026-08-02-01
 - **Current Branch**: `master` — clean, synced with origin (f61a680)
