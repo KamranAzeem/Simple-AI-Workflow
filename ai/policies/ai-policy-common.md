@@ -22,7 +22,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 2. The handoff file contains a `## Verification` section with objective, executable validation steps.
 3. ALL verification steps pass with zero errors (verified via shell command output).
 4. The **Project Coordination File** board is updated (claimed before, cleared after).
-5. The **Project Coordination File** board is updated with the completion entry — the orchestrator folds it into `ai/progress.md` at checkpoint.
+5. The **Project Coordination File** board is updated with the completion entry — the orchestrator folds it into `ai/state/progress.md` at checkpoint.
 *If any condition is not met, human approval is mandatory for the merge.*
 
 ## Agent-to-Agent (A2A) Coordination
@@ -39,10 +39,10 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 **Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
 
-1. `ai/next-steps.md`
+1. `ai/state/next-steps.md`
 2. Latest daily checkpoint in **Project Daily Checkpoints Directory**
-3. `ai/progress.md`
-4. `ai/context.md`
+3. `ai/state/progress.md`
+4. `ai/state/context.md`
 
 ### Checkpoint & Backup Procedures
 - **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
@@ -118,6 +118,8 @@ All such content belongs in named project knowledge files. When creating or upda
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
 - **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve append-only history and detect drift — never a refresh that overwrites fresh work with a stale disk copy.
+- **State File Append-Only Rule**: All updates to the three state files MUST be appended at the tail. The most recent entry is always the last entry. Never insert, prepend, or edit content at the top of a state file or above existing entries. This preserves chronological order across sessions.
+- **State File Scope Rule**: State files contain summaries only (what was done, what is pending, current context). They MUST NOT contain detailed implementation steps, CLI commands, investigation notes, runbooks, or knowledge content. Those belong in **Project AI Knowledge Directory** or **Global AI Knowledge Directory**. Write durable knowledge to its proper file before recording a summary checkpoint entry.
 
 ## Operational Standards
 

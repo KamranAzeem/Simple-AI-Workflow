@@ -8,7 +8,7 @@ This document describes the permanent testing and maintenance system for the [`A
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
-   - Verify readability and format of tracking files (`next-steps.md`, `progress.md`, `context.md`).
+   - Verify readability and format of tracking files (`ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`).
    - Validate checkpointing capability (create/verify/delete `CP-DRY-RUN.md`).
 3. **Linting & Formatting Checks**:
    - Run `markdownlint` on all policy files to ensure structural consistency and compliance with documentation standards.

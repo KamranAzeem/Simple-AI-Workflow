@@ -1,13 +1,22 @@
+<!--
+STATE-FILE: APPEND-ONLY. Append new content at the tail of this file. Do not insert, prepend, or edit content above existing entries. The most recent entry is always the last one.
+STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what is pending, current context). No detailed implementation steps, commands, runbooks, investigation notes, or knowledge content. Use ai/shared/project-knowledge/ for durable knowledge.
+-->
 # Project Context
 
 ## Current Status
-- **Branch**: `master` — 1 commit ahead of origin (HEAD: e82729c)
+- **Branch**: `master` — synced with origin (HEAD: 18b5946)
 - **Release**: v2.0.0 tagged and released on GitHub with full changelog
 - **Validator**: v4.6, all 8/8 checks pass
-- **Policy count**: 15 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
-- **Next milestone**: process notes.md Kilo Code todo; sync AGENTS.md to other projects
+- **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
+- **Next milestone**: Kilo Code doc updates; sync AGENTS.md to other projects; writing style file (awaiting user articles)
 
 ## Checkpoint History
+
+## Latest Checkpoint: CP-2026-08-08-01
+- **Current Branch**: `master` — synced with origin (HEAD: 18b5946)
+- **Summary**: Large session. Two feature branches merged and pushed. Windows SysAdmin policy added (policy #16). README fully rewritten. New comparison doc for Copilot/Claude/ChatGPT/Cursor. Design Documentation Standards expanded with Vision, ID convention (REQ/HLD/LLD/ADR-NNN), and mandatory Delivery Ledger. Workflow guide, slides, and README updated with design flow. Notes processed: windows-system-admin done, Vision/PRD/TLD/LLD/ledger done (TLD resolved as not needed), writing style pending user articles.
+- **Key deliverables**: 3 commits (65c0f92, 0e869d7, 18b5946); 1 new policy; 1 new doc; 2 feature branches merged and deleted; validator v4.6 8/8
 
 ## Latest Checkpoint: CP-2026-08-05-01
 - **Current Branch**: `master` — 1 commit ahead of origin (HEAD: e82729c)
@@ -113,3 +122,5 @@
   - Code review round 2: APPROVED (review-04).
   - 8 broken markdown links repaired across 5 files (AGENTS.md, ai-policy-common.md, workflow-guide.md ×2, example-learning-session-runbook.md).
   - Branch awaiting human review and merge to master.
+
+[MIGRATION-2026-08-08] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 — **Project AI State Files** resolves to ai/state/

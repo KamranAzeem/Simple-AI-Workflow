@@ -169,6 +169,34 @@ function Ensure-CustomizationFile {
   }
 }
 
+function Ensure-StateFilesMigration {
+  param([string]$ProjectRoot)
+
+  $stateDir = Join-Path -Path $ProjectRoot -ChildPath "ai/state"
+  $oldFiles = @("progress.md", "context.md", "next-steps.md")
+  $aiDir = Join-Path -Path $ProjectRoot -ChildPath "ai"
+
+  if (Test-Path -Path $aiDir -PathType Container) {
+    if (-not $WhatIf) {
+      New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
+    }
+    foreach ($fname in $oldFiles) {
+      $oldPath = Join-Path -Path $aiDir -ChildPath $fname
+      $newPath = Join-Path -Path $stateDir -ChildPath $fname
+      if ((Test-Path -Path $oldPath -PathType Leaf) -and -not (Test-Path -Path $newPath -PathType Leaf)) {
+        if (-not $WhatIf) {
+          Move-Item -Path $oldPath -Destination $newPath -Force
+          Add-Content -Path $newPath -Value ""
+          Add-Content -Path $newPath -Value "[MIGRATION-$(Get-Date -Format 'yyyy-MM-dd')] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 (resolve **Project AI State Files** to ai/state/)"
+        }
+        Write-Host "  Migrated $fname to ai/state/"
+      } elseif ((Test-Path -Path $oldPath -PathType Leaf) -and (Test-Path -Path $newPath -PathType Leaf)) {
+        Write-Host "  WARNING: $fname exists in both ai/ and ai/state/ - skipped"
+      }
+    }
+  }
+}
+
 foreach ($m in $foundFiles) {
   $target = $m.FullName
   $targetRoot = Split-Path -Parent $target
@@ -183,7 +211,10 @@ foreach ($m in $foundFiles) {
     Write-Host "  AGENTS.md synced"
   }
 
-  # Step 2: Ensure ai-customization.md has correct workflow directory
+  # Step 2: Migrate state files from ai/ to ai/state/ if needed
+  Ensure-StateFilesMigration -ProjectRoot $targetRoot
+
+  # Step 3: Ensure ai-customization.md has correct workflow directory
   Ensure-CustomizationFile -ProjectRoot $targetRoot -WorkflowDir $workflowDir
 
   Write-Host "------------------------------------------------------------"

@@ -87,7 +87,7 @@ The problem starts when you use two or more assistants on the same project. With
 **Think of it like a road trip with multiple drivers:**
 
 1. Gemini is driving. It works on the task and builds up context.
-2. Gemini's free-tier quota runs out. Before stopping, it saves a checkpoint — writing the current state to `next-steps.md`, `progress.md`, and `context.md`.
+2. Gemini's free-tier quota runs out. Before stopping, it saves a checkpoint — writing the current state to `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md`.
 3. DeepSeek takes the wheel. It reads those same files and continues exactly where Gemini stopped.
 4. When you switch back, DeepSeek saves a checkpoint. Gemini takes over again.
 

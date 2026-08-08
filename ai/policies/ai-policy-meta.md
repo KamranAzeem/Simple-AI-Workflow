@@ -52,7 +52,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 
 ## Audit & Logging
 
-- Any change prepared by the AI must update `ai/progress.md` or `ai/next-steps.md` with a short entry describing the change intent and status (drafted, staged, committed).
+- Any change prepared by the AI must update `ai/state/progress.md` or `ai/state/next-steps.md` with a short entry describing the change intent and status (drafted, staged, committed).
 - Before automated updates, back up touched AI tracking files to a timestamped archive (use the **Global AI Backups Directory** defined in AGENTS.md TIER 1).
 
 ## Suggested Assistant Prompt
@@ -62,11 +62,11 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ## References
 
 - Bootstrapping: `AGENTS.md`
-- Tracking files: `ai/next-steps.md`, `ai/progress.md`, **Project Daily Checkpoints Directory**
+- Tracking files: `ai/state/next-steps.md`, `ai/state/progress.md`, **Project Daily Checkpoints Directory**
 - Helper scripts: `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`
 
 ---
 
-This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/progress.md`.
+This policy is intentionally short and permissive for documentation/maintenance tasks while enforcing safety checks and human approval for side effects. Edit with care and record any policy changes in `ai/state/progress.md`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

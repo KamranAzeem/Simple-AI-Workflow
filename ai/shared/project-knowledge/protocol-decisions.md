@@ -584,3 +584,21 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Files changed**: `ai/policies/ai-policy-common.md` (9 occurrences fixed), this file.
 - **Commit**: `e82729c` on master. Validator v4.6, 8/8 pass.
 
+---
+
+## 2026-08-08 — Session CP-2026-08-08-02 (branch `feature/state-files-directory`)
+
+### State files moved to dedicated `ai/state/` directory
+
+- **Problem**: The three state files (`progress.md`, `context.md`, `next-steps.md`) were the only files directly under `ai/` — everything else was organized into subdirectories (`notes/`, `plans/`, `policies/`, `shared/`, etc.). The flat placement was a leftover from the earliest days of the protocol.
+- **Decision**: Move the three state files into a dedicated directory `ai/state/` (user's choice over `ai/state-files/`). The TIER 1 anchor **Project AI State Files** keeps its name but now resolves to the directory `ai/state/` instead of a three-file list. This keeps the 14+ anchor usages in `AGENTS.md` and policies unchanged while changing the single source-of-truth path in TIER 1.
+- **Guardrails added** (user requirement, in response to weak models prepending entries and bloating state files):
+  1. **Append-Only Rule**: all updates must be appended at the tail; never insert/edit at the top. Enforced via a new bullet in `ai-policy-common.md` State File Ownership Protocol and an `STATE-FILE: APPEND-ONLY` HTML comment header at the top of each state file.
+  2. **Scope Rule**: state files contain summaries only (done / pending / current context); no implementation details, runbooks, commands, or knowledge content. Those belong in knowledge directories. Enforced via a new bullet in `ai-policy-common.md` and an `STATE-FILE: KEEP LEAN` HTML comment header.
+- **Directory name rationale**: `ai/state/` follows the single-word subdirectory convention (`notes/`, `plans/`, `policies/`). The `ai/` parent already supplies the namespace, so `state-files/` would be redundant; no other subdirectory uses a `-files` suffix.
+- **Anchor name kept**: `**Project AI State Files**` stays (not renamed to "Directory") because it is used 14+ times across the protocol as a conceptual term. Only its TIER 1 resolution changed to the directory path. This minimizes protocol text churn.
+- **Historical content preserved**: existing entries inside the state files and historical records in this file keep their old-era paths — they accurately describe where files were when written.
+- **Migration mechanics**: this repo uses `git mv` (state files are git-tracked here). User projects get migration via `sync-agents-md.sh`/`sync-agents-md.ps1`, which create `ai/state/` if absent, move any state files found at `ai/*.md`, and append a `[MIGRATION-YYYY-MM-DD]` notice to each moved file. Migration is idempotent: if both old and new exist, it warns and skips.
+- **Files changed**: `AGENTS.md` (TIER 1 anchor, Procedure A Step 2 structural audit + Step 7(d), Procedure B Step 4, Procedure C Steps 1–2, Procedure E), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
+- **Branch**: `feature/state-files-directory` — not merged to master (user handles merge/push).
+
