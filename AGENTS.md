@@ -42,7 +42,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Project AI Policies Directory**: `ai/policies/`
 **Project Secrets Directory**: `ai/secrets/`
 **Project Shared Directory**: `ai/shared/`
-**Project AI State Files**: `ai/progress.md`, `ai/context.md`, `ai/next-steps.md`
+**Project AI State Files**: `ai/state/`
 
 ### Canonical Names & Short Forms
 The following short forms are recognized as equivalents to their canonical directives:
@@ -86,7 +86,7 @@ The following short forms are recognized as equivalents to their canonical direc
 1.  **Workflow Access**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project AI Knowledge Directory**
-    - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**
+    - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
     - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
     Verify **Project Coordination File** exists. Only report missing items — do not create them.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
@@ -109,7 +109,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - (a) Every section found in the **Project Customization File** — report each one explicitly, whatever sections the file contains. If a section is absent, say so. Do not stop at any particular section; cover the entire file.
     - (b) Global Settings files fully loaded from **Global AI Settings Directory** (list filenames). Global Knowledge files **fully loaded** from **Global AI Knowledge Directory** (list filenames). Policy files **fully loaded** — referenced by the Project Customization File from **Global AI Policies Directory** (list filenames), and custom policies discovered in **Project AI Policies Directory** (list filenames).
     - (c) All discovered pending handoffs in **Project Handoffs Directory**.
-    - (d) Git delta check since the last hash recorded in `context.md`.
+    - (d) Git delta check since the last hash recorded in `ai/state/context.md`.
     - (e) All files **indexed** from the **Project AI Knowledge Directory** (filenames and apparent domains — not read in full), or an explicit confirmation that it was empty.
     - (f) For each **Project AI State File**: line count and most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`), read fresh from file content.
 
@@ -118,7 +118,7 @@ The following short forms are recognized as equivalents to their canonical direc
 1.  **Audit directories**: Run Procedure A, Step 2 (Structural Audit) to identify missing directories and files.
 2.  **Create missing directories and files**: Run `mkdir -p` for all directories found missing in the audit, and create the **Project Coordination File** if it is missing.
 3.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
-4.  **Initialize State Files**: Create `ai/next-steps.md`, `ai/progress.md`, `ai/context.md`, and an initial daily checkpoint.
+4.  **Initialize State Files**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`, and an initial daily checkpoint.
 5.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
 6.  **Finalize**: Proceed to Procedure A.
 
@@ -126,22 +126,22 @@ The following short forms are recognized as equivalents to their canonical direc
 
 1.  **Update State (The Atomic Write Protocol)**: Sync **Project AI State Files**. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
     *   **Write Direction (memory → disk)**: Your active in-memory context is the freshest source of truth for what was accomplished this session. A checkpoint **serialises that fresh in-memory state into Project AI State Files** — it is a write-down, not a re-read to discover what is current. The on-disk files are the stale targets being updated.
-    *   **Fresh-Read Before Write (reconcile, do NOT overwrite fresh work)**: Read the current on-disk content of **Project AI State Files** immediately before writing — but treat this as a **reconcile**, not a memory refresh. Purpose of the read: (a) preserve the append-only history in `progress.md` so a write never drops existing entries, and (b) detect drift introduced by another agent or by context compaction since you last saw the files. **Precedence**: your fresh in-memory deltas are authoritative for new or changed content; the disk read must never overwrite fresh work with a stale cached or summarised version. If disk and memory genuinely conflict on the *same* item, **stop and flag it** — do not silently pick one.
+    *   **Fresh-Read Before Write (reconcile, do NOT overwrite fresh work)**: Read the current on-disk content of **Project AI State Files** immediately before writing — but treat this as a **reconcile**, not a memory refresh. Purpose of the read: (a) preserve the append-only history in `ai/state/progress.md` so a write never drops existing entries, and (b) detect drift introduced by another agent or by context compaction since you last saw the files. **Precedence**: your fresh in-memory deltas are authoritative for new or changed content; the disk read must never overwrite fresh work with a stale cached or summarised version. If disk and memory genuinely conflict on the *same* item, **stop and flag it** — do not silently pick one.
     *   **Inbound Reconcile (multi-agent)**: Before writing, also read the **Project Coordination File** and any new or updated handoffs in **Project Handoffs Directory**, so you fold in work completed by other agents since the last checkpoint. **Project AI State Files** are written by the project-root orchestrator only (see TIER 2 "State File Single-Writer Ownership"); other agents report via the coordination board, handoffs, and role-scoped Project Knowledge.
     *   **Sequential Execution Order**: Stage your changes in memory and write them to disk in this strict sequence:
-        1. 📂 `ai/progress.md` (The Past): Log the completed activity, architectural decisions, or milestone reached first.
-        2. 📂 `ai/next-steps.md` (The Future): Instantly pop the completed task off the backlog and append/sequence the next atomic actions.
-        3. 📂 `ai/context.md` (The Present): Maintain a `## Current Status` section at the top of the file as the living dashboard for the next session. Populate it with the active branch, current milestone, key identifiers, environment state, and open questions — without duplicating completed tasks (`progress.md`) or pending task lists (`next-steps.md`). Append the completed checkpoint entry below the status section. If the entry count below `## Current Status` triggers the horizon shield threshold (Step 2), archive older entries.
+        1. 📂 `ai/state/progress.md` (The Past): Log the completed activity, architectural decisions, or milestone reached first.
+        2. 📂 `ai/state/next-steps.md` (The Future): Instantly pop the completed task off the backlog and append/sequence the next atomic actions.
+        3. 📂 `ai/state/context.md` (The Present): Maintain a `## Current Status` section at the top of the file as the living dashboard for the next session. Populate it with the active branch, current milestone, key identifiers, environment state, and open questions — without duplicating completed tasks (`ai/state/progress.md`) or pending task lists (`ai/state/next-steps.md`). Append the completed checkpoint entry below the status section. If the entry count below `## Current Status` triggers the horizon shield threshold (Step 2), archive older entries.
     *   **Transaction Log Requirement**: Every time you save state or finish a checkpoint execution loop, append a standardized transaction summary directly into your chat output using this exact text format:
         *   [PROGRESS] Added: "[Brief description of what was completed]"
         *   [NEXT-STEPS] Removed: "[Task]" | Added: "[New immediate actionable items]"
         *   [CONTEXT] Updated: "variable_name: old_value" -> "variable_name: new_value"
     *   **Failure Mode Constraint**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
-2.  **Log Condensation (The Sliding Horizon Shield)**: To prevent long-term token bloat inside your active context window, you must actively police the size of `ai/progress.md` and the checkpoint history in `ai/context.md`.
-    *   **Threshold Trigger**: If `ai/progress.md` grows to exceed 50 completed task items or 200 lines of historical text, you must perform an automated log condensation routine during this checkpoint.
-    *   **Truncation Execution**: Move all entries older than the 10 most recent completions out of `ai/progress.md` and append them permanently into a historical archive file named `ai/shared/project-knowledge/progress-archive.md`. 
-    *   **The Horizon Anchor**: Leave a single, high-level 3-sentence summary block titled `## Archive Horizon Context` at the absolute top of `ai/progress.md`. This summary must capture the cumulative milestones achieved in the archived history so active project continuity is never lost.
-    *   **Context.md horizon**: If `ai/context.md` accumulates more than 10 historical checkpoint entries below the `## Current Status` section, keep the 5 most recent entries and move the rest to `ai/shared/project-knowledge/context-archive.md`. This bulk-archive approach prevents the one-entry-at-a-time burden.
+2.  **Log Condensation (The Sliding Horizon Shield)**: To prevent long-term token bloat inside your active context window, you must actively police the size of `ai/state/progress.md` and the checkpoint history in `ai/state/context.md`.
+    *   **Threshold Trigger**: If `ai/state/progress.md` grows to exceed 50 completed task items or 200 lines of historical text, you must perform an automated log condensation routine during this checkpoint.
+    *   **Truncation Execution**: Move all entries older than the 10 most recent completions out of `ai/state/progress.md` and append them permanently into a historical archive file named `ai/shared/project-knowledge/progress-archive.md`. 
+    *   **The Horizon Anchor**: Leave a single, high-level 3-sentence summary block titled `## Archive Horizon Context` at the absolute top of `ai/state/progress.md`. This summary must capture the cumulative milestones achieved in the archived history so active project continuity is never lost.
+    *   **Context.md horizon**: If `ai/state/context.md` accumulates more than 10 historical checkpoint entries below the `## Current Status` section, keep the 5 most recent entries and move the rest to `ai/shared/project-knowledge/context-archive.md`. This bulk-archive approach prevents the one-entry-at-a-time burden.
 3.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project AI Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
     - Decisions made and the rationale behind them
     - Resolved issues and their root causes
@@ -171,7 +171,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Trigger**: Run this whenever the conversation is compacted, that is, whenever the harness replaces the live history with a summary. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary you did not write. It is also safe to run on explicit user request. This procedure only re-reads standing rule and config files; it never deletes or overwrites the working context, so running it when in doubt is safe.
 
-**The one hard rule**: Do NOT read the three **Project AI State Files** (`ai/progress.md`, `ai/context.md`, `ai/next-steps.md`) or any daily checkpoint during this procedure. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older than the summary and would inject stale state. This procedure reloads rules, not state.
+**The one hard rule**: Do NOT read the three **Project AI State Files** (`ai/state/progress.md`, `ai/state/context.md`, `ai/state/next-steps.md`) or any daily checkpoint during this procedure. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older than the summary and would inject stale state. This procedure reloads rules, not state.
 
 **Steps**: Announce **[Reloading key files into context...]** as the literal first line of your reply, then re-read, in this order:
 

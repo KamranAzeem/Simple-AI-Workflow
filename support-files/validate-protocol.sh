@@ -114,7 +114,7 @@ echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
     "artifacts" "code-review-reports" "daily-checkpoints" "notes"
     "pending" "plans" "policies" "policies/compliance" "secrets"
-    "shared" "shared/handoffs" "shared/project-knowledge"
+    "shared" "shared/handoffs" "shared/project-knowledge" "state"
 )
 for sub in "${PROJECT_SUBS[@]}"; do
     if [ ! -d "ai/$sub" ]; then

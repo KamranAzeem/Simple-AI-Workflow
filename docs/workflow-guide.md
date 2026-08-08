@@ -52,19 +52,19 @@ The AI will:
 1. Verify and record ownership in `ai/shared/coordination.md`.
 2. Implement the requirements.
 3. Delete the handoff file and ownership claim upon successful verification.
-4. Record the completion in `ai/progress.md`.
+4. Record the completion in `ai/state/progress.md`.
 
 ## 4. Git Context Enrichment (Automatic)
 The protocol leverages the project's Git history to build a richer understanding of the codebase's evolution without manual data entry.
 
 ### How it Works
-1. **Initial Distillation**: During the first bootstrap in a Git repository, the AI distills the last 50-100 commits into a `## Project Evolution & Git History` section in `ai/context.md`.
-2. **Reference Point**: The AI records the latest commit hash (HEAD) in `context.md`.
+1. **Initial Distillation**: During the first bootstrap in a Git repository, the AI distills the last 50-100 commits into a `## Project Evolution & Git History` section in `ai/state/context.md`.
+2. **Reference Point**: The AI records the latest commit hash (HEAD) in `ai/state/context.md`.
 3. **Delta Loading**: On every subsequent "load context" operation, the AI identifies new commits since the last recorded hash (`git log <hash>..HEAD`) and loads them into active memory.
 
 ### Benefits
 - **Zero-Effort Context**: The AI "remembers" recent changes you made without you having to explain them.
-- **Token Efficiency**: Distilled summaries in `context.md` are much smaller than raw Git logs.
+- **Token Efficiency**: Distilled summaries in `ai/state/context.md` are much smaller than raw Git logs.
 - **Temporal Awareness**: AI understands the "why" behind architectural shifts by looking at commit messages.
 
 ## 5. Expertise & Intent Alignment (Review-First)
@@ -113,7 +113,7 @@ When the conversation is compacted (the harness replaces the live history with a
 
 ### Key rules
 - **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time — automatically or when you ask for it.
-- **No state files**: The AI does not read `context.md`, `progress.md`, `next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
+- **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
 
 ### Benefits
 - **Zero-touch resume**: No need to say "load context" after a compaction.
@@ -230,16 +230,16 @@ At boot (the "load context" procedure), the AI fully loads the small, always-rel
 ### Atomic Write Protocol
 The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
 
-1. **Sequential Writes**: State is written in strict order — `ai/progress.md` (past) → `ai/next-steps.md` (future) → `ai/context.md` (present). Never in a different order.
+1. **Sequential Writes**: State is written in strict order — `ai/state/progress.md` (past) → `ai/state/next-steps.md` (future) → `ai/state/context.md` (present). Never in a different order.
 2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window — showing exactly what was written to each file and what values changed.
 3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
 
 ### Log Condensation (Sliding Horizon)
-To prevent `ai/progress.md` from growing unbounded and consuming context window space:
+To prevent `ai/state/progress.md` from growing unbounded and consuming context window space:
 
-- **Threshold Trigger**: When `ai/progress.md` exceeds 50 completed items or 200 lines, log condensation runs automatically during the next checkpoint.
+- **Threshold Trigger**: When `ai/state/progress.md` exceeds 50 completed items or 200 lines, log condensation runs automatically during the next checkpoint.
 - **Archive**: Entries older than the 10 most recent are moved to `ai/shared/project-knowledge/progress-archive.md`.
-- **Horizon Anchor**: A single 3-sentence "Archive Horizon Context" block at the top of `ai/progress.md` summarizes what was archived, preserving project continuity without the full history.
+- **Horizon Anchor**: A single 3-sentence "Archive Horizon Context" block at the top of `ai/state/progress.md` summarizes what was archived, preserving project continuity without the full history.
 
 ## 15. Design Documentation Flow
 

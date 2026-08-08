@@ -14,7 +14,7 @@ reading each other's state files.
 
 ## Ownership Model
 
-- **State files are single-writer**: `ai/context.md`, `ai/progress.md`, and `ai/next-steps.md`
+- **State files are single-writer**: `ai/state/context.md`, `ai/state/progress.md`, and `ai/state/next-steps.md`
   are the canonical project narrative and are written **only** by the project-root orchestrator.
 - **Sub-agents and role-based team members do NOT write the three state files.** They report
   their work here (the board), in their handoff file, and in role-scoped Project Knowledge files.

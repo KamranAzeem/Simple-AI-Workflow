@@ -13,7 +13,7 @@ Four intertwined questions were examined:
 
 1. **Context freshness / integrity** — when is the AI's in-memory view authoritative, and when is the on-disk copy?
 2. **Checkpoint direction** — does a checkpoint read state into memory, or write memory into state?
-3. **Ownership** — who is allowed to write the three state files (`context.md`, `progress.md`, `next-steps.md`)?
+3. **Ownership** — who is allowed to write the three state files (`ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`)?
 4. **Multi-agent state** — how do multiple agents/roles share state without corrupting it?
 
 ## 2. Decisions
@@ -23,7 +23,7 @@ The AI's active in-memory context is the freshest source of truth for what was a
 
 ### 2.2 The pre-write read is a reconcile, not a memory refresh
 "Read before write" is retained but reframed. Its only purposes are:
-- **(a) Preserve append-only history**: `progress.md` is an append/archive ledger (Procedure C Step 2). A blind memory-driven write could drop existing lines; the read prevents that.
+- **(a) Preserve append-only history**: `ai/state/progress.md` is an append/archive ledger (Procedure C Step 2). A blind memory-driven write could drop existing lines; the read prevents that.
 - **(b) Detect drift**: another agent, or context compaction, may have changed the files since the AI last saw them.
 
 **Precedence**: fresh in-memory deltas are authoritative for new/changed content; the disk read must never overwrite fresh work with a stale cached/summarised copy. Genuine same-item conflicts → stop and flag, do not silently pick one.
@@ -44,7 +44,7 @@ A role needing awareness does not need to *write* the canonical files. It writes
 
 | Surface | Writer | Readers | Purpose |
 |---|---|---|---|
-| `progress.md` / `next-steps.md` / `context.md` | Orchestrator only | all | Canonical project narrative |
+| `ai/state/progress.md` / `ai/state/next-steps.md` / `ai/state/context.md` | Orchestrator only | all | Canonical project narrative |
 | Coordination board (`ai/shared/coordination.md`) | whoever claims/releases a task (small own-row write) | all | Live "who's doing what" — awareness channel |
 | Handoffs (`ai/shared/handoffs/`) | task author / assignee | dispatcher, assignee | Task in / result out |
 | Role-scoped knowledge (`…/project-knowledge/role-*.md`) | that role only | all | Each role's durable memory across sleeps |

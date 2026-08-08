@@ -15,3 +15,14 @@ Document Kilo Code support in the post-compaction reload trigger setup guide and
 - Key facts: AGENTS.md is always-on as system instructions in Kilo Code (survives compaction by architecture, no trigger file needed); compaction summary is visible in chat; human backstop ("Run Post-Compaction Recovery") is sufficient.
 - No workflow slash command; no new files.
 
+
+---
+
+If the user wants to create local policies, do they assign them procedure letters such as PROCEDURE K, etc? This will be cumbersome. 
+
+
+---
+
+Is it possible to train AI on my writing style by showing some of the articles I wrote in the past? How would the AI store that information? and how would I ensure that it uses the training data to write documents in future.
+<!-- More information needed — user will return with sample articles to use as style examples. Approach: store in ~/.ai/global-knowledge/ as a writing style + examples file. -->
+

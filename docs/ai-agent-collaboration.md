@@ -27,7 +27,7 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
     - They are working on a dedicated feature branch.
     - ALL verification steps in the handoff pass with zero errors.
     - The coordination board (`coordination.md`) is updated correctly.
-    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`progress.md`, `next-steps.md`, `context.md`) itself per the single-writer rule (`AGENTS.md` TIER 2). A sub-agent that is **not** the orchestrator does not merge or write the state files — it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
+    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER 2). A sub-agent that is **not** the orchestrator does not merge or write the state files — it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
 
 ### 2. Global (Cross-Project) Collaboration
 This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
@@ -41,7 +41,7 @@ This architecture provides a persistent, cross-project "Shared Intelligence" lay
 All assistants share a mandatory set of operational rules and contracts (branch-gating, A2A protocols, checkpoint ID contracts). This is defined in the **global common policy file**, ensuring that no matter which agent is active, they all follow the same safety and engineering standards.
 
 ## Human Guidance: How to Interacting with AI Agents
-- **Check the Progress**: Read `ai/progress.md` and `ai/next-steps.md` to see the high-level status.
+- **Check the Progress**: Read `ai/state/progress.md` and `ai/state/next-steps.md` to see the high-level status.
 - **Check the Coordination**: Look at `ai/shared/coordination.md` to see what the AI is currently focusing on.
 
 ## Agent Guidance: How to Collaborate
@@ -54,7 +54,7 @@ All assistants share a mandatory set of operational rules and contracts (branch-
 ### A2A Rules (Mandatory)
 1.  **Atomic Update Protocol**: Every interaction with `ai/` tracking files must be a fresh `read` followed by an immediate `write`.
 2.  **Conflict Resolution**: If an agent detects unauthorized changes, it must pause and ask for human clarification.
-3.  **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/next-steps.md`.
+3.  **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/state/next-steps.md`.
 4.  **Handoff Claim & Execute Lifecycle**:
     - **Scan**: Check `ai/shared/handoffs/` for pending tasks.
     - **Validate**: Confirm the handoff is "Valid" (contains Verification section).

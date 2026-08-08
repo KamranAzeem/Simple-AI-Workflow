@@ -193,7 +193,31 @@ for f_abs in "${matches[@]}"; do
     echo "  AGENTS.md synced"
   fi
 
-  # Step 2: Ensure ai-customization.md has correct workflow directory
+  # Step 2: Migrate state files from ai/ to ai/state/ if needed
+  state_dir="$target_root/ai/state"
+  old_files=("progress.md" "context.md" "next-steps.md")
+
+  if [ -d "$target_root/ai" ]; then
+    if [ $DRY_RUN -eq 0 ]; then
+      mkdir -p "$state_dir"
+    fi
+    for fname in "${old_files[@]}"; do
+      old_path="$target_root/ai/$fname"
+      new_path="$state_dir/$fname"
+      if [ -f "$old_path" ] && [ ! -f "$new_path" ]; then
+        if [ $DRY_RUN -eq 0 ]; then
+          mv "$old_path" "$new_path"
+          echo "" >> "$new_path"
+          echo "[MIGRATION-$(date +%Y-%m-%d)] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 (resolve **Project AI State Files** to ai/state/)" >> "$new_path"
+        fi
+        echo "  Migrated $fname to ai/state/"
+      elif [ -f "$old_path" ] && [ -f "$new_path" ]; then
+        echo "  WARNING: $fname exists in both ai/ and ai/state/ — skipped"
+      fi
+    done
+  fi
+
+  # Step 3: Ensure ai-customization.md has correct workflow directory
   ensure_customization_file "$target_root"
 
   echo "----------------------------------------------------------------------------"

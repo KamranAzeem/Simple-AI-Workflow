@@ -81,9 +81,9 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
 | Domain expertise / rules | `SKILLS.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (16 domain policies) |
-| Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/progress.md` |
-| Pending tasks | None | None | None | None | `ai/next-steps.md` |
-| Current state / context dashboard | None | None | None | None | `ai/context.md` |
+| Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
+| Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
+| Current state / context dashboard | None | None | None | None | `ai/state/context.md` |
 | Project knowledge / decisions | None | Uploaded project files | Uploaded project files | None | `ai/shared/project-knowledge/` |
 | Lessons learned across projects | None | `~/.claude/CLAUDE.md` (manual) | Memory (automatic, opaque) | None | `~/.ai/global-knowledge/` (explicit, structured) |
 | Multi-assistant handoffs | None | None | None | None | `ai/shared/handoffs/` |
@@ -103,9 +103,10 @@ Open your project and you will find:
 
 ```
 ai/
-├── progress.md          ← what was done
-├── next-steps.md        ← what comes next
-├── context.md           ← where things stand right now
+├── state/
+│   ├── progress.md       ← what was done
+│   ├── next-steps.md     ← what comes next
+│   └── context.md        ← where things stand right now
 ├── policies/            ← domain rules and expertise
 ├── shared/
 │   ├── project-knowledge/   ← decisions, findings, architecture notes

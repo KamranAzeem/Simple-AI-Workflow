@@ -90,8 +90,8 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | User preferences | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | `ai-customization.md` |
 | Domain expertise / rules | 16 modular policies in `ai/policies/` |
-| Progress tracking | `ai/progress.md` |
-| Pending tasks | `ai/next-steps.md` |
+| Progress tracking | `ai/state/progress.md` |
+| Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge / decisions | `ai/shared/project-knowledge/` |
 | Cross-project lessons | `~/.ai/global-knowledge/` — explicit, structured |
 | Post-summary recovery | Post-Compaction Recovery — automatic |
@@ -289,10 +289,10 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - Writing one file without immediately updating the others causes context drift
 
 ## The Solution: Atomic Writes & Sliding Horizon
-- **Sequential Writes**: `progress.md` → `next-steps.md` → `context.md` — strict order, always
+- **Sequential Writes**: `ai/state/progress.md` → `ai/state/next-steps.md` → `ai/state/context.md` — strict order, always
 - **Transaction Log**: Every checkpoint outputs a confirmation block in chat — what was written and what changed
 - **Abort on Missing Data**: If data is incomplete, the write aborts; the gap is reported to the user
-- **Sliding Horizon**: When `progress.md` exceeds 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
+- **Sliding Horizon**: When `ai/state/progress.md` exceeds 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
 
 > **Consistent state. Every checkpoint. No silent failures.**
 
@@ -307,7 +307,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 ## Built-in Defences in This Workflow
 - **Atomic Write Protocol** — state files sync together or not at all; no partial writes
-- **Sliding Horizon Shield** — `progress.md` auto-archives when it exceeds 50 items or 200 lines
+- **Sliding Horizon Shield** — `ai/state/progress.md` auto-archives when it exceeds 50 items or 200 lines
 - **Post-Compaction Recovery** — reloads rules from disk after any context compaction; for VS Code/Copilot a `PreCompact` hook provides a mechanical re-arm; for other tools a one-time memory note works (see the reload-trigger setup guide)
 - **Proof-of-Load** — AI must confirm every file it read before starting work
 - **Mandatory knowledge sync** — project decisions are written to `project-knowledge/` at every checkpoint
@@ -321,8 +321,8 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - Checkpoint after each logical unit of work — not just at end of day
 - When the AI loses track of context, checkpoint and start a fresh session
 - Set up the per-tool reload trigger once; after any summary, ask "did you run the post-compaction reload?" before trusting the next answer
-- Keep `context.md` lean — current state only, not a history log
-- Review `next-steps.md` at session start — trim stale items before working
+- Keep `ai/state/context.md` lean — current state only, not a history log
+- Review `ai/state/next-steps.md` at session start — trim stale items before working
 
 > **Checkpoint often. Session short. Context stays clean.**
 
