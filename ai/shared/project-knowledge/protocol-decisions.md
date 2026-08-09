@@ -602,3 +602,27 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Files changed**: `AGENTS.md` (TIER 1 anchor, Procedure A Step 2 structural audit + Step 7(d), Procedure B Step 4, Procedure C Steps 1–2, Procedure E), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
 - **Branch**: `feature/state-files-directory` — not merged to master (user handles merge/push).
 
+
+---
+
+## 2026-08-09 — Session CP-2026-08-09-01
+
+### Writing style training: distilled guide in global knowledge, raw examples deleted
+
+- **Problem**: The AI needs to mimic Kamran's writing style in documents, emails, tickets, and READMEs. A 1939-line examples file (8 articles) was created in `ai/notes/`. Global Knowledge is fully loaded at every session boot in every project, so a 1939-line file there would bloat every boot (the set is designed to be "intentionally small").
+- **Decision**: Distill the raw articles into a single style guide and delete the raw file. The raw examples are not stored anywhere.
+- **Result**: `~/.ai/global-knowledge/writing-style-and-examples.md` — a distilled style guide (~40 lines) capturing the voice (conversational, first-person honest, numbered steps, exact specifics, warm sign-offs), a "do not copy" list (era typos), and a "Style sources" index of what the voice was distilled from. Fully loaded at every boot, so the AI is architecturally forced to see the style rules before writing.
+- **Rationale**: Full-load for the small authoritative rules; no large raw corpus to ration. The raw articles served only as distillation input, not as a living reference.
+- **Files**: created `~/.ai/global-knowledge/writing-style-and-examples.md`; deleted the raw examples file; `ai/notes/notes.md` (item marked Processed).
+
+---
+
+## 2026-08-09 — Session CP-2026-08-09-01 (continued)
+
+### Policy discovery in Project AI Policies Directory is intentional; workflow-repo over-load is an accepted artifact
+
+- **Problem**: During Post-Compaction Recovery (Procedure E Step 5), the AI fully loaded all 16 policies in `ai/policies/` instead of only the policies referenced in `ai-customization.md` (Active Expertise: `meta`). The user flagged this as unwanted context bloat and initially suspected a protocol bug.
+- **Investigation**: Four AGENTS.md clauses (Procedure A Step 6 line 105, Step 7(b) line 110, Procedure C Step 4 line 154, Procedure E Step 5 line 182) instruct the AI to discover and fully load every `.md` in **Project AI Policies Directory**. The design intent is custom-policy discovery: in an ordinary user project, `ai/policies/` holds user-created custom policies that exist with the intent of being loaded.
+- **Decision**: The behavior is **correct and will not be changed**. No fix applied.
+- **Rationale**: The over-load is unique to this repository, where `ai/policies/` doubles as the **Global AI Policies Directory** (the 16-policy library) AND the project's custom-policy directory. In any ordinary project directory, `ai/policies/` contains only user-authored custom policies, so loading every file found there is exactly right. Trade-off accepted: working as a protocol developer in the workflow repo means the full policy library is loaded at boot/checkpoint/post-compaction. Do not re-diagnose this as a bug.
+- **Future change note**: If context savings are ever needed for the workflow repo itself, the fix would be to activate the library's policies via the customization file's Active Expertise (referenced-only loading) rather than filesystem discovery — but that would break the intended custom-policy auto-discovery behavior for ordinary projects. Left as-is by explicit user decision.
