@@ -23,3 +23,20 @@ The `sed` alternation pattern `(Framework|Workflow)` in the Bash script was prev
 
 ## Status
 Sync scripts are functional and tested. Ready for production use.
+
+## 2026-08-22 — macOS BSD sed compatibility fix
+
+### Problem
+On macOS, `sed -i -E 's#...(\...)#\1...#'` fails with `\1 not defined in the RE` when updating the workflow directory path in a target `ai-customization.md`. BSD `sed` treats the argument after `-i` as the backup-suffix, so `-E` is consumed as that suffix and the regex runs in basic mode, where `(...)` is not a capture group and `\1` is undefined. GNU sed tolerates this; BSD does not.
+
+### Fix (sync-agents-md.sh)
+Replaced `sed -i -E` with a portable basic-regex temp-file write, dropping the backreference:
+
+```sh
+tmp=$(mktemp)
+sed 's#^\*\*Global AI Workflow Directory\*\*:.*#**Global AI Workflow Directory**: '"$escaped_dir"'#' "$customization_file" > "$tmp"
+mv "$tmp" "$customization_file"
+```
+
+### Lesson
+`sed -i` semantics differ between GNU and BSD. For cross-platform shell scripts, avoid `-E` with backreferences and in-place editing; use basic regex + temp file + `mv` (matches the pattern the script already used for config-section insertion). Verified on Linux; not executed on real macOS in this session.
