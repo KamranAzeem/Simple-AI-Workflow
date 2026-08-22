@@ -2,12 +2,11 @@
 STATE-FILE: APPEND-ONLY. Append new content at the tail of this file. Do not insert, prepend, or edit content above existing entries. The most recent entry is always the last one.
 STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what is pending, current context). No detailed implementation steps, commands, runbooks, investigation notes, or knowledge content. Use ai/shared/project-knowledge/ for durable knowledge.
 -->
-CP-2026-08-22-01
+CP-2026-08-22-02
 
 ## Pending
 - [ ] Process notes.md: document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (see notes.md for full spec)
 - [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`
-- [x] AGENTS.md TIER 2 — Protocol Developer Mode fix: add sub-bullet stating that during context load and post-compaction recovery, load ONLY the policy files explicitly listed under `## Active Expertise` in ai-customization.md; do NOT scan and load all files from the Project AI Policies Directory (that directory is the protocol's distribution tree, not the active policy set). **Done — commit b93741c**
 - [ ] Design docs — create drafts in `ai/notes/` (git-ignored, not for push yet): simple-ai-workflow-vision.md, simple-ai-workflow-prd.md, simple-ai-workflow-hld.md. Formalize protocol-decisions.md entries into proper ADR format. Create delivery ledger once PRD/HLD are drafted.
 - [ ] ai-policy-code-review.md + ai-policy-common.md — add behavioral coaching rule: when surfacing any quality finding, describe intent and expected behavior, never a bare metric score. Flag that capable (Sonnet-class) models game bare scores more aggressively. (Research: Ideas 1+2, notes/ai-coding-quality-behavioral-prompts-habit-hooks-research-2026-08-21.md)
 - [ ] AGENTS.md TIER 2 — add Habit Hooks opt-in snippet (~4 lines): if habit-hooks is available in the project, run it before declaring any coding task complete; treat its output as a direct high-priority coaching prompt. Zero overhead if tool not installed. (Research: Idea 3)

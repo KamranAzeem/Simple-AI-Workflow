@@ -5,12 +5,15 @@ STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what
 # Project Context
 
 ## Current Status
-- **Branch**: `master` — synced with origin (HEAD: 8ea243f, pushed)
+- **Branch**: `master` — pulled to 75bc1fc, local uncommitted work (this checkpoint) ready to commit
 - **Release**: v2.1.0 tagged and released on GitHub with full changelog (2026-08-08)
 - **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` (progress.md, context.md, next-steps.md) with APPEND-ONLY / KEEP LEAN headers
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); behavioral coaching rule + Habit Hooks opt-in + TDD sub-rules in policy files; docs pattern guides; local policies question in notes.md
+- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); behavioral coaching rule + Habit Hooks opt-in + TDD sub-rules in policy files; docs pattern guides; sync AGENTS.md to other projects
+- **Pending work moved here from remote**: 6 items queued on the other machine (design docs, behavioral coaching, Habit Hooks, TDD sub-rules, 3 doc guides) — to be worked on this machine only
+
+## Checkpoint History
 
 ## Latest Checkpoint: CP-2026-08-09-01
 - **Current Branch**: `master` — synced with origin (HEAD: 9183c52, pushed)
@@ -53,3 +56,8 @@ STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what
 - **Current Branch**: `master` — synced with origin (HEAD: 8ea243f, pushed)
 - **Summary**: Implemented Protocol Developer Mode policy-loading fix. Created feature branch; added Exception notes at all 4 policy-scan locations in AGENTS.md (TIER 2, Procedure A Step 6, Procedure C Step 4, Procedure E Step 5). Peer review round-01 CHANGES REQUESTED (Procedure C Step 4 gap) then round-02 APPROVED. Validator v4.6 8/8. Squash-merged to master as b93741c. Research notes and updated state files committed and pushed for cross-machine continuity (8ea243f). Protocol Developer Mode fix marked done in next-steps.md.
 - **Key deliverables**: commit b93741c (AGENTS.md fix); 2 code review reports; notes and state files synced to origin
+
+## Latest Checkpoint: CP-2026-08-22-02
+- **Current Branch**: `master` — pulled to 75bc1fc; local uncommitted work being committed as this checkpoint
+- **Summary**: Remote pull + state reconciliation, decision reversal recorded, notes consolidation, WaqarSb example. Pulled 3 remote commits (b93741c Protocol Developer Mode policy-loading fix, 8ea243f + 75bc1fc checkpoints); dropped stale local CP-2026-08-09-02 entries (recorded the opposite decision, superseded by b93741c). Recorded decision reversal in protocol-decisions.md: 2026-08-09 "no fix" stance reversed for workflow repo, ordinary-project auto-discovery unchanged, old entry marked Superseded. Fixed macOS BSD sed incompatibility in sync-agents-md.sh (portable BRE temp-file+mv, committed db74e68, review APPROVED). Notes consolidation: removed processed items, marked post-compaction complaint Processed, deleted noticed.md, consolidated pending items into notes.md. Created docs/examples/full-stack-web-mobile-ai-customization.md from WaqarSb customization. Project knowledge updated (sync-scripts-testing.md macOS lesson, protocol-decisions.md).
+- **Key deliverables**: sync-agents-md.sh macOS fix (db74e68); protocol-decisions.md decision reversal entry; docs/examples/full-stack-web-mobile-ai-customization.md; notes.md consolidation; state files reconciled to CP-2026-08-22-01 then bumped to -02
