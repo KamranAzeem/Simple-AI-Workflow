@@ -5,12 +5,12 @@ STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what
 # Project Context
 
 ## Current Status
-- **Branch**: `master` — synced with origin (HEAD: 9183c52, pushed)
+- **Branch**: `master` — synced with origin (HEAD: 66a408f, no new commits this session)
 - **Release**: v2.1.0 tagged and released on GitHub with full changelog (2026-08-08)
 - **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` (progress.md, context.md, next-steps.md) with APPEND-ONLY / KEEP LEAN headers
-- **Next milestone**: Kilo Code doc updates; sync AGENTS.md to other projects; writing style guide created (global knowledge) — examples in project knowledge
+- **Next milestones**: Protocol Developer Mode policy-loading fix (AGENTS.md TIER 2); design docs drafts (vision/PRD/HLD in ai/notes/); behavioral coaching rule + Habit Hooks opt-in + TDD sub-rules in policy files; research-derived pattern guides in docs/
 
 ## Checkpoint History
 
@@ -45,3 +45,8 @@ STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what
 - **NOT pushed to origin**
 
 [MIGRATION-2026-08-08] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 — **Project AI State Files** resolves to ai/state/
+
+## Latest Checkpoint: CP-2026-08-21-01
+- **Current Branch**: `master` — synced with origin (HEAD: 66a408f, no new commits this session)
+- **Summary**: Analysis-only session. Full context load (Procedure A). Analyzed three improvement areas from notes.md: (1) Protocol Developer Mode policy-loading bug — during context load and post-compaction recovery the AI loads all 16 domain policies from the distribution tree instead of only those listed in ai-customization.md; fix is one sub-bullet added to AGENTS.md TIER 2 Protocol Developer Mode entry; (2) design docs gap — PRD, HLD, vision, ADRs, and delivery ledger still missing for the protocol itself; plan is to draft in ai/notes/ first; (3) research file on behavioral prompts/Habit Hooks/TDD enforcement — key finding: capable models game bare metric scores 71-88% of trials vs 83% genuine fix rate with behavioral coaching; 6 improvements prioritized. 6 new work items added to next-steps.md. No code changes, no commits.
+- **Key deliverables**: 6 new items in next-steps.md
