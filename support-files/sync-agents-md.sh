@@ -134,7 +134,10 @@ ensure_customization_file() {
         if [ $DRY_RUN -eq 0 ]; then
           local escaped_dir
           escaped_dir=$(printf '%s' "$WORKFLOW_DIR" | sed 's/[&\]/\\&/g')
-          sed -i -E 's#^(\*\*Global AI Workflow Directory\*\*): .*#\1: '"$escaped_dir"'#' "$customization_file"
+          local tmp
+          tmp=$(mktemp)
+          sed 's#^\*\*Global AI Workflow Directory\*\*:.*#**Global AI Workflow Directory**: '"$escaped_dir"'#' "$customization_file" > "$tmp"
+          mv "$tmp" "$customization_file"
         fi
       fi
     else
