@@ -44,3 +44,12 @@ So all 16 policy files need to be loaded in full. I already have ai-policy-commo
 16 policy files must be loaded in full. Reading them now (batched):
 
 Now loading the remaining 14 policy files in full (Step 5 requires every .md in Project AI Policies Directory):
+
+
+I need to add a note somewhere in the main AGENTS.md protocol, that when the AI is running in the protocol developer mode, it is running from the Simple-AI-Workflow directory directly. So any policies listed in the ai-customization.md are read directly from the same directory tree. However, during load context, and post-compaction procedure, the AI loads all policy files and all compliance files (if any) from the main (local) directory which is not supposed to happen for the protocol developer. While working as protocol developer, the AI should load only those policies that are explicitly enabled in the customization file, and skip others even if they are present. 
+
+The protocol is quite developed now, but the HLD , LLD, PRD , DECISIONS.md, delivery ledger, etc are still not created. I want to analyze the protocol and create the necessary documents under docs , but I do not want to push them to the repo at the moment. I want to analyze and polish them first. 
+
+There is a new file under notes, that I want you to analyze to see if we can improve this protocol. One thing to always remember is to keep the protocol simple, light-weight and efficient.
+
+Share your thoughts about each of these points and stop.
