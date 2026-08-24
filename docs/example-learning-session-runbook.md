@@ -93,15 +93,15 @@ Create index.html with minimalistic inline CSS: header, main content, footer. No
 Expected outcome:
 - index.html created with minimalistic CSS.
 
-## Step 4: Create Todo List
+## Step 4: Create Task Backlog
 Send this prompt:
 
 ```text
-Create ai/tasks/todo.md with: create aboutus page, create contactus page, project test, branch cleanup.
+Add these tasks to ai/state/next-steps.md: create aboutus page, create contactus page, project test, branch cleanup.
 ```
 
 Expected outcome:
-- Todo file exists under ai/tasks/.
+- Tasks recorded in ai/state/next-steps.md.
 
 ## Step 5: Create Feature Branch for About Us
 Send this prompt:
