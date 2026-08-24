@@ -197,6 +197,9 @@ function Ensure-StateFilesMigration {
   }
 }
 
+# Read source once; written BOM-less to each target (PS 5.1 Set-Content would add a BOM).
+$srcContent = [System.IO.File]::ReadAllText($srcPath)
+
 foreach ($m in $foundFiles) {
   $target = $m.FullName
   $targetRoot = Split-Path -Parent $target

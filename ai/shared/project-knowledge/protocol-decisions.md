@@ -639,3 +639,24 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Relationship to the 2026-08-09 decision**: The earlier decision remains correct for ordinary user projects — there, `ai/policies/` holds user-created custom policies and filesystem auto-discovery is the intended behavior. The new decision narrows the exception to operating as a protocol developer inside the workflow repo. No part of the ordinary-project behavior changed.
 - **Implementation**: Commit `b93741c` added the "Exception — Protocol Developer Mode" clause at all 4 policy-loading locations in `AGENTS.md` (TIER 2 Protocol Developer Mode bullet, Procedure A Step 6, Procedure C Step 4, Procedure E Step 5). Peer review round-01 CHANGES REQUESTED (Procedure C Step 4 missing) → fixed → round-02 APPROVED. Validator v4.6, 8/8 pass.
 - **Not changed**: `ai-policy-common.md` policy-loading clauses keep the full-load behavior for referenced and discovered custom policies; the exception is scoped to Protocol Developer Mode and lives in `AGENTS.md`. If the ordinary-project path ever needs the same restriction, that is a separate decision.
+
+---
+
+## 2026-08-24 — Session CP-2026-08-24-01 (common-policy additions + state-file discipline)
+
+Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a user-supplied state-file brevity problem (Stream B). All new prose is em-dash-free per the Humanized Output rule. Peer review review-01 APPROVED, validator v4.6 8/8. Branch `feature/common-policy-additions-and-state-file-brevity`, not merged.
+
+### Stream A: three additions to ai-policy-common.md
+- **Full reads for working files** and **No truncation of investigation output** added as points 5 and 6 of Evidence-Based Reasoning. Rationale: the user requires that every important file be read in full to EOF (no sampling); only log-like bulk-data files (logs, dumps, large JSON/CSV) may be sliced by search or filter. Point 6 bans piping enumeration output (grep, find, az) through head or tail during investigation, since that silently drops evidence.
+- **External system mutations require explicit approval** added to Universal Operational Guardrails, beside "No side effects without approval". Generalizes the local side-effect gate to remote systems of record (Jira, ADO, GitHub, Confluence, Teams, Slack): propose the exact text first, wait for approval.
+- The artifact's other steps (deleting duplicated rules from a project `ai-customization.md`, reducing the AC-writing-guide rule to a pointer, relocating WAF/CAF to `ai-policy-cloud.md`) target the user's separate cloud/dba work repo, not this one. Out of scope here.
+
+### Stream B: state-file model corrected and made lean
+- **Conceptual fix**: the prior "State File Append-Only Rule" implied all three state files are append-only history. That is wrong for next-steps.md (a forward-only backlog whose items are deleted when done) and for context.md (whose Current Status dashboard is edited in place). The single rule was replaced in `ai-policy-common.md` with a per-file model: next-steps.md is forward-only plus delete-on-done; progress.md is append-only history plus horizon-shield archiving; context.md is the present (Current Status in place plus appended history). Added a State File Brevity Rule (one to two lines per item, no sub-bullets, transcripts, or rationale) and a Bloat and Order Check (report and propose before rewriting a bloated or out-of-order state file).
+- **Gap closed**: the protocol had a horizon shield for progress.md and context.md but no brevity governance for next-steps.md, and "pop the completed task" was soft enough that sessions left ticked items in place. `AGENTS.md` Procedure C Step 1 now says delete-on-done explicitly (no ticked or struck leftovers) with the brevity gate; Step 2 gained a next-steps brevity bullet.
+- **Ordering model** (user's FIFO framing, refined): insertion is always append-at-tail (oldest top, newest bottom); deletion removes the completed item wherever it sits (work oldest-first by default, not a strict in-order queue).
+- **State-file headers** reworded per file to state the file's nature, chronological order, brevity, and "not a runbook, plan, or ledger".
+- **context.md reordered** to chronological order (it was a descending block followed by an ascending tail block, with multiple "Latest Checkpoint" headings). Now oldest at top, newest at bottom; only the newest entry keeps the "Latest Checkpoint" label. Entry bodies preserved verbatim.
+
+### Practice note: AGENTS.md edited directly by the AI this session
+- The user explicitly authorized the AI to edit protocol files directly as protocol developer, including `AGENTS.md`, despite `AGENTS.md`'s own "modifications must be performed manually by the human user" banner. This matches the mixed practice seen across prior sessions. The banner-versus-Protocol-Developer-Mode tension is a real inconsistency, flagged for the codebase examination.

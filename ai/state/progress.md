@@ -1,6 +1,7 @@
 <!--
-STATE-FILE: APPEND-ONLY. Append new content at the tail of this file. Do not insert, prepend, or edit content above existing entries. The most recent entry is always the last one.
-STATE-FILE: KEEP LEAN. This file manages AI assistant state (what was done, what is pending, current context). No detailed implementation steps, commands, runbooks, investigation notes, or knowledge content. Use ai/shared/project-knowledge/ for durable knowledge.
+STATE-FILE: progress.md is the PAST. Append-only history of completed work.
+STATE-FILE: CHRONOLOGICAL ORDER. Oldest at the top, newest at the bottom. Append new entries at the tail. Never insert, prepend, edit, delete, or reorder existing entries. The horizon shield archives the oldest entries when the file grows too long.
+STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runbook, plan, or ledger. No implementation steps, commands, investigation notes, or knowledge content. Use ai/shared/project-knowledge/ for durable knowledge.
 -->
 [CP-2026-05-06-01] Updated README.md with AGENTS.md update procedure.
 [CP-2026-05-07-01] refactor(protocol): transition to layered customization and standardized knowledge naming.

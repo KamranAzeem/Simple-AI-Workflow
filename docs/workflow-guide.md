@@ -25,19 +25,15 @@ Used for transferring specific tasks and context between AI assistants or sessio
 1. Create a Markdown file in `ai/shared/handoffs/` (e.g., `my-task-handoff.md`).
 2. Use the following template:
 ```markdown
-<!--
-Created-by: Human
-Updated-by: Human
-Last modified: YYYY-MM-DDTHH:MM:SSZ
-Intent: [Brief description]
--->
----
 # Handoff: [Task Name]
 - **Status**: Pending
 - **Assigned To**: [Agent Name or leave blank]
 - **Goal**: [Clear objective]
 - **Requirements**: [List constraints or steps]
 - **Reference**: [Relevant file paths]
+
+## Verification
+- [An objective, executable check that proves the task is done, for example a test command that must pass, a build that must succeed, or a specific file that must exist. A handoff without this section cannot be processed autonomously.]
 ```
 
 **Instruction to AI**:
@@ -226,6 +222,14 @@ At boot (the "load context" procedure), the AI fully loads the small, always-rel
 - **On-Demand Depth**: When a task needs a specific Project Knowledge file, it is loaded in full at that point.
 
 ## 14. Atomic Write Protocol & Log Condensation
+
+### The Three State Files
+Each state file has a distinct role and lifecycle:
+- **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items are appended at the bottom; each item is deleted the moment it is done, never left with a tick or strikethrough. No history builds up here.
+- **`ai/state/progress.md` (past)**: append-only history. Entries are appended at the bottom and never deleted; the horizon shield archives the oldest ones when the file grows too long.
+- **`ai/state/context.md` (present)**: a Current Status dashboard edited in place at the top, plus checkpoint history appended below it.
+
+Every item is a short bullet of one or two lines. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge.
 
 ### Atomic Write Protocol
 The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.

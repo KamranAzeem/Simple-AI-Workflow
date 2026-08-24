@@ -2,65 +2,67 @@
 # Simple AI Workflow
 ## From Chatting with AI, to Working with AI
 
-Your trusted pair-programmer / co-driver / co-pilot
+Your trusted pair-programmer, co-driver, and co-pilot
 
-A no-fluff, simple & secure workflow for reliable AI-assisted work
+A no-fluff, simple, and secure workflow for reliable AI-assisted work
 
 by Muhammad Kamran Azeem (kamran@wbitt.com)
 
-[github.com/KamranAzeem/Simple-AI-Workflow](https://github.com/KamranAzeem/Simple-AI-Workflow) — Creative Commons Attribution 4.0 International
-... (rest of slides until feature list) ...
+[github.com/KamranAzeem/Simple-AI-Workflow](https://github.com/KamranAzeem/Simple-AI-Workflow), Creative Commons Attribution 4.0 International
+
+*(The intro slides live in the Google Slides deck linked above.)*
+
 ---
 
 # More Features
 
-- **Safe Git Operations** — Secrets scanning before every commit
-- **No Tooling Lock-in** — Purely protocol-based; no brittle scripts or "song and dance"
-- **Git Enrichment** — Automatic distillation of Git history
-- **Handoff Protocol** — Seamlessly switch between IDE, CLI, and Web Chat
-- **Notes (`ai/notes/`)** — Unpolished thoughts, meeting notes, random ideas
-- **Artifacts (`ai/artifacts/`)** — Draft outputs, review before promoting to docs/code
-- **Global Settings** (`~/.ai/settings/global-user-settings.md`) — AI learns your skills, tool preferences, and cross-project context
-- **Modular Persona** — Quickly shift AI focus (Architect, Mentor) without losing guardrails
-- **Project Customization** — `ai-customization.md` at project root for project-specific tailoring with curated traits catalog
-- **Compliance Intelligence** — AI-native compliance using built-in knowledge; no on-disk compliance files needed
-- **Idiot-Proof Protocol** — Structural guardrails for safe use with lower-capability "lite" models
-- **Native Backups** — On-demand cross-platform state archiving; say `"backup ai"` to trigger (not automatic at checkpoints)
-- **Project Knowledge Sync** — Key findings, decisions, and discoveries are written to `project-knowledge/` at every checkpoint
-- **Universal Engineering Standards** — SOLID, DRY, YAGNI, Twelve-Factor App, Trunk-Based Development, SemVer, Conventional Commits
-- **Intellectual Rigor** — Architect persona pressure-tests ideas with honest critique; no "yes man" engagement
-- **Daily Snapshots** — Automated history of work and decisions
-- **Peer Review Mode** — On-demand full-file-set code review (including PR reviews) with structured, severity-classified reports
-- **Session Resume (Compacted Context)** — Re-reads standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory when the conversation is compacted; additive reload that never wipes the working thread
-- **PWD-Only Scope** — AI loads `AGENTS.md` and scans `ai/` from the current working directory only
-- **Token Rationing Shield** — Settings, Global Knowledge, and active policies are always fully loaded; large Project Knowledge files are indexed at boot and loaded on demand
-- **Log Condensation Shield** — Sliding Horizon auto-archives progress history when thresholds are crossed; keeps active context token-efficient
-- **Atomic Write Protocol** — Checkpoint state writes are sequential and transactional; partial writes abort automatically with a transaction log in chat
-- **Protocol Developer Mode** — When working on the protocol itself, AI detects the context, mandates a full load of `protocol-decisions.md`, and enforces end-user-perspective path authoring in policy files
-- **Verbose AI File Naming** — AI gives knowledge/docs/workflow files descriptive kebab-case names (filename = JIT lookup key); application/source code is exempt and follows language/framework idioms
-- **Codebase Examination Mode** — Activated by saying `"codebase examination"` or `"examine this codebase"`; uses tiered, disk-backed skeleton maps; no vector DBs or external tools
-- **Career Coaching Policy** — Dedicated policy for job search strategy, resume/cover letter optimization, interview prep (STAR method), and career transition narrative
-- **Windows System Admin Policy** — Covers Windows Server, Active Directory, Group Policy, PowerShell automation, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
-- **Design Documentation Flow** — Structured document stack: Vision → PRD → HLD → LLD → ADRs → Delivery Ledger; ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`); AI checks for missing docs and updates the ledger at every checkpoint
+- **Safe Git operations**: secrets scan before every commit
+- **No tool lock-in**: it is protocol-based, with no brittle scripts or "song and dance"
+- **Git enrichment**: it distils your git history automatically
+- **Handoff protocol**: switch between IDE, CLI, and web chat
+- **Notes (`ai/notes/`)**: rough thoughts, meeting notes, random ideas
+- **Artifacts (`ai/artifacts/`)**: draft outputs you review before promoting to docs or code
+- **Global settings** (`~/.ai/settings/global-user-settings.md`): the AI learns your skills, tool preferences, and cross-project context
+- **Modular persona**: shift the AI's focus (Architect, Mentor) without losing the guardrails
+- **Project customization**: `ai-customization.md` at the project root, with a curated traits catalog
+- **Compliance intelligence**: built-in AI knowledge, no on-disk compliance files
+- **Idiot-proof protocol**: structural guardrails so even "lite" models stay safe
+- **Native backups**: on-demand and cross-platform. Say `"backup ai"` to run one (it is not automatic at checkpoints)
+- **Project knowledge sync**: findings, decisions, and discoveries land in `project-knowledge/` at every checkpoint
+- **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
+- **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
+- **Daily snapshots**: an automatic history of work and decisions
+- **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports
+- **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
+- **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
+- **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot and loaded on demand
+- **Log condensation shield**: the Sliding Horizon auto-archives progress history once it crosses a threshold, keeping context lean
+- **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat
+- **Protocol developer mode**: when you work on the protocol itself, the AI detects it, loads `protocol-decisions.md` in full, and authors policy paths from the end-user's perspective
+- **Verbose AI file naming**: the AI gives knowledge, docs, and workflow files descriptive kebab-case names (the filename is the lookup key). Source code is exempt and follows its own idioms
+- **Codebase examination mode**: say `"codebase examination"` or `"examine this codebase"`. It uses tiered, disk-backed skeleton maps, no vector DBs or external tools
+- **Career coaching policy**: job-search strategy, resume and cover-letter work, interview prep (STAR method), and career-transition narrative
+- **Windows system admin policy**: Windows Server, Active Directory, Group Policy, PowerShell, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
+- **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger at every checkpoint
 
 ---
 
-# How Does This Compare to Copilot, Claude, ChatGPT, and Cursor?
+# How does this compare to Copilot, Claude, ChatGPT, and Cursor?
 
-## The Black Box Problem
+## The black box problem
 
 Every AI assistant stores its context in its own hidden way:
 
-- **Copilot** — memory in VS Code's internal storage and `/memories/` files; VS Code-only
-- **Claude** — `CLAUDE.md` at project root + Claude Projects on Anthropic's servers
-- **ChatGPT** — automatic Memory in your OpenAI account; AI decides what to save
-- **Cursor** — `.cursor/rules` inside the project; invisible to every other tool
+- **Copilot**: memory in VS Code's internal storage and `/memories/` files, VS Code only
+- **Claude**: `CLAUDE.md` at the project root, plus Claude Projects on Anthropic's servers
+- **ChatGPT**: automatic Memory in your OpenAI account, and the AI decides what to save
+- **Cursor**: `.cursor/rules` inside the project, invisible to every other tool
 
-They are black boxes of different shades. Some darker than others.
+They are black boxes of different shades, some darker than others.
 
 **The core problem**: the state belongs to the tool, not to you.
 
-Switch tools and you start from scratch. The new assistant has no idea what the previous one knew.
+Switch tools and you start from scratch. The new assistant has no idea what the last one knew.
 
 > **One tool = one box. Two tools = two boxes. No shared memory. Ever.**
 
@@ -82,148 +84,148 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ---
 
-# Simple AI Workflow — The Same Table
+# Simple AI Workflow: the same table
 
 | What you need | Simple AI Workflow |
 |---|---|
-| Project instructions | `AGENTS.md` — works with any tool, any editor |
+| Project instructions | `AGENTS.md`, works with any tool, any editor |
 | User preferences | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | `ai-customization.md` |
-| Domain expertise / rules | 16 modular policies in `ai/policies/` |
+| Domain expertise and rules | 16 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
-| Project knowledge / decisions | `ai/shared/project-knowledge/` |
-| Cross-project lessons | `~/.ai/global-knowledge/` — explicit, structured |
-| Post-summary recovery | Post-Compaction Recovery — automatic |
+| Project knowledge and decisions | `ai/shared/project-knowledge/` |
+| Cross-project lessons | `~/.ai/global-knowledge/`, explicit and structured |
+| Post-summary recovery | Post-Compaction Recovery, automatic |
 | Multi-tool handoffs | `ai/shared/handoffs/` |
-| Compliance enforcement | `ai/policies/compliance/` + AI built-in knowledge |
-| Peer code review | `"peer review"` — saved reports in `ai/code-review-reports/` |
+| Compliance enforcement | `ai/policies/compliance/` plus built-in AI knowledge |
+| Peer code review | `"peer review"`, saved reports in `ai/code-review-reports/` |
 | Protocol self-validation | `validate-protocol.sh` |
-| Sync across all your projects | `sync-agents-md.sh` / `.ps1` |
+| Sync across all your projects | `sync-agents-md.sh` or `.ps1` |
 
 > **One set of files. Any assistant reads them. Everything in plain sight.**
 
 ---
 
-# Why Simple AI Workflow Wins on Portability
+# Why Simple AI Workflow wins on portability
 
 ## Switch AI tools without losing anything
 - Open any assistant, type `"load context using AGENTS.md protocol"`
 - It reads the same files the previous assistant was using
-- Copilot → Claude → ChatGPT → back to Copilot: zero re-work
+- Copilot to Claude to ChatGPT and back to Copilot: zero re-work
 
-## Change editors, OS, or machines — zero setup
-- Files live in your project directory. That's it.
-- VS Code → terminal → JetBrains — same files, same workflow
-- Linux → macOS → Windows — nothing changes
+## Change editors, OS, or machines, with zero setup
+- Files live in your project directory. That is it.
+- VS Code, terminal, JetBrains: same files, same workflow
+- Linux, macOS, Windows: nothing changes
 - Copilot memory: VS Code only. Claude Projects: Anthropic's servers. ChatGPT Memory: your OpenAI account.
 - **Simple AI Workflow: just files. They go wherever you go.**
 
 ## Moving to a new machine
-- Run `"backup ai"` — archives the entire `ai/` directory to `~/.ai/backups/`
-- Or set up `ai/` as its own private git repo (common for architects and platform engineers managing multiple projects)
+- Run `"backup ai"` and it archives the whole `ai/` directory to `~/.ai/backups/`
+- Or set `ai/` up as its own private git repo (handy if you manage many projects)
 - `git clone` and you are straight back to work
 
 > **Your context is yours. Not the tool's. Not the cloud's. Yours.**
 
 ---
 
-# The Trade-Off — And Why It Is Worth It
+# The trade-off, and why it is worth it
 
 ## What native tools do better
-- ChatGPT Memory saves things automatically — zero effort
-- Copilot's instructions are injected automatically — no prompt needed
+- ChatGPT Memory saves things automatically, with zero effort
+- Copilot's instructions are injected automatically, no prompt needed
 - Claude reads `CLAUDE.md` without being asked
 
 ## What Simple AI Workflow asks of you
-- `"load context using AGENTS.md protocol"` — start of every session
-- `"checkpoint"` — after each task
-- `"update project knowledge"` — when a decision is made
-- `"backup ai"` — when you want a backup
+- `"load context using AGENTS.md protocol"` at the start of every session
+- `"checkpoint"` after each task
+- `"update project knowledge"` when you make a decision
+- `"backup ai"` when you want a backup
 
 ## Why that friction is actually good
 - Typing `"checkpoint"` forces a pause. You review what was done.
 - `"update project knowledge"` makes you ask: *what did we decide, and is it written down?*
-- The commands are friction — but they are **productive friction**.
-- And unlike native automation, **you always know exactly what was saved and why**.
+- The commands are friction, but it is **productive friction**.
+- And unlike native automation, **you always know exactly what was saved, and why**.
 
 > **Less magic. More control. More discipline. Better results.**
 
 ---
 
-# Idiot-Proof Protocol (Low-IQ Compatibility)
+# Idiot-proof protocol (works with lite models)
 
-## The Problem: Instruction Drift
+## The problem: instruction drift
 - Lower-capability "lite" models often treat protocols as suggestions
-- Can lead to accidental re-initialization or overwriting context files
-- "Instruction drift" occurs during complex bootstrap processes
+- That can lead to accidental re-initialization or overwritten context files
+- The drift creeps in during a complex bootstrap
 
-## The Solution: Structural Guardrails
-- **Immortality Headers**: High-visibility `⚠️ STOP` header prevents AI from modifying the protocol
-- **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**
-- **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files
-- **Recursive Discovery**: AI must `ls -R` the **Global User AI Directory** to find all intelligence
-- **Proof-of-Load**: AI must explicitly list Settings and Global Knowledge files fully loaded and Project Knowledge files indexed before proceeding
+## The solution: structural guardrails
+- **Immortality headers**: a high-visibility `⚠️ STOP` header keeps the AI from modifying the protocol
+- **Immutable loading**: the context-loading sequence is flagged **READ-ONLY**
+- **No-overwrite mandates**: the context-loading sequence forbids overwriting existing files
+- **Recursive discovery**: the AI runs `ls -R` on the **Global User AI Directory** to find everything
+- **Proof-of-Load**: the AI lists the Settings and Global Knowledge files it fully loaded, and the Project Knowledge files it indexed, before it starts
 
-> **Safe execution across any IQ tier.** Use lower-cost models without risking project state.
-
----
-
-# Native Checkpoint Backups
-
-## The Problem: Fragile State
-- AI "hallucinations" can sometimes lead to accidental context destruction
-- Relying on manual backups is unreliable and slow
-- "Dumb" models need a forced safety net
-
-## The Solution: On-Demand Archiving
-- **Native CLI One-Liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
-- **On-Demand Trigger**: Run by saying "backup ai" or "backup ai state" (Procedure F) — not automatic at checkpoints
-- **Global Storage**: Saved to `~/.ai/backups/` for easy recovery
-- **Unique Naming**: `{parent}_{project}_{timestamp}`
-
-> **Zero-Script Reliability.** Your project history is always protected.
+> **Safe with any model.** Use lower-cost models without risking your project state.
 
 ---
 
-# On-Demand Peer Review
+# Native checkpoint backups
+
+## The problem: fragile state
+- An AI "hallucination" can wreck your context by accident
+- Manual backups are slow and easy to forget
+- Weaker models need a forced safety net
+
+## The solution: on-demand archiving
+- **Native one-liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
+- **On-demand trigger**: say "backup ai" or "backup ai state" to run one. It is not automatic at checkpoints
+- **Global storage**: saved to `~/.ai/backups/` for easy recovery
+- **Unique naming**: `{parent}_{project}_{timestamp}`
+
+> **Reliable, with zero scripts.** Your project history is always protected.
+
+---
+
+# On-demand peer review
 
 ## How it works
-- Say `"peer review"`, `"code review"`, or `"PR review"` — the AI switches to an objective reviewer role
-- For a named PR: fetches latest, resolves source/target branches, diffs source against target
-- Scans the full file or module the change touches (not just a diff); checks live state when available; saves a structured report to `ai/code-review-reports/`
-- Each report is severity-classified: **Critical / Major / Minor / Suggestions / Not Checked**
-- Ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**
-- Previous reports are never overwritten; each round gets a new numbered file
+- Say `"peer review"`, `"code review"`, or `"PR review"`, and the AI switches to an objective reviewer role
+- For a named PR it fetches the latest, resolves the source and target branches, and diffs source against target
+- It scans the full file or module the change touches, not just the diff, checks live state when it can, and saves a structured report to `ai/code-review-reports/`
+- Each report is severity-classified: **Critical, Major, Minor, Suggestions, Not Checked**
+- It ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**
+- Previous reports are never overwritten. Each round gets a new numbered file
 
 ## Why multiple rounds are normal
-- The AI reviews the **full file set** on every pass — not just the latest diff
-- Fixing one issue can make a different pattern visible in the next pass
-- Diff-based tools (e.g. GitHub Copilot PR review) see only the new diff on each push, requiring many more rounds to converge
-- Expect 2–4 rounds for a thorough review; this is by design
+- The AI reviews the **full file set** on every pass, not just the latest diff
+- Fixing one issue can make a different pattern show up in the next pass
+- Diff-based tools (like the GitHub Copilot PR review) see only the new diff on each push, so they need many more rounds to converge
+- Expect 2 to 4 rounds for a thorough review. That is by design
 
-## vs. GitHub Copilot PR Reviewer
-- Push branch → wait for review → copy comments out of GitHub → paste into local AI → fix → push again → repeat
-- Each push triggers a diff-only review — issues outside the changed lines are invisible
-- After 15+ rounds you may still not have a full-codebase verdict
-- With this workflow: everything stays in your local chat — no push, no copy-paste, full file set every time
+## Compared to the GitHub Copilot PR reviewer
+- There you push the branch, wait for the review, copy the comments out of GitHub, paste them into your local AI, fix, push again, and repeat
+- Each push triggers a diff-only review, so issues outside the changed lines stay invisible
+- After 15 or more rounds you may still not have a full-codebase verdict
+- Here everything stays in your local chat: no push, no copy-paste, and the full file set every time
 
 > **Full-file-set review. Every round. No blind spots.**
 
 ---
 
-# Token Rationing Shield
+# Token rationing shield
 
-## The Problem: Context Window Bloat
-- Loading every large knowledge file at boot consumes context window space in every session
-- Large knowledge bases make every "load context" slower and more token-intensive
-- Not all files are needed for every task
+## The problem: a bloated context window
+- Loading every large knowledge file at boot eats context space in every session
+- Big knowledge bases make every "load context" slower and more token-heavy
+- Not every file is needed for every task
 
-## The Solution: Scoped Token Rationing
-- **Global Knowledge fully loaded at boot**: `~/.ai/global-knowledge/` files — small set, loaded in full so the AI never guesses at a lesson it never read
-- **Active policies fully loaded at boot**: every policy referenced in `ai-customization.md` — the AI cannot follow a rule it hasn't read
-- **Project Knowledge indexed at boot**: `ai/shared/project-knowledge/` files — index-only; large files load on demand
-- **On-Demand Depth**: Project Knowledge loads precisely when a task needs it, not speculatively
+## The solution: scoped token rationing
+- **Global Knowledge loaded in full at boot**: the `~/.ai/global-knowledge/` set is small, so it loads whole and the AI never guesses at a lesson it never read
+- **Active policies loaded in full at boot**: every policy named in `ai-customization.md`, because the AI cannot follow a rule it hasn't read
+- **Project Knowledge indexed at boot**: the `ai/shared/project-knowledge/` files are index-only, and large ones load on demand
+- **Depth on demand**: Project Knowledge loads when a task needs it, not just in case
 
 > **Lean context. Fast boot. Full depth when it matters.**
 
@@ -239,7 +241,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 | Document | What it is |
 |---|---|
-| **Vision** | What you want to build and why. Plain language. 1–2 pages. |
+| **Vision** | What you want to build and why. Plain language. One to two pages. |
 | **PRD** | Requirements with `REQ-NNN` IDs. Defines scope and success criteria. |
 | **HLD** | Architecture and components with `HLD-NNN` IDs. |
 | **LLD** | Detailed per-component design with `LLD-NNN` IDs. |
@@ -247,29 +249,29 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 | **Delivery Ledger** | Tracks which IDs are done, in progress, or not started. |
 
 ## How the AI helps
-- Checks for missing documents at the start of every session and prompts to create them
-- Assigns IDs when generating requirements, components, or design items
-- Updates the delivery ledger at every checkpoint
-- Treats documentation drift as a code smell — flags design docs that lag behind the code
+- It checks for missing documents at the start of every session and offers to create them
+- It assigns IDs as it writes requirements, components, or design items
+- It updates the delivery ledger at every checkpoint
+- It treats documentation drift as a code smell, and flags design docs that lag behind the code
 
-> **Start with notes. End with a clear record of what was built and why.**
+> **Start with notes. End with a clear record of what was built, and why.**
 
 ---
 
-# Use Verbose File Names
+# Use verbose file names
 
-## Why It Matters
-- The AI does not load large project knowledge files at boot — it builds a lightweight index instead
-- The **filename is the lookup key**: when a task requires specific knowledge, the AI maps the task to the most relevant file by name
-- A vague name like `notes.md` is invisible to this process — the AI cannot confidently map any task to it
-- A descriptive name like `azure-postgresql-migration-decisions.md` is unambiguous
+## Why it matters
+- The AI does not load large project knowledge files at boot. It builds a lightweight index instead
+- The **filename is the lookup key**. When a task needs specific knowledge, the AI maps the task to a file by its name
+- A vague name like `notes.md` is invisible to that process. The AI cannot map any task to it with confidence
+- A descriptive name like `azure-postgresql-migration-decisions.md` leaves no doubt
 
-## The Rule
-- Name every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` to clearly describe its content
+## The rule
+- Name every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` so it describes its content
 - Use kebab-case: `project-name-topic-subtopic.md`
-- Ask: could a colleague guess what this file contains from the name alone? If not, rename it
+- Ask yourself: could a colleague guess what this file holds from the name alone? If not, rename it
 
-## Good vs Poor Examples
+## Good vs poor examples
 
 | Poor | Good |
 |---|---|
@@ -281,50 +283,50 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 ---
 
-# Atomic Checkpoint Protocol
+# Atomic checkpoint protocol
 
-## The Problem: Partial Writes & Context Drift
-- A checkpoint interrupted mid-write leaves state files inconsistent
-- Unbounded progress logs bloat the context window over time
-- Writing one file without immediately updating the others causes context drift
+## The problem: partial writes and context drift
+- A checkpoint interrupted mid-write leaves the state files out of sync
+- Progress logs that grow forever bloat the context window
+- Writing one file without updating the others causes context drift
 
-## The Solution: Atomic Writes & Sliding Horizon
-- **Sequential Writes**: `ai/state/progress.md` → `ai/state/next-steps.md` → `ai/state/context.md` — strict order, always
-- **Transaction Log**: Every checkpoint outputs a confirmation block in chat — what was written and what changed
-- **Abort on Missing Data**: If data is incomplete, the write aborts; the gap is reported to the user
-- **Sliding Horizon**: When `ai/state/progress.md` exceeds 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
+## The solution: atomic writes and a sliding horizon
+- **Sequential writes**, always in this order: `ai/state/progress.md`, then `ai/state/next-steps.md`, then `ai/state/context.md`
+- **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
+- **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
+- **Sliding horizon**: once `ai/state/progress.md` passes 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
 
 > **Consistent state. Every checkpoint. No silent failures.**
 
 ---
 
-# Keeping Context Healthy
+# Keeping context healthy
 
-## What is Context Rot?
-- Over a long session, AI working knowledge degrades — stale state, token pressure, forgotten rules
-- The AI starts contradicting earlier decisions or re-asking questions it already answered
-- Left unchecked, it erodes the reliability of every output
+## What is context rot?
+- Over a long session, the AI's working memory drifts: stale state, token pressure, forgotten rules
+- It starts contradicting earlier decisions, or re-asking questions it already answered
+- Left alone, it erodes the reliability of every answer
 
-## Built-in Defences in This Workflow
-- **Atomic Write Protocol** — state files sync together or not at all; no partial writes
-- **Sliding Horizon Shield** — `ai/state/progress.md` auto-archives when it exceeds 50 items or 200 lines
-- **Post-Compaction Recovery** — reloads rules from disk after any context compaction; for VS Code/Copilot a `PreCompact` hook provides a mechanical re-arm; for other tools a one-time memory note works (see the reload-trigger setup guide)
-- **Proof-of-Load** — AI must confirm every file it read before starting work
-- **Mandatory knowledge sync** — project decisions are written to `project-knowledge/` at every checkpoint
+## Built-in defences in this workflow
+- **Atomic write protocol**: state files sync together or not at all, so no partial writes
+- **Sliding horizon shield**: `ai/state/progress.md` auto-archives once it passes 50 items or 200 lines
+- **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
+- **Proof-of-Load**: the AI confirms every file it read before it starts work
+- **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
 
-## The "Load Context" Command
-- **Full form**: `"load context using AGENTS.md protocol"` — use this at the start of every session
-- **Shorthand**: `"load context"` — fine mid-session; unreliable for fresh or weaker models
-- **Rule**: always use the full form at the start of a new session or after a restart
+## The "load context" command
+- **Full form**: `"load context using AGENTS.md protocol"`. Use this at the start of every session
+- **Shorthand**: `"load context"`. Fine mid-session, but unreliable for fresh or weaker models
+- **Rule**: always use the full form at the start of a new session, or after a restart
 
-## Habits That Prevent the Rest
-- Checkpoint after each logical unit of work — not just at end of day
-- When the AI loses track of context, checkpoint and start a fresh session
-- Set up the per-tool reload trigger once; after any summary, ask "did you run the post-compaction reload?" before trusting the next answer
-- Keep `ai/state/context.md` lean — current state only, not a history log
-- Review `ai/state/next-steps.md` at session start — trim stale items before working
+## Habits that handle the rest
+- Checkpoint after each logical unit of work, not just at the end of the day
+- When the AI loses the thread, checkpoint and start a fresh session
+- Set up the per-tool reload trigger once. After any summary, ask "did you run the post-compaction reload?" before you trust the next answer
+- Keep `ai/state/context.md` lean: current state only, not a history log
+- Review `ai/state/next-steps.md` at session start, and trim stale items before you work
 
-> **Checkpoint often. Session short. Context stays clean.**
+> **Checkpoint often. Keep sessions short. Context stays clean.**
 
 ---
 
@@ -332,14 +334,14 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 ## What happens
 
-Context windows fill up. The assistant compacts the conversation — replacing full history
+Context windows fill up. The assistant compacts the conversation, replacing the full history
 with a compressed summary. Without recovery, the standing rules loaded at session start
 (AGENTS.md, policies, Global Knowledge) are gone.
 
 ## How the recovery works
 
 The AI re-reads all standing rules from disk. The compaction summary and task state are
-never touched — only the rules reload.
+never touched. Only the rules reload.
 
 ```
    Session Start          Mid-Session          After Compaction      After Recovery

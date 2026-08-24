@@ -26,6 +26,10 @@ if ! grep -q "### PROCEDURE F: When the user says \"backup ai\"" AGENTS.md; then
     echo "Error: Procedure F (Backup) anchor missing in AGENTS.md."
     exit 1
 fi
+if ! grep -q "### PROCEDURE G: When the user says" AGENTS.md; then
+    echo "Error: Procedure G (Codebase Examination) anchor missing in AGENTS.md."
+    exit 1
+fi
 if ! grep -q "Atomic Write Protocol" AGENTS.md; then
     echo "Error: Atomic Write Protocol missing from Procedure C in AGENTS.md."
     exit 1
@@ -95,6 +99,13 @@ for key in "${CONFIG_KEYS[@]}"; do
         exit 1
     fi
 done
+if [ -f "ai-customization.md" ]; then
+    for sec in "## AI Workflow Configuration" "## Active Expertise"; do
+        if ! grep -q "$sec" ai-customization.md; then
+            echo "Warning: ai-customization.md missing section: $sec"
+        fi
+    done
+fi
 echo "Configuration mapping verified."
 
 # 3. Global Structure
