@@ -1,8 +1,8 @@
-# Multi-Assistant Workflow — Design & Requirements
+# Multi-Assistant Workflow + Build AI Team — Design & Requirements
 
 Status: pending
 
-Extracted from the `feature/multi-assistant-workflow` branch (commit `1a0ef61`) on 2026-08-25. The branch itself is intact locally. This draft predates the current protocol layout; see the reconciliation notes at the end before resuming.
+This note combines two related ideas. (1) The **multi-assistant coordination contract**: how several assistants work the same project via `AGENTS.md` + coordination primitives. Extracted from the `feature/multi-assistant-workflow` branch (commit `1a0ef61`). (2) The **build-AI-team runtime**: a dispatcher/watcher that spawns and manages AI roles, drawn from `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md` §3, §4, §7. The AI-team runtime sits on top of the protocol contract; see the reconciliation notes before resuming.
 
 ---
 
@@ -75,8 +75,25 @@ Extracted from the `feature/multi-assistant-workflow` branch (commit `1a0ef61`) 
 - Implement `scripts/ai-lock.sh` and `scripts/ai-lock.ps1`.
 - Wire `scripts/sync-agents-md.*` to emit per-target reports into `ai/tasks/` when run across multiple repos.
 
+## Build AI team (AI-team runtime)
+
+The multi-assistant workflow above defines the **coordination contract** (who owns what, task/work-queue conventions, advisory locks, dry-run discipline, staged branches). The **AI-team runtime** is the management layer that turns this into a live "team."
+
+### Protocol vs runtime boundary (the scope guard)
+- **Protocol (this repo)** defines the contract: file ownership, single-writer state rule, awareness-via-board, message formats (board/handoff), checkpoint-reconcile semantics.
+- **Runtime (a separate project — the user's "AI team on another machine")** is the dispatcher/watcher/process lifecycle: spawning roles, queueing, crash recovery, preventing double-dispatch, locking in-progress handoffs.
+- The runtime must NOT be built into `AGENTS.md`. The contract lives here; the runtime is built on top of it elsewhere.
+
+### Execution models for role agents (developer, marketing, security, doc-controller)
+- **Always-on persistent processes** — continuously running team-mates.
+- **Watch-spawned (preferred)** — a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board / handoff / role-knowledge, and sleeps.
+- Key insight: watch-spawned decouples **identity** (persistent role that accumulates role-knowledge) from **execution** (ephemeral, runs only per task), so the single-writer ownership rule stays uniform across both models. "Always-on vs watch-spawned" becomes a deployment choice, not a protocol concern.
+
+### True parallelism (Scenario B)
+The coordination board is read-before-write, not a lock, so concurrent sessions writing the *same* state files can lose updates (Scenario B, CP-2026-06-30-02). The safe path for real parallelism is **one status file per agent/task** under `ai/shared/coordination/<agent-or-task>.md`, with the orchestrator reading the directory and reconciling. Revisit trigger: adopt this the moment more than one agent/session may write the three state files at the same time. Until then the single-orchestrator model stands and concurrent sessions are only safe when serialized in time.
+
 ## References
-- `AGENTS.md`, `ai/ai-policy-meta.md`, `scripts/` helpers, `ai/progress.md` checkpoint contract.
+- `AGENTS.md`, `ai/ai-policy-meta.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `scripts/` helpers, `ai/progress.md` checkpoint contract.
 
 ---
 
@@ -84,3 +101,4 @@ Extracted from the `feature/multi-assistant-workflow` branch (commit `1a0ef61`) 
 - This draft predates the current state-file layout. It references `ai/progress.md`, `ai/next-steps.md`, and `ai/tasks/`; the current protocol uses `ai/state/` (progress/next-steps/context) and the single-writer ownership model.
 - The current protocol already has a distinct multi-agent approach: single-writer state ownership, an inbound-reconcile step at checkpoint, `ai/shared/coordination.md` as the coordination board, and role-scoped project-knowledge files. Reconcile this draft with that model before resuming, to avoid two competing designs.
 - The proposed files (`ai/agent-config.md`, `ai/tasks/`, `.ai-lock`, `scripts/ai-lock.sh`/`.ps1`) are not part of the current protocol. Treat them as candidate additions for a future multi-assistant iteration.
+- Two deferred items already tracked belong here: the **AI-team runtime** (dispatcher/watcher/role lifecycle, separate project) and the **per-agent status files** for real parallelism (Scenario B). Both are in `next-steps.md` deferred and the design note above.
