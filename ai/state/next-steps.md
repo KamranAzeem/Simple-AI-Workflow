@@ -3,7 +3,7 @@ STATE-FILE: next-steps.md is the FUTURE. A forward-only backlog, not a history.
 STATE-FILE: CHRONOLOGICAL ORDER. Oldest at the top, newest at the bottom. Append new items at the tail. Delete each item the moment it is done; never leave a ticked, checked, or struck-through entry. No history accumulates here.
 STATE-FILE: KEEP LEAN. Short bullet items, one to two lines each. Not a runbook, plan, or ledger. No sub-bullets, command transcripts, or rationale. Use ai/shared/project-knowledge/ for durable detail.
 -->
-CP-2026-08-25-02
+CP-2026-08-25-03
 
 ## Pending
 - [ ] Document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (spec in notes.md).

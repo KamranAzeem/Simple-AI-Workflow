@@ -6,12 +6,13 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 16e11f1
-- **Release**: v2.3.0 tagged and released on GitHub (2026-08-25); previous v2.2.0 (2026-08-25)
+- **Branch**: `master`, HEAD a2a5215, not pushed to origin
+- **Release**: v2.3.0 (2026-08-25); latest feature work unreleased
 - **Validator**: v4.6, all 8/8 checks pass
+- **Markdown lint**: markdownlint-cli2 v0.23.2 active, 0 issues (config `.markdownlint-cli2.jsonc`)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); behavioral coaching rule, Habit Hooks opt-in, and TDD sub-rules in policy files; docs pattern guides; sync AGENTS.md to other projects
+- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); Habit Hooks opt-in and TDD sub-rules in policy files; ATDD docs guide; sync AGENTS.md to other projects
 
 ## Checkpoint History
 
@@ -37,7 +38,12 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Summary**: Merged two protocol sessions and released v2.2.0. Commit 0383025: Evidence-Based full-reads and no-truncation rules, external-mutation guardrail, state-file model split (next-steps forward-only, progress append-only, context present) with brevity and bloat/order checks, context.md reorder, examination fixes (PowerShell sync bug, compliance-guide rewrite, handoff template, runbook, AGENTS.md banner reconciliation), README and slides rewritten in the maintainer voice, two validator checks. Commit 1d71e95: Pre-Work Gate and Acceptance Criteria Quality (AC guide opt-in).
 - **Key deliverables**: commits 0383025 and 1d71e95; v2.2.0 release; codebase examination findings artifact; 4 peer reviews APPROVED; validator 8/8.
 
-## Latest Checkpoint: CP-2026-08-25-02
+## Checkpoint: CP-2026-08-25-02
 - **Current Branch**: `master`, synced with origin at 16e11f1
 - **Summary**: Full-file-read enforcement. Promoted the read rule to a TIER 2 mandate in AGENTS.md (active at boot, load context, compaction, mid-work), added Proof-of-Load line counts, strengthened Evidence-Based Reasoning point 5, added a 6-item Non-Negotiables index to common policy, and a Full File Reads validator anchor. Committed 16e11f1, squash-merged to master, pushed, branch deleted. Released v2.3.0. Ran the context.md horizon shield (11 entries > 10): kept 5 most recent, archived 6 to context-archive.md.
 - **Key deliverables**: commit 16e11f1; v2.3.0 release; peer review review-01 APPROVED; validator 8/8.
+
+## Latest Checkpoint: CP-2026-08-25-03
+- **Current Branch**: `master`, HEAD a2a5215, not pushed to origin
+- **Summary**: Implemented research ideas 1+2+10 (intent-over-metrics phrasing, shared-understanding pre-work gate) and root-only AGENTS.md/ai-customization.md scope; added markdownlint-cli2 config and fixed 14 whitespace issues. Squash-merged a2a5215, branch deleted. Peer reviews review-01/02 APPROVED, validator 8/8, markdownlint 0 issues.
+- **Key deliverables**: commit a2a5215; .markdownlint-cli2.jsonc; two peer reviews APPROVED; markdownlint clean.
