@@ -175,6 +175,24 @@ The same failure mode as CLI Command Accuracy above, generalized to every kind o
 5. **Full reads for working files**: For any file you must understand or reason about (policies, `AGENTS.md`, the customization file, settings, project knowledge, source, config, design docs, ticket files), read it in full. Establish the file's length first, then read from the first line to EOF, paging through large files until the whole file is covered. Never stop at an arbitrary line window. If a read returns fewer lines than the file contains, continue from where it stopped. Targeted reads (grep, head, tail, or ranged reads) are allowed only for bulk data files you are searching rather than comprehending, such as logs, dumps, or large JSON/CSV. Rule of thumb: to comprehend, read the whole file; to locate one thing, a targeted read is fine.
 6. **No truncation of investigation output**: Never pipe `grep`, `find`, `az`, or any enumeration command through `head`, `tail`, or any line-limiting filter during investigation. `grep` is already a filter, so every line it returns is a match, and truncating it silently drops evidence. Use a count first (for example `wc -l`) to gauge volume, then read the full output. Reserve `head` and `tail` for display convenience, never for completeness checks.
 
+### Pre-Work Gate
+Complete these checks before starting any work item. Do not write code or configuration until they are done. Scale the depth to the work item's size and risk: a small, low-risk change needs a light pass, while a large or destructive change needs the full treatment.
+
+1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
+2. **Acceptance criteria review**: Review the work item's acceptance criteria before you produce any design document. If they are missing, untestable, or ambiguous, flag it to the user and do not proceed until it is resolved. See the Acceptance Criteria Quality section below.
+3. **HLD and LLD**: Produce a High-Level Design and a Low-Level Design per the Design Documentation Standards below, grounded in evidence-based investigation (see the Evidence-Based Reasoning rule above). They must be detailed enough to drive implementation without ambiguity. Their purpose is to remove uncertainty before work begins, not to satisfy a review gate. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
+4. **Removal safety**: When a work item removes items or configuration, gather positive evidence. Confirm that everything meant to stay in place is still present and correct after the change, not just that the target was removed.
+5. **Pre-work announcement**: Write a brief Markdown pre-work summary of the work item. Post it to any external system only on the user's explicit instruction (see the external-system-mutation rule in Universal Operational Guardrails).
+6. **Framework alignment**: Apply the established best-practice framework for the target platform or domain (for example a cloud provider's well-architected framework). Platform-specific detail belongs in the relevant domain policy, not here.
+
+### Acceptance Criteria Quality
+Acceptance criteria are the contract between a work item and its outcome. Two checks matter:
+
+- **Before design**: Review the work item's acceptance criteria. Flag any that are missing, ambiguous, not independently testable, or contradictory, and resolve them before you write the design.
+- **Coverage**: Every acceptance criterion must trace to at least one LLD item. If one does not, the LLD is incomplete.
+
+If acceptance-criteria quality turns out to be a recurring problem on a project, note the patterns in normal project knowledge at checkpoints. Do not stand up a dedicated guide file unless it earns its keep.
+
 ## Universal Testing Standards
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.

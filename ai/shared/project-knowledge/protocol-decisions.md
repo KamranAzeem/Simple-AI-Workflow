@@ -660,3 +660,20 @@ Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a us
 
 ### Practice note: AGENTS.md edited directly by the AI this session
 - The user explicitly authorized the AI to edit protocol files directly as protocol developer, including `AGENTS.md`, despite `AGENTS.md`'s own "modifications must be performed manually by the human user" banner. This matches the mixed practice seen across prior sessions. The banner-versus-Protocol-Developer-Mode tension is a real inconsistency, flagged for the codebase examination.
+
+---
+
+## 2026-08-25 — Pre-Work Gate and Acceptance Criteria Quality added to common policy
+
+Driven by observations from another session (a pasted spec). Added two subsections under `## Operational Standards` in `ai-policy-common.md`, after Evidence-Based Reasoning. Branch `feature/pre-work-gate-and-acceptance-criteria`, not merged.
+
+### Pre-Work Gate
+- Checks to complete before starting any work item: scope discovery (find all repos and configs, and treat a missing repo as archived or decommissioned rather than out of scope), acceptance-criteria review, HLD and LLD, removal safety (gather positive evidence that everything meant to stay is still in place), a pre-work announcement posted externally only on explicit instruction, and framework alignment.
+- **Wise adaptations from the raw spec**: (1) Added a proportionality clause so the depth scales with the work item's size and risk. A blanket "produce HLD and LLD before any work item" would be impractical for a one-line fix. (2) The HLD/LLD step references the existing Design Documentation Standards rather than restating the artifact spec, to stay DRY. (3) The framework-alignment bullet was generalized to the target platform or domain's best-practice framework, and it explicitly defers platform specifics to the domain policy. This respects the earlier decision (in the reconciliation artifact) that WAF/CAF is cloud-specific and belongs in `ai-policy-cloud.md`, not common policy. (4) Cross-references use plain section names, not markdown links or procedure letters, per the policy-file link rules.
+
+### Acceptance Criteria Quality
+- Acceptance criteria are the contract for a work item. Two mandatory checks: review them before design (flag any that are missing, ambiguous, not independently testable, or contradictory), and confirm every criterion traces to at least one LLD item or the LLD is incomplete.
+- **Living guide dropped as a mandatory rule**: the raw spec required a living acceptance-criteria quality guide file, updated on every work item. Softened to opt-in after user pushback. It is a soft rule with no forcing function (same failure shape as the old "pop the completed task"), it is an extra file to manage, and it cuts against the lightweight mandate. A real production customization file had already picked up the same rule through scope creep (a one-off "make me an AC guide" request hardened into a forever-obligation). Final wording: if AC quality is a recurring problem, note patterns in normal project knowledge at checkpoints; do not stand up a dedicated guide file unless it earns its keep.
+
+### Not done
+- No `AGENTS.md` change and no validator anchor added. These are common-policy prose rules, the same pattern as Evidence-Based Reasoning. Validator remains 8/8 at v4.6.
