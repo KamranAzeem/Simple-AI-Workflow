@@ -66,6 +66,10 @@ if ! grep -q "Single-Writer" AGENTS.md; then
     echo "Error: State File Single-Writer Ownership rule missing from TIER 2 in AGENTS.md."
     exit 1
 fi
+if ! grep -q "Full File Reads" AGENTS.md; then
+    echo "Error: Full File Reads mandate missing from TIER 2 in AGENTS.md."
+    exit 1
+fi
 echo "Hardening anchors verified."
 
 # 2. Configuration Mapping
