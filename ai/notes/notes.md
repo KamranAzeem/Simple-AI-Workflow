@@ -20,3 +20,8 @@ Document Kilo Code support in the post-compaction reload trigger setup guide and
 
 ### Design docs for the protocol itself
 The protocol is quite developed now, but the HLD, LLD, PRD, DECISIONS.md, delivery ledger, etc are still not created. Analyze the protocol and create the necessary documents under `docs/`, but do not push them to the repo at the moment. Analyze and polish them first. (Tracked in next-steps.md: drafts in `ai/notes/` — vision/PRD/HLD; formalize protocol-decisions.md entries into ADR format; create delivery ledger.)
+
+### Multi-assistant workflow (design)
+- **Status: pending.** Design extraction saved to `ai/notes/multi-assistant-workflow-design.md`.
+- Source: `feature/multi-assistant-workflow` branch (commit `1a0ef61`), intact locally; the remote-tracking ref was pruned but the branch is not lost.
+- Before resuming: reconcile the draft's older paths (`ai/progress.md`, `ai/tasks/`, `.ai-lock`) and advisory-lock model against the current protocol (state files in `ai/state/`, single-writer ownership, `ai/shared/coordination.md`), so it does not introduce a second, competing multi-agent design.
