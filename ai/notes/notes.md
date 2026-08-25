@@ -20,8 +20,3 @@ Document Kilo Code support in the post-compaction reload trigger setup guide and
 
 ### Design docs for the protocol itself
 The protocol is quite developed now, but the HLD, LLD, PRD, DECISIONS.md, delivery ledger, etc are still not created. Analyze the protocol and create the necessary documents under `docs/`, but do not push them to the repo at the moment. Analyze and polish them first. (Tracked in next-steps.md: drafts in `ai/notes/` — vision/PRD/HLD; formalize protocol-decisions.md entries into ADR format; create delivery ledger.)
-
-### Analyze the coding-quality research file
-There is a new file under notes (`ai/notes/ai-coding-quality-behavioral-prompts-habit-hooks-research-2026-08-21.md`) to analyze for protocol improvement ideas. Always keep the protocol simple, light-weight and efficient. (Derived work items already tracked in next-steps.md: behavioral coaching rule, Habit Hooks opt-in, TDD sub-rules, 3 opt-in pattern guides.)
-
-- Processed (2026-08-25): ideas 1+2 (behavioral coaching, now "Intent over metrics" in common and code-review policies) and idea 10 (Grill Me, now the Pre-Work Gate "Shared understanding" clause). Idea 11 (Ubiquitous Language) dropped as redundant with the existing Glossary supplementary document. Remaining: idea 3 (Habit Hooks), idea 4 (TDD sub-rules), idea 7 (ATDD).
