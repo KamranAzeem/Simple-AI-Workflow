@@ -731,3 +731,12 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 - **Root-only rule strengthened**: extended the PWD-Only Scope mandate in `AGENTS.md` TIER 2 to honor `AGENTS.md` and `ai-customization.md` only from the project root, and ignore any file with either name elsewhere in the directory tree. Closes a gap where `ai-customization.md` was checked at the root (Procedure A Step 0) but never explicitly ignored in other subdirectories.
 - **Markdown linting**: installed markdownlint-cli2 (Node v24.19.0, npm v12.0.2), added `.markdownlint-cli2.jsonc` disabling style-noise rules and keeping real checks, fixed 14 whitespace issues across `AGENTS.md` and policy files, and recorded markdownlint-cli2 in the global settings tools list.
+
+---
+
+## 2026-08-25 (evening): research cleanup, design preservation, refactoring research
+
+- **Research cleanup**: deleted the habit-hooks research file (`ai-coding-quality-behavioral-prompts-habit-hooks-research-2026-08-21.md`) and the two stale artifacts (`additions-to-common-policy.md`, `protocol-examination-findings-2026-08-24.md`) since their content was fully covered by merged work; removed the remaining research-derived pending items (ideas 3, 4, 7) from `next-steps.md` and `notes.md`; committed the previously untracked `2026-08-24.md` daily checkpoint.
+- **Sensitive-name guardrail**: verified the committed repo contains none of Lars, Ninja, Innofactor, or Elmera (confirmed case-insensitive across all tracked files). User left the person's handle "WaqarSb" in the state records and the git-ignored `ai/secrets/` files as-is, since they never reach the repo.
+- **Multi-assistant + build AI team preserved**: saved the `feature/multi-assistant-workflow` design doc combined with the AI-team runtime/role model (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B) into `ai/notes/multi-assistant-workflow-design.md` (Status: pending). Both feature branches deleted; only the note remains, plus the deferred items in `next-steps.md`. Draft's older paths vs the current `ai/state/` + single-writer + `ai/shared/coordination.md` model flagged for reconciliation before resuming.
+- **Refactoring/codebase-upgrade research**: stored the Google research on refactoring vs upgrading, PHP-legacy vs modern-node differences, and the "upgrade first, then refactor" golden rule into `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`. A refactoring/codebase-upgrade policy is under consideration (Status: pending in `notes.md`).

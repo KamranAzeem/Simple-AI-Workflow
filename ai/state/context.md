@@ -6,13 +6,13 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 1ae768c
-- **Release**: v2.3.0 (2026-08-25); latest feature work unreleased
+- **Branch**: `master`, synced with origin at 2bdc118
+- **Release**: v2.3.0 (2026-08-25); latest work unreleased
 - **Validator**: v4.6, all 8/8 checks pass
 - **Markdown lint**: markdownlint-cli2 v0.23.2 active, 0 issues (config `.markdownlint-cli2.jsonc`)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); sync AGENTS.md to other projects
+- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); multi-assistant + build AI team design; refactoring/codebase-upgrade policy; sync AGENTS.md to other projects
 
 ## Checkpoint History
 
@@ -43,7 +43,12 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Summary**: Full-file-read enforcement. Promoted the read rule to a TIER 2 mandate in AGENTS.md (active at boot, load context, compaction, mid-work), added Proof-of-Load line counts, strengthened Evidence-Based Reasoning point 5, added a 6-item Non-Negotiables index to common policy, and a Full File Reads validator anchor. Committed 16e11f1, squash-merged to master, pushed, branch deleted. Released v2.3.0. Ran the context.md horizon shield (11 entries > 10): kept 5 most recent, archived 6 to context-archive.md.
 - **Key deliverables**: commit 16e11f1; v2.3.0 release; peer review review-01 APPROVED; validator 8/8.
 
-## Latest Checkpoint: CP-2026-08-25-03
+## Checkpoint: CP-2026-08-25-03
 - **Current Branch**: `master`, HEAD a2a5215, not pushed to origin
 - **Summary**: Implemented research ideas 1+2+10 (intent-over-metrics phrasing, shared-understanding pre-work gate) and root-only AGENTS.md/ai-customization.md scope; added markdownlint-cli2 config and fixed 14 whitespace issues. Squash-merged a2a5215, branch deleted. Peer reviews review-01/02 APPROVED, validator 8/8, markdownlint 0 issues.
 - **Key deliverables**: commit a2a5215; .markdownlint-cli2.jsonc; two peer reviews APPROVED; markdownlint clean.
+
+## Latest Checkpoint: CP-2026-08-25-04
+- **Current Branch**: `master`, synced with origin at 2bdc118
+- **Summary**: Cleanup and research. Deleted the habit-hooks research file and two stale artifacts; removed research-derived pending items; committed the 2026-08-24 checkpoint; preserved the multi-assistant + build AI team design as a pending note (both feature branches deleted); stored the refactoring/upgrading research note (policy under consideration); verified the repo is free of the sensitive names. Commits 1ae768c, d00b0e6, 08a204a, 47bd5dc, 2bdc118.
+- **Key deliverables**: research/artifact cleanup; ai/notes/multi-assistant-workflow-design.md; ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md; protocol-decisions.md entry.
