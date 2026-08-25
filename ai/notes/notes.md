@@ -25,3 +25,7 @@ The protocol is quite developed now, but the HLD, LLD, PRD, DECISIONS.md, delive
 - **Status: pending.** Combined design saved to `ai/notes/multi-assistant-workflow-design.md`.
 - Source: `feature/multi-assistant-workflow` branch (design doc) + the AI-team runtime/role model from `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md` (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B).
 - Before resuming: reconcile the draft's older paths (`ai/progress.md`, `ai/tasks/`, `.ai-lock`) and advisory-lock model against the current protocol (state files in `ai/state/`, single-writer ownership, `ai/shared/coordination.md`), so it does not introduce a second, competing multi-agent design. Keep the AI-team runtime as a separate project on top of the contract.
+
+### Refactoring / codebase-upgrade policy (considering)
+- **Status: pending.** Research note saved to `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`.
+- Considering a policy for when the user asks to refactor or upgrade a codebase. Key distinction: refactoring (internal quality, no behavior change) vs upgrading (language/platform/dependency bump). Golden rule from the research: never do both at once — upgrade first until tests pass, then refactor. Also: establish a test baseline before refactoring, and clarify goal (bugs / features / security) before choosing refactor vs upgrade vs rewrite.
