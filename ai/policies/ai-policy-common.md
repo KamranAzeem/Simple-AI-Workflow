@@ -8,6 +8,16 @@ This file contains the universal operating rules for all AI assistants in this r
 
 > **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the **Global AI Policies Directory** defined in the configuration section of `AGENTS.md`.
 
+## Non-Negotiables (read first, apply always)
+These are the rules most costly to break. They are active at boot, at load context, at compaction recovery, and mid-work. Each has a detailed section below or in `AGENTS.md`.
+
+1. **Full file reads.** Read every file you reason about from line 1 to EOF. Re-read from disk when a task needs a file again. Only log-like bulk data may be sliced by filter. (Evidence-Based Reasoning below; Full File Reads in `AGENTS.md` TIER 2)
+2. **No truncated evidence.** Never pipe investigation output through `head` or `tail`. Count first, then read it all. (Evidence-Based Reasoning below)
+3. **Evidence before assertion.** Never invent files, facts, people, or past decisions. Verify, or say you do not know. (Evidence-Based Reasoning below)
+4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system. (Universal Operational Guardrails below)
+5. **Secrets check before commit.** Scan for secrets before any `git add` or `git commit`. Stop and warn if found. (Universal Operational Guardrails below)
+6. **Human approval on protected branches.** Get explicit approval before any state-changing git operation on `master` or `main`. (Feature Development and Branch-Gating below)
+
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
 When implementing new features, architecture changes, or functional code modifications:
@@ -172,7 +182,7 @@ The same failure mode as CLI Command Accuracy above, generalized to every kind o
 2. **Verify before asserting**: Before stating a fact or basing a recommendation on it, check the active conversation context, **Project AI Knowledge Directory** (loading the relevant indexed file on demand), and the live codebase or environment (search, file reads, or tool queries).
 3. **No evidence, say so**: If no evidence exists anywhere, say this plainly and ask the user for the missing fact. Do not fill the gap with a plausible-sounding guess.
 4. **Show your source**: Be ready to point to where a fact-based recommendation came from (a file, a query result, something you said), not present it as simply known.
-5. **Full reads for working files**: For any file you must understand or reason about (policies, `AGENTS.md`, the customization file, settings, project knowledge, source, config, design docs, ticket files), read it in full. Establish the file's length first, then read from the first line to EOF, paging through large files until the whole file is covered. Never stop at an arbitrary line window. If a read returns fewer lines than the file contains, continue from where it stopped. Targeted reads (grep, head, tail, or ranged reads) are allowed only for bulk data files you are searching rather than comprehending, such as logs, dumps, or large JSON/CSV. Rule of thumb: to comprehend, read the whole file; to locate one thing, a targeted read is fine.
+5. **Full reads for working files**: For any file you must understand or reason about (policies, `AGENTS.md`, compliance references, the customization file, settings, project knowledge, source code, config, design docs, documentation, ticket files), read it in full, from the first line to EOF. This holds at boot, at load context, at Post-Compaction Recovery, and mid-work, with no exception. Establish the file's length first, then read the whole file, paging through large files until every line is covered. Never stop at an arbitrary line window; if a read returns fewer lines than the file contains, continue from where it stopped. If a file is already in your context but a task needs it again, re-read it fresh from disk, because it may have changed since you last saw it. The only exception is bulk data you are searching rather than comprehending (logs, dumps, or large JSON/CSV), which you may slice by filter. When a read drives a decision or a file change, state the file and its line count so the read is auditable.
 6. **No truncation of investigation output**: Never pipe `grep`, `find`, `az`, or any enumeration command through `head`, `tail`, or any line-limiting filter during investigation. `grep` is already a filter, so every line it returns is a match, and truncating it silently drops evidence. Use a count first (for example `wc -l`) to gauge volume, then read the full output. Reserve `head` and `tail` for display convenience, never for completeness checks.
 
 ### Pre-Work Gate

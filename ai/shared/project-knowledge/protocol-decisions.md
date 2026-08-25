@@ -681,3 +681,24 @@ Driven by observations from another session (a pasted spec). Added two subsectio
 ### Follow-up (merged and released)
 - Peer review (review-02) flagged that Pre-Work Gate item 3 ("Produce HLD and LLD") could read as contradicting the Mandatory Design Artifacts "ask whether to create" rule. Resolved by adding a clause: create the HLD/LLD only after proposing them and getting the user's agreement, in line with the no-side-effects norm.
 - Committed 1d71e95, squash-merged to master, pushed. Released as v2.2.0 (2026-08-25), a MINOR bump: no breaking changes since v2.1.0, backward-compatible features plus fixes. Changelog grouped into Features, Fixes, and Docs.
+
+---
+
+## 2026-08-25: Full-file-read enforcement raised to a TIER 2 mandate
+
+Driven by a real violation in a production session (Claude Sonnet 4.6 skipped full reads of the customization file and a policy at load context) and the user's insistence that the rule be active everywhere. Branch `feature/full-file-read-enforcement`, not merged.
+
+### Problem
+- The read-fully rule lived only in Evidence-Based Reasoning (common policy), one rule among many. It covered boot reads through Proof-of-Load but not mid-task investigation reads, which are invisible to the user and the hardest to enforce. The user cannot watch every behind-the-scenes read.
+
+### Decision
+- **TIER 2 mandate**: added a **Full File Reads (No Partial Reads)** MANDATORY ACTION to `AGENTS.md`. TIER 2 fires unconditionally across all procedures, so the rule is active at boot, at load context, at Post-Compaction Recovery, and mid-work. Every file read for comprehension is read line 1 to EOF. The only exception is bulk data being searched (logs, dumps, large JSON or CSV), sliced by filter. A file already in context is re-read fresh from disk when a task needs it, since it may have changed.
+- **Observable proof**: when a read drives a decision or change, the AI states the file and its line count, so a silent partial read becomes catchable after the fact. Proof-of-Load (a) and (b) now require line counts for the customization file and every settings, knowledge, and policy file loaded at boot.
+- **Common-policy detail**: Evidence-Based Reasoning point 5 strengthened with the everywhere clause, the re-read-from-disk clause, and the observable-proof requirement.
+- **Validator**: added a `Full File Reads` anchor check to guard the mandate against removal. Version unchanged (v4.6).
+
+### Why this shape, not the raw proposal
+- A production-session AI proposed a silent self-check step in Procedure A. Two parts rejected: (1) a silent self-check by the same executor carries the same skip risk as the rule it checks, so the lever is observable output, not a self-audit; (2) Procedure A is boot-only, but the pain is mid-work, so TIER 2 (always-on) is the correct home. Honest limit recorded: a stated line count is still self-reported and not a hard guarantee; a true external check belongs to the pending Habit Hooks work.
+
+### Non-Negotiables index (same branch)
+- Added a short **Non-Negotiables** block (6 items) at the top of `ai-policy-common.md` as an at-a-glance index of the highest-cost rules: full reads, no truncated evidence, evidence before assertion, approval before side effects, secrets check, protected-branch approval. Rationale: short numbered prominence helps salience for the load-bearing rules, and it is capped at 6 to avoid list-bombing. It indexes rules that already have their own detailed sections, so no separate validator anchor was added. This addresses the user's "rules buried in long prose" concern, with the caveat that formatting aids salience but does not fix execution; placement, observable proof, and external checks remain the real levers.
