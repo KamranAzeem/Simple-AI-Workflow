@@ -6,8 +6,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 1d71e95
-- **Release**: v2.2.0 tagged and released on GitHub (2026-08-25); previous v2.1.0 (2026-08-08)
+- **Branch**: `master`, synced with origin at 16e11f1
+- **Release**: v2.3.0 tagged and released on GitHub (2026-08-25); previous v2.2.0 (2026-08-25)
 - **Validator**: v4.6, all 8/8 checks pass
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
@@ -15,37 +15,7 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 
 ## Checkpoint History
 
-## Checkpoint: CP-2026-07-04-04
-- **Summary**: Mega session covering customization-at-root, sync auto-migration, Humanized Output section, 2 new policies, cross-reference audit, bootstrap audit/creation separation, archive/backup directory exclusions, compliance directory reference cleanup, v2.0.0 GitHub release
-- **Key deliverables**: 40 commits since v1.0.0, 14 TIER 1 config anchors, 11 code reviews (review-04 through review-10), README diagram updated, validator v4.5
-- **NOT pushed to origin**
-
-## Checkpoint: CP-2026-07-31-01
-- **Current Branch**: `feature/post-compaction-recovery-rename` — squash-merged to master as f61a680
-- **Summary**: Post-Compaction Recovery work: renamed Procedure E, simplified to additive reload, concrete compaction signals added, PreCompact hook created, Proof-of-Load widened, user memory trigger deleted, README/slides/setup-guide updated, new Post-Compaction Recovery slide with four-box context-window diagram.
-- **Key deliverables**: 4 commits (58f22a4, 4465a54, 36de4b6, e6ea76d), validator v4.6 8/8
-
-## Checkpoint: CP-2026-08-02-01
-- **Current Branch**: `master` — clean, synced with origin (f61a680)
-- **Summary**: Research session — investigated Kilo Code context condensing for PostCompact hook equivalents. No hooks found; AGENTS.md always-on as system instructions (survives compaction by architecture). Decided human backstop is sufficient; no slash command needed. Todo added to notes.md for Kilo Code documentation updates. feature/post-compaction-recovery-rename squash-merged and pushed.
-- **Key deliverables**: notes.md todo added; no commits this session (notes.md change only)
-
-## Checkpoint: CP-2026-08-05-01
-- **Current Branch**: `master` — 1 commit ahead of origin (HEAD: e82729c)
-- **Summary**: Fixed ai-policy-common.md fragile internal-label references. Removed all procedure-letter (A/C/E/F), step-number (Step 4), and TIER-1 references; replaced with plain phrases. Fixed Generated File Validation list indentation. Committed to master (e82729c). Validator v4.6 8/8.
-- **Key deliverables**: 1 commit (e82729c), ai-policy-common.md fixed, next-steps.md duplicate sections cleaned up
-
-## Checkpoint: CP-2026-08-08-01
-- **Current Branch**: `master` — synced with origin (HEAD: 18b5946)
-- **Summary**: Large session. Two feature branches merged and pushed. Windows SysAdmin policy added (policy #16). README fully rewritten. New comparison doc for Copilot/Claude/ChatGPT/Cursor. Design Documentation Standards expanded with Vision, ID convention (REQ/HLD/LLD/ADR-NNN), and mandatory Delivery Ledger. Workflow guide, slides, and README updated with design flow. Notes processed: windows-system-admin done, Vision/PRD/TLD/LLD/ledger done (TLD resolved as not needed), writing style pending user articles.
-- **Key deliverables**: 3 commits (65c0f92, 0e869d7, 18b5946); 1 new policy; 1 new doc; 2 feature branches merged and deleted; validator v4.6 8/8
-
-[MIGRATION-2026-08-08] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 — **Project AI State Files** resolves to ai/state/
-
-## Checkpoint: CP-2026-08-09-01
-- **Current Branch**: `master` — synced with origin (HEAD: 9183c52, pushed)
-- **Summary**: State-files directory release and environment setup. State files moved to `ai/state/` (CP-2026-08-08-02, commit 9183c52, squash-merged to master, pushed, branch deleted). v2.1.0 GitHub release created with full changelog (14 commits, 40 files since v2.0.0). Global settings tools list updated for Fedora 44 Linux (verified paths, tools installed via dnf). Writing style training set up: distilled guide in `~/.ai/global-knowledge/writing-style-and-examples.md` (fully loaded at boot), raw examples reviewed and deleted (not stored anywhere), notes.md item marked Processed. context.md horizon shield run (17 entries > 10): 5 most recent kept, 12 archived to `ai/shared/project-knowledge/context-archive.md`.
-- **Key deliverables**: v2.1.0 release; commit 9183c52; 1 new project knowledge file (context-archive.md); 1 new global knowledge file (writing-style-and-examples.md)
+(Older checkpoint entries are archived in `ai/shared/project-knowledge/context-archive.md`.)
 
 ## Checkpoint: CP-2026-08-21-01
 - **Current Branch**: `master` — synced with origin (HEAD: 66a408f, no new commits this session)
@@ -62,7 +32,12 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Summary**: Remote pull + state reconciliation, decision reversal recorded, notes consolidation, WaqarSb example. Pulled 3 remote commits (b93741c Protocol Developer Mode policy-loading fix, 8ea243f + 75bc1fc checkpoints); dropped stale local CP-2026-08-09-02 entries (recorded the opposite decision, superseded by b93741c). Recorded decision reversal in protocol-decisions.md: 2026-08-09 "no fix" stance reversed for workflow repo, ordinary-project auto-discovery unchanged, old entry marked Superseded. Fixed macOS BSD sed incompatibility in sync-agents-md.sh (portable BRE temp-file+mv, committed db74e68, review APPROVED). Notes consolidation: removed processed items, marked post-compaction complaint Processed, deleted noticed.md, consolidated pending items into notes.md. Created docs/examples/full-stack-web-mobile-ai-customization.md from WaqarSb customization. Project knowledge updated (sync-scripts-testing.md macOS lesson, protocol-decisions.md).
 - **Key deliverables**: sync-agents-md.sh macOS fix (db74e68); protocol-decisions.md decision reversal entry; docs/examples/full-stack-web-mobile-ai-customization.md; notes.md consolidation; state files reconciled to CP-2026-08-22-01 then bumped to -02
 
-## Latest Checkpoint: CP-2026-08-25-01
+## Checkpoint: CP-2026-08-25-01
 - **Current Branch**: `master`, synced with origin at 1d71e95
 - **Summary**: Merged two protocol sessions and released v2.2.0. Commit 0383025: Evidence-Based full-reads and no-truncation rules, external-mutation guardrail, state-file model split (next-steps forward-only, progress append-only, context present) with brevity and bloat/order checks, context.md reorder, examination fixes (PowerShell sync bug, compliance-guide rewrite, handoff template, runbook, AGENTS.md banner reconciliation), README and slides rewritten in the maintainer voice, two validator checks. Commit 1d71e95: Pre-Work Gate and Acceptance Criteria Quality (AC guide opt-in).
 - **Key deliverables**: commits 0383025 and 1d71e95; v2.2.0 release; codebase examination findings artifact; 4 peer reviews APPROVED; validator 8/8.
+
+## Latest Checkpoint: CP-2026-08-25-02
+- **Current Branch**: `master`, synced with origin at 16e11f1
+- **Summary**: Full-file-read enforcement. Promoted the read rule to a TIER 2 mandate in AGENTS.md (active at boot, load context, compaction, mid-work), added Proof-of-Load line counts, strengthened Evidence-Based Reasoning point 5, added a 6-item Non-Negotiables index to common policy, and a Full File Reads validator anchor. Committed 16e11f1, squash-merged to master, pushed, branch deleted. Released v2.3.0. Ran the context.md horizon shield (11 entries > 10): kept 5 most recent, archived 6 to context-archive.md.
+- **Key deliverables**: commit 16e11f1; v2.3.0 release; peer review review-01 APPROVED; validator 8/8.
