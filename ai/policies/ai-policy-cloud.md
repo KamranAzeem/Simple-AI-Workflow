@@ -45,12 +45,9 @@ The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** 
 - **Integration Testing**: Test pipeline deployments in isolated environments (dev/staging) before promoting to production. Verify that infrastructure changes produce the expected state.
 - **Drift Detection**: After deployment, verify that actual infrastructure state matches the declared configuration. Flag and remediate drift.
 
-
-
 ### Testing Standards
 - IaC templates must be validated in a non-production environment before production apply.
 - Pipeline changes must be tested in a separate test pipeline or branch before modifying the main deployment pipeline.
 - Document expected outcomes for each validation step (e.g., "terraform plan should show 0 changes after initial apply").
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
-

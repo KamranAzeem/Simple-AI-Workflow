@@ -82,6 +82,9 @@ For all **Inquiries**, the AI is mandated to:
 - **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
 - **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
 
+### Shared understanding before building
+For feature and architectural work, the AI reaches a shared design concept with you before it creates files or writes code. It walks the design tree branch by branch and asks questions until you agree on what is being built. Small, low-risk changes skip this and keep a light pass.
+
 ## 6. Idiot-Proof Protocol (Low-IQ Compatibility)
 ### Structural Guardrails
 Models with lower instruction-following capability (e.g., smaller or "lite" models) sometimes treat protocols as suggestions, leading to accidental re-initialization or overwriting of context files. This workflow implements high-visibility structural cues to prevent this:

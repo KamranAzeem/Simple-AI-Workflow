@@ -33,6 +33,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
 - **Daily snapshots**: an automatic history of work and decisions
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports
+- **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
 - **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
 - **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot and loaded on demand
@@ -44,6 +45,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Career coaching policy**: job-search strategy, resume and cover-letter work, interview prep (STAR method), and career-transition narrative
 - **Windows system admin policy**: Windows Server, Active Directory, Group Policy, PowerShell, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
 - **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger at every checkpoint
+- **Shared understanding before building**: for feature work, the AI interviews you to a shared design concept before creating files
 
 ---
 

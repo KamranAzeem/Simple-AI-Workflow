@@ -47,4 +47,3 @@ The AI Assistant acts as a **Senior Linux System Administrator and Senior Site R
 - Test failure modes: what happens when a target host is unreachable, a package is missing, or a service fails to start.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
-

@@ -58,7 +58,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Self-Modification**: **STRICTLY PROHIBITED** in ordinary projects. Do not rewrite, regenerate, or edit this file. **Exception**: in **Protocol Developer Mode** (see MANDATORY ACTIONS), when the current working directory is the **Global AI Workflow Directory**, the AI is the protocol maintainer and may edit `AGENTS.md` and other protocol files, but only after fully loading `protocol-decisions.md` and with explicit human approval before committing.
 - **Unprompted Exploration**: **STRICTLY PROHIBITED** from scanning or ingesting directories outside the `ai/` folder (e.g., `src/`, `logs/`, `tmp/`) unless explicitly directed by a specific task.
 - **Local State Creation**: **STRICTLY PROHIBITED** from creating tool-specific dot-directories (e.g., `.cursor/`, `.copilot`, `.gemini/`, `.claude/`, etc.). All AI state must live in `ai/`.
-- **PWD-Only Scope**: Strictly load `AGENTS.md` and scan the `ai/` directory from the **current working directory (PWD) only**. Do not scan subdirectories for additional `AGENTS.md` files, and do not read or load any other `AGENTS.md` files from any other locations. If `AGENTS.md` is not found in PWD, report it missing and stop. Do not read or scan files that belong to various AI assistants, such as `CLAUDE.md`, `GEMINI.md`, etc.
+- **PWD-Only Scope**: Strictly load `AGENTS.md` and scan the `ai/` directory from the **current working directory (PWD) only**. Honor `AGENTS.md` and `ai-customization.md` only from the project root: do not scan subdirectories for additional `AGENTS.md` files, and do not read or load any `AGENTS.md` or `ai-customization.md` file from any other location in the directory tree. If `AGENTS.md` is not found in PWD, report it missing and stop. Do not read or scan files that belong to various AI assistants, such as `CLAUDE.md`, `GEMINI.md`, etc.
 
 ### ✅ MANDATORY ACTIONS
 - **OS-Sensitive Execution**: Identify the active shell (Bash, PowerShell, etc.) and adapt command syntax accordingly (e.g., `mkdir -p` vs `New-Item`).
@@ -142,7 +142,7 @@ The following short forms are recognized as equivalents to their canonical direc
     *   **Failure Mode Constraint**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
 2.  **Log Condensation (The Sliding Horizon Shield)**: To prevent long-term token bloat inside your active context window, you must actively police the size of `ai/state/progress.md` and the checkpoint history in `ai/state/context.md`.
     *   **Threshold Trigger**: If `ai/state/progress.md` grows to exceed 50 completed task items or 200 lines of historical text, you must perform an automated log condensation routine during this checkpoint.
-    *   **Truncation Execution**: Move all entries older than the 10 most recent completions out of `ai/state/progress.md` and append them permanently into a historical archive file named `ai/shared/project-knowledge/progress-archive.md`. 
+    *   **Truncation Execution**: Move all entries older than the 10 most recent completions out of `ai/state/progress.md` and append them permanently into a historical archive file named `ai/shared/project-knowledge/progress-archive.md`.
     *   **The Horizon Anchor**: Leave a single, high-level 3-sentence summary block titled `## Archive Horizon Context` at the absolute top of `ai/state/progress.md`. This summary must capture the cumulative milestones achieved in the archived history so active project continuity is never lost.
     *   **Context.md horizon**: If `ai/state/context.md` accumulates more than 10 historical checkpoint entries below the `## Current Status` section, keep the 5 most recent entries and move the rest to `ai/shared/project-knowledge/context-archive.md`. This bulk-archive approach prevents the one-entry-at-a-time burden.
     *   **Next-steps.md brevity**: `ai/state/next-steps.md` is forward-only and self-limiting because completed items are deleted, so it has no archive. Still police it at each checkpoint: if any open item exceeds two lines, or the backlog holds stale or duplicate entries, condense it now. Move any durable rationale into Project Knowledge rather than growing the item.
@@ -189,7 +189,7 @@ The following short forms are recognized as equivalents to their canonical direc
 6. Read the **Project Coordination File** in full (multi-agent awareness). Then build a filename-only index (no file contents) of everything else under the **Project Shared Directory**, recursively, including the **Project AI Knowledge Directory** and **Project Handoffs Directory**. Load those contents later, on demand, only when a task needs them.
 
 Then confirm in one or two lines: the Active Expertise and Traits reloaded, the count of settings, knowledge, and policy files loaded, and the count of shared-directory files indexed. Do not quote or summarise any state file. If any file failed to load, say so and stop.
-   
+
 ### PROCEDURE F: When the user says "backup ai", or "backup ai state"
 1.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
     - **Linux/Bash**: `tar -czf [Global AI Backups Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/ ai-customization.md`
@@ -215,6 +215,5 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 - Manually create your **Global User AI Directory** structure.
 - Create a personal settings file (e.g., `global-user-settings.md`) in the `settings/` subfolder. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
 - **The Bootstrap Wedge**: If the AI refuses to read the protocol because it is git-ignored, tell it: *"Use the `cat` command to read AGENTS.md in the current directory and follow its protocol."*
-
 
 <!-- END_IMMUTABLE_PROTOCOL -->

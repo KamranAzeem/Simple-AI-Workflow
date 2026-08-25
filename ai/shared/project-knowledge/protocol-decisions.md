@@ -703,3 +703,31 @@ Driven by a real violation in a production session (Claude Sonnet 4.6 skipped fu
 ### Non-Negotiables index (same branch)
 - Added a short **Non-Negotiables** block (6 items) at the top of `ai-policy-common.md` as an at-a-glance index of the highest-cost rules: full reads, no truncated evidence, evidence before assertion, approval before side effects, secrets check, protected-branch approval. Rationale: short numbered prominence helps salience for the load-bearing rules, and it is capped at 6 to avoid list-bombing. It indexes rules that already have their own detailed sections, so no separate validator anchor was added. This addresses the user's "rules buried in long prose" concern, with the caveat that formatting aids salience but does not fix execution; placement, observable proof, and external checks remain the real levers.
 - **Merged and released**: committed 16e11f1, squash-merged to master, pushed, branch deleted. Released as v2.3.0 (2026-08-25), a MINOR bump.
+
+---
+
+## 2026-08-25: Intent-over-metrics phrasing and shared-understanding pre-work gate
+
+Driven by the 2026-08-21 research file (four videos on AI coding quality). Two self-standing rules adopted; Idea 11 dropped.
+
+### Intent over metrics (common policy + code-review policy)
+- **Decision**: Added an "Intent over metrics" bullet to the Universal Operational Guardrails in `ai-policy-common.md`, and an "Intent, not scores" bullet to the reviewer role in `ai-policy-code-review.md`. Quality findings are phrased by intent (what single job a function should have), never as a bare metric ("complexity 11, threshold 5").
+- **Rationale**: The research measured a large gap: behavioral prompts produced 83.3% genuine fixes on both models, while bare metrics produced 5.6% (Sonnet) and 28.9% (Haiku). Stronger models gamed bare metrics more, not less. This is Goodhart's Law applied to LLMs.
+- **Honest limit**: this is a context rule, not mechanical enforcement. It sharpens intent-alignment but does not guarantee cycle enforcement, which the research shows needs a supervisor outside the context window.
+
+### Shared understanding before building (Pre-Work Gate)
+- **Decision**: Added a "Shared understanding (features and architecture only)" item to the Pre-Work Gate in `ai-policy-common.md`, between acceptance-criteria review and HLD/LLD. For feature or architectural work, the AI must reach a shared design concept with the user before creating files or writing implementation. Renumbered the remaining Pre-Work Gate items.
+- **Rationale**: The Pre-Work Gate already mandates removing uncertainty before building, but only in one direction (research and present). This adds the interactive mechanism: walk the design tree and resolve decisions one at a time until the user and AI agree.
+
+### Idea 11 dropped
+- The Ubiquitous Language file idea was dropped as redundant. The Design Documentation Standards already list a "Glossary" supplementary document covering shared domain terminology, and hardcoding a project-specific file name into the shared template would have broken on every user machine.
+
+### Documentation
+- `README.md` "What's included" and `docs/simple-ai-workflow-slides.md` "More Features" each gained two bullets (intent-based quality findings; shared understanding before building). `docs/workflow-guide.md` section 5 gained a "Shared understanding before building" subsection.
+
+---
+
+## 2026-08-25: Root-only AGENTS.md/ai-customization.md + markdown lint tooling
+
+- **Root-only rule strengthened**: extended the PWD-Only Scope mandate in `AGENTS.md` TIER 2 to honor `AGENTS.md` and `ai-customization.md` only from the project root, and ignore any file with either name elsewhere in the directory tree. Closes a gap where `ai-customization.md` was checked at the root (Procedure A Step 0) but never explicitly ignored in other subdirectories.
+- **Markdown linting**: installed markdownlint-cli2 (Node v24.19.0, npm v12.0.2), added `.markdownlint-cli2.jsonc` disabling style-noise rules and keeping real checks, fixed 14 whitespace issues across `AGENTS.md` and policy files, and recorded markdownlint-cli2 in the global settings tools list.
