@@ -9,10 +9,9 @@ CP-2026-08-25-02
 - [ ] Document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (spec in notes.md).
 - [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`.
 - [ ] Draft design docs in `ai/notes/` (vision, PRD, HLD), then ADRs and a delivery ledger.
-- [ ] Add behavioral-coaching rule to ai-policy-code-review.md and ai-policy-common.md: describe intent, never a bare metric score. (research file, ideas 1+2)
 - [ ] Add Habit Hooks opt-in snippet to AGENTS.md TIER 2. (research file, idea 3)
 - [ ] Add TDD sub-rules to ai-policy-common.md Rule 1: simplest green, no dead code, test behavior. (research file, idea 4)
-- [ ] Add docs guides for three opt-in patterns: ATDD, Grill Me, Ubiquitous Language. (research file, ideas 7/10/11)
+- [ ] Add a docs guide for the ATDD opt-in pattern. (research file, idea 7)
 
 ## Deferred
 - [ ] (Breaking) Procedure E precedence rework: let resume read the latest checkpoint's authoritative state, not only the summary.

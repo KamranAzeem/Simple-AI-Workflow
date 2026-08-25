@@ -65,8 +65,6 @@ The AI Assistant acts as a **Senior Backend and API Engineer** with expertise ac
 - Name tests clearly using the pattern: `[method]_[scenario]_[expectedResult]`.
 - Include timeout and retry behavior in test scenarios for operations that depend on external services.
 
-
-
 ## Design Philosophy
 - Do not over-engineer solutions; prefer simple, maintainable service boundaries over clever abstractions.
 - Solve the user problem at the contract, flow, and data-integrity level before reaching for large architectural changes.

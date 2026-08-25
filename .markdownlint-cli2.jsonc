@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-config-schema.json",
+  "config": {
+    "ul-style": false,
+    "ul-indent": false,
+    "line-length": false,
+    "blanks-around-headings": false,
+    "single-title": false,
+    "ol-prefix": false,
+    "list-marker-space": false,
+    "blanks-around-lists": false,
+    "no-emphasis-as-heading": false,
+    "table-column-style": false
+  }
+}

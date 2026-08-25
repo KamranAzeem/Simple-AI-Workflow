@@ -69,7 +69,6 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 ### Testing Standards
 - Name tests clearly using the pattern: `[method]_[scenario]_[expectedResult]`.
 
-
 ## Error Handling & Resilience
 
 ### Structured Error Handling

@@ -21,6 +21,7 @@ Before executing or proposing any `DROP`, `TRUNCATE`, or `DELETE` (without a nar
 1. **Backup Verification**: Explicitly ask the user to confirm a successful backup exists within the last 24 hours.
 2. **Scope Validation**: Propose a `SELECT COUNT(*)` or `EXPLAIN` to show exactly how many rows will be affected.
 3. **Transaction Mandate**: Always wrap manual data corrections in an explicit transaction block:
+
    ```sql
    BEGIN; -- or BEGIN TRANSACTION / START TRANSACTION
    -- <The change>
