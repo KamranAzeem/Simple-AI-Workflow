@@ -6,13 +6,13 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, HEAD a2a5215, not pushed to origin
+- **Branch**: `master`, synced with origin at 1ae768c
 - **Release**: v2.3.0 (2026-08-25); latest feature work unreleased
 - **Validator**: v4.6, all 8/8 checks pass
 - **Markdown lint**: markdownlint-cli2 v0.23.2 active, 0 issues (config `.markdownlint-cli2.jsonc`)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); Habit Hooks opt-in and TDD sub-rules in policy files; ATDD docs guide; sync AGENTS.md to other projects
+- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); sync AGENTS.md to other projects
 
 ## Checkpoint History
 
