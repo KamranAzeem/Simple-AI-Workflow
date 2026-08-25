@@ -677,3 +677,7 @@ Driven by observations from another session (a pasted spec). Added two subsectio
 
 ### Not done
 - No `AGENTS.md` change and no validator anchor added. These are common-policy prose rules, the same pattern as Evidence-Based Reasoning. Validator remains 8/8 at v4.6.
+
+### Follow-up (merged and released)
+- Peer review (review-02) flagged that Pre-Work Gate item 3 ("Produce HLD and LLD") could read as contradicting the Mandatory Design Artifacts "ask whether to create" rule. Resolved by adding a clause: create the HLD/LLD only after proposing them and getting the user's agreement, in line with the no-side-effects norm.
+- Committed 1d71e95, squash-merged to master, pushed. Released as v2.2.0 (2026-08-25), a MINOR bump: no breaking changes since v2.1.0, backward-compatible features plus fixes. Changelog grouped into Features, Fixes, and Docs.
