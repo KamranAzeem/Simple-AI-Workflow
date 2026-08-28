@@ -6,13 +6,14 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 2bdc118
+- **Branch**: `master`, synced with origin at e7c4426 (checkpoint commit for CP-2026-08-25-04); no new commits this session
 - **Release**: v2.3.0 (2026-08-25); latest work unreleased
 - **Validator**: v4.6, all 8/8 checks pass
 - **Markdown lint**: markdownlint-cli2 v0.23.2 active, 0 issues (config `.markdownlint-cli2.jsonc`)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); multi-assistant + build AI team design; refactoring/codebase-upgrade policy; sync AGENTS.md to other projects
+- **Project knowledge**: 9 files — includes 3 new mattpocock repo analyses (skills, dictionary-of-ai-coding, sandcastle) added 2026-08-27
+- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); multi-assistant + build AI team design; refactoring/codebase-upgrade policy; sync AGENTS.md to other projects; Procedure H (Grilling); Procedure I (Agent Document Review)
 
 ## Checkpoint History
 
@@ -52,3 +53,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Current Branch**: `master`, synced with origin at 2bdc118
 - **Summary**: Cleanup and research. Deleted the habit-hooks research file and two stale artifacts; removed research-derived pending items; committed the 2026-08-24 checkpoint; preserved the multi-assistant + build AI team design as a pending note (both feature branches deleted); stored the refactoring/upgrading research note (policy under consideration); verified the repo is free of the sensitive names. Commits 1ae768c, d00b0e6, 08a204a, 47bd5dc, 2bdc118.
 - **Key deliverables**: research/artifact cleanup; ai/notes/multi-assistant-workflow-design.md; ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md; protocol-decisions.md entry.
+
+## Latest Checkpoint: CP-2026-08-28-01
+- **Current Branch**: `master`, synced with origin at e7c4426; no new commits this session
+- **Summary**: Analysis-only session. Full context load (Procedure A). Codebase examination (Procedure G ×3) on mattpocock/skills, mattpocock/dictionary-of-ai-coding, and mattpocock/sandcastle. Design discussion on incorporating learnings: proposed Procedure H (Grilling) and Procedure I (Agent Document Review) as new on-demand standalone policies following the code-review pattern. Wayfinding and sandcastle parallel-planner deferred. Recommendations and small README note saved to ai/notes/notes.md.
+- **Key deliverables**: 3 project knowledge files (mattpocock-skills, mattpocock-dictionary-of-ai-coding, mattpocock-sandcastle analyses, 1207 lines total); notes.md updated with design recommendation.
