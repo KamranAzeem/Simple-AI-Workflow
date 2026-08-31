@@ -6,14 +6,14 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at e7c4426 (checkpoint commit for CP-2026-08-25-04); no new commits this session
-- **Release**: v2.3.0 (2026-08-25); latest work unreleased
+- **Branch**: `master`, synced with origin at fc36781, pushed 2026-08-31
+- **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.6, all 8/8 checks pass
-- **Markdown lint**: markdownlint-cli2 v0.23.2 active, 0 issues (config `.markdownlint-cli2.jsonc`)
+- **Markdown lint**: markdownlint-cli2 v0.23.2; clean on new content (pre-existing findings remain in docs + state files)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
-- **State files**: located in `ai/state/` with per-file headers (next-steps forward-only, progress append-only history, context = present) and one-to-two-line brevity
-- **Project knowledge**: 9 files — includes 3 new mattpocock repo analyses (skills, dictionary-of-ai-coding, sandcastle) added 2026-08-27
-- **Next milestones**: Kilo Code docs; design docs drafts (vision/PRD/HLD in ai/notes/); multi-assistant + build AI team design; refactoring/codebase-upgrade policy; sync AGENTS.md to other projects; Procedure H (Grilling); Procedure I (Agent Document Review)
+- **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present)
+- **Project knowledge**: 9 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
+- **Next milestones**: protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
 
 ## Checkpoint History
 
@@ -58,3 +58,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Current Branch**: `master`, synced with origin at e7c4426; no new commits this session
 - **Summary**: Analysis-only session. Full context load (Procedure A). Codebase examination (Procedure G ×3) on mattpocock/skills, mattpocock/dictionary-of-ai-coding, and mattpocock/sandcastle. Design discussion on incorporating learnings: proposed Procedure H (Grilling) and Procedure I (Agent Document Review) as new on-demand standalone policies following the code-review pattern. Wayfinding and sandcastle parallel-planner deferred. Recommendations and small README note saved to ai/notes/notes.md.
 - **Key deliverables**: 3 project knowledge files (mattpocock-skills, mattpocock-dictionary-of-ai-coding, mattpocock-sandcastle analyses, 1207 lines total); notes.md updated with design recommendation.
+
+## Latest Checkpoint: CP-2026-08-31-01
+- **Current Branch**: `master`, synced with origin at fc36781, pushed
+- **Summary**: Protocol-tightening session. Made evidence-based investigation the default (two-layer: TIER 2 instruction in AGENTS.md + Investigation Contract as the top Non-Negotiable in common policy), removed the old 6-point Evidence-Based Reasoning section, re-sharpened Full File Reads (principle separate from mechanics), added a review-before-advancing gate to the design-doc chain, dropped ubiquitous language and ontology (cost/benefit), and recorded the protocol routing principle. Reorganized notes into separate files. Squash-merged to master fc36781 and pushed. Peer review review-02 APPROVED, validator v4.6 8/8.
+- **Key deliverables**: commit fc36781; protocol-decisions.md decision entries; ai/notes reorganization; TIER 2 vs Non-Negotiables consolidation follow-up tracked in next-steps.md + follow-up notes file.
