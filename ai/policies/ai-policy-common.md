@@ -11,12 +11,16 @@ This file contains the universal operating rules for all AI assistants in this r
 ## Non-Negotiables (read first, apply always)
 These are the rules most costly to break. They are active at boot, at load context, at compaction recovery, and mid-work. Each has a detailed section below or in `AGENTS.md`.
 
-1. **Full file reads.** Read every file you reason about from line 1 to EOF. Re-read from disk when a task needs a file again. Only log-like bulk data may be sliced by filter. (Evidence-Based Reasoning below; Full File Reads in `AGENTS.md` TIER 2)
-2. **No truncated evidence.** Never pipe investigation output through `head` or `tail`. Count first, then read it all. (Evidence-Based Reasoning below)
-3. **Evidence before assertion.** Never invent files, facts, people, or past decisions. Verify, or say you do not know. (Evidence-Based Reasoning below)
+1. **Evidence-Based Investigation** (the top Non-Negotiable): Always investigate before you assert. No claim without a source, no assumptions or guesses where evidence is missing. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract below.
+2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. Only log-like bulk data may be sliced by filter. (Full File Reads in `AGENTS.md` TIER 2)
+3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits. Count first, then read it all. (Full File Reads in `AGENTS.md` TIER 2)
 4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system. (Universal Operational Guardrails below)
 5. **Secrets check before commit.** Scan for secrets before any `git add` or `git commit`. Stop and warn if found. (Universal Operational Guardrails below)
 6. **Human approval on protected branches.** Get explicit approval before any state-changing git operation on `master` or `main`. (Feature Development and Branch-Gating below)
+
+## Investigation Contract
+
+**Investigate, verify, then assert.** Investigation is read-only and wide-scoped over the subject plus its cone of influence: everything that flows into, out of, or through it, and anything it touches (code dependencies and schemas; infrastructure resources, paths, network and firewall traffic). Set that boundary from your own understanding of the domain, never the narrow ask alone, and ask what would break, move, or matter if this changed. Use only sources available at the time: project files and history, the live environment via tool queries, official documentation of the relevant tools, project knowledge, the project's tracker / wiki / knowledge base, and any expert or knowledge service. Every claim names its source, or it appears as "not verified" with a question. Never infer, assume, guess, fabricate, or fill a gap with a plausible-sounding guess. Cross-check before recommending: a fact that matters is confirmed by more than one independent source, and a value you propose is checked against the real environment, not assumed. Cite each recommendation. Read mechanics follow the Full File Reads mandate; commands use verified flags, parameters, and identifiers (CLI Command Accuracy below).
 
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
@@ -177,22 +181,13 @@ Before presenting any shell or CLI command to the user, verify the following:
 2. **Resource identifiers**: Never guess or infer subscription IDs, resource names, resource group names, connection strings, or similar identifiers. Derive them from live tool queries or from values explicitly confirmed in the current session context.
 3. **If a parameter cannot be verified**: State this explicitly. Instruct the user to confirm the correct value before running the command rather than presenting an unverified placeholder.
 
-### Evidence-Based Reasoning (No-Assumption Rule)
-The same failure mode as CLI Command Accuracy above, generalized to every kind of claim, not just command flags and resource identifiers.
-1. **Never invent**: Do not invent people, teams, infrastructure components, configuration values, file contents, or past decisions that are not backed by the current context, project knowledge, or a live query. Do not attribute statements, actions, or opinions to people who were never mentioned.
-2. **Verify before asserting**: Before stating a fact or basing a recommendation on it, check the active conversation context, **Project AI Knowledge Directory** (loading the relevant indexed file on demand), and the live codebase or environment (search, file reads, or tool queries).
-3. **No evidence, say so**: If no evidence exists anywhere, say this plainly and ask the user for the missing fact. Do not fill the gap with a plausible-sounding guess.
-4. **Show your source**: Be ready to point to where a fact-based recommendation came from (a file, a query result, something you said), not present it as simply known.
-5. **Full reads for working files**: For any file you must understand or reason about (policies, `AGENTS.md`, compliance references, the customization file, settings, project knowledge, source code, config, design docs, documentation, ticket files), read it in full, from the first line to EOF. This holds at boot, at load context, at Post-Compaction Recovery, and mid-work, with no exception. Establish the file's length first, then read the whole file, paging through large files until every line is covered. Never stop at an arbitrary line window; if a read returns fewer lines than the file contains, continue from where it stopped. If a file is already in your context but a task needs it again, re-read it fresh from disk, because it may have changed since you last saw it. The only exception is bulk data you are searching rather than comprehending (logs, dumps, or large JSON/CSV), which you may slice by filter. When a read drives a decision or a file change, state the file and its line count so the read is auditable.
-6. **No truncation of investigation output**: Never pipe `grep`, `find`, `az`, or any enumeration command through `head`, `tail`, or any line-limiting filter during investigation. `grep` is already a filter, so every line it returns is a match, and truncating it silently drops evidence. Use a count first (for example `wc -l`) to gauge volume, then read the full output. Reserve `head` and `tail` for display convenience, never for completeness checks.
-
 ### Pre-Work Gate
 Complete these checks before starting any work item. Do not write code or configuration until they are done. Scale the depth to the work item's size and risk: a small, low-risk change needs a light pass, while a large or destructive change needs the full treatment.
 
 1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
 2. **Acceptance criteria review**: Review the work item's acceptance criteria before you produce any design document. If they are missing, untestable, or ambiguous, flag it to the user and do not proceed until it is resolved. See the Acceptance Criteria Quality section below.
 3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the proportionality rule above.
-4. **HLD and LLD**: Produce a High-Level Design and a Low-Level Design per the Design Documentation Standards below, grounded in evidence-based investigation (see the Evidence-Based Reasoning rule above). They must be detailed enough to drive implementation without ambiguity. Their purpose is to remove uncertainty before work begins, not to satisfy a review gate. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
+4. **HLD and LLD**: Produce a High-Level Design and a Low-Level Design per the Design Documentation Standards below, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Their purpose is to remove uncertainty before work begins, not to satisfy a review gate. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
 5. **Removal safety**: When a work item removes items or configuration, gather positive evidence. Confirm that everything meant to stay in place is still present and correct after the change, not just that the target was removed.
 6. **Pre-work announcement**: Write a brief Markdown pre-work summary of the work item. Post it to any external system only on the user's explicit instruction (see the external-system-mutation rule in Universal Operational Guardrails).
 7. **Framework alignment**: Apply the established best-practice framework for the target platform or domain (for example a cloud provider's well-architected framework). Platform-specific detail belongs in the relevant domain policy, not here.
@@ -223,11 +218,11 @@ If acceptance-criteria quality turns out to be a recurring problem on a project,
 ## Design Documentation Standards
 
 ### Document Flow
-Design documentation follows this sequence. Each document feeds the next:
+Design documents form a chain; each feeds the next:
 
 `notes → vision → PRD → HLD → LLD → ADRs → delivery ledger`
 
-Start with raw notes. Distil them into a vision. Use the vision to write a formal PRD. Derive architecture from the PRD. Detail the implementation in the LLD. Record significant decisions as ADRs. Track what has been built against those documents in the delivery ledger.
+Review before advancing. Before the AI creates the next document, it runs a gap analysis and peer review on the existing documents, then resolves every finding. One document at a time; never skip from notes or vision straight to implementation.
 
 ### Mandatory Design Artifacts
 At the start of each session, the AI MUST check for the following design documents in the **Project AI Knowledge Directory**. If any are missing, inform the user with a brief summary of benefits and ask whether to create them.

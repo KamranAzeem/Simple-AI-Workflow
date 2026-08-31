@@ -740,3 +740,72 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **Sensitive-name guardrail**: verified the committed repo contains none of Lars, Ninja, Innofactor, or Elmera (confirmed case-insensitive across all tracked files). User left the person's handle "WaqarSb" in the state records and the git-ignored `ai/secrets/` files as-is, since they never reach the repo.
 - **Multi-assistant + build AI team preserved**: saved the `feature/multi-assistant-workflow` design doc combined with the AI-team runtime/role model (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B) into `ai/notes/multi-assistant-workflow-design.md` (Status: pending). Both feature branches deleted; only the note remains, plus the deferred items in `next-steps.md`. Draft's older paths vs the current `ai/state/` + single-writer + `ai/shared/coordination.md` model flagged for reconciliation before resuming.
 - **Refactoring/codebase-upgrade research**: stored the Google research on refactoring vs upgrading, PHP-legacy vs modern-node differences, and the "upgrade first, then refactor" golden rule into `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`. A refactoring/codebase-upgrade policy is under consideration (Status: pending in `notes.md`).
+
+---
+
+## 2026-08-31: Ubiquitous language and ontology dropped on cost/benefit
+
+### Decision: drop both
+- Dropped both the **ubiquitous language** (UL) system/file and the **ontology** approach for this workflow.
+- **Reason**: the benefit and value are far less than the effort required to build and maintain them.
+
+### Context and outcome
+- The 2026-08-25 "Idea 11 dropped" entry already declined the Ubiquitous Language file idea as redundant with the `Glossary` supplementary document in the Design Documentation Standards, and as a project-specific hardcoded filename that breaks on user machines. This entry supersedes that narrower rationale with a broader cost/benefit decision.
+- On 2026-08-31 the user asked to compare UL vs ontology and their benefits. After the discussion the user decided the value is much less than the effort for both, and dropped them.
+- **Future reference**: if this topic is raised again, this entry is the evidence of the prior discussion and its outcome. Default is to keep both dropped unless scope or requirements change; treat it as resolved, not as a new idea to re-litigate.
+
+### Files updated
+- `ai/shared/project-knowledge/protocol-decisions.md` (this entry)
+- `ai/notes/notes.md` (the loose ubiquitous-language idea marked dropped)
+
+---
+
+## 2026-08-31: Evidence-based investigation made default behavior (two-layer placement)
+
+### Problem: evidence-based investigation not default
+- Full File Reads works because it is a TIER 2 MANDATORY ACTION in AGENTS.md, always-on and prominent. Evidence-Based Reasoning did not: it was only a long 6-point `###` subsection buried in ai-policy-common.md under Operational Standards, so the AI still guessed, assumed, and made things up. The user wants no-guessing to be the default without a reminder.
+
+### Decision: two-layer placement
+1. **Two-layer placement.** AGENTS.md TIER 2 gets a short always-on instruction: investigate before you assert; no claim without a source; no assumptions or guesses. The detail lives in ai-policy-common.md as the top Non-Negotiable (a one-line index pointer) plus a dedicated `## Investigation Contract` section; the AGENTS.md instruction points at that `Investigation Contract` heading. This keeps TIER 2 lean (one line, not a paragraph) and puts the how-to detail in the policy file.
+2. **Principle separate from mechanics.** Full reads and no-truncation stay in the Full File Reads TIER 2 mandate; the contract references that mandate instead of restating it.
+3. **Scope by relationship, not by category.** Wide-scoping is defined as the subject plus its cone of influence (what flows in, out, or through it, and what it touches), with the boundary set from the AI's own domain understanding, plus the self-check "what would break, move, or matter if this changed." This is domain-adaptive (infra, code, architecture, data) without enumerating scenarios, so the AI reasons instead of following a finite checklist.
+4. **Forcing function.** Every claim names its source, or it appears as "not verified" with a question. This binds the output, so an unsourced claim cannot be produced without a visible marker.
+5. **Re-sharpened Full File Reads** in AGENTS.md TIER 2 (was a long paragraph) to the same crisp template, keeping the "Full File Reads" validator anchor.
+
+### Files changed in this change
+- `AGENTS.md` (TIER 2: Full File Reads re-sharpened; new Evidence-Based Investigation instruction)
+- `ai/policies/ai-policy-common.md` (Evidence-Based Investigation as top Non-Negotiable; old Evidence-Based Reasoning section removed; Pre-Work Gate reference updated)
+- `ai/shared/project-knowledge/protocol-decisions.md` (this entry)
+
+### Notes
+- No doc or README references to the old Evidence-Based Reasoning rule existed (verified by grep), so no doc updates were needed.
+- Branch `feature/evidence-based-investigation-default`, not merged.
+
+---
+
+## 2026-08-31: Protocol routing principle + evidence proposal evaluation
+
+### Decision: routing principle
+- AGENTS.md is a router, not a catalog. Do not apply the two-layer pattern (short AGENTS.md instruction plus policy detail) to every rule; it is only for universal always-on mechanics.
+- Three activation mechanisms keep AGENTS.md thin: TIER 2 = small curated set of universal always-on mechanics; TIER 3 = one-line triggered procedures that load a self-contained policy; Active Expertise = persistent domain behavior loaded at boot via Procedure A Step 6.
+- Placement test: applies to every task and is costly to break -> TIER 2 (rare); behavior for a specific situation with steps -> its own policy reached by a trigger phrase or Active Expertise; explicitly invoked procedure -> TIER 3.
+- Reason: otherwise every new policy feature would need a TIER 2 pointer and AGENTS.md would grow; the routing mechanisms already do the wiring.
+
+### Evaluation: evidence-based proposal (other instance, 2026-08-29 DGH case)
+- Item 1 Provenance Tagging: not worth it; a tag taxonomy plus header/inline convention is a schema and maintenance tax. Skip (spirit absorbed by item 4).
+- Item 2 Decision-Driving-Fact Gate: already covered by the Investigation Contract cross-check clause.
+- Item 3 Knowledge-file factual review in code review: not worth it; scope creep on Procedure D.
+- Item 4 Old-knowledge distrust: real gap. A short distrust clause was added to the Investigation Contract on 2026-08-31, then removed the same day on review: it broadened distrust to all stored knowledge, which contradicts the Project Knowledge Protocol's authoritative stance, and it read as an essay the AI could get lost in. The DGH lesson is instead covered by the existing authority of project knowledge plus the mandatory checkpoint knowledge update (Procedure C Step 3). Kept lean by not adding a clause.
+
+### Follow-ups
+- Consolidation: decide a single canonical home for always-on mechanics (TIER 2 vs Non-Negotiables) so there is one source of truth. Still open.
+
+---
+
+## 2026-08-31: Design-doc chain gate and protocol design docs
+
+### Decision: review gate in the design-doc chain
+- The Design Documentation Standards already define the chain: notes → vision → PRD → HLD → LLD → ADRs → delivery ledger. Tightened it in ai-policy-common.md: before the AI creates the next document, it runs a gap analysis and peer review on the existing documents, resolves every finding, then proceeds. One document at a time; never skip from notes or vision straight to implementation. Kept as a small policy item in the common policy, not in AGENTS.md.
+
+### Decision: protocol's own design docs (deferred)
+- The protocol will get its own design artifacts: Vision, PRD, and a Delivery Ledger (ledger first). `protocol-decisions.md` serves as the ADR store, so ADRs are not recreated. A lean HLD is added; LLD is built per module as the protocol is tightened. Deferred to later; tracked in `ai/state/next-steps.md`.

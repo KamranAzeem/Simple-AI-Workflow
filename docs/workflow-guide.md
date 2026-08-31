@@ -250,11 +250,13 @@ To prevent `ai/state/progress.md` from growing unbounded and consuming context w
 
 ## 15. Design Documentation Flow
 
-When building software, designing a system, or setting up infrastructure, the AI follows a structured document flow. Each document feeds the next.
+When building software, designing a system, or setting up infrastructure, the AI follows a structured document flow. Each document feeds the next, and each is reviewed before the next is written.
 
 ```
 notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ```
+
+Before the AI creates the next document, it runs a gap analysis and peer review on the current ones and resolves every finding. One document at a time; never skip from notes or vision straight to code.
 
 | Document | Purpose |
 |---|---|
