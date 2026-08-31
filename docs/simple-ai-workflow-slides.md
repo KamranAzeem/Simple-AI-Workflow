@@ -252,6 +252,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 ## How the AI helps
 - It checks for missing documents at the start of every session and offers to create them
+- It reviews each document before writing the next, so problems are fixed before they cascade
 - It assigns IDs as it writes requirements, components, or design items
 - It updates the delivery ledger at every checkpoint
 - It treats documentation drift as a code smell, and flags design docs that lag behind the code

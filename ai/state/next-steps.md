@@ -8,11 +8,12 @@ CP-2026-08-28-01
 ## Pending
 - [ ] Document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (spec in notes.md).
 - [ ] Sync updated AGENTS.md to other projects via `sync-agents-md.sh`.
-- [ ] Draft design docs in `ai/notes/` (vision, PRD, HLD), then ADRs and a delivery ledger.
+- [ ] Create protocol design docs: Vision, PRD, and Delivery Ledger (ledger priority); ADRs = `protocol-decisions.md`; lean HLD, LLD per module (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 - [ ] Work the multi-assistant + build AI team design (note: `ai/notes/multi-assistant-workflow-design.md`).
 - [ ] Decide on and draft the refactoring/codebase-upgrade policy (note: `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`).
 - [ ] Implement Procedure H (Grilling) + `ai-policy-grilling.md` (design in notes.md, ~50 lines, no external deps).
 - [ ] Implement Procedure I (Agent Document Review) + `ai-policy-document-review.md` (design in notes.md, ~60 lines, no external deps).
+- [ ] Consolidate the TIER 2 vs Non-Negotiables always-on canonical home (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 
 ## Deferred
 - [ ] (Breaking) Procedure E precedence rework: let resume read the latest checkpoint's authoritative state, not only the summary.
