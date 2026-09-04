@@ -14,7 +14,9 @@ I want to improve the readability of this protocol by using proper procedure nam
 ---
 
 
+want to change naming scheme of policies to skills. The reason is that in ai-customization.md we declare "Active Expertise" , and then we list "policies". I think the name of the policies directory should actually be "skills" , not even "expertise" . We also make changes to the names of the files to just dba.md , cloud.md , and so on . We also change the heading in ai-customization.md to "Active Skills" instead of "Active Expertise" . This will be more intuitive. Also, this new "ai/skills" will then be more in-line with the rest of industry. Also, if a user wants to use some skill from someone, he can simply copy the SKILL.md from that person and save it under ai/skills with a proper name name such as peer-review.md , etc. I understand that this will be a major refactor, and can possibly break things. So I want to be sure that I announce this properly and do this thoroughly with as many tests and checks as possible. I think I want to take the route of creating a ticker/issue file and use HLD, LLD, ACs, Delivery Ledger, etc when I do it, so the process / change is completely predictable and documented.
 
+I want your thouhgts on it and then stop.
 
 
 ---

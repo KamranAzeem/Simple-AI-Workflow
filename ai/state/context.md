@@ -6,14 +6,14 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at fc36781, pushed 2026-08-31
+- **Branch**: `master`, synced with origin at ab5b7a4, pushed 2026-09-04
 - **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.6, all 8/8 checks pass
 - **Markdown lint**: markdownlint-cli2 v0.23.2; clean on new content (pre-existing findings remain in docs + state files)
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present)
 - **Project knowledge**: 9 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
-- **Next milestones**: protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
+- **Next milestones**: policies→skills rename (coordinate with TIER2 consolidation; change-request + HLD/LLD/ACs/Ledger; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
 
 ## Checkpoint History
 
@@ -54,3 +54,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 ## Latest Checkpoint: CP-2026-08-31-01
 - **Branch**: `master`, synced with origin at fc36781, pushed
 - **Summary**: Protocol-tightening session. Evidence-based investigation made default (two-layer: TIER 2 instruction + Investigation Contract as top Non-Negotiable), old 6-point Evidence-Based Reasoning section removed, Full File Reads re-sharpened, design-doc chain review gate added, ubiquitous language + ontology dropped, protocol routing principle recorded, notes reorg. Squash-merged fc36781 + pushed; review-02 APPROVED, validator v4.6 8/8.
+
+## Latest Checkpoint: CP-2026-09-04-01
+- **Branch**: `master`, synced with origin at ab5b7a4, pushed
+- **Summary**: Maintenance + analysis. Condensed long historical progress.md/context.md entries to keep-lean (ab5b7a4) — preserved every CP ID, commit hash, validator version, and review outcome; no entries dropped. Analyzed and endorsed the policies→skills rename (ai/policies/→ai/skills/, `ai-policy-<name>.md`→`<name>.md`, Active Expertise→Active Skills): measured blast radius (16 files, 30 ai-policy- refs, 13 Active Expertise / 7 Policies Directory), scoped a freeze on historical records, flagged the common/meta taxonomy nuance + global-dir/sync cascade, recommended coordinating with the TIER2 consolidation, and proposed change-request + HLD/LLD/ACs/Ledger. Not started.
+- **Key deliverables**: ab5b7a4 (state condense); ai/notes/policies-to-skills-rename-proposal-2026-09-04.md; next-steps pending item; notes.md proposal captured.
