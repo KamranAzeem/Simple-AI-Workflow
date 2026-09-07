@@ -121,3 +121,27 @@ Historical checkpoint entries from `ai/state/context.md`, bulk-archived by the S
 - **Summary**: State-files directory release and environment setup. State files moved to `ai/state/` (CP-2026-08-08-02, commit 9183c52, squash-merged to master, pushed, branch deleted). v2.1.0 GitHub release created with full changelog (14 commits, 40 files since v2.0.0). Global settings tools list updated for Fedora 44 Linux (verified paths, tools installed via dnf). Writing style training set up: distilled guide in `~/.ai/global-knowledge/writing-style-and-examples.md` (fully loaded at boot), raw examples reviewed and deleted (not stored anywhere), notes.md item marked Processed. context.md horizon shield run (17 entries > 10): 5 most recent kept, 12 archived to `ai/shared/project-knowledge/context-archive.md`.
 - **Key deliverables**: v2.1.0 release; commit 9183c52; 1 new project knowledge file (context-archive.md); 1 new global knowledge file (writing-style-and-examples.md)
 
+## Checkpoint: CP-2026-08-21-01
+- **Current Branch**: `master` — synced with origin (HEAD: 66a408f, no commits)
+- **Summary**: Analysis-only. Found Protocol Developer Mode policy-loading bug (AI loads all 16 domain policies instead of only listed ones; one sub-bullet fix), design docs gap, and researched behavioral prompts/Habit Hooks (models game bare metrics 71-88% vs 83% genuine fix with coaching). 6 new next-steps items.
+
+## Checkpoint: CP-2026-08-22-01
+- **Current Branch**: `master` — synced with origin (HEAD: 8ea243f, pushed)
+- **Summary**: Implemented Protocol Developer Mode policy-loading fix (Exception notes at all 4 policy-scan locations), reviews 01->02 APPROVED, squash-merged b93741c; state files synced to origin. Detail in protocol-decisions.md.
+
+## Checkpoint: CP-2026-08-22-02
+- **Current Branch**: `master` — pulled to 75bc1fc
+- **Summary**: Remote pull + state reconciliation (dropped stale CP-08-09-02), decision reversal recorded, notes consolidation, [redacted] example, macOS BSD sed fix in sync-agents-md.sh (db74e68). Detail in protocol-decisions.md.
+
+## Checkpoint: CP-2026-08-25-01
+- **Current Branch**: `master` — synced with origin at 1d71e95
+- **Summary**: Merged two protocol sessions and released v2.2.0: evidence full-read/no-truncation, external-mutation guardrail, state-file model split (0383025, 1d71e95); Pre-Work Gate + AC Quality; README/slides rewritten; validator 8/8. Detail in protocol-decisions.md.
+
+## Checkpoint: CP-2026-08-25-02
+- **Current Branch**: `master` — synced with origin at 16e11f1
+- **Summary**: Full-file-read enforcement promoted to TIER 2 mandate, Proof-of-Load line counts, 6-item Non-Negotiables index; committed 16e11f1, v2.3.0 release, context.md horizon shield (kept 5, archived 6); validator 8/8. Detail in protocol-decisions.md.
+
+## Checkpoint: CP-2026-08-25-03
+- **Current Branch**: `master` — HEAD a2a5215, not pushed
+- **Summary**: Implemented research ideas 1+2+10 (intent-over-metrics, shared-understanding pre-work gate) + root-only scope; added markdownlint-cli2 config and fixed 14 whitespace issues; reviews 01/02 APPROVED, validator 8/8.
+

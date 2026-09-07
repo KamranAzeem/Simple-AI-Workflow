@@ -15,6 +15,7 @@ CP-2026-09-04-01
 - [ ] Implement Procedure I (Agent Document Review) + `ai-policy-document-review.md` (design in notes.md, ~60 lines, no external deps).
 - [ ] Consolidate the TIER 2 vs Non-Negotiables always-on canonical home (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 - [ ] Policies→skills rename (ai/policies/→ai/skills/, `ai-policy-<name>.md`→`<name>.md`, Active Expertise→Active Skills; global dir + sync + loader + validator; change-request + HLD/LLD/ACs/Ledger; note: `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`). Coordinate with the TIER2 consolidation item above.
+- [ ] Local-first knowledge retrieval proposal (source precedence in Investigation Contract; not "RAG"; note: `ai/notes/local-first-knowledge-retrieval-proposal.md`).
 
 ## Deferred
 - [ ] (Breaking) Procedure E precedence rework: let resume read the latest checkpoint's authoritative state, not only the summary.

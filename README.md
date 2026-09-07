@@ -44,19 +44,20 @@ When I push updates here that you want:
 3. Run the sync script to update all your projects:
 
    **Linux/Git Bash:**
+
    ```bash
    ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
    ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects
    ```
 
    **Windows PowerShell:**
+
    ```powershell
    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' -WhatIf }"
    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
    ```
 
 4. In each project, type `"load context using AGENTS.md protocol"` to pick up the new rules.
-
 
 ## What it is, and what it isn't
 
@@ -97,10 +98,9 @@ It doesn't matter which assistant you use (ChatGPT, Claude, Gemini, DeepSeek, Co
 
 > **One protocol. One shared context. Any assistant picks up where the last one left off.**
 
-
 ## How it works
 
-```
+```text
    Simple-AI-Workflow/              Your Project/
    |-- AGENTS.md                    |-- AGENTS.md
    |-- ai-customization.md          |-- ai-customization.md
@@ -121,22 +121,41 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
-| After the conversation was compacted | `"run post-compaction procedure"` |
+| After the conversation was compacted | `"run post-compaction recovery procedure"` |
 
 > **Note:** don't use `/init`. It behaves differently across AI tools. Use the text prompts above.
+> **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
 
 Once context is loaded, you can also ask:
 - *"Show me the progress so far"*
 - *"What are the pending tasks?"*
 - *"Where are we in this project?"*
 
-**Notes:**
-- Running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
-- The post-compaction reload runs on its own when the AI spots a compaction summary. If you ran `/compact` by hand, or you are not sure it fired, just ask for it.
+### Review and maintenance phrases
+
+Ask the AI to review something or tidy up the workspace:
+
+- *"perform a code review on <file | directory | git repo | PR or MR>"*
+- *"perform a codebase examination of <directory | git repo>"*
+- *"process my notes directory — remove the notes that are already implemented; for the notes that remain, add a short clarifying comment or a suggestion to me about the note."*
+- *"process my plans directory and find all plans that are fully executed or implemented. If there are any, extract the useful knowledge from them and save it with a descriptive filename under `ai/shared/project-knowledge/`."*
+- *"find any stale files under plans, artifacts, or notes — files that are no longer relevant because they are superseded, incomplete, or obsolete — and inform me about them without deleting anything."*
+- *"process the artifacts directory and remove any stale files."*
+- *"process my notes file and summarize it into a suggested line of action for how to approach them."*
+- *"process my project knowledge — find any stale files and update or remove them as needed; where it helps, rename the files with better, verbose kebab-cased names for easier indexing."*
+
+### Post-compaction recovery
+
+When a session gets auto-summarized, the AI should reload its rules from disk. This is not 100% guaranteed, so it helps to know how it works and what to do:
+
+1. **Ideally, it fires on its own.** When the AI spots a compaction summary in the conversation, it should run the `post-compaction recovery procedure` automatically and reload its loaded rules.
+2. **If it doesn't fire, run it at your next prompt.** You'll notice the compaction appearing in the middle of some work or chat session. If the recovery didn't run, ask for it as soon as it's available: `"run post-compaction recovery procedure"`.
+3. **Why it matters.** Without the reload, the AI loses its loaded rules and guidelines and starts deviating, making mistakes, or working off assumptions.
+4. **Best approach: do it yourself.** To avoid the uncertainty entirely, compact the conversation yourself using a built-in tool (e.g. `/compact`), and then run the `post-compaction recovery procedure` yourself.
 
 ## Keeping context healthy
 
-Over a long session, the AI's working memory drifts. State files fill up with stale notes. The context window gets crowded. Rules that were clear at the start get pushed out of view. People call this **context rot**.
+Over a long session, the AI's working memory drifts. State files fill up with stale notes. The context window gets crowded. Rules that were clear at the start get pushed out of view. This is called **context rot**.
 
 The workflow pushes back with a few built-in defences:
 
@@ -152,7 +171,6 @@ A few habits help a lot:
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day.
 - **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint and start fresh.
 - **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is fine mid-session, but it is unreliable with a fresh or weaker model.
-- **Set up the post-compaction reload trigger once.** A long session can get auto-summarized, and that can drop the rules your AI had loaded. The [per-assistant setup guide](docs/post-compaction-reload-trigger-setup.md) shows how to handle it for your tool.
 
 ## Customizing the AI (`ai-customization.md`)
 
@@ -191,7 +209,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **16 domain policies**: Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching, and more. Load the ones that apply to your project.
+- **12 domain policies**: Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching. Load the ones that apply to your project.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.
@@ -199,7 +217,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Auto-sync script**: push `AGENTS.md` to all your projects in one command, and it migrates the old layout for you.
 - **Protocol validator**: `support-files/validate-protocol.sh` checks that everything is wired up correctly.
 - **Post-compaction recovery**: when a session gets auto-summarized, the AI reloads its rules from disk on its own, without losing your working context.
-- **Design documentation flow**: a structured stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger at every checkpoint, and reviews each doc before writing the next.
+- **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger at every checkpoint, and reviews each doc before writing the next.
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: large project knowledge files are indexed at startup and loaded on demand. Small global files are always loaded in full.

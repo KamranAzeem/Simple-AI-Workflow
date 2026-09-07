@@ -6,42 +6,18 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at ab5b7a4, pushed 2026-09-04
+- **Branch**: `master`, synced with origin at 07e9474; uncommitted README.md + ai/notes/* + ai/state/*
 - **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.6, all 8/8 checks pass
-- **Markdown lint**: markdownlint-cli2 v0.23.2; clean on new content (pre-existing findings remain in docs + state files)
+- **Markdown lint**: markdownlint-cli2 v0.23.2; README.md 0 issues
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present)
-- **Project knowledge**: 9 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
-- **Next milestones**: policies→skills rename (coordinate with TIER2 consolidation; change-request + HLD/LLD/ACs/Ledger; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
+- **Project knowledge**: 10 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
+- **Next milestones**: policies→skills rename (coordinate with TIER2 consolidation; change-request + HLD/LLD/ACs/Ledger; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); local-first knowledge retrieval proposal (note: `ai/notes/local-first-knowledge-retrieval-proposal.md`); protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
 
 ## Checkpoint History
 
 (Older checkpoint entries are archived in `ai/shared/project-knowledge/context-archive.md`.)
-
-## Checkpoint: CP-2026-08-21-01
-- **Branch**: `master`, synced with origin (HEAD 66a408f, no commits)
-- **Summary**: Analysis-only. Found Protocol Developer Mode policy-loading bug (AI loads all 16 domain policies instead of only listed ones; one sub-bullet fix), design docs gap, and researched behavioral prompts/Habit Hooks (models game bare metrics 71-88% vs 83% genuine fix with coaching). 6 new next-steps items.
-
-## Checkpoint: CP-2026-08-22-01
-- **Branch**: `master`, synced with origin (HEAD 8ea243f, pushed)
-- **Summary**: Implemented Protocol Developer Mode policy-loading fix (Exception notes at all 4 policy-scan locations), reviews 01->02 APPROVED, squash-merged b93741c; state files synced to origin. Detail in protocol-decisions.md.
-
-## Checkpoint: CP-2026-08-22-02
-- **Branch**: `master`, pulled to 75bc1fc
-- **Summary**: Remote pull + state reconciliation (dropped stale CP-08-09-02), decision reversal recorded, notes consolidation, [redacted] example, macOS BSD sed fix in sync-agents-md.sh (db74e68). Detail in protocol-decisions.md.
-
-## Checkpoint: CP-2026-08-25-01
-- **Branch**: `master`, synced with origin at 1d71e95
-- **Summary**: Merged two protocol sessions and released v2.2.0: evidence full-read/no-truncation, external-mutation guardrail, state-file model split (0383025, 1d71e95); Pre-Work Gate + AC Quality; README/slides rewritten; validator 8/8. Detail in protocol-decisions.md.
-
-## Checkpoint: CP-2026-08-25-02
-- **Branch**: `master`, synced with origin at 16e11f1
-- **Summary**: Full-file-read enforcement promoted to TIER 2 mandate, Proof-of-Load line counts, 6-item Non-Negotiables index; committed 16e11f1, v2.3.0 release, context.md horizon shield (kept 5, archived 6); validator 8/8. Detail in protocol-decisions.md.
-
-## Checkpoint: CP-2026-08-25-03
-- **Branch**: `master`, HEAD a2a5215, not pushed
-- **Summary**: Implemented research ideas 1+2+10 (intent-over-metrics, shared-understanding pre-work gate) + root-only scope; added markdownlint-cli2 config and fixed 14 whitespace issues; reviews 01/02 APPROVED, validator 8/8.
 
 ## Checkpoint: CP-2026-08-25-04
 - **Branch**: `master`, synced with origin at 2bdc118
@@ -59,3 +35,13 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Branch**: `master`, synced with origin at ab5b7a4, pushed
 - **Summary**: Maintenance + analysis. Condensed long historical progress.md/context.md entries to keep-lean (ab5b7a4) — preserved every CP ID, commit hash, validator version, and review outcome; no entries dropped. Analyzed and endorsed the policies→skills rename (ai/policies/→ai/skills/, `ai-policy-<name>.md`→`<name>.md`, Active Expertise→Active Skills): measured blast radius (16 files, 30 ai-policy- refs, 13 Active Expertise / 7 Policies Directory), scoped a freeze on historical records, flagged the common/meta taxonomy nuance + global-dir/sync cascade, recommended coordinating with the TIER2 consolidation, and proposed change-request + HLD/LLD/ACs/Ledger. Not started.
 - **Key deliverables**: ab5b7a4 (state condense); ai/notes/policies-to-skills-rename-proposal-2026-09-04.md; next-steps pending item; notes.md proposal captured.
+
+## Checkpoint: CP-2026-09-07-01
+- **Branch**: `master`, synced with origin at 07e9474; uncommitted README.md + ai/notes/notes.md
+- **Summary**: README correctness + peer review. Verified recent README edits — found and fixed two issues: (1) design-doc flow listed non-existent "Raw-notes"/"ACs" docs (canonical = Notes/Vision/PRD/HLD/LLD/ADRs/Ledger per ai-policy-common.md:223), (2) post-compaction sentence grammar. Added "Review and maintenance phrases" table (8 prompts) to Common instructions using the canonical `ai/shared/project-knowledge/` path. Peer review (Procedure D) → review-01 CHANGES REQUESTED; fixed all findings: "16 domain policies"→12 (only 12 of 16 files are domain policies), markdownlint MD031×2/MD012×2/MD040. README markdownlint now 0 issues, validator v4.6 8/8. Not committed.
+- **Key deliverables**: README.md edits (Correctness + Common instructions + lint fixes); ai/code-review-reports/2026-09-07_15-35_review-01.md.
+
+## Latest Checkpoint: CP-2026-09-07-02
+- **Branch**: `master`, synced with origin at 07e9474; uncommitted README.md + ai/notes/* + ai/state/* + new ai/notes/local-first-knowledge-retrieval-proposal.md
+- **Summary**: README Common instructions restructure + local-first retrieval discussion. Extracted the long post-compaction bullet into a dedicated "### Post-compaction recovery" numbered subsection; moved the bootstrap note up under the Common instructions table; rewrote the "Review and maintenance phrases" list to keep each verbatim instruction in full (no bare triggers / no split "what it does" column). Analyzed the local-first knowledge retrieval idea — framed it as source-precedence in the Investigation Contract, deliberately NOT "RAG" (no embedding store intended); created proposal note, indexed in notes.md, added a todo to next-steps. README markdownlint 0 issues, validator v4.6 8/8. Not committed.
+- **Key deliverables**: README.md (post-compaction subsection + bootstrap note move + verbatim phrases list); ai/notes/local-first-knowledge-retrieval-proposal.md; notes.md pending index; next-steps.md todo.
