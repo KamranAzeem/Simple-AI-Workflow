@@ -74,6 +74,6 @@ section appended per checkpoint) rather than the `YYYY-MM-DD-NN.md` per-checkpoi
 from the elmera example, since that convention was never actually adopted here. Also
 updated: `ai-policy-common.md` (Daily Checkpoint File Mandate bullet), `validate-protocol.sh`
 (v4.6→v4.7, new anchor check), `docs/workflow-guide.md` §14, `docs/simple-ai-workflow-slides.md`.
-See `protocol-decisions.md` (2026-09-09 entry) for the full record.
+See `protocol-decisions.md` (2026-09-09 entry) for the full record. Committed and pushed as f716105.
 
 Originally reported by Kamran during an elmera project session, 2026-09-08.

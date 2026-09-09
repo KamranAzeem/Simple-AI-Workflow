@@ -31,5 +31,17 @@ issues exist unless a human tells it to look.
 
 ## Status
 
-Open — deferred, future work. Not yet actioned. Reported by Kamran during an
-elmera project session, 2026-09-08, alongside the first issue file.
+Resolved 2026-09-09. Added **Project Issues Directory** (`ai/issues/`) to
+`AGENTS.md` TIER 1, scoped per-project (not global — issues can be about the
+protocol or any sibling project under the same root). Procedure A Step 2 now
+audits it, Step 5 indexes it by filename + line count excluding files prefixed
+`closed-`, Step 7 adds a Proof-of-Load bullet for open issue count/filenames.
+Lifecycle: closing an issue = rename in place with a `closed-` prefix (no
+subdirectories, no separate status field to keep in sync); reopening strips the
+prefix. `support-files/validate-protocol.sh` bumped v4.7→v4.8 with matching
+checks. Peer-reviewed and approved:
+`ai/code-review-reports/2026-09-09_16-17_review-02.md`.
+See `protocol-decisions.md` (2026-09-09, second entry) for the full record.
+
+Originally reported by Kamran during an elmera project session, 2026-09-08,
+alongside the first issue file.

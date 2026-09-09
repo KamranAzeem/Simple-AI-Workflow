@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.7 ---"
+echo "--- Starting Protocol Validation v4.8 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -40,6 +40,10 @@ if ! grep -q "Sliding Horizon Shield" AGENTS.md; then
 fi
 if ! grep -q "Write Daily Checkpoint File" AGENTS.md; then
     echo "Error: Write Daily Checkpoint File step missing from Procedure C in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "excluding any file prefixed \`closed-\`" AGENTS.md; then
+    echo "Error: Project Issues indexing step (closed- prefix convention) missing from Procedure A in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
@@ -92,6 +96,7 @@ CONFIG_KEYS=(
     "Project Customization File"
     "Project Daily Checkpoints Directory"
     "Project Handoffs Directory"
+    "Project Issues Directory"
     "Project AI Knowledge Directory"
     "Project Notes Directory"
     "Project Pending Directory"
@@ -131,7 +136,7 @@ echo "Global structure checked."
 # 4. Project Structure
 echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
-    "artifacts" "code-review-reports" "daily-checkpoints" "notes"
+    "artifacts" "code-review-reports" "daily-checkpoints" "issues" "notes"
     "pending" "plans" "policies" "policies/compliance" "secrets"
     "shared" "shared/handoffs" "shared/project-knowledge" "state"
 )
@@ -210,4 +215,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.7 Completed Successfully ---"
+echo "--- Protocol Validation v4.8 Completed Successfully ---"

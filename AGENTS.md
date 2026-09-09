@@ -36,6 +36,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Project Customization File**: `ai-customization.md`
 **Project Daily Checkpoints Directory**: `ai/daily-checkpoints/`
 **Project Handoffs Directory**: `ai/shared/handoffs/`
+**Project Issues Directory**: `ai/issues/`
 **Project AI Knowledge Directory**: `ai/shared/project-knowledge/`
 **Project Notes Directory**: `ai/notes/`
 **Project Pending Directory**: `ai/pending/`
@@ -88,7 +89,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `~/Projects/Simple-AI-Workflow` from its GitHub URL. Then **stop** — do not proceed with context loading.
 1.  **Workflow Access**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories:
-    - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project AI Knowledge Directory**
+    - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
     - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
     - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
     Verify **Project Coordination File** exists. Only report missing items — do not create them.
@@ -99,6 +100,7 @@ The following short forms are recognized as equivalents to their canonical direc
 5.  **Knowledge Loading**: This is a dedicated required step — do NOT merge it with Step 4.
     - **Global Knowledge** (from **Global AI Knowledge Directory**): Load the FULL TEXT of every file. This set is intentionally small, so a full load is cheap and removes the risk of the AI guessing at lessons it never read. Do NOT index-only.
     - **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories): Project Knowledge remains subject to **Token Rationing** — these files can be large (e.g. historical repo-scan snapshots or archives). Run a shell command (`find` or `ls -R`) to discover all filenames and record paths, filenames, and apparent technical domains as a reference index. **DO NOT** load the full text of any Project Knowledge file at boot time; load it on demand when an active task requires it.
+    - **Project Issues** (from **Project Issues Directory**): Index by filename + line count only, excluding any file prefixed `closed-`.
     If a directory is completely empty, explicitly note it in your state tracking.
 6.  **Policy Loading**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
@@ -116,6 +118,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - (d) Git delta check since the last hash recorded in `ai/state/context.md`.
     - (e) All files **indexed** from the **Project AI Knowledge Directory** (filenames and apparent domains — not read in full), or an explicit confirmation that it was empty.
     - (f) For each **Project AI State File**: line count and most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`), read fresh from file content.
+    - (g) Open issue count and filenames with line counts from the **Project Issues Directory** (files not prefixed `closed-`), or an explicit confirmation that none are open.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
