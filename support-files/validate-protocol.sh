@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.6 ---"
+echo "--- Starting Protocol Validation v4.7 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -36,6 +36,10 @@ if ! grep -q "Atomic Write Protocol" AGENTS.md; then
 fi
 if ! grep -q "Sliding Horizon Shield" AGENTS.md; then
     echo "Error: Log Condensation / Sliding Horizon Shield missing from Procedure C in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Write Daily Checkpoint File" AGENTS.md; then
+    echo "Error: Write Daily Checkpoint File step missing from Procedure C in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
@@ -206,4 +210,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.6 Completed Successfully ---"
+echo "--- Protocol Validation v4.7 Completed Successfully ---"

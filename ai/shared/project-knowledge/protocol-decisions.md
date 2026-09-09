@@ -809,3 +809,19 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Decision: protocol's own design docs (deferred)
 - The protocol will get its own design artifacts: Vision, PRD, and a Delivery Ledger (ledger first). `protocol-decisions.md` serves as the ADR store, so ADRs are not recreated. A lean HLD is added; LLD is built per module as the protocol is tightened. Deferred to later; tracked in `ai/state/next-steps.md`.
+
+---
+
+## 2026-09-09: Checkpoint procedure never wrote the daily checkpoint file — fixed
+
+### Problem
+- Procedure C mandated writing the three **Project AI State Files** but never wrote a file in **Project Daily Checkpoints Directory**. Only Procedure B (bootstrap, one-time) ever created one. Meanwhile `ai-policy-common.md`'s Source-of-Truth Order and State File Proof-of-Read rule both already assumed a current checkpoint file existed at read time. Result: state files raced ahead with new `CP-YYYY-MM-DD-NN` IDs every checkpoint while `ai/daily-checkpoints/` only advanced when an AI session happened to write one unprompted, producing a CP-ID mismatch on the next "load context" — reproduced across multiple personal projects, and confirmed live in this repo during this same session (`next-steps.md` at `CP-2026-09-04-01` vs `context.md`/`progress.md` at `CP-2026-09-07-02`, latest file on disk `2026-09-04.md`). Full write-up: `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md`.
+
+### Decision
+- Added a new step 2, **Write Daily Checkpoint File**, to Procedure C in `AGENTS.md`, between the Atomic Write Protocol (step 1) and Log Condensation (renumbered 2→3; Update Project Knowledge 3→4; Context Re-affirmation 4→5). Fixed the one internal cross-reference to the old step number (`context.md` horizon-shield mention, "(Step 2)" → "(Step 3)").
+- **Naming convention chosen deliberately, deviating from the issue's raw proposal**: the issue's proposed fix cited an elmera-project example using `YYYY-MM-DD-NN.md` (one file per checkpoint). Investigated this repo's own `ai/daily-checkpoints/` directory instead and found the convention actually in force since 2026-06-19 is one file per **calendar day** (`YYYY-MM-DD.md`) with multiple `## CP-<ID>: <title>` sections appended for same-day checkpoints (e.g. `2026-08-25.md` holds four checkpoints). Used that convention rather than importing an example from a different project that was never actually the standard here.
+- `ai-policy-common.md`: added a **Daily Checkpoint File Mandate** bullet next to the existing Checkpoint Mandate in Checkpoint & Backup Procedures, pointing at the new AGENTS.md step without restating its mechanics (two-layer pattern).
+- `support-files/validate-protocol.sh`: v4.6 → v4.7, new anchor check for `Write Daily Checkpoint File` in section 1 alongside the existing Sliding Horizon Shield check.
+- Docs synced: `docs/workflow-guide.md` §14 gained a **Daily Checkpoint File** subsection; `docs/simple-ai-workflow-slides.md`'s "atomic writes and a sliding horizon" slide gained a matching bullet.
+- **Files changed**: `AGENTS.md` (Procedure C), `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md` (Status: Resolved), this file.
+- **Not done in this session**: no commit made yet; pending validator re-run, peer review, and the user's commit decision.

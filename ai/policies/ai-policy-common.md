@@ -60,6 +60,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ### Checkpoint & Backup Procedures
 - **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in `AGENTS.md`. This runs in the same transaction as the state files, not as a separate or optional action.
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint ID Contract**:
     - Format: `CP-YYYY-MM-DD-XX`.

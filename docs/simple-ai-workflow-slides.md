@@ -297,6 +297,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Sequential writes**, always in this order: `ai/state/progress.md`, then `ai/state/next-steps.md`, then `ai/state/context.md`
 - **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
 - **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
+- **Daily checkpoint file**: the same transaction appends a `## CP-<ID>` section to `ai/daily-checkpoints/YYYY-MM-DD.md`, one file per day
 - **Sliding horizon**: once `ai/state/progress.md` passes 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
 
 > **Consistent state. Every checkpoint. No silent failures.**
