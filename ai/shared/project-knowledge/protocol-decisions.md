@@ -825,3 +825,19 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Docs synced: `docs/workflow-guide.md` §14 gained a **Daily Checkpoint File** subsection; `docs/simple-ai-workflow-slides.md`'s "atomic writes and a sliding horizon" slide gained a matching bullet.
 - **Files changed**: `AGENTS.md` (Procedure C), `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md` (Status: Resolved), this file.
 - **Not done in this session**: no commit made yet; pending validator re-run, peer review, and the user's commit decision.
+
+---
+
+## 2026-09-09: ai/issues/ formalized in the protocol (Project Issues Directory)
+
+### Problem
+- `ai/issues/` had been used informally (starting with the daily-checkpoint-file issue above) but had no defined place in the protocol: not in TIER 1, not indexed by Procedure A, not surfaced in the Proof-of-Load report. A fresh "load context" session had no way to learn open protocol/project issues exist unless a human pointed to them. Full write-up: `ai/issues/proof-of-load-report-should-index-issues-directory.md`.
+
+### Decision
+- **Scope corrected from the issue's own guess**: the issue file speculated this might be "global-only, since issues are about the protocol itself." Rejected — issues can be about the protocol *or* about any sibling project under the same project root, so it is a **Project Issues Directory** (`ai/issues/`), scoped like `ai/notes/`/`ai/pending/`/`ai/plans/`, added to TIER 1 in alphabetical position between Handoffs and AI Knowledge.
+- **Lifecycle mechanism — flat directory with a `closed-` filename prefix, not subdirectories**: considered `ai/issues/open/` + `ai/issues/closed/`, and considered a `## Status` content field. Rejected both: a content field (like the one improvised for the first issue) requires opening and reading every file to know open/closed status, which both violates Token Rationing (index-only, no full-text at boot) and reintroduces the exact drift risk the daily-checkpoint fix above addressed (a text claim that can silently go stale relative to where the file actually lives). Subdirectories solve that but add a directory-existence question (should `closed/` be pre-created at bootstrap when empty?) for no real benefit over a filename prefix. Settled on: closing an issue = `git mv` to prefix the filename with `closed-`, in place. Reopening = strip the prefix. One directory, one grep filter (`closed-*`), used identically by both the indexing step and the report bullet.
+- Added to `AGENTS.md`: TIER 1 entry; Procedure A Step 2 (Structural Audit) now includes it as a mandatory directory; Procedure A Step 5 (Knowledge Loading) indexes it by filename + line count excluding `closed-*`; Procedure A Step 7 (Proof-of-Load report) gained bullet (g) reporting open issue count + filenames + line counts.
+- No `ai-policy-common.md` change — the TIER 1 entry plus the two Procedure A additions were judged sufficient; a separate policy mandate would only restate the same behavior.
+- `support-files/validate-protocol.sh`: v4.7 → v4.8. Added `Project Issues Directory` to the config-key check, `issues` to the mandatory-directory check, and an anchor check for the indexing step's `closed-` convention text.
+- Migration: `checkpoint-procedure-never-writes-daily-checkpoint-file.md` renamed to `closed-checkpoint-procedure-never-writes-daily-checkpoint-file.md` (already resolved); `proof-of-load-report-should-index-issues-directory.md` (this issue) stays open until this change is verified, then gets the same treatment.
+- **Files changed**: `AGENTS.md` (TIER 1, Procedure A), `support-files/validate-protocol.sh`, two files under `ai/issues/`, this file.
