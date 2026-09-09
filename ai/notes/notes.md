@@ -45,3 +45,43 @@ https://github.com/mattpocock/skills.git
 
 ---
 
+This work will be done on a feature branch.
+
+I need to create a mechanism to create issues and close issues. This itself is an issue of the type "feature". So this is not an implementation request right away. The flow should always be (from now on) open-issue -> implementation -> closed-issue + update related project-knowledge.  
+
+I need a proper (but simple) procedure that is called when a user asks to create an issue, or when AI thinks an issue should be created. 
+
+When an issue is created it should be created under ai/issues/ , when the issue is resolved in some way, it's status should change to "closed-<original-issue-filename>" in the same ai/issues/ directory. 
+
+The format/template of the issue file should be simple , providing basic fields inside the ticket to mimic GitHub Issues or Gitlab Issues, but not over complicating the format. 
+
+The format of the issue file will be used later to build a basic kanban board. 
+
+I would like the following fields in the issue file. 
+
+```
+Reported: date (DD-Mon-YYYY)
+Reporter: Username / AI Assistant name
+Summary: <Issue title (Summary)> (one line only)
+Severity: P1, P2, P3, P4 (P1 = Must Have, P2 = Should Have, P3 = Could Have, P4 = Won't Have) (P4 will probably not be used that often as no one wants to create an issue to not solve, but it can be used to say this is actually not an issue, and no effort will be spent on fixing it)
+Size: S(mall), M(edium), L(arge), X L(arge) (Small = 2 hours, Medium 4 hours, Large 8 hours, XL = too large, and needs breakdown/grooming)
+Status: Open, In Progress, Closed
+Description:
+MultiLine description of the issue in as much detail as possible, with steps to replicate if possible, whatever has been tried so far (or not), etc.
+---
+YYYY-MM-DD (timestamp)
+Any update on the issue, progress , etc.
+(these can be multiple sections.)
+
+```
+
+This template should be part of the protocol as a file to maintain the decided format, saved somewhere within ai directory, (when finalized), maybe within the ai/issues/ directory (probably a good idea)? , and then whenever an issue is created it is created with this template. 
+
+The filename of the issue should be:
+
+For open issue: <priority>-<size>-<compressed-issue-summary>.md
+For closed issue: simply prefix the issue filename with "closed-" irrespective of what type of closure was it. 
+
+Later, if the user wants, he can transfer the issues to github or gitlab or Jira, etc, using either the cli tool, or using the web interface manually. The user may ask AI to transder the issues from local issues directory to the VCS web of choice (Github, Gitlab, Jira, etc)
+
+I want to discuss this with you first, so we reach on a common understanding about it. The protocol needs to remain very light-weight, so this functionality (create-issue) should be very light but strong and robust. 
