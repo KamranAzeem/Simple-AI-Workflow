@@ -241,6 +241,14 @@ The checkpoint procedure uses an atomic write sequence to prevent partial or inc
 2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window — showing exactly what was written to each file and what values changed.
 3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
 
+### Daily Checkpoint File
+In the same transaction as the state files, every checkpoint also appends an entry to `ai/daily-checkpoints/`.
+
+- **One file per day**: `YYYY-MM-DD.md`, created on the first checkpoint of that day.
+- **One section per checkpoint**: A new `## CP-<ID>: <short title>` section is appended for each checkpoint that day; earlier sections are never edited or removed.
+- **Fuller narrative than the state files**: This is where the detail lives — files touched, commits, validator or review outcomes — since `progress.md` and `context.md` stay lean.
+- **Kept in sync**: The CP identifier here always matches the one written to `progress.md` and `context.md` for that checkpoint.
+
 ### Log Condensation (Sliding Horizon)
 To prevent `ai/state/progress.md` from growing unbounded and consuming context window space:
 
