@@ -6,7 +6,7 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 2149bc8 (CP-2026-09-09-02 work formalizing `ai/issues/` committed and pushed)
+- **Branch**: `master`, synced with origin at d57880d (CP-2026-09-09-03 squash-merge landed as 2149bc8; CP-2026-09-09-04 issue-management design committed on top)
 - **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.8, all 8/8 checks pass (Project Issues Directory config-key + `issues` dir + `closed-` anchor checks added in CP-09-09-02)
 - **Markdown lint**: markdownlint-cli2 v0.23.2; README.md 0 issues
@@ -58,7 +58,12 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Summary**: Formalized `ai/issues/` in the protocol (see `ai/issues/closed-proof-of-load-report-should-index-issues-directory.md`). Added **Project Issues Directory** (`ai/issues/`) to `AGENTS.md` TIER 1, scoped per-project not global (corrected from the issue's own "global-only" guess — issues can cover the protocol or any sibling project under the same root). Procedure A Step 2 now audits it, Step 5 indexes it by filename + line count excluding `closed-`-prefixed files, Step 7 adds Proof-of-Load bullet (g). Lifecycle: rejected `open/`/`closed/` subdirectories and a `## Status` content field in favor of a flat directory with a `closed-` filename prefix (avoids the same text-drift risk CP-01 fixed, and avoids a directory-existence question). `validate-protocol.sh` v4.7→v4.8 (CONFIG_KEYS + PROJECT_SUBS + new anchor check). Both existing issue files renamed with the `closed-` prefix; the second's Status updated to Resolved, dogfooding the new convention on itself. Validator run 3× across the edit sequence, 8/8 pass each time. Peer review (Procedure D) → review-02 APPROVED, no findings (2 non-blocking suggestions).
 - **Key deliverables**: `AGENTS.md` (TIER 1 + Procedure A Steps 2/5/7); `support-files/validate-protocol.sh` (v4.8); `ai/shared/project-knowledge/protocol-decisions.md`; `ai/issues/closed-checkpoint-procedure-never-writes-daily-checkpoint-file.md` + `ai/issues/closed-proof-of-load-report-should-index-issues-directory.md` (both renamed); `ai/code-review-reports/2026-09-09_16-17_review-02.md`; `ai/daily-checkpoints/2026-09-09.md` (CP-02 section).
 
-## Latest Checkpoint: CP-2026-09-09-03
+## Checkpoint: CP-2026-09-09-03
+- **Branch**: `master`, synced with origin at 2149bc8, pushed
+- **Summary**: Squash-merged `feature/proof-of-load-issues-directory-indexing` into `master` per user approval: committed on the feature branch (`3db16cd`), squash-merged (`git merge --squash`), committed on `master` as `2149bc8`, pushed to `origin/master` (`f716105..2149bc8`). Local feature branch force-deleted after confirming zero content diff vs `master` (expected, since squash merges aren't recognized by git as "fully merged").
+- **Key deliverables**: `master` @ 2149bc8, pushed; local branch `feature/proof-of-load-issues-directory-indexing` removed.
+
+## Latest Checkpoint: CP-2026-09-09-04
 - **Branch**: `master`, synced with origin at 2149bc8 (clean tree at session start; the CP-09-09-02 work is now committed to master, no feature branch)
 - **Summary**: Designed and filed the issue-management mechanism (feature). Locked the design with the user, then wrote `ai/notes/issue-management-mechanism-design.md` (locked decisions + full implementation plan). Filed the first proper issue `ai/issues/open-P2-L-issue-management-mechanism.md` using the new template (dogfooded on itself), and filed the related `ai/issues/boot-up-should-create-required-ai-directories.md`. Also ran a full load-context (Procedure A) at session start and reviewed the repo for cross-machine resume readiness. Confirmed the design note belongs in `ai/notes/` (working spec) with the authoritative record deferred to `protocol-decisions.md` until implementation. No protocol files changed this session.
 - **Key deliverables**: `ai/notes/issue-management-mechanism-design.md`; `ai/issues/open-P2-L-issue-management-mechanism.md`; `ai/issues/boot-up-should-create-required-ai-directories.md`; `ai/notes/notes.md` (user requirement capture).
