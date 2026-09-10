@@ -3,7 +3,7 @@ STATE-FILE: next-steps.md is the FUTURE. A forward-only backlog, not a history.
 STATE-FILE: CHRONOLOGICAL ORDER. Oldest at the top, newest at the bottom. Append new items at the tail. Delete each item the moment it is done; never leave a ticked, checked, or struck-through entry. No history accumulates here.
 STATE-FILE: KEEP LEAN. Short bullet items, one to two lines each. Not a runbook, plan, or ledger. No sub-bullets, command transcripts, or rationale. Use ai/shared/project-knowledge/ for durable detail.
 -->
-CP-2026-09-09-04
+CP-2026-09-10-01
 
 ## Pending
 - [ ] Document Kilo Code support in post-compaction-reload-trigger-setup.md and compaction-trigger-problem.md (spec in notes.md).
@@ -16,7 +16,7 @@ CP-2026-09-09-04
 - [ ] Consolidate the TIER 2 vs Non-Negotiables always-on canonical home (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 - [ ] Policies→skills rename (ai/policies/→ai/skills/, `ai-policy-<name>.md`→`<name>.md`, Active Expertise→Active Skills; global dir + sync + loader + validator; change-request + HLD/LLD/ACs/Ledger; note: `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`). Coordinate with the TIER2 consolidation item above.
 - [ ] Local-first knowledge retrieval proposal (source precedence in Investigation Contract; not "RAG"; note: `ai/notes/local-first-knowledge-retrieval-proposal.md`).
-- [ ] Implement issue-management mechanism per `ai/notes/issue-management-mechanism-design.md` (feature/issue-management; from `ai/issues/open-P2-L-issue-management-mechanism.md`; also resolves `ai/issues/boot-up-should-create-required-ai-directories.md`).
+- [ ] Implement issue-management mechanism per `ai/notes/issue-management-mechanism-design.md` (feature/issue-management; from `ai/issues/open-issue-management-mechanism.md`; also resolves `ai/issues/boot-up-should-create-required-ai-directories.md`).
 
 ## Deferred
 - [ ] (Breaking) Procedure E precedence rework: let resume read the latest checkpoint's authoritative state, not only the summary.

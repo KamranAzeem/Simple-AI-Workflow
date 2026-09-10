@@ -6,7 +6,7 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at d57880d (CP-2026-09-09-03 squash-merge landed as 2149bc8; CP-2026-09-09-04 issue-management design committed on top)
+- **Branch**: `master`, synced with origin at 2ead9bf; CP-2026-09-10-01 committed on top (pending push)
 - **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.8, all 8/8 checks pass (Project Issues Directory config-key + `issues` dir + `closed-` anchor checks added in CP-09-09-02)
 - **Markdown lint**: markdownlint-cli2 v0.23.2; README.md 0 issues
@@ -14,8 +14,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present)
 - **Daily checkpoints**: Procedure C's mandatory write step (step 2) working live; `ai/daily-checkpoints/2026-09-09.md` holds CP-01..CP-03
 - **Project knowledge**: 9 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
-- **Project issues**: `ai/issues/` is a formal TIER 1 directory; 2 open (`open-P2-L-issue-management-mechanism.md`, `boot-up-should-create-required-ai-directories.md`), 2 closed (`closed-` prefixed)
-- **Next milestones**: implement issue-management mechanism (feature/issue-management; design + plan in `ai/notes/issue-management-mechanism-design.md`; first issue `ai/issues/open-P2-L-issue-management-mechanism.md`; also resolves the boot-up directory-creation issue); policies→skills rename (coordinate with TIER2 consolidation; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); local-first knowledge retrieval proposal; protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
+- **Project issues**: `ai/issues/` is a formal TIER 1 directory; 2 open (`open-issue-management-mechanism.md`, `boot-up-should-create-required-ai-directories.md`), 2 closed (`closed-` prefixed)
+- **Next milestones**: implement issue-management mechanism (feature/issue-management; design + plan in `ai/notes/issue-management-mechanism-design.md`; first issue `ai/issues/open-issue-management-mechanism.md`; also resolves the boot-up directory-creation issue); policies→skills rename (coordinate with TIER2 consolidation; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); local-first knowledge retrieval proposal; protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
 
 ## Checkpoint History
 
@@ -67,3 +67,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Branch**: `master`, synced with origin at 2149bc8 (clean tree at session start; the CP-09-09-02 work is now committed to master, no feature branch)
 - **Summary**: Designed and filed the issue-management mechanism (feature). Locked the design with the user, then wrote `ai/notes/issue-management-mechanism-design.md` (locked decisions + full implementation plan). Filed the first proper issue `ai/issues/open-P2-L-issue-management-mechanism.md` using the new template (dogfooded on itself), and filed the related `ai/issues/boot-up-should-create-required-ai-directories.md`. Also ran a full load-context (Procedure A) at session start and reviewed the repo for cross-machine resume readiness. Confirmed the design note belongs in `ai/notes/` (working spec) with the authoritative record deferred to `protocol-decisions.md` until implementation. No protocol files changed this session.
 - **Key deliverables**: `ai/notes/issue-management-mechanism-design.md`; `ai/issues/open-P2-L-issue-management-mechanism.md`; `ai/issues/boot-up-should-create-required-ai-directories.md`; `ai/notes/notes.md` (user requirement capture).
+
+## Latest Checkpoint: CP-2026-09-10-01
+- **Branch**: `master`, synced with origin at 2ead9bf at session start
+- **Summary**: Simplified the issue filename convention before implementation: priority/size dropped from the filename (mutable, so they stay in the `Severity`/`Size` header fields only), `ai/issues/open-P2-L-issue-management-mechanism.md` renamed to `open-issue-management-mechanism.md`, design note updated (filename table + a future-kanban note on reading `Severity`/`Size` from the header), live references updated in `notes.md`/`context.md`/`next-steps.md` (historical entries in `progress.md` and the daily-checkpoint file left untouched, since they describe what was true at the time). Also documented the checkpoint commit-hash one-commit lag as expected/benign (a commit can't record its own hash) with light one-line additions to `ai-policy-common.md`, `AGENTS.md` Proof-of-Load step (d), and README.md's context-health table.
+- **Key deliverables**: `ai/issues/open-issue-management-mechanism.md` (renamed); `ai/notes/issue-management-mechanism-design.md`; `ai/notes/notes.md`; `ai/policies/ai-policy-common.md`; `AGENTS.md`; `README.md`.
