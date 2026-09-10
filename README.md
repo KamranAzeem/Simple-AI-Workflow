@@ -166,6 +166,7 @@ The workflow pushes back with a few built-in defences:
 | Rules lost after auto-summary | Post-Compaction Recovery reloads rules from disk on its own |
 | AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
+| Recorded commit hash one behind HEAD | Expected: a checkpoint commit can't record its own hash. Only a bigger, unexplained gap is real drift |
 
 A few habits help a lot:
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day.

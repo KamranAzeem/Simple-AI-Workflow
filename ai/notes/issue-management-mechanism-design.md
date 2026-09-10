@@ -1,8 +1,8 @@
 # Issue Management Mechanism — Locked Design Decisions
 
-Status: Locked 2026-09-09 (agreed between Kamran and the AI before implementation).
+Status: Locked 2026-09-09, revised 2026-09-10 (filename simplified before implementation).
 This note records the agreed design. The implementation issue is
-`ai/issues/open-P2-L-issue-management-mechanism.md`.
+`ai/issues/open-issue-management-mechanism.md`.
 
 ## Purpose
 
@@ -18,20 +18,24 @@ filename prefix, so the scanner and Proof-of-Load never open a file to learn its
 state (avoids the Token Rationing cost and the text-drift risk that motivated the
 CP-2026-09-09-02 rejection of a content Status field).
 
-Filename pattern: `<status>-<priority>-<size>-<slug>.md`
+Filename pattern: `<status>-<slug>.md`
 
 | Status | Prefix | Example |
 |---|---|---|
-| Open (not started) | `open-` | `open-P2-L-issue-management-mechanism.md` |
-| In progress | `in-progress-` | `in-progress-P2-L-issue-management-mechanism.md` |
-| Closed | `closed-` | `closed-P2-L-issue-management-mechanism.md` |
+| Open (not started) | `open-` | `open-issue-management-mechanism.md` |
+| In progress | `in-progress-` | `in-progress-issue-management-mechanism.md` |
+| Closed | `closed-` | `closed-issue-management-mechanism.md` |
 
-- Open uses `open-P#-` for uniformity with the other two prefixes.
-- Priority is always `P1`/`P2`/`P3`/`P4`; size is `S`/`M`/`L`/`XL`.
+- Priority and size are NOT in the filename. They live only in the `Severity`/
+  `Size` header fields (below) because they are mutable — encoding them in the
+  filename would force a rename every time either value changes.
 - Slug: compressed summary, kebab-case, self-explanatory, capped around 40-50
   chars, allowed char set only.
 - Scanner / Proof-of-Load lists **open + in-progress** by filtering out
-  `closed-*.md` files. A future kanban maps prefix to column.
+  `closed-*.md` files. This is unchanged by dropping priority/size from the name.
+- Future kanban: to group/annotate by priority or size, the board builder opens
+  each open/in-progress file and reads `Severity`/`Size` from its header. Not
+  needed until the kanban board is actually built.
 
 ## Lifecycle (now the standing flow)
 

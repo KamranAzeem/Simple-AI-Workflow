@@ -66,6 +66,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - Format: `CP-YYYY-MM-DD-XX`.
     - Must be consistent across all tracking files.
     - Material resume field changes require a new ID.
+- **Recorded Commit Hash Lag (expected, not drift)**: A checkpoint commit cannot record its own hash. `context.md`'s recorded hash will normally sit exactly one commit behind live HEAD right after that checkpoint lands — this is benign self-lag, not drift. Flag only when the gap is larger or unexplained.
 
 ## AI-Driven Secure Development Practices
 **Mandate**: AI-generated code and infrastructure configurations must inherently adhere to security best practices derived from established threat modeling principles (e.g., STRIDE, OWASP Top 10).

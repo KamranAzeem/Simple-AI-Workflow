@@ -23,7 +23,8 @@ Agreed requirements (see the design note
 `ai/notes/issue-management-mechanism-design.md` for the full spec):
 
 - Filename is the single source of truth for status (no Status field inside the
-  file). Prefixes: `open-P#-...`, `in-progress-P#-...`, `closed-P#-...`.
+  file). Prefixes: `open-...`, `in-progress-...`, `closed-...`. Priority/size
+  stay in the header fields only, not the filename (they're mutable).
 - Lifecycle that becomes the standing flow: open issue -> implementation ->
   closed issue + update related project-knowledge.
 - A simple issue file template with fields: Reported, Reporter, IssueType,
@@ -49,3 +50,11 @@ follow-on capability that uses the URL field; it is not part of this issue.
 2026-09-09
 Opened as the first issue filed with the new template. Design decisions locked
 and captured in `ai/notes/issue-management-mechanism-design.md`.
+
+---
+2026-09-10
+Revised filename convention before implementation: priority/size dropped from
+the filename (they're mutable, already live in the `Severity`/`Size` header
+fields, and encoding them in the name forced a rename on every reprioritize).
+Filename is now `<status>-<slug>.md`. File renamed to
+`open-issue-management-mechanism.md`. Design note updated to match.
