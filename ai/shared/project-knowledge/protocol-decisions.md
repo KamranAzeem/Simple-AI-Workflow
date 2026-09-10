@@ -841,3 +841,25 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `support-files/validate-protocol.sh`: v4.7 → v4.8. Added `Project Issues Directory` to the config-key check, `issues` to the mandatory-directory check, and an anchor check for the indexing step's `closed-` convention text.
 - Migration: `checkpoint-procedure-never-writes-daily-checkpoint-file.md` renamed to `closed-checkpoint-procedure-never-writes-daily-checkpoint-file.md` (already resolved); `proof-of-load-report-should-index-issues-directory.md` (this issue) stays open until this change is verified, then gets the same treatment.
 - **Files changed**: `AGENTS.md` (TIER 1, Procedure A), `support-files/validate-protocol.sh`, two files under `ai/issues/`, this file.
+
+---
+
+## 2026-09-10: Issue filename simplified (priority/size dropped) + commit-hash lag documented as expected
+
+### Problem 1: issue filenames duplicated mutable header fields
+- The filename pattern locked on 2026-09-09 (`<status>-<priority>-<size>-<slug>.md`) encoded `Severity` and `Size` in the filename even though both already live in the issue's own header fields. Since severity/size can change after filing (reprioritized, regroomed), the filename would need a rename every time either value changed — the same dual-source-of-truth risk the 2026-09-09 issues-directory decision (above) had already rejected for a content `Status` field.
+
+### Decision 1
+- Filename pattern simplified to `<status>-<slug>.md`. Priority and size stay in the `Severity`/`Size` header fields only. A future kanban board builder reads those fields directly from each open/in-progress file rather than parsing them out of the filename — acceptable since the board does not exist yet and Proof-of-Load never needed those two fields, only the status prefix.
+- `ai/issues/open-P2-L-issue-management-mechanism.md` renamed to `ai/issues/open-issue-management-mechanism.md` (`git mv`, dogfooding the new convention on its own first issue). `ai/notes/issue-management-mechanism-design.md` updated (filename table, rationale, new future-kanban note). Live references updated in `ai/notes/notes.md`, `ai/state/context.md` (Current Status only), `ai/state/next-steps.md`. Historical/append-only entries in `ai/state/progress.md` and `ai/daily-checkpoints/2026-09-09.md` left untouched — they describe what was true at the time the prior convention was still in force.
+
+### Problem 2: checkpoint commit-hash self-reference lag looked like drift
+- `context.md`'s Current Status records the last known git hash. A checkpoint commit cannot record its own hash (the hash does not exist until after the commit is made), so the recorded hash is structurally always at least one commit behind true HEAD immediately after that checkpoint's own commit lands. Without saying so explicitly, this reads as unexplained drift on the next "load context" and risks the user panicking over a false alarm.
+
+### Decision 2
+- Documented as expected/benign, not a defect, with minimal added text (no new procedure, no new validator check): a bullet in `ai-policy-common.md`'s Checkpoint & Backup Procedures ("Recorded Commit Hash Lag"), a one-sentence addition to `AGENTS.md` Procedure A Step 7(d) instructing the Proof-of-Load report to state the one-commit gap is expected when the ahead-commit is the one that wrote the hash, and a new row in `README.md`'s "Keeping context healthy" table.
+- **Not done**: no validator anchor added for this (prose-only change, consistent with how Evidence-Based Reasoning and other prose rules were handled without anchors elsewhere in this file).
+
+### Process note (self-correction)
+- Both changes above were made and committed (`37e31e5`) without first fully loading this file, and without adding an entry to it — a direct miss of the Protocol Developer Mode mandate ("MUST fully load protocol-decisions.md ... not JIT-optional") that this same file documents (2026-06-19 entry, above). Caught by a self-requested peer review (`ai/code-review-reports/2026-09-10_11-08_review-01.md`, CHANGES REQUESTED, 2 Major findings) and fixed in this same session: this file now fully loaded and this entry added.
+- **Files changed**: `ai/issues/open-issue-management-mechanism.md` (renamed), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/notes.md`, `ai/state/context.md`, `ai/state/next-steps.md`, `ai/policies/ai-policy-common.md`, `AGENTS.md`, `README.md`, this file.

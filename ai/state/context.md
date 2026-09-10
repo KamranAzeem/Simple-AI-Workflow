@@ -6,13 +6,13 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at 2ead9bf; CP-2026-09-10-01 committed on top (pending push)
+- **Branch**: `master`, synced with origin at 37e31e5 (CP-2026-09-10-01 pushed)
 - **Release**: v2.3.0 (2026-08-25); current protocol work merged to master, unreleased
 - **Validator**: v4.8, all 8/8 checks pass (Project Issues Directory config-key + `issues` dir + `closed-` anchor checks added in CP-09-09-02)
 - **Markdown lint**: markdownlint-cli2 v0.23.2; README.md 0 issues
 - **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
 - **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present)
-- **Daily checkpoints**: Procedure C's mandatory write step (step 2) working live; `ai/daily-checkpoints/2026-09-09.md` holds CP-01..CP-03
+- **Daily checkpoints**: Procedure C's mandatory write step (step 2) working live; `ai/daily-checkpoints/2026-09-09.md` holds CP-01..CP-04; `ai/daily-checkpoints/2026-09-10.md` holds CP-01
 - **Project knowledge**: 9 files; `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
 - **Project issues**: `ai/issues/` is a formal TIER 1 directory; 2 open (`open-issue-management-mechanism.md`, `boot-up-should-create-required-ai-directories.md`), 2 closed (`closed-` prefixed)
 - **Next milestones**: implement issue-management mechanism (feature/issue-management; design + plan in `ai/notes/issue-management-mechanism-design.md`; first issue `ai/issues/open-issue-management-mechanism.md`; also resolves the boot-up directory-creation issue); policies→skills rename (coordinate with TIER2 consolidation; analysis in `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`); local-first knowledge retrieval proposal; protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Procedure H (Grilling); Procedure I (Agent Document Review); sync AGENTS.md to other projects
@@ -72,3 +72,8 @@ STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runboo
 - **Branch**: `master`, synced with origin at 2ead9bf at session start
 - **Summary**: Simplified the issue filename convention before implementation: priority/size dropped from the filename (mutable, so they stay in the `Severity`/`Size` header fields only), `ai/issues/open-P2-L-issue-management-mechanism.md` renamed to `open-issue-management-mechanism.md`, design note updated (filename table + a future-kanban note on reading `Severity`/`Size` from the header), live references updated in `notes.md`/`context.md`/`next-steps.md` (historical entries in `progress.md` and the daily-checkpoint file left untouched, since they describe what was true at the time). Also documented the checkpoint commit-hash one-commit lag as expected/benign (a commit can't record its own hash) with light one-line additions to `ai-policy-common.md`, `AGENTS.md` Proof-of-Load step (d), and README.md's context-health table.
 - **Key deliverables**: `ai/issues/open-issue-management-mechanism.md` (renamed); `ai/notes/issue-management-mechanism-design.md`; `ai/notes/notes.md`; `ai/policies/ai-policy-common.md`; `AGENTS.md`; `README.md`.
+
+## Latest Checkpoint: CP-2026-09-10-02
+- **Branch**: `master`, synced with origin at 37e31e5 at session start
+- **Summary**: Self-requested peer review of CP-2026-09-10-01 (`ai/code-review-reports/2026-09-10_11-08_review-01.md`, CHANGES REQUESTED) found 2 Major findings (protocol files edited without first fully loading `protocol-decisions.md`; no ADR entry added for the two decisions, breaking the file's established convention) and 3 Minor (two stale `context.md` bullets; inconsistent daily-checkpoint entry style). Fixed: `protocol-decisions.md` read in full (865 lines) and a new dated entry added; `context.md`'s "Branch" and "Daily checkpoints" bullets corrected; the CP-2026-09-10-01 daily-checkpoint entry rewritten to match the file's established Problem/Fix/Files-changed/Validation/Status structure.
+- **Key deliverables**: `ai/shared/project-knowledge/protocol-decisions.md`; `ai/state/context.md`; `ai/daily-checkpoints/2026-09-10.md`.
