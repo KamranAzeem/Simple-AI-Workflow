@@ -356,15 +356,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### Boilerplate removal
 - Duplicate `Bootstrap Entry` and `Path Resolution` lines removed from all 11 domain policies. A global note in `ai-policy-common.md` applies to all policies as replacement.
 
-## Key configuration values confirmed this session
-
-- **Validator version**: v4.5
-- **Git state**: master, 11 commits ahead of origin, NOT pushed
-- **Policy count**: 14 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher)
-- **Sync scripts tested**: migration from old `ai/` layout → root verified end-to-end
-
----
-
 ## 2026-07-04 — Session CP-2026-07-04-04 (final checkpoint — release and cleanup)
 
 ### v2.0.0 GitHub release
@@ -411,15 +402,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Issue 2**: Hardcoded "Claude, Anthropic" in the example AI-disclosure statement (line 155). Changed to `[Tool/Vendor]` placeholder so the template works regardless of which AI assistant the user runs.
 - **Validation**: All 8/8 checks pass after fixes.
 
-## Key configuration values (end of session)
-
-- **Validator version**: v4.5
-- **Commits since v1.0.0**: 40
-- **Git state**: master, 22 commits ahead of origin, NOT pushed
-- **Tags**: v1.0.0 (old), v2.0.0 (current)
-- **Release**: v2.0.0 published on GitHub
-- **Policy count**: 15 modular policies
-
 ## 2026-07-28 — Ad hoc protocol-developer session (code review scope discipline)
 
 ### PR review added as a trigger phrase for Procedure D
@@ -434,7 +416,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Companion change**: Added a `## Not Checked` section to the report format template (between `Suggestions` and `Verdict`), so item 5 above is enforced by the report structure itself, not left as an unverified aspiration.
 - **Style note**: New prose in both files avoids em dashes per the Humanized Output rule in `ai-policy-common.md`, even though older content in this repo predates that rule and still uses them.
 - **Files changed**: `AGENTS.md` (Procedure D header), `ai/policies/ai-policy-code-review.md` (Scope Discipline section, Activated-by line, Not Checked report section), this file.
-- **Not done in this session**: No full checkpoint was run in this repo (this was a short protocol-developer edit made from a different project's session, not a `load context` session against Simple-AI-Workflow). No commit was made; changes are on disk only, pending the user's own review and commit.
 
 ## 2026-07-28 — Self-review of the above changes, and fix cycle (review-01 / review-02)
 
@@ -444,7 +425,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Fix applied**: `AGENTS.md` Procedure D gained a new Step 2 ("Resolve the PR (PR review only)": fetch remote refs, resolve source/target branches, diff source against target before scanning), with steps renumbered 1–6. `ai-policy-code-review.md` Iteration Protocol now opens with a re-fetch step for the PR case. The Role exits bullet now covers "or, for a PR review, when the PR is merged or closed." The Scoped bullet now points at Scope Discipline. The Report Format now documents the optional `review-01_PR53929.md` filename convention.
 - **Outcome (review-02, APPROVED)**: All 5 findings from review-01 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed. No new issues found.
 - **Files changed**: `AGENTS.md` (Procedure D), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), `ai/code-review-reports/2026-07-28_review-01.md` and `2026-07-28_review-02.md` (new), this file.
-- **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
 
 ## 2026-07-28 — Evidence-Based Reasoning (No-Assumption Rule) added to common policy
 
@@ -454,7 +434,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Why common policy, not code-review policy**: The user has seen this failure across many task types (migration plans, PR reviews, general analysis), not just code review. A narrow fix in `ai-policy-code-review.md` would not cover the general case. Common policy is always loaded, so the rule applies everywhere without needing a trigger phrase.
 - **Why placed next to CLI Command Accuracy**: That existing rule already implements a narrow version of the same idea (never guess subscription IDs, resource names — verify via live query or confirmed context). The new rule explicitly generalizes it: "the same failure mode ... generalized to every kind of claim, not just command flags and resource identifiers."
 - **Rule content**: (1) never invent people, teams, infrastructure, config values, file contents, or past decisions not backed by context/project knowledge/a live query, and never attribute statements or actions to people never mentioned; (2) verify before asserting, by checking active context, **Project AI Knowledge Directory**, and live codebase/environment; (3) if no evidence exists anywhere, say so plainly and ask the user, rather than filling the gap with a guess; (4) be ready to cite the source of any fact-based recommendation.
-- **Not done in this session**: No commit made yet; change is on disk only, pending the user's review and commit decision. `validate-protocol.sh` not extended with a new anchor check for this rule (not requested; existing 8 checks still pass).
+- **Validator**: `validate-protocol.sh` not extended with a new anchor check for this rule (not requested; existing 8 checks still pass).
 
 ## 2026-07-28 — Peer review of ai-policy-common.md, fix cycle (review-03 / review-04)
 
@@ -467,16 +447,12 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
   - Pre-existing em-dash count (34) left untouched, same rationale as prior sessions: predates the Humanized Output rule, out of scope for a targeted fix pass.
 - **Outcome (review-04)**: All Major and addressable Minor findings from review-03 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed (with the new marker check now active and passing).
 - **Files changed**: `ai/policies/ai-policy-common.md` (markers, word-list, paragraph split), `support-files/validate-protocol.sh` (v4.5 → v4.6, new marker check in Step 6), `ai/code-review-reports/2026-07-28_review-03.md` and `2026-07-28_review-04.md` (new), this file.
-- **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
 
 ## 2026-07-28 — Documentation sync for today's Procedure D / policy changes, then commit
 
-### README, workflow-guide, and slides updated to match Procedure D and policy changes
-- **Decision**: Updated `README.md` (§9 Peer Review Mode), `docs/workflow-guide.md` (§12 Peer Review Mode), `docs/simple-ai-workflow-slides.md` (feature bullet list and the "On-Demand Peer Review" slide), and `docs/ai-customization-guide.md` (Peer Review note) to reflect today's changes: the `"PR review"` trigger phrase, PR resolution mechanics (fetch latest, resolve source/target branches, diff source against target), the Scope Discipline behavior (don't stop at the diff), and the new `Not Checked` report section.
-- **Why**: These docs already documented Peer Review Mode in detail before today's changes; leaving them saying only `"peer review"` with diff-only scanning would make them stale and misleading relative to the actual protocol behavior.
-- **Not touched**: `docs/protocol-validation-system.md` (high-level design blueprint, does not enumerate specific checks or version numbers, so the new READ-ONLY marker check and v4.6 bump did not require an edit there). No other doc files referenced the old wording.
-- **Verification**: `validate-protocol.sh` re-run in full after doc edits, 8/8 passed.
-- **Session-end state**: All of today's work (Procedure D PR mechanics, Scope Discipline, Evidence-Based Reasoning rule, READ-ONLY marker fix + validator hardening, four review reports, and this documentation sync) is being committed to `master` in one commit at the user's explicit request.
+### README, workflow-guide, and slides synced; today's work committed
+- Updated `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and `docs/ai-customization-guide.md` to reflect today's changes (the `"PR review"` trigger phrase and mechanics, Scope Discipline, the `Not Checked` report section), since they already documented Peer Review Mode in detail and would otherwise go stale. `docs/protocol-validation-system.md` left untouched (high-level blueprint, doesn't enumerate specific checks). Validator re-run in full, 8/8 passed.
+- All of today's work (PR mechanics, Scope Discipline, Evidence-Based Reasoning rule, READ-ONLY marker fix + validator hardening, four review reports, this doc sync) committed to `master` in one commit at the user's explicit request.
 
 ## 2026-07-28 — Procedure E hardened against silent skip (ad hoc protocol-developer session)
 
@@ -490,7 +466,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Validator impact**: None. `support-files/validate-protocol.sh` only checks the `### PROCEDURE E: Post-Condensation Recovery` header string, which was not touched. Re-run in full after the change: 8/8 passed.
 - **Peer review**: review-05 (CHANGES REQUESTED, 2 Minor) flagged new-prose em dashes in the added text, against the Humanized Output rule in `ai-policy-common.md`. Fixed (colon and parentheses substituted). review-06 (APPROVED).
 - **Files changed**: `AGENTS.md` (Procedure E), `ai/code-review-reports/2026-07-28_13-10_review-05.md` and `2026-07-28_13-12_review-06.md` (new), this file.
-- **Not done in this session**: No commit made yet; change is on disk only, pending the user's review and commit decision. Docs (`README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`) were checked for stale references to the removed suppression behavior via targeted grep — none found, so no doc updates were required this time.
+- **Docs check**: `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md` checked for stale references to the removed suppression behavior via targeted grep — none found, so no doc updates were required.
 
 ## 2026-07-28 — Stable-title identifier, title-only validator anchor, and per-tool external reload trigger
 
@@ -510,7 +486,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Community guide**: Added `docs/post-condensation-reload-trigger-setup.md` — a straightforward, assistant-agnostic guide with one generic trigger block and a per-assistant placement table (GitHub Copilot, Claude Code, claude.ai, ChatGPT, KiloCode, Kimi, Gemini CLI/Code Assist, AntiGravity, plus a generic fallback), a plain-language explanation of why the note is a necessary evil, and the human backstop. Per-assistant paths are given with a caveat that names/paths drift and the user should consult their assistant's docs.
 - **Human backstop**: Documented across the setup guide, `docs/workflow-guide.md` §7, and `README.md`: after any summary, ask "did you run the post-condensation reload?" before trusting the next answer. Framed as the acknowledged final safety net, not a failure.
 - **Docs updated**: `README.md` (delabeled the two context-rot table cells from "Procedure E" to the title, added a habit bullet, a Session Resume bullet linking the setup guide, and a Docs-and-Slides index entry for the new guide), `docs/workflow-guide.md` (§7 new subsection), `docs/simple-ai-workflow-slides.md` (honest-ceiling caveat on the Post-Condensation Recovery defence bullet plus a reload-backstop habit; the live Google Slides deck is already behind the markdown and will be reconciled separately, not this session), this file.
-- **Not done in this session**: No commit made yet; all changes remain on disk pending the user's review and commit decision.
 
 ## 2026-07-31 — Procedure E renamed to Post-Compaction Recovery and simplified to an additive reload
 
@@ -824,7 +799,6 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `support-files/validate-protocol.sh`: v4.6 → v4.7, new anchor check for `Write Daily Checkpoint File` in section 1 alongside the existing Sliding Horizon Shield check.
 - Docs synced: `docs/workflow-guide.md` §14 gained a **Daily Checkpoint File** subsection; `docs/simple-ai-workflow-slides.md`'s "atomic writes and a sliding horizon" slide gained a matching bullet.
 - **Files changed**: `AGENTS.md` (Procedure C), `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md` (Status: Resolved), this file.
-- **Not done in this session**: no commit made yet; pending validator re-run, peer review, and the user's commit decision.
 
 ---
 
@@ -863,3 +837,20 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ### Process note (self-correction)
 - Both changes above were made and committed (`37e31e5`) without first fully loading this file, and without adding an entry to it — a direct miss of the Protocol Developer Mode mandate ("MUST fully load protocol-decisions.md ... not JIT-optional") that this same file documents (2026-06-19 entry, above). Caught by a self-requested peer review (`ai/code-review-reports/2026-09-10_11-08_review-01.md`, CHANGES REQUESTED, 2 Major findings) and fixed in this same session: this file now fully loaded and this entry added.
 - **Files changed**: `ai/issues/open-issue-management-mechanism.md` (renamed), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/notes.md`, `ai/state/context.md`, `ai/state/next-steps.md`, `ai/policies/ai-policy-common.md`, `AGENTS.md`, `README.md`, this file.
+
+---
+
+## 2026-09-10: This file consolidated — stale transient status notes removed
+
+### Problem
+- The user asked why this file had grown so long (865 lines at the time) and requested consolidation without losing value. This file has no horizon shield (unlike `ai/state/progress.md`), so every entry accumulates forever; several entries carried mid-session bookkeeping that had no lasting decision value once the work was committed.
+
+### Decision
+- Removed 7 stale "Not done in this session ... pending the user's review and commit decision" bullets (2026-07-28 x6, 2026-09-09 x1) — all described in-flight commit status that had long since resolved; kept any genuinely useful fact embedded in the same bullet (e.g. "validator not extended, not requested" was kept, reworded without the stale commit framing).
+- Removed 2 "Key configuration values" snapshot blocks (2026-07-04 sessions) — stale point-in-time git-ahead-counts ("22 commits ahead of origin, NOT pushed") duplicated by the adjacent release entry, no unique decision content.
+- Condensed the "Documentation sync ... then commit" 2026-07-28 entry from a 7-line multi-bullet form to 2 lines — it recorded no new decision, only which docs were synced and that the day's work was committed.
+- **What was explicitly NOT done** (scoped out by the user): no structural Horizon Shield added to this file, and no merging of the larger multi-entry same-day streams (e.g. the seven 2026-07-28 entries) — each of those carries distinct rejected-alternative or rationale detail not safe to compress without a slower, dedicated pass.
+- **Result**: 865 → 839 lines before this entry (26 lines removed, ~3%). No decision, rejected alternative, or reversal was dropped.
+
+### Files changed
+- `ai/shared/project-knowledge/protocol-decisions.md` (this file).
