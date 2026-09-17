@@ -58,3 +58,21 @@ the filename (they're mutable, already live in the `Severity`/`Size` header
 fields, and encoding them in the name forced a rename on every reprioritize).
 Filename is now `<status>-<slug>.md`. File renamed to
 `open-issue-management-mechanism.md`. Design note updated to match.
+
+---
+
+2026-09-17
+
+There is a new observation in issue management, especially related to the filenames.
+
+In the early design, I thought that having a status prefix in the filename would be easier for both the user and the AI. However, as more and more issues are being created, the status prefix is becoming an eyesore, a cognitive overload. The user going through the tickets have to visually filter out "open-" and "closed-" , and only then the user is able to make sense of the slug. This is tiring.
+
+I propose that the issues directory has a "closed" subdirectory inside it, where the closed tickets live without a need for a "closed-" prefix. The open tickets can simply live in the main ai/issues/ directory without the "open-" prefix. The proof of load can simply scan the ai/issues/ directory and list all tickets and index them for JIT.
+
+When an issue is "not open" , it can then be moved into the closed subdirectory'. This means there is no juglary with the filename at any stage of the ticket.
+
+For kanban board (future), the fields are still there in the tickets, that can be referenced. The kanban mechanism can scan the ai/issues/closed directory too, and show them under the "done/closed" column. This is for later.
+
+---
+2026-09-17
+Decisions locked and implemented on `feature/issue-management`. Tickets now live in `ai/issues/{open,in-progress,closed}/`. A ticket's location is its status, the filename is its slug only, and there is no status prefix or suffix. Filenames never change; moving between states is a directory move. Proof-of-Load indexes `open/` and `in-progress/` by filename and line count, and omits the closed count. The three directories and the issue template are created at bootstrap and ensured during load-context. A new issue-management procedure ships in `AGENTS.md`, the mechanism is defined in `ai-policy-common.md`, and the full template lives in `ai/shared/project-knowledge/issue-template.md`. Moves to `closed/` when the branch merges.

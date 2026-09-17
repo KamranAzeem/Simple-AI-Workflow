@@ -1,4 +1,12 @@
-# Checkpoint procedure never writes a daily-checkpoint file
+Reported: 2026-09-08
+Reporter: Kamran Azeem
+IssueType: Defect/Bugfix
+Severity: Human-to-decide
+Size: Human-to-decide
+URL:
+Summary: Procedure C never wrote a daily-checkpoint file, so state files raced ahead of ai/daily-checkpoints/
+
+Description:
 
 ## Problem
 
@@ -64,16 +72,18 @@ Files likely touched:
 Requires Protocol Developer Mode (load `protocol-decisions.md` first) and human
 approval before committing, per `AGENTS.md` TIER 2.
 
-## Status
-
-Resolved 2026-09-09. Added an explicit "Write Daily Checkpoint File" step to Procedure C
-(new step 2, between the Atomic Write Protocol and Log Condensation; Log Condensation,
-Update Project Knowledge, and Context Re-affirmation renumbered to 3/4/5). Uses this
-repo's own established convention (`YYYY-MM-DD.md`, one file per day, one `## CP-<ID>`
-section appended per checkpoint) rather than the `YYYY-MM-DD-NN.md` per-checkpoint naming
-from the [redacted] example, since that convention was never actually adopted here. Also
-updated: `ai-policy-common.md` (Daily Checkpoint File Mandate bullet), `validate-protocol.sh`
-(v4.6→v4.7, new anchor check), `docs/workflow-guide.md` §14, `docs/simple-ai-workflow-slides.md`.
-See `protocol-decisions.md` (2026-09-09 entry) for the full record. Committed and pushed as f716105.
-
 Originally reported by Kamran during an [redacted] project session, 2026-09-08.
+
+---
+2026-09-09
+Resolved. Added an explicit "Write Daily Checkpoint File" step to Procedure C
+(new step 2, between the Atomic Write Protocol and Log Condensation; Log
+Condensation, Update Project Knowledge, and Context Re-affirmation renumbered to
+3/4/5). Uses this repo's own established convention (`YYYY-MM-DD.md`, one file per
+day, one `## CP-<ID>` section appended per checkpoint) rather than the
+`YYYY-MM-DD-NN.md` per-checkpoint naming from the [redacted] example, since that
+convention was never actually adopted here. Also updated: `ai-policy-common.md`
+(Daily Checkpoint File Mandate bullet), `validate-protocol.sh` (v4.6→v4.7, new
+anchor check), `docs/workflow-guide.md` §14, `docs/simple-ai-workflow-slides.md`.
+See `protocol-decisions.md` (2026-09-09 entry) for the full record. Committed and
+pushed as f716105.

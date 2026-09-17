@@ -81,7 +81,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### PROCEDURE A: When User says "load context"
 
-**Safety Barrier**: This procedure is strictly READ-ONLY. AI is forbidden from modifying any file content during this phase.
+**Safety Barrier**: This procedure is read-only with one narrow, deterministic exception. AI must not modify the content of any existing file during this phase. The only permitted writes are the idempotent creation of missing mandatory directories and the missing issue template described in Step 2. Every other action is read-only.
 
 0.  **Customization Discovery**: Check for **Project Customization File** at project root (`ai-customization.md`):
     - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory`**. If the section is missing, inform the user and stop.
@@ -92,7 +92,11 @@ The following short forms are recognized as equivalents to their canonical direc
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
     - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
     - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
-    Verify **Project Coordination File** exists. Only report missing items — do not create them.
+    Verify **Project Coordination File** exists.
+    Then ensure the mandatory directories exist. Run one idempotent `mkdir -p` over this fixed path list, and report any directory that had to be created:
+    - `ai/artifacts/`, `ai/code-review-reports/`, `ai/daily-checkpoints/`, `ai/issues/`, `ai/issues/open/`, `ai/issues/in-progress/`, `ai/issues/closed/`, `ai/notes/`, `ai/pending/`, `ai/plans/`, `ai/policies/`, `ai/policies/compliance/`, `ai/secrets/`, `ai/shared/`, `ai/shared/handoffs/`, `ai/shared/project-knowledge/`, `ai/state/`
+    - Do not branch, prompt, or stall on silent output. `mkdir -p` is safe and silent when the directory already exists.
+    Then ensure `ai/shared/project-knowledge/issue-template.md` exists. If and only if it is missing, create it from the compact field list in `ai-policy-common.md`. Never overwrite it.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents — excluding compressed and archive files per the **Archive File Exclusion** rule in TIER 2. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
 4.  **Loading**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) are NOT loaded here — they are loaded in full in Step 5.
@@ -100,7 +104,7 @@ The following short forms are recognized as equivalents to their canonical direc
 5.  **Knowledge Loading**: This is a dedicated required step — do NOT merge it with Step 4.
     - **Global Knowledge** (from **Global AI Knowledge Directory**): Load the FULL TEXT of every file. This set is intentionally small, so a full load is cheap and removes the risk of the AI guessing at lessons it never read. Do NOT index-only.
     - **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories): Project Knowledge remains subject to **Token Rationing** — these files can be large (e.g. historical repo-scan snapshots or archives). Run a shell command (`find` or `ls -R`) to discover all filenames and record paths, filenames, and apparent technical domains as a reference index. **DO NOT** load the full text of any Project Knowledge file at boot time; load it on demand when an active task requires it.
-    - **Project Issues** (from **Project Issues Directory**): Index by filename + line count only, excluding any file prefixed `closed-`.
+    - **Project Issues** (from **Project Issues Directory**): Index `open/` and `in-progress/` by filename + line count only. Files under `closed/` are not indexed at boot.
     If a directory is completely empty, explicitly note it in your state tracking.
 6.  **Policy Loading**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
@@ -118,12 +122,12 @@ The following short forms are recognized as equivalents to their canonical direc
     - (d) Git delta check since the last hash recorded in `ai/state/context.md`. If live HEAD is exactly one commit ahead and that commit is the one which wrote the recorded hash, state this is expected/benign (a commit can't record its own hash) — do not treat it as drift. Flag anything beyond that.
     - (e) All files **indexed** from the **Project AI Knowledge Directory** (filenames and apparent domains — not read in full), or an explicit confirmation that it was empty.
     - (f) For each **Project AI State File**: line count and most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`), read fresh from file content.
-    - (g) Open issue count and filenames with line counts from the **Project Issues Directory** (files not prefixed `closed-`), or an explicit confirmation that none are open.
+    - (g) Open and in-progress issue filenames with line counts from the `open/` and `in-progress/` directories under the **Project Issues Directory**, or an explicit confirmation that none are open.
 
 ### PROCEDURE B: When Repo is Empty (Bootstrap)
 
-1.  **Audit directories**: Run Procedure A, Step 2 (Structural Audit) to identify missing directories and files.
-2.  **Create missing directories and files**: Run `mkdir -p` for all directories found missing in the audit, and create the **Project Coordination File** if it is missing.
+1.  **Ensure directories**: Run Procedure A, Step 2 (Structural Audit). It audits and idempotently creates the mandatory directories and the issue template.
+2.  **Create missing files**: Create the **Project Coordination File** if it is missing.
 3.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
 4.  **Initialize State Files**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`, and an initial daily checkpoint.
 5.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
@@ -210,6 +214,18 @@ Then confirm in one or two lines: the Active Expertise and Traits reloaded, the 
 1.  Load `ai/policies/ai-policy-codebase-examination.md` for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
 2.  Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
 3.  Return to normal role when the examination session concludes.
+
+### PROCEDURE H: When the user says "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues"
+
+1.  **Load the mechanism**: The issue-management rules live in `ai-policy-common.md`, which is always loaded. There is no separate policy file and no extra load step.
+2.  **Locate the ticket**: Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No file sits directly under `ai/issues/`.
+3.  **Act on the request**:
+    - **Create**: write a new ticket under `ai/issues/open/` using the format in `ai/shared/project-knowledge/issue-template.md`. AI-initiated creation is immediate and never waits on a human; set `Severity`/`Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them.
+    - **Start work**: move the ticket file from `open/` to `in-progress/` (for example `git mv` in a repository that tracks `ai/`).
+    - **Close**: move the ticket to `closed/`, append a dated update section, and update any related project knowledge. A ticket reaches `closed/` only when its fix is merged.
+    - **Reopen**: move the ticket from `closed/` back to `open/`.
+    - **List**: read `ai/issues/open/` and `ai/issues/in-progress/` and report filenames. This action is read-only.
+4.  **Return to normal role** when the issue action is complete.
 
 ---
 

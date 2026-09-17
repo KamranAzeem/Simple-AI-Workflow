@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.8 ---"
+echo "--- Starting Protocol Validation v4.9 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -42,8 +42,12 @@ if ! grep -q "Write Daily Checkpoint File" AGENTS.md; then
     echo "Error: Write Daily Checkpoint File step missing from Procedure C in AGENTS.md."
     exit 1
 fi
-if ! grep -q "excluding any file prefixed \`closed-\`" AGENTS.md; then
-    echo "Error: Project Issues indexing step (closed- prefix convention) missing from Procedure A in AGENTS.md."
+if ! grep -q 'Index `open/` and `in-progress/`' AGENTS.md; then
+    echo "Error: Project Issues indexing step (three-directory status convention) missing from Procedure A in AGENTS.md."
+    exit 1
+fi
+if ! grep -q '### PROCEDURE H:' AGENTS.md; then
+    echo "Error: Procedure H (Issue Management) anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
@@ -136,7 +140,8 @@ echo "Global structure checked."
 # 4. Project Structure
 echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
-    "artifacts" "code-review-reports" "daily-checkpoints" "issues" "notes"
+    "artifacts" "code-review-reports" "daily-checkpoints" "issues"
+    "issues/open" "issues/in-progress" "issues/closed" "notes"
     "pending" "plans" "policies" "policies/compliance" "secrets"
     "shared" "shared/handoffs" "shared/project-knowledge" "state"
 )
@@ -146,6 +151,14 @@ for sub in "${PROJECT_SUBS[@]}"; do
         exit 1
     fi
 done
+if find ai/issues -maxdepth 1 -type f -name '*.md' | grep -q .; then
+    echo "Error: ticket files must live under ai/issues/{open,in-progress,closed}/, not directly under ai/issues/."
+    exit 1
+fi
+if [ ! -f "ai/shared/project-knowledge/issue-template.md" ]; then
+    echo "Error: Mandatory issue template ai/shared/project-knowledge/issue-template.md missing."
+    exit 1
+fi
 echo "Project structure verified."
 
 # 5. Coordination Board
@@ -215,4 +228,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.8 Completed Successfully ---"
+echo "--- Protocol Validation v4.9 Completed Successfully ---"

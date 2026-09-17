@@ -1,12 +1,13 @@
-# Procedure I: Agent Document Review (design note)
+# Agent Document Review Procedure (design note)
 
 > Split from `ai/notes/notes.md` (mattpocock repo analysis, 2026-08-27) on 2026-08-31 for independent work.
+> Letter reservation dropped 2026-09-17 (no letter assigned until this is implemented).
 
 Examined three repos: `mattpocock/skills`, `mattpocock/dictionary-of-ai-coding`, `mattpocock/sandcastle`. Full analysis saved to project knowledge (three files dated 2026-08-27). The recommendation below is the design output — save here and revisit in a day or two.
 
 **Core idea**: add two new on-demand procedures, following the exact same pattern as Procedure D (code review) and Procedure G (codebase examination): a dedicated `ai-policy-*.md` loaded on demand via a trigger phrase in a new AGENTS.md Procedure. AI adopts a specific role, does the work, exits the role. Zero always-loaded bloat.
 
-## Proposed Procedure I: Agent Document Review
+## Proposed Agent Document Review Procedure
 
 Trigger: user says "review this document for agents" or "agent document review"
 

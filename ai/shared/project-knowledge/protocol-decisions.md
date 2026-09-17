@@ -577,7 +577,6 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Files changed**: `AGENTS.md` (TIER 1 anchor, Procedure A Step 2 structural audit + Step 7(d), Procedure B Step 4, Procedure C Steps 1–2, Procedure E), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
 - **Branch**: `feature/state-files-directory` — not merged to master (user handles merge/push).
 
-
 ---
 
 ## 2026-08-09 — Session CP-2026-08-09-01
@@ -854,3 +853,33 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Files changed
 - `ai/shared/project-knowledge/protocol-decisions.md` (this file).
+
+---
+
+## 2026-09-17: Issue management mechanism implemented (status moves from filename prefix to directory)
+
+### Problem
+- The 2026-09-09 formalization made `ai/issues/` a flat directory where status lived in a filename prefix (`open-`, `in-progress-`, `closed-`). In real use the prefix became visual noise on every ticket: a reader had to strip it before the slug made sense. It also forced a rename on every state change, and the middle `in-progress-` state added a second rename. A 2026-09-17 observation recorded on the implementation issue proposed moving status into the directory structure instead.
+
+### Decision
+- **Status is location.** Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No `Status` field lives in the file, and no file sits directly under `ai/issues/`.
+- **Filename is the slug only.** Lowercase kebab-case, no prefix or suffix, and it never changes. Moving between states is a directory move (`git mv` where the repo tracks `ai/`). Reopening moves a ticket back to `open/`.
+- **Lifecycle.** open issue, then implementation, then closed issue plus a related project-knowledge update. A ticket reaches `closed/` only when its fix is merged.
+- **Proof-of-Load** indexes `open/` and `in-progress/` by filename and line count, and does not index `closed/`. The closed count is not required.
+- **Bootstrap and load-context ensure** the three directories and `ai/shared/project-knowledge/issue-template.md` when missing. The Procedure A read-only Safety Barrier was amended to permit exactly that creation and nothing else.
+- **A new issue-management procedure** ships in `AGENTS.md` TIER 3, triggered by "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues".
+- **Template split.** The mechanism and a compact field list live in `ai-policy-common.md` (always loaded, so the template ensure step is known at load-context). The full formatted template lives in `ai/shared/project-knowledge/issue-template.md`. Field names and enums are the contract; formatting may vary; the file is created only when missing and never overwritten.
+- **Validator v4.8 to v4.9.** Replaced the `closed-` prefix anchor with the open/in-progress indexing anchor, added the three status directories and a presence check for the issue template to `PROJECT_SUBS`, added a guard against `*.md` files directly under `ai/issues/`, and added a `PROCEDURE H:` anchor check.
+
+### Reversals recorded
+- **Reverses the 2026-09-09 decision that rejected subdirectories in favor of a flat `closed-` filename prefix.** That decision weighed a directory-existence question against no benefit. Two things changed: real usage showed the prefix is a per-ticket readability cost, and the three-state lifecycle needs a home for `in-progress`. The directory-existence question is resolved by the ensure step above.
+- **Reverses the 2026-07-04 decision that Procedure A Step 2 must only report missing directories and never create them.** That decision was made because the AI could stall on silent `mkdir -p` output. The new step preserves the intent: one deterministic, idempotent loop over a fixed path list, with an explicit instruction not to branch, prompt, or stall on silent output.
+- **Supersedes the 2026-09-10 issue-filename simplification decision.** That decision removed priority and size from the filename while keeping a status prefix. Status no longer appears in the filename at all.
+- **Cites and deviates from the 2026-08-31 routing principle.** A triggered procedure should normally load its own self-contained policy. This mechanism stays in the always-loaded common policy because the template ensure step must be known during load-context, and only an always-loaded file carries that. Recorded as a conscious deviation, not an oversight.
+
+### Process note
+- Protocol Developer Mode: `protocol-decisions.md` was fully loaded before any protocol file was edited. The implementation plan was saved to `ai/plans/issue-management-mechanism-implementation-plan.md` and peer-reviewed before implementation (review-01 CHANGES REQUESTED, five Major findings resolved, then review-02 APPROVED).
+- The two pending procedure design notes (Grilling, Agent Document Review) dropped their informal H and I letter reservations and take letters when they are implemented, so that `PROCEDURE H` could be assigned to issue management.
+
+### Files changed
+- `AGENTS.md` (Procedure A Safety Barrier and Steps 2, 5, 7(g); Procedure B Steps 1 and 2; new `PROCEDURE H`), `ai/policies/ai-policy-common.md` (new Issue Management Protocol section), `ai/shared/project-knowledge/issue-template.md` (new), `support-files/validate-protocol.sh` (v4.9), the six tickets under `ai/issues/` (moved and given template headers), `ai/issues/in-progress/.gitkeep` (new), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed), `ai/notes/notes.md`, `ai/plans/issue-management-mechanism-implementation-plan.md` (new), state files, and this file.

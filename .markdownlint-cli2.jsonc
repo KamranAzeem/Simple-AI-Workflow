@@ -10,6 +10,10 @@
     "list-marker-space": false,
     "blanks-around-lists": false,
     "no-emphasis-as-heading": false,
-    "table-column-style": false
+    "table-column-style": false,
+    // Ticket files under ai/issues/ begin with a protocol-defined `Reported:` header block, not a heading.
+    "first-line-heading": false,
+    // protocol-decisions.md repeats `### Problem` / `### Decision` / `### Files changed` under different dated entries.
+    "no-duplicate-heading": { "siblings_only": true }
   }
 }

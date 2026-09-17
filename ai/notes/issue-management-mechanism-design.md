@@ -1,8 +1,10 @@
-# Issue Management Mechanism — Locked Design Decisions
+# Issue Management Mechanism: Locked Design Decisions
 
-Status: Locked 2026-09-09, revised 2026-09-10 (filename simplified before implementation).
+Status: Locked 2026-09-09. Revised 2026-09-10 (filename simplified) and
+2026-09-17 (status moved from a filename prefix to a directory).
 This note records the agreed design. The implementation issue is
-`ai/issues/open-issue-management-mechanism.md`.
+`ai/issues/in-progress/issue-management-mechanism.md`, and the implementation
+plan is `ai/plans/issue-management-mechanism-implementation-plan.md`.
 
 ## Purpose
 
@@ -11,65 +13,49 @@ markdown files, usable by the AI and later parsed into a kanban board and
 exported to GitHub/GitLab/Jira. The protocol must stay light: one template,
 one naming convention, one status mechanism.
 
-## Filename = single source of truth for status
+## Location is the single source of truth for status
 
-No `Status` field lives inside the file. Status is derived entirely from the
-filename prefix, so the scanner and Proof-of-Load never open a file to learn its
-state (avoids the Token Rationing cost and the text-drift risk that motivated the
-CP-2026-09-09-02 rejection of a content Status field).
+No `Status` field lives inside the file. Status comes entirely from which
+directory the ticket sits in, so the scanner never opens a file to learn its
+state. This avoids the Token Rationing cost and the text-drift risk that
+motivated the CP-2026-09-09-02 rejection of a content Status field.
 
-Filename pattern: `<status>-<slug>.md`
+```text
+ai/issues/
+  open/          tickets not started
+  in-progress/   tickets being worked
+  closed/        tickets done and merged
+```
 
-| Status | Prefix | Example |
-|---|---|---|
-| Open (not started) | `open-` | `open-issue-management-mechanism.md` |
-| In progress | `in-progress-` | `in-progress-issue-management-mechanism.md` |
-| Closed | `closed-` | `closed-issue-management-mechanism.md` |
+- Filename: `<slug>.md`, lowercase kebab-case, self-explanatory, capped around
+  40-50 chars. No status prefix or suffix. The filename never changes.
+- No file sits directly under `ai/issues/`.
+- Moving between states is a directory move (`git mv` when the repo tracks
+  `ai/`). Reopening moves a ticket from `closed/` back to `open/`.
+- Proof-of-Load lists `open/` and `in-progress/` by filename and line count, and
+  does not index `closed/`.
+- Future kanban: the three directories map to three columns. Priority and size
+  come from the header fields, read only when the board is built.
 
-- Priority and size are NOT in the filename. They live only in the `Severity`/
-  `Size` header fields (below) because they are mutable — encoding them in the
-  filename would force a rename every time either value changes.
-- Slug: compressed summary, kebab-case, self-explanatory, capped around 40-50
-  chars, allowed char set only.
-- Scanner / Proof-of-Load lists **open + in-progress** by filtering out
-  `closed-*.md` files. This is unchanged by dropping priority/size from the name.
-- Future kanban: to group/annotate by priority or size, the board builder opens
-  each open/in-progress file and reads `Severity`/`Size` from its header. Not
-  needed until the kanban board is actually built.
-
-## Lifecycle (now the standing flow)
+## Lifecycle (the standing flow)
 
 `open issue -> implementation -> closed issue + update related project-knowledge`
 
-- Create: file with the template, using the naming convention.
-- In progress: rename prefix `open-` -> `in-progress-`.
-- Closed: rename prefix to `closed-`, append a dated update section, and update
-  any related project-knowledge files.
-- All renames are in place (`git mv` in this repo); reopening strips the prefix.
+- Create: file with the template under `open/`.
+- Start: move to `in-progress/`.
+- Close: move to `closed/`, append a dated update section, and update related
+  project knowledge. A ticket reaches `closed/` only when its fix is merged.
+- Reopen: move back to `open/`.
 
 ## Issue file template
 
-Header block is plain `Key: Value` lines, then a blank line, then the
-Description section, then zero or more `---`-separated dated update sections.
-Dates are `YYYY-MM-DD` everywhere (no other format).
+The header block is plain `Key: Value` lines, then a blank line, then
+`Description:`, then zero or more `---`-separated dated update sections. Dates
+are `YYYY-MM-DD`. The full template lives at
+`ai/shared/project-knowledge/issue-template.md`.
 
-```
-Reported: 2026-09-09
-Reporter: Kamran Azeem / Kilo
-IssueType: Feature
-Severity: P2
-Size: L
-URL:
-Summary: <one line, readable>
-
-Description:
-
-<multiline detail, steps to replicate, what was tried>
-
----
-2026-09-09
-<update, progress, resolution>
-```
+Fields: `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`,
+`Description`.
 
 ### Field rules
 
@@ -77,72 +63,50 @@ Description:
 - `Reporter`: username / AI assistant name.
 - `IssueType` enum: `Feature`, `Defect/Bugfix`, `Improvement/Refactor`,
   `Documentation`, `Task`.
-- `Severity`: P1 (Must Have), P2 (Should Have), P3 (Could Have), P4 (Won't Have
-  / not an issue, no effort).
-- `Size`: S (2h), M (4h), L (8h), XL (too large, needs breakdown/grooming).
-- `URL`: mostly empty; filled when migrated to GitHub/GitLab/Jira.
-- `Summary`: one readable line, placed directly above the Description section.
-- `Status`: not a field — it is the filename prefix (see above).
-- On AI-initiated creation: `Severity`/`Size` are set to
-  `Human-to-decide (AI estimate: M)` and the human updates them later. The file
-  is always created immediately; creation never waits on a human.
+- `Severity`: `P1` (must have), `P2` (should have), `P3` (could have),
+  `P4` (will not do), or `Human-to-decide (AI estimate: Pn)`.
+- `Size`: `S` (about 2h), `M` (about 4h), `L` (about 8h), `XL` (needs
+  breakdown), or `Human-to-decide (AI estimate: <size>)`.
+- `URL`: empty until migrated to GitHub/GitLab/Jira.
+- `Summary`: one readable line, directly above `Description:`.
+- No `Status` field.
 
 ## Template location and propagation
 
-The **template format lives in `ai-policy-common.md`** (the common policy that
-defines the issue mechanism). On load-context / bootstrap, the AI writes that
-template into each project's `ai/shared/project-knowledge/issue-template.md`,
-then uses it for every new issue. There is no tracked repo template file; the
-format ships inside the always-loaded common policy and is instantiated per
-project. Keeping it out of `ai/issues/` prevents the AI from confusing it with a
-real issue and keeps the `ai/issues/` directory logic simple.
+The compact field list lives in `ai-policy-common.md`, so the always-loaded
+policy can drive creation. The full template lives in the project's
+`ai/shared/project-knowledge/issue-template.md`. The bootstrap and load-context
+procedures create the file when it is missing and never overwrite it. The field
+names and enums are the contract; formatting may vary between projects.
 
 ## AI-initiated creation
 
 When the AI identifies something that should be tracked, it drafts and creates
-the issue file immediately (never waits on a human). It fills `Reported`/
-`Reporter`/`IssueType`/`Summary` and best-guess `Severity`/`Size`, marking the
-latter two as `Human-to-decide (AI estimate: ...)`.
+the ticket immediately (never waits on a human). It fills `Reported`/`Reporter`/
+`IssueType`/`Summary` and best-guess `Severity`/`Size`, marking the latter two as
+`Human-to-decide (AI estimate: ...)`.
 
 ## Transfer to external VCS
 
 The `URL` field stays empty until a migration. Later the user may ask the AI to
-transfer issues from `ai/issues/` to GitHub/GitLab/Jira via CLI or web, filling
-the `URL` field on each migrated issue. This is a follow-on feature, not in the
-initial scope.
+transfer tickets to GitHub/GitLab/Jira, filling the `URL` field on each migrated
+ticket. This is a follow-on feature, not in scope.
 
-## Backfill
+## Routing-principle deviation
 
-When the mechanism is implemented, the existing issue files are converted to the
-new layout (add header block, rename to the status-prefixed convention). This
-covers the two `closed-` files already present and the open
-`ai/issues/boot-up-should-create-required-ai-directories.md`.
+The 2026-08-31 routing principle says a TIER 3 procedure should load its own
+self-contained policy. This mechanism keeps its rules in the always-loaded
+`ai-policy-common.md` instead, because the template ensure step must be known
+during load-context, and only an always-loaded file carries that. Recorded as a
+conscious deviation in `protocol-decisions.md`.
 
-## Implementation plan (for the implementing session)
+## Backfill and implementation plan
 
-Work on a feature branch (`feature/issue-management`). This plan is the source
-of truth so a later/fresh session does not need the original discussion.
+See `ai/plans/issue-management-mechanism-implementation-plan.md` for the backfill
+mapping table and the step-by-step implementation plan.
 
-1. `ai/policies/ai-policy-common.md` — add the issue mechanism: the field list,
-   naming/status-prefix convention, lifecycle (open -> implement -> closed +
-   update related project knowledge), AI-initiated creation rules, the template
-   format block, and the ensure-template-in-project-knowledge step.
-2. `AGENTS.md` — add a Procedure trigger in TIER 3 (Issue Management); document
-   the status-prefix convention; add the ensure-required-`ai/`-dirs-and-template
-   step to load-context/bootstrap (this also resolves the related
-   `boot-up-should-create-required-ai-directories.md` issue).
-3. `support-files/validate-protocol.sh` — add an anchor/check for the trigger and
-   template presence.
-4. `ai/shared/project-knowledge/protocol-decisions.md` — record the unified
-   design and the supersession of the CP-2026-09-09-02 "no status field" stance.
-5. Backfill: convert the two `closed-` files and the open
-   `boot-up-should-create-required-ai-directories.md` to the new layout.
-6. Run Procedure D (peer review) proactively, per the standing rule in
-   `ai-customization.md`.
-7. On approval, commit; then close the implementation issue and update related
-   project knowledge.
+## Alignment rules (from `protocol-decisions.md`)
 
-Alignment rules to observe (from `protocol-decisions.md`): policy files must not
-use procedure letters or step numbers; no markdown hyperlinks in policy files;
-author from the end-user project-root perspective; Protocol Developer Mode rules
-apply in this repo.
+Policy files must not use procedure letters or step numbers; no markdown
+hyperlinks in policy files; author from the end-user project-root perspective;
+Protocol Developer Mode rules apply in this repo.

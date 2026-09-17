@@ -131,6 +131,16 @@ They do NOT contain:
 
 All such content belongs in named project knowledge files. When creating or updating a ticket file, apply this boundary strictly. Existing content that violates it must be migrated to the appropriate knowledge file, not left in place.
 
+## Issue Management Protocol
+
+Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. The file itself carries no `Status` field, and no file sits directly under `ai/issues/`.
+
+- **Naming**: a ticket filename is its slug only, lowercase kebab-case, with no status prefix or suffix. Moving a ticket between states changes its directory, never its filename.
+- **Lifecycle**: open issue, then implementation, then closed issue plus an update to related project knowledge. A ticket reaches `closed/` only when its fix is merged. Reopening moves it back to `open/`.
+- **Fields**: `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Description`. `IssueType` is one of `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, `Task`. `Severity` is `P1` to `P4`. `Size` is `S`, `M`, `L`, or `XL`. `URL` stays empty until a migration to an external tracker.
+- **AI-initiated creation**: when the AI finds something worth tracking, it files the ticket immediately and never waits on a human. Where the user has not chosen `Severity` or `Size`, set `Human-to-decide (AI estimate: ...)`.
+- **Template file**: the full ticket template lives at `ai/shared/project-knowledge/issue-template.md`. The `AGENTS.md` bootstrap and load-context procedures create it from the compact field list above when it is missing, and never overwrite it.
+
 ## State File Ownership Protocol
 - **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.

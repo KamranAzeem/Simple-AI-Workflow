@@ -28,7 +28,7 @@ not fix it as part of booting; it just carries on with the task, so the drift
 persists across every session until someone raises it explicitly. This is the
 same "protocol defines a rule but nothing enforces it automatically" shape as
 the checkpoint-procedure-never-writes-daily-checkpoint-file issue
-(`ai/issues/closed-checkpoint-procedure-never-writes-daily-checkpoint-file.md`),
+(`ai/issues/closed/checkpoint-procedure-never-writes-daily-checkpoint-file.md`),
 applied to file ordering and size instead of file existence.
 
 Two concrete, related gaps:
