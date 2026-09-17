@@ -76,3 +76,7 @@ For kanban board (future), the fields are still there in the tickets, that can b
 ---
 2026-09-17
 Decisions locked and implemented on `feature/issue-management`. Tickets now live in `ai/issues/{open,in-progress,closed}/`. A ticket's location is its status, the filename is its slug only, and there is no status prefix or suffix. Filenames never change; moving between states is a directory move. Proof-of-Load indexes `open/` and `in-progress/` by filename and line count, and omits the closed count. The three directories and the issue template are created at bootstrap and ensured during load-context. A new issue-management procedure ships in `AGENTS.md`, the mechanism is defined in `ai-policy-common.md`, and the full template lives in `ai/shared/project-knowledge/issue-template.md`. Moves to `closed/` when the branch merges.
+
+---
+2026-09-17
+Closed: squash-merged to `master` as `be4e4b1` and pushed to `origin/master`. The ticket moved `open/` to `in-progress/` to `closed/`, following its own new lifecycle. Related project knowledge updated: `ai/policies/ai-policy-common.md`, `ai/shared/project-knowledge/issue-template.md`, `ai/shared/project-knowledge/protocol-decisions.md`.

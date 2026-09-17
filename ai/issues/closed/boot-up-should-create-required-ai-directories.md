@@ -87,3 +87,7 @@ when it is missing. The read-only Safety Barrier was amended to permit exactly
 those creates and nothing else. The 2026-07-04 intent is preserved: one
 deterministic loop, no prompt, no stall on silent output. Moves to `closed/`
 when the branch merges.
+
+---
+2026-09-17
+Closed: implemented and squash-merged to `master` as `be4e4b1`. Procedure A Step 2 now ensures the mandatory `ai/` directories and the issue template exist.

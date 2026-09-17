@@ -883,3 +883,6 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Files changed
 - `AGENTS.md` (Procedure A Safety Barrier and Steps 2, 5, 7(g); Procedure B Steps 1 and 2; new `PROCEDURE H`), `ai/policies/ai-policy-common.md` (new Issue Management Protocol section), `ai/shared/project-knowledge/issue-template.md` (new), `support-files/validate-protocol.sh` (v4.9), the six tickets under `ai/issues/` (moved and given template headers), `ai/issues/in-progress/.gitkeep` (new), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed), `ai/notes/notes.md`, `ai/plans/issue-management-mechanism-implementation-plan.md` (new), state files, and this file.
+
+### Merge record
+- Committed on `master` as `be4e4b1` (squash of `feature/issue-management`) and pushed to `origin/master` (`9eba9f0..be4e4b1`). The feature branch was deleted. Both tickets resolved by this work moved to `ai/issues/closed/`: `issue-management-mechanism.md` and `boot-up-should-create-required-ai-directories.md`.

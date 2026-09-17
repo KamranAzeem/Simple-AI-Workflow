@@ -9,13 +9,13 @@ STATE-FILE: KEEP LEAN. Short bullet items, one to two lines each. Not a runbook,
 - [ ] Create protocol design docs: Vision, PRD, and Delivery Ledger (ledger priority); ADRs = `protocol-decisions.md`; lean HLD, LLD per module (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 - [ ] Work the multi-assistant + build AI team design (note: `ai/notes/multi-assistant-workflow-design.md`).
 - [ ] Decide on and draft the refactoring/codebase-upgrade policy (note: `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`).
-- [ ] Implement Procedure H (Grilling) + `ai-policy-grilling.md` (design in notes.md, ~50 lines, no external deps).
-- [ ] Implement Procedure I (Agent Document Review) + `ai-policy-document-review.md` (design in notes.md, ~60 lines, no external deps).
+- [ ] Implement the Grilling procedure + policy (design in `ai/notes/grilling-procedure-design-note.md`, ~50 lines, no external deps).
+- [ ] Implement the Agent Document Review procedure + policy (design in `ai/notes/agent-document-review-procedure-design-note.md`, ~60 lines, no external deps).
 - [ ] Consolidate the TIER 2 vs Non-Negotiables always-on canonical home (note: `ai/notes/protocol-routing-principle-and-consolidation-follow-up.md`).
 - [ ] Policies→skills rename (ai/policies/→ai/skills/, `ai-policy-<name>.md`→`<name>.md`, Active Expertise→Active Skills; global dir + sync + loader + validator; change-request + HLD/LLD/ACs/Ledger; note: `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`). Coordinate with the TIER2 consolidation item above.
 - [ ] Local-first knowledge retrieval proposal (source precedence in Investigation Contract; not "RAG"; note: `ai/notes/local-first-knowledge-retrieval-proposal.md`).
-- [ ] Implement issue-management mechanism per `ai/notes/issue-management-mechanism-design.md` (feature/issue-management; from `ai/issues/open-issue-management-mechanism.md`; also resolves `ai/issues/boot-up-should-create-required-ai-directories.md`).
-- [ ] Design pass needed before implementing load-context order/bloat self-healing + daily-checkpoint STATE-FILE header — 6 open questions recorded in `ai/issues/open-state-file-order-and-bloat-self-healing.md` (Context Protection conflict, prompt-only vs scripted, thresholds, Procedure E scope, backfill, validator impact).
+- [ ] Horizon-shield `ai/state/progress.md` and `ai/state/context.md` (both past the Horizon Shield thresholds at CP-2026-09-17-01; needs user confirmation before archiving).
+- [ ] Design pass needed before implementing load-context order/bloat self-healing + daily-checkpoint STATE-FILE header — 6 open questions recorded in `ai/issues/open/state-file-order-and-bloat-self-healing.md` (Context Protection conflict, prompt-only vs scripted, thresholds, Procedure E scope, backfill, validator impact).
 
 ## Deferred
 - [ ] (Breaking) Procedure E precedence rework: let resume read the latest checkpoint's authoritative state, not only the summary.
