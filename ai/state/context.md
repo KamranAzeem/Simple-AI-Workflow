@@ -2,15 +2,15 @@
 # Project Context
 
 ## Current Status
-- **Milestone**: Self-consistency check shipped to master on 2026-09-19; the full backlog moved into issue tickets the same day
+- **Milestone**: Agent-facing documentation dimension added to peer review on 2026-09-19; the full backlog moved into issue tickets the same day
 - **Validator**: v5.0, 8/8 checks
 - **Policy count**: 16 modular policies
 - **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive
-- **Project knowledge**: `ai/shared/project-knowledge/` (JIT-indexed; `protocol-decisions.md` is the ADR store); ticket background lives here. `ai/notes/` holds only `notes.md`, an index
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 20 open, 1 in-progress, 7 closed
+- **Project knowledge**: `ai/shared/project-knowledge/` (JIT-indexed; `protocol-decisions.md` is the ADR store); ticket background lives here. `ai/notes/` holds only `notes.md`, the processing preamble
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 20 open, 0 in-progress, 8 closed
 
 ## Active Working Context
-- **Objective**: agent-document review folded into the peer-review policy (dimension 6); pending commit.
-- **Live decisions**: ticket background lives in Project Knowledge until the work is implemented; grilling and brainstorming are separate modes; agent document review is a peer-review dimension, not a separate procedure; external-tool dependency is Won't fix. Durable rationale in `ai/shared/project-knowledge/protocol-decisions.md`.
+- **Objective**: none active. The backlog is the open issues; take the next item from `ai/issues/open/`.
+- **Live decisions**: ticket background lives in Project Knowledge until the work is implemented; grilling and brainstorming are separate modes; agent document review is a peer-review dimension, not a separate procedure; policy instructions are concise what-focused text; external-tool dependency is Won't fix. Durable rationale in `ai/shared/project-knowledge/protocol-decisions.md`.
 - **Findings**: none pending.
-- **Next actions**: commit the pending work when the user approves.
+- **Next actions**: none required; review the open tickets when ready.

@@ -25,4 +25,4 @@ Acceptance criteria:
 
 ---
 2026-09-19
-Folded into the peer-review policy instead of a standalone procedure; implemented dimension 6 with examples. Pending commit and merge.
+Folded into the peer-review policy instead of a standalone procedure; implemented dimension 6 with examples. Merged and pushed on 2026-09-19. Ticket closed.

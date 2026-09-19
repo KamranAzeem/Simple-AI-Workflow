@@ -1047,6 +1047,9 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ### Files changed
 - `ai/policies/ai-policy-code-review.md` (dimension 6), `ai/issues/in-progress/agent-document-review-procedure.md`, `ai/notes/notes.md`, this file.
 
+### Merge record
+- Committed on `master` as `6a96da7` (the feature), with the backlog filing as `2ebac7f` (chore), and pushed to `origin/master` (`1f142ad..6a96da7`). The ticket `agent-document-review-procedure.md` moved to `ai/issues/closed/`.
+
 ---
 
 ## 2026-09-19: Policy instructions are concise what-focused text
