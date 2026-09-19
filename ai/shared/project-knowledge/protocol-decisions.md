@@ -951,3 +951,109 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Committed on `master` as `5f17b65` (squash of `feature/self-consistency-check`) on 2026-09-19; not pushed to origin. The feature branch was deleted. The ticket moved to `ai/issues/closed/`.
+
+---
+
+## 2026-09-19: Backlog triage into issue tickets
+
+### Context
+- The user reviewed the pending notes and asked for a list of open topics, then directed that actionable items be converted into tickets under `ai/issues/`, with estimates, and that the converted notes be cleared to reduce clutter.
+
+### Tickets filed (all 2026-09-19)
+- `grilling-procedure.md`: Feature, P3, M. Includes the open decision on grilling vs brainstorming for reaching a shared design.
+- `agent-document-review-procedure.md`: Feature, P3, M.
+- `kilo-code-documentation.md`: Documentation, P4, S.
+- `policies-to-skills-rename.md`: Improvement/Refactor, P2, L.
+- `refactoring-and-upgrading-policy.md`: Feature, P3, M.
+- `multi-assistant-workflow-and-ai-team.md`: Feature, P3, XL.
+- `dictionary-vocabulary-concepts-evaluation.md`: Task, P4, S.
+- `procedure-naming-readability.md`: Improvement/Refactor, P3, L.
+- `readme-progressive-disclosure-note.md`: Documentation, P4, S.
+- `external-tool-dependency-wont-fix.md`: Task, P4, S, filed directly in `closed/` as Won't fix.
+
+### Knowledge relocated (not deleted)
+- `multi-assistant-workflow-design.md` and `refactoring-and-upgrading-best-practices-2026-08-25.md` moved from `ai/notes/` to `ai/shared/project-knowledge/`, each with a "Tracked by" pointer to its ticket. The design and research detail is preserved; only the notes-directory clutter is removed.
+
+### Notes deleted after their content moved into a ticket
+- `grilling-procedure-design-note.md`, `agent-document-review-procedure-design-note.md`, `kilo-code-documentation.md`, `policies-to-skills-rename-proposal-2026-09-04.md`, `mattpocock-analysis-deferrals-and-readme-note.md`.
+
+### Decisions recorded this session
+- **External-tool dependency: Won't fix.** No workflow capability that depends on external tools. The Sandcastle parallel-planner (Docker + Node.js) is dropped. This matches the existing codebase-examination ban on external indexing tools.
+- **Wayfinding (fog-of-war planning): skipped.** The simplified file-based version duplicates what the state files and `ai/plans/` already provide.
+- **Dictionary vocabulary concepts: deferred** to an evaluation ticket; the prior "use where useful, no policy" stance is not confirmed as valuable.
+- **Sync AGENTS.md to other projects: kept** as a user-side operational step in `next-steps.md`; it is not a repo change.
+- **Grilling and brainstorming are different modes.** Grilling is adversarial and converges decisions; brainstorming is generative and diverges. The recommendation is to keep both and implement grilling first, with the final decision recorded on the grilling ticket.
+
+### Explained and kept pending (no ticket)
+- The protocol's own design docs (Vision, PRD, Delivery Ledger); the TIER 2 vs Non-Negotiables canonical-home consolidation; the bounded boot-time staleness heuristic; the Procedure E precedence rework; the compaction-trigger open question; the AI-team dispatcher/watcher runtime; per-agent status files for true parallelism.
+
+### State update
+- `ai/state/next-steps.md` keeps only the items not filed as tickets: sync to other projects, protocol design docs, and the TIER 2 consolidation. `ai/notes/notes.md`'s pending index was reduced to the two remaining notes.
+
+---
+
+## 2026-09-19: Backlog triage round 2 and the ticket-background convention
+
+### Context
+- After round 1, the user resolved the open conceptual items and asked for the remaining ones to be ticketed, plus several new tickets. All remaining backlog was moved out of notes and `next-steps.md` into the issue tracker.
+
+### Convention decided: ticket background lives in Project Knowledge
+- Ticket background and research live in `ai/shared/project-knowledge/` while the work is pending. The ticket references the file with a "Tracked by" pointer.
+- When the work is implemented, the knowledge file may change shape or location, for example fold into `protocol-decisions.md` or move to `docs/`.
+- Rationale: `ai/notes/` is scratch and gets cleared; Project Knowledge is the durable, JIT-indexed home; and the ticket stays lean. This keeps one place for background instead of scattering it into tickets.
+
+### Tickets added this round
+- `brainstorming-procedure.md` (Feature, P3, M). Grilling and brainstorming are now two separate modes and two tickets. `grilling-procedure.md` was updated to the convergent mode and references the divergent one.
+- `protocol-design-docs.md` (Documentation, P3, L).
+- `tier2-vs-non-negotiables-consolidation.md` (Improvement/Refactor, P3, M).
+- `bounded-boot-time-staleness-heuristic.md` (Improvement/Refactor, P4, M).
+- `procedure-e-precedence-rework.md` (Improvement/Refactor, P4, M).
+- `compaction-trigger-hook-research.md` (Task, P4, S).
+- `ai-team-runtime-dispatcher-watcher.md` (Feature, P4, XL). The runtime half of the multi-assistant work, tracked separately from the contract ticket.
+- `per-agent-status-files-research.md` (Task, P4, S).
+- `wayfinding-evaluation.md` (Task, P4, S).
+- `readme-upgrade-location-instructions.md` (Documentation, P3, S).
+- `sync-script-symlinked-customization-file.md` (Defect/Bugfix, P2, M).
+- `active-traits-persona-customization-files.md` (Feature, P3, L).
+
+### Notes relocated to Project Knowledge
+- `protocol-routing-principle-and-consolidation-follow-up.md`, `local-first-knowledge-retrieval-proposal.md`, and `compaction-trigger-problem.md` moved from `ai/notes/` to `ai/shared/project-knowledge/`, each with a pointer to its ticket.
+- `protocol-design-docs.md` was removed; its plan is captured in the `protocol-design-docs.md` ticket.
+
+### State update
+- `ai/notes/` now contains only `notes.md`, which is an index pointing at issues and Project Knowledge.
+- `ai/state/next-steps.md` holds no unticketed items; the backlog is the open issues. The "sync AGENTS.md to other projects" item was removed as routine, per the user.
+- Agent Document Review remains open with an added "why this exists" rationale; the user will decide whether to keep it.
+
+---
+
+## 2026-09-19: Agent document review folded into the peer-review policy
+
+### Decision
+- Add one review dimension to `ai/policies/ai-policy-code-review.md` instead of a standalone procedure and policy. The new dimension 6, "Agent-facing documentation", applies only when the reviewed file is read by an AI (`AGENTS.md`, policy files, handoff templates, skill files).
+- Six checks, each with a before/after example: hierarchy, completion criteria, leading words, negation, sediment, sprawl.
+
+### Rationale
+- Procedure D already reviews documentation. A separate procedure plus a new policy is more surface than the value justifies until it is proven otherwise.
+- Folding keeps the capability on demand with zero load cost and avoids a new TIER 3 procedure for something that only fires when reviewing agent-facing text.
+- If the dimension proves too narrow in practice, spin out a dedicated procedure later.
+
+### Follow-up
+- The ticket `agent-document-review-procedure.md` was repurposed to the folded approach and moved to `ai/issues/in-progress/`. It closes when the change is merged.
+
+### Notes cleanup
+- `ai/notes/notes.md` no longer carries an index pointing at issues and Project Knowledge; that was redundant. It keeps only the processing preamble.
+
+### Files changed
+- `ai/policies/ai-policy-code-review.md` (dimension 6), `ai/issues/in-progress/agent-document-review-procedure.md`, `ai/notes/notes.md`, this file.
+
+---
+
+## 2026-09-19: Policy instructions are concise what-focused text
+
+### Decision
+- Text added to policy files and the protocol must be concise, clear, short, and state what to do, not why. Rationale belongs in design docs, ADRs, or knowledge files, not in the instruction.
+- Applies to all new and edited instruction text. Existing verbose prose is migrated opportunistically when a file is touched, not in a bulk rewrite.
+
+### Context
+- The user raised this while reviewing the new peer-review dimension. It reinforces the Humanized Output rules and the 2026-08-31 lean stance, and it is the standard the agent-facing documentation dimension itself checks.

@@ -36,13 +36,20 @@ This discipline applies across domains. The live-state and telemetry sources var
 
 ---
 
-## Review Dimensions (in order of severity)
+## Review Dimensions
 
 1. **Security** — OWASP Top 10, STRIDE threats, hardcoded credentials, injection risks, insecure defaults, missing input validation, exposed sensitive data.
 2. **Correctness** — Logic errors, unhandled edge cases, broken error handling, incorrect assumptions, race conditions.
 3. **Policy compliance** — Violations of any loaded policy (naming conventions, structure, security guardrails, compliance standards).
 4. **Code quality** — Duplication, excessive complexity, dead code, poor naming, missing error propagation, unclear control flow.
 5. **Documentation** — Missing or misleading comments, broken links, stale content, undocumented public interfaces.
+6. **Agent-facing documentation** (only when the reviewed file is read by an AI: `AGENTS.md`, policy files, handoff templates). Report each finding with a before/after suggestion:
+   - **Hierarchy**: keep always-applies content inline; put branch-only content behind a context pointer. Example: move a step used by one procedure out of the shared preamble and into that procedure.
+   - **Completion criteria**: end each step on a condition the agent can check. Example: replace "make sure the design is understood" with "list the accepted decisions; if any is unresolved, stop and ask".
+   - **Leading words**: replace a long phrase with one compact, pretrained term. Example: replace "read the whole file from start to finish" with "read the file in full".
+   - **Negation**: state the positive action. Example: replace "do not guess" with "cite the source, or write 'not verified' and ask".
+   - **Sediment**: delete stale lines, no-ops, and duplication. Example: remove a rule the model already follows by default.
+   - **Sprawl**: split or disclose a document that is too long even when every line is live. Example: move a long reference table out of the core and leave a pointer.
 
 ---
 

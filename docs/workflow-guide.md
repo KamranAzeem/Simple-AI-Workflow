@@ -185,9 +185,10 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
 2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target — not the local working tree.
 3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
-4. It does not stop at the diff: it examines the full file or module the change touches, checks live or runtime state when tooling allows, and states plainly what it did not check.
-5. It saves a structured report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`.
-6. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
+4. When the reviewed file is read by an AI (`AGENTS.md`, policy files, handoff templates), it also checks agent readability: hierarchy, completion criteria, leading words, negation, sediment, and sprawl.
+5. It does not stop at the diff: it examines the full file or module the change touches, checks live or runtime state when tooling allows, and states plainly what it did not check.
+6. It saves a structured report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`.
+7. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
 
 ### Iterating
 - Apply the fixes from the report, then ask for another review.

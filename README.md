@@ -212,7 +212,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 ## What's included
 
 - **12 domain policies**: Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching. Load the ones that apply to your project.
-- **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`.
+- **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.
 - **Multi-agent coordination**: handoffs, a coordination board, and single-writer state ownership, so several AI sessions don't step on each other.

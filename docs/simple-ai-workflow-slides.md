@@ -32,7 +32,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
 - **Daily snapshots**: an automatic history of work and decisions
-- **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports
+- **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
 - **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
 - **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
@@ -201,6 +201,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - For a named PR it fetches the latest, resolves the source and target branches, and diffs source against target
 - It scans the full file or module the change touches, not just the diff, checks live state when it can, and saves a structured report to `ai/code-review-reports/`
 - Each report is severity-classified: **Critical, Major, Minor, Suggestions, Not Checked**
+- When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks agent readability: hierarchy, completion criteria, leading words, negation, sediment, sprawl
 - It ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**
 - Previous reports are never overwritten. Each round gets a new numbered file
 
