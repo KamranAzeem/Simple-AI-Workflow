@@ -1,6 +1,6 @@
 # Protocol architecture routing principle + consolidation follow-up
 
-Captured 2026-08-31 so it cannot be missed. Working note for later protocol work. The two big items are the consolidation follow-up and the evidence-proposal evaluation below.
+Captured 2026-08-31 so it cannot be missed. Working note for later protocol work. The two big items are the consolidation follow-up and the evidence-proposal evaluation below. Tracked by `ai/issues/open/tier2-vs-non-negotiables-consolidation.md`.
 
 ## Routing principle (decided 2026-08-31)
 
@@ -34,4 +34,4 @@ Evaluated the 4-item proposal from the other production instance (provenance tag
 
 ## Candidate follow-ups (2026-08-31)
 - Old-knowledge distrust clause: added then removed 2026-08-31. It was too essay-like and over-broad (it contradicted project knowledge's authority), so it was dropped to keep the Investigation Contract lean. Rely on the checkpoint knowledge update (Procedure C Step 3) for freshness. Do not re-add unless it can be stated crisply and scoped to time-bound state only.
-- [ ] Consolidate the TIER 2 vs Non-Negotiables "always-on" canonical home so there is one source of truth.
+- [ ] Consolidate the TIER 2 vs Non-Negotiables "always-on" canonical home so there is one source of truth. Ticket: `ai/issues/open/tier2-vs-non-negotiables-consolidation.md`.

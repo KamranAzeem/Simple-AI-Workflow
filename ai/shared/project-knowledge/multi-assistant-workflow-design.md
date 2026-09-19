@@ -1,6 +1,6 @@
 # Multi-Assistant Workflow + Build AI Team — Design & Requirements
 
-Status: pending
+Status: pending. Tracked by `ai/issues/open/multi-assistant-workflow-and-ai-team.md`.
 
 This note combines two related ideas. (1) The **multi-assistant coordination contract**: how several assistants work the same project via `AGENTS.md` + coordination primitives. Extracted from the `feature/multi-assistant-workflow` branch (commit `1a0ef61`). (2) The **build-AI-team runtime**: a dispatcher/watcher that spawns and manages AI roles, drawn from `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md` §3, §4, §7. The AI-team runtime sits on top of the protocol contract; see the reconciliation notes before resuming.
 

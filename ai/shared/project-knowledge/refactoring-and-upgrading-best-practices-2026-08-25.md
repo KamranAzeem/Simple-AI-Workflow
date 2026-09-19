@@ -1,6 +1,6 @@
 # Refactoring & Upgrading Codebases — Best Practices and Frameworks
 
-Status: research note (2026-08-25)
+Status: research note (2026-08-25). Tracked by `ai/issues/open/refactoring-and-upgrading-policy.md`.
 
 Research from Google on refactoring best practices, whether codebase age/language matters, and how refactoring differs from upgrading. Stored for evaluation; a protocol policy for refactor/upgrade requests is being considered.
 

@@ -1,6 +1,6 @@
 # Local-First Knowledge Retrieval — proposal (discussion)
 
-Discussed 2026-09-07. Status: the source-precedence part shipped on 2026-09-19 (Investigation Contract, `ai/policies/ai-policy-common.md`); the bounded staleness heuristic remains open and is tracked as deferred in `ai/state/next-steps.md`. Captured here so the open part isn't lost.
+Discussed 2026-09-07. Status: the source-precedence part shipped on 2026-09-19 (Investigation Contract, `ai/policies/ai-policy-common.md`); the bounded staleness heuristic remains open, tracked by `ai/issues/open/bounded-boot-time-staleness-heuristic.md`. Captured here so the open part isn't lost.
 
 ## Idea
 Have the AI always search the local knowledge base (Project Knowledge + Global Knowledge) and other local sources of truth first (project files, live environment, cloned repos), and only go out to the model's own knowledge / web / official docs **after** local sources are exhausted.

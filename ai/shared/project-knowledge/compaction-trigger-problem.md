@@ -1,5 +1,7 @@
 # Problem: Reliable post-compaction recovery in AI-assisted workflows
 
+Background for `ai/issues/open/compaction-trigger-hook-research.md` and `ai/issues/open/kilo-code-documentation.md`.
+
 ## What the problem is
 
 Long AI coding sessions eventually fill the context window. When that happens, most AI assistants (Claude, GPT-4o, Gemini, GitHub Copilot/VS Code) automatically compact the conversation — they replace the full history with a compressed summary. The AI continues from there.
