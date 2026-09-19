@@ -16,3 +16,7 @@ Acceptance criteria:
 - README states the working-directory requirement before the commands.
 - Both Linux/Git Bash and Windows PowerShell examples show the directory context.
 - No change to the scripts themselves.
+
+---
+2026-09-19
+Implemented. Step 2 now sends the user to the clone directory before `git pull`, and both the Linux/Git Bash and Windows PowerShell blocks start with `cd` into the clone, so each is self-contained. Scripts unchanged. Peer-reviewed: review-12 CHANGES REQUESTED (Linux block missing the directory), fix applied, review-13 APPROVED. Validator v5.0 8/8; markdownlint 0 issues. Committed and pushed on 2026-09-19. Ticket closed.

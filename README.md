@@ -40,20 +40,35 @@ I built this for myself, to get my AI assistant to remember my projects and foll
 When I push updates here that you want:
 
 1. Run a checkpoint in your current project first.
-2. `git pull` the latest changes in this repo.
-3. Run the sync script to update all your projects:
+2. Go to the directory where you cloned this repo (for example `~/Projects/Simple-AI-Workflow`). Pull and sync from there, not from your project:
+
+   ```bash
+   cd ~/Projects/Simple-AI-Workflow
+
+   git pull
+   ```
+
+3. Run the sync script from the same clone directory to update all your projects:
 
    **Linux/Git Bash:**
 
    ```bash
+   cd ~/Projects/Simple-AI-Workflow
+
    ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
+
    ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects
    ```
 
    **Windows PowerShell:**
 
    ```powershell
+   cd C:\Users\<you>\Projects\Simple-AI-Workflow
+
+   git pull
+
    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' -WhatIf }"
+
    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
    ```
 
