@@ -944,7 +944,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Process note
 - Protocol Developer Mode: this file was loaded in full before any protocol edit. The LLD was peer-reviewed (review-07 CHANGES REQUESTED, 3 Minor, fixed) and the implementation was peer-reviewed (review-08 CHANGES REQUESTED, 1 Minor, fixed; review-09 APPROVED).
-- Branch `feature/self-consistency-check`, not merged pending explicit user approval.
+- Merged to `master`; see Merge record below.
 
 ### Files changed
-- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/shared/project-knowledge/self-consistency-check-lld.md` (new), `ai/issues/open/edit-verification-missing-self-consistency-check.md` (moved to `ai/issues/in-progress/`), `README.md`, `docs/simple-ai-workflow-slides.md`, this file.
+- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/shared/project-knowledge/self-consistency-check-lld.md` (new), `ai/issues/open/edit-verification-missing-self-consistency-check.md` (moved to `ai/issues/in-progress/`, then to `ai/issues/closed/` on merge), `README.md`, `docs/simple-ai-workflow-slides.md`, this file.
+
+### Merge record
+- Committed on `master` as `5f17b65` (squash of `feature/self-consistency-check`) on 2026-09-19; not pushed to origin. The feature branch was deleted. The ticket moved to `ai/issues/closed/`.
