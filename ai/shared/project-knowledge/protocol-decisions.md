@@ -920,4 +920,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `AGENTS.md`, `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh` (v5.0), `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/daily-checkpoints/` (15 files added or appended), `ai/shared/project-knowledge/progress-archive.md` (deleted), `ai/shared/project-knowledge/context-archive.md` (deleted), `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and this file.
 
 ### Process note
-- Protocol Developer Mode: this file was loaded in full before edits. The plan was peer-reviewed: review-01 CHANGES REQUESTED (8 Major, 7 Minor), then fixed, then review-02, review-03, and review-04 APPROVED. Branch `feature/state-file-model-v2`; not committed, merged, or pushed pending user approval.
+- Protocol Developer Mode: this file was loaded in full before edits. The plan was peer-reviewed: review-01 CHANGES REQUESTED (8 Major, 7 Minor), then fixed, then review-02, review-03, and review-04 APPROVED. Implementation review-05 CHANGES REQUESTED (1 Major, fixed) then review-06 APPROVED.
+
+### Merge record
+- Committed on `master` as `af54432` (squash of `feature/state-file-model-v2`) and pushed to `origin/master` (`dbf4cd7..af54432`). The feature branch was deleted. The issue `state-file-order-and-bloat-self-healing.md` moved to `ai/issues/closed/`.

@@ -159,3 +159,7 @@ Answers to the six open questions:
 6. Validator: v5.0 adds a `PROCEDURE I` anchor, a one-line-comment check for the three state files, and a non-fatal 20 KB advisory.
 
 Scope delivered: detect-and-report at load, repair on demand, the v2 state-file model (no git metadata, no checkpoint IDs, one comment line), daily checkpoints as the only archive, and local-first source precedence. The original "self-heal automatically" ask was deliberately reduced to detect-and-repair to keep the read-only rule intact. Moves to `closed/` when the branch merges.
+
+---
+2026-09-19
+Closed: implemented and merged to master (squash commit `af54432`), then pushed. The mechanism ships as State-File Model v2: the load-time health check, the `repair state files` procedure, the diary-as-archive model, and the 20 KB budget. Ticket moved `open/` to `in-progress/` to `closed/`.
