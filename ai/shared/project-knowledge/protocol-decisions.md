@@ -924,3 +924,27 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Committed on `master` as `af54432` (squash of `feature/state-file-model-v2`) and pushed to `origin/master` (`dbf4cd7..af54432`). The feature branch was deleted. The issue `state-file-order-and-bloat-self-healing.md` moved to `ai/issues/closed/`.
+
+---
+
+## 2026-09-19: Self-consistency check added to the Investigation Contract
+
+### Problem
+- The Investigation Contract required every claim to name a source and required cross-checking a fact that matters by more than one independent source. It did not require re-checking a new or changed claim against the other sections of the same document, or against a source already read in the session.
+- A client GRS migration plan (2026-09-10) exposed the gap. A narrow claim was verified correctly, then a broader architectural inference built on it contradicted an earlier, correct section of the same document. The origin ticket is `edit-verification-missing-self-consistency-check.md`.
+
+### Decision
+- Added one short paragraph to the `## Investigation Contract` in `ai/policies/ai-policy-common.md`, immediately after the first paragraph ("Investigate, verify, then assert") and before "Local-first source precedence", so it sits adjacent to the existing cross-check sentence:
+  `**Self-consistency check.** Before finalizing an edit, re-check any new or changed claim against the other sections already read this session and the source it derives from. Resolve or flag contradictions.`
+- The wording is what-focused, 30 words, with no rationale. It uses "claim", so wording, formatting, and cosmetic edits do not trigger it.
+- No `AGENTS.md` change, per the 2026-08-31 routing principle (AGENTS.md is a router; this is policy-only prose). No validator anchor, because the rule is behavioral prose, not a file or structure check.
+
+### Scope choice
+- The user chose LLD plus an ADR entry only: one design document, no Vision, PRD, or HLD, because the change is one paragraph in an existing section and alters no architecture. The LLD lives at `ai/shared/project-knowledge/self-consistency-check-lld.md`.
+
+### Process note
+- Protocol Developer Mode: this file was loaded in full before any protocol edit. The LLD was peer-reviewed (review-07 CHANGES REQUESTED, 3 Minor, fixed) and the implementation was peer-reviewed (review-08 CHANGES REQUESTED, 1 Minor, fixed; review-09 APPROVED).
+- Branch `feature/self-consistency-check`, not merged pending explicit user approval.
+
+### Files changed
+- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/shared/project-knowledge/self-consistency-check-lld.md` (new), `ai/issues/open/edit-verification-missing-self-consistency-check.md` (moved to `ai/issues/in-progress/`), `README.md`, `docs/simple-ai-workflow-slides.md`, this file.

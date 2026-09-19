@@ -227,7 +227,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive; there are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
-- **Evidence-based investigation by default**: the AI investigates and cites its sources before it asserts, without being asked.
+- **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.
 
 ---
 

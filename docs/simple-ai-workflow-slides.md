@@ -41,7 +41,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
 - **Issue management**: say `"manage issues"` to work tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template and dated updates
 - **Local-first research**: the AI searches your local sources first, then the web or its own recall, with a bounded probe
-- **Evidence-based investigation by default**: the AI investigates and cites sources before it asserts
+- **Evidence-based investigation by default**: the AI investigates, cites sources, and checks new claims against what it has already read
 - **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat
 - **Protocol developer mode**: when you work on the protocol itself, the AI detects it, loads `protocol-decisions.md` in full, and authors policy paths from the end-user's perspective
 - **Verbose AI file naming**: the AI gives knowledge, docs, and workflow files descriptive kebab-case names (the filename is the lookup key). Source code is exempt and follows its own idioms

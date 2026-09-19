@@ -86,3 +86,17 @@ Scope note: this issue is about the specific gap this incident exposed
 (claim not cross-checked against already-read material in the same
 document/session). It is not proposing a general rewrite of the Investigation
 Contract, and it is not proposing new tooling or scripted enforcement.
+
+## Update 2026-09-19
+
+- Implementation started on branch `feature/self-consistency-check`.
+- Added a "Self-consistency check" paragraph to the `## Investigation Contract`
+  in `ai/policies/ai-policy-common.md`: before finalizing an edit, re-check any
+  new or changed claim against the other sections already read this session and
+  the source it derives from, and resolve or flag contradictions. Placed after
+  the first paragraph, adjacent to the existing cross-check sentence.
+- Design doc: `ai/shared/project-knowledge/self-consistency-check-lld.md`.
+- Peer reviewed: review-07 (LLD, CHANGES REQUESTED, fixed), review-08
+  (implementation, CHANGES REQUESTED, fixed), review-09 (APPROVED). Validator
+  v5.0 8/8; markdownlint 0 issues.
+- Merged to `master` on 2026-09-19 as a squash commit. Ticket closed.
