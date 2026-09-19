@@ -17,10 +17,6 @@ I want to change naming scheme of policies to skills. (recorded in separate note
 
 ---
 
-(Dropped 2026-08-31) Ubiquitous language and ontology: value far less than the effort. Decision recorded in `ai/shared/project-knowledge/protocol-decisions.md` (2026-08-31 entry).
-
----
-
 ## Pending
 
 Each pending item lives in its own note under `ai/notes/`:
@@ -30,15 +26,4 @@ Each pending item lives in its own note under `ai/notes/`:
 - **Multi-assistant workflow + build AI team** — `ai/notes/multi-assistant-workflow-design.md`
 - **Refactoring / codebase-upgrade policy** — `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`
 - **New procedures from mattpocock analysis** — `ai/notes/grilling-procedure-design-note.md`, `ai/notes/agent-document-review-procedure-design-note.md`, `ai/notes/mattpocock-analysis-deferrals-and-readme-note.md`
-- **Local-first knowledge retrieval (RAG-style)** — `ai/notes/local-first-knowledge-retrieval-proposal.md` (discussed 2026-09-07; not a change yet)
-
----
-
-mattpocock/skills - AI Engineer
-
-<https://github.com/mattpocock/skills.git>
-
----
-
-Issue management mechanism (create/track/close issues under ai/issues/, kanban-ready fields, directory-based status, template + lifecycle). (Processed 2026-09-17: implemented and merged as `be4e4b1`; ticket closed)
-<!-- Design locked 2026-09-09, revised 2026-09-17 to status-by-directory; implemented and merged as be4e4b1. Decisions in ai/shared/project-knowledge/protocol-decisions.md; mechanism in ai/policies/ai-policy-common.md; ticket in ai/issues/closed/issue-management-mechanism.md. -->
+- **Local-first knowledge retrieval** — `ai/notes/local-first-knowledge-retrieval-proposal.md` (source precedence implemented 2026-09-19; the bounded boot-time staleness heuristic remains open)

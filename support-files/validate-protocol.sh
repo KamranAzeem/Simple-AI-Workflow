@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v4.9 ---"
+echo "--- Starting Protocol Validation v5.0 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -34,8 +34,8 @@ if ! grep -q "Atomic Write Protocol" AGENTS.md; then
     echo "Error: Atomic Write Protocol missing from Procedure C in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Sliding Horizon Shield" AGENTS.md; then
-    echo "Error: Log Condensation / Sliding Horizon Shield missing from Procedure C in AGENTS.md."
+if ! grep -q "State-File Trimming" AGENTS.md; then
+    echo "Error: State-File Trimming step missing from Procedure C in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Write Daily Checkpoint File" AGENTS.md; then
@@ -48,6 +48,10 @@ if ! grep -q 'Index `open/` and `in-progress/`' AGENTS.md; then
 fi
 if ! grep -q '### PROCEDURE H:' AGENTS.md; then
     echo "Error: Procedure H (Issue Management) anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q '### PROCEDURE I:' AGENTS.md; then
+    echo "Error: Procedure I (Repair State Files) anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
@@ -159,6 +163,16 @@ if [ ! -f "ai/shared/project-knowledge/issue-template.md" ]; then
     echo "Error: Mandatory issue template ai/shared/project-knowledge/issue-template.md missing."
     exit 1
 fi
+for sf in context.md progress.md next-steps.md; do
+    if ! grep -q 'State file (' "ai/state/$sf"; then
+        echo "Error: ai/state/$sf is missing its one-line state-file comment."
+        exit 1
+    fi
+done
+STATE_BYTES=$(wc -c ai/state/context.md ai/state/progress.md ai/state/next-steps.md | awk 'END {print $1}')
+if [ "$STATE_BYTES" -gt 20480 ]; then
+    echo "Advisory: the three state files total $STATE_BYTES bytes, over the 20 KB soft budget (non-fatal)."
+fi
 echo "Project structure verified."
 
 # 5. Coordination Board
@@ -228,4 +242,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v4.9 Completed Successfully ---"
+echo "--- Protocol Validation v5.0 Completed Successfully ---"

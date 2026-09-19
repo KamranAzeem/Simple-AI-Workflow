@@ -1,47 +1,16 @@
-<!--
-STATE-FILE: context.md is the PRESENT. A Current Status dashboard plus appended checkpoint history.
-STATE-FILE: CHRONOLOGICAL ORDER. The ## Current Status section at the top is edited in place each checkpoint. Checkpoint history is appended below it, oldest above and newest at the bottom. Never reorder existing entries. The horizon shield archives the oldest entries when they grow too long.
-STATE-FILE: KEEP LEAN. Short bullet entries, one to two lines each. Not a runbook, plan, or ledger. No implementation steps, commands, or knowledge content. Use ai/shared/project-knowledge/ for durable knowledge.
--->
+<!-- State file (present). Dashboard plus active working context. Short bullets with a pointer to Project Knowledge. No history, no git metadata. -->
 # Project Context
 
 ## Current Status
-- **Branch**: `master`, synced with origin at bcecc7c (CP-2026-09-17-02 pushed)
-- **Release**: v2.3.0 (2026-08-25); issue-management feature merged to master as be4e4b1, unreleased
-- **Validator**: v4.9, all 8/8 checks pass (three issue status dirs + issue-template presence + no-md-under-issues guard + PROCEDURE H anchor)
-- **Markdown lint**: markdownlint-cli2 v0.23.2; changed files 0 issues (config exempts the ticket header block and repeated decision headings)
-- **Policy count**: 16 modular policies (common, meta, cloud, api-backend, web-frontend, data, linux-system-admin, windows-system-admin, mobile-apps, dba, observability, code-review, codebase-examination, accounting, academic-researcher, career-coaching)
-- **State files**: located in `ai/state/` (next-steps forward-only, progress append-only history, context = present); Horizon Shield run at CP-2026-09-18-01 (progress kept 10 entries + anchor, context kept 5 entries)
-- **Daily checkpoints**: Procedure C's mandatory write step (step 2) working live; `ai/daily-checkpoints/2026-09-17.md` holds CP-01..CP-02; `ai/daily-checkpoints/2026-09-18.md` holds CP-01
-- **Project knowledge**: 11 files (added `issue-template.md` and `progress-archive.md`); `protocol-decisions.md` is the ADR store; notes split into `ai/notes/` files
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 2 open (`state-file-order-and-bloat-self-healing.md`, `edit-verification-missing-self-consistency-check.md`), 0 in-progress, 4 closed (`issue-management-mechanism.md`, `boot-up-should-create-required-ai-directories.md`, `checkpoint-procedure-never-writes-daily-checkpoint-file.md`, `proof-of-load-report-should-index-issues-directory.md`)
-- **Next milestones**: design pass for load-context order/bloat self-healing (`ai/issues/open/state-file-order-and-bloat-self-healing.md`, 6 open questions); policies→skills rename; local-first knowledge retrieval; protocol design docs (Vision/PRD/Delivery Ledger); TIER 2 vs Non-Negotiables consolidation; Kilo Code docs; multi-assistant + build AI team design; refactoring/codebase-upgrade policy; Grilling and Agent Document Review procedures; sync AGENTS.md to other projects
+- **Milestone**: State-File Model v2 on branch `feature/state-file-model-v2` (uncommitted, awaiting user review)
+- **Validator**: v5.0, 8/8 checks
+- **Policy count**: 16 modular policies
+- **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive
+- **Project knowledge**: `ai/shared/project-knowledge/` (JIT-indexed; `protocol-decisions.md` is the ADR store); `ai/notes/` holds working notes
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 2 open, 0 in-progress, 4 closed
 
-## Checkpoint History
-
-(Older checkpoint entries are archived in `ai/shared/project-knowledge/context-archive.md`.)
-
-## Checkpoint: CP-2026-09-10-04
-- **Branch**: `master`, synced with origin at 284be27 at session start
-- **Summary**: User asked to (1) review all project knowledge for consolidation without losing value, and (2) file an issue about state/checkpoint files drifting out of order or bloating on machines where AI hasn't recently fixed them. Reviewed all 8 non-`protocol-decisions.md` files in `ai/shared/project-knowledge/`: 7 already lean and well-organized (including the 3 pre-compressed mattpocock research artifacts); one redundancy found (`context-archive.md` restates some 2026-06-30 content also in `protocol-decisions.md`/`multi-agent-state-ownership-and-checkpoint-model.md`) but recommended leaving it as-is since it's a JIT-indexed archive with no boot-time cost. Filed `ai/issues/open-state-file-order-and-bloat-self-healing.md`: load-context (Procedure A) reads the state/checkpoint files but never checks whether they're already out of chronological order or over the Horizon Shield size threshold, so drift persists silently; also confirmed daily-checkpoint files have no `STATE-FILE:` header unlike the three state files. Issue is a proposal for design, not implemented. Also fixed a stray leftover `CP-2026-09-10-03` marker line in `next-steps.md`.
-- **Key deliverables**: `ai/issues/open-state-file-order-and-bloat-self-healing.md`; `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`; `ai/daily-checkpoints/2026-09-10.md` (this entry).
-
-## Checkpoint: CP-2026-09-10-05
-- **Branch**: `master`, synced with origin at 284be27 at session start
-- **Summary**: User asked whether the new issue had enough detail to implement directly. Reviewed it and concluded no: found 6 open design questions blocking confident implementation — (1) conflicts with the existing TIER 2 "Context Protection: read-only during bootstrap" rule, since self-healing requires writing state files during load-context; (2) prompt-only vs. scripted enforcement undecided, given the mechanical/error-prone nature of reordering files that already mix CP entries with non-CP marker lines; (3) no concrete thresholds proposed for `next-steps.md`/daily-checkpoint bloat (only the two existing Horizon Shield numbers exist); (4) scope vs. Procedure E (which deliberately never reads state files) unstated; (5) backfill of existing daily-checkpoint files left as "consider," not decided, against the repo's norm of not rewriting historical content; (6) validator impact (a new `validate-protocol.sh` anchor check) not scoped. Shared this analysis and stopped per the user's request; user agreed a design pass is needed first and asked to record the gaps in the issue so they aren't lost — added a new dated update block to `ai/issues/open-state-file-order-and-bloat-self-healing.md` with all 6 questions and a closing "not proceeding to implementation" decision. No protocol files changed.
-- **Key deliverables**: `ai/issues/open-state-file-order-and-bloat-self-healing.md` (design-questions update block); `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`; `ai/daily-checkpoints/2026-09-10.md` (this entry).
-
-## Checkpoint: CP-2026-09-17-01
-- **Branch**: `feature/issue-management` (off `master` @ 9eba9f0), uncommitted
-- **Summary**: Implemented the issue-management mechanism per `ai/notes/issue-management-mechanism-design.md` and `ai/plans/issue-management-mechanism-implementation-plan.md`. Ticket status moved from a filename prefix to three directories (`ai/issues/{open,in-progress,closed}/`); the filename is now the slug only and never changes. Added `PROCEDURE H (Issue Management)` to AGENTS.md TIER 3, an Issue Management Protocol section to `ai-policy-common.md`, and the full template at `ai/shared/project-knowledge/issue-template.md`; Procedure A now ensures the three directories and the template at boot; validator v4.8 to v4.9. Peer-reviewed: plan review-01 CHANGES REQUESTED (five Major, all resolved) then review-02 APPROVED; implementation review-03 APPROVED. Reversed and recorded two prior decisions (2026-09-09 subdirectory rejection; 2026-07-04 report-only). Horizon-shield archiving deferred pending user confirmation.
-- **Key deliverables**: `AGENTS.md`; `ai/policies/ai-policy-common.md`; `ai/shared/project-knowledge/issue-template.md` (new); `support-files/validate-protocol.sh` (v4.9); six tickets moved and re-headered under `ai/issues/`; `ai/issues/in-progress/.gitkeep` (new); `ai/notes/issue-management-mechanism-design.md`; `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed); `ai/notes/notes.md`; `ai/plans/issue-management-mechanism-implementation-plan.md` (new); `ai/shared/project-knowledge/protocol-decisions.md`; `.markdownlint-cli2.jsonc`; `ai/code-review-reports/2026-09-17_23-22_review-01.md`, `review-02.md`, `2026-09-17_23-30_review-03.md`; this checkpoint.
-
-## Checkpoint: CP-2026-09-17-02
-- **Branch**: `master`, synced with origin at be4e4b1 (feature/issue-management squash-merged and pushed); checkpoint commit follows
-- **Summary**: Merged the issue-management mechanism to `master` and pushed. Squash commit `be4e4b1` (`feat(protocol): directory-based issue management (Procedure H)`) landed on `origin/master` (`9eba9f0..be4e4b1`); the `feature/issue-management` branch was deleted. Both tickets resolved by the work moved from `in-progress/` to `closed/` (`issue-management-mechanism.md`, `boot-up-should-create-required-ai-directories.md`), dogfooding the new lifecycle. `protocol-decisions.md` gained a merge record. Horizon-shield archiving still deferred pending user confirmation.
-- **Key deliverables**: `master` @ be4e4b1 pushed; two tickets closed; `ai/shared/project-knowledge/protocol-decisions.md`; `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`; `ai/daily-checkpoints/2026-09-17.md` (this entry).
-
-## Latest Checkpoint: CP-2026-09-18-01
-- **Branch**: `master`, synced with origin at bcecc7c (CP-2026-09-17-02 pushed)
-- **Summary**: No new work since CP-2026-09-17-02. Ran the overdue Horizon Shield after user confirmation: archived the oldest 44 `progress.md` entries to the new `ai/shared/project-knowledge/progress-archive.md` (kept the 10 most recent) and the oldest 13 `context.md` entries to `ai/shared/project-knowledge/context-archive.md` (kept the 5 most recent), and added the `## Archive Horizon Context` anchor to `progress.md`. Content was moved verbatim, not summarized away.
-- **Key deliverables**: `ai/state/progress.md`, `ai/state/context.md`, `ai/state/next-steps.md`; `ai/shared/project-knowledge/progress-archive.md` (new); `ai/shared/project-knowledge/context-archive.md`; `ai/daily-checkpoints/2026-09-18.md` (this entry).
+## Active Working Context
+- **Objective**: State-File Model v2 implemented on `feature/state-file-model-v2`; stopped for user review before commit.
+- **Live decisions**: no git metadata in state files; daily checkpoints are the only archive; 20 KB total budget (context 8 KB, progress 7 KB, next-steps 5 KB); 14-day window; no checkpoint IDs; read-only detection at load and repair only via `repair state files`; local-first source precedence. Rationale in `ai/shared/project-knowledge/protocol-decisions.md`.
+- **Findings**: 59 archived checkpoints migrated into the diary with no loss; validator v5.0.
+- **Next actions**: run validator and markdownlint; peer review the implementation; documentation last (README, slides, workflow guide); stop for approval.

@@ -146,3 +146,16 @@ protocol-file edit; recording the open questions here so they aren't lost.
 likely via a short design note (the pattern used for the issue-management
 mechanism, whose outcome is recorded in
 `ai/shared/project-knowledge/protocol-decisions.md`).
+
+---
+2026-09-19
+Design resolved and implemented on `feature/state-file-model-v2` (not merged yet).
+Answers to the six open questions:
+1. Context Protection: no exception added. Detection is read-only inside load-context; repair runs only through the separate `repair state files` procedure.
+2. Prompt vs script: both are prompt-driven. The mechanical work is limited to reordering and moving entries, and the repair procedure writes the diary mirror before removing anything.
+3. Thresholds: the fixed counts are gone. The budget is 20 KB total (context 8 KB, progress 7 KB, next-steps 5 KB), with a 14-day window for completed progress entries; next-steps never drops unfinished work.
+4. Procedure E: confirmed it never reads state files and never runs detection or repair.
+5. Daily-checkpoint comment: one short comment line, new files only, forward-only, no backfill of historical files.
+6. Validator: v5.0 adds a `PROCEDURE I` anchor, a one-line-comment check for the three state files, and a non-fatal 20 KB advisory.
+
+Scope delivered: detect-and-report at load, repair on demand, the v2 state-file model (no git metadata, no checkpoint IDs, one comment line), daily checkpoints as the only archive, and local-first source precedence. The original "self-heal automatically" ask was deliberately reduced to detect-and-repair to keep the read-only rule intact. Moves to `closed/` when the branch merges.

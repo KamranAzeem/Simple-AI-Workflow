@@ -22,6 +22,8 @@ These are the rules most costly to break. They are active at boot, at load conte
 
 **Investigate, verify, then assert.** Investigation is read-only and wide-scoped over the subject plus its cone of influence: everything that flows into, out of, or through it, and anything it touches (code dependencies and schemas; infrastructure resources, paths, network and firewall traffic). Set that boundary from your own understanding of the domain, never the narrow ask alone, and ask what would break, move, or matter if this changed. Use only sources available at the time: project files and history, the live environment via tool queries, official documentation of the relevant tools, project knowledge, the project's tracker / wiki / knowledge base, and any expert or knowledge service. Every claim names its source, or it appears as "not verified" with a question. Never infer, assume, guess, fabricate, or fill a gap with a plausible-sounding guess. Cross-check before recommending: a fact that matters is confirmed by more than one independent source, and a value you propose is checked against the real environment, not assumed. Cite each recommendation. Read mechanics follow the Full File Reads mandate; commands use verified flags, parameters, and identifiers (CLI Command Accuracy below).
 
+**Local-first source precedence.** Search local sources of truth before external ones. The project's own files and history, Project Knowledge, Global Knowledge, the live environment, and cloned repos come before the model's own knowledge, the web, or official documentation. Bound the probe: index, open the likely candidates, then escalate. Do not turn "local first" into a new token sink.
+
 ## Feature Development and Branch-Gating
 ### Branch-Gating Requirement
 When implementing new features, architecture changes, or functional code modifications:
@@ -62,11 +64,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
 - **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in `AGENTS.md`. This runs in the same transaction as the state files, not as a separate or optional action.
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
-- **Checkpoint ID Contract**:
-    - Format: `CP-YYYY-MM-DD-XX`.
-    - Must be consistent across all tracking files.
-    - Material resume field changes require a new ID.
-- **Recorded Commit Hash Lag (expected, not drift)**: A checkpoint commit cannot record its own hash. `context.md`'s recorded hash will normally sit exactly one commit behind live HEAD right after that checkpoint lands — this is benign self-lag, not drift. Flag only when the gap is larger or unexplained.
+- **Checkpoint Labeling**: A checkpoint is labeled by its date plus a short title. There is no checkpoint ID.
+- **No Git Metadata in State Files**: The state files never record a branch, commit hash, or push status, and the AI does not prompt the user to commit them. Git history is the source of truth for version control.
 
 ## AI-Driven Secure Development Practices
 **Mandate**: AI-generated code and infrastructure configurations must inherently adhere to security best practices derived from established threat modeling principles (e.g., STRIDE, OWASP Top 10).
@@ -148,11 +147,13 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve the append-only history in progress.md and detect drift, never a refresh that overwrites fresh work with a stale disk copy.
 - **Chronological Order (all state files)**: Entries run oldest at the top and newest at the bottom. New content is always appended at the tail, never inserted above existing entries. This governs insertion order; deletion and in-place dashboard edits follow the per-file rules below.
 - **next-steps.md is forward-only (the future)**: It is a backlog, not a history. Append new items at the tail. Delete each item the moment it is done; never leave a ticked, checked, or struck-through entry. Work oldest-first by default, but delete a finished item wherever it sits. No history accumulates here and it has no archive.
-- **progress.md is append-only (the past)**: It is the history of completed work. Append at the tail, newest last; never delete or reorder an entry. When it grows too long, the horizon shield archives the oldest entries to Project Knowledge (see the checkpoint procedure in `AGENTS.md`).
-- **context.md is the present**: A `## Current Status` dashboard sits at the top and is edited in place each checkpoint; checkpoint history is appended below it in chronological order and archived by the horizon shield when it grows too long.
-- **State File Brevity Rule**: Every item is a short bullet, one to two lines at most. No sub-bullets, no command transcripts, no decision rationale, no step-by-step detail. Condense any item that grows longer before writing the checkpoint.
+- **progress.md is recent history (the past)**: Completed work, newest at the bottom. Keep about 14 days or up to 7 KB. When it is over budget or holds older entries, move the oldest completed entries to the daily checkpoints (the archive) in the same checkpoint.
+- **next-steps.md is the future**: Open items only, oldest first, delete on done. Keep it to 5 KB. Never drop an unfinished item; record any dropped item in the daily checkpoints first.
+- **context.md is the present**: A `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. No chronological history. Keep it to 8 KB and its live items to short one-liners with a pointer to Project Knowledge.
+- **State-File Brevity Rule**: Every item is at most three short bullets. No prose, no command transcripts, no decision rationale, no step-by-step detail. Condense any item that grows longer before writing the checkpoint.
 - **State File Scope Rule**: State files are summaries only (what was done, what is pending, current context). They are never runbooks, plans, or ledgers. They MUST NOT contain implementation steps, CLI commands, investigation notes, or knowledge content. Those belong in **Project AI Knowledge Directory** or **Global AI Knowledge Directory**. Write durable knowledge to its proper file before recording a summary checkpoint entry.
-- **Bloat and Order Check**: When loading or checking state files, if any file is bloated (items longer than two lines, runbook or ledger content, duplicate or stale entries) or out of chronological order, report it and propose a fix. Wait for user confirmation before rewriting or re-ordering an existing state file.
+- **Daily Checkpoints Are the Only Archive**: The diary under **Project Daily Checkpoints Directory** is the single, chronological, unbounded archive. No separate archive file exists.
+- **Bloat and Order Check**: When loading or checking state files, if any file is bloated (items longer than three bullets, runbook or ledger content, duplicate or stale entries) or out of chronological order, report it and propose a fix. Repair is a separate, user-triggered procedure (`repair state files`); the load-context check never writes.
 
 ## Operational Standards
 

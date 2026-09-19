@@ -24,6 +24,7 @@ Used for transferring specific tasks and context between AI assistants or sessio
 **Human Instructions**:
 1. Create a Markdown file in `ai/shared/handoffs/` (e.g., `my-task-handoff.md`).
 2. Use the following template:
+
 ```markdown
 # Handoff: [Task Name]
 - **Status**: Pending
@@ -224,15 +225,15 @@ At boot (the "load context" procedure), the AI fully loads the small, always-rel
 - **Token Efficiency where it counts**: Large Project Knowledge files are not loaded speculatively, keeping the boot context lean.
 - **On-Demand Depth**: When a task needs a specific Project Knowledge file, it is loaded in full at that point.
 
-## 14. Atomic Write Protocol & Log Condensation
+## 14. Atomic Write Protocol & State-File Trimming
 
 ### The Three State Files
 Each state file has a distinct role and lifecycle:
 - **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items are appended at the bottom; each item is deleted the moment it is done, never left with a tick or strikethrough. No history builds up here.
-- **`ai/state/progress.md` (past)**: append-only history. Entries are appended at the bottom and never deleted; the horizon shield archives the oldest ones when the file grows too long.
-- **`ai/state/context.md` (present)**: a Current Status dashboard edited in place at the top, plus checkpoint history appended below it.
+- **`ai/state/progress.md` (past)**: recent completed work, newest at the bottom. Keep about 14 days or up to 7 KB; older completed entries move into the daily checkpoint archive.
+- **`ai/state/context.md` (present)**: a `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. It holds the present, not a history log.
 
-Every item is a short bullet of one or two lines. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge.
+Every item is at most three short bullets. The three files share a 20 KB soft budget. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
 
 ### Atomic Write Protocol
 The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
@@ -245,22 +246,22 @@ The checkpoint procedure uses an atomic write sequence to prevent partial or inc
 In the same transaction as the state files, every checkpoint also appends an entry to `ai/daily-checkpoints/`.
 
 - **One file per day**: `YYYY-MM-DD.md`, created on the first checkpoint of that day.
-- **One section per checkpoint**: A new `## CP-<ID>: <short title>` section is appended for each checkpoint that day; earlier sections are never edited or removed.
-- **Fuller narrative than the state files**: This is where the detail lives — files touched, commits, validator or review outcomes — since `progress.md` and `context.md` stay lean.
-- **Kept in sync**: The CP identifier here always matches the one written to `progress.md` and `context.md` for that checkpoint.
+- **One section per checkpoint**: a new `## <short title>` section is appended for each checkpoint that day; earlier sections are never edited or removed.
+- **Fuller narrative than the state files**: this is where the detail lives (files touched, validator or review outcomes), since the state files stay lean.
+- **The archive**: the diary is the only archive. Old `progress.md` entries and resolved `context.md` items move here; there are no separate archive files.
 
-### Log Condensation (Sliding Horizon)
-To prevent `ai/state/progress.md` from growing unbounded and consuming context window space:
+### State-File Trimming
+To prevent the state files from growing unbounded and consuming context window space:
 
-- **Threshold Trigger**: When `ai/state/progress.md` exceeds 50 completed items or 200 lines, log condensation runs automatically during the next checkpoint.
-- **Archive**: Entries older than the 10 most recent are moved to `ai/shared/project-knowledge/progress-archive.md`.
-- **Horizon Anchor**: A single 3-sentence "Archive Horizon Context" block at the top of `ai/state/progress.md` summarizes what was archived, preserving project continuity without the full history.
+- **Budget**: the three state files share a 20 KB soft budget: `context.md` 8 KB, `progress.md` 7 KB, `next-steps.md` 5 KB.
+- **Trim at checkpoint**: when `progress.md` is over 7 KB, or holds completed entries older than 14 days, the oldest completed entries move into the daily checkpoint archive. Resolved `context.md` items leave only after their record is in the diary.
+- **Never lose work**: an unfinished `next-steps.md` item is never dropped.
 
 ## 15. Design Documentation Flow
 
 When building software, designing a system, or setting up infrastructure, the AI follows a structured document flow. Each document feeds the next, and each is reviewed before the next is written.
 
-```
+```text
 notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ```
 

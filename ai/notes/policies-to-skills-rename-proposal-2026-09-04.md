@@ -30,7 +30,7 @@ verbatim in `ai/notes/notes.md`.
 - `ai-policy-common` referenced in 21+ files.
 
 ## Scoping: freeze historical records (do NOT rewrite)
-- `protocol-decisions.md`, `context-archive.md`, `ai/daily-checkpoints/*` are the
+- `protocol-decisions.md` and `ai/daily-checkpoints/*` are the
   audit/decision record and must remain **byte-identical** — do not edit them.
 
 ## Taxonomy nuance (decide before HLD)

@@ -37,7 +37,11 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
 - **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot and loaded on demand
-- **Log condensation shield**: the Sliding Horizon auto-archives progress history once it crosses a threshold, keeping context lean
+- **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
+- **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
+- **Issue management**: say `"manage issues"` to work tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template and dated updates
+- **Local-first research**: the AI searches your local sources first, then the web or its own recall, with a bounded probe
+- **Evidence-based investigation by default**: the AI investigates and cites sources before it asserts
 - **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat
 - **Protocol developer mode**: when you work on the protocol itself, the AI detects it, loads `protocol-decisions.md` in full, and authors policy paths from the end-user's perspective
 - **Verbose AI file naming**: the AI gives knowledge, docs, and workflow files descriptive kebab-case names (the filename is the lookup key). Source code is exempt and follows its own idioms
@@ -237,7 +241,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ## The Stack
 
-```
+```text
 notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ```
 
@@ -293,12 +297,12 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - Progress logs that grow forever bloat the context window
 - Writing one file without updating the others causes context drift
 
-## The solution: atomic writes and a sliding horizon
+## The solution: atomic writes and state-file trimming
 - **Sequential writes**, always in this order: `ai/state/progress.md`, then `ai/state/next-steps.md`, then `ai/state/context.md`
 - **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
 - **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
-- **Daily checkpoint file**: the same transaction appends a `## CP-<ID>` section to `ai/daily-checkpoints/YYYY-MM-DD.md`, one file per day
-- **Sliding horizon**: once `ai/state/progress.md` passes 50 items or 200 lines, older entries archive automatically to `progress-archive.md`
+- **Daily checkpoint file**: the same transaction appends a short-named section to `ai/daily-checkpoints/YYYY-MM-DD.md`, one file per day. The diary is the archive
+- **State-file trimming**: the three state files share a 20 KB soft budget; completed `progress.md` entries older than 14 days move into the diary. No separate archive file
 
 > **Consistent state. Every checkpoint. No silent failures.**
 
@@ -313,7 +317,8 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 ## Built-in defences in this workflow
 - **Atomic write protocol**: state files sync together or not at all, so no partial writes
-- **Sliding horizon shield**: `ai/state/progress.md` auto-archives once it passes 50 items or 200 lines
+- **State-file trimming**: the three state files share a 20 KB soft budget, and completed old entries move into the daily checkpoint archive
+- **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
@@ -347,7 +352,7 @@ with a compressed summary. Without recovery, the standing rules loaded at sessio
 The AI re-reads all standing rules from disk. The compaction summary and task state are
 never touched. Only the rules reload.
 
-```
+```text
    Session Start          Mid-Session          After Compaction      After Recovery
 
 ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐

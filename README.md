@@ -122,6 +122,8 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
+| Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
+| Bring out-of-order or bloated state files back into shape | `"repair state files"` |
 
 > **Note:** don't use `/init`. It behaves differently across AI tools. Use the text prompts above.
 > **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
@@ -162,11 +164,10 @@ The workflow pushes back with a few built-in defences:
 | Problem | What protects you |
 |---|---|
 | Stale state files | All 3 state files are written together at checkpoint, or none at all |
-| Progress log growing forever | Old entries auto-archive when the list gets too long |
+| Progress log growing forever | Old entries move into the daily checkpoint archive when the list gets too long |
 | Rules lost after auto-summary | Post-Compaction Recovery reloads rules from disk on its own |
 | AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
-| Recorded commit hash one behind HEAD | Expected: a checkpoint commit can't record its own hash. Only a bigger, unexplained gap is real drift |
 
 A few habits help a lot:
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day.
@@ -222,6 +223,11 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: large project knowledge files are indexed at startup and loaded on demand. Small global files are always loaded in full.
+- **Issue management**: say `"manage issues"` and the AI works tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, and dated updates.
+- **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
+- **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive; there are no separate archive files.
+- **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
+- **Evidence-based investigation by default**: the AI investigates and cites its sources before it asserts, without being asked.
 
 ---
 

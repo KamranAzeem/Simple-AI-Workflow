@@ -886,3 +886,38 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Committed on `master` as `be4e4b1` (squash of `feature/issue-management`) and pushed to `origin/master` (`9eba9f0..be4e4b1`). The feature branch was deleted. Both tickets resolved by this work moved to `ai/issues/closed/`: `issue-management-mechanism.md` and `boot-up-should-create-required-ai-directories.md`.
+
+---
+
+## 2026-09-19: State-File Model v2 (no git metadata, diary as the only archive, detect-and-repair)
+
+### Problem
+- State files recorded version-control facts (branch, commit hash, push status), which duplicated git and could never be self-consistent: a checkpoint commit cannot contain its own hash, so every commit created a fresh inconsistency and an AI temptation to record it. The AI also nagged the user about committing state files.
+- The Horizon Shield trimmed by fixed entry counts (more than 50 items for `progress.md`, more than 10 entries for `context.md`) and created two extra archive files (`progress-archive.md`, `context-archive.md`). Fixed counts fail on long-horizon work (50+ done in one session, 50+ pending), and the extra files are unnecessary because the daily checkpoints already mirror every entry.
+- Load-context read the state files but never checked them for order, bloat, or comment presence, so drift persisted silently until someone asked for a fix.
+
+### Decision
+- **State files describe work, never version control.** No branch, hash, or push status, and the AI does not prompt about committing them.
+- **Daily checkpoints are the only archive.** The diary is chronological, unbounded, and records what was done, what is being done, and what needs doing. `progress-archive.md` and `context-archive.md` were deleted after a verified no-loss migration.
+- **Size budget, not counts.** 20 KB total: `context.md` 8 KB, `progress.md` 7 KB, `next-steps.md` 5 KB, soft. Completed `progress.md` entries older than 14 days move to the diary; the budget wins over the window. `next-steps.md` never drops an unfinished item.
+- **No checkpoint IDs.** Checkpoints are labeled by date plus a short title.
+- **One comment line per state file**, with the rules in the common policy and presence checked at load.
+- **context.md is the present, not a log:** a `## Current Status` dashboard plus an `## Active Working Context` section, edited in place, with no chronological history.
+- **Detect read-only; repair on demand.** Load-context checks order, budget, comment, and diary mirror and reports in the Proof-of-Load. A new `PROCEDURE I` ("repair state files") performs reorder, trim, and comment repair, including writing a missing diary mirror first, and never drops an unfinished `next-steps.md` item.
+- **Local-first source precedence** added to the Investigation Contract: local sources before the model's own knowledge, the web, or official docs, with a bounded probe.
+- **Procedure E** explicitly never reads state files and never runs detection or repair.
+- **Validator v5.0:** the `Sliding Horizon Shield` anchor became `State-File Trimming`; added a `PROCEDURE I` anchor, a one-line-comment check for the three state files, and a non-fatal advisory when the three exceed 20 KB.
+
+### Reversals recorded
+- **Reverses the fixed-count Horizon Shield** (more than 50 items / more than 10 entries) and its two archive files. Counts are arbitrary and fail for long-horizon work; the diary is the archive.
+- **Reverses checkpoint IDs** (`CP-YYYY-MM-DD-NN`) and the recorded-commit-hash contract, including the "one-commit lag is expected" note, which only existed because state files recorded hashes.
+- **Reverses the daily-checkpoint "mirror the progress entry" wording** in favor of a general diary of done, doing, and next, since the diary is now the archive.
+
+### Migration
+- 59 archived checkpoints from `progress-archive.md`, `context-archive.md`, and the `context.md` checkpoint history were mapped into `ai/daily-checkpoints/` by date. Verified: every archived CP identifier now appears as a diary heading (expected 59, found 62 including pre-existing sections), and both migration markers are preserved. Pre-June 2026 history was reconstructed into retroactive daily files because no diary existed before 2026-06-18. Only then were the two archive files deleted.
+
+### Files changed
+- `AGENTS.md`, `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh` (v5.0), `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/daily-checkpoints/` (15 files added or appended), `ai/shared/project-knowledge/progress-archive.md` (deleted), `ai/shared/project-knowledge/context-archive.md` (deleted), `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and this file.
+
+### Process note
+- Protocol Developer Mode: this file was loaded in full before edits. The plan was peer-reviewed: review-01 CHANGES REQUESTED (8 Major, 7 Minor), then fixed, then review-02, review-03, and review-04 APPROVED. Branch `feature/state-file-model-v2`; not committed, merged, or pushed pending user approval.
