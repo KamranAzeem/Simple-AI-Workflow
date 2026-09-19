@@ -88,12 +88,32 @@ See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customiz
 EOF
 }
 
+# Write temp file $1 to $2, keeping $2 a symlink. A plain mv would replace the
+# symlink with a regular file.
+replace_file() {
+  local tmp="$1" dest="$2"
+  if [ -L "$dest" ]; then
+    cat "$tmp" > "$dest"
+    rm -f "$tmp"
+  else
+    mv "$tmp" "$dest"
+  fi
+}
+
 # Ensure ai-customization.md at a project root has the correct config
 ensure_customization_file() {
   local project_root="$1"
   local customization_file="$project_root/ai-customization.md"
   local old_file="$project_root/ai/ai-customization.md"
   local bak_file="$project_root/ai-customization.md.bak"
+
+  # Root is a symlink to the real file inside ai/ (intentional versioned layout).
+  # Keep the link and edit the target instead of treating it as a duplicate.
+  if [ -L "$customization_file" ] && [ -f "$old_file" ] && [ "$customization_file" -ef "$old_file" ]; then
+    echo "  ai-customization.md: symlink to ai/ai-customization.md; keeping the link"
+    customization_file="$old_file"
+    old_file=""
+  fi
 
   # CASE A: old ai/ location exists
   if [ -f "$old_file" ]; then
@@ -137,7 +157,7 @@ ensure_customization_file() {
           local tmp
           tmp=$(mktemp)
           sed 's#^\*\*Global AI Workflow Directory\*\*:.*#**Global AI Workflow Directory**: '"$escaped_dir"'#' "$customization_file" > "$tmp"
-          mv "$tmp" "$customization_file"
+          replace_file "$tmp" "$customization_file"
         fi
       fi
     else

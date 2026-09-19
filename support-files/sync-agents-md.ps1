@@ -107,14 +107,21 @@ function Ensure-CustomizationFile {
   $configHeader = "## AI Workflow Configuration"
   $configLinePattern = '\*\*Global AI Workflow Directory\*\*:'
 
+  $custItem = Get-Item -LiteralPath $customizationFile -Force -ErrorAction SilentlyContinue
+  $custIsLink = ($null -ne $custItem) -and (($custItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0)
+
   # CASE A: old ai/ location exists
   if (Test-Path -Path $oldFile -PathType Leaf) {
-    if (Test-Path -Path $customizationFile -PathType Leaf) {
+    if ($custIsLink) {
+      # Symlinked root: keep the link and edit the target. Do not rename the real file.
+      Write-Host "  ai-customization.md: symlink detected; keeping the link and updating the target"
+    } elseif (Test-Path -Path $customizationFile -PathType Leaf) {
       Write-Host "  WARNING: both $oldFile and $customizationFile exist."
       Write-Host "  Renaming $oldFile to ai-customization.md.bak"
       if (-not $WhatIf) {
         Move-Item -Path $oldFile -Destination $bakFile -Force
       }
+      return
     } else {
       Write-Host "  Moving $oldFile to $customizationFile and adding config section"
       if (-not $WhatIf) {
@@ -128,8 +135,8 @@ function Ensure-CustomizationFile {
           [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
         }
       }
+      return
     }
-    return
   }
 
   # CASE C: root customization file exists

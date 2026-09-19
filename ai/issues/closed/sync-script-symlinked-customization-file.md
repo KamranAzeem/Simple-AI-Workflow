@@ -23,3 +23,11 @@ Acceptance criteria:
 - If migration is genuinely needed, the symlink target is updated, not replaced by a copy.
 - Behavior on a normal (non-symlink) root file is unchanged.
 - Verified with a test that creates the symlink layout in a temp directory.
+
+---
+2026-09-19
+Implemented on branch `fix/sync-script-symlinked-customization-file`.
+- Bash: added a symlink guard in `ensure_customization_file` so a root `ai-customization.md` that is a symlink to `ai/ai-customization.md` is edited in place, and a `replace_file` helper so a symlinked root is never replaced by a regular file. A genuine old-plus-root conflict (regular file) still renames the old file to `.bak`.
+- PowerShell: same guard using ReparsePoint detection and the skip-the-rename branch. Not executed locally (no `pwsh`); verified by reading.
+- Test: `support-files/test-sync-agents-md.sh` builds temp projects for the symlink layout, a normal regular root, the legacy move, and the genuine conflict. All checks pass.
+- Validator v5.0 8/8. Peer review review-14 APPROVED. Merged to master on 2026-09-19. Ticket closed.
