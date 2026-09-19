@@ -19,8 +19,9 @@ the directory already has a purpose but no defined shape.
 This feature adds a lightweight but robust issue-management mechanism that keeps
 the protocol light while making `ai/issues/` reliable and machine-parseable.
 
-Agreed requirements (see the design note
-`ai/notes/issue-management-mechanism-design.md` for the full spec):
+Agreed requirements (the mechanism now lives in `ai/policies/ai-policy-common.md`,
+and the final decisions and reversals are recorded in
+`ai/shared/project-knowledge/protocol-decisions.md`):
 
 - Filename is the single source of truth for status (no Status field inside the
   file). Prefixes: `open-...`, `in-progress-...`, `closed-...`. Priority/size
@@ -80,3 +81,14 @@ Decisions locked and implemented on `feature/issue-management`. Tickets now live
 ---
 2026-09-17
 Closed: squash-merged to `master` as `be4e4b1` and pushed to `origin/master`. The ticket moved `open/` to `in-progress/` to `closed/`, following its own new lifecycle. Related project knowledge updated: `ai/policies/ai-policy-common.md`, `ai/shared/project-knowledge/issue-template.md`, `ai/shared/project-knowledge/protocol-decisions.md`.
+
+---
+2026-09-19
+Future scope carried over from the retired issue-management design note, so no
+design detail is lost:
+- External tracker transfer: the `URL` field stays empty until the user asks to
+  migrate tickets to GitHub, GitLab, or Jira; each migrated ticket then has its
+  `URL` filled in.
+- Kanban rendering: the three status directories map to To Do, Doing, and Done
+  columns. The board reads `Severity` and `Size` from the ticket header fields
+  and scans `ai/issues/closed/` for the Done column.

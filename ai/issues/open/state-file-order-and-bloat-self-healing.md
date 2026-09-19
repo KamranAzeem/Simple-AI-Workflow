@@ -143,5 +143,6 @@ protocol-file edit; recording the open questions here so they aren't lost.
    daily-checkpoint header presence).
 
 **Decision**: not proceeding to implementation until these are resolved,
-likely via a short design note (same pattern as
-`ai/notes/issue-management-mechanism-design.md`).
+likely via a short design note (the pattern used for the issue-management
+mechanism, whose outcome is recorded in
+`ai/shared/project-knowledge/protocol-decisions.md`).

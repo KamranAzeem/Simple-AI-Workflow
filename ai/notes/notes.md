@@ -31,7 +31,6 @@ Each pending item lives in its own note under `ai/notes/`:
 - **Refactoring / codebase-upgrade policy** — `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`
 - **New procedures from mattpocock analysis** — `ai/notes/grilling-procedure-design-note.md`, `ai/notes/agent-document-review-procedure-design-note.md`, `ai/notes/mattpocock-analysis-deferrals-and-readme-note.md`
 - **Local-first knowledge retrieval (RAG-style)** — `ai/notes/local-first-knowledge-retrieval-proposal.md` (discussed 2026-09-07; not a change yet)
-- **Issue management mechanism** — `ai/notes/issue-management-mechanism-design.md` (design locked; implementation in progress, tracked in `ai/issues/in-progress/issue-management-mechanism.md`)
 
 ---
 
@@ -41,5 +40,5 @@ mattpocock/skills - AI Engineer
 
 ---
 
-Issue management mechanism (create/track/close issues under ai/issues/, kanban-ready fields, directory-based status, template + lifecycle).
-<!-- Design locked 2026-09-09, revised 2026-09-17 to status-by-directory; full spec in ai/notes/issue-management-mechanism-design.md; implementation plan in ai/plans/issue-management-mechanism-implementation-plan.md. -->
+Issue management mechanism (create/track/close issues under ai/issues/, kanban-ready fields, directory-based status, template + lifecycle). (Processed 2026-09-17: implemented and merged as `be4e4b1`; ticket closed)
+<!-- Design locked 2026-09-09, revised 2026-09-17 to status-by-directory; implemented and merged as be4e4b1. Decisions in ai/shared/project-knowledge/protocol-decisions.md; mechanism in ai/policies/ai-policy-common.md; ticket in ai/issues/closed/issue-management-mechanism.md. -->
