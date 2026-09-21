@@ -1060,3 +1060,30 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Context
 - The user raised this while reviewing the new peer-review dimension. It reinforces the Humanized Output rules and the 2026-08-31 lean stance, and it is the standard the agent-facing documentation dimension itself checks.
+
+---
+
+## 2026-09-21: "Untried is not impossible" added to the Investigation Contract
+
+### Problem
+- A client-project session ([redacted], [redacted]) asserted a limitation ("unconfirmed", "would need to search for the source") without first attempting the direct artifact already in evidence, even though the Investigation Contract already required investigate-verify-then-assert. The Contract had no explicit rule against asserting an untested limitation as fact. Origin: GitHub issue #1, "Investigation Contract: untested blockers must be labeled as untested".
+
+### Decision
+- Added one paragraph to the `## Investigation Contract` in `ai/policies/ai-policy-common.md`, immediately after "Investigate, verify, then assert" and before "Self-consistency check":
+  `**Untried is not impossible.** Never claim a limitation ("would need X," "can't confirm without Y," "not accessible") unless you tried and it failed — name the tool and the result. If you haven't tried it, say "not yet attempted," never assert it as fact. Always attempt the direct artifact already in evidence (a URL, path, or ID) before searching indirectly for its source.`
+- Wording matches the fix the user had already drafted and verified against the issue text (a reference copy prepared in a separate client project's `tmp/` directory), confirmed word-for-word before implementation.
+- No `AGENTS.md` change (2026-08-31 routing principle: policy-only prose). No validator anchor change — behavioral prose, not a structural check. `support-files/validate-protocol.sh` run post-edit: 8/8 checks passed.
+
+### Scope choice
+- ADR entry only, no separate LLD file. The change reuses wording already reviewed and approved via the GitHub issue; there is no open design question to document beyond placement and rationale, unlike the 2026-09-19 self-consistency-check addition which needed a dedicated LLD.
+
+### Process note
+- Protocol Developer Mode: `protocol-decisions.md` (this file) was loaded in full (1062 lines) before the edit, per the mandatory pre-action check.
+- Peer review: `ai/code-review-reports/2026-09-21_14-43_review-01.md` — APPROVED, no findings.
+- `README.md` and `docs/simple-ai-workflow-slides.md` checked for references to specific Investigation Contract paragraph names or counts — none found, no updates needed.
+
+### Files changed
+- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/code-review-reports/2026-09-21_14-43_review-01.md` (new), this file.
+
+### Merge record
+- Squash-merged `feature/untried-not-impossible-investigation-contract` to `master` on 2026-09-21 and pushed to `origin/master`. The feature branch was deleted. GitHub issue #1 closed via the commit's `Closes #1`.
