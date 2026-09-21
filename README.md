@@ -1,5 +1,7 @@
 # Simple AI Workflow
 
+> **Repository history was rewritten on 2026-09-22.** If you already cloned this repository, run `git fetch origin && git reset --hard origin/master` to sync. A plain `git pull` will not work after a history rewrite.
+>
 > **Already using this?** The customization file moved from `ai/ai-customization.md` to `ai-customization.md` at your project root. Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it migrates for you, or follow the [manual steps](docs/ai-customization-guide.md).
 
 **The idea: stop *chatting* with AI, and start *working* with it.**
