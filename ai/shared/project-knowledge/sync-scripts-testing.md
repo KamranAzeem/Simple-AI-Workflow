@@ -40,3 +40,17 @@ mv "$tmp" "$customization_file"
 
 ### Lesson
 `sed -i` semantics differ between GNU and BSD. For cross-platform shell scripts, avoid `-E` with backreferences and in-place editing; use basic regex + temp file + `mv` (matches the pattern the script already used for config-section insertion). Verified on Linux; not executed on real macOS in this session.
+
+## 2026-09-19: symlinked ai-customization.md fix + regression test
+
+### Problem
+A root `ai-customization.md` that is a symlink to `ai/ai-customization.md` was read as a duplicate. The script renamed the real file to `.bak` and left the root link dangling, so the next load context found no customization.
+
+### Fix (both scripts)
+Detect the symlinked layout and edit the real target in place. A symlink-preserving write replaces the plain `mv` so a linked root is never replaced by a regular file. A genuine old-plus-root conflict on a regular root file still renames the old file to `.bak`.
+
+### Test
+`support-files/test-sync-agents-md.sh` builds temp projects and covers the symlink layout, a normal regular root, the legacy move, and the genuine conflict. Run it with `bash support-files/test-sync-agents-md.sh`; all 13 checks pass on Linux.
+
+### Caveat
+The PowerShell change is mirrored but not executed (no `pwsh` on the machine used). Verify on Windows when one is available.

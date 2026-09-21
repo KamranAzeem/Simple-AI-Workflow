@@ -1087,3 +1087,33 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Squash-merged `feature/untried-not-impossible-investigation-contract` to `master` on 2026-09-21 and pushed to `origin/master`. The feature branch was deleted. GitHub issue #1 closed via the commit's `Closes #1`.
+
+---
+
+## 2026-09-22: Full-history purge of sensitive identifiers, tags recreated, and a global commit guardrail
+
+### Problem
+- Sensitive identifiers (client project name, person names, a company name, client ticket prefixes, and client infrastructure identifiers) were present in committed history, including three release tags and two commit messages. The 2026-08-25 sensitive-name guardrail recorded that the repo should contain none of them, but later commits reintroduced some.
+- A broad scan found no credentials, private keys, tokens, or connection strings in history. `ai/secrets/` was never committed.
+
+### Decision
+- Rewrote the entire history from the first affected commit (`888bdf6`, 2026-06-22) with `git filter-repo --replace-text --replace-message --mailmap`. Every identifier now reads `[redacted]`.
+- Normalized all author and committer emails to `kamranazeem@gmail.com`.
+- Recreated all five tags (`v1.0.0` through `v2.3.0`) on the rewritten commits, preserving their messages. Force-pushed `master` and the tags.
+- Added a migration notice to `README.md`: existing clones must run `git fetch origin && git reset --hard origin/master`.
+- Moved the authoritative list of sensitive names out of the repo and into the user's global settings file (`~/.ai/settings/global-user-settings.md`), with a rule that the AI scans staged changes before any `git add` or `git commit` and stops on a match. Genericized the same identifiers in the global knowledge file.
+
+### Scope choice
+- Full-history purge rather than a tip-only cleanup, because the identifiers existed in commits and tags, not only at the tip.
+
+### Verification
+- Every old commit maps to a live new commit (221 old commits, zero missing). Old and new `master` file lists are identical. Commit counts preserved. Tag messages byte-identical. Validator 8/8; markdownlint 0. A fresh mirror clone of the rewritten repo has zero identifier hits across all 223 commits.
+- Plan: `ai/plans/full-history-sensitive-data-purge-plan.md`. Peer review: `ai/code-review-reports/2026-09-22_00-16_review-18.md` APPROVED. Backups under `/tmp/kilo/`.
+
+### Accepted consequences
+- Every commit hash from `888bdf6` forward changed. Short-hash references recorded in tracked files are now stale.
+- GitHub may serve old objects by SHA for a while; forks and caches can persist.
+- The branch `docs/readme-overhaul` is rewritten locally and remains unmerged.
+
+### Routing
+- No `AGENTS.md` or policy change: repo maintenance plus a user-side global settings rule.

@@ -5,6 +5,9 @@ ai/secrets/**
 # ai/code-review-reports/ contains session-local peer review artefacts — not committed.
 ai/code-review-reports/
 ai/code-review-reports/**
+# ai/artifacts/ contains local report artifacts and examples — not committed.
+ai/artifacts/
+ai/artifacts/**
 
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
