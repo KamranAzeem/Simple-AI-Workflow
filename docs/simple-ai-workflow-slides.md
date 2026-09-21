@@ -18,12 +18,11 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 
 - **Safe Git operations**: secrets scan before every commit
 - **No tool lock-in**: it is protocol-based, with no brittle scripts or "song and dance"
-- **Git enrichment**: it distils your git history automatically
 - **Handoff protocol**: switch between IDE, CLI, and web chat
 - **Notes (`ai/notes/`)**: rough thoughts, meeting notes, random ideas
 - **Artifacts (`ai/artifacts/`)**: draft outputs you review before promoting to docs or code
 - **Global settings** (`~/.ai/settings/global-user-settings.md`): the AI learns your skills, tool preferences, and cross-project context
-- **Modular persona**: shift the AI's focus (Architect, Mentor) without losing the guardrails
+- **Modular persona**: shift the AI's focus (System Architect, Teacher/Trainer) without losing the guardrails
 - **Project customization**: `ai-customization.md` at the project root, with a curated traits catalog
 - **Compliance intelligence**: built-in AI knowledge, no on-disk compliance files
 - **Idiot-proof protocol**: structural guardrails so even "lite" models stay safe
@@ -31,7 +30,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Project knowledge sync**: findings, decisions, and discoveries land in `project-knowledge/` at every checkpoint
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
-- **Daily snapshots**: an automatic history of work and decisions
+- **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint and used as the state-file archive
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
 - **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
 - **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
@@ -50,6 +49,10 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Windows system admin policy**: Windows Server, Active Directory, Group Policy, PowerShell, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
 - **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger at every checkpoint
 - **Shared understanding before building**: for feature work, the AI interviews you to a shared design concept before creating files
+- **Privacy-safe commits**: a pre-commit sensitive-name scan, with a full-history purge and a migration path when something slips through
+- **Investigation Contract**: evidence-based by default, cross-checked against what was already read (self-consistency), and "Untried is not impossible" (never assert a limitation you did not test)
+- **Progressive disclosure**: `AGENTS.md` stays short; detail sits behind context pointers the AI opens only when a task needs it
+- **Git setup guidance**: a recommended global `.gitconfig` (identity, CRLF handling, a readable `git lg` alias) in the global settings template
 
 ---
 
@@ -104,7 +107,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | Cross-project lessons | `~/.ai/global-knowledge/`, explicit and structured |
 | Post-summary recovery | Post-Compaction Recovery, automatic |
 | Multi-tool handoffs | `ai/shared/handoffs/` |
-| Compliance enforcement | `ai/policies/compliance/` plus built-in AI knowledge |
+| Compliance enforcement | Built-in AI knowledge (no on-disk files required) |
 | Peer code review | `"peer review"`, saved reports in `ai/code-review-reports/` |
 | Protocol self-validation | `validate-protocol.sh` |
 | Sync across all your projects | `sync-agents-md.sh` or `.ps1` |
@@ -332,7 +335,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ## Habits that handle the rest
 - Checkpoint after each logical unit of work, not just at the end of the day
 - When the AI loses the thread, checkpoint and start a fresh session
-- Set up the per-tool reload trigger once. After any summary, ask "did you run the post-compaction reload?" before you trust the next answer
+- Set up the per-tool recovery trigger once. After any summary, ask "did you run the post-compaction recovery?" before you trust the next answer
 - Keep `ai/state/context.md` lean: current state only, not a history log
 - Review `ai/state/next-steps.md` at session start, and trim stale items before you work
 

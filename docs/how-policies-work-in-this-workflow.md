@@ -1,13 +1,13 @@
-## How policies play their role in AI produced work:
+## How policies play their role in AI produced work
 
-> Question. With all these policies and compliance policies we have , how can we actually use them for our work? How do they become useful while using this ai workflow? Do these policies govern the AI-generated work to follow all the active policies? 
+> Question. With all these policies and compliance policies we have , how can we actually use them for our work? How do they become useful while using this ai workflow? Do these policies govern the AI-generated work to follow all the active policies?
 
 * The policies serve as the "Institutional Memory" and "Guardrails" for your AI teammates. They become useful through a process of Contextual Injection and Proactive Verification.
 
   How Policies Work in the Workflow
 
    1. Contextual Injection (The "Know Your Rules" Phase):
-      When you say "Load context using AGENTS.md protocol," the AI reads the ai/policies/ directory. By doing so, it updates its "System Instruction" or "Working Memory" to
+      When you say "Load context using AGENTS.md protocol," the AI loads the policies your `ai-customization.md` names, plus the common policy. By doing so, it updates its "System Instruction" or "Working Memory" to
   include these rules. It’s no longer just an AI; it’s an AI that knows it must follow your specific Cloud, Backend, or Security standards.
 
    2. Constraint-Based Code Generation (The "Guardrail" Phase):
@@ -26,10 +26,10 @@
 
   Without Policies: The AI might give you a basic, insecure bucket definition.
 
-  With Your ai-policy-cloud.md & Compliance Modules:
+  With the cloud policy and compliance active:
   The AI automatically:
    1. Injects Security: Recalls the policy rule for "Secure Defaults." It adds PublicAccessBlockConfiguration to ensure the bucket is private.
-   2. Applies Compliance: Sees iso-27001.md or soc2.md is active. It adds BucketEncryption with AES256 and enables Versioning to satisfy data integrity controls.
+   2. Applies Compliance: Sees gdpr or iso-27001 active in ai-customization.md. It adds BucketEncryption with AES256 and enables Versioning to satisfy data integrity controls.
    3. Enforces Standards: Recalls the rule about "Infrastructure-as-Code Quality." It adds a tagging block (e.g., Environment, Owner) because the policy mandates it.
    4. Self-Validation: Before presenting the script, it automatically runs terraform fmt and checkov (as per the "Generated File Validation" rule in ai-policy-common.md).
 
@@ -44,5 +44,3 @@
 
   Does this example clarify how the policies transition from static documents into active "teammate" behavior? I can draft a more technical breakdown of the "Resolution
   Loop" if you'd like to see the pseudo-code logic the AI follows.
-
-

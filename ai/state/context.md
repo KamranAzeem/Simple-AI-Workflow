@@ -2,7 +2,7 @@
 # Project Context
 
 ## Current Status
-- **Milestone**: full-history sensitive-identifier purge completed on 2026-09-22 and released as `v2.4.0`; the README overhaul and global user settings template remain in progress on branch `docs/readme-overhaul`
+- **Milestone**: full-history sensitive-identifier purge completed on 2026-09-22; the README overhaul and global user settings template are in progress on branch `docs/readme-overhaul`. The `v2.4.0` release tag is deferred until the branch merges.
 - **Validator**: v5.0, 8/8 checks
 - **Policy count**: 16 modular policies
 - **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive

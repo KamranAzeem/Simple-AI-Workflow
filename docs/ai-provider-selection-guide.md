@@ -108,4 +108,3 @@ This avoids over-configuring too early.
 ## Related Guides
 
 - VS Code + Cline setup: `docs/vscode-cline-provider-setup-for-beginners.md`
-- VS Code `/init` workflow notes: `docs/vscode-init-instructions.md`

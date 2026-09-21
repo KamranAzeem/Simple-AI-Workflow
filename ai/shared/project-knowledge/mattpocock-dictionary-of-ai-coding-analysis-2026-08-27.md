@@ -1,6 +1,6 @@
 # Codebase Analysis: mattpocock/dictionary-of-ai-coding
 
-**Source**: https://github.com/mattpocock/dictionary-of-ai-coding (cloned to `/tmp/dictionary-of-ai-coding`)
+**Source**: <https://github.com/mattpocock/dictionary-of-ai-coding> (cloned to `/tmp/dictionary-of-ai-coding`)
 **Examined**: 2026-08-27
 **Version at examination**: HEAD 251fec7
 **Purpose**: Capture the vocabulary, structure, and ideas from Matt Pocock's AI coding
@@ -10,7 +10,7 @@ dictionary for use in the Simple-AI-Workflow protocol.
 
 ## Level 0 Repo Map
 
-```
+```text
 /
 ├── CLAUDE.md                    (agent-facing writing rules and repo conventions)
 ├── README.md                    (GENERATED — built from template + dictionary entries)
@@ -41,7 +41,7 @@ plus the entry files. The goal is to give developers the vocabulary to understan
 coding behaves the way it does: why context degrades, why bills are high, why the same
 prompt behaves differently day to day.
 
-Published at: https://www.aihero.dev/ai-coding-dictionary
+Published at: <https://www.aihero.dev/ai-coding-dictionary>
 
 ---
 

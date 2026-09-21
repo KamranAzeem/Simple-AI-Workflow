@@ -25,3 +25,8 @@ See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customiz
 
 ### Rule: Proactive Peer Review
 - After completing each module or change set, run Procedure D (peer review) proactively — without being asked.
+
+### Rule: Close the Ticket Before the Squash Merge
+- When a branch's work resolves an issue ticket, close the ticket as the final change on the branch: `git mv` the file into `closed/` and append a dated closing update, then squash-merge into `master`.
+- The squash merge then carries the closed state, so no follow-up commit is needed to realign the ticket with the live state.
+- Do not close the ticket in a separate commit after the merge. A ticket moves to `closed/` only as part of the same branch that contains its fix.

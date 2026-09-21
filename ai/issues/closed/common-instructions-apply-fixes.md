@@ -19,3 +19,9 @@ Acceptance criteria:
 ---
 2026-09-20
 Implemented on branch `docs/readme-overhaul`. The Common instructions table now has two rows: `"perform a code review on <topic>"` and `"apply fixes for problems identified in code review report"`. The duplicate code-review phrase was removed from the "Review and maintenance phrases" list. The workflow guide documents peer review as a mode and does not carry the common-instruction phrase list, so no change was needed there. Pending merge.
+
+---
+
+2026-09-22
+
+Closed as part of the `docs/readme-overhaul` squash merge into `master`. Both review phrases are in the README Common instructions table, and the build is lint-clean.

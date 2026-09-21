@@ -51,18 +51,17 @@ The AI will:
 3. Delete the handoff file and ownership claim upon successful verification.
 4. Record the completion in `ai/state/progress.md`.
 
-## 4. Git Context Enrichment (Automatic)
-The protocol leverages the project's Git history to build a richer understanding of the codebase's evolution without manual data entry.
+## 4. Working with Git
+The workflow does not inject Git history into the state files. Git is the source of truth for version control, and the state files never record a branch, commit hash, or push status (see [Section 14](#14-atomic-write-protocol--state-file-trimming)).
 
-### How it Works
-1. **Initial Distillation**: During the first bootstrap in a Git repository, the AI distills the last 50-100 commits into a `## Project Evolution & Git History` section in `ai/state/context.md`.
-2. **Reference Point**: The AI records the latest commit hash (HEAD) in `ai/state/context.md`.
-3. **Delta Loading**: On every subsequent "load context" operation, the AI identifies new commits since the last recorded hash (`git log <hash>..HEAD`) and loads them into active memory.
+What the protocol does enforce around Git:
+- **Branch gating**: obtain explicit approval before state-changing Git operations on `master` or `main`.
+- **Conventional commits**: follow the project's commit conventions (for example `feature:`, `fix:`, `chore:`, `docs:`).
+- **PR review**: peer review can target a named pull request; the AI fetches the latest refs and diffs the PR's source against its target, not the local working tree (see [Section 12](#12-peer-review-mode)).
 
-### Benefits
-- **Zero-Effort Context**: The AI "remembers" recent changes you made without you having to explain them.
-- **Token Efficiency**: Distilled summaries in `ai/state/context.md` are much smaller than raw Git logs.
-- **Temporal Awareness**: AI understands the "why" behind architectural shifts by looking at commit messages.
+The AI does not rely on commit history to rebuild project context. If you want a decision or design recorded, it belongs in `ai/shared/project-knowledge/` or the daily checkpoints, not in the state files.
+
+For a recommended global Git setup (identity, CRLF handling, and a readable `git lg` alias), see the Git Configuration section in the [global user settings template](global-user-settings.md).
 
 ## 5. Expertise & Intent Alignment (Review-First)
 To prevent AI assistants from prematurely implementing code changes when you only wanted to ask a question, the workflow enforces a strict intent alignment protocol.
@@ -135,7 +134,7 @@ The honest target is high reliability with a loud, visible signal, not a hard
 guarantee. The reload announces itself as the first line of the first reply
 after a compaction; if you do not see that line, the reload was skipped. The
 final backstop is you: after any summary, ask "did you run the post-compaction
-reload?" before trusting the next answer.
+recovery?" before trusting the next answer.
 
 ## 8. Native AI State Backups
 ### On-Demand Archiving
@@ -288,3 +287,29 @@ All design documents live in `ai/shared/project-knowledge/` and follow the verbo
 - `<project>-delivery-ledger.md`
 
 At the start of each session, the AI checks for these documents and prompts you to create any that are missing. At every checkpoint, it updates the delivery ledger to reflect what was built during the session.
+
+## 16. Issue Management (`ai/issues/`)
+
+Tickets live under three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status, and no file sits directly under `ai/issues/`.
+
+- Create a ticket with `"file an issue"` or `"new issue"`. It uses the template at `ai/shared/project-knowledge/issue-template.md`.
+- Start work with `"manage issues"`, which moves the ticket to `in-progress/`.
+- Close it as the final change on the branch, then squash-merge, so the merge carries the closed state and no follow-up commit is needed. A ticket reaches `closed/` only as part of the branch that contains its fix.
+- Reopen by moving it back to `open/`, and list open and in-progress tickets with `"list issues"`.
+
+## 17. State-File Health and Repair
+
+Every `"load context"` checks the three state files read-only for the rule comment, chronological order, duplicates, the size budget, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves over-budget or older-than-14-days completed entries into the daily checkpoint diary, restores a missing rule comment, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
+
+## 18. Evidence and the Investigation Contract
+
+The Investigation Contract in `ai/policies/ai-policy-common.md` governs how the AI reasons:
+
+- **Investigate, verify, then assert**: no claim without a source. If it cannot verify, it says "not verified" and asks.
+- **Local-first source precedence**: local sources of truth come before the model's own knowledge, the web, or official docs, with a bounded probe.
+- **Self-consistency check**: before finalizing an edit, the AI re-checks a new or changed claim against the other sections already read this session, and resolves or flags contradictions.
+- **Untried is not impossible**: the AI never asserts a limitation (for example "can't confirm without Y") unless it tried and failed, and it names the tool and the result. If it has not tried, it says "not yet attempted".
+
+## 19. Codebase Examination
+
+Say `"codebase examination"` or `"examine this codebase"` to examine or refactor a codebase larger than the context window. It uses disk-backed repo maps and tiered, just-in-time loading, with no vector databases or external indexing tools. See the [codebase examination guide](codebase-examination-guide.md).

@@ -80,7 +80,7 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
 | User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
-| Domain expertise / rules | `SKILLS.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (16 domain policies) |
+| Domain expertise / rules | `SKILLS.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (16 policies) |
 | Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
 | Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
 | Current state / context dashboard | None | None | None | None | `ai/state/context.md` |
@@ -101,7 +101,7 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 
 Open your project and you will find:
 
-```
+```text
 ai/
 ├── state/
 │   ├── progress.md       ← what was done
@@ -193,7 +193,7 @@ And unlike native tool automation, you always know what was saved and why.
 | Portability | Tied to one tool or account | Works with any tool, any editor, any OS |
 | Cross-tool continuity | Start over every time | Pick up where you left off, any assistant |
 | Memory control | Automatic, often opaque | Explicit, structured, fully inspectable |
-| Domain expertise | Flat instructions text | 16 modular domain policies with enforced rules |
+| Domain expertise | Flat instructions text | 16 modular policies with enforced rules |
 | Compliance | None | SOC2, ISO-27001, GDPR, and more |
 | Peer review | None | On-demand, with saved reports |
 | Setup on a new machine | Re-configure each tool | Zero — files travel with the project |

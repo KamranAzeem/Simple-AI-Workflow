@@ -1,6 +1,6 @@
 # Codebase Analysis: mattpocock/skills
 
-**Source**: https://github.com/mattpocock/skills (cloned to `/tmp/skills`)
+**Source**: <https://github.com/mattpocock/skills> (cloned to `/tmp/skills`)
 **Examined**: 2026-08-27
 **Version at examination**: 1.2.3 (HEAD: 6654f6b)
 **Purpose**: Capture key ideas from Matt Pocock's AI skills repo for potential adoption or
@@ -10,7 +10,7 @@ inspiration in the Simple-AI-Workflow protocol.
 
 ## Level 0 Repo Map
 
-```
+```text
 /
 ├── AGENTS.md              (empty — 9 bytes, placeholder only)
 ├── CLAUDE.md              (agent-facing repo maintenance rules)
@@ -125,7 +125,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 
 ### Main flow: idea to ship
 
-```
+```text
 grilling/grill-me
   → domain-modeling        (establish vocabulary, update CONTEXT.md)
     → to-spec              (synthesize grilled ideas into a spec)

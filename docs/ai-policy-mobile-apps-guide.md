@@ -1,6 +1,6 @@
 # Mobile App Development Policy Guide
 
-This guide explains the `ai/ai-policy-mobile-apps.md` policy file — what it covers, how to use it, and how it integrates with the rest of the workflow.
+This guide explains the `ai/policies/ai-policy-mobile-apps.md` policy file — what it covers, how to use it, and how it integrates with the rest of the workflow.
 
 ## Overview
 
@@ -75,20 +75,23 @@ Each platform gets its own section with framework preferences, language conventi
 
 ## How to Use
 
-### Step 1: Set up AGENTS.md
-Copy [`AGENTS.md`](../AGENTS.md) into your mobile project's root directory. The protocol file handles path resolution automatically via its TIER 1 configuration section — no manual path updates are needed.
+### Step 1: Set up the protocol files
+Copy [`AGENTS.md`](../AGENTS.md) into your mobile project's root directory, and copy [`ai-customization.md`](ai-customization.md) to `ai-customization.md` at your project root. Set **Global AI Workflow Directory** in `ai-customization.md` to the path of your clone. The protocol resolves all other paths from there.
 
 ### Step 2: Bootstrap
 In your AI assistant, run:
-```
+
+```text
 bootstrap using AGENTS.md protocol
 ```
 
 ### Step 3: Tell the AI you're working on a mobile app
 The mobile policy is a specialized policy — it's loaded on demand. Tell the AI:
-```
+
+```text
 Use the mobile app policy for this project
 ```
+
 Or simply start working and the AI will detect your platform from the project files (`.xcodeproj` → iOS, `build.gradle` → Android, `pubspec.yaml` → Flutter, etc.).
 
 ## How It Integrates with the Common Policy
@@ -104,7 +107,6 @@ The mobile policy works **on top of** the [global common policy file](../ai/poli
 
 **Instruction precedence** (from the common policy):
 > system/tool safety > explicit user request > project customization > **specialized policy (mobile)** > common policy
-
 
 This means the mobile policy's rules take priority over the common policy when there's overlap.
 
@@ -125,6 +127,6 @@ This means the mobile policy's rules take priority over the common policy when t
 
 ## File Reference
 
-- **Policy file**: [`ai/ai-policy-mobile-apps.md`](../ai/ai-policy-mobile-apps.md)
-- **Common policy**: [`ai/ai-policy-common.md`](../ai/ai-policy-common.md)
+- **Policy file**: [`ai/policies/ai-policy-mobile-apps.md`](../ai/policies/ai-policy-mobile-apps.md)
+- **Common policy**: [`ai/policies/ai-policy-common.md`](../ai/policies/ai-policy-common.md)
 - **Bootstrap entry**: [`AGENTS.md`](../AGENTS.md)

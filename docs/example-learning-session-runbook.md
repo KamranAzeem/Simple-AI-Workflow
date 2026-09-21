@@ -21,20 +21,20 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
   - Test the connection by opening a chat in the IDE and sending a simple message.
 
 ### 2. Simple-AI-Workflow Repository
-- Clone the [Simple-AI-Workflow](https://github.com/kamran-azeem/Simple-AI-Workflow) repository to a global location on your machine.
+- Clone the [Simple-AI-Workflow](https://github.com/KamranAzeem/Simple-AI-Workflow) repository to a global location on your machine.
 - Example: `~/Projects/Simple-AI-Workflow` or `C:\Users\YourName\Projects\Simple-AI-Workflow`
 - This global location is your reference copy for policies and protocol.
 
-### 3. AGENTS.md Configuration
-- Copy `AGENTS.md` from the global Simple-AI-Workflow repository to your example project directory.
-- Open the copied `AGENTS.md` in your example directory.
-- Update the **Global Policies Directory** path to point to the correct location (**"full/absolute path"**) on your machine:
+### 3. Project Configuration
+- Copy `AGENTS.md` from the global Simple-AI-Workflow repository to your example project directory. `AGENTS.md` itself stays unchanged.
+- Copy `docs/ai-customization.md` from the clone to `ai-customization.md` at your example project root.
+- Open `ai-customization.md` and set **Global AI Workflow Directory** to the absolute path of your clone (**"full/absolute path"**):
   - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`
   - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/`
   - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
   - Ensure the path reflects your actual global repository location.
-- Verify the policy files exist at the path you configured (check that `ai/ai-policy-meta.md` and `ai/ai-policy-common.md` are accessible).
-- Optional: create `global-user-settings.md` in `~/.ai/settings/` to give the AI persistent context about your skills, preferences, and tooling. Use `docs/about-human.md` and `docs/tools-preferences.md` from this repository as starting templates.
+- Verify the policy files exist under that path (check that `ai/policies/ai-policy-meta.md` and `ai/policies/ai-policy-common.md` are accessible).
+- Optional: create `global-user-settings.md` in `~/.ai/settings/` to give the AI persistent context about your skills, preferences, and tooling. Use `docs/global-user-settings.md` from this repository as a starting template.
 
 ### 4. Verification Checklist
 Before starting Step 1, confirm:
@@ -43,7 +43,7 @@ Before starting Step 1, confirm:
 - [ ] You can open a chat window in the IDE and send prompts.
 - [ ] Simple-AI-Workflow repository is cloned to a global location.
 - [ ] AGENTS.md is copied to your example project directory.
-- [ ] AGENTS.md Global Policies Directory is updated to your machine's path.
+- [ ] `ai-customization.md` is copied to the project root and its Global AI Workflow Directory points to your clone.
 
 Once all prerequisites are met, proceed to Step 1.
 
@@ -65,8 +65,7 @@ Send this prompt:
 bootstrap using AGENTS.md protocol
 ```
 
-**Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompt `"bootstrap using AGENTS.md protocol"` instead — it works the same way everywhere.
-
+**Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompt `"bootstrap using AGENTS.md protocol"` instead. It works the same way everywhere.
 
 Expected outcome:
 - The agent will load instructions from AGENTS.md and load necessary policy files.

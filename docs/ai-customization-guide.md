@@ -9,14 +9,16 @@ Different projects require different expertise (Cloud vs. Frontend), different b
 
 ## 1. Composing Expertise (Technical Roles)
 
-Use the `## Active Expertise` section to load domain-specific policies from the **Global Policies Directory**.
+Use the `## Active Expertise` section to load domain-specific policies from the `ai/policies/` directory in your clone (resolved through **Global AI Workflow Directory**).
 
 **Example:**
+
 ```markdown
 ## Active Expertise
 - cloud
 - api-backend
 ```
+
 **How it works**: The AI assistant will look for a matching file in the global directory using two patterns — `ai-policy-<name>.md` first, then `<name>.md` — and load all matched files as additive layers.
 
 ---
@@ -38,6 +40,7 @@ Use the `## Active Traits` section to define *how* the AI should behave. These a
 - **Teacher/Trainer** — Explain the 'why' behind every 'how'. Break down complex tasks into teachable steps.
 
 **Example:**
+
 ```markdown
 ## Active Traits
 - System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components. **Engagement style: Pressure-test architectural ideas with honest critique — identify risks, trade-offs, and blind spots. Do not be a "yes man."**
@@ -66,6 +69,7 @@ Use the `## Required Compliance` section to load compliance modules from the glo
 If you are an **Architect** managing a group-level directory that contains multiple sub-projects (e.g., a "Solutions" folder containing `/infra`, `/api`, and `/frontend`), you can use `ai-customization.md` at the root to give the AI a comprehensive cross-domain vision.
 
 **Architect Configuration Example:**
+
 ```markdown
 ## Active Expertise
 - cloud        # For the infrastructure sub-folder
@@ -89,15 +93,15 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 
 | Component | Example | Path Inferred |
 | :--- | :--- | :--- |
-| **Expertise** | `cloud` | `ai-policy-cloud.md` |
-| **Expertise** | `web-frontend` | `ai-policy-web-frontend.md` |
-| **Expertise** | `dba` | `ai-policy-dba.md` |
-| **Expertise** | `observability` | `ai-policy-observability.md` |
-| **Expertise** | `meta` | `ai-policy-meta.md` |
-| **Expertise** | `accounting` | `ai-policy-accounting.md` |
-| **Expertise** | `academic-researcher` | `ai-policy-academic-researcher.md` |
-| **Expertise** | `career-coaching` | `ai-policy-career-coaching.md` |
-| **Expertise** | `windows-system-admin` | `ai-policy-windows-system-admin.md` |
+| **Expertise** | `cloud` | `ai/policies/ai-policy-cloud.md` |
+| **Expertise** | `web-frontend` | `ai/policies/ai-policy-web-frontend.md` |
+| **Expertise** | `dba` | `ai/policies/ai-policy-dba.md` |
+| **Expertise** | `observability` | `ai/policies/ai-policy-observability.md` |
+| **Expertise** | `meta` | `ai/policies/ai-policy-meta.md` |
+| **Expertise** | `accounting` | `ai/policies/ai-policy-accounting.md` |
+| **Expertise** | `academic-researcher` | `ai/policies/ai-policy-academic-researcher.md` |
+| **Expertise** | `career-coaching` | `ai/policies/ai-policy-career-coaching.md` |
+| **Expertise** | `windows-system-admin` | `ai/policies/ai-policy-windows-system-admin.md` |
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
 

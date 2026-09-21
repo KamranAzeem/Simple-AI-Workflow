@@ -14,7 +14,7 @@ Build a simple 3-page static website (Home, About, Contact) using three differen
 ## Prerequisites
 
 - Simple-AI-Workflow cloned to a central location
-- `AGENTS.md` copied to the project root with the correct policy path
+- `AGENTS.md` copied to the project root, and `ai-customization.md` created there from `docs/ai-customization.md` with **Global AI Workflow Directory** set to the clone
 - All three AI assistants have access to the same project directory
 - The `ai/` directory is git-ignored (shared state, not committed)
 
@@ -26,7 +26,7 @@ Build a simple 3-page static website (Home, About, Contact) using three differen
 
 Open your IDE with Agent A (Gemini) and send:
 
-```
+```text
 bootstrap using AGENTS.md protocol
 ```
 
@@ -34,7 +34,7 @@ bootstrap using AGENTS.md protocol
 
 ### Step 1.2: Initialize Git
 
-```
+```text
 Initialize git repo with main branch, add .gitignore, show changes, stop before commit.
 ```
 
@@ -42,7 +42,7 @@ Initialize git repo with main branch, add .gitignore, show changes, stop before 
 
 ### Step 1.3: Create Home Page
 
-```
+```text
 Create index.html with minimalistic inline CSS: header, main content, footer. No frameworks, no animations. Show files and test command.
 ```
 
@@ -50,7 +50,7 @@ Create index.html with minimalistic inline CSS: header, main content, footer. No
 
 ### Step 1.4: Update Coordination Board
 
-```
+```text
 Update ai/shared/coordination.md to record that Agent A (Gemini) has completed the project foundation (index.html, CSS, git init). List remaining tasks for Agent B.
 ```
 
@@ -58,7 +58,7 @@ Update ai/shared/coordination.md to record that Agent A (Gemini) has completed t
 
 ### Step 1.5: Create Handoff for Agent B
 
-```
+```text
 Create a handoff file at ai/shared/handoffs/agent-b-create-pages.md with:
 - Objective: Create about.html and contact.html matching index.html style
 - Requirements: Consistent CSS, navigation links between all pages
@@ -69,7 +69,7 @@ Create a handoff file at ai/shared/handoffs/agent-b-create-pages.md with:
 
 ### Step 1.6: Checkpoint
 
-```
+```text
 checkpoint
 ```
 
@@ -83,7 +83,7 @@ checkpoint
 
 Open your IDE with Agent B (Claude) and send:
 
-```
+```text
 load context using AGENTS.md protocol
 ```
 
@@ -91,7 +91,7 @@ load context using AGENTS.md protocol
 
 ### Step 2.2: Claim and Execute Handoff
 
-```
+```text
 Claim and execute the handoff at ai/shared/handoffs/agent-b-create-pages.md
 ```
 
@@ -103,7 +103,7 @@ Claim and execute the handoff at ai/shared/handoffs/agent-b-create-pages.md
 
 ### Step 2.3: Create Handoff for Agent C
 
-```
+```text
 Create a handoff file at ai/shared/handoffs/agent-c-review.md with:
 - Objective: Review all three pages for consistency, fix any issues
 - Requirements: Check styling consistency, navigation, HTML validity
@@ -114,7 +114,7 @@ Create a handoff file at ai/shared/handoffs/agent-c-review.md with:
 
 ### Step 2.4: Checkpoint
 
-```
+```text
 checkpoint
 ```
 
@@ -128,7 +128,7 @@ checkpoint
 
 Open your IDE with Agent C (DeepSeek) and send:
 
-```
+```text
 load context using AGENTS.md protocol
 ```
 
@@ -136,7 +136,7 @@ load context using AGENTS.md protocol
 
 ### Step 3.2: Claim and Execute Review
 
-```
+```text
 Claim and execute the handoff at ai/shared/handoffs/agent-c-review.md
 ```
 
@@ -148,7 +148,7 @@ Claim and execute the handoff at ai/shared/handoffs/agent-c-review.md
 
 ### Step 3.3: Finalize
 
-```
+```text
 Update ai/shared/coordination.md to mark all tasks complete. Create a final checkpoint.
 ```
 

@@ -33,7 +33,7 @@ Paste this into your assistant's persistent-memory or always-on-instructions
 layer (see the per-assistant locations below). Do not change the wording much;
 it is deliberately assistant-agnostic.
 
-```
+```text
 Applies only in projects that use the Simple-AI-Workflow protocol (an AGENTS.md
 file exists at the project root). Ignore everywhere else.
 
@@ -111,6 +111,6 @@ is the closest available mechanism; the human backstop below covers the gap.
 
 No text-only setup makes a missed reload impossible. The most reliable check is
 simple and takes five seconds: **after you notice a session has been
-summarized, ask your assistant "did you run the post-compaction reload?"**
+summarized, ask your assistant "did you run the post-compaction recovery?"**
 before you trust its next answer. This is what has caught misses in practice.
 Treat it as the final safety net, not an admission of failure.

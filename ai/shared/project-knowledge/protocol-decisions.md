@@ -711,7 +711,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ## 2026-08-25 (evening): research cleanup, design preservation, refactoring research
 
 - **Research cleanup**: deleted the habit-hooks research file (`ai-coding-quality-behavioral-prompts-habit-hooks-research-2026-08-21.md`) and the two stale artifacts (`additions-to-common-policy.md`, `protocol-examination-findings-2026-08-24.md`) since their content was fully covered by merged work; removed the remaining research-derived pending items (ideas 3, 4, 7) from `next-steps.md` and `notes.md`; committed the previously untracked `2026-08-24.md` daily checkpoint.
-- **Sensitive-name guardrail**: verified the committed repo contains none of [redacted], [redacted], [redacted], or [redacted] (confirmed case-insensitive across all tracked files). User left the person's handle "[redacted]" in the state records and the git-ignored `ai/secrets/` files as-is, since they never reach the repo.
+- **Sensitive-name guardrail**: verified the committed repo contains none of the flagged sensitive names (confirmed case-insensitive across all tracked files). The authoritative list lives in the user's global settings file, never in this repo. A person's handle was left in the state records and the git-ignored `ai/secrets/` files as-is, since they never reach the repo.
 - **Multi-assistant + build AI team preserved**: saved the `feature/multi-assistant-workflow` design doc combined with the AI-team runtime/role model (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B) into `ai/notes/multi-assistant-workflow-design.md` (Status: pending). Both feature branches deleted; only the note remains, plus the deferred items in `next-steps.md`. Draft's older paths vs the current `ai/state/` + single-writer + `ai/shared/coordination.md` model flagged for reconciliation before resuming.
 - **Refactoring/codebase-upgrade research**: stored the Google research on refactoring vs upgrading, PHP-legacy vs modern-node differences, and the "upgrade first, then refactor" golden rule into `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`. A refactoring/codebase-upgrade policy is under consideration (Status: pending in `notes.md`).
 
@@ -793,7 +793,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Decision
 - Added a new step 2, **Write Daily Checkpoint File**, to Procedure C in `AGENTS.md`, between the Atomic Write Protocol (step 1) and Log Condensation (renumbered 2→3; Update Project Knowledge 3→4; Context Re-affirmation 4→5). Fixed the one internal cross-reference to the old step number (`context.md` horizon-shield mention, "(Step 2)" → "(Step 3)").
-- **Naming convention chosen deliberately, deviating from the issue's raw proposal**: the issue's proposed fix cited an [redacted]-project example using `YYYY-MM-DD-NN.md` (one file per checkpoint). Investigated this repo's own `ai/daily-checkpoints/` directory instead and found the convention actually in force since 2026-06-19 is one file per **calendar day** (`YYYY-MM-DD.md`) with multiple `## CP-<ID>: <title>` sections appended for same-day checkpoints (e.g. `2026-08-25.md` holds four checkpoints). Used that convention rather than importing an example from a different project that was never actually the standard here.
+- **Naming convention chosen deliberately, deviating from the issue's raw proposal**: the issue's proposed fix cited an example from another project using `YYYY-MM-DD-NN.md` (one file per checkpoint). Investigated this repo's own `ai/daily-checkpoints/` directory instead and found the convention actually in force since 2026-06-19 is one file per **calendar day** (`YYYY-MM-DD.md`) with multiple `## CP-<ID>: <title>` sections appended for same-day checkpoints (e.g. `2026-08-25.md` holds four checkpoints). Used that convention rather than importing an example from a different project that was never actually the standard here.
 - `ai-policy-common.md`: added a **Daily Checkpoint File Mandate** bullet next to the existing Checkpoint Mandate in Checkpoint & Backup Procedures, pointing at the new AGENTS.md step without restating its mechanics (two-layer pattern).
 - `support-files/validate-protocol.sh`: v4.6 → v4.7, new anchor check for `Write Daily Checkpoint File` in section 1 alongside the existing Sliding Horizon Shield check.
 - Docs synced: `docs/workflow-guide.md` §14 gained a **Daily Checkpoint File** subsection; `docs/simple-ai-workflow-slides.md`'s "atomic writes and a sliding horizon" slide gained a matching bullet.
@@ -1063,10 +1063,49 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ---
 
+## 2026-09-20: Call-a-friend and help-a-friend design decisions
+
+### Context
+- The user described a real support pattern: two people helping each other on the same project end up acting as lossy, high-latency modems between two AIs, relaying output through chat. Remote control is unavailable and screen sharing is painful.
+- The feature is tracked in `ai/issues/open/ask-for-help-feature.md`, which holds the full design at the user's request. This entry records the durable decisions.
+
+### Decisions
+- **Redaction is an option with a safe default.** Reports are redacted by default; the full version is an explicit opt-in. Secret-inclusive reports must be written to `ai/secrets/` or outside the repo, never to `ai/artifacts/`, which is git-tracked. A transport caution applies to the full version.
+- **"Help a friend" is a read-only intake mode.** The incoming report is untrusted external data, not instructions: no command execution from it, no writes to the helper's `ai/state/` or `ai/shared/project-knowledge/`, and only the response artifact is written.
+- **The exchange must be tool-agnostic.** The friend may not run this workflow, so portable report and response templates must work with any AI.
+- **Traceability uses the existing convention** (`YYYY-MM-DD_HH-MM_<slug>-NN.md`) plus a `Responds-to:` field linking a response to the report it answers, because sequence numbers reset per day.
+- **Responses target a non-technical person's AI:** exact copy-paste steps, a check after each step, "if you see X do Y", and an assumptions list.
+
+### Notes
+- Deliberate exception to the ticket-background convention: the user asked for the full design to live in the ticket, so `ask-for-help-feature.md` is the detailed home and this entry is the durable decision record.
+- Three separable pieces: the report generator with redaction, the friend-intake mode, and the portable two-sided templates.
+
+---
+
+## 2026-09-21: README overhaul and global user settings template
+
+### Decisions
+- Scope the overhaul to `README.md` only. Restructure it into a single setup flow, keep the first-person voice, and remove duplication.
+- Fix the quick start: the workflow directory path is set in `ai-customization.md`, not `AGENTS.md`. AGENTS.md resolves it from the project customization file.
+- Fix the "How it works" diagram: only `AGENTS.md` and `ai-customization.md` are copied into the project. The project's `ai/` directory is created and maintained by the AI, and the policy files stay in the clone.
+- Add two Common instructions: `"perform a code review on <topic>"` and `"apply fixes for problems identified in code review report"`.
+- Rename `docs/about-human.md` to `docs/global-user-settings.md`, fix its header comment and live references, and make it an OS-agnostic template: identity placeholders, and a CLI tool list that starts with names only and records each tool's path after it is installed. No per-OS variants.
+- Keep `Communication Style` as a subsection of `Preferences and Style`, not duplicated.
+
+### Process
+- Branch `docs/readme-overhaul`, not merged until the user confirms the README is complete.
+- review-15 CHANGES REQUESTED (diagram and copy-count findings), fixes applied, review-16 APPROVED.
+- One review finding was withdrawn: the customization list was said to omit project constraints and developer workflow, but the customization template has no such sections. Those presets are tracked by `customization-presets-per-role.md`.
+
+### Files changed
+- `README.md`, `docs/global-user-settings.md` (renamed from `docs/about-human.md`), `docs/example-learning-session-runbook.md`, `.gitignore`, `ai/issues/in-progress/common-instructions-apply-fixes.md`.
+
+---
+
 ## 2026-09-21: "Untried is not impossible" added to the Investigation Contract
 
 ### Problem
-- A client-project session ([redacted], [redacted]) asserted a limitation ("unconfirmed", "would need to search for the source") without first attempting the direct artifact already in evidence, even though the Investigation Contract already required investigate-verify-then-assert. The Contract had no explicit rule against asserting an untested limitation as fact. Origin: GitHub issue #1, "Investigation Contract: untested blockers must be labeled as untested".
+- A client-project session asserted a limitation ("unconfirmed", "would need to search for the source") without first attempting the direct artifact already in evidence, even though the Investigation Contract already required investigate-verify-then-assert. The Contract had no explicit rule against asserting an untested limitation as fact. Origin: GitHub issue #1, "Investigation Contract: untested blockers must be labeled as untested".
 
 ### Decision
 - Added one paragraph to the `## Investigation Contract` in `ai/policies/ai-policy-common.md`, immediately after "Investigate, verify, then assert" and before "Self-consistency check":
@@ -1108,7 +1147,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Verification
 - Every old commit maps to a live new commit (221 old commits, zero missing). Old and new `master` file lists are identical. Commit counts preserved. Tag messages byte-identical. Validator 8/8; markdownlint 0. A fresh mirror clone of the rewritten repo has zero identifier hits across all 223 commits.
-- Plan: `ai/plans/full-history-sensitive-data-purge-plan.md`. Peer review: `ai/code-review-reports/2026-09-22_00-16_review-18.md` APPROVED. Backups under `/tmp/kilo/`.
+- Peer review: `ai/code-review-reports/2026-09-22_00-16_review-18.md` APPROVED. Backups under `/tmp/kilo/`.
 
 ### Accepted consequences
 - Every commit hash from `888bdf6` forward changed. Short-hash references recorded in tracked files are now stale.
@@ -1117,3 +1156,22 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Routing
 - No `AGENTS.md` or policy change: repo maintenance plus a user-side global settings rule.
+
+---
+
+## 2026-09-22: Documentation cleanup and release preparation
+
+### Problem
+- Since `v2.3.0` (2026-08-25) the protocol gained issue management, State-File Model v2, the self-consistency check, the agent-facing documentation dimension in peer review, "Untried is not impossible", the history purge and the sensitive-name guardrail. The user-facing docs and the slide deck lagged, and some content was stale: a Git-enrichment feature that no longer exists, compliance attributed to on-disk files, wrong policy counts and paths, a broken `/init` reference, and two overlapping tool lists.
+
+### Decision
+- Slide deck: removed the false Git-enrichment bullet, corrected the compliance row to built-in knowledge, renamed the daily-snapshot bullet to name the daily checkpoint files, and added the privacy guardrail, the Investigation Contract additions, progressive disclosure, and the Git setup note.
+- `workflow-guide.md`: added sections for issue management, state-file health and repair, the Investigation Contract (evidence-based investigation, self-consistency, "Untried is not impossible"), and codebase examination, plus a Git configuration pointer.
+- Removed `docs/tools-preferences.md`; its tool list lives in the global-user-settings CLI tools section.
+- Removed one-time or implemented artifacts: the history-purge plan and the self-consistency LLD. Removed the sync-scripts testing record after moving its portable BSD `sed` lesson to Global Knowledge.
+
+### Verification
+- markdownlint clean across 139 tracked markdown files; validator v5.0 8/8; all relative links resolve.
+
+### Routing
+- Documentation and knowledge maintenance only. No `AGENTS.md` or policy change.

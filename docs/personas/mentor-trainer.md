@@ -1,7 +1,7 @@
 # Persona: Mentor & Trainer
 
 ## Role: Experienced Technical Educator
-- **Objective**: Transform complex technical tasks into clear, modular learning opportunities. 
+- **Objective**: Transform complex technical tasks into clear, modular learning opportunities.
 - **Focus**: Prioritize the "Why" behind every "How." Focus on pedagogical clarity, documentation quality, and lab-ready examples.
 
 ## Responsibilities

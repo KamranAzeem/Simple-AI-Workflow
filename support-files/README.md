@@ -1,16 +1,21 @@
 # Sync AGENTS.md scripts
 
-This folder contains two helper scripts to propagate the canonical `AGENTS.md` into project directories that may contain an older `AGENTS.md` copy, while preserving the "global workflow directory and global policy file references" locations in those `AGENTS.md` files. This makes is very easy to find and update all the `AGENTS.md` files, no matter where they are in the target-path that you provide to the script. This is shown below in the test runs.
-
-Remember, these tools/scripts are completely optional. If you want, you can instead use your OS (CLI-based) copy commands - or a file manager in the GUI to copy the `AGENTS.md` file to the project/directory of your choice. 
+Optional helper scripts that propagate the canonical `AGENTS.md` into your project directories, and make sure each project has a correctly configured `ai-customization.md` at its project root. They also migrate the old `ai/ai-customization.md` location when they find one.
 
 - `sync-agents-md.sh` — Bash script for Linux, macOS, and Git Bash (POSIX environments).
+- `sync-agents-md.ps1` — PowerShell script for Windows (works with `powershell` or `pwsh`).
+
+These scripts are optional. You can instead copy `AGENTS.md` and `ai-customization.md` yourself with CLI commands or a GUI file manager.
+
+## Usage
+
+Bash:
 
 ```bash
 ./sync-agents-md.sh --source /path/to/AGENTS.md --target-path /search/path --dry-run
 ```
 
-- `sync-agents-md.ps1` — PowerShell script for Windows (works with `powershell` or `pwsh`).
+PowerShell:
 
 ```powershell
 ./sync-agents-md.ps1 -Source "C:\path\to\AGENTS.md" -TargetPath "C:\projects" -WhatIf
@@ -18,219 +23,45 @@ Remember, these tools/scripts are completely optional. If you want, you can inst
 
 ## Behavior
 
-Both scripts compare file contents first and will update a target `AGENTS.md` whenever the contents differ. This avoids relying on timestamps alone. They support a dry-run mode (`--dry-run` or `-WhatIf`) so you can preview changes.
+- Copies the canonical `AGENTS.md` into every project under the target path that has an `AGENTS.md`. It compares contents first, so unchanged files are skipped.
+- For each project, ensures `ai-customization.md` exists at the project root with a `## AI Workflow Configuration` section, and points `**Global AI Workflow Directory**` at the current clone.
+- Migrates the old layout: an `ai/ai-customization.md` is moved to the project root. If the root `ai-customization.md` is a symlink to it, the link is kept and the real file is edited in place.
+- Supports a dry run (`--dry-run` or `-WhatIf`) that reports what it would change without writing.
 
-## Implementation details
+## Argument notes
 
-- Bash: compares file contents and injects the target's global workflow directory value using `grep`/`sed` plus `cp`/`mv` for updates; it enforces the `--source` before `--target-path` ordering for safety.
-- PowerShell: reads the source content and performs a regex-based replacement/injection of the global workflow directory line; it uses content-based comparison and write operations rather than an explicit file-hash command.
+- `sync-agents-md.sh` requires `--source` to appear before `--target-path`, to prevent ordering mistakes.
+- `sync-agents-md.ps1` uses named parameters, so ordering does not matter.
 
-Note: The Bash script enforces positional ordering of `--source` before `--target-path` (see argument notes). The PowerShell script accepts named parameters, so explicit ordering is not required there.
+## Safety
 
-### Argument notes
+- Run the dry run first to verify what will change.
+- On Windows, the PowerShell execution policy may block the script. Run it with a one-time bypass, or set `-Scope CurrentUser RemoteSigned` if you trust the source.
 
-- `sync-agents-md.sh` requires the `--source` argument to appear before `--target-path` on the command line (this prevents accidental ordering mistakes).
+## Example (Bash dry run)
 
-### Safety
-
-- Always run with the dry-run flag first to verify what will change.
-- On Windows, PowerShell's Execution Policy may block script execution; run with a one-time bypass or set `-Scope CurrentUser RemoteSigned` if you trust the source.
-
-
-## Examples
-
-### Linux / Git Bash (dry-run):
-```bash
-$ ./sync-agents-md.sh --source ../AGENTS.md --target-path ~/Projects/Personal/ --dry-run
-
-Source: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/AGENTS.md
-
-Searching under: /c/Users/kamran.azeem/Projects/Personal
-
-Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
-
+```text
+$ ./sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
+Source: ~/Projects/Simple-AI-Workflow/AGENTS.md
+Workflow directory: ~/Projects/Simple-AI-Workflow
+Searching under: /path/to/projects
+Found 2 AGENTS.md file(s)
 ----------------------------------------------------------------------------
-
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target-specific policy settings)
-
+Target: /path/to/projects/proj-b/AGENTS.md
+  DRY-RUN: would update /path/to/projects/proj-b/AGENTS.md from source
+  (AGENTS.md sync)
+  ai-customization.md: creating with default configuration
 ----------------------------------------------------------------------------
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/project-ai-server-feasibility/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/project-ai-server-feasibility/AGENTS.md (while retaining target-specific policy settings)
-
+Target: /path/to/projects/proj-a/AGENTS.md
+  DRY-RUN: would update /path/to/projects/proj-a/AGENTS.md from source
+  (AGENTS.md sync)
+  ai-customization.md: updating workflow directory path (was: /home/user/Projects/Personal/Simple-AI-Workflow/)
 ----------------------------------------------------------------------------
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: (not found, will use source value)
-	Global Main Policy:      (not found, will use source value)
-	Global Common Policy:    (not found, will use source value)
-
-DRY-RUN: would update /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Done. Processed 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
+Done.
 ```
 
-### Linux / Git Bash (actual run):
-
-```bash
-$ ./sync-agents-md.sh --source ../AGENTS.md --target-path ~/Projects/Personal/
-
-Source: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/AGENTS.md
-
-Searching under: /c/Users/kamran.azeem/Projects/Personal
-
-Found 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
-
-----------------------------------------------------------------------------
-
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-Updating /c/Users/kamran.azeem/Projects/Personal/azure-katas/AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/project-ai-server-feasibility/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-Updating /c/Users/kamran.azeem/Projects/Personal/project-ai-server-feasibility/AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: (not found, will use source value)
-	Global Main Policy:      (not found, will use source value)
-	Global Common Policy:    (not found, will use source value)
-Updating /c/Users/kamran.azeem/Projects/Personal/static-website/AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Done. Processed 3 AGENTS.md file(s) under /c/Users/kamran.azeem/Projects/Personal
-```
-
-
-### Windows / PowerShell example (dry-run):
-
-```powershell
-PS> powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\sync-agents-md.ps1 -Source '..\AGENTS.md' -TargetPath 'C:\Users\kamran.azeem\Projects\Personal\' -WhatIf }"
-Source: C:\Users\kamran.azeem\Projects\Personal\Simple-AI-Workflow\AGENTS.md
-
-Searching under: C:\Users\kamran.azeem\Projects\Personal\
-
-Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
-------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\project-ai-server-feasibility\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\project-ai-server-feasibility\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: (not found, will use source value)
-	Global Main Policy:      (not found, will use source value)
-	Global Common Policy:    (not found, will use source value)
-
-DRY-RUN: would update C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Done. Processed 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
-```
-
-### Windows / PowerShell example (actual run):
-
-
-```powershell
-PS> powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\sync-agents-md.ps1 -Source '..\AGENTS.md' -TargetPath 'C:\Users\kamran.azeem\Projects\Personal\' }"
-Source: C:\Users\kamran.azeem\Projects\Personal\Simple-AI-Workflow\AGENTS.md
-
-Searching under: C:\Users\kamran.azeem\Projects\Personal\
-
-Found 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
-------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-azure.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-Updating C:\Users\kamran.azeem\Projects\Personal\azure-katas\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\project-ai-server-feasibility\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/
-	Global Main Policy:      /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-cloud.md
-	Global Common Policy:    /c/Users/kamran.azeem/Projects/Personal/Simple-AI-Workflow/ai/ai-policy-common.md
-
-Updating C:\Users\kamran.azeem\Projects\Personal\project-ai-server-feasibility\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Target AGENTS.md file: C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md
-
-Values preserved from target (if found):
-	Global Policies Directory: (not found, will use source value)
-	Global Main Policy:      (not found, will use source value)
-	Global Common Policy:    (not found, will use source value)
-
-Updating C:\Users\kamran.azeem\Projects\Personal\static-website\AGENTS.md (while retaining target-specific policy settings)
-
-----------------------------------------------------------------------------
-
-Done. Processed 3 AGENTS.md file(s) under C:\Users\kamran.azeem\Projects\Personal\
-```
+The real run performs the same actions without the `DRY-RUN` prefix.
 
 ## Notes
 
-- Prefer running the PowerShell script with `pwsh` (PowerShell Core) for cross-platform execution.
+- Prefer `pwsh` (PowerShell Core) for cross-platform execution.

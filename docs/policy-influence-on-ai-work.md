@@ -8,13 +8,13 @@ This document outlines how the Simple-AI-Workflow policy framework transforms st
 Policies are not merely suggestions; they are the active "System Memory" of your AI teammates. The workflow utilizes a three-stage influence loop:
 
 ### 1. Contextual Injection (Proactive Awareness)
-Upon initialization, the AI reads the `ai/policies/` directory. This is not just a passive read; the AI updates its "Operating Instructions" to reflect your specific architectural standards and compliance mandates.
+Upon initialization, the AI loads the policies your `ai-customization.md` names, plus the common policy. This is not just a passive read; the AI updates its "Operating Instructions" to reflect your specific architectural standards and compliance mandates.
 *   **Result**: The AI acts as a teammate who has already memorized your corporate handbook.
 
 ### 2. Constraint-Based Generation (The "Guardrail" Phase)
 The AI filters all outputs through the active policy rules. Before generating any artifact, the AI performs a "Policy check":
-*   *Security Mandate:* "Does this request require sensitive handling?" -> Apply `ai-policy-common.md` security defaults.
-*   *Compliance Mandate:* "Is this a Cloud workload?" -> Check `ai/policies/compliance/` and inject mandatory controls (e.g., encryption, logging).
+*   *Security Mandate:* "Does this request require sensitive handling?" -> Apply the common policy security defaults (`ai/policies/ai-policy-common.md`).
+*   *Compliance Mandate:* "Is this a Cloud workload?" -> Apply the compliance standards listed in `ai-customization.md` from built-in AI knowledge, and inject mandatory controls (for example encryption, logging).
 *   *Standardization:* "Does this infra require resource tagging?" -> Add the tag block automatically.
 
 ### 3. Verification & Validation (The Audit Loop)

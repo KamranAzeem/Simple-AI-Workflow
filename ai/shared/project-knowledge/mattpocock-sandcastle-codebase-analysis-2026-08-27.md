@@ -1,6 +1,6 @@
 # Codebase Analysis: mattpocock/sandcastle
 
-**Source**: https://github.com/mattpocock/sandcastle (cloned to `/tmp/sandcastle`)
+**Source**: <https://github.com/mattpocock/sandcastle> (cloned to `/tmp/sandcastle`)
 **Examined**: 2026-08-27
 **Version at examination**: v0.12.0 (HEAD: e99f832)
 **Purpose**: Capture the architecture, API, templates, and design decisions from
@@ -10,7 +10,7 @@ mattpocock's agent orchestration library for context on multi-agent patterns.
 
 ## Level 0 Repo Map
 
-```
+```text
 /
 ├── AGENTS.md                   (9-byte placeholder only)
 ├── CLAUDE.md                   (agent-facing brief: typecheck, changesets, skills config)

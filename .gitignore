@@ -12,7 +12,7 @@ ai/artifacts/**
 # Ignore tmp within the project, which may contain local AI artifacts or scratch files.
 tmp/
 
-# Global settings directory — personal files shared across all projects (e.g. about-human.md).
+# Global settings directory — personal files shared across all projects (e.g. global-user-settings.md).
 # Git-ignored so contents survive git pull without being committed.
 settings/
 

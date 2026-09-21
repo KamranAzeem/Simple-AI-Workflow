@@ -8,13 +8,13 @@
 
 **Global AI Workflow Directory**: /path/to/Simple-AI-Workflow
 
-See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md> for help.
 
 ---
 
 ## Active Expertise
 <!-- List technical domains to load from the global policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, linux-system-admin, mobile-apps, meta, dba, observability, accounting, academic-researcher -->
+<!-- Available: cloud, api-backend, web-frontend, data, dba, observability, linux-system-admin, windows-system-admin, mobile-apps, accounting, academic-researcher, career-coaching, meta -->
 
 - web-frontend
 

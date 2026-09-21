@@ -2,7 +2,7 @@
 # Architectural Reflection: Protocol vs. Plumbing
 
 ## The "Context Engineering" Philosophy
-Building a structured, policy-driven bootstrap (AGENTS.md) is a move from simple "chatting" with AI to **Governance-as-Code**. 
+Building a structured, policy-driven bootstrap (AGENTS.md) is a move from simple "chatting" with AI to **Governance-as-Code**.
 
 ### Trade-offs: Tokens vs. Intelligence
 - **Cost**: Loading policies increases initial context usage.
@@ -16,7 +16,7 @@ Building a structured, policy-driven bootstrap (AGENTS.md) is a move from simple
 To keep the system performant as it scales:
 1. **Analyze-Plan-Stop**: The ultimate token-saver. Prevents AI from wandering off-script.
 2. **Modular Loading**: Do not load all 50+ potential policies into every repo. Only bootstrap with the specialized policies relevant to the current project (e.g., Cloud + Common + Meta).
-3. **Context Separation**: 
+3. **Context Separation**:
     - **Policy Files**: Keep these short and mandatory (the "Rules").
     - **Shared Knowledge Base**: Keep "Lessons Learned" here (the "Memory"). Agents only index this when explicitly needed, saving active context window space.
 

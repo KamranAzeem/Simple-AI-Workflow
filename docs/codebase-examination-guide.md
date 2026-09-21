@@ -2,7 +2,7 @@
 
 How the Simple-AI-Workflow lets an AI assistant examine — and optionally refactor — a codebase that is **larger than its context window**, without heavyweight tooling.
 
-This guide explains the `codebase-examination` expertise module (`ai/policies/ai-policy-codebase-examination.md`). For the design rationale and the evaluation that produced it, see `ai/artifacts/large-codebase-examination-strategy-evaluation.md`.
+This guide explains the `codebase-examination` expertise module (`ai/policies/ai-policy-codebase-examination.md`). For the design rationale, see the ADR store at `ai/shared/project-knowledge/protocol-decisions.md`.
 
 ---
 
