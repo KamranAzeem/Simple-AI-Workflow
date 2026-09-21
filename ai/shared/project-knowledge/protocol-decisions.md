@@ -1175,3 +1175,33 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Routing
 - Documentation and knowledge maintenance only. No `AGENTS.md` or policy change.
+
+---
+
+## 2026-09-22: Bounded boot-time staleness heuristic
+
+### Problem
+- Project Knowledge is indexed at boot and loaded on demand. Nothing surfaced when an indexed file was old and on-topic, so stale knowledge could be loaded as if current. A broad "distrust stored knowledge" clause was rejected on 2026-08-31 because it contradicted Project Knowledge's authoritative stance.
+
+### Decision
+- Flag a Project Knowledge file at boot when its indexed domain matches a `## Active Expertise` domain and its age exceeds 90 days.
+- Take age from metadata only: the last-commit date for tracked files, or the modified time otherwise. No file content is read at boot.
+- Report flagged files in the Proof-of-Load, one line each. The flag is advisory and never blocks work.
+- At task start, re-check the index against the task's keywords the same way.
+- Verify a flagged file against current state, policies, and decisions when a task loads it, using the self-consistency check.
+- The 90-day threshold is fixed. Configurability is out of scope.
+
+### Scope choice
+- No LLD. The change is boot mechanics in `AGENTS.md` plus one policy bullet, matching the two-layer pattern. The rule is freshness-only and deliberately does not restate the rejected distrust clause.
+
+### Verification
+- Validator v5.0 8/8; markdownlint 0 on changed files; links resolve. Plan peer-reviewed (review-19 CHANGES REQUESTED, review-20 APPROVED).
+
+### Routing
+- Boot mechanics in `AGENTS.md` (Procedure A Steps 5 and 7). Behavior in `ai-policy-common.md`. Docs synced. No validator anchor: behavioral prose, no new structure.
+
+### Files changed
+- `AGENTS.md`, `ai/policies/ai-policy-common.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/plans/bounded-boot-time-staleness-heuristic-plan.md`, `ai/issues/in-progress/bounded-boot-time-staleness-heuristic.md`, this file.
+
+### Merge record
+- Not merged. Branch `feature/bounded-staleness-heuristic`, awaiting user approval.

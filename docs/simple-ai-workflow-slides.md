@@ -35,7 +35,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
 - **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
-- **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot and loaded on demand
+- **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
 - **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
 - **Issue management**: say `"manage issues"` to work tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template and dated updates

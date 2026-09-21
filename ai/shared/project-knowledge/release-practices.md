@@ -10,8 +10,11 @@
 - v1.0.0 — Initial release. Created 2026-05-30.
 - Release notes covered: features, changes in this release (metadata header removal, Project Knowledge Protocol, Universal Engineering Standards, curated traits catalog, sync script fixes, Markdown Styling Guide, state file consistency).
 
-## Next Release (planned)
-- **v2.4.0** — history purge and sensitive-name guardrail, issue management, State-File Model v2, self-consistency check, "Untried is not impossible", agent-facing documentation in peer review, README overhaul and global user settings template, and the documentation cleanup.
+## v3.0.0 (2026-09-22)
+- **MAJOR**: the full history was rewritten to purge sensitive identifiers, so existing clones must run `git fetch origin && git reset --hard origin/master`. All tags were recreated.
+- **Features**: issue management (`ai/issues/` with `open/`, `in-progress/`, `closed/`), State-File Model v2 with `"repair state files"`, the bounded boot-time staleness heuristic, the self-consistency check, `"Untried is not impossible"`, and the agent-facing documentation dimension in peer review.
+- **Privacy**: a sensitive-name guardrail in the global settings, and a full history purge with no credentials found.
+- **Docs**: README overhaul, global user settings template (Git configuration guide, CLI tools by role), slides and workflow guide synced, documentation cleanup, markdownlint clean.
 
 ## Release Checklist
 1. Confirm the feature branch is squash-merged to `master` and the validator passes 8/8.

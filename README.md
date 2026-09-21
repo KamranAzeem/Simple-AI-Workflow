@@ -262,7 +262,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger at every checkpoint, and reviews each doc before writing the next.
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
-- **Context shielding**: large project knowledge files are indexed at startup and loaded on demand. Small global files are always loaded in full.
+- **Context shielding**: large project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Small global files are always loaded in full.
 - **Issue management**: say `"manage issues"` and the AI works tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, and dated updates.
 - **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.

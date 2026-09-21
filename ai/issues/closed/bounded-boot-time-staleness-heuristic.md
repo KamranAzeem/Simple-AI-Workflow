@@ -21,3 +21,9 @@ Acceptance criteria:
 - A bounded check that adds no full-file reads at boot.
 - Possibly-stale knowledge is surfaced at load context.
 - Deep verification happens only on demand.
+
+---
+
+2026-09-22
+
+Closed as part of the `feature/bounded-staleness-heuristic` squash merge into `master`. The boot flag, the Proof-of-Load bullet, the policy rule, and the docs sync are in; validator 8/8, markdownlint 0. Ships in v3.0.0.

@@ -225,6 +225,9 @@ At boot (the "load context" procedure), the AI fully loads the small, always-rel
 - **Token Efficiency where it counts**: Large Project Knowledge files are not loaded speculatively, keeping the boot context lean.
 - **On-Demand Depth**: When a task needs a specific Project Knowledge file, it is loaded in full at that point.
 
+### Boot-time staleness check
+A metadata-only check flags Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
+
 ## 14. Atomic Write Protocol & State-File Trimming
 
 ### The Three State Files
