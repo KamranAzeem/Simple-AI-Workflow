@@ -1228,7 +1228,8 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Verification
 - Validator v5.0 8/8; markdownlint 0 on changed markdown; no live reference to the removed exception remains.
-- Plan peer-reviewed (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation reviewed separately.
+- Plan peer-reviewed (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation peer-reviewed (review-03 CHANGES REQUESTED, review-04 and review-05 APPROVED).
+- The user approved a conditional final sentence for the rule: "When a work item goes on a branch, open the branch before the first commit."
 
 ### Routing
 - Behavior in `ai-policy-common.md` and `ai-policy-meta.md`. Docs synced in `docs/workflow-guide.md` §4. No `AGENTS.md` change. No validator anchor.
@@ -1237,4 +1238,4 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-meta.md`, `ai/plans/pre-work-commits-on-master-plan.md`, `ai/issues/in-progress/pre-work-commits-on-master.md` (renamed from `git-history-noise-from-ai-housekeeping-commits.md`), `docs/workflow-guide.md`, this file.
 
 ### Merge record
-- Not merged. Branch `feature/pre-work-commits-policy`, awaiting user approval.
+- Squash-merged to `master` as `da72fae` on 2026-09-22, branch deleted, and pushed to `origin/master`. The ticket `pre-work-commits-on-master.md` is closed under `ai/issues/closed/`.
