@@ -1205,3 +1205,36 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Not merged. Branch `feature/bounded-staleness-heuristic`, awaiting user approval.
+
+---
+
+## 2026-09-22: No pre-work commits (branch before the first commit)
+
+### Problem
+- `master` carried commits that announce work instead of containing it. A "start work" commit landed before the feature branch opened, and it stays on `master` if the branch is abandoned.
+- The Branch-Gating exception in `ai-policy-common.md` let documentation and AI tracking files skip branching, and licensed the direct-on-`master` pattern.
+- The mandate to record every protocol or policy change in this file was only conventional. The 2026-09-10 entry records a real miss (a change committed with no ADR entry, caught later by peer review).
+
+### Decision
+- Removed the Branch-Gating exception from `ai-policy-common.md`.
+- Added: "No pre-work commits. Every commit carries the work itself. Never open a work item with a 'start work' or placeholder commit. When a work item goes on a branch, open the branch before the first commit."
+- Added a Required Pre-action Check to `ai-policy-meta.md`: every protocol or policy change adds a dated entry here, and a protocol change is not committed without it.
+- The rule is general. It applies to every repository, whether or not `ai/` is tracked, and whether or not `ai/` is its own repo.
+
+### Scope choice
+- No ban on direct commits to `master`/`main`. Rejected as too strict. The protected-branch approval rule still governs those, and precedent stands (2026-06-22-02: applied directly on master as a protocol-development change with human approval).
+- Removal is safe: Branch-Gating's scope is features, architecture, and functional code. Docs and tracking files were never in scope, so no replacement carve-out is needed.
+- Out of scope: the cross-machine state-commit cycle. The hash half was resolved by State-File Model v2 (no branch, hash, or push in state files; no commit prompts). The persistence half has no clean answer and is inherent, so it is abandoned. Housekeeping-commit batching is dropped with it.
+
+### Verification
+- Validator v5.0 8/8; markdownlint 0 on changed markdown; no live reference to the removed exception remains.
+- Plan peer-reviewed (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation reviewed separately.
+
+### Routing
+- Behavior in `ai-policy-common.md` and `ai-policy-meta.md`. Docs synced in `docs/workflow-guide.md` §4. No `AGENTS.md` change. No validator anchor.
+
+### Files changed
+- `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-meta.md`, `ai/plans/pre-work-commits-on-master-plan.md`, `ai/issues/in-progress/pre-work-commits-on-master.md` (renamed from `git-history-noise-from-ai-housekeeping-commits.md`), `docs/workflow-guide.md`, this file.
+
+### Merge record
+- Not merged. Branch `feature/pre-work-commits-policy`, awaiting user approval.

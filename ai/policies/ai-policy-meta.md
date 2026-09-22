@@ -35,6 +35,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 3. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
 4. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
 5. Present a concise summary and proposed commit message; wait for human approval to stage/commit.
+6. Add a dated entry to `ai/shared/project-knowledge/protocol-decisions.md` for every protocol or policy change. Do not commit a protocol change without it.
 
 ## Forbidden Actions
 

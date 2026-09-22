@@ -34,7 +34,7 @@ When implementing new features, architecture changes, or functional code modific
 1. **Discussion**: Propose and wait for approval.
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
-*Exception*: Read-only work, documentation, and AI tracking files do not require branching, BUT all state-changing Git operations on `master` or `main` still require explicit per-interaction human approval.
+**No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before the first commit.
 
 ### Conditional Autonomy for Handoffs
 AI assistants are authorized to autonomously merge a feature branch to `master`/`main` **ONLY IF** all of the following conditions are met:

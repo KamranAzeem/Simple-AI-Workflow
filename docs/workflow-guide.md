@@ -56,6 +56,7 @@ The workflow does not inject Git history into the state files. Git is the source
 
 What the protocol does enforce around Git:
 - **Branch gating**: obtain explicit approval before state-changing Git operations on `master` or `main`.
+- **No pre-work commits**: never commit a start-work or placeholder commit; when a work item goes on a branch, open the branch before the first commit.
 - **Conventional commits**: follow the project's commit conventions (for example `feature:`, `fix:`, `chore:`, `docs:`).
 - **PR review**: peer review can target a named pull request; the AI fetches the latest refs and diffs the PR's source against its target, not the local working tree (see [Section 12](#12-peer-review-mode)).
 
