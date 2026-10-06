@@ -239,6 +239,17 @@ The AI doesn't load knowledge files at startup. It builds a name-based index and
 
 This rule covers AI-generated files too, and the common policy enforces it. Source code is exempt, so use whatever your language and framework expect.
 
+**Keep global knowledge split by domain.** The AI finds global knowledge files by name, so a single file covering many topics is invisible to it. Put each topic in its own file, with a name that says what it holds.
+
+- Good: `azure-cli-subscription-context.md`, `postgresql-naming-conventions.md`, `shell-scripting-sed-portability.md`
+- Bad: `general-notes.md`, `misc-lessons.md`, `notes-and-lessons.md`
+
+If one of your global knowledge files has grown into a mix of topics, ask the AI to split it:
+
+```text
+Look at my global knowledge directory (~/.ai/global-knowledge/). Propose a split of any file that covers more than one topic into separate, descriptively named files. Show me the plan and the proposed new names before you create anything. After I approve, create the files with the content preserved and remove the old file.
+```
+
 ## How does this compare to Copilot, Claude, or ChatGPT?
 
 Each AI assistant stores context its own way, in its own hidden directories, its own memory format, its own rules. They are all black boxes of different shades. Switch from one to another and you start from scratch, because the new assistant has no idea what the old one knew.

@@ -1261,6 +1261,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Reverses the Global Knowledge portion of 2026-06-30-01 ("Full-load active policies and Global Knowledge at boot — Token Rationing re-scoped to Project Knowledge only"), whose premise was that Global Knowledge is intentionally small and cheap to load whole.
 - Returns to the model of 2026-06-18-03, which first extended JIT indexing to Global Knowledge, now with the per-domain naming rule added.
 - Updates 2026-08-09-01, which kept the writing-style guide small and in Global Knowledge because the set loaded in full; the guide is now indexed, so its value depends on a descriptive, single-domain filename.
+- Follow-up (2026-10-06): the writing-style guide moved into `~/.ai/settings/global-user-settings.md` (always loaded) and was folded into its Communication Style section, so the voice rules are always present; the standalone knowledge file was removed. The README now documents the global-knowledge split rule under "File naming for knowledge and notes".
 
 ### Accepted risk
 - JIT fails if a file's name does not reveal its domain. A bundled file such as `engineering-lessons-and-conventions.md` would be missed by a task that does not name its bundled topics. Mitigated by the per-domain naming and split guidance; splitting the existing bundled file is a user-space action, not a protocol change.
