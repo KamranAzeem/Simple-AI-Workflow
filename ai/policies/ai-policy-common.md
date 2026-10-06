@@ -47,7 +47,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Agent-to-Agent (A2A) Coordination
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
-2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the `AGENTS.md` bootstrap procedure). This summary must explicitly list active traits, loaded Global Knowledge files, and pending tasks.
+2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the `AGENTS.md` bootstrap procedure). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
@@ -55,7 +55,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Operational Restart and Checkpoint Contract
 ### Source-of-Truth Order
-**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are loaded during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
 **Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
 
@@ -108,14 +108,14 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ## Global Knowledge Protocol
 - **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
-- **Bootstrapping & Load Context — Knowledge (Full Load)**: Files in the **Global AI Knowledge Directory** are loaded in FULL at boot. This set is intentionally small, so Token Rationing does NOT apply to it — a full load is cheap and prevents the agent from guessing at lessons it never read. (Token Rationing still governs large Project Knowledge files — see the Project Knowledge Protocol.)
+- **Bootstrapping & Load Context — Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file to a single domain with a descriptive name, and split a file that mixes domains, because the filename is the JIT lookup key. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
 - **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user.
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
-- **Bounded staleness**: Flag a Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Project Knowledge file at boot for staleness.
+- **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."

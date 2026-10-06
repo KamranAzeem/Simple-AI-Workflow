@@ -1239,3 +1239,35 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Squash-merged to `master` as `da72fae` on 2026-09-22, branch deleted, and pushed to `origin/master`. The ticket `pre-work-commits-on-master.md` is closed under `ai/issues/closed/`.
+
+---
+
+## 2026-10-06: Global Knowledge moves to JIT indexing (reverses the 2026-06-30 full-load decision)
+
+### Problem
+- `~/.ai/global-knowledge/` is fully loaded into context at every boot, context reload, and Post-Compaction Recovery. The 2026-06-30 decision chose full-load because the set was "intentionally small". Across many projects the set is now growing, so the full load costs context and tokens at every session start.
+
+### Decision
+- Global Knowledge is indexed at boot, not fully loaded, using the same Token Rationing JIT model as Project Knowledge. A file is read in full only when a task needs it.
+- Boot (the `AGENTS.md` load-context procedure), the checkpoint context reload, and Post-Compaction Recovery all index Global Knowledge instead of loading it.
+- Global Knowledge and Project Knowledge are indexed in the same Step 5 at load context (Procedure A) and listed as two separate sets in the Proof-of-Load report.
+- The bounded boot-time staleness check (metadata-only, 90-day threshold) is extended to Global Knowledge.
+- New guidance: Global Knowledge files stay per-domain and descriptively named; a file that mixes domains must be split, because the filename is the JIT lookup key.
+- Active policies remain full-load. The change reverses only the Global Knowledge portion of the 2026-06-30 decision. Policies are operational rules and are never deferred, so their full-load behavior is unchanged.
+
+### Relationship to prior decisions
+- Reverses the Global Knowledge portion of 2026-06-30-01 ("Full-load active policies and Global Knowledge at boot — Token Rationing re-scoped to Project Knowledge only"), whose premise was that Global Knowledge is intentionally small and cheap to load whole.
+- Returns to the model of 2026-06-18-03, which first extended JIT indexing to Global Knowledge, now with the per-domain naming rule added.
+- Updates 2026-08-09-01, which kept the writing-style guide small and in Global Knowledge because the set loaded in full; the guide is now indexed, so its value depends on a descriptive, single-domain filename.
+
+### Accepted risk
+- JIT fails if a file's name does not reveal its domain. A bundled file such as `engineering-lessons-and-conventions.md` would be missed by a task that does not name its bundled topics. Mitigated by the per-domain naming and split guidance; splitting the existing bundled file is a user-space action, not a protocol change.
+
+### Scope choice
+- No HLD or LLD. This is a loading-model change with a contained, enumerated file set. The implementation plan is `ai/plans/global-knowledge-jit-indexing-plan.md`, peer-reviewed before implementation.
+
+### Routing
+- Boot, reload, and recovery mechanics in `AGENTS.md`; behavior in `ai/policies/ai-policy-common.md`; docs synced in `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and `docs/ai-agent-collaboration.md`. Existing validator anchors are preserved, so no validator change is expected.
+
+### Status
+- Decision approved by the user on 2026-10-06. Plan approved (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation complete on branch `feature/global-knowledge-jit-indexing`, validator 8/8 and markdownlint clean; awaiting merge. Merge record to be appended on merge.

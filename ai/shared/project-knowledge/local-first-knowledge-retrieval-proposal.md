@@ -7,7 +7,7 @@ Have the AI always search the local knowledge base (Project Knowledge + Global K
 
 ## Where the protocol already does this
 - Project Knowledge is already a retrievable corpus: indexed (filename-only) at boot, loaded on demand; verbose filenames are the JIT lookup key.
-- Global Knowledge is loaded in full at boot.
+- Global Knowledge is indexed (filename-only) at boot, like Project Knowledge, and read on demand. Changed 2026-10-06 from full-load; see `protocol-decisions.md`.
 - The Investigation Contract used to list allowed sources without ordering them. That gap is now closed by the local-first source-precedence paragraph added on 2026-09-19.
 
 ## Decisions

@@ -33,9 +33,9 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint and used as the state-file archive
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
 - **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
-- **Session resume (compacted context)**: re-reads the standing rules, all Global Knowledge, and active policies, and re-indexes the shared directory after a compaction. It adds files, it never wipes your working thread
+- **Session resume (compacted context)**: re-reads the standing rules and active policies, and re-indexes Global Knowledge and the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
-- **Token rationing shield**: settings, Global Knowledge, and active policies load in full; large Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
+- **Token rationing shield**: settings and active policies load in full; Global and Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
 - **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
 - **Issue management**: say `"manage issues"` to work tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template and dated updates
@@ -174,7 +174,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - **Immutable loading**: the context-loading sequence is flagged **READ-ONLY**
 - **No-overwrite mandates**: the context-loading sequence forbids overwriting existing files
 - **Recursive discovery**: the AI runs `ls -R` on the **Global User AI Directory** to find everything
-- **Proof-of-Load**: the AI lists the Settings and Global Knowledge files it fully loaded, and the Project Knowledge files it indexed, before it starts
+- **Proof-of-Load**: the AI lists the Settings and policy files it fully loaded, and the Global and Project Knowledge files it indexed, before it starts
 
 > **Safe with any model.** Use lower-cost models without risking your project state.
 
@@ -232,10 +232,10 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - Not every file is needed for every task
 
 ## The solution: scoped token rationing
-- **Global Knowledge loaded in full at boot**: the `~/.ai/global-knowledge/` set is small, so it loads whole and the AI never guesses at a lesson it never read
+- **Global Knowledge indexed at boot**: the `~/.ai/global-knowledge/` files are indexed and loaded on demand, like Project Knowledge, so a growing set does not bloat every boot
 - **Active policies loaded in full at boot**: every policy named in `ai-customization.md`, because the AI cannot follow a rule it hasn't read
-- **Project Knowledge indexed at boot**: the `ai/shared/project-knowledge/` files are index-only, and large ones load on demand
-- **Depth on demand**: Project Knowledge loads when a task needs it, not just in case
+- **Global and Project Knowledge indexed at boot**: the `~/.ai/global-knowledge/` and `ai/shared/project-knowledge/` files are index-only, and load on demand
+- **Depth on demand**: Knowledge loads when a task needs it, not just in case
 
 > **Lean context. Fast boot. Full depth when it matters.**
 
@@ -272,7 +272,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 # Use verbose file names
 
 ## Why it matters
-- The AI does not load large project knowledge files at boot. It builds a lightweight index instead
+- The AI does not load knowledge files at boot. It builds a lightweight index instead
 - The **filename is the lookup key**. When a task needs specific knowledge, the AI maps the task to a file by its name
 - A vague name like `notes.md` is invisible to that process. The AI cannot map any task to it with confidence
 - A descriptive name like `azure-postgresql-migration-decisions.md` leaves no doubt
@@ -349,7 +349,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 
 Context windows fill up. The assistant compacts the conversation, replacing the full history
 with a compressed summary. Without recovery, the standing rules loaded at session start
-(AGENTS.md, policies, Global Knowledge) are gone.
+(AGENTS.md, policies, and the knowledge index) are gone.
 
 ## How the recovery works
 
@@ -362,10 +362,10 @@ never touched. Only the rules reload.
 ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐
 │ ■ AGENTS.md      │  │ ■ AGENTS.md      │  │ compacted        │  │ compacted        │
 │ ■ Policies       │  │ ■ Policies       │  │ conversation     │  │ conversation     │
-│ ■ Global Knowl.  │  │ ■ Global Knowl.  │  ├──────────────────┤  ├──────────────────┤
+│ ■ Knowledge idx  │  │ ■ Knowledge idx  │  ├──────────────────┤  ├──────────────────┤
 ├──────────────────┤  ├──────────────────┤  │                  │  │ ■ AGENTS.md      │
 │                  │  │ code, diffs,     │  │                  │  │ ■ Policies       │
-│                  │  │ searches,        │  │ active work +    │  │ ■ Global Knowl.  │
+│                  │  │ searches,        │  │ active work +    │  │ ■ Knowledge idx  │
 │ active work +    │  │ conversation...  │  │ free space       │  ├──────────────────┤
 │ free space       │  │ tool outputs...  │  │                  │  │ active work      │
 │                  │  ├──────────────────┤  │                  │  │ (current) +      │

@@ -14,8 +14,8 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
 - **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
 - **Status**: Personal persistent memory that follows you into every project.
-- **Usage**: Loaded in full at initialization (this set is intentionally small). Token Rationing — index-at-boot, load-on-demand — applies to larger **Project Knowledge** files, not to Global Knowledge; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
-- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify — the filename is also the lookup key for index-only Project Knowledge — see **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
+- **Usage**: Indexed at initialization (index-at-boot, load-on-demand) under the same Token Rationing model as **Project Knowledge**; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
+- **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify; the filename is also the lookup key for index-only Global and Project Knowledge. See **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
 
 ## 3. Task Handoffs (`ai/shared/handoffs/`)
 Used for transferring specific tasks and context between AI assistants or sessions.
@@ -107,7 +107,7 @@ When the conversation is compacted (the harness replaces the live history with a
 
 ### How it works
 1. The AI notices the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary it did not write.
-2. It re-reads `AGENTS.md`, the **Project Customization File**, all Global Settings and Global Knowledge files, and the policy files (the common policy plus the ones your customization file names).
+2. It re-reads `AGENTS.md`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
 3. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
 4. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
 
@@ -214,20 +214,20 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, Global Knowledge, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** only where files can be large and are not always needed: **Project Knowledge**.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
 ### How it works
-1. **Global Knowledge — full load**: The AI loads the full text of every file under `~/.ai/global-knowledge/`. This set is intentionally small, so a full load is cheap and guarantees the AI never guesses at a lesson it never read.
+1. **Global Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
 2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
 3. **Project Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
-- **Robustness first**: Operational rules (policies, lessons) are always in context — the AI never acts on rules it hasn't read.
-- **Token Efficiency where it counts**: Large Project Knowledge files are not loaded speculatively, keeping the boot context lean.
-- **On-Demand Depth**: When a task needs a specific Project Knowledge file, it is loaded in full at that point.
+- **Robustness first**: Operational rules (policies) are always in context; the AI never acts on a rule it has not read. Lessons in the knowledge bases are indexed and read on demand.
+- **Token Efficiency where it counts**: Knowledge files (Global and Project) are not loaded speculatively, keeping the boot context lean.
+- **On-Demand Depth**: When a task needs a specific Global or Project Knowledge file, it is loaded in full at that point.
 
 ### Boot-time staleness check
-A metadata-only check flags Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
+A metadata-only check flags Global and Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
 
 ## 14. Atomic Write Protocol & State-File Trimming
 

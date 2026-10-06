@@ -33,8 +33,8 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
 This architecture provides a persistent, cross-project "Shared Intelligence" layer for when assistants operate across **multiple solution directories**. It ensures settings and knowledge follow the user and the agent across different project boundaries.
 
 - **`Global Settings Source` (`~/.ai/settings/`)**: Stores personal identity-level context (e.g., `global-user-settings.md`) and tool preferences. Fully loaded at every session start.
-- **`Global Knowledge Source` (`~/.ai/global-knowledge/`)**: Stores reusable design patterns, architectural lessons, and technical tips valid across all projects.
-- **Bootstrapping**: Agents automatically index these sources upon session initiation as read-only knowledge providers.
+- **`Global Knowledge Source` (`~/.ai/global-knowledge/`)**: Stores reusable design patterns, architectural lessons, and technical tips valid across all projects. Indexed at session start (JIT), then read on demand, unlike Global Settings which loads in full.
+- **Bootstrapping**: Agents load Global Settings in full and index Global Knowledge at session initiation as read-only knowledge providers.
 - **Normalization**: Content here is treated as "lessons learned" to inform decision-making, not as authoritative project-specific logic.
 
 ### 3. Shared Policy Baseline (`ai/policies/ai-policy-common.md`)
