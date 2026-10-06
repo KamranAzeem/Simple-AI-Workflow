@@ -1307,4 +1307,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Step numbers inside historical ADR prose were deliberately left in place, because step positions changed over time and mapping them would risk corrupting the record. The migration map translates them.
 
 ### Status
-- Decision approved by the user on 2026-10-06. Implementation on branch `feature/descriptive-names-for-procedures-steps-and-tiers`; validator v6.0 8/8 and the reference-integrity test PASS. Merge record to be appended on merge.
+- Decision approved by the user on 2026-10-06. Implementation on branch `feature/descriptive-names-for-procedures-steps-and-tiers`; validator v6.0 8/8 and the reference-integrity test PASS.
+
+### Merge record
+- Squash-merged `feature/descriptive-names-for-procedures-steps-and-tiers` into `master` as `f311fe7` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `descriptive-names-for-procedures-steps-and-tiers.md` is closed under `ai/issues/closed/`; the executed plan was removed.
