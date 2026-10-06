@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **Protocol entities were renamed on 2026-10-06.** Procedures, steps, and tiers now use stable ALL-CAPS kebab names instead of single letters and numbers, for example `PROCEDURE LOAD-CONTEXT` where it used to be `Procedure A`. Old names still appear in dated records. The full old-to-new map is in [ai/shared/project-knowledge/protocol-name-migration-map-2026-10-06.md](ai/shared/project-knowledge/protocol-name-migration-map-2026-10-06.md). |
+| **v4.0.0 released (2026-10-06).** Procedures, steps, and tiers now use stable names instead of single letters and numbers, and Global Knowledge is indexed instead of fully loaded. Nothing about how the workflow works has changed. Read the announcement: [docs/announcements/v4.0.0.md](docs/announcements/v4.0.0.md). |
 
 # Simple AI Workflow
 

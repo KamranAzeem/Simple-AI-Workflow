@@ -1311,3 +1311,28 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Squash-merged `feature/descriptive-names-for-procedures-steps-and-tiers` into `master` as `f311fe7` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `descriptive-names-for-procedures-steps-and-tiers.md` is closed under `ai/issues/closed/`; the executed plan was removed.
+
+---
+
+## 2026-10-06: Friendly release announcements in docs/announcements
+
+### Problem
+- Release notes live only on GitHub Releases, which is the exhaustive changelog. There was no short, friendly, in-repo note telling users what changed for them and what to do. The v4.0.0 announcement email filled that gap but lived outside the repo, in a git-ignored artifacts directory.
+
+### Decision
+- Add `docs/announcements/`, one short announcement per release, for example `docs/announcements/v4.0.0.md`.
+- Role split: the GitHub Release is the exhaustive, authoritative changelog; the announcement is a short friendly summary that links to the release; the README banner links to the latest announcement.
+- No index file inside the directory (skipped by request).
+- The announcement is also the source for the release email.
+
+### Rationale
+- A friendly "what this means for you" note is a different job from a changelog. Keeping them separate avoids a second authoritative history while giving repo readers an approachable entry point.
+
+### Routing
+- `release-practices.md` gained an Announcements section and a Release Checklist step; the "sole source of truth" wording was softened so the two surfaces do not compete. The README banner now links the latest announcement. The first entry is v4.0.0.
+
+### Status
+- Implemented on branch `feature/docs-announcements`; validator 8/8 and markdownlint clean.
+
+### Merge record
+- Squash-merged into `master` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `docs-announcements-directory.md` is closed under `ai/issues/closed/`.
