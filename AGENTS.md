@@ -14,7 +14,7 @@
 
 This is the single startup entry point for all AI assistants in this repository.
 
-## TIER 1: CONFIGURATION
+## TIER CONFIGURATION
 
 **Path Normalization & Inference Rules**:
 - **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `/c/Users/username` on Gitbash, `C:\Users\username` on Windows CMD or PowerShell ).
@@ -53,7 +53,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ---
 
-## TIER 2: AI READ-FIRST RULES (Rules of Engagement)
+## TIER READ-FIRST-RULES
 
 ### 🛑 PROHIBITED ACTIONS
 - **Self-Modification**: **STRICTLY PROHIBITED** in ordinary projects. Do not rewrite, regenerate, or edit this file. **Exception**: in **Protocol Developer Mode** (see MANDATORY ACTIONS), when the current working directory is the **Global AI Workflow Directory**, the AI is the protocol maintainer and may edit `AGENTS.md` and other protocol files, but only after fully loading `protocol-decisions.md` and with explicit human approval before committing.
@@ -66,29 +66,31 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context where permitted. Never refuse to read a file or directory solely because it is git-ignored.
 - **Full File Reads (No Partial Reads)**: Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. This holds at boot, at load context, at Post-Compaction Recovery, and mid-work. The only exception is log-like bulk data you are searching rather than comprehending (logs, dumps, large JSON or CSV), which you may slice by filter. Never truncate investigation command output with `head`, `tail`, or `-N` limits, since truncated output is fabricated evidence. When a read drives a decision or change, state the file and its line count so the read is auditable. (Evidence-Based Investigation)
 - **Evidence-Based Investigation**: Investigate before you assert. No claim without a source; no assumptions or guesses. If you cannot verify, write "not verified" and ask. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract in `ai-policy-common.md`.
-- **Context Protection**: Treat **Project AI State Files** as read-only during bootstrap and context loading. During **Post-Compaction Recovery** (Procedure E), these files must not be read at all.
-- **State File Single-Writer Ownership**: **Project AI State Files** are the canonical project narrative and are written by the **project-root orchestrator only** — the single AI session that owns this project root. **Ownership is by session/process identity, not by role**: if that one owning session changes hats mid-session (e.g. manager → developer → document-controller), it is still the orchestrator and still writes the state files normally — switching roles does not create a second writer. The prohibition targets **separate** agents that run as their own session/process: sub-agents and role-based team members (developer, security, document-controller, etc.) that are **not** the owning session, whether long-running or spawned per handoff, **MUST NOT write Project AI State Files**. They obtain awareness by **reading** the coordination board, and they report their own work by updating the **Project Coordination File**, their handoff file, and role-scoped **Project Knowledge** files (single-writer per role). The orchestrator folds those reports into the state files at checkpoint (Procedure C). This keeps the canonical narrative single-writer and free of multi-agent write contention. Awareness = read the board; canonical narrative = orchestrator writes.
+- **Context Protection**: Treat **Project AI State Files** as read-only during bootstrap and context loading. During **PROCEDURE POST-COMPACTION-RECOVERY**, these files must not be read at all.
+- **State File Single-Writer Ownership**: **Project AI State Files** are the canonical project narrative and are written by the **project-root orchestrator only** — the single AI session that owns this project root. **Ownership is by session/process identity, not by role**: if that one owning session changes hats mid-session (e.g. manager → developer → document-controller), it is still the orchestrator and still writes the state files normally — switching roles does not create a second writer. The prohibition targets **separate** agents that run as their own session/process: sub-agents and role-based team members (developer, security, document-controller, etc.) that are **not** the owning session, whether long-running or spawned per handoff, **MUST NOT write Project AI State Files**. They obtain awareness by **reading** the coordination board, and they report their own work by updating the **Project Coordination File**, their handoff file, and role-scoped **Project Knowledge** files (single-writer per role). The orchestrator folds those reports into the state files at checkpoint (PROCEDURE WRITE-CHECKPOINT). This keeps the canonical narrative single-writer and free of multi-agent write contention. Awareness = read the board; canonical narrative = orchestrator writes.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
-- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER 1), you are operating as a protocol developer on this repository itself. This is the sanctioned exception to the Self-Modification prohibition in PROHIBITED ACTIONS: here you maintain these files, not merely read them. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** — it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule. **Policy loading**: during context loading and post-compaction recovery, load ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. Do NOT scan and load all files from the **Project AI Policies Directory** — that directory is the protocol's full distribution tree, not your working policy set.
-- **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary, or the conversation is compacted mid-session, AI MUST run **Post-Compaction Recovery** (Procedure E) before responding to the user's first request. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary the AI did not write.
+- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER CONFIGURATION), you are operating as a protocol developer on this repository itself. This is the sanctioned exception to the Self-Modification prohibition in PROHIBITED ACTIONS: here you maintain these files, not merely read them. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** — it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule. **Policy loading**: during context loading and post-compaction recovery, load ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. Do NOT scan and load all files from the **Project AI Policies Directory** — that directory is the protocol's full distribution tree, not your working policy set.
+- **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary, or the conversation is compacted mid-session, AI MUST run **PROCEDURE POST-COMPACTION-RECOVERY** before responding to the user's first request. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary the AI did not write.
 - **Git Workspace Detection**: Before offering git operations on the project root, scan for `.git` subdirectories within the project tree (excluding `ai/`). If any `.git` directory is found, the root is part of a larger git workspace — do not treat it as a git repo itself. Do not offer `git init`, run `git log` on the project root, or propose git operations that assume the project root is independently tracked. Users may also define explicit workspace rules in the **Project Customization File**.
 - **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
 - **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
 
 ---
 
-## TIER 3: TRIGGERED PROCEDURES
+## TIER TRIGGERED-PROCEDURES
 
-### PROCEDURE A: When User says "load context"
+### PROCEDURE LOAD-CONTEXT: When the user says "load context"
 
-**Safety Barrier**: This procedure is read-only with one narrow, deterministic exception. AI must not modify the content of any existing file during this phase. The only permitted writes are the idempotent creation of missing mandatory directories and the missing issue template described in Step 2. Every other action is read-only.
+**Aliases**: load context; load context using AGENTS.md protocol
 
-0.  **Customization Discovery**: Check for **Project Customization File** at project root (`ai-customization.md`):
+**Safety Barrier**: This procedure is read-only with one narrow, deterministic exception. AI must not modify the content of any existing file during this phase. The only permitted writes are the idempotent creation of missing mandatory directories and the missing issue template described in STEP-STRUCTURAL-AUDIT. Every other action is read-only.
+
+0.  **STEP-CUSTOMIZATION-DISCOVERY**: Check for **Project Customization File** at project root (`ai-customization.md`):
     - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory`**. If the section is missing, inform the user and stop.
     - If the old `ai/ai-customization.md` exists instead → inform the user: "Your customization file is in the old `ai/` directory. Add a `## AI Workflow Configuration` section with a `**Global AI Workflow Directory**` entry, then move it to the project root as `ai-customization.md`." Then **stop** — do not proceed with context loading.
     - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `~/Projects/Simple-AI-Workflow` from its GitHub URL. Then **stop** — do not proceed with context loading.
-1.  **Workflow Access**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
-2.  **Structural Audit (Existence-First)**: Silently verify the existence of the mandatory directories:
+1.  **STEP-WORKFLOW-ACCESS**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
+2.  **STEP-STRUCTURAL-AUDIT (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
     - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
     - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
@@ -98,14 +100,14 @@ The following short forms are recognized as equivalents to their canonical direc
     - Do not branch, prompt, or stall on silent output. `mkdir -p` is safe and silent when the directory already exists.
     Then ensure `ai/shared/project-knowledge/issue-template.md` exists. If and only if it is missing, create it from the compact field list in `ai-policy-common.md`. Never overwrite it.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
-3.  **Discovery**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents — excluding compressed and archive files per the **Archive File Exclusion** rule in TIER 2. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
-4.  **Loading**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) and **Project Knowledge files** are NOT loaded here; they are indexed in Step 5.
-    *   **State File Proof-of-Read**: After loading **Project AI State Files**, read them fresh and check them without writing: each carries its one-line rule comment; entries are in chronological order with no duplicates; each file is within its size budget and the total is within 20 KB; items are at most three short bullets; and the newest `ai/state/progress.md` entry date matches the newest daily-checkpoint file date. Do not use filesystem metadata. Do not summarise from memory. If any file cannot be read, stop and report it before continuing. Report the findings under bullet (d) of Step 7, and repair only via `repair state files`.
-5.  **Knowledge Loading (JIT Index)**: This is a dedicated required step; do NOT merge it with Step 4. Both knowledge sets are indexed, never fully loaded at boot.
+3.  **STEP-DISCOVERY**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents — excluding compressed and archive files per the **Archive File Exclusion** rule in TIER READ-FIRST-RULES. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored — use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
+4.  **STEP-LOADING**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) and **Project Knowledge files** are NOT loaded here; they are indexed in STEP-KNOWLEDGE-INDEXING.
+    *   **STEP-STATE-FILE-PROOF-OF-READ**: After loading **Project AI State Files**, read them fresh and check them without writing: each carries its one-line rule comment; entries are in chronological order with no duplicates; each file is within its size budget and the total is within 20 KB; items are at most three short bullets; and the newest `ai/state/progress.md` entry date matches the newest daily-checkpoint file date. Do not use filesystem metadata. Do not summarise from memory. If any file cannot be read, stop and report it before continuing. Report the findings under ITEM STATE-FILE-HEALTH of STEP-PROOF-OF-LOAD, and repair only via `repair state files`.
+5.  **STEP-KNOWLEDGE-INDEXING (JIT Index)**: This is a dedicated required step; do NOT merge it with STEP-LOADING. Both knowledge sets are indexed, never fully loaded at boot.
     - **Global Knowledge** (from **Global AI Knowledge Directory**) and **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories) are both subject to **Token Rationing**. Index both in this one step: run a shell command (`find` or `ls -R`) over both directories, and record paths, filenames, and apparent technical domains as a reference index. Record each file's age from metadata only: the last-commit date for tracked files, or the modified time otherwise. **DO NOT** load the full text of any Global Knowledge or Project Knowledge file at boot time; load a file in full on demand when an active task requires it. The filename is the lookup key, so a vague or bundled name is invisible to the index.
     - **Project Issues** (from **Project Issues Directory**): Index `open/` and `in-progress/` by filename + line count only. Files under `closed/` are not indexed at boot.
     If a directory is completely empty, explicitly note it in your state tracking.
-6.  **Policy Loading**: Scan the **Project Customization File** for the `## Active Expertise` section.
+6.  **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
     - Locate matching files in the **Global AI Policies Directory** using a recursive shell command (`find` or equivalent).
     - Load the FULL TEXT of every matched file.
@@ -114,77 +116,85 @@ The following short forms are recognized as equivalents to their canonical direc
     **Exception — Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip this recursive scan. Load ONLY `ai-policy-common.md` and the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. The **Project AI Policies Directory** is the protocol's full distribution tree — all domain policies live there, but most do not apply to protocol development work.
 
     > **Design note (deliberate exception to Token Rationing)**: Loading referenced policy files in full at boot is an intentional exception to the Token-Rationing principle. The cost of a few hundred lines of policy text is far lower than the cost of the AI applying wrong or missing rules because it guessed at policy content. Token Rationing still applies to large Project Knowledge files (repo-scan snapshots, historical archives) — never to the operational policy files that govern AI behaviour.
-7.  **REPORT: Proof-of-Load**: Submit a detailed Markdown summary containing:
-    - (a) Every section found in the **Project Customization File**: report each one explicitly, whatever sections the file contains. If a section is absent, say so. Do not stop at any particular section; cover the entire file, and report its line count as proof of a full read.
-    - (b) Global Settings files fully loaded from **Global AI Settings Directory** (list filenames with line counts). Policy files **fully loaded**, referenced by the Project Customization File from **Global AI Policies Directory** (list filenames with line counts), and custom policies discovered in **Project AI Policies Directory** (list filenames with line counts). Line counts are proof of a full read from line 1 to EOF.
-    - (c) All discovered pending handoffs in **Project Handoffs Directory**.
-    - (d) State-file health from Step 4: any order, size-budget, comment, or brevity finding for the **Project AI State Files**, or an explicit confirmation that all are in order.
-    - (e) All files **indexed** from the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** (filenames and apparent domains — not read in full), listed as two separate sets, or an explicit confirmation that each was empty.
-    - (f) For each **Project AI State File**: line count, and for `ai/state/progress.md` its newest entry date, read fresh from file content.
-    - (g) Open and in-progress issue filenames with line counts from the `open/` and `in-progress/` directories under the **Project Issues Directory**, or an explicit confirmation that none are open.
-    - (h) Possibly-stale Global Knowledge and Project Knowledge: files whose indexed domain matches a `## Active Expertise` domain and whose age exceeds 90 days, listed with their age, or an explicit confirmation that none are flagged. This is advisory and never blocks work.
+7.  **STEP-PROOF-OF-LOAD**: Submit a detailed Markdown summary containing:
+    - **ITEM CUSTOMIZATION-SECTIONS**: Every section found in the **Project Customization File**: report each one explicitly, whatever sections the file contains. If a section is absent, say so. Do not stop at any particular section; cover the entire file, and report its line count as proof of a full read.
+    - **ITEM SETTINGS-AND-POLICIES**: Global Settings files fully loaded from **Global AI Settings Directory** (list filenames with line counts). Policy files **fully loaded**, referenced by the Project Customization File from **Global AI Policies Directory** (list filenames with line counts), and custom policies discovered in **Project AI Policies Directory** (list filenames with line counts). Line counts are proof of a full read from line 1 to EOF.
+    - **ITEM HANDOFFS**: All discovered pending handoffs in **Project Handoffs Directory**.
+    - **ITEM STATE-FILE-HEALTH**: State-file health from STEP-LOADING: any order, size-budget, comment, or brevity finding for the **Project AI State Files**, or an explicit confirmation that all are in order.
+    - **ITEM KNOWLEDGE-INDEX**: All files **indexed** from the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** (filenames and apparent domains — not read in full), listed as two separate sets, or an explicit confirmation that each was empty.
+    - **ITEM STATE-FILE-COUNTS**: For each **Project AI State File**: line count, and for `ai/state/progress.md` its newest entry date, read fresh from file content.
+    - **ITEM ISSUES-INDEX**: Open and in-progress issue filenames with line counts from the `open/` and `in-progress/` directories under the **Project Issues Directory**, or an explicit confirmation that none are open.
+    - **ITEM STALE-KNOWLEDGE**: Possibly-stale Global Knowledge and Project Knowledge: files whose indexed domain matches a `## Active Expertise` domain and whose age exceeds 90 days, listed with their age, or an explicit confirmation that none are flagged. This is advisory and never blocks work.
 
-### PROCEDURE B: When Repo is Empty (Bootstrap)
+### PROCEDURE BOOTSTRAP-PROJECT: Empty repository
 
-1.  **Ensure directories**: Run Procedure A, Step 2 (Structural Audit). It audits and idempotently creates the mandatory directories and the issue template.
-2.  **Create missing files**: Create the **Project Coordination File** if it is missing.
-3.  **Initialize Customization**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
-4.  **Initialize State Files**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md` in the v2 shape (one rule-comment line each; progress and next-steps chronological; context a dashboard plus an `## Active Working Context` section), and an initial daily checkpoint with its one-line rule comment.
-5.  **Git Setup**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
-6.  **Finalize**: Proceed to Procedure A.
+**Aliases**: bootstrap; bootstrap using AGENTS.md protocol
 
-### PROCEDURE C: When performing a Checkpoint (Save State)
+1.  **STEP-ENSURE-DIRECTORIES**: Run PROCEDURE LOAD-CONTEXT, STEP-STRUCTURAL-AUDIT. It audits and idempotently creates the mandatory directories and the issue template.
+2.  **STEP-CREATE-MISSING-FILES**: Create the **Project Coordination File** if it is missing.
+3.  **STEP-INITIALIZE-CUSTOMIZATION**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
+4.  **STEP-INITIALIZE-STATE-FILES**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md` in the v2 shape (one rule-comment line each; progress and next-steps chronological; context a dashboard plus an `## Active Working Context` section), and an initial daily checkpoint with its one-line rule comment.
+5.  **STEP-GIT-SETUP**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
+6.  **STEP-FINALIZE-BOOTSTRAP**: Proceed to PROCEDURE LOAD-CONTEXT.
 
-1.  **Update State (The Atomic Write Protocol)**: Sync **Project AI State Files**. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
-    *   **Write Direction (memory → disk)**: Your active in-memory context is the freshest source of truth for what was accomplished this session. A checkpoint **serialises that fresh in-memory state into Project AI State Files** — it is a write-down, not a re-read to discover what is current. The on-disk files are the stale targets being updated.
-    *   **Fresh-Read Before Write (reconcile, do NOT overwrite fresh work)**: Read the current on-disk content of **Project AI State Files** immediately before writing — but treat this as a **reconcile**, not a memory refresh. Purpose of the read: (a) preserve the append-only history in `ai/state/progress.md` so a write never drops existing entries, and (b) detect drift introduced by another agent or by context compaction since you last saw the files. **Precedence**: your fresh in-memory deltas are authoritative for new or changed content; the disk read must never overwrite fresh work with a stale cached or summarised version. If disk and memory genuinely conflict on the *same* item, **stop and flag it** — do not silently pick one.
-    *   **Inbound Reconcile (multi-agent)**: Before writing, also read the **Project Coordination File** and any new or updated handoffs in **Project Handoffs Directory**, so you fold in work completed by other agents since the last checkpoint. **Project AI State Files** are written by the project-root orchestrator only (see TIER 2 "State File Single-Writer Ownership"); other agents report via the coordination board, handoffs, and role-scoped Project Knowledge.
-    *   **Sequential Execution Order**: Stage your changes in memory and write them to disk in this strict sequence:
+### PROCEDURE WRITE-CHECKPOINT: When the user says "checkpoint" or "save checkpoint"
+
+**Aliases**: checkpoint; save checkpoint
+
+1.  **STEP-ATOMIC-WRITE (The Atomic Write Protocol)**: Sync **Project AI State Files**. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
+    *   **STEP-WRITE-DIRECTION (memory → disk)**: Your active in-memory context is the freshest source of truth for what was accomplished this session. A checkpoint **serialises that fresh in-memory state into Project AI State Files** — it is a write-down, not a re-read to discover what is current. The on-disk files are the stale targets being updated.
+    *   **STEP-FRESH-READ-BEFORE-WRITE (reconcile, do NOT overwrite fresh work)**: Read the current on-disk content of **Project AI State Files** immediately before writing — but treat this as a **reconcile**, not a memory refresh. Purpose of the read: (a) preserve the append-only history in `ai/state/progress.md` so a write never drops existing entries, and (b) detect drift introduced by another agent or by context compaction since you last saw the files. **Precedence**: your fresh in-memory deltas are authoritative for new or changed content; the disk read must never overwrite fresh work with a stale cached or summarised version. If disk and memory genuinely conflict on the *same* item, **stop and flag it** — do not silently pick one.
+    *   **STEP-INBOUND-RECONCILE (multi-agent)**: Before writing, also read the **Project Coordination File** and any new or updated handoffs in **Project Handoffs Directory**, so you fold in work completed by other agents since the last checkpoint. **Project AI State Files** are written by the project-root orchestrator only (see TIER READ-FIRST-RULES "State File Single-Writer Ownership"); other agents report via the coordination board, handoffs, and role-scoped Project Knowledge.
+    *   **STEP-SEQUENTIAL-WRITE-ORDER**: Stage your changes in memory and write them to disk in this strict sequence:
         1. 📂 `ai/state/progress.md` (The Past): Log the completed activity, architectural decisions, or milestone reached first.
         2. 📂 `ai/state/next-steps.md` (The Future): Delete each completed task from the backlog entirely. Never leave a ticked, checked, or struck-through entry. Append new atomic actions at the tail, keeping the order oldest at top and newest at the bottom. Work oldest-first by default, but delete a finished item wherever it sits. Keep every open item to at most three short bullets, with no command transcripts and no rationale. Condense any item that grows longer before writing the checkpoint.
         3. 📂 `ai/state/context.md` (The Present): Maintain a `## Current Status` dashboard and an `## Active Working Context` section, both edited in place, with no chronological history and no git metadata. Keep live decisions and findings to short one-liners with a pointer to Project Knowledge. Do not duplicate completed tasks (`ai/state/progress.md`) or pending tasks (`ai/state/next-steps.md`). Remove a resolved item only after its record is in the diary.
-    *   **Transaction Log Requirement**: Every time you save state or finish a checkpoint execution loop, append a standardized transaction summary directly into your chat output using this exact text format:
+    *   **STEP-TRANSACTION-LOG**: Every time you save state or finish a checkpoint execution loop, append a standardized transaction summary directly into your chat output using this exact text format:
         *   [PROGRESS] Added: "[Brief description of what was completed]"
         *   [NEXT-STEPS] Removed: "[Task]" | Added: "[New immediate actionable items]"
         *   [CONTEXT] Updated: "variable_name: old_value" -> "variable_name: new_value"
-    *   **Failure Mode Constraint**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
-2.  **Write Daily Checkpoint File**: In the same transaction as the state files above, append this checkpoint to **Project Daily Checkpoints Directory**. This is the write side of the Source-of-Truth Order and the State File Proof-of-Read check in `ai-policy-common.md` — both already expect a current checkpoint file at this point; this step is what keeps it current.
+    *   **STEP-ABORT-ON-MISSING-DATA**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
+2.  **STEP-DAILY-CHECKPOINT-FILE**: In the same transaction as the state files above, append this checkpoint to **Project Daily Checkpoints Directory**. This is the write side of the Source-of-Truth Order and the State File Proof-of-Read check in `ai-policy-common.md` — both already expect a current checkpoint file at this point; this step is what keeps it current.
     *   **One file per day**: Use `YYYY-MM-DD.md` (today's calendar date). If today's file does not exist yet, create it with the one-line diary rule comment and a top-level `# Daily Checkpoint YYYY-MM-DD` heading.
     *   **Append, never overwrite**: Add a new `## <short title>` section at the tail of today's file. Multiple checkpoints on the same day append multiple sections; never edit, delete, or reorder an earlier section. Leave legacy `## CP-<ID>: <title>` sections untouched.
     *   **Content**: Record what was done, what is being done, and what needs doing, in short bullets, expanded with whatever detail belongs to the fuller narrative (files touched, validator or review outcomes). Nothing is dropped; the diary is the record.
     *   **This is the only archive**: No separate archive file is created. Old `ai/state/progress.md` entries and resolved `ai/state/context.md` items move here.
-3.  **State-File Trimming**: Keep the three state files small enough to load cheaply. There is no separate archive file; the daily checkpoints are the archive.
+3.  **STEP-STATE-FILE-TRIMMING**: Keep the three state files small enough to load cheaply. There is no separate archive file; the daily checkpoints are the archive.
     *   **Budget**: Total for the three state files is 20 KB: `ai/state/context.md` 8 KB, `ai/state/progress.md` 7 KB, `ai/state/next-steps.md` 5 KB. These are soft caps; measure bytes.
     *   **Progress trim**: If `ai/state/progress.md` is over 7 KB, or holds completed entries older than 14 days, move the oldest completed entries to the diary. The budget wins: trim even inside 14 days when over budget.
     *   **Next-steps trim**: Never drop an unfinished item. Remove only completed, duplicate, or explicitly-dropped items, and record a dropped item in the diary first. If the backlog exceeds 5 KB with every item live, condense the wording and let the file exceed the soft cap.
     *   **Context trim**: Remove resolved items from `## Active Working Context` only after their record is in the diary. Keep live items to short one-liners with pointers.
     *   **Ordering rule**: An entry leaves a state file only after its content is in the diary, in the same checkpoint.
     *   **No git metadata**: The state files never record a branch, hash, or push status, and the AI does not prompt the user to commit them.
-4.  **Update Project Knowledge**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project AI Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
+4.  **STEP-PROJECT-KNOWLEDGE-UPDATE**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project AI Knowledge Directory**, update or create the relevant files now. This step is **mandatory** — even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
     - Decisions made and the rationale behind them
     - Resolved issues and their root causes
     - Investigation and research conclusions (technical findings, confirmed values, analysis outcomes)
     - New constraints, blockers, or dependencies identified
     - Key identifiers, configuration values, or reference data confirmed during the session (e.g., resource IDs, API endpoints, library versions, schema names, environment variables — **never raw secrets**)
     - Updates posted to external systems such as issue trackers, project management tools, or communication channels (include timestamp and channel)
-5.  **Context Re-affirmation After Checkpoint (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **Post-Compaction Recovery** (Procedure E) performs:
+5.  **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
     - Announce: **[Re-affirming key files into context after checkpoint...]**
     - Load the FULL TEXT of `ai-policy-common.md`, every policy file referenced in the **Project Customization File**, and all custom policies discovered in **Project AI Policies Directory**.
       **Exception — Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the custom-policy scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**.
-    - Index the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** (JIT, no full read, the same way Step 5 of the load-context procedure does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory).
+    - Index the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** (JIT, no full read, the same way STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory).
     - Announce on completion: **[Context re-affirmation complete.]**
     If context is still healthy and the operational files are already loaded, skip the reload and state explicitly that it was not needed.
 
-### PROCEDURE D: When User says "peer review", "code review", or "PR review"
+### PROCEDURE RUN-PEER-REVIEW: When the user says "peer review", "code review", or "PR review"
 
-1.  **Adopt Reviewer Role**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
-2.  **Resolve the PR (PR review only)**: When the trigger is a named PR (a PR number, URL, or branch), first fetch the latest remote refs (`git fetch --all --prune` or equivalent), then resolve the PR's source and target branches. Diff source against target, not the local working tree, before doing anything else. If the source branch is not found locally, fetch it explicitly by name.
-3.  **Scan**: Review the diffed files (PR review) or the files the user specifies (general review). If no scope is given for a general review, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories). In both cases, follow the Scope Discipline section of `ai-policy-code-review.md` — do not stop at the diff.
-4.  **Report**: Write the review report to **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
-5.  **Iterate**: After fixes are applied, locally or as new commits pushed to the PR branch, and another review is requested, re-fetch first if reviewing a PR, then create a new numbered report. Note which previous issues were resolved.
-6.  **Exit**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, when a commit is made, or, for a PR review, when the PR is merged or closed.
+**Aliases**: peer review; code review; PR review
 
-### PROCEDURE E: Post-Compaction Recovery
+1.  **STEP-ADOPT-REVIEWER-ROLE**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer — your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
+2.  **STEP-RESOLVE-PR (PR review only)**: When the trigger is a named PR (a PR number, URL, or branch), first fetch the latest remote refs (`git fetch --all --prune` or equivalent), then resolve the PR's source and target branches. Diff source against target, not the local working tree, before doing anything else. If the source branch is not found locally, fetch it explicitly by name.
+3.  **STEP-SCAN-SCOPE**: Review the diffed files (PR review) or the files the user specifies (general review). If no scope is given for a general review, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories). In both cases, follow the Scope Discipline section of `ai-policy-code-review.md` — do not stop at the diff.
+4.  **STEP-WRITE-REVIEW-REPORT**: Write the review report to **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
+5.  **STEP-ITERATE-REVIEW**: After fixes are applied, locally or as new commits pushed to the PR branch, and another review is requested, re-fetch first if reviewing a PR, then create a new numbered report. Note which previous issues were resolved.
+6.  **STEP-EXIT-REVIEW-ROLE**: Return to your normal role when the user says "done reviewing", when the verdict is APPROVED, when a commit is made, or, for a PR review, when the PR is merged or closed.
+
+### PROCEDURE POST-COMPACTION-RECOVERY: Automatic after conversation compaction
+
+**Aliases**: post-compaction recovery; run post-compaction recovery procedure
 
 **Stable identifier**: The title "Post-Compaction Recovery" is the maintained contract referenced by the `validate-protocol.sh` anchor, the setup guide, and any hook configurations. Never rename this procedure without updating those in lockstep.
 
@@ -194,56 +204,65 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Steps**: Announce **[Reloading key files into context...]** as the literal first line of your reply, then re-read, in this order:
 
-1. `AGENTS.md` from the current working directory: the **TIER 1: CONFIGURATION** section plus all procedures.
-2. The **Project Customization File**: active Expertise, Traits, and Development Workflow rules.
-3. Every file in the **Global AI Settings Directory** (full text).
-4. Index the **Global AI Knowledge Directory** (filenames only, JIT); do not read file contents here.
-5. `ai-policy-common.md` from the **Global AI Policies Directory**, every policy referenced in the **Project Customization File**, and every `.md` found by a recursive scan of the **Project AI Policies Directory** (full text).
+1.  **STEP-READ-AGENTS**: `AGENTS.md` from the current working directory: the **TIER CONFIGURATION** section plus all procedures.
+2.  **STEP-READ-CUSTOMIZATION**: The **Project Customization File**: active Expertise, Traits, and Development Workflow rules.
+3.  **STEP-READ-SETTINGS**: Every file in the **Global AI Settings Directory** (full text).
+4.  **STEP-INDEX-KNOWLEDGE**: Index the **Global AI Knowledge Directory** (filenames only, JIT); do not read file contents here.
+5.  **STEP-LOAD-POLICIES**: `ai-policy-common.md` from the **Global AI Policies Directory**, every policy referenced in the **Project Customization File**, and every `.md` found by a recursive scan of the **Project AI Policies Directory** (full text).
    **Exception — Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the recursive scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**. The **Project AI Policies Directory** is the protocol's full distribution tree — most files in it do not apply to protocol development work.
-6. Read the **Project Coordination File** in full (multi-agent awareness). Then build a filename-only index (no file contents) of everything else under the **Project Shared Directory**, recursively, including the **Project AI Knowledge Directory** and **Project Handoffs Directory**. Load those contents later, on demand, only when a task needs them.
+6.  **STEP-READ-COORDINATION**: Read the **Project Coordination File** in full (multi-agent awareness). Then build a filename-only index (no file contents) of everything else under the **Project Shared Directory**, recursively, including the **Project AI Knowledge Directory** and **Project Handoffs Directory**. Load those contents later, on demand, only when a task needs them.
 
-Then confirm in one or two lines: the Active Expertise and Traits reloaded, the count of settings and policy files loaded, the count of Global Knowledge files indexed, and the count of shared-directory files indexed. Do not quote or summarise any state file. If any file failed to load, say so and stop.
+**STEP-RELOAD-REPORT**: Then confirm in one or two lines: the Active Expertise and Traits reloaded, the count of settings and policy files loaded, the count of Global Knowledge files indexed, and the count of shared-directory files indexed. Do not quote or summarise any state file. If any file failed to load, say so and stop.
 
-### PROCEDURE F: When the user says "backup ai", or "backup ai state"
-1.  **Backup Mandate**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
+### PROCEDURE CREATE-BACKUP: When the user says "backup ai" or "backup ai state"
+
+**Aliases**: backup ai; backup ai state
+
+1.  **STEP-BACKUP-MANDATE**: Run the native backup command for your OS, substituting variables for resolved absolute paths:
     - **Linux/Bash**: `tar -czf [Global AI Backups Directory]/$(basename $(dirname $(pwd)))_$(basename $(pwd))_$(date +%Y-%m-%d_%H-%M).tar.gz ai/ ai-customization.md`
     - **Windows/PS**: `Compress-Archive -Path ai/, ai-customization.md -DestinationPath "[Global AI Backups Directory]/$(Split-Path -Leaf (Split-Path -Parent $PWD))_$(Split-Path -Leaf $PWD)_$(Get-Date -Format 'yyyy-MM-dd_HH-mm').zip"`
-2.  **Reporting**: Confirm the backup file path.
+2.  **STEP-REPORT-BACKUP-PATH**: Confirm the backup file path.
 
-### PROCEDURE G: When the user says "examine this codebase" or "codebase examination"
+### PROCEDURE EXAMINE-CODEBASE: When the user says "examine this codebase" or "codebase examination"
 
-1.  Load `ai/policies/ai-policy-codebase-examination.md` for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
-2.  Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
-3.  Return to normal role when the examination session concludes.
+**Aliases**: examine this codebase; codebase examination
 
-### PROCEDURE H: When the user says "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues"
+1.  **STEP-LOAD-EXAMINATION-POLICY**: Load `ai/policies/ai-policy-codebase-examination.md` for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
+2.  **STEP-RUN-EXAMINATION-WORKFLOW**: Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
+3.  **STEP-EXIT-EXAMINATION**: Return to normal role when the examination session concludes.
 
-1.  **Load the mechanism**: The issue-management rules live in `ai-policy-common.md`, which is always loaded. There is no separate policy file and no extra load step.
-2.  **Locate the ticket**: Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No file sits directly under `ai/issues/`.
-3.  **Act on the request**:
+### PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues"
+
+**Aliases**: manage issues; file an issue; new issue; close issue; reopen issue; list issues
+
+1.  **STEP-LOAD-ISSUE-MECHANISM**: The issue-management rules live in `ai-policy-common.md`, which is always loaded. There is no separate policy file and no extra load step.
+2.  **STEP-LOCATE-TICKET**: Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No file sits directly under `ai/issues/`.
+3.  **STEP-ACT-ON-ISSUE-REQUEST**:
     - **Create**: write a new ticket under `ai/issues/open/` using the format in `ai/shared/project-knowledge/issue-template.md`. AI-initiated creation is immediate and never waits on a human; set `Severity`/`Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them.
     - **Start work**: move the ticket file from `open/` to `in-progress/` (for example `git mv` in a repository that tracks `ai/`).
     - **Close**: move the ticket to `closed/`, append a dated update section, and update any related project knowledge. A ticket reaches `closed/` only when its fix is merged.
     - **Reopen**: move the ticket from `closed/` back to `open/`.
     - **List**: read `ai/issues/open/` and `ai/issues/in-progress/` and report filenames. This action is read-only.
-4.  **Return to normal role** when the issue action is complete.
+4.  **STEP-EXIT-ISSUE-MODE**: Return to normal role when the issue action is complete.
 
-### PROCEDURE I: When the user says "repair state files", "tidy state files", or "heal state files"
+### PROCEDURE REPAIR-STATE-FILES: When the user says "repair state files", "tidy state files", or "heal state files"
 
-1.  **Load the rules**: The state-file model lives in `ai-policy-common.md`, which is always loaded. There is no separate policy file.
-2.  **Diagnose**: Run the same read-only checks as the load-context State File Proof-of-Read: comment presence, chronological order, duplicates, size budget, brevity, and the diary mirror.
-3.  **Repair**:
+**Aliases**: repair state files; tidy state files; heal state files
+
+1.  **STEP-LOAD-STATE-RULES**: The state-file model lives in `ai-policy-common.md`, which is always loaded. There is no separate policy file.
+2.  **STEP-DIAGNOSE-STATE**: Run the same read-only checks as the STEP-STATE-FILE-PROOF-OF-READ of PROCEDURE LOAD-CONTEXT: comment presence, chronological order, duplicates, size budget, brevity, and the diary mirror.
+3.  **STEP-REPAIR-STATE**:
     - Reorder out-of-order entries into chronological order. This is corruption repair, not a normal edit.
     - Move over-budget or older-than-14-days completed `ai/state/progress.md` entries, and resolved `ai/state/context.md` items, into the daily checkpoints (the diary) before removing them from the state file.
     - If a state-file entry has no diary mirror, write the mirror first.
     - Never drop an unfinished `ai/state/next-steps.md` item.
     - Restore the one-line rule comment if missing.
-4.  **Report**: List every change made, then confirm the state files are in order.
-5.  **Return to normal role** when the repair is complete.
+4.  **STEP-REPORT-REPAIR**: List every change made, then confirm the state files are in order.
+5.  **STEP-EXIT-REPAIR-MODE**: Return to normal role when the repair is complete.
 
 ---
 
-## TIER 4: APPENDIX (Reference & Human Setup)
+## TIER APPENDIX
 
 ### Path Format Requirements (Windows)
 File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).

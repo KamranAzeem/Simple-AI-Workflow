@@ -4,16 +4,16 @@ IssueType: Improvement/Refactor
 Severity: P3
 Size: M
 URL:
-Summary: Consolidate the TIER 2 and Non-Negotiables always-on rule homes into one source of truth
+Summary: Consolidate the TIER READ-FIRST-RULES and Non-Negotiables always-on rule homes into one source of truth
 
 Description:
 
-Two places claim to hold always-on rules: the TIER 2 MANDATORY ACTIONS in `AGENTS.md` and the Non-Negotiables list at the top of `ai-policy-common.md`. Both are always loaded, and several rules appear in both (evidence-based investigation, full file reads). This creates two sources of truth and a drift risk.
+Two places claim to hold always-on rules: the TIER READ-FIRST-RULES MANDATORY ACTIONS in `AGENTS.md` and the Non-Negotiables list at the top of `ai-policy-common.md`. Both are always loaded, and several rules appear in both (evidence-based investigation, full file reads). This creates two sources of truth and a drift risk.
 
 Decide and execute one canonical home:
-- Option A: keep TIER 2 canonical and reduce the common-policy Non-Negotiables to a pointer.
+- Option A: keep TIER READ-FIRST-RULES canonical and reduce the common-policy Non-Negotiables to a pointer.
 - Option B: move always-on mechanics into the always-loaded common policy and keep `AGENTS.md` thin and structural.
-- Option C: keep both with a strict division, for example TIER 2 holds only rules needed before policy files load.
+- Option C: keep both with a strict division, for example TIER READ-FIRST-RULES holds only rules needed before policy files load.
 
 Constraints:
 - Apply the 2026-08-31 routing principle (AGENTS.md is a router, not a catalog).

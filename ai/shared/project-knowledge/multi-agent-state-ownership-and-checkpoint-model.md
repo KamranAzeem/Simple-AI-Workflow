@@ -1,7 +1,7 @@
 # Multi-Agent State Ownership & Checkpoint Model
 
 **Date**: 2026-06-30 — Session CP-2026-06-30-02 (branch `feature/boot-full-load-policies-and-global-knowledge`)
-**Status**: Contract decided and partially implemented in the protocol today. Runtime (AI-team dispatcher) and Procedure E precedence rework explicitly deferred.
+**Status**: Contract decided and partially implemented in the protocol today. Runtime (AI-team dispatcher) and PROCEDURE POST-COMPACTION-RECOVERY precedence rework explicitly deferred.
 
 This note captures a design discussion about context freshness/integrity, checkpoint direction, and multi-agent state ownership, and records what was implemented versus deferred.
 
@@ -23,7 +23,7 @@ The AI's active in-memory context is the freshest source of truth for what was a
 
 ### 2.2 The pre-write read is a reconcile, not a memory refresh
 "Read before write" is retained but reframed. Its only purposes are:
-- **(a) Preserve append-only history**: `ai/state/progress.md` is an append/archive ledger (Procedure C Step 2). A blind memory-driven write could drop existing lines; the read prevents that.
+- **(a) Preserve append-only history**: `ai/state/progress.md` is an append/archive ledger (PROCEDURE WRITE-CHECKPOINT). A blind memory-driven write could drop existing lines; the read prevents that.
 - **(b) Detect drift**: another agent, or context compaction, may have changed the files since the AI last saw them.
 
 **Precedence**: fresh in-memory deltas are authoritative for new/changed content; the disk read must never overwrite fresh work with a stale cached/summarised copy. Genuine same-item conflicts → stop and flag, do not silently pick one.
@@ -81,9 +81,9 @@ The runtime must NOT be built into AGENTS.md. The contract lives here; the runti
 
 ## 6. Implemented today (this branch, non-breaking)
 
-- **AGENTS.md TIER 2**: new mandatory action **"State File Single-Writer Ownership"**.
-- **AGENTS.md Procedure C Step 1**: added **Write Direction (memory → disk)**; reframed **Fresh-Read Before Write** as a reconcile with explicit precedence; added **Inbound Reconcile (multi-agent)** sub-step (read board + handoffs before writing state).
-- **AGENTS.md Procedure E Step 3**: added a coordination-board read on resume (board is not a state file; state files remain off-limits in E).
+- **AGENTS.md TIER READ-FIRST-RULES**: new mandatory action **"State File Single-Writer Ownership"**.
+- **AGENTS.md STEP-ATOMIC-WRITE in PROCEDURE WRITE-CHECKPOINT**: added **Write Direction (memory → disk)**; reframed **Fresh-Read Before Write** as a reconcile with explicit precedence; added **Inbound Reconcile (multi-agent)** sub-step (read board + handoffs before writing state).
+- **AGENTS.md PROCEDURE POST-COMPACTION-RECOVERY**: added a coordination-board read on resume (board is not a state file; state files remain off-limits in it).
 - **ai/shared/coordination.md**: added an **Ownership Model** section; fixed the keystone "Clear" step (was "update `ai/progress.md`" → now "record completion on the board; do NOT write state files"); added the concurrency caveat.
 - **ai/policies/ai-policy-common.md**: new **State File Ownership Protocol** subsection (single-writer, awareness-vs-authorship, reporting channel, checkpoint direction).
 - **support-files/validate-protocol.sh**: v4.3 → v4.4; new `Single-Writer` anchor check; fixed a stale error string.
@@ -91,7 +91,7 @@ The runtime must NOT be built into AGENTS.md. The contract lives here; the runti
 
 ## 7. Deferred (NOT implemented today)
 
-- **Procedure E precedence rework**: letting Procedure E read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) instead of trusting only the summary. This reverses a deliberate safety rule and is a breaking change — defer and design carefully as one coherent change.
+- **PROCEDURE POST-COMPACTION-RECOVERY precedence rework**: letting PROCEDURE POST-COMPACTION-RECOVERY read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) instead of trusting only the summary. This reverses a deliberate safety rule and is a breaking change; defer and design carefully as one coherent change.
 - **AI-team runtime**: dispatcher/watcher, role startup, process lifecycle. Separate project.
 - **Per-agent status files** (robust concurrency variant) — the safe path for **Scenario B** (multiple agents/sessions writing concurrently). **Revisit trigger**: adopt this the moment more than one agent/session may write the three state files *at the same time* (one file per agent under `ai/shared/coordination/`, orchestrator reconciles — no shared-file write contention). Until then the single-orchestrator model stands, and concurrent sessions are only safe if their writes are **serialized in time**. Sequential role-switching inside one session (**Scenario A**) is unaffected and always safe — it is one writer wearing different hats.
 - **TLD.md / LLD.md** scope/size-control documents (user-raised, future).
@@ -99,5 +99,5 @@ The runtime must NOT be built into AGENTS.md. The contract lives here; the runti
 ## 8. Open decisions for the user
 
 1. Board write discipline: single shared board (append/own-row) vs per-agent status files.
-2. Procedure E: keep summary-only on resume, or rework to prefer latest checkpoint state + board.
+2. PROCEDURE POST-COMPACTION-RECOVERY: keep summary-only on resume, or rework to prefer latest checkpoint state + board.
 3. When (if ever) to start the AI-team runtime as its own scoped project.

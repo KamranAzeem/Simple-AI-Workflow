@@ -54,7 +54,7 @@ Before preparing or executing changes that modify files outside the `ai/` direct
 ## Audit & Logging
 
 - Any change prepared by the AI must update `ai/state/progress.md` or `ai/state/next-steps.md` with a short entry describing the change intent and status (drafted, staged, committed).
-- Before automated updates, back up touched AI tracking files to a timestamped archive (use the **Global AI Backups Directory** defined in AGENTS.md TIER 1).
+- Before automated updates, back up touched AI tracking files to a timestamped archive (use the **Global AI Backups Directory** defined in AGENTS.md TIER CONFIGURATION).
 
 ## Suggested Assistant Prompt
 

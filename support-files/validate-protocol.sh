@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v5.0 ---"
+echo "--- Starting Protocol Validation v6.0 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -10,80 +10,88 @@ if ! grep -q "⚠️ STOP: READ-ONLY PROTOCOL" AGENTS.md; then
     echo "Error: Immortality Header missing in AGENTS.md"
     exit 1
 fi
-if ! grep -q "### PROCEDURE A: When User says \"load context\"" AGENTS.md; then
-    echo "Error: Procedure A anchor missing in AGENTS.md."
+if ! grep -q "### PROCEDURE LOAD-CONTEXT: When the user says \"load context\"" AGENTS.md; then
+    echo "Error: PROCEDURE LOAD-CONTEXT anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "### PROCEDURE D: When User says \"peer review\"" AGENTS.md; then
-    echo "Error: Procedure D (Peer Review) anchor missing in AGENTS.md."
+if ! grep -q "### PROCEDURE RUN-PEER-REVIEW: When the user says \"peer review\"" AGENTS.md; then
+    echo "Error: PROCEDURE RUN-PEER-REVIEW anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Post-Compaction Recovery" AGENTS.md; then
-    echo "Error: Post-Compaction Recovery procedure anchor missing in AGENTS.md."
+if ! grep -q "### PROCEDURE POST-COMPACTION-RECOVERY:" AGENTS.md; then
+    echo "Error: PROCEDURE POST-COMPACTION-RECOVERY anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "### PROCEDURE F: When the user says \"backup ai\"" AGENTS.md; then
-    echo "Error: Procedure F (Backup) anchor missing in AGENTS.md."
+if ! grep -q "### PROCEDURE CREATE-BACKUP: When the user says \"backup ai\"" AGENTS.md; then
+    echo "Error: PROCEDURE CREATE-BACKUP anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "### PROCEDURE G: When the user says" AGENTS.md; then
-    echo "Error: Procedure G (Codebase Examination) anchor missing in AGENTS.md."
+if ! grep -q "### PROCEDURE EXAMINE-CODEBASE: When the user says" AGENTS.md; then
+    echo "Error: PROCEDURE EXAMINE-CODEBASE anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Atomic Write Protocol" AGENTS.md; then
-    echo "Error: Atomic Write Protocol missing from Procedure C in AGENTS.md."
+if ! grep -q "STEP-ATOMIC-WRITE" AGENTS.md; then
+    echo "Error: STEP-ATOMIC-WRITE missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
     exit 1
 fi
-if ! grep -q "State-File Trimming" AGENTS.md; then
-    echo "Error: State-File Trimming step missing from Procedure C in AGENTS.md."
+if ! grep -q "STEP-STATE-FILE-TRIMMING" AGENTS.md; then
+    echo "Error: STEP-STATE-FILE-TRIMMING missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Write Daily Checkpoint File" AGENTS.md; then
-    echo "Error: Write Daily Checkpoint File step missing from Procedure C in AGENTS.md."
+if ! grep -q "STEP-DAILY-CHECKPOINT-FILE" AGENTS.md; then
+    echo "Error: STEP-DAILY-CHECKPOINT-FILE missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
     exit 1
 fi
 if ! grep -q 'Index `open/` and `in-progress/`' AGENTS.md; then
-    echo "Error: Project Issues indexing step (three-directory status convention) missing from Procedure A in AGENTS.md."
+    echo "Error: Project Issues indexing step (three-directory status convention) missing from PROCEDURE LOAD-CONTEXT in AGENTS.md."
     exit 1
 fi
-if ! grep -q '### PROCEDURE H:' AGENTS.md; then
-    echo "Error: Procedure H (Issue Management) anchor missing in AGENTS.md."
+if ! grep -q '### PROCEDURE MANAGE-ISSUES:' AGENTS.md; then
+    echo "Error: PROCEDURE MANAGE-ISSUES anchor missing in AGENTS.md."
     exit 1
 fi
-if ! grep -q '### PROCEDURE I:' AGENTS.md; then
-    echo "Error: Procedure I (Repair State Files) anchor missing in AGENTS.md."
+if ! grep -q '### PROCEDURE REPAIR-STATE-FILES:' AGENTS.md; then
+    echo "Error: PROCEDURE REPAIR-STATE-FILES anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
-    echo "Error: Token Rationing steps missing from Procedure A in AGENTS.md."
+    echo "Error: Token Rationing steps missing from PROCEDURE LOAD-CONTEXT in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Knowledge Loading" AGENTS.md; then
-    echo "Error: Knowledge Loading step missing from Procedure A in AGENTS.md (must cover both Global and Project Knowledge)."
+if ! grep -q "STEP-KNOWLEDGE-INDEXING" AGENTS.md; then
+    echo "Error: STEP-KNOWLEDGE-INDEXING missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (must cover both Global and Project Knowledge)."
     exit 1
 fi
-if ! grep -q "Policy Loading" AGENTS.md; then
-    echo "Error: Policy Loading step missing from Procedure A in AGENTS.md (referenced policies must be fully loaded at boot)."
+if ! grep -q "STEP-POLICY-LOADING" AGENTS.md; then
+    echo "Error: STEP-POLICY-LOADING missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (referenced policies must be fully loaded at boot)."
     exit 1
 fi
 if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
-    echo "Error: Global AI Knowledge Directory reference missing from Knowledge Loading step in AGENTS.md."
+    echo "Error: Global AI Knowledge Directory reference missing from STEP-KNOWLEDGE-INDEXING in AGENTS.md."
     exit 1
 fi
-if ! grep -q "State File Proof-of-Read" AGENTS.md; then
-    echo "Error: State File Proof-of-Read guarantee missing from Procedure A Step 4 in AGENTS.md."
+if ! grep -q "STEP-STATE-FILE-PROOF-OF-READ" AGENTS.md; then
+    echo "Error: STEP-STATE-FILE-PROOF-OF-READ guarantee missing from STEP-LOADING in PROCEDURE LOAD-CONTEXT in AGENTS.md."
     exit 1
 fi
-if ! grep -q "Fresh-Read Before Write" AGENTS.md; then
-    echo "Error: Fresh-Read Before Write guarantee missing from Procedure C Step 1 in AGENTS.md."
+if ! grep -q "STEP-FRESH-READ-BEFORE-WRITE" AGENTS.md; then
+    echo "Error: STEP-FRESH-READ-BEFORE-WRITE guarantee missing from STEP-ATOMIC-WRITE in PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Single-Writer" AGENTS.md; then
-    echo "Error: State File Single-Writer Ownership rule missing from TIER 2 in AGENTS.md."
+    echo "Error: State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Full File Reads" AGENTS.md; then
-    echo "Error: Full File Reads mandate missing from TIER 2 in AGENTS.md."
+    echo "Error: Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
+    exit 1
+fi
+if grep -qE "\bPROCEDURE [A-I]\b|\bProcedure [A-I]\b|\bprocedure [A-I]\b" AGENTS.md; then
+    echo "Error: letter-based procedure reference found in AGENTS.md; use PROCEDURE <NAME> instead."
+    exit 1
+fi
+if grep -qE "\bTIER [0-9]\b|\bStep [0-9]\b" AGENTS.md; then
+    echo "Error: numeric tier or step reference found in AGENTS.md; use TIER <NAME> or STEP <NAME> instead."
     exit 1
 fi
 echo "Hardening anchors verified."
@@ -186,7 +194,7 @@ echo "Coordination Board verified."
 # 6. Policy Baseline
 echo "[6/8] Verifying policy baseline (16 modular policies)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
-# Policy files use project-root-relative paths and TIER 1 anchor references that are
+# Policy files use project-root-relative paths and TIER CONFIGURATION anchor references that are
 # correct from the end user's project root — they will always appear broken when checked
 # from inside the protocol repo. See protocol-decisions.md "No markdown hyperlinks" entry.
 POLICIES=(
@@ -242,4 +250,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v5.0 Completed Successfully ---"
+echo "--- Protocol Validation v6.0 Completed Successfully ---"

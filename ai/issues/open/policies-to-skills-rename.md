@@ -13,7 +13,7 @@ Motivation: "Active Expertise" lists "policies", a taxonomy mismatch. "Skills" i
 Change surface (measured 2026-09-04, re-measure before starting):
 - ai/policies/ to ai/skills/ (this is both the Project AI Policies Directory and the Global AI Policies Directory in this repo).
 - `ai-policy-<name>.md` to `<name>.md` (16 files).
-- AGENTS.md: TIER 1 directory names, TIER 2 mandates, Procedure A Step 6 loader, Procedure C Step 4, Procedure E Step 5, and the four Protocol Developer Mode exception notes.
+- AGENTS.md: TIER CONFIGURATION directory names, TIER READ-FIRST-RULES mandates, STEP-POLICY-LOADING in PROCEDURE LOAD-CONTEXT, STEP-CONTEXT-RE-AFFIRMATION in PROCEDURE WRITE-CHECKPOINT, STEP-LOAD-POLICIES in PROCEDURE POST-COMPACTION-RECOVERY, and the four Protocol Developer Mode exception notes.
 - ai-customization.md: ## Active Expertise to ## Active Skills.
 - support-files/validate-protocol.sh: anchors plus a new guard against the ai-policy- prefix.
 - support-files/sync-agents-md.sh and .ps1.
@@ -23,7 +23,7 @@ Change surface (measured 2026-09-04, re-measure before starting):
 Constraints:
 - Freeze historical records: protocol-decisions.md and ai/daily-checkpoints/* must stay byte-identical (do not rewrite).
 - Decide the taxonomy before the HLD: common and meta are core guardrails, not really "skills". Options: (a) uniform skills directory including common/meta; (b) split ai/core/ and ai/skills/; (c) uniform plus document the core role.
-- Sequence with the TIER 2 vs Non-Negotiables consolidation ticket to avoid a second rename pass.
+- Sequence with the TIER READ-FIRST-RULES vs Non-Negotiables consolidation ticket to avoid a second rename pass.
 
 Proposed process: change-request, HLD, review gate, LLD, acceptance criteria, delivery ledger plus ADR in protocol-decisions.md.
 

@@ -12,8 +12,8 @@ This file contains the universal operating rules for all AI assistants in this r
 These are the rules most costly to break. They are active at boot, at load context, at compaction recovery, and mid-work. Each has a detailed section below or in `AGENTS.md`.
 
 1. **Evidence-Based Investigation** (the top Non-Negotiable): Always investigate before you assert. No claim without a source, no assumptions or guesses where evidence is missing. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract below.
-2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. Only log-like bulk data may be sliced by filter. (Full File Reads in `AGENTS.md` TIER 2)
-3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits. Count first, then read it all. (Full File Reads in `AGENTS.md` TIER 2)
+2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. Only log-like bulk data may be sliced by filter. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
+3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits. Count first, then read it all. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
 4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system. (Universal Operational Guardrails below)
 5. **Secrets check before commit.** Scan for secrets before any `git add` or `git commit`. Stop and warn if found. (Universal Operational Guardrails below)
 6. **Human approval on protected branches.** Get explicit approval before any state-changing git operation on `master` or `main`. (Feature Development and Branch-Gating below)
@@ -82,6 +82,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 **AI Contextual Security**: The AI shall use the context of the user's request (e.g., feature description, code snippet, infrastructure goal) to infer potential security concerns and generate appropriately secure outputs.
 
 ## Universal Operational Guardrails
+- **Canonical Reference Names**: Refer to procedures, steps, and tiers by their canonical ALL-CAPS kebab names (for example PROCEDURE WRITE-CHECKPOINT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES). Never reference them by letter or number.
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
 - **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.

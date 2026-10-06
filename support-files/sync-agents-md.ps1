@@ -194,7 +194,7 @@ function Ensure-StateFilesMigration {
         if (-not $WhatIf) {
           Move-Item -Path $oldPath -Destination $newPath -Force
           Add-Content -Path $newPath -Value ""
-          Add-Content -Path $newPath -Value "[MIGRATION-$(Get-Date -Format 'yyyy-MM-dd')] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 (resolve **Project AI State Files** to ai/state/)"
+          Add-Content -Path $newPath -Value "[MIGRATION-$(Get-Date -Format 'yyyy-MM-dd')] State files relocated from ai/ to ai/state/ per AGENTS.md TIER CONFIGURATION (resolve **Project AI State Files** to ai/state/)"
         }
         Write-Host "  Migrated $fname to ai/state/"
       } elseif ((Test-Path -Path $oldPath -PathType Leaf) -and (Test-Path -Path $newPath -PathType Leaf)) {

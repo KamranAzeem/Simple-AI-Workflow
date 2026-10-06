@@ -100,7 +100,7 @@ Large refactors are risky, so this module leans on guardrails the workflow alrea
 
 ## 6. How to Activate
 
-Say `"codebase examination"` or `"examine this codebase"` in your AI chat. The policy is loaded on demand (see Procedure G in `AGENTS.md`) — it is not loaded or indexed at boot time, just like the peer review mode.
+Say `"codebase examination"` or `"examine this codebase"` in your AI chat. The policy is loaded on demand (see PROCEDURE EXAMINE-CODEBASE in `AGENTS.md`): it is not loaded or indexed at boot time, just like the peer review mode.
 
 ---
 

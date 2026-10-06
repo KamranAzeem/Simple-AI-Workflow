@@ -140,9 +140,9 @@ recovery?" before trusting the next answer.
 ## 8. Native AI State Backups
 ### On-Demand Archiving
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
-- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` Procedure F.
+- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` PROCEDURE CREATE-BACKUP.
 - **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
-- **Not automatic**: Backups are **not** part of the checkpoint procedure (Procedure C). They are a separate procedure (Procedure F) invoked only by explicit user request.
+- **Not automatic**: Backups are **not** part of the checkpoint procedure (PROCEDURE WRITE-CHECKPOINT). They are a separate procedure (PROCEDURE CREATE-BACKUP) invoked only by explicit user request.
 
 ### Benefits
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.

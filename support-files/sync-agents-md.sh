@@ -231,7 +231,7 @@ for f_abs in "${matches[@]}"; do
         if [ $DRY_RUN -eq 0 ]; then
           mv "$old_path" "$new_path"
           echo "" >> "$new_path"
-          echo "[MIGRATION-$(date +%Y-%m-%d)] State files relocated from ai/ to ai/state/ per AGENTS.md TIER 1 (resolve **Project AI State Files** to ai/state/)" >> "$new_path"
+          echo "[MIGRATION-$(date +%Y-%m-%d)] State files relocated from ai/ to ai/state/ per AGENTS.md TIER CONFIGURATION (resolve **Project AI State Files** to ai/state/)" >> "$new_path"
         fi
         echo "  Migrated $fname to ai/state/"
       elif [ -f "$old_path" ] && [ -f "$new_path" ]; then

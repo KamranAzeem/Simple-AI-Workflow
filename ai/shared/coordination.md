@@ -18,7 +18,7 @@ reading each other's state files.
   are the canonical project narrative and are written **only** by the project-root orchestrator.
 - **Sub-agents and role-based team members do NOT write the three state files.** They report
   their work here (the board), in their handoff file, and in role-scoped Project Knowledge files.
-- The orchestrator **reconciles** this board into the state files at each checkpoint (Procedure C).
+- The orchestrator **reconciles** this board into the state files at each checkpoint (PROCEDURE WRITE-CHECKPOINT).
 
 ## Active Tasks
 

@@ -29,8 +29,8 @@
 ## Development Workflow (Standing Rules)
 
 - Always pull/fetch the latest from the remote before starting work.
-- **One branch per feature**: `feature/<feature-name>`. Peer review (Procedure D) passes and tests are green before proposing a merge; merging to master always requires explicit human approval (see `ai/policies/ai-policy-common.md`).
-- **Proactive peer review**: After completing each module, run peer review (AGENTS.md Procedure D) and write the report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. A module is complete only when it passes with no blocking issues.
+- **One branch per feature**: `feature/<feature-name>`. Peer review (PROCEDURE RUN-PEER-REVIEW) passes and tests are green before proposing a merge; merging to master always requires explicit human approval (see `ai/policies/ai-policy-common.md`).
+- **Proactive peer review**: After completing each module, run peer review (AGENTS.md PROCEDURE RUN-PEER-REVIEW) and write the report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. A module is complete only when it passes with no blocking issues.
 
 ### Methodologies (mandatory)
 - **TDD**: Write tests before implementation code; tests must fail meaningfully first (see `ai/policies/ai-policy-api-backend.md`, `ai/policies/ai-policy-web-frontend.md`, `ai/policies/ai-policy-mobile-apps.md`).

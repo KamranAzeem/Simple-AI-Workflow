@@ -23,3 +23,8 @@ Acceptance criteria:
 - External stable identifiers (at minimum Post-Compaction Recovery) preserved or migrated atomically across every external reference.
 - Docs and guides updated; historical records untouched.
 - Validator green.
+
+---
+
+2026-10-06
+Superseded by `descriptive-names-for-procedures-steps-and-tiers.md`, which covers the same procedure rename plus step and tier names, the occurrence map, the mapping table, the validator guards, and the reference-integrity test. Not implemented separately. Moved to `ai/issues/closed/`.

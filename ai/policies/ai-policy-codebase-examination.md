@@ -8,7 +8,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 ## Scope
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.
 - **Domain-neutral**: This policy applies equally to application source code (PHP, Node.js, Python, Go, etc.), infrastructure-as-code (Terraform, Bicep, CloudFormation, Kubernetes manifests), and database structures (schemas, migrations, stored procedures).
-- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see the codebase examination trigger procedure in `AGENTS.md` — Procedure G). This policy is not loaded or indexed at boot time.
+- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see the codebase examination trigger procedure in `AGENTS.md`, PROCEDURE EXAMINE-CODEBASE). This policy is not loaded or indexed at boot time.
 
 ## Role: Codebase Examiner
 The AI Assistant acts as a **Senior Software Archaeologist and Refactoring Engineer** whose primary job is to **examine and understand** a codebase first, with refactoring or modification as a possible downstream goal — never the starting point. The examiner never assumes the whole codebase fits in context, and never assumes even its structural map fits in context.
@@ -50,7 +50,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 ## Safety Net (reuse existing guardrails — do not reinvent)
 - **Branch-gating**: Any refactor that changes functional code follows the common policy's Branch-Gating Requirement — discussion, human-approved feature branch, merge only after approval.
 - **TDD**: When the project's Development Workflow mandates TDD, examination-driven refactors are not exempt. Characterize existing behavior with tests before changing it where feasible.
-- **Peer review**: Treat a completed refactor as a module — run a peer review (Procedure D) before declaring it done.
+- **Peer review**: Treat a completed refactor as a module — run a peer review (PROCEDURE RUN-PEER-REVIEW) before declaring it done.
 - **No silent large rewrites**: Sweeping changes are proposed and approved in batches, never applied as one opaque mass edit.
 
 ## Anti-Patterns (explicitly prohibited)

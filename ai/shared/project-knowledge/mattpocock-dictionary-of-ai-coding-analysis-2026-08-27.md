@@ -305,9 +305,9 @@ Several terms directly map to concepts already in the Simple-AI-Workflow protoco
 
 | Dictionary term | Protocol equivalent |
 |---|---|
-| Compaction | Post-Compaction Recovery (Procedure E) |
+| Compaction | Post-Compaction Recovery (PROCEDURE POST-COMPACTION-RECOVERY) |
 | Handoff artifact | Project Handoffs Directory files |
-| Context pointer | The pointers in AGENTS.md Tier 1 + skills descriptions |
+| Context pointer | The pointers in AGENTS.md TIER CONFIGURATION + skills descriptions |
 | Progressive disclosure | JIT loading / on-demand policy loading |
 | Skill | Policies loaded on Active Expertise trigger |
 | Memory system | Global/Project AI Knowledge Directories |

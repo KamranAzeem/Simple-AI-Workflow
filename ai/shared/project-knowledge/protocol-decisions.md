@@ -7,33 +7,35 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 # Protocol Design Decisions
 
+> **Naming note (2026-10-06)**: Procedures and tiers below were retrofitted to their current ALL-CAPS kebab names (for example PROCEDURE LOAD-CONTEXT for "PROCEDURE LOAD-CONTEXT", TIER TRIGGERED-PROCEDURES for "TIER TRIGGERED-PROCEDURES"). Historical entries still refer to steps by number because step positions changed over time; use `protocol-name-migration-map-2026-10-06.md` to translate a step number. Daily checkpoints and closed tickets keep the old names.
+
 ## 2026-05-21 — Session CP-2026-05-21-01
 
 ### Project-knowledge loading: dedicated step vs. appended sentence
-- **Decision**: Promote project-knowledge loading to its own numbered step (Step 5) in Procedure A, rather than appending it as a sentence to Step 4.
+- **Decision**: Promote project-knowledge loading to its own numbered step (Step 5) in PROCEDURE LOAD-CONTEXT, rather than appending it as a sentence to Step 4.
 - **Rationale**: Weak models complete Step 4's explicit list and stop. A trailing sentence is silently skipped. A dedicated numbered step with "do NOT merge with Step 4" is unmissable.
 - **Outcome**: Verified working in production test after change.
 
 ### Git-ignore handling: point-of-use reminders
-- **Decision**: Add inline git-ignore override reminders at Step 3 (Discovery) and Step 5 (Load Project Knowledge), in addition to the Tier 2 general rule.
+- **Decision**: Add inline git-ignore override reminders at Step 3 (Discovery) and Step 5 (Load Project Knowledge), in addition to the TIER READ-FIRST-RULES general rule.
 - **Rationale**: Weak models do not re-apply general rules stated in a preamble when they reach a specific step. The reminder must be at the point of execution.
-- **Outcome**: Tier 2 rule also strengthened — changed from "these two items" (too narrow) to "entire ai/ directory including ALL subdirectories and every file".
+- **Outcome**: TIER READ-FIRST-RULES rule also strengthened — changed from "these two items" (too narrow) to "entire ai/ directory including ALL subdirectories and every file".
 
-### Procedure C: project-knowledge update as mandatory checkpoint step
-- **Decision**: Insert new Step 2 in Procedure C requiring explicit review and update of project-knowledge before every backup. Made mandatory even when nothing changed (AI must confirm).
+### PROCEDURE WRITE-CHECKPOINT: project-knowledge update as mandatory checkpoint step
+- **Decision**: Insert new Step 2 in PROCEDURE WRITE-CHECKPOINT requiring explicit review and update of project-knowledge before every backup. Made mandatory even when nothing changed (AI must confirm).
 - **Rationale**: Investigation findings, decisions, and confirmed values were being permanently lost at checkpoint. Only state files were synced; project-knowledge was untouched.
 - **Outcome**: Policy layer (ai-policy-common.md) also updated with matching mandate to reinforce for weak models.
 
 ### backup-ai-dir.sh removal
 - **Decision**: Removed `support-files/backup-ai-dir.sh`.
-- **Rationale**: Backup is now a native one-liner embedded directly in AGENTS.md Procedure C. The standalone script was redundant and not referenced in any documentation.
+- **Rationale**: Backup is now a native one-liner embedded directly in AGENTS.md PROCEDURE WRITE-CHECKPOINT. The standalone script was redundant and not referenced in any documentation.
 
 ### validate-protocol.sh: $HOME portability fix
 - **Decision**: Replace hardcoded `/home/kamran/.ai` with `$HOME/.ai`.
 - **Rationale**: Script failed on Windows/Git Bash with 3 warnings and a hard exit on step 9. `$HOME` resolves correctly on Linux, macOS, and Git Bash on Windows.
 
 ### README: remove protocol-section "TIER" terminology
-- **Decision**: Replace all references to "TIER 1", "TIER 1: CONFIGURATION", and "tiers" (when referring to protocol sections) with plain language ("CONFIGURATION section", "sections or procedures").
+- **Decision**: Replace references to the TIER CONFIGURATION label and to "tiers" (when referring to protocol sections) with plain language ("CONFIGURATION section", "sections or procedures").
 - **Rationale**: The TIER labels are internal protocol structure. Exposing them in user-facing documentation creates unnecessary jargon and couples docs to internal naming.
 - **Scope**: 6 occurrences in README.md; pricing-tier references left unchanged.
 
@@ -41,9 +43,9 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ## 2026-05-21 — Session CP-2026-05-21-02
 
-### Peer Review Mode: Procedure D placement must be in TIER 3
-- **Decision**: PROCEDURE D must live in TIER 3 (Triggered Procedures), not TIER 5 (Appendix).
-- **Rationale**: An AI scanning TIER 3 for triggered procedures stops before reaching TIER 5. Procedure D placed in TIER 5 is silently invisible to weak models — the feature never activates.
+### Peer Review Mode: PROCEDURE RUN-PEER-REVIEW placement must be in TIER TRIGGERED-PROCEDURES
+- **Decision**: PROCEDURE RUN-PEER-REVIEW must live in TIER TRIGGERED-PROCEDURES, not TIER APPENDIX.
+- **Rationale**: An AI scanning TIER TRIGGERED-PROCEDURES for triggered procedures stops before reaching TIER APPENDIX. PROCEDURE RUN-PEER-REVIEW placed in TIER APPENDIX is silently invisible to weak models — the feature never activates.
 - **Lesson**: Every triggered procedure must be co-located with peers A/B/C. Never append procedures to appendix sections as an afterthought.
 - **How found**: Discovered via the first self-review using the new Peer Review Mode (review-01 Critical finding).
 
@@ -53,7 +55,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Note**: PowerShell 7+ (`pwsh`) does not have this issue, but README instructs using `powershell` for compatibility.
 
 ### Peer review policy: ai-policy-code-review.md
-- **Decision**: Peer review role, dimensions, severity, and report format extracted into a dedicated policy file (`ai/policies/ai-policy-code-review.md`), read by the AI at the start of Procedure D.
+- **Decision**: Peer review role, dimensions, severity, and report format extracted into a dedicated policy file (`ai/policies/ai-policy-code-review.md`), read by the AI at the start of PROCEDURE RUN-PEER-REVIEW.
 - **Rationale**: Embedding all review rules inline in AGENTS.md would make AGENTS.md too long. A separate policy keeps the bootstrap file concise and allows the review policy to evolve independently.
 - **Report location**: `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md` — sequential numbering per session, never overwritten.
 
@@ -71,7 +73,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ## 2026-05-21 — Session CP-2026-05-21-03
 
 ### Protocol terminology must not appear in user-facing documentation
-- **Decision**: Remove all references to internal protocol labels ("Procedure A", "Procedure B", "Procedure D", "TIER 1", etc.) from README and all files under `docs/`.
+- **Decision**: Remove all references to internal protocol labels ("PROCEDURE LOAD-CONTEXT", "PROCEDURE BOOTSTRAP-PROJECT", "PROCEDURE RUN-PEER-REVIEW", "TIER CONFIGURATION", etc.) from README and all files under `docs/`.
 - **Rationale**: These are internal implementation labels. Exposing them creates jargon that confuses end users and couples documentation to internal naming. User-facing text should describe what the action does, not what internal label it has.
 - **Scope**: 8 occurrences fixed across README.md, workflow-guide.md, simple-ai-workflow-slides.md, ai-customization-guide.md.
 - **Rule going forward**: Docs describe behaviour in plain language. AGENTS.md is the only file permitted to use procedure/tier labels.
@@ -97,7 +99,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### validate-protocol.sh updated to v4.0
 - **Decision**: Expand the validation script to check all current AGENTS.md features.
-- **Changes**: Step 1 expanded from 3 anchor checks to 8 (added Procedure E, F, Atomic Write Protocol, Sliding Horizon Shield, Token Rationing). Step 2 expanded from 3 config keys to 10 (all TIER 1 keys now checked).
+- **Changes**: Step 1 expanded from 3 anchor checks to 8 (added PROCEDURE POST-COMPACTION-RECOVERY, F, Atomic Write Protocol, Sliding Horizon Shield, Token Rationing). Step 2 expanded from 3 config keys to 10 (all TIER CONFIGURATION keys now checked).
 - **Outcome**: All 8 checks pass against current AGENTS.md.
 
 ### Policy file structural inconsistencies fixed
@@ -110,7 +112,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### "load context" command — full form vs shorthand
 - **Decision**: Document the distinction between the full form (`"load context using AGENTS.md protocol"`) and the shorthand (`"load context"`) in both README and slides.
-- **Rule**: Always use the full form at the start of a new session or after any restart. The shorthand is acceptable mid-session only when the AI already has AGENTS.md in view. A fresh or weaker model cannot reliably connect "load context" to Procedure A without the explicit anchor.
+- **Rule**: Always use the full form at the start of a new session or after any restart. The shorthand is acceptable mid-session only when the AI already has AGENTS.md in view. A fresh or weaker model cannot reliably connect "load context" to PROCEDURE LOAD-CONTEXT without the explicit anchor.
 - **Scope**: Added "Keeping Context Healthy" section to README (after "How to start working" section) and a matching slide appended to the presentation.
 
 ---
@@ -120,7 +122,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### JIT indexing extended to Global Knowledge
 - **Decision**: Extend Token Rationing (JIT indexing) to cover `~/.ai/global-knowledge/` files, not just `ai/shared/project-knowledge/` files. AGENTS.md Step 5 was renamed from "Project Knowledge Indexing" to "Knowledge Indexing" and expanded to cover both directories.
 - **Rationale**: The pre-existing Step 5 only indexed Project Knowledge. Global Knowledge was bundled into Step 4 for full loading alongside Settings. Loading all global knowledge files at boot is just as wasteful as loading all project knowledge files. The same JIT lookup-by-task-context principle applies to both.
-- **Files changed**: AGENTS.md (Steps 4, 5, Proof-of-Load items b/e, Procedure E Step 3/5, Session Resume bullet), ai-policy-common.md (Global Knowledge Protocol + Project Knowledge Protocol), docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, README.md.
+- **Files changed**: AGENTS.md (Steps 4, 5, Proof-of-Load items b/e, PROCEDURE POST-COMPACTION-RECOVERY Step 3/5, Session Resume bullet), ai-policy-common.md (Global Knowledge Protocol + Project Knowledge Protocol), docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, README.md.
 
 ### Settings vs Knowledge: explicit split in loading semantics
 - **Decision**: Formalize the distinction between Global AI Settings Directory (`~/.ai/settings/`) and Global AI Knowledge Directory (`~/.ai/global-knowledge/`): Settings are always fully loaded at boot; Knowledge is always JIT-indexed at boot.
@@ -129,12 +131,12 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Broken markdown links in policy files (pre-existing, repaired on this branch)
 - **Finding**: `ai/policies/ai-policy-common.md` had 4 broken relative links (coordination.md, next-steps.md, progress.md, context.md, daily-checkpoints/) using repo-root-relative paths. Because the file lives in `ai/policies/`, these paths resolved two directories short of their targets.
-- **Fix**: Changed paths to use `../` relative navigation (e.g., `../next-steps.md`). Also fixed a broken path in `AGENTS.md` Procedure A Step 1 and two broken paths in `docs/workflow-guide.md`.
+- **Fix**: Changed paths to use `../` relative navigation (e.g., `../next-steps.md`). Also fixed a broken path in `AGENTS.md` PROCEDURE LOAD-CONTEXT Step 1 and two broken paths in `docs/workflow-guide.md`.
 - **Rule going forward**: Markdown links in policy files under `ai/policies/` must use `../` relative paths, not `ai/`-prefixed paths. Links in `docs/` files referencing other `docs/` files must not be prefixed with `docs/`.
 
 ### validate-protocol.sh v4.1 — Global Knowledge JIT checks added
 - **Decision**: Bump validate-protocol.sh from v4.0 to v4.1 with two new anchor checks.
-- **New checks**: (1) "Knowledge Indexing" step must exist in AGENTS.md Procedure A; (2) "Global AI Knowledge Directory" must appear in that step.
+- **New checks**: (1) "Knowledge Indexing" step must exist in AGENTS.md PROCEDURE LOAD-CONTEXT; (2) "Global AI Knowledge Directory" must appear in that step.
 - **Rationale**: These checks guard against regression where the JIT indexing of Global Knowledge is silently removed or the step is renamed back to "Project Knowledge Indexing".
 
 ---
@@ -142,19 +144,19 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ## 2026-06-19 — Session CP-2026-06-18-03 (continued)
 
 ### No markdown hyperlinks in policy files — two-context link rule
-- **Decision**: Policy files (`ai/policies/*.md`) and `AGENTS.md` MUST NOT contain markdown hyperlinks `[text](path)`. All file references must use either **Bold Anchor Name** (for files defined in TIER 1 Configuration) or `` `backtick/path` `` (for well-known state files).
-- **Rationale**: Policy files live in the **Global AI Policies Directory** (`Simple-AI-Workflow/ai/policies/`) but are read by an AI operating in the **user's project root** (e.g., `~/Projects/MurtazaSb/`). A relative path like `../shared/coordination.md` resolves correctly inside the protocol repo but resolves to a completely wrong location in the user's project — or nowhere at all. The TIER 1 Configuration anchors (`**Project Coordination File**`, `**Project AI Knowledge Directory**`, etc.) are the correct indirection mechanism: they are resolved by the AI against the TIER 1 definitions, not against the filesystem.
+- **Decision**: Policy files (`ai/policies/*.md`) and `AGENTS.md` MUST NOT contain markdown hyperlinks `[text](path)`. All file references must use either **Bold Anchor Name** (for files defined in TIER CONFIGURATION) or `` `backtick/path` `` (for well-known state files).
+- **Rationale**: Policy files live in the **Global AI Policies Directory** (`Simple-AI-Workflow/ai/policies/`) but are read by an AI operating in the **user's project root** (e.g., `~/Projects/MurtazaSb/`). A relative path like `../shared/coordination.md` resolves correctly inside the protocol repo but resolves to a completely wrong location in the user's project — or nowhere at all. The TIER CONFIGURATION anchors (`**Project Coordination File**`, `**Project AI Knowledge Directory**`, etc.) are the correct indirection mechanism: they are resolved by the AI against the TIER CONFIGURATION definitions, not against the filesystem.
 - **Two contexts rule**: When editing this repository as the protocol developer, your working directory IS the protocol repo. But all policy files must be authored from the user's perspective — their working directory is their own project root. Any path in a policy file is evaluated in the user's project root, not in this repo.
 - **What to use**:
-  - TIER 1 anchor → `**Anchor Name**` (e.g., `**Project Coordination File**`, `**Global AI Policies Directory**`)
-  - State files (not in TIER 1) → `` `ai/next-steps.md` ``, `` `ai/progress.md` `` etc. (project-root-relative, no link wrapper)
+  - TIER CONFIGURATION anchor → `**Anchor Name**` (e.g., `**Project Coordination File**`, `**Global AI Policies Directory**`)
+  - State files (not in TIER CONFIGURATION) → `` `ai/next-steps.md` ``, `` `ai/progress.md` `` etc. (project-root-relative, no link wrapper)
   - `AGENTS.md` → `` `AGENTS.md` `` or "the `AGENTS.md` file in the project root"
 - **Rule going forward**: Any automated link checker (including validate-protocol.sh) MUST NOT run filesystem link resolution against `ai/policies/` or `AGENTS.md`. Those files' references are intentionally evaluated from the user's project root and will always appear broken when checked from inside the protocol repo.
 - **How it was broken**: An automated Python link checker ran relative resolution from the file's disk location (`ai/policies/`), found `ai/shared/coordination.md` appearing broken (because `ai/policies/../shared/coordination.md` ≠ correct from protocol root), and "fixed" it to `../shared/coordination.md` — which is wrong in the user's context.
 
-### Protocol Developer Mode — unconditionally-read rule in TIER 2
-- **Decision**: Add "Protocol Developer Mode" as a bullet in TIER 2 MANDATORY ACTIONS (always-read block, no trigger required).
-- **Rationale**: `protocol-decisions.md` was JIT-indexed at boot but not guaranteed to load before protocol work. An AI starting fresh with only a task like "change this rule" would reach the task without the authoritative constraint file loaded. TIER 2 is the only block that fires unconditionally — before any procedure or policy — making it the correct location.
+### Protocol Developer Mode — unconditionally-read rule in TIER READ-FIRST-RULES
+- **Decision**: Add "Protocol Developer Mode" as a bullet in TIER READ-FIRST-RULES MANDATORY ACTIONS (always-read block, no trigger required).
+- **Rationale**: `protocol-decisions.md` was JIT-indexed at boot but not guaranteed to load before protocol work. An AI starting fresh with only a task like "change this rule" would reach the task without the authoritative constraint file loaded. TIER READ-FIRST-RULES is the only block that fires unconditionally — before any procedure or policy — making it the correct location.
 - **Rule**: When PWD matches the **Global AI Workflow Directory**, the AI is in protocol developer mode. It must fully load `protocol-decisions.md` before touching any protocol file. The rule also embeds the two-context path authoring requirement inline.
 - **Mirror in ai-policy-meta.md**: The same requirement is now also listed as Pre-action Check #1 in `ai-policy-meta.md` for redundancy.
 
@@ -163,10 +165,10 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Rationale**: Every other policy file has these guards. The meta policy was the only one missing them — an AI could treat it as freely editable without the guard.
 - **Also fixed**: Removed phantom `AGENTS.local.md` reference (file does not exist anywhere in the repo or docs).
 
-### Redundant inline paths alongside TIER 1 anchors — removed
-- **Decision**: Remove all hardcoded inline paths that appeared alongside TIER 1 bold anchor references in `ai-policy-common.md`.
+### Redundant inline paths alongside TIER CONFIGURATION anchors — removed
+- **Decision**: Remove all hardcoded inline paths that appeared alongside TIER CONFIGURATION bold anchor references in `ai-policy-common.md`.
 - **Removed**: `` (`~/.ai/settings/`) `` next to `**Global AI Settings Directory**`; `` (`~/.ai/global-knowledge/`) `` next to `**Global AI Knowledge Directory**`; `` (`ai/shared/project-knowledge/`) `` next to `**Project AI Knowledge Directory**`; `` (`ai/ai-customization.md`) `` next to `**Project Customization File**`.
-- **Rationale**: The anchor is the single source of truth for the path. Repeating the path inline creates two sources that can drift. The anchor resolves against TIER 1 Configuration; the inline path cannot be kept in sync automatically.
+- **Rationale**: The anchor is the single source of truth for the path. Repeating the path inline creates two sources that can drift. The anchor resolves against TIER CONFIGURATION; the inline path cannot be kept in sync automatically.
 
 ### sync-agents-md.ps1 regex back-reference bug — fixed
 - **Finding**: The Workflow Dir replacement used group `$3` (old path value) as the closing backtick, when `$4` was the closing backtick. User AI Dir replacement had the same class of error. Result: the old path was appended to the new one and the closing backtick was dropped.
@@ -192,9 +194,9 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Validator**: `validate-protocol.sh` policy baseline list extended from 11 to 12 (added `codebase-examination`). The check only verifies listed policies exist, so adding a file does not otherwise affect it.
 
 ### Internal protocol labels confirmed out of user-facing docs (regression caught in review)
-- **Finding**: The first draft of `docs/codebase-examination-guide.md` used "Procedure D" and the `Inquiry`/`Directive`/`Analyze-Plan-Stop` jargon — violating the CP-2026-05-21-03 decision (no internal labels in README or `docs/`).
+- **Finding**: The first draft of `docs/codebase-examination-guide.md` used "PROCEDURE RUN-PEER-REVIEW" and the `Inquiry`/`Directive`/`Analyze-Plan-Stop` jargon — violating the CP-2026-05-21-03 decision (no internal labels in README or `docs/`).
 - **Resolution**: Caught by peer review (review-01, CHANGES REQUESTED); rephrased to plain language; review-02 APPROVED.
-- **Reinforced rule**: Policy files (`ai/policies/*.md`) MAY use procedure/tier labels (they are internal); files under `docs/` and README MUST use plain language. This split is now exercised by the codebase-examination policy (uses "Procedure D") vs its guide (plain language).
+- **Reinforced rule**: Policy files (`ai/policies/*.md`) MAY use procedure/tier labels (they are internal); files under `docs/` and README MUST use plain language. This split is now exercised by the codebase-examination policy (uses "PROCEDURE RUN-PEER-REVIEW") vs its guide (plain language).
 
 ---
 
@@ -203,13 +205,13 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### Codebase Examination — changed from "opt-in expertise" to "triggered procedure"
 
 - **Decision**: Changed `ai-policy-codebase-examination.md` activation from "add `codebase-examination` to `## Active Expertise`" to a procedure-triggered pattern matching how `ai-policy-code-review.md` works (zero boot-time visibility).
-- **Rationale**: Listing it in Active Expertise causes Procedure A Step 6 to index it at boot time and Step 7 to list it in the Proof-of-Load report. The user wants no boot-time presence — same as code-review, which is only activated by a trigger phrase ("peer review" / "code review").
+- **Rationale**: Listing it in Active Expertise causes PROCEDURE LOAD-CONTEXT Step 6 to index it at boot time and Step 7 to list it in the Proof-of-Load report. The user wants no boot-time presence — same as code-review, which is only activated by a trigger phrase ("peer review" / "code review").
 - **Changes applied**:
-  1. `ai/policies/ai-policy-codebase-examination.md`: On-demand activation paragraph now references Procedure G — not Active Expertise.
-  2. `AGENTS.md`: Procedure G added to TIER 3 (Triggered Procedures) — loads the policy when user says "examine this codebase" or "codebase examination".
+  1. `ai/policies/ai-policy-codebase-examination.md`: On-demand activation paragraph now references PROCEDURE EXAMINE-CODEBASE — not Active Expertise.
+  2. `AGENTS.md`: PROCEDURE EXAMINE-CODEBASE added to TIER TRIGGERED-PROCEDURES — loads the policy when user says "examine this codebase" or "codebase examination".
   3. `protocol-decisions.md`: This entry.
   4. `README.md` line 342: Updated to reference "codebase examination" trigger phrase instead of Active Expertise.
-- **What did NOT change**: `validate-protocol.sh` — policy file still exists, baseline stays at 12. Procedure G is not anchor-checked by the validator (same as Procedure D was before it was added; can be added later if desired).
+- **What did NOT change**: `validate-protocol.sh` — policy file still exists, baseline stays at 12. PROCEDURE EXAMINE-CODEBASE is not anchor-checked by the validator (same as PROCEDURE RUN-PEER-REVIEW was before it was added; can be added later if desired).
 - **Documents updated**: `docs/codebase-examination-guide.md` and `docs/ai-customization-guide.md` now reference the trigger phrase, not the Active Expertise list.
 - **Branch**: Applied directly on master as a protocol-development change with human approval.
 
@@ -223,13 +225,13 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ## 2026-06-29 — Session CP-2026-06-29-01
 
-### State File Proof-of-Read — fresh-read requirement added to Procedure A and Procedure C
+### State File Proof-of-Read — fresh-read requirement added to PROCEDURE LOAD-CONTEXT and PROCEDURE WRITE-CHECKPOINT
 
 - **Problem**: AI in production session reported progress.md last entry as 23 June when entries from 24th and 25th existed. When challenged, the AI admitted it "scanned too quickly and only saw the last few lines." Classic failure mode: AI summarises from conversation memory instead of reading the file fresh.
 - **Decision**: Add three protocol guardrails to AGENTS.md:
-  1. **Procedure A Step 4 sub-bullet** (`State File Proof-of-Read`): After loading the three state files, the AI must record the line count and the most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`) from each file's content. The CP identifier must be consistent across all three state files and the latest checkpoint file. If any file cannot be read, stop and report before continuing.
-  2. **Procedure A Step 7 bullet (f)**: The Proof-of-Load report must include, for each state file: line count and most recent CP identifier, read fresh from file content.
-  3. **Procedure C Step 1 sub-bullet** (`Fresh-Read Before Write`): Before staging any checkpoint write, the AI must read the current on-disk content of all three state files fresh. Do not write from a cached or summarised version held in the active context window.
+  1. **PROCEDURE LOAD-CONTEXT Step 4 sub-bullet** (`State File Proof-of-Read`): After loading the three state files, the AI must record the line count and the most recent checkpoint identifier (`CP-YYYY-MM-DD-NN`) from each file's content. The CP identifier must be consistent across all three state files and the latest checkpoint file. If any file cannot be read, stop and report before continuing.
+  2. **PROCEDURE LOAD-CONTEXT Step 7 bullet (f)**: The Proof-of-Load report must include, for each state file: line count and most recent CP identifier, read fresh from file content.
+  3. **PROCEDURE WRITE-CHECKPOINT Step 1 sub-bullet** (`Fresh-Read Before Write`): Before staging any checkpoint write, the AI must read the current on-disk content of all three state files fresh. Do not write from a cached or summarised version held in the active context window.
 - **Why CP identifier, not a date field**: The state files contain no standalone date fields — the date is embedded in the checkpoint ID format (`CP-YYYY-MM-DD-NN`). Using the CP identifier as the date marker is unambiguous, extractable from content, and consistent across all three files and checkpoint files. An AI must read the file to know it.
 - **Why line count**: A line count is an instant verifiable signal. If the AI reports 15 lines but `wc -l` shows 35, the partial-read bug is immediately visible. It is not a perfect proof, but it is fast to spot-check.
 - **"Held in context" wording fix**: First draft of Fresh-Read Before Write said "held in context" — "context" clashes with `context.md` (the state file name). Fixed to "held in the active context window".
@@ -243,20 +245,20 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### Full-load active policies and Global Knowledge at boot — Token Rationing re-scoped to Project Knowledge only
 
 - **Problem**: The prior model (extended on 2026-06-18-03) applied JIT index-only loading to *both* Global Knowledge and the active policy files. This meant the AI booted with only the *names* of the policies and lessons that govern its behaviour, and was expected to load them "on demand". In practice an AI cannot know which trigger maps to which policy without first reading the policy — so deferring policy loading silently produced behaviour driven by rules the AI had never read. The same applied to Global Knowledge ("lessons learned" the AI never actually saw).
-- **Decision**: At boot (Procedure A) and on post-condensation recovery (Procedure E), the AI now loads in **full**: Settings, all Global Knowledge files, the common policy (`ai-policy-common.md`), and **every** policy referenced in the Project Customization File. **Token Rationing is retained but re-scoped to Project Knowledge only** — those files can be large (e.g. historical repo-scan snapshots) and are still shell-indexed at boot and loaded on demand.
-- **Reverses**: The Global-Knowledge portion of the 2026-06-18-03 decision ("Step 5 now covers both Global and Project Knowledge with JIT index-only semantics") and the policy-indexing portion of Procedure A. Project Knowledge index-only behaviour from that session is **kept**.
+- **Decision**: At boot (PROCEDURE LOAD-CONTEXT) and on post-condensation recovery (PROCEDURE POST-COMPACTION-RECOVERY), the AI now loads in **full**: Settings, all Global Knowledge files, the common policy (`ai-policy-common.md`), and **every** policy referenced in the Project Customization File. **Token Rationing is retained but re-scoped to Project Knowledge only** — those files can be large (e.g. historical repo-scan snapshots) and are still shell-indexed at boot and loaded on demand.
+- **Reverses**: The Global-Knowledge portion of the 2026-06-18-03 decision ("Step 5 now covers both Global and Project Knowledge with JIT index-only semantics") and the policy-indexing portion of PROCEDURE LOAD-CONTEXT. Project Knowledge index-only behaviour from that session is **kept**.
 - **Rationale**:
   - **Robustness over token thrift for operational files**: The cost of a few hundred lines of policy/lesson text at boot is far lower than the cost of the AI applying wrong or missing rules it never read. Token Rationing still earns its keep where files are genuinely large and not always needed — Project Knowledge.
   - **Global Knowledge is intentionally small**: A full load is cheap and removes the "guessing at a lesson it never read" failure mode.
   - **Deferred policy loading is self-defeating**: The AI cannot map a task to a policy by name alone; the policy text *is* the mapping.
 - **Files changed on this branch**:
-  - `AGENTS.md`: TIER 2 Session Resume bullet; Procedure A Step 5 renamed `Knowledge Indexing` → `Knowledge Loading` (Global Knowledge full text; Project Knowledge keeps Token Rationing); Step 6 renamed `Policy Indexing` → `Policy Loading` with a "deliberate exception to Token Rationing" design note; Step 7 bullet (b) wording (`fully loaded`); Procedure C new Step 4 `Context Re-affirmation After Checkpoint` made **condition-gated** (reload only when context was condensed); Procedure E Step 3 full-loads common policy + Global Knowledge + Settings + referenced policies and shell-indexes Project Knowledge, with `[Reloading key files into context...]` announcements; Procedure E Step 5 references "steps 1–4", `fully loaded` wording, direct-task one-liner suppression.
-  - `ai/policies/ai-policy-common.md`: Global Knowledge Protocol `Index Only` → `Full Load`; two stale `Procedure C Step 2` → `Step 3` cross-reference fixes.
+  - `AGENTS.md`: TIER READ-FIRST-RULES Session Resume bullet; PROCEDURE LOAD-CONTEXT Step 5 renamed `Knowledge Indexing` → `Knowledge Loading` (Global Knowledge full text; Project Knowledge keeps Token Rationing); Step 6 renamed `Policy Indexing` → `Policy Loading` with a "deliberate exception to Token Rationing" design note; Step 7 bullet (b) wording (`fully loaded`); PROCEDURE WRITE-CHECKPOINT new Step 4 `Context Re-affirmation After Checkpoint` made **condition-gated** (reload only when context was condensed); PROCEDURE POST-COMPACTION-RECOVERY Step 3 full-loads common policy + Global Knowledge + Settings + referenced policies and shell-indexes Project Knowledge, with `[Reloading key files into context...]` announcements; PROCEDURE POST-COMPACTION-RECOVERY Step 5 references "steps 1–4", `fully loaded` wording, direct-task one-liner suppression.
+  - `ai/policies/ai-policy-common.md`: Global Knowledge Protocol `Index Only` → `Full Load`; two stale `PROCEDURE WRITE-CHECKPOINT Step 2` → `Step 3` cross-reference fixes.
   - `support-files/validate-protocol.sh`: v4.2 → v4.3; anchor check `Knowledge Indexing` → `Knowledge Loading`; added `Policy Loading` anchor check; kept `Token Rationing` anchor check (still present, scoped to Project Knowledge).
   - Docs (`README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`): updated Token Rationing / JIT sections, Session Resume features, and Proof-of-Load wording to the new model.
 - **Token Rationing anchor preserved**: The validator still greps for `Token Rationing` because the concept lives on for Project Knowledge — the term was deliberately *not* removed from AGENTS.md.
 - **Source plan correction**: The originating plan (`ai/plans/agents-md-context-reload-improvements.md`) claimed ~27 project-knowledge files with large repo-scan snapshots; the actual count in this repo is 4 small files (the large-snapshot concern was imported from another workspace). The change set keeps Token Rationing for Project Knowledge on principle (files *can* be large elsewhere / in user projects), independent of this repo's current size.
-- **Constraints honoured**: Protocol Developer Mode (protocol-decisions.md fully pre-loaded); no inline machine paths (TIER 1 anchors only); no markdown hyperlinks in policy files; immutable markers preserved; AGENTS.md authored from the end-user project-root perspective.
+- **Constraints honoured**: Protocol Developer Mode (protocol-decisions.md fully pre-loaded); no inline machine paths (TIER CONFIGURATION anchors only); no markdown hyperlinks in policy files; immutable markers preserved; AGENTS.md authored from the end-user project-root perspective.
 - **Branch**: `feature/boot-full-load-policies-and-global-knowledge` — not merged to master (user handles merge/push).
 
 ---
@@ -275,14 +277,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
   5. **Checkpoint is two-phase**: inbound reconcile (read board + handoffs) → outbound write (memory → state files).
   6. **Protocol vs. runtime boundary**: the protocol defines the *contract* (ownership, message formats, reconcile); the AI-team *runtime* (dispatcher/watcher/role lifecycle) is a separate project and must NOT be built into AGENTS.md. A role can be persistent in identity but ephemeral in execution (watch-spawned), which makes the single-writer rule uniform across execution models.
 - **Implemented today (non-breaking, this branch)**:
-  - `AGENTS.md`: TIER 2 new mandatory action **State File Single-Writer Ownership**; Procedure C Step 1 added **Write Direction (memory → disk)**, reframed **Fresh-Read Before Write** as a reconcile with precedence, added **Inbound Reconcile (multi-agent)**; Procedure E Step 3 added a coordination-board read on resume (board is not a state file; state files stay off-limits).
+  - `AGENTS.md`: TIER READ-FIRST-RULES new mandatory action **State File Single-Writer Ownership**; PROCEDURE WRITE-CHECKPOINT Step 1 added **Write Direction (memory → disk)**, reframed **Fresh-Read Before Write** as a reconcile with precedence, added **Inbound Reconcile (multi-agent)**; PROCEDURE POST-COMPACTION-RECOVERY Step 3 added a coordination-board read on resume (board is not a state file; state files stay off-limits).
   - `ai/shared/coordination.md`: added **Ownership Model** section; fixed keystone **Clear** step (was "update `ai/progress.md`" → now "record completion on the board; do NOT write state files"); added cooperative-coordination caveat.
   - `ai/policies/ai-policy-common.md`: new **State File Ownership Protocol** subsection.
   - `support-files/validate-protocol.sh`: v4.3 → v4.4; new `Single-Writer` anchor check; fixed a stale "Knowledge Indexing step" error string → "Knowledge Loading step".
   - `README.md`: Multi-Agent Coordination feature augmented with single-writer state-ownership bullet.
 - **Keystone correction**: The old `coordination.md` told every sub-agent to "update `ai/progress.md`" on clear — the exact multi-writer-on-state-files pattern. That line is now removed in favour of board-only reporting.
 - **Explicitly deferred (would be breaking / out of scope)**:
-  - **Procedure E precedence rework** — letting Procedure E read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) rather than trusting only the summary. Reverses a deliberate safety rule; design as one coherent change later.
+  - **PROCEDURE POST-COMPACTION-RECOVERY precedence rework** — letting PROCEDURE POST-COMPACTION-RECOVERY read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) rather than trusting only the summary. Reverses a deliberate safety rule; design as one coherent change later.
   - **AI-team runtime** (dispatcher/watcher/role lifecycle) — separate project.
   - **Per-agent status files** robust-concurrency variant — adopt only when real parallelism is needed.
 - **Non-breaking confirmation**: all existing validator anchors retained (`Fresh-Read Before Write`, `Atomic Write Protocol`, `Token Rationing`, `Knowledge Loading`, `Policy Loading`, etc.); the `Fresh-Read Before Write` phrase was deliberately preserved as the anchor while its body was reframed.
@@ -294,7 +296,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Single-writer clarification (session vs role) + Scenario B revisit trigger + branch merged
 
-- **Session-not-role clarification**: A user question exposed an ambiguity — the single-writer rule listed role names (developer, security, document-controller) that a human might *switch the same session into*, which could be misread as "a session in developer role may not write state files." Clarified in `AGENTS.md` TIER 2 and mirrored in `ai-policy-common.md`: **ownership is by session/process identity, not role label.** One owning session switching role-hats is still the orchestrator and writes the state files normally; the prohibition targets **separate** sub-agent sessions/processes.
+- **Session-not-role clarification**: A user question exposed an ambiguity — the single-writer rule listed role names (developer, security, document-controller) that a human might *switch the same session into*, which could be misread as "a session in developer role may not write state files." Clarified in `AGENTS.md` TIER READ-FIRST-RULES and mirrored in `ai-policy-common.md`: **ownership is by session/process identity, not role label.** One owning session switching role-hats is still the orchestrator and writes the state files normally; the prohibition targets **separate** sub-agent sessions/processes.
 - **Scenario A (sequential role-switch in one session)**: explicitly safe — one writer wearing different hats.
 - **Scenario B (concurrent sessions writing the *same* state files)**: deliberately **not blessed** — the cooperative board is read-before-write, not a lock, so simultaneous writes can lose updates. Recorded as an explicit **revisit-when-parallel trigger** (adopt per-agent status files under `ai/shared/coordination/` when real parallelism is introduced) in design note §7 and `next-steps.md`. Concurrent writes to *distinct* role-scoped knowledge files remain fine.
 
@@ -305,13 +307,13 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### ai-customization.md moved to project root
 
 - **Problem**: Bootstrap required editing two files (AGENTS.md for workflow directory, `ai/ai-customization.md` for personalization) — one buried inside `ai/`. The bootstrap procedure had unnecessary friction (create `ai/`, copy file into it, exit, reload).
-- **Decision**: Move the customization file from `ai/ai-customization.md` to `ai-customization.md` at the project root (sibling of `AGENTS.md`). Move `**Global AI Workflow Directory**` from AGENTS.md TIER 1 into the customization file — AGENTS.md becomes entirely read-only.
+- **Decision**: Move the customization file from `ai/ai-customization.md` to `ai-customization.md` at the project root (sibling of `AGENTS.md`). Move `**Global AI Workflow Directory**` from AGENTS.md TIER CONFIGURATION into the customization file — AGENTS.md becomes entirely read-only.
 - **Why root**: Single location, visible at project root, simpler bootstrap. The AI does not hunt for the file — it checks one fixed location. If the old `ai/ai-customization.md` exists, the AI instructs the user to add the workflow directory and move it.
 - **No fallback scanning**: The AI does not scan directories. If the file is missing, it guides the user through first-time setup (show template, explain config, optionally suggest cloning the repo).
-- **Chicken-and-egg**: Resolved by adding Procedure A Step 0 (Customization Discovery) — the AI reads the customization file first, extracts the workflow directory, then resolves all derived TIER 1 paths.
-- **No impact on loading behavior**: All 10+ references to `**Project Customization File`** use the TIER 1 anchor — changing one line in TIER 1 propagates everywhere. Procedure A Steps 4/6/7b, Procedure E Step 2, etc. all auto-adapt.
-- **Stale references fixed**: Procedure E Step 2 "only `ai/` file" wording updated. Procedure F backup commands now include `ai-customization.md`.
-- **Files changed**: AGENTS.md (TIER 1, Procedures A/B/E/F), `ai-customization.md` (new at root), `docs/ai-customization.md` (template updated), `.gitignore`, README, docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, docs/compliance-guide.md, docs/personas/README.md.
+- **Chicken-and-egg**: Resolved by adding PROCEDURE LOAD-CONTEXT Step 0 (Customization Discovery) — the AI reads the customization file first, extracts the workflow directory, then resolves all derived TIER CONFIGURATION paths.
+- **No impact on loading behavior**: All 10+ references to `**Project Customization File`** use the TIER CONFIGURATION anchor — changing one line in TIER CONFIGURATION propagates everywhere. PROCEDURE LOAD-CONTEXT Steps 4/6/7b, PROCEDURE POST-COMPACTION-RECOVERY Step 2, etc. all auto-adapt.
+- **Stale references fixed**: PROCEDURE POST-COMPACTION-RECOVERY Step 2 "only `ai/` file" wording updated. PROCEDURE CREATE-BACKUP backup commands now include `ai-customization.md`.
+- **Files changed**: AGENTS.md (TIER CONFIGURATION, Procedures A/B/E/F), `ai-customization.md` (new at root), `docs/ai-customization.md` (template updated), `.gitignore`, README, docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, docs/compliance-guide.md, docs/personas/README.md.
 - **Bootstrap simplified**: Copy `docs/ai-customization.md` → `ai-customization.md`, edit one file, run "load context". No more `mkdir -p ai/`, no exit-and-reload.
 - **Merge**: the whole branch (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) squash-merged into master as one commit; feature branch deleted; **not pushed** to origin per user instruction. Final peer review review-04 APPROVED. Validator v4.4.
 
@@ -331,16 +333,16 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - Both follow existing policy structure and are listed in the validator POLICIES array.
 
 ### Policy expertise name resolution made flexible
-- **Problem**: Procedure A Step 6 said "scan the customization file to identify which policy files apply" but didn't specify how to map expertise names to filenames. AIs with `linux-system-admin` listed would not find `ai-policy-linux-system-admin.md`.
+- **Problem**: PROCEDURE LOAD-CONTEXT Step 6 said "scan the customization file to identify which policy files apply" but didn't specify how to map expertise names to filenames. AIs with `linux-system-admin` listed would not find `ai-policy-linux-system-admin.md`.
 - **Fix**: Step 6 now has an explicit two-try resolution: try `ai-policy-<name>.md` first, then `<name>.md` as fallback. Uses recursive `find` on **Global AI Policies Directory**.
 - **Why two-try**: Handles both the standard naming convention and future files without the `ai-policy-` prefix (e.g., `wrc.md`).
 
 ### Compliance directory references removed from procedures
-- **Problem**: The recursive find on **Project AI Policies Directory** already reaches `ai/policies/compliance/`, but separate mentions of **Project Compliance Policies Directory** in Steps 7b, C Step 4, and E Step 3 caused the AI to explicitly scan for and ask permission to read compliance files.
-- **Fix**: Removed all separate mentions. **Project Compliance Policies Directory** remains defined in TIER 1 (for directory existence checks) but is not independently scanned.
+- **Problem**: The recursive find on **Project AI Policies Directory** already reaches `ai/policies/compliance/`, but separate mentions of **Project Compliance Policies Directory** in the PROOF-OF-LOAD item, PROCEDURE WRITE-CHECKPOINT Step 4, and PROCEDURE POST-COMPACTION-RECOVERY Step 3 caused the AI to explicitly scan for and ask permission to read compliance files.
+- **Fix**: Removed all separate mentions. **Project Compliance Policies Directory** remains defined in TIER CONFIGURATION (for directory existence checks) but is not independently scanned.
 
 ### gitignore check for ai-customization.md added to Structural Audit
-- Procedure A Step 2 now checks `.gitignore` for `ai-customization.md` after the directory audit and informs the user if absent.
+- PROCEDURE LOAD-CONTEXT Step 2 now checks `.gitignore` for `ai-customization.md` after the directory audit and informs the user if absent.
 
 ### Sync scripts rewritten for auto-migration
 - `sync-agents-md.sh` and `sync-agents-md.ps1` now handle four cases at each target:
@@ -364,15 +366,15 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - All 8 peer reviews (review-04 through review-10) completed.
 
 ### Bootstrap audit/creation separation
-- Procedure A Step 2: changed from "Only propose `mkdir -p` for missing items" to "Only report missing items — do not create them."
-- Procedure B: split into separate audit (Step 1) and creation (Step 2) steps. Fixes AI getting stuck on silent `mkdir -p` output during load context.
+- PROCEDURE LOAD-CONTEXT Step 2: changed from "Only propose `mkdir -p` for missing items" to "Only report missing items — do not create them."
+- PROCEDURE BOOTSTRAP-PROJECT: split into separate audit (Step 1) and creation (Step 2) steps. Fixes AI getting stuck on silent `mkdir -p` output during load context.
 
-### Archive and backup exclusions added to TIER 2
+### Archive and backup exclusions added to TIER READ-FIRST-RULES
 - Archive File Exclusion: all find/ls commands skip `*.tar*` and `*.zip` files.
 - Backup Directory Exclusion: `~/.ai/backups/` is never scanned, listed, or read.
 
 ### Compliance directory references removed
-- All separate mentions of **Project Compliance Policies Directory** removed from Procedure A Step 7b, Procedure C Step 4, and Procedure E Step 3. The recursive find on the parent directory already covers it.
+- All separate mentions of **Project Compliance Policies Directory** removed from PROCEDURE LOAD-CONTEXT Step 7b, PROCEDURE WRITE-CHECKPOINT Step 4, and PROCEDURE POST-COMPACTION-RECOVERY Step 3. The recursive find on the parent directory already covers it.
 
 ### README diagram updated
 - Replaced the old wide two-column ASCII diagram with a compact side-by-side tree view using standard ASCII characters. Displays Simple-AI-Workflow vs Your Project with `-->` relationship arrow.
@@ -385,7 +387,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Outcome**: Policy created at `ai/policies/ai-policy-career-coaching.md` (93 lines). README, customization guide, slides, and validate-protocol.sh updated.
 
 ### Pre-existing missing directories created
-- **Decision**: Created `ai/plans/` and `ai/policies/compliance/` — both are listed as mandatory project directories in the TIER 1 config but were missing. Created during checkpoint validation to pass `validate-protocol.sh` checks.
+- **Decision**: Created `ai/plans/` and `ai/policies/compliance/` — both are listed as mandatory project directories in the TIER CONFIGURATION config but were missing. Created during checkpoint validation to pass `validate-protocol.sh` checks.
 - **Note**: `ai/plans/` had been flagged in next-steps.md as "Decide fate of untracked ai/plans/agents-md-context-reload-improvements.md" — the referenced file was never written to disk; creating the directory resolves the pending item.
 
 ## 2026-07-25 — Session CP-2026-07-25-02
@@ -404,9 +406,9 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ## 2026-07-28 — Ad hoc protocol-developer session (code review scope discipline)
 
-### PR review added as a trigger phrase for Procedure D
-- **Decision**: Changed the Procedure D header in `AGENTS.md` from `When User says "peer review" or "code review"` to `When User says "peer review", "code review", or "PR review"`.
-- **Rationale**: A real review session on a customer repo showed the AI treating "review this PR" as a plain diff read instead of invoking the full peer-reviewer role and report format. Users naturally say "PR review" as often as "code review". The validator only checks the string prefix `### PROCEDURE D: When User says "peer review"`, so this change does not break `validate-protocol.sh`.
+### PR review added as a trigger phrase for PROCEDURE RUN-PEER-REVIEW
+- **Decision**: Changed the PROCEDURE RUN-PEER-REVIEW header in `AGENTS.md` from `When User says "peer review" or "code review"` to `When User says "peer review", "code review", or "PR review"`.
+- **Rationale**: A real review session on a customer repo showed the AI treating "review this PR" as a plain diff read instead of invoking the full peer-reviewer role and report format. Users naturally say "PR review" as often as "code review". The validator only checks the string prefix `### PROCEDURE RUN-PEER-REVIEW: When the user says "peer review"`, so this change does not break `validate-protocol.sh`.
 
 ### Scope Discipline section added to ai-policy-code-review.md
 - **Decision**: Added a `## Scope Discipline: Do Not Narrow to the Diff` section, placed after the `Role: Strict Peer Reviewer` bullet list and before `Review Dimensions`.
@@ -415,16 +417,16 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Rule added**: Reviews must (1) review the diff, (2) examine the full file or module the diff touches for pre-existing issues, (3) check live or runtime state relevant to what the code represents when access and tooling allow (examples given for IaC, database, API, and application-config domains), (4) check observability signals for the touched component when available, and (5) state plainly what was not checked rather than omitting it silently. Deliberately written domain-neutral (not just network-specific) per user instruction not to make the rule too narrow.
 - **Companion change**: Added a `## Not Checked` section to the report format template (between `Suggestions` and `Verdict`), so item 5 above is enforced by the report structure itself, not left as an unverified aspiration.
 - **Style note**: New prose in both files avoids em dashes per the Humanized Output rule in `ai-policy-common.md`, even though older content in this repo predates that rule and still uses them.
-- **Files changed**: `AGENTS.md` (Procedure D header), `ai/policies/ai-policy-code-review.md` (Scope Discipline section, Activated-by line, Not Checked report section), this file.
+- **Files changed**: `AGENTS.md` (PROCEDURE RUN-PEER-REVIEW header), `ai/policies/ai-policy-code-review.md` (Scope Discipline section, Activated-by line, Not Checked report section), this file.
 
 ## 2026-07-28 — Self-review of the above changes, and fix cycle (review-01 / review-02)
 
 ### Peer review triggered on the AI's own just-edited protocol files
-- **Decision**: Ran Procedure D against `AGENTS.md` and `ai-policy-code-review.md` themselves, applying the newly-written Scope Discipline rule recursively to the files that introduced it.
-- **Finding (review-01, CHANGES REQUESTED)**: 2 Major issues, both the same root cause — "PR review" was added as a Procedure D trigger phrase, but no step anywhere defined the actual mechanics (fetch latest, resolve source/target branch, diff source against target) needed to perform one. The Iteration Protocol had the matching gap for a second review pass on a PR (no re-fetch step). 3 Minor issues: the "Role exits ... when a commit is made" condition doesn't clearly cover PR-only reviews where the AI never commits; the "Scoped" bullet didn't cross-reference the new Scope Discipline section; pre-existing em-dash counts (35 in `AGENTS.md`, 14 in the policy file) predate the Humanized Output rule and were left alone. 1 Suggestion: optional PR identifier in the report filename.
-- **Fix applied**: `AGENTS.md` Procedure D gained a new Step 2 ("Resolve the PR (PR review only)": fetch remote refs, resolve source/target branches, diff source against target before scanning), with steps renumbered 1–6. `ai-policy-code-review.md` Iteration Protocol now opens with a re-fetch step for the PR case. The Role exits bullet now covers "or, for a PR review, when the PR is merged or closed." The Scoped bullet now points at Scope Discipline. The Report Format now documents the optional `review-01_PR53929.md` filename convention.
+- **Decision**: Ran PROCEDURE RUN-PEER-REVIEW against `AGENTS.md` and `ai-policy-code-review.md` themselves, applying the newly-written Scope Discipline rule recursively to the files that introduced it.
+- **Finding (review-01, CHANGES REQUESTED)**: 2 Major issues, both the same root cause — "PR review" was added as a PROCEDURE RUN-PEER-REVIEW trigger phrase, but no step anywhere defined the actual mechanics (fetch latest, resolve source/target branch, diff source against target) needed to perform one. The Iteration Protocol had the matching gap for a second review pass on a PR (no re-fetch step). 3 Minor issues: the "Role exits ... when a commit is made" condition doesn't clearly cover PR-only reviews where the AI never commits; the "Scoped" bullet didn't cross-reference the new Scope Discipline section; pre-existing em-dash counts (35 in `AGENTS.md`, 14 in the policy file) predate the Humanized Output rule and were left alone. 1 Suggestion: optional PR identifier in the report filename.
+- **Fix applied**: `AGENTS.md` PROCEDURE RUN-PEER-REVIEW gained a new Step 2 ("Resolve the PR (PR review only)": fetch remote refs, resolve source/target branches, diff source against target before scanning), with steps renumbered 1–6. `ai-policy-code-review.md` Iteration Protocol now opens with a re-fetch step for the PR case. The Role exits bullet now covers "or, for a PR review, when the PR is merged or closed." The Scoped bullet now points at Scope Discipline. The Report Format now documents the optional `review-01_PR53929.md` filename convention.
 - **Outcome (review-02, APPROVED)**: All 5 findings from review-01 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed. No new issues found.
-- **Files changed**: `AGENTS.md` (Procedure D), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), `ai/code-review-reports/2026-07-28_review-01.md` and `2026-07-28_review-02.md` (new), this file.
+- **Files changed**: `AGENTS.md` (PROCEDURE RUN-PEER-REVIEW), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), `ai/code-review-reports/2026-07-28_review-01.md` and `2026-07-28_review-02.md` (new), this file.
 
 ## 2026-07-28 — Evidence-Based Reasoning (No-Assumption Rule) added to common policy
 
@@ -448,34 +450,34 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Outcome (review-04)**: All Major and addressable Minor findings from review-03 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed (with the new marker check now active and passing).
 - **Files changed**: `ai/policies/ai-policy-common.md` (markers, word-list, paragraph split), `support-files/validate-protocol.sh` (v4.5 → v4.6, new marker check in Step 6), `ai/code-review-reports/2026-07-28_review-03.md` and `2026-07-28_review-04.md` (new), this file.
 
-## 2026-07-28 — Documentation sync for today's Procedure D / policy changes, then commit
+## 2026-07-28 — Documentation sync for today's PROCEDURE RUN-PEER-REVIEW / policy changes, then commit
 
 ### README, workflow-guide, and slides synced; today's work committed
 - Updated `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and `docs/ai-customization-guide.md` to reflect today's changes (the `"PR review"` trigger phrase and mechanics, Scope Discipline, the `Not Checked` report section), since they already documented Peer Review Mode in detail and would otherwise go stale. `docs/protocol-validation-system.md` left untouched (high-level blueprint, doesn't enumerate specific checks). Validator re-run in full, 8/8 passed.
 - All of today's work (PR mechanics, Scope Discipline, Evidence-Based Reasoning rule, READ-ONLY marker fix + validator hardening, four review reports, this doc sync) committed to `master` in one commit at the user's explicit request.
 
-## 2026-07-28 — Procedure E hardened against silent skip (ad hoc protocol-developer session)
+## 2026-07-28 — PROCEDURE POST-COMPACTION-RECOVERY hardened against silent skip (ad hoc protocol-developer session)
 
 ### Removed the suppressed-report path; made the procedure a hard, unconditional gate
-- **Problem**: A real session skipped Procedure E entirely after an actual condensation event, going straight to the user's task. Root cause traced to the "quiet mode" carve-out: Step 2 and Step 5 both let the AI suppress the full reload report when the first message was a direct task request, down to a single one-line acknowledgment. That carve-out gave a plausible, protocol-sanctioned way to skip the visible reload, and the AI used it.
+- **Problem**: A real session skipped PROCEDURE POST-COMPACTION-RECOVERY entirely after an actual condensation event, going straight to the user's task. Root cause traced to the "quiet mode" carve-out: Step 2 and Step 5 both let the AI suppress the full reload report when the first message was a direct task request, down to a single one-line acknowledgment. That carve-out gave a plausible, protocol-sanctioned way to skip the visible reload, and the AI used it.
 - **Decision**: Removed the suppression branch entirely.
   1. Step 2 (Trigger): now states there is no silent or suppressed path, regardless of what the first message contains.
   2. Step 5 (REPORT): the full confirmation block is now mandatory as the literal first content of every response after condensation, including direct task requests. The old one-line `[Reloading key files into context... done. Proceeding with task.]` shortcut was deleted.
   3. Added a blunt precondition line at the top of the procedure naming the exact failure mode ("an AI reasoned that a detailed condensation summary already provided enough context and went straight to the task") so the temptation is called out explicitly rather than left implicit.
 - **Rationale**: A well-structured condensation summary can make the reload feel unnecessary in the moment, that is precisely the failure this session hit. Removing the optional-suppression path removes the mechanism the AI used to rationalize skipping it. This does not make skipping impossible, but it removes the protocol-sanctioned shortcut.
-- **Validator impact**: None. `support-files/validate-protocol.sh` only checks the `### PROCEDURE E: Post-Condensation Recovery` header string, which was not touched. Re-run in full after the change: 8/8 passed.
+- **Validator impact**: None. `support-files/validate-protocol.sh` only checks the `### PROCEDURE POST-COMPACTION-RECOVERY: Post-Condensation Recovery` header string, which was not touched. Re-run in full after the change: 8/8 passed.
 - **Peer review**: review-05 (CHANGES REQUESTED, 2 Minor) flagged new-prose em dashes in the added text, against the Humanized Output rule in `ai-policy-common.md`. Fixed (colon and parentheses substituted). review-06 (APPROVED).
-- **Files changed**: `AGENTS.md` (Procedure E), `ai/code-review-reports/2026-07-28_13-10_review-05.md` and `2026-07-28_13-12_review-06.md` (new), this file.
+- **Files changed**: `AGENTS.md` (PROCEDURE POST-COMPACTION-RECOVERY), `ai/code-review-reports/2026-07-28_13-10_review-05.md` and `2026-07-28_13-12_review-06.md` (new), this file.
 - **Docs check**: `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md` checked for stale references to the removed suppression behavior via targeted grep — none found, so no doc updates were required.
 
 ## 2026-07-28 — Stable-title identifier, title-only validator anchor, and per-tool external reload trigger
 
-### Procedure E hardening continued: identify by title, not by letter
-- **Problem raised by the user**: Tying anything external to "Procedure E" is fragile because the letter is a positional label that can be renumbered during future development.
+### PROCEDURE POST-COMPACTION-RECOVERY hardening continued: identify by title, not by letter
+- **Problem raised by the user**: Tying anything external to "PROCEDURE POST-COMPACTION-RECOVERY" is fragile because the letter is a positional label that can be renumbered during future development.
 - **Decision**: The descriptive title "Post-Condensation Recovery" is now the **stable external identifier** and a maintained contract. The letter may change freely; the title must be preserved so out-of-repo triggers keep resolving to it. Recorded inline in `AGENTS.md` as a **Stable identifier** note directly under the procedure header, and honoured everywhere external (memory trigger, setup guide, docs) by referencing the title plus a one-line function description, never the letter.
-- **Validator change**: `support-files/validate-protocol.sh` anchor changed from `### PROCEDURE E: Post-Condensation Recovery` to the title-only string `Post-Condensation Recovery`, so renumbering the letter no longer breaks validation. Validator version unchanged (v4.6); the check count stays 8.
+- **Validator change**: `support-files/validate-protocol.sh` anchor changed from `### PROCEDURE POST-COMPACTION-RECOVERY: Post-Condensation Recovery` to the title-only string `Post-Condensation Recovery`, so renumbering the letter no longer breaks validation. Validator version unchanged (v4.6); the check count stays 8.
 
-### Procedure E: first-cognitive-act framing, named sentinel, honest-ceiling note
+### PROCEDURE POST-COMPACTION-RECOVERY: first-cognitive-act framing, named sentinel, honest-ceiling note
 - **Trigger** reworded as the model's first cognitive act (a crisp boolean check on the harness summary headings) before reading the user's first message.
 - **Sentinel**: the existing Step 3 announcement `[Reloading key files into context...]` is now formally the mandatory loud-failure sentinel and must be the literal first line of the first post-condensation reply. Its absence is the visible signal that the procedure was skipped. This also fixed the prior "mandatory every response" ambiguity (it is the first reply after condensation, not every turn for the rest of the session).
 - **Honest ceiling** note added at the end of the procedure: this is a self-executed rule, `AGENTS.md` may not survive condensation, so the protocol cannot guarantee its own re-arming. The accepted target is high reliability via a loud sentinel plus a per-tool external trigger plus the user's own spot check, explicitly not a structural guarantee.
@@ -485,14 +487,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **User's own layer**: For this user (GitHub Copilot), the trigger lives in Copilot user memory, physically at `%APPDATA%\Code\User\globalStorage\github.copilot-chat\memory-tool\memories\post-condensation-reload-trigger.md`. It identifies the procedure by title and defers to `AGENTS.md` for the steps. The older overlapping note in the user's `tdd-and-review-workflow.md` memory was trimmed to a pointer, and its now-wrong "suppress the report" guidance was removed.
 - **Community guide**: Added `docs/post-condensation-reload-trigger-setup.md` — a straightforward, assistant-agnostic guide with one generic trigger block and a per-assistant placement table (GitHub Copilot, Claude Code, claude.ai, ChatGPT, KiloCode, Kimi, Gemini CLI/Code Assist, AntiGravity, plus a generic fallback), a plain-language explanation of why the note is a necessary evil, and the human backstop. Per-assistant paths are given with a caveat that names/paths drift and the user should consult their assistant's docs.
 - **Human backstop**: Documented across the setup guide, `docs/workflow-guide.md` §7, and `README.md`: after any summary, ask "did you run the post-condensation reload?" before trusting the next answer. Framed as the acknowledged final safety net, not a failure.
-- **Docs updated**: `README.md` (delabeled the two context-rot table cells from "Procedure E" to the title, added a habit bullet, a Session Resume bullet linking the setup guide, and a Docs-and-Slides index entry for the new guide), `docs/workflow-guide.md` (§7 new subsection), `docs/simple-ai-workflow-slides.md` (honest-ceiling caveat on the Post-Condensation Recovery defence bullet plus a reload-backstop habit; the live Google Slides deck is already behind the markdown and will be reconciled separately, not this session), this file.
+- **Docs updated**: `README.md` (delabeled the two context-rot table cells from "PROCEDURE POST-COMPACTION-RECOVERY" to the title, added a habit bullet, a Session Resume bullet linking the setup guide, and a Docs-and-Slides index entry for the new guide), `docs/workflow-guide.md` (§7 new subsection), `docs/simple-ai-workflow-slides.md` (honest-ceiling caveat on the Post-Condensation Recovery defence bullet plus a reload-backstop habit; the live Google Slides deck is already behind the markdown and will be reconciled separately, not this session), this file.
 
-## 2026-07-31 — Procedure E renamed to Post-Compaction Recovery and simplified to an additive reload
+## 2026-07-31 — PROCEDURE POST-COMPACTION-RECOVERY renamed to Post-Compaction Recovery and simplified to an additive reload
 
 ### Title change: "Post-Condensation Recovery" → "Post-Compaction Recovery"
-- **Problem (vocabulary mismatch)**: The harness labels a compacted thread "Compacted conversation", while the procedure was named after "condensation". There was no lexical bridge, so the AI could fail to recognise the trigger moment. The word "condensation" also collides with Procedure C Step 2 "Log Condensation (The Sliding Horizon Shield)", an unrelated `progress.md`-archiving feature.
+- **Problem (vocabulary mismatch)**: The harness labels a compacted thread "Compacted conversation", while the procedure was named after "condensation". There was no lexical bridge, so the AI could fail to recognise the trigger moment. The word "condensation" also collides with PROCEDURE WRITE-CHECKPOINT Step 2 "Log Condensation (The Sliding Horizon Shield)", an unrelated `progress.md`-archiving feature.
 - **Decision**: Renamed the procedure title to **Post-Compaction Recovery** to match the harness term. This **updates, not contradicts**, the 2026-07-28 "identify by title, not by letter" decision: the title is still the stable external identifier and still a maintained contract, so the rename had to be applied atomically across `AGENTS.md`, the validator anchor, the external memory trigger, the setup guide, and all docs, or the external triggers stop resolving. The letter (E) remains free to renumber.
-- **Not renamed**: Procedure C Step 2 "Log Condensation / Sliding Horizon Shield" was deliberately left untouched — it is a different concept (log archiving, not conversation recovery).
+- **Not renamed**: PROCEDURE WRITE-CHECKPOINT Step 2 "Log Condensation / Sliding Horizon Shield" was deliberately left untouched — it is a different concept (log archiving, not conversation recovery).
 
 ### Body simplified and made additive (non-destructive)
 - **Problem (harmful voluntary runs)**: The prior body carried conditional carve-outs, a first-cognitive-act boolean, a precedence essay, a multi-bullet report, and an honest-ceiling essay. It was over-complicated, and running it without a real compaction risked overwriting live context.
@@ -501,8 +503,8 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Dropped**: the 2026-07-28 anti-skip hardening prose (suppression-path removal narrative, first-cognitive-act boolean, honest-ceiling essay). The user judged the silent-skip risk acceptable given the loud first-line sentinel and the external trigger, and preferred a short, readable procedure.
 - **Sentinel retained**: `[Reloading key files into context...]` is still the mandatory literal first line of the first reply after a compaction.
 
-### TIER 1 anchors made bold everywhere
-- **Decision**: Every reference to a TIER 1 path variable in the procedure and touched policy/doc text now uses the bold anchor form (**Project Customization File**, **Global AI Settings Directory**, **Project Coordination File**, etc.) so the AI cannot miss them.
+### TIER CONFIGURATION anchors made bold everywhere
+- **Decision**: Every reference to a TIER CONFIGURATION path variable in the procedure and touched policy/doc text now uses the bold anchor form (**Project Customization File**, **Global AI Settings Directory**, **Project Coordination File**, etc.) so the AI cannot miss them.
 
 ### Files renamed
 - `docs/post-condensation-reload-trigger-setup.md` → `docs/post-compaction-reload-trigger-setup.md` (via `git mv`, history preserved), contents retitled and the generic trigger block rewritten to key on the "Compacted conversation" signal with additive-safe framing.
@@ -512,14 +514,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - `support-files/validate-protocol.sh` anchor changed from the title string `Post-Condensation Recovery` to `Post-Compaction Recovery`. Version unchanged (v4.6), check count stays 8 (precedent: 2026-07-28 anchor change kept the version). Re-run after the change to confirm 8/8.
 
 ### Files changed
-- `AGENTS.md` (TIER 2 Context Protection + Session Resume, Procedure C Steps 1 and 4, Procedure E fully rewritten), `support-files/validate-protocol.sh`, `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-codebase-examination.md`, `docs/codebase-examination-guide.md`, `docs/workflow-guide.md` (§7), `README.md`, `docs/simple-ai-workflow-slides.md`, the two renamed files above, this file.
+- `AGENTS.md` (TIER READ-FIRST-RULES Context Protection + Session Resume, PROCEDURE WRITE-CHECKPOINT Steps 1 and 4, PROCEDURE POST-COMPACTION-RECOVERY fully rewritten), `support-files/validate-protocol.sh`, `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-codebase-examination.md`, `docs/codebase-examination-guide.md`, `docs/workflow-guide.md` (§7), `README.md`, `docs/simple-ai-workflow-slides.md`, the two renamed files above, this file.
 - **Commits**: 58f22a4 (rename + simplify, 11 files), 4465a54 (Proof-of-Load Step 7(a) widened), 36de4b6 (PreCompact hook + concrete signals + memory trigger deleted + setup guide update). See the following entry for the full record of the second and third commits.
 
 ## 2026-07-31 — Concrete compaction signals, PreCompact hook, and doc updates
 
 ### Compaction signals made syntactically detectable
 - **Problem**: AGENTS.md trigger language was vague ("tell-tale signs"); the AI had to reason about the provenance of a session summary, which led to missed detections on two documented occasions.
-- **Decision**: Replace vague language with three concrete syntactic signals in both TIER 2 Session Resume and Procedure E Trigger: (1) the literal text `"Compacted conversation"` in the transcript; (2) a `<conversation-summary>` XML block in the active context; (3) the session opening with a machine-generated multi-section summary the AI did not write.
+- **Decision**: Replace vague language with three concrete syntactic signals in both TIER READ-FIRST-RULES Session Resume and PROCEDURE POST-COMPACTION-RECOVERY Trigger: (1) the literal text `"Compacted conversation"` in the transcript; (2) a `<conversation-summary>` XML block in the active context; (3) the session opening with a machine-generated multi-section summary the AI did not write.
 - **Rationale**: Syntactic pattern matching is more reliable than provenance inference. The `<conversation-summary>` XML tag is a structural Copilot marker that cannot appear in normal conversation.
 
 ### User memory trigger file deleted
@@ -535,7 +537,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Decision**: Changed to "report each one explicitly, whatever sections the file contains" for full coverage. Commit 4465a54.
 
 ### Stable identifier note simplified
-- **Decision**: Simplified the Procedure E "Stable identifier" paragraph to reference the validator anchor, setup guide, and hook configurations — removing the stale mention of the deleted external trigger file.
+- **Decision**: Simplified the PROCEDURE POST-COMPACTION-RECOVERY "Stable identifier" paragraph to reference the validator anchor, setup guide, and hook configurations — removing the stale mention of the deleted external trigger file.
 
 ### Docs and notes
 - `README.md`: two stale "memory note" references updated to mention the PreCompact hook
@@ -554,7 +556,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Policy files must not use procedure letters or step numbers
 
-- **Decision**: Policy files (`ai/policies/*.md`) must not reference procedure letters (e.g. "Procedure A", "Procedure C") or step numbers (e.g. "Step 4"). These are internal `AGENTS.md` labels that silently break if procedures are renumbered or renamed.
+- **Decision**: Policy files (`ai/policies/*.md`) must not reference procedure letters or step numbers (e.g. "Step 4"), because those are positional internal `AGENTS.md` labels that silently break if procedures are renumbered or renamed. (Updated 2026-10-06: procedures now have stable kebab names, so a policy may reference a procedure by its canonical name, for example PROCEDURE RUN-PEER-REVIEW; letters and step numbers remain banned.)
 - **Rule going forward**: All references to `AGENTS.md` procedures or steps in policy files must use plain descriptive phrases: "the `AGENTS.md` bootstrap procedure", "the checkpoint knowledge update steps in `AGENTS.md`", etc. Using the procedure's own stable title (e.g. "Post-Compaction Recovery") is fine — it is a maintained external identifier, not a positional label.
 - **Files changed**: `ai/policies/ai-policy-common.md` (9 occurrences fixed), this file.
 - **Commit**: `e82729c` on master. Validator v4.6, 8/8 pass.
@@ -566,15 +568,15 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### State files moved to dedicated `ai/state/` directory
 
 - **Problem**: The three state files (`progress.md`, `context.md`, `next-steps.md`) were the only files directly under `ai/` — everything else was organized into subdirectories (`notes/`, `plans/`, `policies/`, `shared/`, etc.). The flat placement was a leftover from the earliest days of the protocol.
-- **Decision**: Move the three state files into a dedicated directory `ai/state/` (user's choice over `ai/state-files/`). The TIER 1 anchor **Project AI State Files** keeps its name but now resolves to the directory `ai/state/` instead of a three-file list. This keeps the 14+ anchor usages in `AGENTS.md` and policies unchanged while changing the single source-of-truth path in TIER 1.
+- **Decision**: Move the three state files into a dedicated directory `ai/state/` (user's choice over `ai/state-files/`). The TIER CONFIGURATION anchor **Project AI State Files** keeps its name but now resolves to the directory `ai/state/` instead of a three-file list. This keeps the 14+ anchor usages in `AGENTS.md` and policies unchanged while changing the single source-of-truth path in TIER CONFIGURATION.
 - **Guardrails added** (user requirement, in response to weak models prepending entries and bloating state files):
   1. **Append-Only Rule**: all updates must be appended at the tail; never insert/edit at the top. Enforced via a new bullet in `ai-policy-common.md` State File Ownership Protocol and an `STATE-FILE: APPEND-ONLY` HTML comment header at the top of each state file.
   2. **Scope Rule**: state files contain summaries only (done / pending / current context); no implementation details, runbooks, commands, or knowledge content. Those belong in knowledge directories. Enforced via a new bullet in `ai-policy-common.md` and an `STATE-FILE: KEEP LEAN` HTML comment header.
 - **Directory name rationale**: `ai/state/` follows the single-word subdirectory convention (`notes/`, `plans/`, `policies/`). The `ai/` parent already supplies the namespace, so `state-files/` would be redundant; no other subdirectory uses a `-files` suffix.
-- **Anchor name kept**: `**Project AI State Files**` stays (not renamed to "Directory") because it is used 14+ times across the protocol as a conceptual term. Only its TIER 1 resolution changed to the directory path. This minimizes protocol text churn.
+- **Anchor name kept**: `**Project AI State Files**` stays (not renamed to "Directory") because it is used 14+ times across the protocol as a conceptual term. Only its TIER CONFIGURATION resolution changed to the directory path. This minimizes protocol text churn.
 - **Historical content preserved**: existing entries inside the state files and historical records in this file keep their old-era paths — they accurately describe where files were when written.
 - **Migration mechanics**: this repo uses `git mv` (state files are git-tracked here). User projects get migration via `sync-agents-md.sh`/`sync-agents-md.ps1`, which create `ai/state/` if absent, move any state files found at `ai/*.md`, and append a `[MIGRATION-YYYY-MM-DD]` notice to each moved file. Migration is idempotent: if both old and new exist, it warns and skips.
-- **Files changed**: `AGENTS.md` (TIER 1 anchor, Procedure A Step 2 structural audit + Step 7(d), Procedure B Step 4, Procedure C Steps 1–2, Procedure E), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
+- **Files changed**: `AGENTS.md` (TIER CONFIGURATION anchor, PROCEDURE LOAD-CONTEXT Step 2 structural audit + Step 7(d), PROCEDURE BOOTSTRAP-PROJECT Step 4, PROCEDURE WRITE-CHECKPOINT Steps 1–2, PROCEDURE POST-COMPACTION-RECOVERY), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
 - **Branch**: `feature/state-files-directory` — not merged to master (user handles merge/push).
 
 ---
@@ -595,8 +597,8 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Policy discovery in Project AI Policies Directory is intentional; workflow-repo over-load is an accepted artifact
 
-- **Problem**: During Post-Compaction Recovery (Procedure E Step 5), the AI fully loaded all 16 policies in `ai/policies/` instead of only the policies referenced in `ai-customization.md` (Active Expertise: `meta`). The user flagged this as unwanted context bloat and initially suspected a protocol bug.
-- **Investigation**: Four AGENTS.md clauses (Procedure A Step 6 line 105, Step 7(b) line 110, Procedure C Step 4 line 154, Procedure E Step 5 line 182) instruct the AI to discover and fully load every `.md` in **Project AI Policies Directory**. The design intent is custom-policy discovery: in an ordinary user project, `ai/policies/` holds user-created custom policies that exist with the intent of being loaded.
+- **Problem**: During Post-Compaction Recovery (PROCEDURE POST-COMPACTION-RECOVERY Step 5), the AI fully loaded all 16 policies in `ai/policies/` instead of only the policies referenced in `ai-customization.md` (Active Expertise: `meta`). The user flagged this as unwanted context bloat and initially suspected a protocol bug.
+- **Investigation**: Four AGENTS.md clauses (PROCEDURE LOAD-CONTEXT Step 6 line 105, Step 7(b) line 110, PROCEDURE WRITE-CHECKPOINT Step 4 line 154, PROCEDURE POST-COMPACTION-RECOVERY Step 5 line 182) instruct the AI to discover and fully load every `.md` in **Project AI Policies Directory**. The design intent is custom-policy discovery: in an ordinary user project, `ai/policies/` holds user-created custom policies that exist with the intent of being loaded.
 - **Decision**: The behavior is **correct and will not be changed**. No fix applied.
 - **Rationale**: The over-load is unique to this repository, where `ai/policies/` doubles as the **Global AI Policies Directory** (the 16-policy library) AND the project's custom-policy directory. In any ordinary project directory, `ai/policies/` contains only user-authored custom policies, so loading every file found there is exactly right. Trade-off accepted: working as a protocol developer in the workflow repo means the full policy library is loaded at boot/checkpoint/post-compaction. Do not re-diagnose this as a bug.
 - **Future change note**: If context savings are ever needed for the workflow repo itself, the fix would be to activate the library's policies via the customization file's Active Expertise (referenced-only loading) rather than filesystem discovery — but that would break the intended custom-policy auto-discovery behavior for ordinary projects. Left as-is by explicit user decision.
@@ -611,7 +613,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Problem**: The 2026-08-09 decision declared the workflow-repo over-load (all 16 policies loaded at boot and post-compaction) an accepted artifact and instructed "do not re-diagnose this as a bug". The user later decided the constant full-library load would keep bothering them and chose to fix it after all, knowingly reversing the earlier stance for this repository.
 - **Decision (current, authoritative)**: During context loading and Post-Compaction Recovery, Protocol Developer Mode (PWD matches **Global AI Workflow Directory**) loads ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. The recursive scan of the **Project AI Policies Directory** is skipped — that directory is the protocol's full distribution tree, not the working policy set.
 - **Relationship to the 2026-08-09 decision**: The earlier decision remains correct for ordinary user projects — there, `ai/policies/` holds user-created custom policies and filesystem auto-discovery is the intended behavior. The new decision narrows the exception to operating as a protocol developer inside the workflow repo. No part of the ordinary-project behavior changed.
-- **Implementation**: Commit `b93741c` added the "Exception — Protocol Developer Mode" clause at all 4 policy-loading locations in `AGENTS.md` (TIER 2 Protocol Developer Mode bullet, Procedure A Step 6, Procedure C Step 4, Procedure E Step 5). Peer review round-01 CHANGES REQUESTED (Procedure C Step 4 missing) → fixed → round-02 APPROVED. Validator v4.6, 8/8 pass.
+- **Implementation**: Commit `b93741c` added the "Exception — Protocol Developer Mode" clause at all 4 policy-loading locations in `AGENTS.md` (TIER READ-FIRST-RULES Protocol Developer Mode bullet, PROCEDURE LOAD-CONTEXT Step 6, PROCEDURE WRITE-CHECKPOINT Step 4, PROCEDURE POST-COMPACTION-RECOVERY Step 5). Peer review round-01 CHANGES REQUESTED (PROCEDURE WRITE-CHECKPOINT Step 4 missing) → fixed → round-02 APPROVED. Validator v4.6, 8/8 pass.
 - **Not changed**: `ai-policy-common.md` policy-loading clauses keep the full-load behavior for referenced and discovered custom policies; the exception is scoped to Protocol Developer Mode and lives in `AGENTS.md`. If the ordinary-project path ever needs the same restriction, that is a separate decision.
 
 ---
@@ -627,7 +629,7 @@ Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a us
 
 ### Stream B: state-file model corrected and made lean
 - **Conceptual fix**: the prior "State File Append-Only Rule" implied all three state files are append-only history. That is wrong for next-steps.md (a forward-only backlog whose items are deleted when done) and for context.md (whose Current Status dashboard is edited in place). The single rule was replaced in `ai-policy-common.md` with a per-file model: next-steps.md is forward-only plus delete-on-done; progress.md is append-only history plus horizon-shield archiving; context.md is the present (Current Status in place plus appended history). Added a State File Brevity Rule (one to two lines per item, no sub-bullets, transcripts, or rationale) and a Bloat and Order Check (report and propose before rewriting a bloated or out-of-order state file).
-- **Gap closed**: the protocol had a horizon shield for progress.md and context.md but no brevity governance for next-steps.md, and "pop the completed task" was soft enough that sessions left ticked items in place. `AGENTS.md` Procedure C Step 1 now says delete-on-done explicitly (no ticked or struck leftovers) with the brevity gate; Step 2 gained a next-steps brevity bullet.
+- **Gap closed**: the protocol had a horizon shield for progress.md and context.md but no brevity governance for next-steps.md, and "pop the completed task" was soft enough that sessions left ticked items in place. `AGENTS.md` PROCEDURE WRITE-CHECKPOINT Step 1 now says delete-on-done explicitly (no ticked or struck leftovers) with the brevity gate; Step 2 gained a next-steps brevity bullet.
 - **Ordering model** (user's FIFO framing, refined): insertion is always append-at-tail (oldest top, newest bottom); deletion removes the completed item wherever it sits (work oldest-first by default, not a strict in-order queue).
 - **State-file headers** reworded per file to state the file's nature, chronological order, brevity, and "not a runbook, plan, or ledger".
 - **context.md reordered** to chronological order (it was a descending block followed by an ascending tail block, with multiple "Latest Checkpoint" headings). Now oldest at top, newest at bottom; only the newest entry keeps the "Latest Checkpoint" label. Entry bodies preserved verbatim.
@@ -658,7 +660,7 @@ Driven by observations from another session (a pasted spec). Added two subsectio
 
 ---
 
-## 2026-08-25: Full-file-read enforcement raised to a TIER 2 mandate
+## 2026-08-25: Full-file-read enforcement raised to a TIER READ-FIRST-RULES mandate
 
 Driven by a real violation in a production session (Claude Sonnet 4.6 skipped full reads of the customization file and a policy at load context) and the user's insistence that the rule be active everywhere. Branch `feature/full-file-read-enforcement`, not merged.
 
@@ -666,13 +668,13 @@ Driven by a real violation in a production session (Claude Sonnet 4.6 skipped fu
 - The read-fully rule lived only in Evidence-Based Reasoning (common policy), one rule among many. It covered boot reads through Proof-of-Load but not mid-task investigation reads, which are invisible to the user and the hardest to enforce. The user cannot watch every behind-the-scenes read.
 
 ### Decision
-- **TIER 2 mandate**: added a **Full File Reads (No Partial Reads)** MANDATORY ACTION to `AGENTS.md`. TIER 2 fires unconditionally across all procedures, so the rule is active at boot, at load context, at Post-Compaction Recovery, and mid-work. Every file read for comprehension is read line 1 to EOF. The only exception is bulk data being searched (logs, dumps, large JSON or CSV), sliced by filter. A file already in context is re-read fresh from disk when a task needs it, since it may have changed.
+- **TIER READ-FIRST-RULES mandate**: added a **Full File Reads (No Partial Reads)** MANDATORY ACTION to `AGENTS.md`. TIER READ-FIRST-RULES fires unconditionally across all procedures, so the rule is active at boot, at load context, at Post-Compaction Recovery, and mid-work. Every file read for comprehension is read line 1 to EOF. The only exception is bulk data being searched (logs, dumps, large JSON or CSV), sliced by filter. A file already in context is re-read fresh from disk when a task needs it, since it may have changed.
 - **Observable proof**: when a read drives a decision or change, the AI states the file and its line count, so a silent partial read becomes catchable after the fact. Proof-of-Load (a) and (b) now require line counts for the customization file and every settings, knowledge, and policy file loaded at boot.
 - **Common-policy detail**: Evidence-Based Reasoning point 5 strengthened with the everywhere clause, the re-read-from-disk clause, and the observable-proof requirement.
 - **Validator**: added a `Full File Reads` anchor check to guard the mandate against removal. Version unchanged (v4.6).
 
 ### Why this shape, not the raw proposal
-- A production-session AI proposed a silent self-check step in Procedure A. Two parts rejected: (1) a silent self-check by the same executor carries the same skip risk as the rule it checks, so the lever is observable output, not a self-audit; (2) Procedure A is boot-only, but the pain is mid-work, so TIER 2 (always-on) is the correct home. Honest limit recorded: a stated line count is still self-reported and not a hard guarantee; a true external check belongs to the pending Habit Hooks work.
+- A production-session AI proposed a silent self-check step in PROCEDURE LOAD-CONTEXT. Two parts rejected: (1) a silent self-check by the same executor carries the same skip risk as the rule it checks, so the lever is observable output, not a self-audit; (2) PROCEDURE LOAD-CONTEXT is boot-only, but the pain is mid-work, so TIER READ-FIRST-RULES (always-on) is the correct home. Honest limit recorded: a stated line count is still self-reported and not a hard guarantee; a true external check belongs to the pending Habit Hooks work.
 
 ### Non-Negotiables index (same branch)
 - Added a short **Non-Negotiables** block (6 items) at the top of `ai-policy-common.md` as an at-a-glance index of the highest-cost rules: full reads, no truncated evidence, evidence before assertion, approval before side effects, secrets check, protected-branch approval. Rationale: short numbered prominence helps salience for the load-bearing rules, and it is capped at 6 to avoid list-bombing. It indexes rules that already have their own detailed sections, so no separate validator anchor was added. This addresses the user's "rules buried in long prose" concern, with the caveat that formatting aids salience but does not fix execution; placement, observable proof, and external checks remain the real levers.
@@ -703,7 +705,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ## 2026-08-25: Root-only AGENTS.md/ai-customization.md + markdown lint tooling
 
-- **Root-only rule strengthened**: extended the PWD-Only Scope mandate in `AGENTS.md` TIER 2 to honor `AGENTS.md` and `ai-customization.md` only from the project root, and ignore any file with either name elsewhere in the directory tree. Closes a gap where `ai-customization.md` was checked at the root (Procedure A Step 0) but never explicitly ignored in other subdirectories.
+- **Root-only rule strengthened**: extended the PWD-Only Scope mandate in `AGENTS.md` TIER READ-FIRST-RULES to honor `AGENTS.md` and `ai-customization.md` only from the project root, and ignore any file with either name elsewhere in the directory tree. Closes a gap where `ai-customization.md` was checked at the root (PROCEDURE LOAD-CONTEXT Step 0) but never explicitly ignored in other subdirectories.
 - **Markdown linting**: installed markdownlint-cli2 (Node v24.19.0, npm v12.0.2), added `.markdownlint-cli2.jsonc` disabling style-noise rules and keeping real checks, fixed 14 whitespace issues across `AGENTS.md` and policy files, and recorded markdownlint-cli2 in the global settings tools list.
 
 ---
@@ -737,17 +739,17 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ## 2026-08-31: Evidence-based investigation made default behavior (two-layer placement)
 
 ### Problem: evidence-based investigation not default
-- Full File Reads works because it is a TIER 2 MANDATORY ACTION in AGENTS.md, always-on and prominent. Evidence-Based Reasoning did not: it was only a long 6-point `###` subsection buried in ai-policy-common.md under Operational Standards, so the AI still guessed, assumed, and made things up. The user wants no-guessing to be the default without a reminder.
+- Full File Reads works because it is a TIER READ-FIRST-RULES MANDATORY ACTION in AGENTS.md, always-on and prominent. Evidence-Based Reasoning did not: it was only a long 6-point `###` subsection buried in ai-policy-common.md under Operational Standards, so the AI still guessed, assumed, and made things up. The user wants no-guessing to be the default without a reminder.
 
 ### Decision: two-layer placement
-1. **Two-layer placement.** AGENTS.md TIER 2 gets a short always-on instruction: investigate before you assert; no claim without a source; no assumptions or guesses. The detail lives in ai-policy-common.md as the top Non-Negotiable (a one-line index pointer) plus a dedicated `## Investigation Contract` section; the AGENTS.md instruction points at that `Investigation Contract` heading. This keeps TIER 2 lean (one line, not a paragraph) and puts the how-to detail in the policy file.
-2. **Principle separate from mechanics.** Full reads and no-truncation stay in the Full File Reads TIER 2 mandate; the contract references that mandate instead of restating it.
+1. **Two-layer placement.** AGENTS.md TIER READ-FIRST-RULES gets a short always-on instruction: investigate before you assert; no claim without a source; no assumptions or guesses. The detail lives in ai-policy-common.md as the top Non-Negotiable (a one-line index pointer) plus a dedicated `## Investigation Contract` section; the AGENTS.md instruction points at that `Investigation Contract` heading. This keeps TIER READ-FIRST-RULES lean (one line, not a paragraph) and puts the how-to detail in the policy file.
+2. **Principle separate from mechanics.** Full reads and no-truncation stay in the Full File Reads TIER READ-FIRST-RULES mandate; the contract references that mandate instead of restating it.
 3. **Scope by relationship, not by category.** Wide-scoping is defined as the subject plus its cone of influence (what flows in, out, or through it, and what it touches), with the boundary set from the AI's own domain understanding, plus the self-check "what would break, move, or matter if this changed." This is domain-adaptive (infra, code, architecture, data) without enumerating scenarios, so the AI reasons instead of following a finite checklist.
 4. **Forcing function.** Every claim names its source, or it appears as "not verified" with a question. This binds the output, so an unsourced claim cannot be produced without a visible marker.
-5. **Re-sharpened Full File Reads** in AGENTS.md TIER 2 (was a long paragraph) to the same crisp template, keeping the "Full File Reads" validator anchor.
+5. **Re-sharpened Full File Reads** in AGENTS.md TIER READ-FIRST-RULES (was a long paragraph) to the same crisp template, keeping the "Full File Reads" validator anchor.
 
 ### Files changed in this change
-- `AGENTS.md` (TIER 2: Full File Reads re-sharpened; new Evidence-Based Investigation instruction)
+- `AGENTS.md` (TIER READ-FIRST-RULES: Full File Reads re-sharpened; new Evidence-Based Investigation instruction)
 - `ai/policies/ai-policy-common.md` (Evidence-Based Investigation as top Non-Negotiable; old Evidence-Based Reasoning section removed; Pre-Work Gate reference updated)
 - `ai/shared/project-knowledge/protocol-decisions.md` (this entry)
 
@@ -761,18 +763,18 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Decision: routing principle
 - AGENTS.md is a router, not a catalog. Do not apply the two-layer pattern (short AGENTS.md instruction plus policy detail) to every rule; it is only for universal always-on mechanics.
-- Three activation mechanisms keep AGENTS.md thin: TIER 2 = small curated set of universal always-on mechanics; TIER 3 = one-line triggered procedures that load a self-contained policy; Active Expertise = persistent domain behavior loaded at boot via Procedure A Step 6.
-- Placement test: applies to every task and is costly to break -> TIER 2 (rare); behavior for a specific situation with steps -> its own policy reached by a trigger phrase or Active Expertise; explicitly invoked procedure -> TIER 3.
-- Reason: otherwise every new policy feature would need a TIER 2 pointer and AGENTS.md would grow; the routing mechanisms already do the wiring.
+- Three activation mechanisms keep AGENTS.md thin: TIER READ-FIRST-RULES = small curated set of universal always-on mechanics; TIER TRIGGERED-PROCEDURES = one-line triggered procedures that load a self-contained policy; Active Expertise = persistent domain behavior loaded at boot via PROCEDURE LOAD-CONTEXT Step 6.
+- Placement test: applies to every task and is costly to break -> TIER READ-FIRST-RULES (rare); behavior for a specific situation with steps -> its own policy reached by a trigger phrase or Active Expertise; explicitly invoked procedure -> TIER TRIGGERED-PROCEDURES.
+- Reason: otherwise every new policy feature would need a TIER READ-FIRST-RULES pointer and AGENTS.md would grow; the routing mechanisms already do the wiring.
 
 ### Evaluation: evidence-based proposal (other instance, 2026-08-29 DGH case)
 - Item 1 Provenance Tagging: not worth it; a tag taxonomy plus header/inline convention is a schema and maintenance tax. Skip (spirit absorbed by item 4).
 - Item 2 Decision-Driving-Fact Gate: already covered by the Investigation Contract cross-check clause.
-- Item 3 Knowledge-file factual review in code review: not worth it; scope creep on Procedure D.
-- Item 4 Old-knowledge distrust: real gap. A short distrust clause was added to the Investigation Contract on 2026-08-31, then removed the same day on review: it broadened distrust to all stored knowledge, which contradicts the Project Knowledge Protocol's authoritative stance, and it read as an essay the AI could get lost in. The DGH lesson is instead covered by the existing authority of project knowledge plus the mandatory checkpoint knowledge update (Procedure C Step 3). Kept lean by not adding a clause.
+- Item 3 Knowledge-file factual review in code review: not worth it; scope creep on PROCEDURE RUN-PEER-REVIEW.
+- Item 4 Old-knowledge distrust: real gap. A short distrust clause was added to the Investigation Contract on 2026-08-31, then removed the same day on review: it broadened distrust to all stored knowledge, which contradicts the Project Knowledge Protocol's authoritative stance, and it read as an essay the AI could get lost in. The DGH lesson is instead covered by the existing authority of project knowledge plus the mandatory checkpoint knowledge update (PROCEDURE WRITE-CHECKPOINT Step 3). Kept lean by not adding a clause.
 
 ### Follow-ups
-- Consolidation: decide a single canonical home for always-on mechanics (TIER 2 vs Non-Negotiables) so there is one source of truth. Still open.
+- Consolidation: decide a single canonical home for always-on mechanics (TIER READ-FIRST-RULES vs Non-Negotiables) so there is one source of truth. Still open.
 
 ---
 
@@ -789,31 +791,31 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ## 2026-09-09: Checkpoint procedure never wrote the daily checkpoint file — fixed
 
 ### Problem
-- Procedure C mandated writing the three **Project AI State Files** but never wrote a file in **Project Daily Checkpoints Directory**. Only Procedure B (bootstrap, one-time) ever created one. Meanwhile `ai-policy-common.md`'s Source-of-Truth Order and State File Proof-of-Read rule both already assumed a current checkpoint file existed at read time. Result: state files raced ahead with new `CP-YYYY-MM-DD-NN` IDs every checkpoint while `ai/daily-checkpoints/` only advanced when an AI session happened to write one unprompted, producing a CP-ID mismatch on the next "load context" — reproduced across multiple personal projects, and confirmed live in this repo during this same session (`next-steps.md` at `CP-2026-09-04-01` vs `context.md`/`progress.md` at `CP-2026-09-07-02`, latest file on disk `2026-09-04.md`). Full write-up: `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md`.
+- PROCEDURE WRITE-CHECKPOINT mandated writing the three **Project AI State Files** but never wrote a file in **Project Daily Checkpoints Directory**. Only PROCEDURE BOOTSTRAP-PROJECT (bootstrap, one-time) ever created one. Meanwhile `ai-policy-common.md`'s Source-of-Truth Order and State File Proof-of-Read rule both already assumed a current checkpoint file existed at read time. Result: state files raced ahead with new `CP-YYYY-MM-DD-NN` IDs every checkpoint while `ai/daily-checkpoints/` only advanced when an AI session happened to write one unprompted, producing a CP-ID mismatch on the next "load context" — reproduced across multiple personal projects, and confirmed live in this repo during this same session (`next-steps.md` at `CP-2026-09-04-01` vs `context.md`/`progress.md` at `CP-2026-09-07-02`, latest file on disk `2026-09-04.md`). Full write-up: `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md`.
 
 ### Decision
-- Added a new step 2, **Write Daily Checkpoint File**, to Procedure C in `AGENTS.md`, between the Atomic Write Protocol (step 1) and Log Condensation (renumbered 2→3; Update Project Knowledge 3→4; Context Re-affirmation 4→5). Fixed the one internal cross-reference to the old step number (`context.md` horizon-shield mention, "(Step 2)" → "(Step 3)").
+- Added a new step 2, **Write Daily Checkpoint File**, to PROCEDURE WRITE-CHECKPOINT in `AGENTS.md`, between the Atomic Write Protocol (step 1) and Log Condensation (renumbered 2→3; Update Project Knowledge 3→4; Context Re-affirmation 4→5). Fixed the one internal cross-reference to the old step number (`context.md` horizon-shield mention, "(Step 2)" → "(Step 3)").
 - **Naming convention chosen deliberately, deviating from the issue's raw proposal**: the issue's proposed fix cited an example from another project using `YYYY-MM-DD-NN.md` (one file per checkpoint). Investigated this repo's own `ai/daily-checkpoints/` directory instead and found the convention actually in force since 2026-06-19 is one file per **calendar day** (`YYYY-MM-DD.md`) with multiple `## CP-<ID>: <title>` sections appended for same-day checkpoints (e.g. `2026-08-25.md` holds four checkpoints). Used that convention rather than importing an example from a different project that was never actually the standard here.
 - `ai-policy-common.md`: added a **Daily Checkpoint File Mandate** bullet next to the existing Checkpoint Mandate in Checkpoint & Backup Procedures, pointing at the new AGENTS.md step without restating its mechanics (two-layer pattern).
 - `support-files/validate-protocol.sh`: v4.6 → v4.7, new anchor check for `Write Daily Checkpoint File` in section 1 alongside the existing Sliding Horizon Shield check.
 - Docs synced: `docs/workflow-guide.md` §14 gained a **Daily Checkpoint File** subsection; `docs/simple-ai-workflow-slides.md`'s "atomic writes and a sliding horizon" slide gained a matching bullet.
-- **Files changed**: `AGENTS.md` (Procedure C), `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md` (Status: Resolved), this file.
+- **Files changed**: `AGENTS.md` (PROCEDURE WRITE-CHECKPOINT), `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/issues/checkpoint-procedure-never-writes-daily-checkpoint-file.md` (Status: Resolved), this file.
 
 ---
 
 ## 2026-09-09: ai/issues/ formalized in the protocol (Project Issues Directory)
 
 ### Problem
-- `ai/issues/` had been used informally (starting with the daily-checkpoint-file issue above) but had no defined place in the protocol: not in TIER 1, not indexed by Procedure A, not surfaced in the Proof-of-Load report. A fresh "load context" session had no way to learn open protocol/project issues exist unless a human pointed to them. Full write-up: `ai/issues/proof-of-load-report-should-index-issues-directory.md`.
+- `ai/issues/` had been used informally (starting with the daily-checkpoint-file issue above) but had no defined place in the protocol: not in TIER CONFIGURATION, not indexed by PROCEDURE LOAD-CONTEXT, not surfaced in the Proof-of-Load report. A fresh "load context" session had no way to learn open protocol/project issues exist unless a human pointed to them. Full write-up: `ai/issues/proof-of-load-report-should-index-issues-directory.md`.
 
 ### Decision
-- **Scope corrected from the issue's own guess**: the issue file speculated this might be "global-only, since issues are about the protocol itself." Rejected — issues can be about the protocol *or* about any sibling project under the same project root, so it is a **Project Issues Directory** (`ai/issues/`), scoped like `ai/notes/`/`ai/pending/`/`ai/plans/`, added to TIER 1 in alphabetical position between Handoffs and AI Knowledge.
+- **Scope corrected from the issue's own guess**: the issue file speculated this might be "global-only, since issues are about the protocol itself." Rejected — issues can be about the protocol *or* about any sibling project under the same project root, so it is a **Project Issues Directory** (`ai/issues/`), scoped like `ai/notes/`/`ai/pending/`/`ai/plans/`, added to TIER CONFIGURATION in alphabetical position between Handoffs and AI Knowledge.
 - **Lifecycle mechanism — flat directory with a `closed-` filename prefix, not subdirectories**: considered `ai/issues/open/` + `ai/issues/closed/`, and considered a `## Status` content field. Rejected both: a content field (like the one improvised for the first issue) requires opening and reading every file to know open/closed status, which both violates Token Rationing (index-only, no full-text at boot) and reintroduces the exact drift risk the daily-checkpoint fix above addressed (a text claim that can silently go stale relative to where the file actually lives). Subdirectories solve that but add a directory-existence question (should `closed/` be pre-created at bootstrap when empty?) for no real benefit over a filename prefix. Settled on: closing an issue = `git mv` to prefix the filename with `closed-`, in place. Reopening = strip the prefix. One directory, one grep filter (`closed-*`), used identically by both the indexing step and the report bullet.
-- Added to `AGENTS.md`: TIER 1 entry; Procedure A Step 2 (Structural Audit) now includes it as a mandatory directory; Procedure A Step 5 (Knowledge Loading) indexes it by filename + line count excluding `closed-*`; Procedure A Step 7 (Proof-of-Load report) gained bullet (g) reporting open issue count + filenames + line counts.
-- No `ai-policy-common.md` change — the TIER 1 entry plus the two Procedure A additions were judged sufficient; a separate policy mandate would only restate the same behavior.
+- Added to `AGENTS.md`: TIER CONFIGURATION entry; PROCEDURE LOAD-CONTEXT Step 2 (Structural Audit) now includes it as a mandatory directory; PROCEDURE LOAD-CONTEXT Step 5 (Knowledge Loading) indexes it by filename + line count excluding `closed-*`; PROCEDURE LOAD-CONTEXT Step 7 (Proof-of-Load report) gained bullet (g) reporting open issue count + filenames + line counts.
+- No `ai-policy-common.md` change — the TIER CONFIGURATION entry plus the two PROCEDURE LOAD-CONTEXT additions were judged sufficient; a separate policy mandate would only restate the same behavior.
 - `support-files/validate-protocol.sh`: v4.7 → v4.8. Added `Project Issues Directory` to the config-key check, `issues` to the mandatory-directory check, and an anchor check for the indexing step's `closed-` convention text.
 - Migration: `checkpoint-procedure-never-writes-daily-checkpoint-file.md` renamed to `closed-checkpoint-procedure-never-writes-daily-checkpoint-file.md` (already resolved); `proof-of-load-report-should-index-issues-directory.md` (this issue) stays open until this change is verified, then gets the same treatment.
-- **Files changed**: `AGENTS.md` (TIER 1, Procedure A), `support-files/validate-protocol.sh`, two files under `ai/issues/`, this file.
+- **Files changed**: `AGENTS.md` (TIER CONFIGURATION, PROCEDURE LOAD-CONTEXT), `support-files/validate-protocol.sh`, two files under `ai/issues/`, this file.
 
 ---
 
@@ -830,7 +832,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `context.md`'s Current Status records the last known git hash. A checkpoint commit cannot record its own hash (the hash does not exist until after the commit is made), so the recorded hash is structurally always at least one commit behind true HEAD immediately after that checkpoint's own commit lands. Without saying so explicitly, this reads as unexplained drift on the next "load context" and risks the user panicking over a false alarm.
 
 ### Decision 2
-- Documented as expected/benign, not a defect, with minimal added text (no new procedure, no new validator check): a bullet in `ai-policy-common.md`'s Checkpoint & Backup Procedures ("Recorded Commit Hash Lag"), a one-sentence addition to `AGENTS.md` Procedure A Step 7(d) instructing the Proof-of-Load report to state the one-commit gap is expected when the ahead-commit is the one that wrote the hash, and a new row in `README.md`'s "Keeping context healthy" table.
+- Documented as expected/benign, not a defect, with minimal added text (no new procedure, no new validator check): a bullet in `ai-policy-common.md`'s Checkpoint & Backup Procedures ("Recorded Commit Hash Lag"), a one-sentence addition to `AGENTS.md` PROCEDURE LOAD-CONTEXT Step 7(d) instructing the Proof-of-Load report to state the one-commit gap is expected when the ahead-commit is the one that wrote the hash, and a new row in `README.md`'s "Keeping context healthy" table.
 - **Not done**: no validator anchor added for this (prose-only change, consistent with how Evidence-Based Reasoning and other prose rules were handled without anchors elsewhere in this file).
 
 ### Process note (self-correction)
@@ -866,23 +868,23 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **Filename is the slug only.** Lowercase kebab-case, no prefix or suffix, and it never changes. Moving between states is a directory move (`git mv` where the repo tracks `ai/`). Reopening moves a ticket back to `open/`.
 - **Lifecycle.** open issue, then implementation, then closed issue plus a related project-knowledge update. A ticket reaches `closed/` only when its fix is merged.
 - **Proof-of-Load** indexes `open/` and `in-progress/` by filename and line count, and does not index `closed/`. The closed count is not required.
-- **Bootstrap and load-context ensure** the three directories and `ai/shared/project-knowledge/issue-template.md` when missing. The Procedure A read-only Safety Barrier was amended to permit exactly that creation and nothing else.
-- **A new issue-management procedure** ships in `AGENTS.md` TIER 3, triggered by "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues".
+- **Bootstrap and load-context ensure** the three directories and `ai/shared/project-knowledge/issue-template.md` when missing. The PROCEDURE LOAD-CONTEXT read-only Safety Barrier was amended to permit exactly that creation and nothing else.
+- **A new issue-management procedure** ships in `AGENTS.md` TIER TRIGGERED-PROCEDURES, triggered by "manage issues", "file an issue", "new issue", "close issue", "reopen issue", or "list issues".
 - **Template split.** The mechanism and a compact field list live in `ai-policy-common.md` (always loaded, so the template ensure step is known at load-context). The full formatted template lives in `ai/shared/project-knowledge/issue-template.md`. Field names and enums are the contract; formatting may vary; the file is created only when missing and never overwritten.
-- **Validator v4.8 to v4.9.** Replaced the `closed-` prefix anchor with the open/in-progress indexing anchor, added the three status directories and a presence check for the issue template to `PROJECT_SUBS`, added a guard against `*.md` files directly under `ai/issues/`, and added a `PROCEDURE H:` anchor check.
+- **Validator v4.8 to v4.9.** Replaced the `closed-` prefix anchor with the open/in-progress indexing anchor, added the three status directories and a presence check for the issue template to `PROJECT_SUBS`, added a guard against `*.md` files directly under `ai/issues/`, and added a `PROCEDURE MANAGE-ISSUES:` anchor check.
 
 ### Reversals recorded
 - **Reverses the 2026-09-09 decision that rejected subdirectories in favor of a flat `closed-` filename prefix.** That decision weighed a directory-existence question against no benefit. Two things changed: real usage showed the prefix is a per-ticket readability cost, and the three-state lifecycle needs a home for `in-progress`. The directory-existence question is resolved by the ensure step above.
-- **Reverses the 2026-07-04 decision that Procedure A Step 2 must only report missing directories and never create them.** That decision was made because the AI could stall on silent `mkdir -p` output. The new step preserves the intent: one deterministic, idempotent loop over a fixed path list, with an explicit instruction not to branch, prompt, or stall on silent output.
+- **Reverses the 2026-07-04 decision that PROCEDURE LOAD-CONTEXT Step 2 must only report missing directories and never create them.** That decision was made because the AI could stall on silent `mkdir -p` output. The new step preserves the intent: one deterministic, idempotent loop over a fixed path list, with an explicit instruction not to branch, prompt, or stall on silent output.
 - **Supersedes the 2026-09-10 issue-filename simplification decision.** That decision removed priority and size from the filename while keeping a status prefix. Status no longer appears in the filename at all.
 - **Cites and deviates from the 2026-08-31 routing principle.** A triggered procedure should normally load its own self-contained policy. This mechanism stays in the always-loaded common policy because the template ensure step must be known during load-context, and only an always-loaded file carries that. Recorded as a conscious deviation, not an oversight.
 
 ### Process note
 - Protocol Developer Mode: `protocol-decisions.md` was fully loaded before any protocol file was edited. The implementation plan was saved to `ai/plans/issue-management-mechanism-implementation-plan.md` and peer-reviewed before implementation (review-01 CHANGES REQUESTED, five Major findings resolved, then review-02 APPROVED).
-- The two pending procedure design notes (Grilling, Agent Document Review) dropped their informal H and I letter reservations and take letters when they are implemented, so that `PROCEDURE H` could be assigned to issue management.
+- The two pending procedure design notes (Grilling, Agent Document Review) dropped their informal H and I letter reservations and take names when they are implemented, so that `PROCEDURE MANAGE-ISSUES` could be assigned to issue management.
 
 ### Files changed
-- `AGENTS.md` (Procedure A Safety Barrier and Steps 2, 5, 7(g); Procedure B Steps 1 and 2; new `PROCEDURE H`), `ai/policies/ai-policy-common.md` (new Issue Management Protocol section), `ai/shared/project-knowledge/issue-template.md` (new), `support-files/validate-protocol.sh` (v4.9), the six tickets under `ai/issues/` (moved and given template headers), `ai/issues/in-progress/.gitkeep` (new), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed), `ai/notes/notes.md`, `ai/plans/issue-management-mechanism-implementation-plan.md` (new), state files, and this file.
+- `AGENTS.md` (PROCEDURE LOAD-CONTEXT Safety Barrier and Steps 2, 5, 7(g); PROCEDURE BOOTSTRAP-PROJECT Steps 1 and 2; new `PROCEDURE MANAGE-ISSUES`), `ai/policies/ai-policy-common.md` (new Issue Management Protocol section), `ai/shared/project-knowledge/issue-template.md` (new), `support-files/validate-protocol.sh` (v4.9), the six tickets under `ai/issues/` (moved and given template headers), `ai/issues/in-progress/.gitkeep` (new), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed), `ai/notes/notes.md`, `ai/plans/issue-management-mechanism-implementation-plan.md` (new), state files, and this file.
 
 ### Merge record
 - Committed on `master` as `be4e4b1` (squash of `feature/issue-management`) and pushed to `origin/master` (`9eba9f0..be4e4b1`). The feature branch was deleted. Both tickets resolved by this work moved to `ai/issues/closed/`: `issue-management-mechanism.md` and `boot-up-should-create-required-ai-directories.md`.
@@ -903,10 +905,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **No checkpoint IDs.** Checkpoints are labeled by date plus a short title.
 - **One comment line per state file**, with the rules in the common policy and presence checked at load.
 - **context.md is the present, not a log:** a `## Current Status` dashboard plus an `## Active Working Context` section, edited in place, with no chronological history.
-- **Detect read-only; repair on demand.** Load-context checks order, budget, comment, and diary mirror and reports in the Proof-of-Load. A new `PROCEDURE I` ("repair state files") performs reorder, trim, and comment repair, including writing a missing diary mirror first, and never drops an unfinished `next-steps.md` item.
+- **Detect read-only; repair on demand.** Load-context checks order, budget, comment, and diary mirror and reports in the Proof-of-Load. A new `PROCEDURE REPAIR-STATE-FILES` ("repair state files") performs reorder, trim, and comment repair, including writing a missing diary mirror first, and never drops an unfinished `next-steps.md` item.
 - **Local-first source precedence** added to the Investigation Contract: local sources before the model's own knowledge, the web, or official docs, with a bounded probe.
-- **Procedure E** explicitly never reads state files and never runs detection or repair.
-- **Validator v5.0:** the `Sliding Horizon Shield` anchor became `State-File Trimming`; added a `PROCEDURE I` anchor, a one-line-comment check for the three state files, and a non-fatal advisory when the three exceed 20 KB.
+- **PROCEDURE POST-COMPACTION-RECOVERY** explicitly never reads state files and never runs detection or repair.
+- **Validator v5.0:** the `Sliding Horizon Shield` anchor became `State-File Trimming`; added a `PROCEDURE REPAIR-STATE-FILES` anchor, a one-line-comment check for the three state files, and a non-fatal advisory when the three exceed 20 KB.
 
 ### Reversals recorded
 - **Reverses the fixed-count Horizon Shield** (more than 50 items / more than 10 entries) and its two archive files. Counts are arbitrary and fail for long-horizon work; the diary is the archive.
@@ -985,10 +987,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **Grilling and brainstorming are different modes.** Grilling is adversarial and converges decisions; brainstorming is generative and diverges. The recommendation is to keep both and implement grilling first, with the final decision recorded on the grilling ticket.
 
 ### Explained and kept pending (no ticket)
-- The protocol's own design docs (Vision, PRD, Delivery Ledger); the TIER 2 vs Non-Negotiables canonical-home consolidation; the bounded boot-time staleness heuristic; the Procedure E precedence rework; the compaction-trigger open question; the AI-team dispatcher/watcher runtime; per-agent status files for true parallelism.
+- The protocol's own design docs (Vision, PRD, Delivery Ledger); the TIER READ-FIRST-RULES vs Non-Negotiables canonical-home consolidation; the bounded boot-time staleness heuristic; the PROCEDURE POST-COMPACTION-RECOVERY precedence rework; the compaction-trigger open question; the AI-team dispatcher/watcher runtime; per-agent status files for true parallelism.
 
 ### State update
-- `ai/state/next-steps.md` keeps only the items not filed as tickets: sync to other projects, protocol design docs, and the TIER 2 consolidation. `ai/notes/notes.md`'s pending index was reduced to the two remaining notes.
+- `ai/state/next-steps.md` keeps only the items not filed as tickets: sync to other projects, protocol design docs, and the TIER READ-FIRST-RULES consolidation. `ai/notes/notes.md`'s pending index was reduced to the two remaining notes.
 
 ---
 
@@ -1034,8 +1036,8 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Six checks, each with a before/after example: hierarchy, completion criteria, leading words, negation, sediment, sprawl.
 
 ### Rationale
-- Procedure D already reviews documentation. A separate procedure plus a new policy is more surface than the value justifies until it is proven otherwise.
-- Folding keeps the capability on demand with zero load cost and avoids a new TIER 3 procedure for something that only fires when reviewing agent-facing text.
+- PROCEDURE RUN-PEER-REVIEW already reviews documentation. A separate procedure plus a new policy is more surface than the value justifies until it is proven otherwise.
+- Folding keeps the capability on demand with zero load cost and avoids a new TIER TRIGGERED-PROCEDURES procedure for something that only fires when reviewing agent-facing text.
 - If the dimension proves too narrow in practice, spin out a dedicated procedure later.
 
 ### Follow-up
@@ -1198,7 +1200,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Validator v5.0 8/8; markdownlint 0 on changed files; links resolve. Plan peer-reviewed (review-19 CHANGES REQUESTED, review-20 APPROVED).
 
 ### Routing
-- Boot mechanics in `AGENTS.md` (Procedure A Steps 5 and 7). Behavior in `ai-policy-common.md`. Docs synced. No validator anchor: behavioral prose, no new structure.
+- Boot mechanics in `AGENTS.md` (PROCEDURE LOAD-CONTEXT Steps 5 and 7). Behavior in `ai-policy-common.md`. Docs synced. No validator anchor: behavioral prose, no new structure.
 
 ### Files changed
 - `AGENTS.md`, `ai/policies/ai-policy-common.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/plans/bounded-boot-time-staleness-heuristic-plan.md`, `ai/issues/in-progress/bounded-boot-time-staleness-heuristic.md`, this file.
@@ -1250,7 +1252,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ### Decision
 - Global Knowledge is indexed at boot, not fully loaded, using the same Token Rationing JIT model as Project Knowledge. A file is read in full only when a task needs it.
 - Boot (the `AGENTS.md` load-context procedure), the checkpoint context reload, and Post-Compaction Recovery all index Global Knowledge instead of loading it.
-- Global Knowledge and Project Knowledge are indexed in the same Step 5 at load context (Procedure A) and listed as two separate sets in the Proof-of-Load report.
+- Global Knowledge and Project Knowledge are indexed in the same Step 5 at load context (PROCEDURE LOAD-CONTEXT) and listed as two separate sets in the Proof-of-Load report.
 - The bounded boot-time staleness check (metadata-only, 90-day threshold) is extended to Global Knowledge.
 - New guidance: Global Knowledge files stay per-domain and descriptively named; a file that mixes domains must be split, because the filename is the JIT lookup key.
 - Active policies remain full-load. The change reverses only the Global Knowledge portion of the 2026-06-30 decision. Policies are operational rules and are never deferred, so their full-load behavior is unchanged.
@@ -1274,3 +1276,35 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Squash-merged `feature/global-knowledge-jit-indexing` into `master` as `e431dca` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `global-knowledge-jit-indexing.md` is closed under `ai/issues/closed/`; the executed plan was removed.
+
+---
+
+## 2026-10-06: Procedures, steps, and tiers renamed from letters/numbers to stable ALL-CAPS kebab names
+
+### Problem
+- Procedures were labeled PROCEDURE A through PROCEDURE I, steps were referenced by number ("Step 5"), and tiers were numbered (TIER 1 through TIER 4). Positions are fragile: any reorder, insertion, or removal silently breaks every reference, and a policy or doc can end up pointing at a moved entity.
+
+### Decision
+- Every procedure, every top-level step, every referenced sub-step, and every tier now has a stable ALL-CAPS kebab name, for example PROCEDURE LOAD-CONTEXT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES. Names never renumber.
+- Protocol files reference entities by canonical name. Users use plain phrases. Each procedure header carries an Aliases line listing the phrases that resolve to it.
+- Letters are dropped entirely. Leading step numbers stay only as a visual cue and are never referenced.
+- ADR references were retrofitted to the new names. Daily checkpoints and closed tickets keep the old names and are covered by the migration map.
+- PROOF-OF-LOAD report items are named too (`ITEM <NAME>`), replacing "bullet (x)" references.
+- New common-policy rule: reference procedures, steps, and tiers by their canonical ALL-CAPS kebab names, never by letter or number. Backed by a validator guard and the reference-integrity test.
+
+### Rationale
+- Names are decoupled from order, so the protocol can be reorganized without a cascade of broken references.
+
+### Routing and enforcement
+- Names are defined in `AGENTS.md`. The old-to-new map is `ai/shared/project-knowledge/protocol-name-migration-map-2026-10-06.md`, surfaced by a README banner.
+- `support-files/validate-protocol.sh` is now v6.0: anchors and error strings updated, plus a guard that fails on a letter-based procedure reference or a numeric tier or step reference in `AGENTS.md`.
+- New `support-files/test-protocol-references.sh`: a resolvability check (every reference resolves to a definition) and a conformance check (no letters or numbers in live files).
+
+### Scope choice
+- One ticket, delivered in phases: occurrence map and baseline, procedures and tiers, steps, live non-AGENTS files, ADR retrofit, then verification. Plan was peer-reviewed before implementation.
+
+### Accepted trade-off
+- Step numbers inside historical ADR prose were deliberately left in place, because step positions changed over time and mapping them would risk corrupting the record. The migration map translates them.
+
+### Status
+- Decision approved by the user on 2026-10-06. Implementation on branch `feature/descriptive-names-for-procedures-steps-and-tiers`; validator v6.0 8/8 and the reference-integrity test PASS. Merge record to be appended on merge.

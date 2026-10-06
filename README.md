@@ -1,6 +1,7 @@
 | Announcement |
 | --- |
 | **Repository history was rewritten on 2026-09-22.** If you already cloned this repository, run `git fetch origin && git reset --hard origin/master` to sync. A plain `git pull` will not work after a history rewrite. |
+| **Protocol entities were renamed on 2026-10-06.** Procedures, steps, and tiers now use stable ALL-CAPS kebab names instead of single letters and numbers, for example `PROCEDURE LOAD-CONTEXT` where it used to be `Procedure A`. Old names still appear in dated records. The full old-to-new map is in [ai/shared/project-knowledge/protocol-name-migration-map-2026-10-06.md](ai/shared/project-knowledge/protocol-name-migration-map-2026-10-06.md). |
 
 # Simple AI Workflow
 
