@@ -16,6 +16,13 @@
 - **Privacy**: a sensitive-name guardrail in the global settings, and a full history purge with no credentials found.
 - **Docs**: README overhaul, global user settings template (Git configuration guide, CLI tools by role), slides and workflow guide synced, documentation cleanup, markdownlint clean.
 
+## v4.0.0 (2026-10-06)
+- **MAJOR**: procedures, steps, and tiers were renamed from letters and numbers to stable ALL-CAPS kebab names, so old references like "Procedure A" no longer match live files. Migration map: `protocol-name-migration-map-2026-10-06.md`.
+- **Behavior**: Global Knowledge is now JIT-indexed at boot, on reload, and on Post-Compaction Recovery instead of fully loaded; the 90-day staleness flag covers both knowledge sets; each procedure gained an Aliases line of user phrases.
+- **Policy**: pre-work commits on `master` are banned, and every protocol or policy change requires an ADR entry; a canonical-reference-names rule forbids letter and number references.
+- **Tooling**: validator v6.0 with updated anchors and a no-letter/no-number guard; new `support-files/test-protocol-references.sh`; sync scripts updated.
+- **Docs**: migration map and README banner; workflow guide, slides, agent-collaboration, codebase-examination guide, and examples updated.
+
 ## Release Checklist
 1. Confirm the feature branch is squash-merged to `master` and the validator passes 8/8.
 2. Run markdownlint on all tracked markdown and confirm 0 issues.
