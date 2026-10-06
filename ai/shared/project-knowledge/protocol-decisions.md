@@ -1270,4 +1270,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Boot, reload, and recovery mechanics in `AGENTS.md`; behavior in `ai/policies/ai-policy-common.md`; docs synced in `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and `docs/ai-agent-collaboration.md`. Existing validator anchors are preserved, so no validator change is expected.
 
 ### Status
-- Decision approved by the user on 2026-10-06. Plan approved (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation complete on branch `feature/global-knowledge-jit-indexing`, validator 8/8 and markdownlint clean; awaiting merge. Merge record to be appended on merge.
+- Decision approved by the user on 2026-10-06. Plan approved (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation complete on branch `feature/global-knowledge-jit-indexing`, validator 8/8 and markdownlint clean.
+
+### Merge record
+- Squash-merged `feature/global-knowledge-jit-indexing` into `master` as `e431dca` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `global-knowledge-jit-indexing.md` is closed under `ai/issues/closed/`; the executed plan was removed.
