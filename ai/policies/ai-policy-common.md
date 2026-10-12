@@ -258,7 +258,7 @@ At the start of each session, the AI MUST check for the following design documen
 - **PRD** (Product Requirements Document): Problem, target users, success criteria, and scope. Each requirement is assigned a unique `REQ-NNN` ID. Prevents building the wrong thing.
 - **HLD** (High-Level Design): System architecture, component decomposition, module boundaries, and technology choices. Each component is assigned a unique `HLD-NNN` ID. Provides the implementation roadmap.
 - **LLD** (Low-Level Design): Detailed designs per component — classes, interfaces, data flows, APIs, database schemas. Each item is assigned a unique `LLD-NNN` ID. Bridges between architecture and code.
-- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Each ADR is assigned a unique `ADR-NNN` ID. Prevents repeated debate and preserves institutional knowledge.
+- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Each ADR is assigned a unique `ADR-NNN` ID. Prevents repeated debate and preserves institutional knowledge. Each entry is self-contained: it states the decision, its context, and its consequences in plain language. Do not reference commit hashes, branch names, removed plan files, or non-committed reports.
 - **Delivery Ledger**: A living cross-reference document that tracks which design items (by ID) have been implemented and released. Created as soon as implementation begins against any design document. Updated at every checkpoint. See Delivery Ledger section below.
 
 ### ID Convention

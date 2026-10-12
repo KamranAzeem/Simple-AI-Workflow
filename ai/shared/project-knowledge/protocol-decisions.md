@@ -47,7 +47,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Decision**: PROCEDURE RUN-PEER-REVIEW must live in TIER TRIGGERED-PROCEDURES, not TIER APPENDIX.
 - **Rationale**: An AI scanning TIER TRIGGERED-PROCEDURES for triggered procedures stops before reaching TIER APPENDIX. PROCEDURE RUN-PEER-REVIEW placed in TIER APPENDIX is silently invisible to weak models — the feature never activates.
 - **Lesson**: Every triggered procedure must be co-located with peers A/B/C. Never append procedures to appendix sections as an afterthought.
-- **How found**: Discovered via the first self-review using the new Peer Review Mode (review-01 Critical finding).
+- **How found**: Discovered via the first self-review using the new Peer Review Mode (a Critical finding).
 
 ### sync-agents-md.ps1: Set-Content with UTF8 encoding adds BOM on PowerShell 5.1
 - **Decision**: Replace `Set-Content -Encoding UTF8` with `[System.IO.File]::WriteAllText($path, $content, [System.Text.UTF8Encoding]::new($false))`.
@@ -195,7 +195,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Internal protocol labels confirmed out of user-facing docs (regression caught in review)
 - **Finding**: The first draft of `docs/codebase-examination-guide.md` used "PROCEDURE RUN-PEER-REVIEW" and the `Inquiry`/`Directive`/`Analyze-Plan-Stop` jargon — violating the CP-2026-05-21-03 decision (no internal labels in README or `docs/`).
-- **Resolution**: Caught by peer review (review-01, CHANGES REQUESTED); rephrased to plain language; review-02 APPROVED.
+- **Resolution**: Caught by peer review (CHANGES REQUESTED); rephrased to plain language; then APPROVED.
 - **Reinforced rule**: Policy files (`ai/policies/*.md`) MAY use procedure/tier labels (they are internal); files under `docs/` and README MUST use plain language. This split is now exercised by the codebase-examination policy (uses "PROCEDURE RUN-PEER-REVIEW") vs its guide (plain language).
 
 ---
@@ -235,12 +235,12 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Why CP identifier, not a date field**: The state files contain no standalone date fields — the date is embedded in the checkpoint ID format (`CP-YYYY-MM-DD-NN`). Using the CP identifier as the date marker is unambiguous, extractable from content, and consistent across all three files and checkpoint files. An AI must read the file to know it.
 - **Why line count**: A line count is an instant verifiable signal. If the AI reports 15 lines but `wc -l` shows 35, the partial-read bug is immediately visible. It is not a perfect proof, but it is fast to spot-check.
 - **"Held in context" wording fix**: First draft of Fresh-Read Before Write said "held in context" — "context" clashes with `context.md` (the state file name). Fixed to "held in the active context window".
-- **Peer review outcome**: round-01 CHANGES REQUESTED (2 Minor: date ambiguity, context wording); fixes applied; round-02 APPROVED.
-- **Commit**: `888bdf6` on master, pushed to origin.
+- **Peer review outcome**: CHANGES REQUESTED (2 Minor: date ambiguity, context wording); fixes applied; then APPROVED.
+- **Outcome**: implemented on the main branch.
 
 ---
 
-## 2026-06-30 — Session CP-2026-06-30-01 (branch `feature/boot-full-load-policies-and-global-knowledge`)
+## 2026-06-30 — Session CP-2026-06-30-01
 
 ### Full-load active policies and Global Knowledge at boot — Token Rationing re-scoped to Project Knowledge only
 
@@ -257,9 +257,9 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
   - `support-files/validate-protocol.sh`: v4.2 → v4.3; anchor check `Knowledge Indexing` → `Knowledge Loading`; added `Policy Loading` anchor check; kept `Token Rationing` anchor check (still present, scoped to Project Knowledge).
   - Docs (`README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`): updated Token Rationing / JIT sections, Session Resume features, and Proof-of-Load wording to the new model.
 - **Token Rationing anchor preserved**: The validator still greps for `Token Rationing` because the concept lives on for Project Knowledge — the term was deliberately *not* removed from AGENTS.md.
-- **Source plan correction**: The originating plan (`ai/plans/agents-md-context-reload-improvements.md`) claimed ~27 project-knowledge files with large repo-scan snapshots; the actual count in this repo is 4 small files (the large-snapshot concern was imported from another workspace). The change set keeps Token Rationing for Project Knowledge on principle (files *can* be large elsewhere / in user projects), independent of this repo's current size.
+- **Source plan correction**: The originating plan claimed ~27 project-knowledge files with large repo-scan snapshots; the actual count in this repo is 4 small files (the large-snapshot concern was imported from another workspace). The change set keeps Token Rationing for Project Knowledge on principle (files *can* be large elsewhere / in user projects), independent of this repo's current size.
 - **Constraints honoured**: Protocol Developer Mode (protocol-decisions.md fully pre-loaded); no inline machine paths (TIER CONFIGURATION anchors only); no markdown hyperlinks in policy files; immutable markers preserved; AGENTS.md authored from the end-user project-root perspective.
-- **Branch**: `feature/boot-full-load-policies-and-global-knowledge` — not merged to master (user handles merge/push).
+- **Merge state**: not merged to master (user handles merge/push).
 
 ---
 
@@ -288,7 +288,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
   - **AI-team runtime** (dispatcher/watcher/role lifecycle) — separate project.
   - **Per-agent status files** robust-concurrency variant — adopt only when real parallelism is needed.
 - **Non-breaking confirmation**: all existing validator anchors retained (`Fresh-Read Before Write`, `Atomic Write Protocol`, `Token Rationing`, `Knowledge Loading`, `Policy Loading`, etc.); the `Fresh-Read Before Write` phrase was deliberately preserved as the anchor while its body was reframed.
-- **Branch**: `feature/boot-full-load-policies-and-global-knowledge` — still not merged to master (user handles merge/push).
+- **Merge state**: still not merged to master (user handles merge/push).
 
 ---
 
@@ -315,7 +315,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Stale references fixed**: PROCEDURE POST-COMPACTION-RECOVERY Step 2 "only `ai/` file" wording updated. PROCEDURE CREATE-BACKUP backup commands now include `ai-customization.md`.
 - **Files changed**: AGENTS.md (TIER CONFIGURATION, Procedures A/B/E/F), `ai-customization.md` (new at root), `docs/ai-customization.md` (template updated), `.gitignore`, README, docs/workflow-guide.md, docs/simple-ai-workflow-slides.md, docs/compliance-guide.md, docs/personas/README.md.
 - **Bootstrap simplified**: Copy `docs/ai-customization.md` → `ai-customization.md`, edit one file, run "load context". No more `mkdir -p ai/`, no exit-and-reload.
-- **Merge**: the whole branch (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) squash-merged into master as one commit; feature branch deleted; **not pushed** to origin per user instruction. Final peer review review-04 APPROVED. Validator v4.4.
+- **Merge**: the whole change set (boot full-load + single-writer ownership + checkpoint reconcile + doc alignment + wording) merged into the trunk as one commit. Final peer review APPROVED. Validator v4.4.
 
 ---
 
@@ -363,7 +363,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 ### v2.0.0 GitHub release
 - Tagged and published v2.0.0 on GitHub with full changelog covering 40 commits since v1.0.0.
 - Release title: "Customization at root, auto-migration, Humanized Output".
-- All 8 peer reviews (review-04 through review-10) completed.
+- All 8 review rounds completed.
 
 ### Bootstrap audit/creation separation
 - PROCEDURE LOAD-CONTEXT Step 2: changed from "Only propose `mkdir -p` for missing items" to "Only report missing items — do not create them."
@@ -388,14 +388,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Pre-existing missing directories created
 - **Decision**: Created `ai/plans/` and `ai/policies/compliance/` — both are listed as mandatory project directories in the TIER CONFIGURATION config but were missing. Created during checkpoint validation to pass `validate-protocol.sh` checks.
-- **Note**: `ai/plans/` had been flagged in next-steps.md as "Decide fate of untracked ai/plans/agents-md-context-reload-improvements.md" — the referenced file was never written to disk; creating the directory resolves the pending item.
+- **Note**: `ai/plans/` had been flagged in next-steps.md as "Decide fate of an untracked plan file" — the referenced file was never written to disk; creating the directory resolves the pending item.
 
 ## 2026-07-25 — Session CP-2026-07-25-02
 
 ### Academic-researcher policy: internationalized rewrite
 - **Decision**: Replaced the 48-line generic `ai-policy-academic-researcher.md` with a comprehensive 342-line policy sourced from a friend's draft, then stripped of all India/UGC-specific content (UGC 2018 regulations, UGC-CARE, DPDP Act, similarity thresholds) and any single-domain hardcoding (removed Container/Kubernetes Security as primary focus).
 - **Rationale**: The original policy was too thin to guide serious research. The friend's draft had excellent depth across source quality, research workflow, statistics, ethics, and publishing but was scoped to one country and one domain. Making it international and domain-neutral makes it useful for any researcher globally.
-- **Outcome**: Policy at `ai/policies/ai-policy-academic-researcher.md` (342 lines, 22 sections + appendix). Retained frameworks: Singapore Statement, ALLEA, ORI, UK Concordat, Australian Code, COPE, ICMJE, Helsinki, Belmont, Menlo, FAIR, GDPR. Validator v4.5 all 8/8 pass. Peer review review-02 APPROVED.
+- **Outcome**: Policy at `ai/policies/ai-policy-academic-researcher.md` (342 lines, 22 sections + appendix). Retained frameworks: Singapore Statement, ALLEA, ORI, UK Concordat, Australian Code, COPE, ICMJE, Helsinki, Belmont, Menlo, FAIR, GDPR. Validator v4.5 all 8/8 pass. Peer review APPROVED.
 
 ## 2026-07-25 — Session CP-2026-07-25-03 (High-effort review pass)
 
@@ -419,14 +419,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Style note**: New prose in both files avoids em dashes per the Humanized Output rule in `ai-policy-common.md`, even though older content in this repo predates that rule and still uses them.
 - **Files changed**: `AGENTS.md` (PROCEDURE RUN-PEER-REVIEW header), `ai/policies/ai-policy-code-review.md` (Scope Discipline section, Activated-by line, Not Checked report section), this file.
 
-## 2026-07-28 — Self-review of the above changes, and fix cycle (review-01 / review-02)
+## 2026-07-28 — Self-review of the above changes, and fix cycle
 
 ### Peer review triggered on the AI's own just-edited protocol files
 - **Decision**: Ran PROCEDURE RUN-PEER-REVIEW against `AGENTS.md` and `ai-policy-code-review.md` themselves, applying the newly-written Scope Discipline rule recursively to the files that introduced it.
-- **Finding (review-01, CHANGES REQUESTED)**: 2 Major issues, both the same root cause — "PR review" was added as a PROCEDURE RUN-PEER-REVIEW trigger phrase, but no step anywhere defined the actual mechanics (fetch latest, resolve source/target branch, diff source against target) needed to perform one. The Iteration Protocol had the matching gap for a second review pass on a PR (no re-fetch step). 3 Minor issues: the "Role exits ... when a commit is made" condition doesn't clearly cover PR-only reviews where the AI never commits; the "Scoped" bullet didn't cross-reference the new Scope Discipline section; pre-existing em-dash counts (35 in `AGENTS.md`, 14 in the policy file) predate the Humanized Output rule and were left alone. 1 Suggestion: optional PR identifier in the report filename.
+- **Finding (CHANGES REQUESTED)**: 2 Major issues, both the same root cause — "PR review" was added as a PROCEDURE RUN-PEER-REVIEW trigger phrase, but no step anywhere defined the actual mechanics (fetch latest, resolve source/target branch, diff source against target) needed to perform one. The Iteration Protocol had the matching gap for a second review pass on a PR (no re-fetch step). 3 Minor issues: the "Role exits ... when a commit is made" condition doesn't clearly cover PR-only reviews where the AI never commits; the "Scoped" bullet didn't cross-reference the new Scope Discipline section; pre-existing em-dash counts (35 in `AGENTS.md`, 14 in the policy file) predate the Humanized Output rule and were left alone. 1 Suggestion: optional PR identifier in the report filename.
 - **Fix applied**: `AGENTS.md` PROCEDURE RUN-PEER-REVIEW gained a new Step 2 ("Resolve the PR (PR review only)": fetch remote refs, resolve source/target branches, diff source against target before scanning), with steps renumbered 1–6. `ai-policy-code-review.md` Iteration Protocol now opens with a re-fetch step for the PR case. The Role exits bullet now covers "or, for a PR review, when the PR is merged or closed." The Scoped bullet now points at Scope Discipline. The Report Format now documents the optional `review-01_PR53929.md` filename convention.
-- **Outcome (review-02, APPROVED)**: All 5 findings from review-01 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed. No new issues found.
-- **Files changed**: `AGENTS.md` (PROCEDURE RUN-PEER-REVIEW), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), `ai/code-review-reports/2026-07-28_review-01.md` and `2026-07-28_review-02.md` (new), this file.
+- **Outcome (APPROVED)**: All 5 findings resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed. No new issues found.
+- **Files changed**: `AGENTS.md` (PROCEDURE RUN-PEER-REVIEW), `ai/policies/ai-policy-code-review.md` (Role exits, Scoped, Iteration Protocol, Report Format), this file.
 
 ## 2026-07-28 — Evidence-Based Reasoning (No-Assumption Rule) added to common policy
 
@@ -438,17 +438,17 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Rule content**: (1) never invent people, teams, infrastructure, config values, file contents, or past decisions not backed by context/project knowledge/a live query, and never attribute statements or actions to people never mentioned; (2) verify before asserting, by checking active context, **Project AI Knowledge Directory**, and live codebase/environment; (3) if no evidence exists anywhere, say so plainly and ask the user, rather than filling the gap with a guess; (4) be ready to cite the source of any fact-based recommendation.
 - **Validator**: `validate-protocol.sh` not extended with a new anchor check for this rule (not requested; existing 8 checks still pass).
 
-## 2026-07-28 — Peer review of ai-policy-common.md, fix cycle (review-03 / review-04)
+## 2026-07-28 — Peer review of ai-policy-common.md, fix cycle
 
 ### READ-ONLY markers were missing from the flagship policy file
-- **Finding (review-03, CHANGES REQUESTED)**: `ai-policy-common.md` was the only one of 15 policy files missing the `<!-- AI-ASSISTANT: READ-ONLY START -->` / `<!-- AI-ASSISTANT: READ-ONLY END -->` markers required by the 2026-06-18 (CP-2026-06-18-01) structural convention. `validate-protocol.sh` never caught this because it only checks `AGENTS.md`'s own banner text, not the per-policy-file markers.
+- **Finding (CHANGES REQUESTED)**: `ai-policy-common.md` was the only one of 15 policy files missing the `<!-- AI-ASSISTANT: READ-ONLY START -->` / `<!-- AI-ASSISTANT: READ-ONLY END -->` markers required by the 2026-06-18 (CP-2026-06-18-01) structural convention. `validate-protocol.sh` never caught this because it only checks `AGENTS.md`'s own banner text, not the per-policy-file markers.
 - **Fix applied**: Added both markers to `ai-policy-common.md` (START after the `DO NOT MODIFY` guard, END at end of file). Extended `validate-protocol.sh` Step 6 (Policy Baseline) to grep every file in the `POLICIES` array for both markers, failing the check if either is missing. Bumped validator to v4.6.
 - **Minor findings also resolved**:
   - The "Verbose File Naming" bullet (a ~200-word run-on paragraph) was split into shorter sentences, consistent with the file's own Humanized Output rule.
-  - Reviewed the "robust" flag from review-03 with the user: **decision reversed** — "robust" is a normal, useful word and should not be banned. Removed it from the `#### Words to Use and Avoid` banned-word list rather than removing its use at line 59 ("Implementing robust user verification and access control"). The banned-word list itself was the thing that was wrong, not the usage.
+  - Reviewed the "robust" flag with the user: **decision reversed** — "robust" is a normal, useful word and should not be banned. Removed it from the `#### Words to Use and Avoid` banned-word list rather than removing its use at line 59 ("Implementing robust user verification and access control"). The banned-word list itself was the thing that was wrong, not the usage.
   - Pre-existing em-dash count (34) left untouched, same rationale as prior sessions: predates the Humanized Output rule, out of scope for a targeted fix pass.
-- **Outcome (review-04)**: All Major and addressable Minor findings from review-03 resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed (with the new marker check now active and passing).
-- **Files changed**: `ai/policies/ai-policy-common.md` (markers, word-list, paragraph split), `support-files/validate-protocol.sh` (v4.5 → v4.6, new marker check in Step 6), `ai/code-review-reports/2026-07-28_review-03.md` and `2026-07-28_review-04.md` (new), this file.
+- **Outcome**: All Major and addressable Minor findings resolved and verified; `validate-protocol.sh` re-run in full, 8/8 passed (with the new marker check now active and passing).
+- **Files changed**: `ai/policies/ai-policy-common.md` (markers, word-list, paragraph split), `support-files/validate-protocol.sh` (v4.5 → v4.6, new marker check in Step 6), this file.
 
 ## 2026-07-28 — Documentation sync for today's PROCEDURE RUN-PEER-REVIEW / policy changes, then commit
 
@@ -466,8 +466,8 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
   3. Added a blunt precondition line at the top of the procedure naming the exact failure mode ("an AI reasoned that a detailed condensation summary already provided enough context and went straight to the task") so the temptation is called out explicitly rather than left implicit.
 - **Rationale**: A well-structured condensation summary can make the reload feel unnecessary in the moment, that is precisely the failure this session hit. Removing the optional-suppression path removes the mechanism the AI used to rationalize skipping it. This does not make skipping impossible, but it removes the protocol-sanctioned shortcut.
 - **Validator impact**: None. `support-files/validate-protocol.sh` only checks the `### PROCEDURE POST-COMPACTION-RECOVERY: Post-Condensation Recovery` header string, which was not touched. Re-run in full after the change: 8/8 passed.
-- **Peer review**: review-05 (CHANGES REQUESTED, 2 Minor) flagged new-prose em dashes in the added text, against the Humanized Output rule in `ai-policy-common.md`. Fixed (colon and parentheses substituted). review-06 (APPROVED).
-- **Files changed**: `AGENTS.md` (PROCEDURE POST-COMPACTION-RECOVERY), `ai/code-review-reports/2026-07-28_13-10_review-05.md` and `2026-07-28_13-12_review-06.md` (new), this file.
+- **Peer review**: CHANGES REQUESTED (2 Minor) flagged new-prose em dashes in the added text, against the Humanized Output rule in `ai-policy-common.md`. Fixed (colon and parentheses substituted), then APPROVED.
+- **Files changed**: `AGENTS.md` (PROCEDURE POST-COMPACTION-RECOVERY), this file.
 - **Docs check**: `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md` checked for stale references to the removed suppression behavior via targeted grep — none found, so no doc updates were required.
 
 ## 2026-07-28 — Stable-title identifier, title-only validator anchor, and per-tool external reload trigger
@@ -515,7 +515,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 
 ### Files changed
 - `AGENTS.md` (TIER READ-FIRST-RULES Context Protection + Session Resume, PROCEDURE WRITE-CHECKPOINT Steps 1 and 4, PROCEDURE POST-COMPACTION-RECOVERY fully rewritten), `support-files/validate-protocol.sh`, `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-codebase-examination.md`, `docs/codebase-examination-guide.md`, `docs/workflow-guide.md` (§7), `README.md`, `docs/simple-ai-workflow-slides.md`, the two renamed files above, this file.
-- **Commits**: 58f22a4 (rename + simplify, 11 files), 4465a54 (Proof-of-Load Step 7(a) widened), 36de4b6 (PreCompact hook + concrete signals + memory trigger deleted + setup guide update). See the following entry for the full record of the second and third commits.
+- **Implementation**: rename + simplify (11 files); Proof-of-Load Step 7(a) widened; PreCompact hook plus concrete signals, memory-trigger deletion, and setup-guide update. See the following entry for the full record of the second and third changes.
 
 ## 2026-07-31 — Concrete compaction signals, PreCompact hook, and doc updates
 
@@ -534,7 +534,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Known ceiling**: No `PostCompact` hook exists in VS Code. The PreCompact warning + human backstop covers the gap.
 
 ### Proof-of-Load Step 7(a): report all customization file sections
-- **Decision**: Changed to "report each one explicitly, whatever sections the file contains" for full coverage. Commit 4465a54.
+- **Decision**: Changed to "report each one explicitly, whatever sections the file contains" for full coverage.
 
 ### Stable identifier note simplified
 - **Decision**: Simplified the PROCEDURE POST-COMPACTION-RECOVERY "Stable identifier" paragraph to reference the validator anchor, setup guide, and hook configurations — removing the stale mention of the deleted external trigger file.
@@ -559,11 +559,11 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Decision**: Policy files (`ai/policies/*.md`) must not reference procedure letters or step numbers (e.g. "Step 4"), because those are positional internal `AGENTS.md` labels that silently break if procedures are renumbered or renamed. (Updated 2026-10-06: procedures now have stable kebab names, so a policy may reference a procedure by its canonical name, for example PROCEDURE RUN-PEER-REVIEW; letters and step numbers remain banned.)
 - **Rule going forward**: All references to `AGENTS.md` procedures or steps in policy files must use plain descriptive phrases: "the `AGENTS.md` bootstrap procedure", "the checkpoint knowledge update steps in `AGENTS.md`", etc. Using the procedure's own stable title (e.g. "Post-Compaction Recovery") is fine — it is a maintained external identifier, not a positional label.
 - **Files changed**: `ai/policies/ai-policy-common.md` (9 occurrences fixed), this file.
-- **Commit**: `e82729c` on master. Validator v4.6, 8/8 pass.
+- **Outcome**: implemented on the main branch. Validator v4.6, 8/8 pass.
 
 ---
 
-## 2026-08-08 — Session CP-2026-08-08-02 (branch `feature/state-files-directory`)
+## 2026-08-08 — Session CP-2026-08-08-02
 
 ### State files moved to dedicated `ai/state/` directory
 
@@ -577,7 +577,7 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Historical content preserved**: existing entries inside the state files and historical records in this file keep their old-era paths — they accurately describe where files were when written.
 - **Migration mechanics**: this repo uses `git mv` (state files are git-tracked here). User projects get migration via `sync-agents-md.sh`/`sync-agents-md.ps1`, which create `ai/state/` if absent, move any state files found at `ai/*.md`, and append a `[MIGRATION-YYYY-MM-DD]` notice to each moved file. Migration is idempotent: if both old and new exist, it warns and skips.
 - **Files changed**: `AGENTS.md` (TIER CONFIGURATION anchor, PROCEDURE LOAD-CONTEXT Step 2 structural audit + Step 7(d), PROCEDURE BOOTSTRAP-PROJECT Step 4, PROCEDURE WRITE-CHECKPOINT Steps 1–2, PROCEDURE POST-COMPACTION-RECOVERY), `ai/policies/ai-policy-common.md` (handoff reference, Source-of-Truth Order, two new guardrail bullets), `ai/policies/ai-policy-meta.md` (3 references), `ai/shared/coordination.md`, `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`, `support-files/validate-protocol.sh` (Step 4 PROJECT_SUBS + config), `support-files/sync-agents-md.sh`, `support-files/sync-agents-md.ps1`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `docs/ai-agent-collaboration.md`, `docs/protocol-validation-system.md`, `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`, this file, and the three state files (moved + headers + migration notice).
-- **Branch**: `feature/state-files-directory` — not merged to master (user handles merge/push).
+- **Merge state**: not merged to master (user handles merge/push).
 
 ---
 
@@ -613,14 +613,14 @@ Intent: Capture protocol design decisions made during the 2026-05-21 session (up
 - **Problem**: The 2026-08-09 decision declared the workflow-repo over-load (all 16 policies loaded at boot and post-compaction) an accepted artifact and instructed "do not re-diagnose this as a bug". The user later decided the constant full-library load would keep bothering them and chose to fix it after all, knowingly reversing the earlier stance for this repository.
 - **Decision (current, authoritative)**: During context loading and Post-Compaction Recovery, Protocol Developer Mode (PWD matches **Global AI Workflow Directory**) loads ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. The recursive scan of the **Project AI Policies Directory** is skipped — that directory is the protocol's full distribution tree, not the working policy set.
 - **Relationship to the 2026-08-09 decision**: The earlier decision remains correct for ordinary user projects — there, `ai/policies/` holds user-created custom policies and filesystem auto-discovery is the intended behavior. The new decision narrows the exception to operating as a protocol developer inside the workflow repo. No part of the ordinary-project behavior changed.
-- **Implementation**: Commit `b93741c` added the "Exception — Protocol Developer Mode" clause at all 4 policy-loading locations in `AGENTS.md` (TIER READ-FIRST-RULES Protocol Developer Mode bullet, PROCEDURE LOAD-CONTEXT Step 6, PROCEDURE WRITE-CHECKPOINT Step 4, PROCEDURE POST-COMPACTION-RECOVERY Step 5). Peer review round-01 CHANGES REQUESTED (PROCEDURE WRITE-CHECKPOINT Step 4 missing) → fixed → round-02 APPROVED. Validator v4.6, 8/8 pass.
+- **Implementation**: Added the "Exception — Protocol Developer Mode" clause at all 4 policy-loading locations in `AGENTS.md` (TIER READ-FIRST-RULES Protocol Developer Mode bullet, PROCEDURE LOAD-CONTEXT Step 6, PROCEDURE WRITE-CHECKPOINT Step 4, PROCEDURE POST-COMPACTION-RECOVERY Step 5). Peer review CHANGES REQUESTED (PROCEDURE WRITE-CHECKPOINT Step 4 missing), then APPROVED. Validator v4.6, 8/8 pass.
 - **Not changed**: `ai-policy-common.md` policy-loading clauses keep the full-load behavior for referenced and discovered custom policies; the exception is scoped to Protocol Developer Mode and lives in `AGENTS.md`. If the ordinary-project path ever needs the same restriction, that is a separate decision.
 
 ---
 
 ## 2026-08-24 — Session CP-2026-08-24-01 (common-policy additions + state-file discipline)
 
-Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a user-supplied state-file brevity problem (Stream B). All new prose is em-dash-free per the Humanized Output rule. Peer review review-01 APPROVED, validator v4.6 8/8. Branch `feature/common-policy-additions-and-state-file-brevity`, not merged.
+Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a user-supplied state-file brevity problem (Stream B). All new prose is em-dash-free per the Humanized Output rule. Peer review APPROVED, validator v4.6 8/8. Not merged.
 
 ### Stream A: three additions to ai-policy-common.md
 - **Full reads for working files** and **No truncation of investigation output** added as points 5 and 6 of Evidence-Based Reasoning. Rationale: the user requires that every important file be read in full to EOF (no sampling); only log-like bulk-data files (logs, dumps, large JSON/CSV) may be sliced by search or filter. Point 6 bans piping enumeration output (grep, find, az) through head or tail during investigation, since that silently drops evidence.
@@ -641,7 +641,7 @@ Work driven by `ai/artifacts/additions-to-common-policy.md` (Stream A) plus a us
 
 ## 2026-08-25 — Pre-Work Gate and Acceptance Criteria Quality added to common policy
 
-Driven by observations from another session (a pasted spec). Added two subsections under `## Operational Standards` in `ai-policy-common.md`, after Evidence-Based Reasoning. Branch `feature/pre-work-gate-and-acceptance-criteria`, not merged.
+Driven by observations from another session (a pasted spec). Added two subsections under `## Operational Standards` in `ai-policy-common.md`, after Evidence-Based Reasoning. Not merged.
 
 ### Pre-Work Gate
 - Checks to complete before starting any work item: scope discovery (find all repos and configs, and treat a missing repo as archived or decommissioned rather than out of scope), acceptance-criteria review, HLD and LLD, removal safety (gather positive evidence that everything meant to stay is still in place), a pre-work announcement posted externally only on explicit instruction, and framework alignment.
@@ -655,14 +655,14 @@ Driven by observations from another session (a pasted spec). Added two subsectio
 - No `AGENTS.md` change and no validator anchor added. These are common-policy prose rules, the same pattern as Evidence-Based Reasoning. Validator remains 8/8 at v4.6.
 
 ### Follow-up (merged and released)
-- Peer review (review-02) flagged that Pre-Work Gate item 3 ("Produce HLD and LLD") could read as contradicting the Mandatory Design Artifacts "ask whether to create" rule. Resolved by adding a clause: create the HLD/LLD only after proposing them and getting the user's agreement, in line with the no-side-effects norm.
-- Committed 1d71e95, squash-merged to master, pushed. Released as v2.2.0 (2026-08-25), a MINOR bump: no breaking changes since v2.1.0, backward-compatible features plus fixes. Changelog grouped into Features, Fixes, and Docs.
+- Peer review flagged that Pre-Work Gate item 3 ("Produce HLD and LLD") could read as contradicting the Mandatory Design Artifacts "ask whether to create" rule. Resolved by adding a clause: create the HLD/LLD only after proposing them and getting the user's agreement, in line with the no-side-effects norm.
+- Merged to the main branch. Released as v2.2.0 (2026-08-25), a MINOR bump: no breaking changes since v2.1.0, backward-compatible features plus fixes. Changelog grouped into Features, Fixes, and Docs.
 
 ---
 
 ## 2026-08-25: Full-file-read enforcement raised to a TIER READ-FIRST-RULES mandate
 
-Driven by a real violation in a production session (Claude Sonnet 4.6 skipped full reads of the customization file and a policy at load context) and the user's insistence that the rule be active everywhere. Branch `feature/full-file-read-enforcement`, not merged.
+Driven by a real violation in a production session (an assistant skipped full reads of the customization file and a policy at load context) and the user's insistence that the rule be active everywhere. Not merged.
 
 ### Problem
 - The read-fully rule lived only in Evidence-Based Reasoning (common policy), one rule among many. It covered boot reads through Proof-of-Load but not mid-task investigation reads, which are invisible to the user and the hardest to enforce. The user cannot watch every behind-the-scenes read.
@@ -678,7 +678,7 @@ Driven by a real violation in a production session (Claude Sonnet 4.6 skipped fu
 
 ### Non-Negotiables index (same branch)
 - Added a short **Non-Negotiables** block (6 items) at the top of `ai-policy-common.md` as an at-a-glance index of the highest-cost rules: full reads, no truncated evidence, evidence before assertion, approval before side effects, secrets check, protected-branch approval. Rationale: short numbered prominence helps salience for the load-bearing rules, and it is capped at 6 to avoid list-bombing. It indexes rules that already have their own detailed sections, so no separate validator anchor was added. This addresses the user's "rules buried in long prose" concern, with the caveat that formatting aids salience but does not fix execution; placement, observable proof, and external checks remain the real levers.
-- **Merged and released**: committed 16e11f1, squash-merged to master, pushed, branch deleted. Released as v2.3.0 (2026-08-25), a MINOR bump.
+- **Merged and released**: merged to the main branch. Released as v2.3.0 (2026-08-25), a MINOR bump.
 
 ---
 
@@ -714,7 +714,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 - **Research cleanup**: deleted the habit-hooks research file (`ai-coding-quality-behavioral-prompts-habit-hooks-research-2026-08-21.md`) and the two stale artifacts (`additions-to-common-policy.md`, `protocol-examination-findings-2026-08-24.md`) since their content was fully covered by merged work; removed the remaining research-derived pending items (ideas 3, 4, 7) from `next-steps.md` and `notes.md`; committed the previously untracked `2026-08-24.md` daily checkpoint.
 - **Sensitive-name guardrail**: verified the committed repo contains none of the flagged sensitive names (confirmed case-insensitive across all tracked files). The authoritative list lives in the user's global settings file, never in this repo. A person's handle was left in the state records and the git-ignored `ai/secrets/` files as-is, since they never reach the repo.
-- **Multi-assistant + build AI team preserved**: saved the `feature/multi-assistant-workflow` design doc combined with the AI-team runtime/role model (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B) into `ai/notes/multi-assistant-workflow-design.md` (Status: pending). Both feature branches deleted; only the note remains, plus the deferred items in `next-steps.md`. Draft's older paths vs the current `ai/state/` + single-writer + `ai/shared/coordination.md` model flagged for reconciliation before resuming.
+- **Multi-assistant + build AI team preserved**: saved the `feature/multi-assistant-workflow` design doc combined with the AI-team runtime/role model (watch-spawned roles, dispatcher/watcher, per-agent status files for Scenario B) into `ai/notes/multi-assistant-workflow-design.md` (Status: pending). Only the note remains, plus the deferred items in `next-steps.md`. Draft's older paths vs the current `ai/state/` + single-writer + `ai/shared/coordination.md` model flagged for reconciliation before resuming.
 - **Refactoring/codebase-upgrade research**: stored the Google research on refactoring vs upgrading, PHP-legacy vs modern-node differences, and the "upgrade first, then refactor" golden rule into `ai/notes/refactoring-and-upgrading-best-practices-2026-08-25.md`. A refactoring/codebase-upgrade policy is under consideration (Status: pending in `notes.md`).
 
 ---
@@ -755,7 +755,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Notes
 - No doc or README references to the old Evidence-Based Reasoning rule existed (verified by grep), so no doc updates were needed.
-- Branch `feature/evidence-based-investigation-default`, not merged.
+- Not merged.
 
 ---
 
@@ -836,7 +836,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **Not done**: no validator anchor added for this (prose-only change, consistent with how Evidence-Based Reasoning and other prose rules were handled without anchors elsewhere in this file).
 
 ### Process note (self-correction)
-- Both changes above were made and committed (`37e31e5`) without first fully loading this file, and without adding an entry to it — a direct miss of the Protocol Developer Mode mandate ("MUST fully load protocol-decisions.md ... not JIT-optional") that this same file documents (2026-06-19 entry, above). Caught by a self-requested peer review (`ai/code-review-reports/2026-09-10_11-08_review-01.md`, CHANGES REQUESTED, 2 Major findings) and fixed in this same session: this file now fully loaded and this entry added.
+- Both changes above were made without first fully loading this file, and without adding an entry to it — a direct miss of the Protocol Developer Mode mandate ("MUST fully load protocol-decisions.md ... not JIT-optional") that this same file documents (2026-06-19 entry, above). Caught by a self-requested peer review (CHANGES REQUESTED, 2 Major findings) and fixed in this same session: this file now fully loaded and this entry added.
 - **Files changed**: `ai/issues/open-issue-management-mechanism.md` (renamed), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/notes.md`, `ai/state/context.md`, `ai/state/next-steps.md`, `ai/policies/ai-policy-common.md`, `AGENTS.md`, `README.md`, this file.
 
 ---
@@ -848,7 +848,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Decision
 - Removed 7 stale "Not done in this session ... pending the user's review and commit decision" bullets (2026-07-28 x6, 2026-09-09 x1) — all described in-flight commit status that had long since resolved; kept any genuinely useful fact embedded in the same bullet (e.g. "validator not extended, not requested" was kept, reworded without the stale commit framing).
-- Removed 2 "Key configuration values" snapshot blocks (2026-07-04 sessions) — stale point-in-time git-ahead-counts ("22 commits ahead of origin, NOT pushed") duplicated by the adjacent release entry, no unique decision content.
+- Removed 2 "Key configuration values" snapshot blocks (2026-07-04 sessions) — stale point-in-time git-ahead counts, duplicated by the adjacent release entry, no unique decision content.
 - Condensed the "Documentation sync ... then commit" 2026-07-28 entry from a 7-line multi-bullet form to 2 lines — it recorded no new decision, only which docs were synced and that the day's work was committed.
 - **What was explicitly NOT done** (scoped out by the user): no structural Horizon Shield added to this file, and no merging of the larger multi-entry same-day streams (e.g. the seven 2026-07-28 entries) — each of those carries distinct rejected-alternative or rationale detail not safe to compress without a slower, dedicated pass.
 - **Result**: 865 → 839 lines before this entry (26 lines removed, ~3%). No decision, rejected alternative, or reversal was dropped.
@@ -880,14 +880,14 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - **Cites and deviates from the 2026-08-31 routing principle.** A triggered procedure should normally load its own self-contained policy. This mechanism stays in the always-loaded common policy because the template ensure step must be known during load-context, and only an always-loaded file carries that. Recorded as a conscious deviation, not an oversight.
 
 ### Process note
-- Protocol Developer Mode: `protocol-decisions.md` was fully loaded before any protocol file was edited. The implementation plan was saved to `ai/plans/issue-management-mechanism-implementation-plan.md` and peer-reviewed before implementation (review-01 CHANGES REQUESTED, five Major findings resolved, then review-02 APPROVED).
+- Protocol Developer Mode: `protocol-decisions.md` was fully loaded before any protocol file was edited. The implementation plan was peer-reviewed before implementation (CHANGES REQUESTED, five Major findings resolved, then APPROVED).
 - The two pending procedure design notes (Grilling, Agent Document Review) dropped their informal H and I letter reservations and take names when they are implemented, so that `PROCEDURE MANAGE-ISSUES` could be assigned to issue management.
 
 ### Files changed
 - `AGENTS.md` (PROCEDURE LOAD-CONTEXT Safety Barrier and Steps 2, 5, 7(g); PROCEDURE BOOTSTRAP-PROJECT Steps 1 and 2; new `PROCEDURE MANAGE-ISSUES`), `ai/policies/ai-policy-common.md` (new Issue Management Protocol section), `ai/shared/project-knowledge/issue-template.md` (new), `support-files/validate-protocol.sh` (v4.9), the six tickets under `ai/issues/` (moved and given template headers), `ai/issues/in-progress/.gitkeep` (new), `ai/notes/issue-management-mechanism-design.md`, `ai/notes/grilling-procedure-design-note.md` and `ai/notes/agent-document-review-procedure-design-note.md` (renamed), `ai/notes/notes.md`, `ai/plans/issue-management-mechanism-implementation-plan.md` (new), state files, and this file.
 
 ### Merge record
-- Committed on `master` as `be4e4b1` (squash of `feature/issue-management`) and pushed to `origin/master` (`9eba9f0..be4e4b1`). The feature branch was deleted. Both tickets resolved by this work moved to `ai/issues/closed/`: `issue-management-mechanism.md` and `boot-up-should-create-required-ai-directories.md`.
+- Merged to the main branch. Both tickets resolved by this work are closed: `issue-management-mechanism.md` and `boot-up-should-create-required-ai-directories.md`.
 
 ---
 
@@ -922,10 +922,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `AGENTS.md`, `ai/policies/ai-policy-common.md`, `support-files/validate-protocol.sh` (v5.0), `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, `ai/daily-checkpoints/` (15 files added or appended), `ai/shared/project-knowledge/progress-archive.md` (deleted), `ai/shared/project-knowledge/context-archive.md` (deleted), `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md`, `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and this file.
 
 ### Process note
-- Protocol Developer Mode: this file was loaded in full before edits. The plan was peer-reviewed: review-01 CHANGES REQUESTED (8 Major, 7 Minor), then fixed, then review-02, review-03, and review-04 APPROVED. Implementation review-05 CHANGES REQUESTED (1 Major, fixed) then review-06 APPROVED.
+- Protocol Developer Mode: this file was loaded in full before edits. The plan was peer-reviewed: CHANGES REQUESTED (8 Major, 7 Minor), then fixed and approved. The implementation was peer-reviewed: CHANGES REQUESTED (1 Major, fixed), then APPROVED.
 
 ### Merge record
-- Committed on `master` as `af54432` (squash of `feature/state-file-model-v2`) and pushed to `origin/master` (`dbf4cd7..af54432`). The feature branch was deleted. The issue `state-file-order-and-bloat-self-healing.md` moved to `ai/issues/closed/`.
+- Merged to the main branch. The ticket `state-file-order-and-bloat-self-healing.md` is closed.
 
 ---
 
@@ -945,14 +945,14 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - The user chose LLD plus an ADR entry only: one design document, no Vision, PRD, or HLD, because the change is one paragraph in an existing section and alters no architecture. The LLD lives at `ai/shared/project-knowledge/self-consistency-check-lld.md`.
 
 ### Process note
-- Protocol Developer Mode: this file was loaded in full before any protocol edit. The LLD was peer-reviewed (review-07 CHANGES REQUESTED, 3 Minor, fixed) and the implementation was peer-reviewed (review-08 CHANGES REQUESTED, 1 Minor, fixed; review-09 APPROVED).
+- Protocol Developer Mode: this file was loaded in full before any protocol edit. The LLD was peer-reviewed (CHANGES REQUESTED, 3 Minor, fixed) and the implementation was peer-reviewed (CHANGES REQUESTED, 1 Minor, fixed; then APPROVED).
 - Merged to `master`; see Merge record below.
 
 ### Files changed
 - `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/shared/project-knowledge/self-consistency-check-lld.md` (new), `ai/issues/open/edit-verification-missing-self-consistency-check.md` (moved to `ai/issues/in-progress/`, then to `ai/issues/closed/` on merge), `README.md`, `docs/simple-ai-workflow-slides.md`, this file.
 
 ### Merge record
-- Committed on `master` as `5f17b65` (squash of `feature/self-consistency-check`) on 2026-09-19; not pushed to origin. The feature branch was deleted. The ticket moved to `ai/issues/closed/`.
+- Merged to the main branch. The ticket is closed.
 
 ---
 
@@ -1050,7 +1050,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `ai/policies/ai-policy-code-review.md` (dimension 6), `ai/issues/in-progress/agent-document-review-procedure.md`, `ai/notes/notes.md`, this file.
 
 ### Merge record
-- Committed on `master` as `6a96da7` (the feature), with the backlog filing as `2ebac7f` (chore), and pushed to `origin/master` (`1f142ad..6a96da7`). The ticket `agent-document-review-procedure.md` moved to `ai/issues/closed/`.
+- Merged to the main branch; the backlog filing was a separate chore commit. The ticket `agent-document-review-procedure.md` is closed.
 
 ---
 
@@ -1096,7 +1096,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Process
 - Branch `docs/readme-overhaul`, not merged until the user confirms the README is complete.
-- review-15 CHANGES REQUESTED (diagram and copy-count findings), fixes applied, review-16 APPROVED.
+- Peer review: CHANGES REQUESTED (diagram and copy-count findings), fixes applied, then APPROVED.
 - One review finding was withdrawn: the customization list was said to omit project constraints and developer workflow, but the customization template has no such sections. Those presets are tracked by `customization-presets-per-role.md`.
 
 ### Files changed
@@ -1120,14 +1120,14 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Process note
 - Protocol Developer Mode: `protocol-decisions.md` (this file) was loaded in full (1062 lines) before the edit, per the mandatory pre-action check.
-- Peer review: `ai/code-review-reports/2026-09-21_14-43_review-01.md` — APPROVED, no findings.
+- Peer review: APPROVED, no findings.
 - `README.md` and `docs/simple-ai-workflow-slides.md` checked for references to specific Investigation Contract paragraph names or counts — none found, no updates needed.
 
 ### Files changed
-- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), `ai/code-review-reports/2026-09-21_14-43_review-01.md` (new), this file.
+- `ai/policies/ai-policy-common.md` (one blank line and one paragraph inserted), this file.
 
 ### Merge record
-- Squash-merged `feature/untried-not-impossible-investigation-contract` to `master` on 2026-09-21 and pushed to `origin/master`. The feature branch was deleted. GitHub issue #1 closed via the commit's `Closes #1`.
+- Merged to the main branch. The related GitHub issue was closed by the merge.
 
 ---
 
@@ -1138,7 +1138,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - A broad scan found no credentials, private keys, tokens, or connection strings in history. `ai/secrets/` was never committed.
 
 ### Decision
-- Rewrote the entire history from the first affected commit (`888bdf6`, 2026-06-22) with `git filter-repo --replace-text --replace-message --mailmap`. Every identifier now reads `[redacted]`.
+- Rewrote the entire history from the first affected commit (2026-06-22) with `git filter-repo --replace-text --replace-message --mailmap`. Every identifier now reads `[redacted]`.
 - Normalized all author and committer emails to `kamranazeem@gmail.com`.
 - Recreated all five tags (`v1.0.0` through `v2.3.0`) on the rewritten commits, preserving their messages. Force-pushed `master` and the tags.
 - Added a migration notice to `README.md`: existing clones must run `git fetch origin && git reset --hard origin/master`.
@@ -1149,10 +1149,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Verification
 - Every old commit maps to a live new commit (221 old commits, zero missing). Old and new `master` file lists are identical. Commit counts preserved. Tag messages byte-identical. Validator 8/8; markdownlint 0. A fresh mirror clone of the rewritten repo has zero identifier hits across all 223 commits.
-- Peer review: `ai/code-review-reports/2026-09-22_00-16_review-18.md` APPROVED. Backups under `/tmp/kilo/`.
+- Peer review: APPROVED.
 
 ### Accepted consequences
-- Every commit hash from `888bdf6` forward changed. Short-hash references recorded in tracked files are now stale.
+- Every commit hash from that point forward changed. Short-hash references recorded in tracked files are now stale.
 - GitHub may serve old objects by SHA for a while; forks and caches can persist.
 - The branch `docs/readme-overhaul` is rewritten locally and remains unmerged.
 
@@ -1197,7 +1197,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - No LLD. The change is boot mechanics in `AGENTS.md` plus one policy bullet, matching the two-layer pattern. The rule is freshness-only and deliberately does not restate the rejected distrust clause.
 
 ### Verification
-- Validator v5.0 8/8; markdownlint 0 on changed files; links resolve. Plan peer-reviewed (review-19 CHANGES REQUESTED, review-20 APPROVED).
+- Validator v5.0 8/8; markdownlint 0 on changed files; links resolve. Plan peer-reviewed (CHANGES REQUESTED, then APPROVED).
 
 ### Routing
 - Boot mechanics in `AGENTS.md` (PROCEDURE LOAD-CONTEXT Steps 5 and 7). Behavior in `ai-policy-common.md`. Docs synced. No validator anchor: behavioral prose, no new structure.
@@ -1206,7 +1206,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `AGENTS.md`, `ai/policies/ai-policy-common.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, `ai/plans/bounded-boot-time-staleness-heuristic-plan.md`, `ai/issues/in-progress/bounded-boot-time-staleness-heuristic.md`, this file.
 
 ### Merge record
-- Not merged. Branch `feature/bounded-staleness-heuristic`, awaiting user approval.
+- Not merged; awaiting user approval.
 
 ---
 
@@ -1230,7 +1230,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Verification
 - Validator v5.0 8/8; markdownlint 0 on changed markdown; no live reference to the removed exception remains.
-- Plan peer-reviewed (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation peer-reviewed (review-03 CHANGES REQUESTED, review-04 and review-05 APPROVED).
+- Plan peer-reviewed (CHANGES REQUESTED, then APPROVED). Implementation peer-reviewed (CHANGES REQUESTED, then APPROVED).
 - The user approved a conditional final sentence for the rule: "When a work item goes on a branch, open the branch before the first commit."
 
 ### Routing
@@ -1240,7 +1240,7 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `ai/policies/ai-policy-common.md`, `ai/policies/ai-policy-meta.md`, `ai/plans/pre-work-commits-on-master-plan.md`, `ai/issues/in-progress/pre-work-commits-on-master.md` (renamed from `git-history-noise-from-ai-housekeeping-commits.md`), `docs/workflow-guide.md`, this file.
 
 ### Merge record
-- Squash-merged to `master` as `da72fae` on 2026-09-22, branch deleted, and pushed to `origin/master`. The ticket `pre-work-commits-on-master.md` is closed under `ai/issues/closed/`.
+- Merged to the main branch. The ticket `pre-work-commits-on-master.md` is closed.
 
 ---
 
@@ -1267,16 +1267,16 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - JIT fails if a file's name does not reveal its domain. A bundled file such as `engineering-lessons-and-conventions.md` would be missed by a task that does not name its bundled topics. Mitigated by the per-domain naming and split guidance; splitting the existing bundled file is a user-space action, not a protocol change.
 
 ### Scope choice
-- No HLD or LLD. This is a loading-model change with a contained, enumerated file set. The implementation plan is `ai/plans/global-knowledge-jit-indexing-plan.md`, peer-reviewed before implementation.
+- No HLD or LLD. This is a loading-model change with a contained, enumerated file set. The implementation plan was peer-reviewed before implementation.
 
 ### Routing
 - Boot, reload, and recovery mechanics in `AGENTS.md`; behavior in `ai/policies/ai-policy-common.md`; docs synced in `README.md`, `docs/workflow-guide.md`, `docs/simple-ai-workflow-slides.md`, and `docs/ai-agent-collaboration.md`. Existing validator anchors are preserved, so no validator change is expected.
 
 ### Status
-- Decision approved by the user on 2026-10-06. Plan approved (review-01 CHANGES REQUESTED, review-02 APPROVED). Implementation complete on branch `feature/global-knowledge-jit-indexing`, validator 8/8 and markdownlint clean.
+- Decision approved by the user on 2026-10-06. Implementation complete; validator 8/8 and markdownlint clean.
 
 ### Merge record
-- Squash-merged `feature/global-knowledge-jit-indexing` into `master` as `e431dca` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `global-knowledge-jit-indexing.md` is closed under `ai/issues/closed/`; the executed plan was removed.
+- Merged to the main branch. The ticket `global-knowledge-jit-indexing.md` is closed.
 
 ---
 
@@ -1308,10 +1308,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Step numbers inside historical ADR prose were deliberately left in place, because step positions changed over time and mapping them would risk corrupting the record. The migration map translates them.
 
 ### Status
-- Decision approved by the user on 2026-10-06. Implementation on branch `feature/descriptive-names-for-procedures-steps-and-tiers`; validator v6.0 8/8 and the reference-integrity test PASS.
+- Decision approved by the user on 2026-10-06. Implemented; validator v6.0 8/8 and the reference-integrity test PASS.
 
 ### Merge record
-- Squash-merged `feature/descriptive-names-for-procedures-steps-and-tiers` into `master` as `f311fe7` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `descriptive-names-for-procedures-steps-and-tiers.md` is closed under `ai/issues/closed/`; the executed plan was removed.
+- Merged to the main branch. The ticket `descriptive-names-for-procedures-steps-and-tiers.md` is closed.
 
 ---
 
@@ -1333,10 +1333,10 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `release-practices.md` gained an Announcements section and a Release Checklist step; the "sole source of truth" wording was softened so the two surfaces do not compete. The README banner now links the latest announcement. The first entry is v4.0.0.
 
 ### Status
-- Implemented on branch `feature/docs-announcements`; validator 8/8 and markdownlint clean.
+- Implemented; validator 8/8 and markdownlint clean.
 
 ### Merge record
-- Squash-merged into `master` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `docs-announcements-directory.md` is closed under `ai/issues/closed/`.
+- Merged to the main branch. The ticket `docs-announcements-directory.md` is closed.
 
 ---
 
@@ -1361,7 +1361,24 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - `docs/workflow-guide.md` section 16, `docs/simple-ai-workflow-slides.md`, and `README.md`: synced.
 
 ### Status
-- Implemented on branch `feature/improve-issue-management-policy`. Plan `ai/plans/improve-issue-management-policy-implementation-plan.md` reviewed: review-01 and review-02 CHANGES REQUESTED, review-03 APPROVED. Implementation reviewed: review-04 CHANGES REQUESTED, review-05 APPROVED. Validator v6.0 8/8, reference test PASS (58 steps), markdownlint 0. The delivery-ledger exclusion is a deliberate user decision.
+- Decision approved by the user on 2026-10-12. Implemented; validator v6.0 8/8, reference test PASS, markdownlint 0. The delivery-ledger exclusion is a deliberate user decision.
 
 ### Merge record
-- Squash-merged `feature/improve-issue-management-policy` into `master` as `000bd7c` on 2026-10-12; branch deleted and `master` pushed to `origin/master`. The ticket `issue-management-policy-improvements.md` is closed under `ai/issues/closed/`; the executed plan was removed.
+- Merged to the main branch. The ticket `issue-management-policy-improvements.md` is closed.
+
+---
+
+## 2026-10-12: ADR entries are self-contained
+
+### Problem
+- ADR entries had drifted into implementation bookkeeping: commit hashes, branch names, push ranges, references to plan files that were later removed, and review-report numbers for reports that are git-ignored and never committed. A reader could not understand an entry without consulting git or artifacts that no longer exist. The 2026-09-22 history rewrite had already falsified every hash recorded before it.
+
+### Decision
+- ADR entries state the decision, its context, and its consequences in plain language. They do not depend on commit hashes, branch names, removed plan files, or non-committed reports.
+- The existing ledger was repaired to this standard: hash and branch/push bookkeeping and review-report references were removed or reworded; all decisions, rationales, and ticket outcomes were kept.
+
+### Rationale
+- An ADR is a durable record. A pointer that breaks (a rewritten hash, a deleted plan, a git-ignored report) makes the record's content unreachable.
+
+### Status
+- Standard added to the Design Documentation Standards in `ai/policies/ai-policy-common.md` and to the Protocol Developer Mode ADR mandate in `ai/policies/ai-policy-meta.md`. The ledger was repaired.
