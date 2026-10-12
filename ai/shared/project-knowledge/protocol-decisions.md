@@ -1364,4 +1364,4 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - Implemented on branch `feature/improve-issue-management-policy`. Plan `ai/plans/improve-issue-management-policy-implementation-plan.md` reviewed: review-01 and review-02 CHANGES REQUESTED, review-03 APPROVED. Implementation reviewed: review-04 CHANGES REQUESTED, review-05 APPROVED. Validator v6.0 8/8, reference test PASS (58 steps), markdownlint 0. The delivery-ledger exclusion is a deliberate user decision.
 
 ### Merge record
-- Pending squash merge to `master`.
+- Squash-merged `feature/improve-issue-management-policy` into `master` as `000bd7c` on 2026-10-12; branch deleted and `master` pushed to `origin/master`. The ticket `issue-management-policy-improvements.md` is closed under `ai/issues/closed/`; the executed plan was removed.
