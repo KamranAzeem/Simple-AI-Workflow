@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v4.0.0 released (2026-10-06).** Procedures, steps, and tiers now use stable names instead of single letters and numbers, and Global Knowledge is indexed instead of fully loaded. Nothing about how the workflow works has changed. Read the announcement: [docs/announcements/v4.0.0.md](docs/announcements/v4.0.0.md). |
+| **v5.0.0 (2026-10-12).** Design documents now live beside your code in a `design-docs/` directory, not inside the hidden `ai/` folder, so your design is versioned, shared, and present months later. Nothing breaks if you do nothing; migration is optional. Read the announcement: [docs/announcements/v5.0.0.md](docs/announcements/v5.0.0.md). |
 
 # Simple AI Workflow
 

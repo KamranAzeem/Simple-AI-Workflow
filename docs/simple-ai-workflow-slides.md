@@ -41,6 +41,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Issue management**: say `"manage issues"` to file, analyze, plan, and review tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template, a `Label` for unworkable tickets, and dated updates
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email; it uses your identity (git config, then global settings) and offers to create or fix `.gitconfig`
 - **Markdown output**: one policy for structure (headings, lists, code, links), a table ban unless you explicitly ask, and a reference `.markdownlint-cli2.jsonc`
+- **Design documents**: vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger live beside the code in `design-docs/`, with proportional depth
 - **Local-first research**: the AI searches your local sources first, then the web or its own recall, with a bounded probe
 - **Evidence-based investigation by default**: the AI investigates, cites sources, and checks new claims against what it has already read
 - **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat

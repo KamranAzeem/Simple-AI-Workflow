@@ -379,3 +379,7 @@ At bootstrap and at each `"load context"`, if no global `.gitconfig` exists, the
 ## 21. Markdown Output
 
 One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs every markdown file the AI writes: headings, lists, code fences, links, emphasis, and line length. Markdown tables are not used in protocol files; they are fine in slides, and in user-facing docs when they aid clarity, or whenever you ask for one. The reference linter settings live in `.markdownlint-cli2.jsonc`; reproduce them in the markdown linter of your choice.
+
+## 22. Design Documents
+
+Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; migration is optional.
