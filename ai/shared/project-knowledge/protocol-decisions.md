@@ -1402,7 +1402,4 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 - One home for markdown mechanics, and a rule set a user can port to their own linter.
 
 ### Status
-- Implemented on branch `feature/consolidate-markdown-policy`. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The stricter `.markdownlint-cli2.jsonc` enables blanks-around-headings, blanks-around-lists, ul-indent, list-marker-space, ul-style, ol-prefix, code-fence-style (backtick), hr-style (`---`), and proper-names.
-
-### Merge record
-- Pending.
+- Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The stricter `.markdownlint-cli2.jsonc` enables blanks-around-headings, blanks-around-lists, ul-indent, list-marker-space, ul-style, ol-prefix, code-fence-style (backtick), hr-style (`---`), and proper-names. The ticket `consolidate-markdown-formatting-policy.md` is closed and the executed plan removed.
