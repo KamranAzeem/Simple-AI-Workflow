@@ -40,7 +40,7 @@ When implementing new features, architecture changes, or functional code modific
 1. **Discussion**: Propose and wait for approval.
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
-**No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before the first commit.
+**No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before making any change to the files, so every edit lands on the branch.
 Branch prefix and commit format: see Git conventions in Universal Engineering Standards.
 
 ### Conditional Autonomy for Handoffs

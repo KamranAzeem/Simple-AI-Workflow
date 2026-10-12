@@ -471,3 +471,7 @@ The protocol's ADR store is `design-docs/protocol-decisions.md` at the protocol 
 ## 2026-10-12: The decision store holds decisions only
 
 The store records genuine design decisions in a short decision, context, consequence shape. Session bookkeeping (status, merge records, files changed, verification notes, review counts, commit and branch details) is not kept here; it lives in the daily checkpoints. The store was reduced from 1763 lines and 73 dated entries to this curated form.
+
+## 2026-10-12: Open the branch before editing
+
+Open the branch before making any file change on a work item, not merely before the first commit. Editing first and branching later risks changes landing on the trunk and breaks the single-branch rule. This refines the 2026-09-22 no-pre-work-commits decision.
