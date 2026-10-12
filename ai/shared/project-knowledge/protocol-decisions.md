@@ -1450,3 +1450,17 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0. The ticket `grilling-procedure.md` is closed and the executed plan removed.
+
+---
+
+## 2026-10-12: Brainstorming mode in the common policy
+
+### Decision
+- Add a `## Brainstorming` section to the common policy: the divergent mode, with a trigger phrase ("brainstorm this"), a generative-partner role, no criticism during divergence, deferred judgment, clustering, a grouped output list with a shortlist, and a handoff to Grilling or a design document. Placed next to `## Grilling`.
+- No separate policy file and no AGENTS.md procedure.
+
+### Rationale
+- Brainstorming is the divergent counterpart to Grilling; keeping the pair together in the common policy keeps the two modes in one place.
+
+### Status
+- Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0. The ticket `brainstorming-procedure.md` is closed and the executed plan removed.

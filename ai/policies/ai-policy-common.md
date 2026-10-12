@@ -280,6 +280,16 @@ The convergent mode for reaching shared understanding. Trigger it with "grill me
 - **Output**: a one-paragraph gist that can feed a design document or a next-steps entry.
 - **Stop**: when no branch remains unanswered.
 
+## Brainstorming
+
+The divergent mode for widening the option space before a design exists. Trigger it with "brainstorm this" or "let's brainstorm [topic]".
+
+- **Role**: generative partner. Do not criticize during divergence.
+- **Method**: generate options freely on the problem and the design. Capture every idea and defer judgment.
+- **Cluster**: group related ideas once the flow slows.
+- **Output**: a grouped list of ideas plus a short recommended shortlist.
+- **Handoff**: pass the shortlist to Grilling or a design document.
+
 ## Universal Testing Standards
 
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
