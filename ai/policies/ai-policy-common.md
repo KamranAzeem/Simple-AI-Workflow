@@ -255,7 +255,7 @@ Complete these checks before starting any work item. Do not write code or config
 
 1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
 2. **Acceptance criteria review**: Review the work item's acceptance criteria before you produce any design document. If they are missing, untestable, or ambiguous, flag it to the user and do not proceed until it is resolved. See the Acceptance Criteria Quality section below.
-3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the proportionality rule above.
+3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the proportionality rule above. For the convergence method, see the Grilling section.
 4. **HLD and LLD**: Produce a High-Level Design and a Low-Level Design per the Design Documentation Standards below, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Their purpose is to remove uncertainty before work begins, not to satisfy a review gate. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
 5. **Removal safety**: When a work item removes items or configuration, gather positive evidence. Confirm that everything meant to stay in place is still present and correct after the change, not just that the target was removed.
 6. **Pre-work announcement**: Write a brief Markdown pre-work summary of the work item. Post it to any external system only on the user's explicit instruction (see the external-system-mutation rule in Universal Operational Guardrails).
@@ -269,6 +269,16 @@ Acceptance criteria are the contract between a work item and its outcome. Two ch
 - **Coverage**: Every acceptance criterion must trace to at least one LLD item. If one does not, the LLD is incomplete.
 
 If acceptance-criteria quality turns out to be a recurring problem on a project, note the patterns in normal project knowledge at checkpoints. Do not stand up a dedicated guide file unless it earns its keep.
+
+## Grilling
+
+The convergent mode for reaching shared understanding. Trigger it with "grill me on this" or "grill this [plan/design/idea]". It also runs inside Pre-Work Gate item 3.
+
+- **Role**: interviewer, not a yes-man. Challenge every assumption.
+- **Recommended answer**: propose an answer for each question before asking it, so the user reacts instead of inventing one.
+- **Method**: map the idea as a design tree. Work in rounds. Ask all pending branches, process the answers, find new branches, and repeat.
+- **Output**: a one-paragraph gist that can feed a design document or a next-steps entry.
+- **Stop**: when no branch remains unanswered.
 
 ## Universal Testing Standards
 

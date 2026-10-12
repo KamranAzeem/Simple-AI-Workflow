@@ -1436,3 +1436,17 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. Refines the 2026-10-12 "Markdown Output policy consolidated" entry.
+
+---
+
+## 2026-10-12: Grilling mode in the common policy
+
+### Decision
+- Add a `## Grilling` section to the common policy: the convergent shared-understanding mode, with a trigger phrase ("grill me on this"), an interviewer role, a recommended answer per question, design-tree rounds, a one-paragraph output gist, and a stop condition. Pre-Work Gate item 3 cross-references it.
+- No separate policy file and no AGENTS.md procedure.
+
+### Rationale
+- Grilling formalizes the Pre-Work Gate's shared-understanding step, so it belongs next to it in the common policy.
+
+### Status
+- Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0. The ticket `grilling-procedure.md` is closed and the executed plan removed.
