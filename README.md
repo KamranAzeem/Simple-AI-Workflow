@@ -257,7 +257,7 @@ Simple AI Workflow fixes that. Everything lives in plain files inside your proje
 
 For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, Cursor, and this workflow, with a side-by-side table, see:
 
-**[Simple AI Workflow vs Copilot, Claude, ChatGPT: a full comparison](docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md)**
+**[AI assistants and their memory systems: how Simple AI Workflow fits in](docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md)**
 
 ## What's included
 
