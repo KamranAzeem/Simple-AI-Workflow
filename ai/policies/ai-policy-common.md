@@ -183,7 +183,7 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 - **AI-initiated creation**: when the AI finds something worth tracking, it files the ticket immediately and never waits on a human. Where the user has not chosen `Severity` or `Size`, set `Human-to-decide (AI estimate: ...)`.
 - **Pre-work analysis**: before any work starts, analyze the ticket for missing information, inconsistencies, and gaps. Fill every gap through brainstorming or grilling with the user, and keep the ticket at minimum prose as gaps are filled. If the ticket is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists. For an external tracker with no label mechanism, analyze the ticket and tell the user whether it is workable.
 - **Plan mandate**: once the ticket is workable, create an implementation plan and append its file name as a dated comment on the ticket. If the project uses TDD, write the failing test first, then the implementation.
-- **Plan depth**: a small ticket needs context plus acceptance criteria. A medium or larger ticket needs an HLD, an LLD, acceptance criteria, and an ADR for each design decision. Keep the plan concise and at minimum prose. Depth follows the Pre-Work Gate.
+- **Plan depth**: a small ticket needs context plus acceptance criteria. A medium or larger ticket needs an HLD, an LLD (with AC), and an ADR for each design decision. Keep the plan concise and at minimum prose. Depth follows the Pre-Work Gate.
 - **Plan review**: pass the plan through review rounds. Validate design and architecture decisions with the user during planning, record each as an ADR, and implement only a bullet-proof plan.
 - **Branch and merge**: implement on a feature branch and pass it through peer-review rounds. For local work, close the ticket, squash-merge to trunk, then delete the branch, in that order. For external PR/MR work, merge the PR/MR first, then close the ticket.
 - **Lifecycle**: open, then in-progress, then closed. A ticket reaches `closed/` only when its fix is merged. Reopening moves it back to `open/`.
@@ -256,7 +256,7 @@ Complete these checks before starting any work item. Do not write code or config
 1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
 2. **Acceptance criteria review**: Review the work item's acceptance criteria before you produce any design document. If they are missing, untestable, or ambiguous, flag it to the user and do not proceed until it is resolved. See the Acceptance Criteria Quality section below.
 3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the proportionality rule above. For the convergence method, see the Grilling section.
-4. **HLD and LLD**: Produce a High-Level Design and a Low-Level Design per the Design Documentation Standards below, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Their purpose is to remove uncertainty before work begins, not to satisfy a review gate. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
+4. **HLD and LLD (with AC)**: Produce an HLD and an LLD (with AC) per the Design Documentation Standards below, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
 5. **Removal safety**: When a work item removes items or configuration, gather positive evidence. Confirm that everything meant to stay in place is still present and correct after the change, not just that the target was removed.
 6. **Pre-work announcement**: Write a brief Markdown pre-work summary of the work item. Post it to any external system only on the user's explicit instruction (see the external-system-mutation rule in Universal Operational Guardrails).
 7. **Framework alignment**: Apply the established best-practice framework for the target platform or domain (for example a cloud provider's well-architected framework). Platform-specific detail belongs in the relevant domain policy, not here.
@@ -335,50 +335,70 @@ Offer at bootstrap and at each load context; strongly suggest when the current d
 
 ## Design Documentation Standards
 
-### Document Flow
+### Document Chain
 
-Design documents form a chain; each feeds the next:
+Documents form a chain; each feeds the next:
 
-`notes → vision → PRD → HLD → LLD → ADRs → delivery ledger`
+`Notes (in ai/notes) → Vision → PRD → HLD → LLD (with AC) → Risk and Gap Analysis → ADRs → Delivery Ledger`
 
-Review before advancing. Before the AI creates the next document, it runs a gap analysis and peer review on the existing documents, then resolves every finding. One document at a time; never skip from notes or vision straight to implementation.
+One document at a time. Before creating the next document, run a gap analysis and peer review on the existing ones and resolve every finding. Never skip from Notes or Vision to implementation.
+
+### Requirement Gathering
+
+Gather enough requirements to build an MVP. Then iterate.
+
+### Proportional Depth
+
+- Small work: context plus acceptance criteria.
+- Medium, large, and architectural work: the full document set.
+
+Roles differ. Application developers mostly need the light path plus ADRs for real decisions. Solution architects need the layered, multi-repo set. Infrastructure engineers need requirements, design, and runbook.
+
+### Layering
+
+A large solution may use layered design documents. Layer 1 is the bird's-eye view: major components, modules, and subsystems. Each later layer details one component. Repeat as needed.
 
 ### Mandatory Design Artifacts
 
-At the start of each session, the AI MUST check for the following design documents in the **Project AI Knowledge Directory**. If any are missing, inform the user with a brief summary of benefits and ask whether to create them.
+Design documents live beside the code in `design-docs/`, never under `ai/`. The single-repo and multi-repo layouts are defined with the location rules.
 
-- **Vision**: A short, plain-language document that captures what you want to build and why, written before any formal documentation. Distilled from raw notes. Sections: What, Why, Goals, Out of scope. One to two pages maximum.
-- **PRD** (Product Requirements Document): Problem, target users, success criteria, and scope. Each requirement is assigned a unique `REQ-NNN` ID. Prevents building the wrong thing.
-- **HLD** (High-Level Design): System architecture, component decomposition, module boundaries, and technology choices. Each component is assigned a unique `HLD-NNN` ID. Provides the implementation roadmap.
-- **LLD** (Low-Level Design): Detailed designs per component — classes, interfaces, data flows, APIs, database schemas. Each item is assigned a unique `LLD-NNN` ID. Bridges between architecture and code.
-- **ADRs** (Architecture Decision Records): Context and rationale for each significant architectural decision. Each ADR is assigned a unique `ADR-NNN` ID. Prevents repeated debate and preserves institutional knowledge. Each entry is self-contained: it states the decision, its context, and its consequences in plain language. Do not reference commit hashes, branch names, removed plan files, or non-committed reports.
-- **Delivery Ledger**: A living cross-reference document that tracks which design items (by ID) have been implemented and released. Created as soon as implementation begins against any design document. Updated at every checkpoint. See Delivery Ledger section below.
+At the start of each session, check for the documents below. For medium or larger work, if any are missing, tell the user and ask whether to create them.
+
+- **Vision**: What, Why, Goals, Out of scope. One to two pages.
+- **PRD** (Product Requirements Document): problem, target users, success criteria, scope. Each requirement gets a `REQ-NNN` ID.
+- **HLD** (High-Level Design): architecture, component decomposition, module boundaries, technology choices. Each component gets an `HLD-NNN` ID.
+- **LLD (with AC)** (Low-Level Design with Acceptance Criteria): classes, interfaces, data flows, APIs, database schemas, and the acceptance criteria for each item. Each item gets an `LLD-NNN` ID. AC is a coupling, not a container: small work keeps AC without an LLD.
+- **Risk and Gap Analysis**: open risks and gaps. Each gets an `RSK-NNN` ID.
+- **ADRs** (Architecture Decision Records): genuine design decisions only. Each entry states the decision, its context, and its consequences, and gets an `ADR-NNN` ID. Never a changelog, diary, or command log, and never an external reference such as a commit hash.
+- **Delivery Ledger**: tracks which design items (by ID) are implemented and released. Created when implementation begins against a design document. Updated at every checkpoint.
 
 ### ID Convention
 
-Every requirement, component, and design item gets a unique ID the moment it is written. IDs are sequential within each document, starting at `001`. Never reuse or delete an ID — if an item is cancelled, mark it `[CANCELLED]` in the ledger and leave the ID in place.
+Every requirement, component, design item, risk, and decision gets a unique sequential ID, starting at `001`. Never reuse or delete an ID. Mark a cancelled item `[CANCELLED]` and leave the ID in place.
 
-- PRD requirement: `REQ-NNN` (for example `REQ-001`).
-- HLD component: `HLD-NNN` (for example `HLD-003`).
-- LLD item: `LLD-NNN` (for example `LLD-012`).
-- ADR: `ADR-NNN` (for example `ADR-001`).
+- PRD requirement: `REQ-NNN`.
+- HLD component: `HLD-NNN`.
+- LLD item: `LLD-NNN`.
+- Risk or gap: `RSK-NNN`.
+- ADR: `ADR-NNN`.
 
 ### Naming Convention
 
-Follow the Verbose File Naming rule from Universal Operational Guardrails. File names MUST identify the project or sub-project they belong to. Kebab-case with descriptive prefix and document-type suffix:
+File names identify the project or sub-project: kebab-case with a descriptive prefix and a document-type suffix.
 
-- `<project-or-subproject>-vision.md` — e.g. `identity-service-vision.md`
-- `<project-or-subproject>-prd.md` — e.g. `identity-service-prd.md`
-- `<project-or-subproject>-hld.md` — e.g. `checkout-flow-hld.md`
-- `<project-or-subproject>-lld.md` — e.g. `payment-worker-lld.md`
-- `<project-or-subproject>-adr-<nnn>-<short-description>.md` — e.g. `checkout-adr-001-use-stripe.md`
-- `<project-or-subproject>-delivery-ledger.md` — e.g. `identity-service-delivery-ledger.md`
+- `<project>-vision.md`
+- `<project>-prd.md`
+- `<project>-hld.md`
+- `<project>-lld.md`
+- `<project>-risk-and-gap-analysis.md`
+- `<project>-adr-<nnn>-<short-description>.md`
+- `<project>-delivery-ledger.md`
 
 ### Delivery Ledger
 
-The delivery ledger is a mandatory tracking document. Create it when implementation begins against any design document. It lives in the **Project AI Knowledge Directory** alongside the design documents it references.
+The Delivery Ledger tracks which design items (by ID) are implemented and released. It lives in `design-docs/` alongside the design documents it references.
 
-The ledger has one section per design document. Each row references an item by its ID:
+One section per design document, one line per item. Status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
 
 ```markdown
 ## PRD Requirements
@@ -398,9 +418,7 @@ The ledger has one section per design document. Each row references an item by i
 - `LLD-002`: Email template engine. Status: Not Started.
 ```
 
-Valid status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
-
-**AI checkpoint obligation**: At every checkpoint, review the delivery ledger and update the status of any items completed or progressed during the session. If the ledger does not exist yet and a design document does, prompt the user to create it.
+At every checkpoint, update the ledger for items completed or progressed. If the ledger does not exist and a design document does, prompt the user.
 
 ### Supplementary Documents (Consider Also)
 
@@ -414,7 +432,7 @@ Create these when the project's complexity warrants them:
 
 ### Update Discipline
 
-Update design documents alongside the code they describe. A PRD or HLD left untouched after significant changes becomes misleading — treat documentation drift as a code smell.
+Update design documents alongside the code they describe. Treat documentation drift as a defect.
 
 ## Communication Standards
 

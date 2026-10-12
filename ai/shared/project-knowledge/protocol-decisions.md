@@ -1464,3 +1464,24 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0. The ticket `brainstorming-procedure.md` is closed and the executed plan removed.
+
+---
+
+## 2026-10-12: Design documentation standards
+
+### Decision
+- Document chain: `Notes (in ai/notes) → Vision → PRD → HLD → LLD (with AC) → Risk and Gap Analysis → ADRs → Delivery Ledger`.
+- "LLD" is written as "LLD (with AC)". AC is a coupling, not a container: small work keeps AC without an LLD.
+- Risk and Gap Analysis is a tracked artifact with `RSK-NNN`.
+- ADRs record genuine design decisions only (decision, context, consequences), never a changelog or an external reference.
+- New projects gather enough requirements for an MVP, then iterate.
+- Large solutions may use layered design documents.
+- Depth is proportional and role-aware.
+- Design documents live beside the code in `design-docs/`, never under `ai/`.
+
+### Context
+- The prior standards were app-shaped, mandatory for everyone, and stored design documents under the AI directory, which is private, unshared, and may never be backed up.
+
+### Consequences
+- The Pre-Work Gate and the plan-depth rule use "LLD (with AC)".
+- The `design-docs/` location detail and boot indexing land in a separate change.
