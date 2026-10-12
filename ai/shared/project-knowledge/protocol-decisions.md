@@ -1485,3 +1485,21 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 ### Consequences
 - The Pre-Work Gate and the plan-depth rule use "LLD (with AC)".
 - The `design-docs/` location detail and boot indexing land in a separate change.
+
+---
+
+## 2026-10-12: Design docs location and boot indexing
+
+### Decision
+- Design documents live in `design-docs/` beside the code, never under `ai/`. Single repo: project-root `design-docs/`. Multi-repo: solution documents and a rollup in the project-root `design-docs/`, and each component's documents in its own repo.
+- The Delivery Ledger lives in `design-docs/`: one per repo, plus the rollup.
+- Boot indexes every `design-docs/` under the project root (JIT, max depth 5, heavy trees pruned, archives skipped, read-only), shown as the Proof-of-Load item `ITEM DESIGN-DOCS-INDEX`.
+- Scanning `design-docs` by name is the standing exception to the unprompted-exploration ban.
+- Migration from the old `ai/shared/project-knowledge/` location is optional: detect and offer at load context, and a `"migrate design docs"` trigger moves files with approval.
+
+### Context
+- Design documents were stored under the AI directory, which is private, unshared, and may never be backed up. The design belongs with the code.
+
+### Consequences
+- The reference test reports 9 Proof-of-Load items.
+- Docs, banner, and the version bump land in a separate change.

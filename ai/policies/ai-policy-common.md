@@ -372,6 +372,21 @@ At the start of each session, check for the documents below. For medium or large
 - **ADRs** (Architecture Decision Records): genuine design decisions only. Each entry states the decision, its context, and its consequences, and gets an `ADR-NNN` ID. Never a changelog, diary, or command log, and never an external reference such as a commit hash.
 - **Delivery Ledger**: tracks which design items (by ID) are implemented and released. Created when implementation begins against a design document. Updated at every checkpoint.
 
+### Location
+
+Design documents live beside the code in `design-docs/`, never under `ai/`.
+
+- Single repo: the `design-docs/` directory at the project root.
+- Multi-repo project root: the solution-level documents in the project-root `design-docs/`, and each component's documents in that repo's own `design-docs/`.
+- The Delivery Ledger lives in `design-docs/`: one per repo, plus a project-root rollup that links to each repo's ledger.
+
+### Migration
+
+Design documents under `ai/shared/project-knowledge/` are the old location. Migration is optional.
+
+- At load context, if design documents exist there and no `design-docs/` exists, offer to migrate.
+- The trigger `"migrate design docs"` moves the files into `design-docs/` with the user's approval and shows the git impact (they become tracked).
+
 ### ID Convention
 
 Every requirement, component, design item, risk, and decision gets a unique sequential ID, starting at `001`. Never reuse or delete an ID. Mark a cancelled item `[CANCELLED]` and leave the ID in place.
