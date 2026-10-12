@@ -238,7 +238,7 @@ Before presenting any generated file to the user, run the appropriate linter/val
   - Swift: `swiftlint --fix`
   - Kotlin: `ktlint -F <file>`
   - Java: `google-java-format -i <file>` (or checkstyle)
-- **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
+- **Exceptions**: auto-generated configs, lock files, and third-party vendor files.
 - **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
 ### CLI Command Accuracy
