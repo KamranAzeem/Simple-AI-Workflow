@@ -460,7 +460,7 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
 - **Headings**: ATX headings (`#`, `##`, `###`) in order; do not skip levels. Surround every heading with a blank line above and below. A file does not have to start with a heading, and more than one `#` title is allowed. No trailing punctuation in headings.
 - **Lists**: any consistent unordered marker (`-` or `*`) or ordered prefix (`1.`). One space after each marker. One item per line. Indent nested items 2 spaces per level; never tabs. Surround every list with a blank line above and below.
 - **Code**: fenced code blocks with a language tag where it is known (for example `bash` or `markdown`). Put multi-line commands in fenced blocks, not inline. Keep blocks copy-friendly.
-- **Tables**: do not use markdown tables in any document. The only exception is when the user explicitly asks for a table, for example in a user-facing report or a presentation slide. Otherwise use a list.
+- **Tables**: do not use markdown tables in protocol files (`AGENTS.md`, `ai/policies/*`, `ai/issues/*`, `ai/plans/*`); use a list. Tables are fine in slides, and in user-facing documentation (`docs/`, `README.md`) when they aid clarity, and whenever the user asks for one.
 - **Links**: do not use markdown hyperlinks `[text](path)` in policy files or `AGENTS.md`; use a Bold Anchor or backticks. Inside `ai/policies/`, relative links use `../`. Links in `docs/` to other docs must not repeat the `docs/` prefix.
 - **Emphasis**: use `**bold**` for key terms and `code` for identifiers, paths, and commands. Emphasis as a heading is allowed; prefer a real heading.
 - **Line length**: no maximum; do not hard-wrap paragraphs.

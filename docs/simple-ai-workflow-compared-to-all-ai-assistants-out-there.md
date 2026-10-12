@@ -71,25 +71,27 @@ Cursor's rules file is easy to set up and effective within Cursor. But the momen
 
 ---
 
-## How the Concepts Map
+## The Translation Table
 
 Here is how the concepts from each tool map to Simple AI Workflow.
 
-- **Project-level instructions**: `.github/copilot-instructions.md` (Copilot), `CLAUDE.md` (Claude), custom instructions (ChatGPT), `.cursor/rules` (Cursor), `AGENTS.md` (Simple AI Workflow).
-- **User preferences, cross-project**: `/memories/` user scope (Copilot), `~/.claude/CLAUDE.md` (Claude), custom instructions (ChatGPT), user rules in settings (Cursor), `~/.ai/settings/global-user-settings.md` (Simple AI Workflow).
-- **Per-project customization**: no standard equivalent (Copilot, Claude), Projects (ChatGPT), none (Cursor), `ai-customization.md` (Simple AI Workflow).
-- **Domain expertise and rules**: `.github/skills/<name>/SKILL.md` and `.instructions.md` (Copilot), `CLAUDE.md` sections (Claude), custom GPTs (ChatGPT), `.cursor/rules` sections (Cursor), `ai/policies/ai-policy-*.md` with 16 policies (Simple AI Workflow).
-- **Progress tracking across sessions**: Claude Projects history (Claude), Projects (ChatGPT), `ai/state/progress.md` (Simple AI Workflow), none (Copilot, Cursor).
-- **Pending tasks**: `ai/state/next-steps.md` (Simple AI Workflow), none in the others.
-- **Current state and context dashboard**: `ai/state/context.md` (Simple AI Workflow), none in the others.
-- **Project knowledge and decisions**: uploaded project files (Claude, ChatGPT), `ai/shared/project-knowledge/` (Simple AI Workflow), none (Copilot, Cursor).
-- **Lessons learned across projects**: `~/.claude/CLAUDE.md`, manual (Claude), Memory, automatic and opaque (ChatGPT), `~/.ai/global-knowledge/`, explicit and structured (Simple AI Workflow), none (Copilot, Cursor).
-- **Multi-assistant handoffs**: `ai/shared/handoffs/` (Simple AI Workflow), none in the others.
-- **Post-summary recovery**: `PreCompact` hook (Copilot), Post-Compaction Recovery procedure (Simple AI Workflow), none in the others.
-- **Compliance enforcement**: built-in AI knowledge, applied by the AI and not stored as files (Simple AI Workflow), none in the others.
-- **Peer code review mode**: `"peer review"` procedure plus saved reports (Simple AI Workflow), none in the others.
-- **Protocol self-validation**: `validate-protocol.sh` (Simple AI Workflow), none in the others.
-- **Sync instructions across projects**: `sync-agents-md.sh` / `.ps1` (Simple AI Workflow), none in the others.
+| What you need | Copilot | Claude | ChatGPT | Cursor | Simple AI Workflow |
+|---|---|---|---|---|---|
+| Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
+| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `~/.ai/settings/global-user-settings.md` |
+| Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
+| Domain expertise / rules | `.github/skills/<name>/SKILL.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (16 policies) |
+| Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
+| Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
+| Current state / context dashboard | None | None | None | None | `ai/state/context.md` |
+| Project knowledge / decisions | None | Uploaded project files | Uploaded project files | None | `ai/shared/project-knowledge/` |
+| Lessons learned across projects | None | `~/.claude/CLAUDE.md` (manual) | Memory (automatic, opaque) | None | `~/.ai/global-knowledge/` (explicit, structured) |
+| Multi-assistant handoffs | None | None | None | None | `ai/shared/handoffs/` |
+| Post-summary recovery | `PreCompact` hook | None | None | None | Post-Compaction Recovery procedure |
+| Compliance enforcement | None | None | None | None | built-in AI knowledge (applied by the AI, not stored as files) |
+| Peer code review mode | None | None | None | None | `"peer review"` procedure + saved reports |
+| Protocol self-validation | None | None | None | None | `validate-protocol.sh` |
+| Sync instructions across projects | None | None | None | None | `sync-agents-md.sh` / `.ps1` |
 
 ---
 
@@ -185,15 +187,17 @@ And unlike native tool automation, you always know what was saved and why.
 
 ## In Short
 
-- **Files**: hidden in tool-specific directories (native tools), in your project as plain Markdown (Simple AI Workflow).
-- **Portability**: tied to one tool or account (native), works with any tool, any editor, any OS (Simple AI Workflow).
-- **Cross-tool continuity**: start over every time (native), pick up where you left off with any assistant (Simple AI Workflow).
-- **Memory control**: automatic and often opaque (native), explicit, structured, and fully inspectable (Simple AI Workflow).
-- **Domain expertise**: flat instructions text (native), 16 modular policies with enforced rules (Simple AI Workflow).
-- **Compliance**: none (native), SOC2, ISO-27001, GDPR, and more (Simple AI Workflow).
-- **Peer review**: none (native), on-demand with saved reports (Simple AI Workflow).
-- **Setup on a new machine**: re-configure each tool (native), zero, the files travel with the project (Simple AI Workflow).
-- **Cost**: zero friction (native), a few deliberate commands per session (Simple AI Workflow).
+| | Native AI tools | Simple AI Workflow |
+|---|---|---|
+| Files | Hidden in tool-specific directories | In your project, plain Markdown |
+| Portability | Tied to one tool or account | Works with any tool, any editor, any OS |
+| Cross-tool continuity | Start over every time | Pick up where you left off, any assistant |
+| Memory control | Automatic, often opaque | Explicit, structured, fully inspectable |
+| Domain expertise | Flat instructions text | 16 modular policies with enforced rules |
+| Compliance | None | SOC2, ISO-27001, GDPR, and more |
+| Peer review | None | On-demand, with saved reports |
+| Setup on a new machine | Re-configure each tool | Zero, files travel with the project |
+| Cost | Zero friction | A few deliberate commands per session |
 
 Simple AI Workflow is not trying to replace the convenience of native tools. It is solving a different problem: **what happens when the tool is not enough, or when you want the same discipline across all of them.**
 

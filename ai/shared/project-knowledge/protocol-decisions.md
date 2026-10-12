@@ -1422,3 +1422,17 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The ticket `ai-identity-attribution-and-project-gitconfig-setup.md` is closed and the executed plan removed.
+
+---
+
+## 2026-10-12: Markdown tables allowed in slides and user-facing docs
+
+### Decision
+- Refine the `## Markdown Output` table rule. Tables stay banned in protocol files (`AGENTS.md`, `ai/policies/*`, `ai/issues/*`, `ai/plans/*`). Tables are allowed in slides (presentation layer) and in user-facing documentation (`docs/`, `README.md`) when they aid clarity, and whenever the user asks for one.
+- Restore the two tables in the AI-assistants comparison document, which are clarity aids in user-facing docs.
+
+### Rationale
+- Slides are presentation, and a comparison table is clearer than a list in user-facing docs. The strict ban belongs only where the AI writes structured working files.
+
+### Status
+- Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. Refines the 2026-10-12 "Markdown Output policy consolidated" entry.

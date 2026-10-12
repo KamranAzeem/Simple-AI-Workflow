@@ -378,4 +378,4 @@ At bootstrap and at each `"load context"`, if no global `.gitconfig` exists, the
 
 ## 21. Markdown Output
 
-One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs every markdown file the AI writes: headings, lists, code fences, links, emphasis, and line length. Markdown tables are banned unless you explicitly ask for one, for example in a report or a slide. The reference linter settings live in `.markdownlint-cli2.jsonc`; reproduce them in the markdown linter of your choice.
+One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs every markdown file the AI writes: headings, lists, code fences, links, emphasis, and line length. Markdown tables are not used in protocol files; they are fine in slides, and in user-facing docs when they aid clarity, or whenever you ask for one. The reference linter settings live in `.markdownlint-cli2.jsonc`; reproduce them in the markdown linter of your choice.
