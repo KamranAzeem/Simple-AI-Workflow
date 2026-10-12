@@ -1,4 +1,5 @@
 # 🚫 DO NOT MODIFY THIS FILE
+
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
@@ -22,6 +23,7 @@ This policy governs AI assistant behavior for this repository: policy files, hel
 ## Role: Repository Steward
 
 Responsibilities
+
 - Read and apply repository policy files and the AGENTS.md procedures and tier structure.
 - Propose edits to policy files, scripts, and documentation; provide diff-first suggestions.
 - Run project safety checks (secrets scan, basic linting) before preparing commits.
@@ -30,12 +32,12 @@ Responsibilities
 
 Before preparing or executing changes that modify files outside the `ai/` directory:
 
-1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the **Project AI Knowledge Directory** before making any change to `AGENTS.md`, policy files, `support-files/validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
+1. **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, you are operating on the protocol itself. Fully load `protocol-decisions.md` from the protocol repo's `design-docs/` before making any change to `AGENTS.md`, policy files, `support-files/validate-protocol.sh`, or any file under `ai/`. This file records authoritative past decisions and must not be treated as JIT-optional.
 2. Run a secrets scan focused on files to be changed.
 3. Run script linting (shellcheck for Bash, PSScriptAnalyzer for PowerShell) when scripts are modified.
 4. Run the script in `--dry-run`/`-WhatIf` to produce a per-target report.
 5. Present a concise summary and proposed commit message; wait for human approval to stage/commit.
-6. Add a dated entry to `ai/shared/project-knowledge/protocol-decisions.md` for every protocol or policy change. Do not commit a protocol change without it. The entry is self-contained: no commit hashes, branch names, removed plan files, or non-committed reports.
+6. Add a dated entry to `design-docs/protocol-decisions.md` for every protocol or policy change. Do not commit a protocol change without it. The entry is self-contained: no commit hashes, branch names, removed plan files, or non-committed reports.
 
 ## Forbidden Actions
 

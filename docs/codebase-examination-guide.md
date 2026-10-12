@@ -2,7 +2,7 @@
 
 How the Simple-AI-Workflow lets an AI assistant examine — and optionally refactor — a codebase that is **larger than its context window**, without heavyweight tooling.
 
-This guide explains the `codebase-examination` expertise module (`ai/policies/ai-policy-codebase-examination.md`). For the design rationale, see the ADR store at `ai/shared/project-knowledge/protocol-decisions.md`.
+This guide explains the `codebase-examination` expertise module (`ai/policies/ai-policy-codebase-examination.md`). For the design rationale, see the ADR store at `design-docs/protocol-decisions.md`.
 
 ---
 
@@ -53,23 +53,27 @@ A smaller window only means **smaller batches and more passes** — never a hard
 ## 3. The Four-Phase Workflow
 
 ### Phase 1 — Map (build durable understanding on disk)
+
 1. Generate the Level 0 repo map and persist it with a verbose name, e.g. `codebase-skeleton-map-<project-or-area>.md`.
 2. Generate Level 1 signature maps per module as needed; persist them (or as clearly delimited sections in the skeleton-map file). Signatures only — no bodies.
 3. Record a lightweight **dependency note** in plain text (`module-a -> module-b`) — this is what later lets an edit in one file surface its dependents.
 4. Build these maps with the assistant's native file tools (`grep_search`, `read_file`, `file_search`).
 
 ### Phase 2 — Plan (decide before touching)
-5. Analyse first: read the maps, identify the exact files an examination or refactor would touch, and present that list. Wait for your go-ahead before editing anything.
-6. If refactoring is the goal, write findings and the change plan to disk before any code change — so they survive context compaction.
+
+1. Analyse first: read the maps, identify the exact files an examination or refactor would touch, and present that list. Wait for your go-ahead before editing anything.
+2. If refactoring is the goal, write findings and the change plan to disk before any code change, so they survive context compaction.
 
 ### Phase 3 — Perform (bounded batches)
-7. Process work in small batches (a handful of files per pass) sized to the active window — not the whole codebase at once.
-8. After each batch, append a short entry to a durable changelog, e.g. `refactor-changelog-<project-or-area>.md` (what changed, in which files, any new or broken references).
-9. Drop Level 2 file contents from context once a batch is committed; reload only what the next batch needs.
+
+1. Process work in small batches (a handful of files per pass) sized to the active window, not the whole codebase at once.
+2. After each batch, append a short entry to a durable changelog, e.g. `refactor-changelog-<project-or-area>.md` (what changed, in which files, any new or broken references).
+3. Drop Level 2 file contents from context once a batch is committed; reload only what the next batch needs.
 
 ### Phase 4 — Reconcile (close the loop)
-10. Do a reduce pass: using the changelog and the dependency note, find dangling references, broken imports, and unupdated dependents, and fix them.
-11. Update the skeleton map and dependency note to reflect the new reality before declaring the work complete.
+
+1. Do a reduce pass: using the changelog and the dependency note, find dangling references, broken imports, and unupdated dependents, and fix them.
+2. Update the skeleton map and dependency note to reflect the new reality before declaring the work complete.
 
 ---
 
