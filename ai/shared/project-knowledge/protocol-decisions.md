@@ -1382,3 +1382,27 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Standard added to the Design Documentation Standards in `ai/policies/ai-policy-common.md` and to the Protocol Developer Mode ADR mandate in `ai/policies/ai-policy-meta.md`. The ledger was repaired.
+
+---
+
+## 2026-10-12: Markdown Output policy consolidated
+
+### Problem
+- Markdown formatting rules were scattered across the common policy, the code-review policy, the issue template, the state-file rules, the customization file, and the global settings. No single section defined them, and two protocol files used markdown tables.
+
+### Decision
+- Add a `## Markdown Output` section to `ai/policies/ai-policy-common.md` holding every universal markdown-mechanics rule: headings, lists, code fences, tables, links, emphasis, line length, filenames, and validation.
+- Ban markdown tables in every document. The only exception is a table the user explicitly asks for, for example in a report or a slide.
+- State the linter conventions in linter-agnostic terms that match `.markdownlint-cli2.jsonc`, so a user can reproduce them in any linter.
+- Prose style stays in Humanized Output and is cross-referenced. Personal preferences stay in `ai-customization.md`.
+- Convert the tables in the edited policy files to lists.
+- Enforcement is going forward: new and edited markdown must pass; existing files are grandfathered and fixed when touched or on request.
+
+### Rationale
+- One home for markdown mechanics, and a rule set a user can port to their own linter.
+
+### Status
+- Implemented on branch `feature/consolidate-markdown-policy`. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The stricter `.markdownlint-cli2.jsonc` enables blanks-around-headings, blanks-around-lists, ul-indent, list-marker-space, ul-style, ol-prefix, code-fence-style (backtick), hr-style (`---`), and proper-names.
+
+### Merge record
+- Pending.

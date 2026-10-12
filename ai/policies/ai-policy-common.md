@@ -1,4 +1,5 @@
 # 🚫 DO NOT MODIFY THIS FILE
+
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
@@ -9,6 +10,7 @@ This file contains the universal operating rules for all AI assistants in this r
 > **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the **Global AI Policies Directory** defined in the configuration section of `AGENTS.md`.
 
 ## Non-Negotiables (read first, apply always)
+
 These are the rules most costly to break. They are active at boot, at load context, at compaction recovery, and mid-work. Each has a detailed section below or in `AGENTS.md`.
 
 1. **Evidence-Based Investigation** (the top Non-Negotiable): Always investigate before you assert. No claim without a source, no assumptions or guesses where evidence is missing. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract below.
@@ -29,15 +31,20 @@ These are the rules most costly to break. They are active at boot, at load conte
 **Local-first source precedence.** Search local sources of truth before external ones. The project's own files and history, Project Knowledge, Global Knowledge, the live environment, and cloned repos come before the model's own knowledge, the web, or official documentation. Bound the probe: index, open the likely candidates, then escalate. Do not turn "local first" into a new token sink.
 
 ## Feature Development and Branch-Gating
+
 ### Branch-Gating Requirement
+
 When implementing new features, architecture changes, or functional code modifications:
+
 1. **Discussion**: Propose and wait for approval.
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
 **No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before the first commit.
 
 ### Conditional Autonomy for Handoffs
+
 AI assistants are authorized to autonomously merge a feature branch to `master`/`main` **ONLY IF** all of the following conditions are met:
+
 1. The task is being processed from a handoff file in **Project Handoffs Directory**.
 2. The handoff file contains a `## Verification` section with objective, executable validation steps.
 3. ALL verification steps pass with zero errors (verified via shell command output).
@@ -46,6 +53,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 *If any condition is not met, human approval is mandatory for the merge.*
 
 ## Agent-to-Agent (A2A) Coordination
+
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
 2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the `AGENTS.md` bootstrap procedure). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
@@ -54,7 +62,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
     - **Refusal Mandate**: AI assistants MUST refuse to process any handoff that lacks this section. They must inform the user: "This handoff lacks a Verification section and cannot be processed autonomously per ai-policy-common.md."
 
 ## Operational Restart and Checkpoint Contract
+
 ### Source-of-Truth Order
+
 **Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
 
 **Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
@@ -65,6 +75,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 4. `ai/state/context.md`
 
 ### Checkpoint & Backup Procedures
+
 - **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
 - **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in `AGENTS.md`. This runs in the same transaction as the state files, not as a separate or optional action.
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
@@ -72,7 +83,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **No Git Metadata in State Files**: The state files never record a branch, commit hash, or push status, and the AI does not prompt the user to commit them. Git history is the source of truth for version control.
 
 ## AI-Driven Secure Development Practices
+
 **Mandate**: AI-generated code and infrastructure configurations must inherently adhere to security best practices derived from established threat modeling principles (e.g., STRIDE, OWASP Top 10).
+
 - This includes, but is not limited to:
   - Input Validation & Sanitization: To prevent injection attacks (SQLi, XSS).
   - Secure Authentication & Authorization: Implementing robust user verification and access control.
@@ -82,6 +95,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 **AI Contextual Security**: The AI shall use the context of the user's request (e.g., feature description, code snippet, infrastructure goal) to infer potential security concerns and generate appropriately secure outputs.
 
 ## Universal Operational Guardrails
+
 - **Canonical Reference Names**: Refer to procedures, steps, and tiers by their canonical ALL-CAPS kebab names (for example PROCEDURE WRITE-CHECKPOINT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES). Never reference them by letter or number.
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
@@ -93,12 +107,13 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
-    - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
-    - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
-    - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
+  - **Batching**: Group independent tool calls into a single turn whenever possible to minimize API requests.
+  - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
+  - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 - **Intent over metrics**: When you surface a code quality issue, describe it by intent, never by a bare metric. Say what single job a function should have, or why a parameter list implies a missing abstraction. Never hand the model a bare score like "complexity 11, threshold 5". A bare number is a target: capable models hit the number and ignore the intent behind it (Goodhart's Law). This is most true on strong models, which game bare linter scores more, not less.
 
 ## Compliance Intelligence
+
 - **No On-Disk Compliance Files**: Compliance standards (e.g., GDPR, SOC2, HIPAA, PCI-DSS, ISO-27001, CCPA) are NOT stored as on-disk files. When the **Project Customization File** lists required compliance standards under `## Required Compliance`, the AI assistant MUST use its built-in knowledge (or web search if available) to apply the relevant requirements, guardrails, and best practices for each listed standard.
 - **Contextual Application**: The AI shall infer which compliance controls are relevant based on the task context (e.g., data handling, user authentication, logging, access control) and apply them without requiring explicit rule files.
 - **No Directory Scanning**: The AI MUST NOT scan for or attempt to load compliance files from any directory. Compliance is handled entirely through AI intelligence.
@@ -108,6 +123,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
   3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard — review and remove`) — but only with the user's explicit approval.
 
 ## Global Knowledge Protocol
+
 - **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
 - **Bootstrapping & Load Context — Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file to a single domain with a descriptive name, and split a file that mixes domains, because the filename is the JIT lookup key. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
@@ -115,6 +131,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
+
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
 - **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
@@ -122,13 +139,16 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 
 ### Ticket File Scope
+
 Files under a `tickets/` subdirectory of the **Project AI Knowledge Directory** represent the status exchange that flows through the customer ticket system (Jira, etc.). They contain:
+
 - Decisions and outcomes communicated through the ticket
 - Blockers raised and resolved, as visible to the customer
 - References to PRs, builds, and key identifiers as they appear in ticket comments
 - Closing conditions and final status
 
 They do NOT contain:
+
 - Technical investigation notes, CLI output, or diagnostic data
 - Step-by-step runbooks or command sequences
 - AI model handover notes or session diary entries
@@ -154,6 +174,7 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 - **Template file**: the full ticket template lives at `ai/shared/project-knowledge/issue-template.md`. The `AGENTS.md` bootstrap and load-context procedures create it from the compact field list above when it is missing, and never overwrite it.
 
 ## State File Ownership Protocol
+
 - **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
 - **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
@@ -171,43 +192,49 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 ## Operational Standards
 
 ### Directive vs. Inquiry
+
 Distinguish between **Directives** (unambiguous requests for action or implementation) and **Inquiries** (requests for analysis, advice, or observations).
+
 - **The "Analyze-Plan-Stop" Rule**: Assume all requests are **Inquiries** unless they contain an explicit instruction to perform a task. For Inquiries, your scope is strictly limited to research and analysis. You MUST:
-    1.  Analyze the request and share technical thoughts or opinions.
-    2.  Propose a specific implementation strategy or plan.
-    3.  Identify the exact files that would be modified or created.
-    4.  **Pause and wait** for a Directive before modifying any files.
+    1. Analyze the request and share technical thoughts or opinions.
+    2. Propose a specific implementation strategy or plan.
+    3. Identify the exact files that would be modified or created.
+    4. **Pause and wait** for a Directive before modifying any files.
 - **No Proactive Fixes**: Do not initiate implementation based on observations of bugs or statements of fact. Wait for a corresponding Directive.
 - **Plan Mode**: For complex Inquiries involving architectural decisions or broad changes, research thoroughly and present a proposed strategy with specific file changes before implementing.
 
 ### Generated File Validation
-Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review.
+
+Before presenting any generated file to the user, run the appropriate linter/validator for that file type and fix all issues found. This catches syntax errors, formatting issues, and common bugs before human review. Markdown follows the Markdown Output section.
 
 - **Common linters by file type**:
-    - JavaScript/TypeScript: `npx eslint --fix <file>`
-    - Python: `ruff check --fix <file>` (or flake8/pylint)
-    - Go: `gofmt -w <file>` (or `golangci-lint run --fix`)
-    - Rust: `cargo clippy --fix` (or `rustfmt <file>`)
-    - Shell scripts: `shellcheck <file>`
-    - Markdown: `markdownlint --fix <file>`
-    - YAML/JSON: `yamllint <file>` (or `jq . <file>` for JSON validation)
-    - Dockerfile: `hadolint <file>`
-    - Terraform/HCL: `terraform fmt <file>`
-    - SQL: `sqlfluff fix <file>`
-    - CSS/SCSS: `stylelint --fix <file>`
-    - Swift: `swiftlint --fix`
-    - Kotlin: `ktlint -F <file>`
-    - Java: `google-java-format -i <file>` (or checkstyle)
+  - JavaScript/TypeScript: `npx eslint --fix <file>`
+  - Python: `ruff check --fix <file>` (or flake8/pylint)
+  - Go: `gofmt -w <file>` (or `golangci-lint run --fix`)
+  - Rust: `cargo clippy --fix` (or `rustfmt <file>`)
+  - Shell scripts: `shellcheck <file>`
+  - Markdown: `markdownlint --fix <file>`
+  - YAML/JSON: `yamllint <file>` (or `jq . <file>` for JSON validation)
+  - Dockerfile: `hadolint <file>`
+  - Terraform/HCL: `terraform fmt <file>`
+  - SQL: `sqlfluff fix <file>`
+  - CSS/SCSS: `stylelint --fix <file>`
+  - Swift: `swiftlint --fix`
+  - Kotlin: `ktlint -F <file>`
+  - Java: `google-java-format -i <file>` (or checkstyle)
 - **Exceptions**: AI tracking files (`ai/`), auto-generated configs, lock files, and third-party vendor files.
 - **If linter is unavailable**: Note it clearly and suggest the user installs it.
 
 ### CLI Command Accuracy
+
 Before presenting any shell or CLI command to the user, verify the following:
+
 1. **Exact parameter names and flags**: Check `<tool> <subcommand> --help` output or the tool's official online documentation. Do not rely on memory — flag and option names differ across tools, versions, and vendors. A plausible-sounding flag that does not exist is worse than no command at all.
 2. **Resource identifiers**: Never guess or infer subscription IDs, resource names, resource group names, connection strings, or similar identifiers. Derive them from live tool queries or from values explicitly confirmed in the current session context.
 3. **If a parameter cannot be verified**: State this explicitly. Instruct the user to confirm the correct value before running the command rather than presenting an unverified placeholder.
 
 ### Pre-Work Gate
+
 Complete these checks before starting any work item. Do not write code or configuration until they are done. Scale the depth to the work item's size and risk: a small, low-risk change needs a light pass, while a large or destructive change needs the full treatment.
 
 1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
@@ -219,6 +246,7 @@ Complete these checks before starting any work item. Do not write code or config
 7. **Framework alignment**: Apply the established best-practice framework for the target platform or domain (for example a cloud provider's well-architected framework). Platform-specific detail belongs in the relevant domain policy, not here.
 
 ### Acceptance Criteria Quality
+
 Acceptance criteria are the contract between a work item and its outcome. Two checks matter:
 
 - **Before design**: Review the work item's acceptance criteria. Flag any that are missing, ambiguous, not independently testable, or contradictory, and resolve them before you write the design.
@@ -227,6 +255,7 @@ Acceptance criteria are the contract between a work item and its outcome. Two ch
 If acceptance-criteria quality turns out to be a recurring problem on a project, note the patterns in normal project knowledge at checkpoints. Do not stand up a dedicated guide file unless it earns its keep.
 
 ## Universal Testing Standards
+
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
 - **Mock external dependencies**: Mock external services (APIs, databases, network, sensors) in unit tests. Use in-memory test doubles or fakes for integration tests.
@@ -234,6 +263,7 @@ If acceptance-criteria quality turns out to be a recurring problem on a project,
 - **TDD**: If the project uses TDD, write the failing test first, then the implementation.
 
 ## Universal Engineering Standards
+
 - **SOLID Principles**: Apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion to all object-oriented code. These are non-negotiable for maintainable, testable systems.
 - **DRY (Don't Repeat Yourself)**: Every piece of knowledge must have a single, unambiguous, authoritative representation within a system. Extract duplication into shared abstractions, but avoid over-abstracting before patterns emerge.
 - **YAGNI (You Ain't Gonna Need It)**: Do not add functionality until it is actually needed. Speculative generality increases complexity without proven value.
@@ -245,6 +275,7 @@ If acceptance-criteria quality turns out to be a recurring problem on a project,
 ## Design Documentation Standards
 
 ### Document Flow
+
 Design documents form a chain; each feeds the next:
 
 `notes → vision → PRD → HLD → LLD → ADRs → delivery ledger`
@@ -252,6 +283,7 @@ Design documents form a chain; each feeds the next:
 Review before advancing. Before the AI creates the next document, it runs a gap analysis and peer review on the existing documents, then resolves every finding. One document at a time; never skip from notes or vision straight to implementation.
 
 ### Mandatory Design Artifacts
+
 At the start of each session, the AI MUST check for the following design documents in the **Project AI Knowledge Directory**. If any are missing, inform the user with a brief summary of benefits and ask whether to create them.
 
 - **Vision**: A short, plain-language document that captures what you want to build and why, written before any formal documentation. Distilled from raw notes. Sections: What, Why, Goals, Out of scope. One to two pages maximum.
@@ -262,16 +294,16 @@ At the start of each session, the AI MUST check for the following design documen
 - **Delivery Ledger**: A living cross-reference document that tracks which design items (by ID) have been implemented and released. Created as soon as implementation begins against any design document. Updated at every checkpoint. See Delivery Ledger section below.
 
 ### ID Convention
+
 Every requirement, component, and design item gets a unique ID the moment it is written. IDs are sequential within each document, starting at `001`. Never reuse or delete an ID — if an item is cancelled, mark it `[CANCELLED]` in the ledger and leave the ID in place.
 
-| Document | ID prefix | Example |
-|---|---|---|
-| PRD requirement | `REQ-NNN` | `REQ-001` |
-| HLD component | `HLD-NNN` | `HLD-003` |
-| LLD item | `LLD-NNN` | `LLD-012` |
-| ADR | `ADR-NNN` | `ADR-001` |
+- PRD requirement: `REQ-NNN` (for example `REQ-001`).
+- HLD component: `HLD-NNN` (for example `HLD-003`).
+- LLD item: `LLD-NNN` (for example `LLD-012`).
+- ADR: `ADR-NNN` (for example `ADR-001`).
 
 ### Naming Convention
+
 Follow the Verbose File Naming rule from Universal Operational Guardrails. File names MUST identify the project or sub-project they belong to. Kebab-case with descriptive prefix and document-type suffix:
 
 - `<project-or-subproject>-vision.md` — e.g. `identity-service-vision.md`
@@ -282,6 +314,7 @@ Follow the Verbose File Naming rule from Universal Operational Guardrails. File 
 - `<project-or-subproject>-delivery-ledger.md` — e.g. `identity-service-delivery-ledger.md`
 
 ### Delivery Ledger
+
 The delivery ledger is a mandatory tracking document. Create it when implementation begins against any design document. It lives in the **Project AI Knowledge Directory** alongside the design documents it references.
 
 The ledger has one section per design document. Each row references an item by its ID:
@@ -289,25 +322,19 @@ The ledger has one section per design document. Each row references an item by i
 ```markdown
 ## PRD Requirements
 
-| ID      | Description             | Status      | Released in |
-|---------|-------------------------|-------------|-------------|
-| REQ-001 | User registration       | Done        | v1.0        |
-| REQ-002 | Password reset          | In Progress | —           |
-| REQ-003 | Social login            | Not Started | —           |
+- `REQ-001`: User registration. Status: Done. Released in v1.0.
+- `REQ-002`: Password reset. Status: In Progress.
+- `REQ-003`: Social login. Status: Not Started.
 
 ## HLD Components
 
-| ID      | Component               | Status      | Released in |
-|---------|-------------------------|-------------|-------------|
-| HLD-001 | Auth service            | Done        | v1.0        |
-| HLD-002 | Notification pipeline   | In Progress | —           |
+- `HLD-001`: Auth service. Status: Done. Released in v1.0.
+- `HLD-002`: Notification pipeline. Status: In Progress.
 
 ## LLD Items
 
-| ID      | Item                    | Status      | Released in |
-|---------|-------------------------|-------------|-------------|
-| LLD-001 | JWT token generation    | Done        | v1.0        |
-| LLD-002 | Email template engine   | Not Started | —           |
+- `LLD-001`: JWT token generation. Status: Done. Released in v1.0.
+- `LLD-002`: Email template engine. Status: Not Started.
 ```
 
 Valid status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
@@ -315,6 +342,7 @@ Valid status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
 **AI checkpoint obligation**: At every checkpoint, review the delivery ledger and update the status of any items completed or progressed during the session. If the ledger does not exist yet and a design document does, prompt the user to create it.
 
 ### Supplementary Documents (Consider Also)
+
 Create these when the project's complexity warrants them:
 
 - **API Specification** (OpenAPI/AsyncAPI): Contract-first service boundaries.
@@ -324,9 +352,11 @@ Create these when the project's complexity warrants them:
 - **Glossary**: Shared domain terminology to align humans and AI on project-specific language.
 
 ### Update Discipline
+
 Update design documents alongside the code they describe. A PRD or HLD left untouched after significant changes becomes misleading — treat documentation drift as a code smell.
 
 ## Communication Standards
+
 - **Collaborative Tone**: Maintain a professional, direct, and collaborative tone suitable for a senior peer programmer. Avoid robotic or overly formal keyword-driven responses (e.g., using "STOP") unless explicitly required for safety.
 - **Token Efficiency**: Minimize filler; use direct, actionable language.
 - **Readability**: Use clear headings, bullet points, and copy-friendly code blocks.
@@ -334,6 +364,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 ### Humanized Output
 
 #### Sentence Structure
+
 - Keep sentences under 15 words. Break longer ones into shorter parts.
 - Vary how you start sentences. Do not start three in a row with the same word.
 - Use active voice. Say "the API returns 404" not "a 404 status code will be returned."
@@ -341,6 +372,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 - Get to the point fast. Put the answer first. Add context after.
 
 #### Words to Use and Avoid
+
 - Use everyday words: `use` not `utilize`, `help` not `facilitate`, `show` not `demonstrate`, `try` not `endeavour`, `to` not `in order to`, `because` not `due to the fact that`.
 - Never use these AI-tell words: `delve`, `pivotal`, `underscore`, `testament`, `tapestry`, `showcase`, `vibrant`, `boasts` (meaning "has"), `meticulous`, `intricate`, `landscape` (as an abstract noun), `foster`, `garner`, `interplay`, `bolster`.
 - Do not start sentences with `Additionally`, `Furthermore`, `Moreover`, or `Consequently`.
@@ -348,6 +380,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 - Be specific, not abstract. Say "costs $12/month" not "incurs incremental operational expenditure."
 
 #### Tone
+
 - Write like a helpful senior engineer. Not a textbook and not a marketing page.
 - Be formal when needed but never robotic. You can say "this needs fixing" without apologizing.
 - In chat, be less formal. Short sentences, natural flow, no boilerplate.
@@ -356,6 +389,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 - Do not over-apologize. `This needs fixing.` is better than `Sorry, but I think there might be an issue.`
 
 #### Patterns to Kill
+
 - **No em dashes** (`—`). Use commas, colons, or parentheses instead. Em dashes are a strong AI tell.
 - **No negative parallelisms**. Avoid `not only... but also`, `not X, but Y` patterns. They sound like the text is disproving a misconception no one had.
 - **No rule of three**. Do not list three items just because the pattern sounds good. Two items is enough. One is even better.
@@ -367,6 +401,7 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 - **No exhaustive caveats**. Every suggestion does not need `but this depends on your specific use case, architecture, requirements, team, and budget.`
 
 #### Writing Style by Medium
+
 - **Reports and documents**: Formal but direct. Short paragraphs. One idea per paragraph. No fluff.
 - **Customer emails and tickets**: Professional but human. Use contractions. Thank or acknowledge briefly. Get to the point.
 - **Research papers**: Precise. Cite sources properly. Do not inflate the importance of your findings.
@@ -374,5 +409,24 @@ Update design documents alongside the code they describe. A PRD or HLD left unto
 - **Chat conversations**: Be natural. Short responses. No sign-off. Use `I` for your thoughts, `we` for what you and the user do together.
 
 #### Why This Matters
+
 AI-generated text has a tell. It is too perfect, too polite, and too generic. Human writing has rough edges. It gets to the point faster. It uses simpler words. This section exists so your output sounds like it came from a knowledgeable person — not a language model.
+
+## Markdown Output
+
+Applies to every markdown file the AI generates or edits. Prose style is in Humanized Output; this section covers structure only. A user's customization file may tighten these rules; when it does, it takes precedence.
+
+- **Headings**: ATX headings (`#`, `##`, `###`) in order; do not skip levels. Surround every heading with a blank line above and below. A file does not have to start with a heading, and more than one `#` title is allowed. No trailing punctuation in headings.
+- **Lists**: any consistent unordered marker (`-` or `*`) or ordered prefix (`1.`). One space after each marker. One item per line. Indent nested items 2 spaces per level; never tabs. Surround every list with a blank line above and below.
+- **Code**: fenced code blocks with a language tag where it is known (for example `bash` or `markdown`). Put multi-line commands in fenced blocks, not inline. Keep blocks copy-friendly.
+- **Tables**: do not use markdown tables in any document. The only exception is when the user explicitly asks for a table, for example in a user-facing report or a presentation slide. Otherwise use a list.
+- **Links**: do not use markdown hyperlinks `[text](path)` in policy files or `AGENTS.md`; use a Bold Anchor or backticks. Inside `ai/policies/`, relative links use `../`. Links in `docs/` to other docs must not repeat the `docs/` prefix.
+- **Emphasis**: use `**bold**` for key terms and `code` for identifiers, paths, and commands. Emphasis as a heading is allowed; prefer a real heading.
+- **Line length**: no maximum; do not hard-wrap paragraphs.
+- **Filenames**: follow the Verbose File Naming rule.
+- **Validation**: generated markdown must pass a markdown linter. The reference settings are in `.markdownlint-cli2.jsonc`; reproduce them in your linter of choice. Settings the rules above do not already state:
+  - Multiple top-level headings are allowed, and a file need not start with a heading.
+  - Emphasis used as a heading is allowed.
+  - Duplicate headings are allowed unless they are siblings.
+
 <!-- AI-ASSISTANT: READ-ONLY END -->

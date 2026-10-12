@@ -1,4 +1,5 @@
 # 🚫 DO NOT MODIFY THIS FILE
+
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
@@ -55,12 +56,10 @@ This discipline applies across domains. The live-state and telemetry sources var
 
 ## Severity Classifications
 
-| Level | Meaning | Action |
-|---|---|---|
-| **Critical** | Blocks commit | Security vulnerability, data loss risk, broken core functionality |
-| **Major** | Fix before commit | Policy violation, logic error, significant quality issue |
-| **Minor** | Fix when convenient | Style, naming, minor duplication |
-| **Suggestion** | Optional | Refactor idea, alternative approach |
+- **Critical**: blocks commit. Security vulnerability, data loss risk, broken core functionality.
+- **Major**: fix before commit. Policy violation, logic error, significant quality issue.
+- **Minor**: fix when convenient. Style, naming, minor duplication.
+- **Suggestion**: optional. Refactor idea, alternative approach.
 
 ---
 
