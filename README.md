@@ -18,17 +18,13 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 ## Quick start
 
 1. Clone this repo somewhere on your machine (for example `~/Projects/Simple-AI-Workflow`).
-2. Create your global AI directory structure - it is important:
-  - `mkdir $HOME/.ai`
-  - `mkdir $HOME/.ai/settings/`
-  - `mkdir $HOME/.ai/global-knowledge/`
-  - `mkdir $HOME/.ai/backups/`
-  - Optional: copy `docs/global-user-settings.md` to `$HOME/.ai/settings/global-user-settings.md` and fill in your own details.
-3. Copy `AGENTS.md` to your project root - by CLI or file manager.
-4. Copy `docs/ai-customization.md` to `ai-customization.md` at your project root, then set `Global AI Workflow Directory` inside it to where you cloned this repo.
-5. Add expertise, traits, or compliance settings if you want them (see the [customization guide](docs/ai-customization-guide.md)).
-6. Open your project in VS Code and type this in the AI chat:
-   - `"bootstrap using AGENTS.md protocol"`
+2. Create your global AI directory structure (`mkdir $HOME/.ai`, then `settings/`, `global-knowledge/`, and `backups/` inside it).
+3. Optional: copy `docs/global-user-settings.md` to `$HOME/.ai/settings/global-user-settings.md` and fill in your own details.
+4. Set your git identity so commits use your name and email (`git config --global user.name` and `user.email`). At bootstrap the AI also offers to create or fix `.gitconfig`.
+5. Copy `AGENTS.md` to your project root - by CLI or file manager.
+6. Copy `docs/ai-customization.md` to `ai-customization.md` at your project root, then set `Global AI Workflow Directory` inside it to where you cloned this repo.
+7. Add expertise, traits, or compliance settings if you want them (see the [customization guide](docs/ai-customization-guide.md)).
+8. Open your project in VS Code and type this in the AI chat: `"bootstrap using AGENTS.md protocol"`.
 
 > **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
 
@@ -56,6 +52,7 @@ The repo holds the workflow and its policy files. You copy `AGENTS.md` and `ai-c
 A personal starter kit for one developer. You.
 
 It helps you:
+
 - Get better answers from your AI assistant, because it now knows your project's rules and your own preferences.
 - Use the same setup across all your projects and across different AI tools.
 - Stay organized. Progress, notes, and decisions are saved, so you can pick up where you left off.
@@ -111,6 +108,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 > **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
 
 Once context is loaded, you can also ask:
+
 - *"Show me the progress so far"*
 - *"What are the pending tasks?"*
 - *"Where are we in this project?"*
@@ -150,6 +148,7 @@ The workflow pushes back with a few built-in defences:
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
 
 A few habits help a lot:
+
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day. This keeps the active state files small and efficient, and all the information keep getting recorded in the state log / diary which is maintained under daily-checkpoint. This is *extremely* helpful to find out what you did three months ago - for example. The AI will go through all the daily checkpoints, and find out the information you were looking for.
 - **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint, compact conversation manually using "/compact" or "/compress", run "post-compaction recovery procedure" and continue working.
 - **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, as it is unreliable with a fresh or weaker models.
@@ -216,7 +215,7 @@ So, the process is as follows:
 
 **Note:** You *can* simply copy the `AGENTS.md` file from the Simple-AI-Workflow directory (where you pulled latest changes), and paste / overwrite the `AGENTS.md` in the projects you are interested in. However copying in several directories is cumbersome. Also, sometimes the changes are more than just an updated `AGENTS.md` file, so using the sync script is better.
 
-4. Go to the project directory you started from, start the IDEA again (e.g. VsCode), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
+1. Go to the project directory you started from, start the IDEA again (e.g. VsCode), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
 
 ## Examples
 
@@ -275,6 +274,8 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
 - **Issue management**: say `"manage issues"` and the AI files, analyzes, plans, and reviews tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, a `Label` for unworkable tickets, and dated updates.
+- **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
+- **Markdown output**: one policy for headings, lists, code, links, and a ban on markdown tables unless you explicitly ask for one. `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
@@ -287,6 +288,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 [Markdown version of the slides](docs/simple-ai-workflow-slides.md)
 
 Other docs:
+
 - [Workflow guide](docs/workflow-guide.md): handoffs, knowledge base, issue management, state files
 - [AI Customization Guide](docs/ai-customization-guide.md)
 - [Compliance guide](docs/compliance-guide.md)

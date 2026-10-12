@@ -3,7 +3,9 @@
 This guide explains how to interact with AI assistants in this repository and how to manage the AI state tracking files.
 
 ## 1. Project Knowledge (`ai/shared/project-knowledge/`)
+
 All persistent AI reasoning, style guides, and project-specific patterns are stored here.
+
 - **Location**: `/ai/shared/project-knowledge/` (Git-ignored)
 - **Status**: Non-version-controlled. Each contributor builds their own project knowledge base.
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
@@ -11,17 +13,22 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 - **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session — even if nothing changed (confirmation is mandatory).
 
 ## 2. Global Knowledge (Cross-Project)
+
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
+
 - **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
 - **Status**: Personal persistent memory that follows you into every project.
 - **Usage**: Indexed at initialization (index-at-boot, load-on-demand) under the same Token Rationing model as **Project Knowledge**; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
 - **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify; the filename is also the lookup key for index-only Global and Project Knowledge. See **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
 
 ## 3. Task Handoffs (`ai/shared/handoffs/`)
+
 Used for transferring specific tasks and context between AI assistants or sessions.
 
 ### How to Create a Handoff Task
+
 **Human Instructions**:
+
 1. Create a Markdown file in `ai/shared/handoffs/` (e.g., `my-task-handoff.md`).
 2. Use the following template:
 
@@ -42,19 +49,23 @@ To have the AI generate and save a handoff for you:
 > *"Create a handoff task for [task name] with [details] and save it to the handoffs directory."*
 
 ### How to Execute a Handoff Task
+
 To tell the AI to start working on a handoff:
 > *"Claim and execute [filename] from the handoffs directory."*
 
 The AI will:
+
 1. Verify and record ownership in `ai/shared/coordination.md`.
 2. Implement the requirements.
 3. Delete the handoff file and ownership claim upon successful verification.
 4. Record the completion in `ai/state/progress.md`.
 
 ## 4. Working with Git
+
 The workflow does not inject Git history into the state files. Git is the source of truth for version control, and the state files never record a branch, commit hash, or push status (see [Section 14](#14-atomic-write-protocol--state-file-trimming)).
 
 What the protocol does enforce around Git:
+
 - **Branch gating**: obtain explicit approval before state-changing Git operations on `master` or `main`.
 - **No pre-work commits**: never commit a start-work or placeholder commit; when a work item goes on a branch, open the branch before the first commit.
 - **Conventional commits**: follow the project's commit conventions (for example `feature:`, `fix:`, `chore:`, `docs:`).
@@ -65,30 +76,40 @@ The AI does not rely on commit history to rebuild project context. If you want a
 For a recommended global Git setup (identity, CRLF handling, and a readable `git lg` alias), see the Git Configuration section in the [global user settings template](global-user-settings.md).
 
 ## 5. Expertise & Intent Alignment (Review-First)
+
 To prevent AI assistants from prematurely implementing code changes when you only wanted to ask a question, the workflow enforces a strict intent alignment protocol.
 
 ### Directive vs. Inquiry
+
 The system distinguishes between two types of requests:
+
 - **Inquiry**: Requests for analysis, advice, observations, or "how-to" explanations.
 - **Directive**: Explicit instructions to perform a task, fix a bug, or implement a feature.
 
 ### The "Analyze-Plan-Stop" Rule
+
 For all **Inquiries**, the AI is mandated to:
-1.  **Analyze**: Share technical thoughts, opinions, and analysis of the problem.
-2.  **Plan**: Propose a specific implementation strategy, including which files will be changed or created.
-3.  **Pause and wait**: The AI MUST NOT proceed with code modifications until it receives an explicit **Directive** from you.
+
+1. **Analyze**: Share technical thoughts, opinions, and analysis of the problem.
+2. **Plan**: Propose a specific implementation strategy, including which files will be changed or created.
+3. **Pause and wait**: The AI MUST NOT proceed with code modifications until it receives an explicit **Directive** from you.
 
 ### Benefits
+
 - **Full Control**: You review the plan before a single line of code is changed.
 - **Token Efficiency**: Prevents wasted tokens on incorrect or unwanted implementations.
 - **Higher Quality**: Forces the AI to "think" (plan) before it "acts," leading to more robust solutions.
 
 ### Shared understanding before building
+
 For feature and architectural work, the AI reaches a shared design concept with you before it creates files or writes code. It walks the design tree branch by branch and asks questions until you agree on what is being built. Small, low-risk changes skip this and keep a light pass.
 
 ## 6. Idiot-Proof Protocol (Low-IQ Compatibility)
+
 ### Structural Guardrails
+
 Models with lower instruction-following capability (e.g., smaller or "lite" models) sometimes treat protocols as suggestions, leading to accidental re-initialization or overwriting of context files. This workflow implements high-visibility structural cues to prevent this:
+
 - **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
@@ -97,6 +118,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
 
 ### Benefits
+
 - **Reliability**: Use lower-cost models without risking project state.
 - **Consistency**: The same protocol works safely across any IQ tier.
 - **Visibility**: You know exactly what intelligence the AI has loaded before you start work.
@@ -106,16 +128,19 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the AI runs the **Post-Compaction Recovery** procedure before responding to your next request.
 
 ### How it works
+
 1. The AI notices the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary it did not write.
 2. It re-reads `AGENTS.md`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
 3. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
 4. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
 
 ### Key rules
+
 - **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time — automatically or when you ask for it.
 - **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
 
 ### Benefits
+
 - **Zero-touch resume**: No need to say "load context" after a compaction.
 - **Context integrity**: The reload restores your standing rules without disturbing the live thread.
 
@@ -138,20 +163,26 @@ final backstop is you: after any summary, ask "did you run the post-compaction
 recovery?" before trusting the next answer.
 
 ## 8. Native AI State Backups
+
 ### On-Demand Archiving
+
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
+
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` PROCEDURE CREATE-BACKUP.
 - **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
 - **Not automatic**: Backups are **not** part of the checkpoint procedure (PROCEDURE WRITE-CHECKPOINT). They are a separate procedure (PROCEDURE CREATE-BACKUP) invoked only by explicit user request.
 
 ### Benefits
+
 - **Disaster Recovery**: Easily roll back to a previous state if the `ai/` directory is corrupted.
 - **History Preservation**: Maintains a granular history of the AI's "brain" and project context over time.
 
 ## 9. AI-Driven Secure Development Practices
+
 The AI assistant is designed to inherently apply secure coding and infrastructure best practices derived from threat modeling principles (e.g., STRIDE, OWASP Top 10). This ensures that generated code and configurations adhere to security standards by default, assisting developers, engineers, and security professionals in building safer applications and infrastructure. The AI uses the context of your requests to infer potential security concerns and generate appropriately secure outputs.
 
 ## 10. Universal Engineering Standards
+
 The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Universal Engineering Standards** section that applies across all domains:
 
 - **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion — non-negotiable for maintainable OO code.
@@ -165,6 +196,7 @@ The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Uni
 These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
 
 ## 11. AI Customization & Curated Traits
+
 The `ai-customization.md` file at the project root is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`, `linux-system-admin`, `windows-system-admin`).
@@ -182,6 +214,7 @@ Trigger an on-demand code review at any point by saying:
 The AI immediately switches to a **Strict Peer Reviewer** role. It does not write or fix code during this mode — it only identifies, classifies, and explains issues.
 
 ### How it works
+
 1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
 2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target — not the local working tree.
 3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
@@ -191,20 +224,25 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 7. The report ends with a clear verdict: **APPROVED** or **CHANGES REQUESTED**.
 
 ### Iterating
+
 - Apply the fixes from the report, then ask for another review.
 - Each round creates a new numbered report. Previous reports are never overwritten.
 - The AI notes which previous issues were resolved at the start of each new report.
 
 ### Why multiple review rounds are normal
+
 The AI reviews the **full file set** on every pass — not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
 
 ### Compared to GitHub Copilot PR reviewer
+
 Using GitHub Copilot's pull request reviewer involves a frustrating cycle: push your branch, wait for Copilot to review the diff, copy the review comments out of GitHub, paste them into your local AI chat to understand and fix them, apply the fixes, push again, and repeat. Each push triggers a new diff-only review that cannot see issues outside the changed lines. After many rounds, you still may not have a full-codebase verdict. With this workflow's peer review, the entire loop stays in your local AI chat window — no push required, no copy-pasting between tools, and the AI scans the full file set every time.
 
 ### Exiting reviewer mode
+
 Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR review, see the PR merged or closed. The AI returns to its normal role.
 
 ### Report structure
+
 - **Critical** — blocks commit (security, data loss, broken functionality)
 - **Major** — fix before commit (policy violations, logic errors)
 - **Minor** — fix when convenient (style, naming)
@@ -217,22 +255,27 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
 ### How it works
+
 1. **Global Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
 2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
 3. **Project Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
+
 - **Robustness first**: Operational rules (policies) are always in context; the AI never acts on a rule it has not read. Lessons in the knowledge bases are indexed and read on demand.
 - **Token Efficiency where it counts**: Knowledge files (Global and Project) are not loaded speculatively, keeping the boot context lean.
 - **On-Demand Depth**: When a task needs a specific Global or Project Knowledge file, it is loaded in full at that point.
 
 ### Boot-time staleness check
+
 A metadata-only check flags Global and Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
 
 ## 14. Atomic Write Protocol & State-File Trimming
 
 ### The Three State Files
+
 Each state file has a distinct role and lifecycle:
+
 - **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items are appended at the bottom; each item is deleted the moment it is done, never left with a tick or strikethrough. No history builds up here.
 - **`ai/state/progress.md` (past)**: recent completed work, newest at the bottom. Keep about 14 days or up to 7 KB; older completed entries move into the daily checkpoint archive.
 - **`ai/state/context.md` (present)**: a `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. It holds the present, not a history log.
@@ -240,6 +283,7 @@ Each state file has a distinct role and lifecycle:
 Every item is at most three short bullets. The three files share a 20 KB soft budget. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
 
 ### Atomic Write Protocol
+
 The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
 
 1. **Sequential Writes**: State is written in strict order — `ai/state/progress.md` (past) → `ai/state/next-steps.md` (future) → `ai/state/context.md` (present). Never in a different order.
@@ -247,6 +291,7 @@ The checkpoint procedure uses an atomic write sequence to prevent partial or inc
 3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
 
 ### Daily Checkpoint File
+
 In the same transaction as the state files, every checkpoint also appends an entry to `ai/daily-checkpoints/`.
 
 - **One file per day**: `YYYY-MM-DD.md`, created on the first checkpoint of that day.
@@ -255,6 +300,7 @@ In the same transaction as the state files, every checkpoint also appends an ent
 - **The archive**: the diary is the only archive. Old `progress.md` entries and resolved `context.md` items move here; there are no separate archive files.
 
 ### State-File Trimming
+
 To prevent the state files from growing unbounded and consuming context window space:
 
 - **Budget**: the three state files share a 20 KB soft budget: `context.md` 8 KB, `progress.md` 7 KB, `next-steps.md` 5 KB.
@@ -319,3 +365,17 @@ The Investigation Contract in `ai/policies/ai-policy-common.md` governs how the 
 ## 19. Codebase Examination
 
 Say `"codebase examination"` or `"examine this codebase"` to examine or refactor a codebase larger than the context window. It uses disk-backed repo maps and tiered, just-in-time loading, with no vector databases or external indexing tools. See the [codebase examination guide](codebase-examination-guide.md).
+
+## 20. Author Identity and Git Config
+
+The AI never signs its output as an AI, model, or harness, and never uses a generated email. It uses your identity, resolved in this order:
+
+1. Your project git identity (`git config user.name` / `user.email`).
+2. Your global `~/.gitconfig`.
+3. Your global settings file (`Name` and `Email`), for anyone who does not use git.
+
+At bootstrap and at each `"load context"`, if no global `.gitconfig` exists, the AI offers to create one from the common policy template; if the repository's config is inadequate, it suggests fixing it. It never writes without your approval.
+
+## 21. Markdown Output
+
+One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs every markdown file the AI writes: headings, lists, code fences, links, emphasis, and line length. Markdown tables are banned unless you explicitly ask for one, for example in a report or a slide. The reference linter settings live in `.markdownlint-cli2.jsonc`; reproduce them in the markdown linter of your choice.

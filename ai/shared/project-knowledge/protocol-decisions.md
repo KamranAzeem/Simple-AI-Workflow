@@ -1403,3 +1403,22 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Status
 - Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The stricter `.markdownlint-cli2.jsonc` enables blanks-around-headings, blanks-around-lists, ul-indent, list-marker-space, ul-style, ol-prefix, code-fence-style (backtick), hr-style (`---`), and proper-names. The ticket `consolidate-markdown-formatting-policy.md` is closed and the executed plan removed.
+
+---
+
+## 2026-10-12: AI identity, identifying names, and git configuration in the common policy
+
+### Problem
+- The AI could sign output as an AI or model, or use a generated email, and nothing in the common policy stopped it. Names of people, companies, or organizations could enter commits. Git conventions and a git config baseline lived only in the user's settings, which the user wanted to keep thin.
+
+### Decision
+- Add `## Author Identity and Attribution`: never use an AI, model, or harness name, or a generated email, as the author or sender; use the user's identity, resolved from project git config, then global `~/.gitconfig`, then the global settings `Name`/`Email` fallback. The rule binds sub-agents and non-orchestrator sessions.
+- Extend the secrets check to identifying names (Non-Negotiable 5 and the Guardrails bullet), with the settings list consulted first if present, and neutralization using generic phrases.
+- Add the reusable git conventions and a `### Git Configuration` template with an adequacy checklist to Universal Engineering Standards.
+- Wire the offer into PROCEDURE BOOTSTRAP-PROJECT (STEP-AUTHOR-IDENTITY) and PROCEDURE LOAD-CONTEXT STEP-LOADING (offer only, no write).
+
+### Rationale
+- Author identity must be the human's, and reusable git rules belong in the shared policy so the settings file stays thin.
+
+### Status
+- Merged to the main branch. Validator v6.0 8/8, reference test PASS, markdownlint 0 on the edited files. The ticket `ai-identity-attribution-and-project-gitconfig-setup.md` is closed and the executed plan removed.

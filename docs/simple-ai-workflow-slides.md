@@ -39,6 +39,8 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
 - **Issue management**: say `"manage issues"` to file, analyze, plan, and review tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template, a `Label` for unworkable tickets, and dated updates
+- **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email; it uses your identity (git config, then global settings) and offers to create or fix `.gitconfig`
+- **Markdown output**: one policy for structure (headings, lists, code, links), a table ban unless you explicitly ask, and a reference `.markdownlint-cli2.jsonc`
 - **Local-first research**: the AI searches your local sources first, then the web or its own recall, with a bounded probe
 - **Evidence-based investigation by default**: the AI investigates, cites sources, and checks new claims against what it has already read
 - **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat
@@ -119,11 +121,13 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # Why Simple AI Workflow wins on portability
 
 ## Switch AI tools without losing anything
+
 - Open any assistant, type `"load context using AGENTS.md protocol"`
 - It reads the same files the previous assistant was using
 - Copilot to Claude to ChatGPT and back to Copilot: zero re-work
 
 ## Change editors, OS, or machines, with zero setup
+
 - Files live in your project directory. That is it.
 - VS Code, terminal, JetBrains: same files, same workflow
 - Linux, macOS, Windows: nothing changes
@@ -131,6 +135,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - **Simple AI Workflow: just files. They go wherever you go.**
 
 ## Moving to a new machine
+
 - Run `"backup ai"` and it archives the whole `ai/` directory to `~/.ai/backups/`
 - Or set `ai/` up as its own private git repo (handy if you manage many projects)
 - `git clone` and you are straight back to work
@@ -142,17 +147,20 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # The trade-off, and why it is worth it
 
 ## What native tools do better
+
 - ChatGPT Memory saves things automatically, with zero effort
 - Copilot's instructions are injected automatically, no prompt needed
 - Claude reads `CLAUDE.md` without being asked
 
 ## What Simple AI Workflow asks of you
+
 - `"load context using AGENTS.md protocol"` at the start of every session
 - `"checkpoint"` after each task
 - `"update project knowledge"` when you make a decision
 - `"backup ai"` when you want a backup
 
 ## Why that friction is actually good
+
 - Typing `"checkpoint"` forces a pause. You review what was done.
 - `"update project knowledge"` makes you ask: *what did we decide, and is it written down?*
 - The commands are friction, but it is **productive friction**.
@@ -165,11 +173,13 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # Idiot-proof protocol (works with lite models)
 
 ## The problem: instruction drift
+
 - Lower-capability "lite" models often treat protocols as suggestions
 - That can lead to accidental re-initialization or overwritten context files
 - The drift creeps in during a complex bootstrap
 
 ## The solution: structural guardrails
+
 - **Immortality headers**: a high-visibility `⚠️ STOP` header keeps the AI from modifying the protocol
 - **Immutable loading**: the context-loading sequence is flagged **READ-ONLY**
 - **No-overwrite mandates**: the context-loading sequence forbids overwriting existing files
@@ -183,11 +193,13 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # Native checkpoint backups
 
 ## The problem: fragile state
+
 - An AI "hallucination" can wreck your context by accident
 - Manual backups are slow and easy to forget
 - Weaker models need a forced safety net
 
 ## The solution: on-demand archiving
+
 - **Native one-liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
 - **On-demand trigger**: say "backup ai" or "backup ai state" to run one. It is not automatic at checkpoints
 - **Global storage**: saved to `~/.ai/backups/` for easy recovery
@@ -200,6 +212,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # On-demand peer review
 
 ## How it works
+
 - Say `"peer review"`, `"code review"`, or `"PR review"`, and the AI switches to an objective reviewer role
 - For a named PR it fetches the latest, resolves the source and target branches, and diffs source against target
 - It scans the full file or module the change touches, not just the diff, checks live state when it can, and saves a structured report to `ai/code-review-reports/`
@@ -209,12 +222,14 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - Previous reports are never overwritten. Each round gets a new numbered file
 
 ## Why multiple rounds are normal
+
 - The AI reviews the **full file set** on every pass, not just the latest diff
 - Fixing one issue can make a different pattern show up in the next pass
 - Diff-based tools (like the GitHub Copilot PR review) see only the new diff on each push, so they need many more rounds to converge
 - Expect 2 to 4 rounds for a thorough review. That is by design
 
 ## Compared to the GitHub Copilot PR reviewer
+
 - There you push the branch, wait for the review, copy the comments out of GitHub, paste them into your local AI, fix, push again, and repeat
 - Each push triggers a diff-only review, so issues outside the changed lines stay invisible
 - After 15 or more rounds you may still not have a full-codebase verdict
@@ -227,11 +242,13 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 # Token rationing shield
 
 ## The problem: a bloated context window
+
 - Loading every large knowledge file at boot eats context space in every session
 - Big knowledge bases make every "load context" slower and more token-heavy
 - Not every file is needed for every task
 
 ## The solution: scoped token rationing
+
 - **Global Knowledge indexed at boot**: the `~/.ai/global-knowledge/` files are indexed and loaded on demand, like Project Knowledge, so a growing set does not bloat every boot
 - **Active policies loaded in full at boot**: every policy named in `ai-customization.md`, because the AI cannot follow a rule it hasn't read
 - **Global and Project Knowledge indexed at boot**: the `~/.ai/global-knowledge/` and `ai/shared/project-knowledge/` files are index-only, and load on demand
@@ -259,6 +276,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 | **Delivery Ledger** | Tracks which IDs are done, in progress, or not started. |
 
 ## How the AI helps
+
 - It checks for missing documents at the start of every session and offers to create them
 - It reviews each document before writing the next, so problems are fixed before they cascade
 - It assigns IDs as it writes requirements, components, or design items
@@ -272,12 +290,14 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 # Use verbose file names
 
 ## Why it matters
+
 - The AI does not load knowledge files at boot. It builds a lightweight index instead
 - The **filename is the lookup key**. When a task needs specific knowledge, the AI maps the task to a file by its name
 - A vague name like `notes.md` is invisible to that process. The AI cannot map any task to it with confidence
 - A descriptive name like `azure-postgresql-migration-decisions.md` leaves no doubt
 
 ## The rule
+
 - Name every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` so it describes its content
 - Use kebab-case: `project-name-topic-subtopic.md`
 - Ask yourself: could a colleague guess what this file holds from the name alone? If not, rename it
@@ -297,11 +317,13 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 # Atomic checkpoint protocol
 
 ## The problem: partial writes and context drift
+
 - A checkpoint interrupted mid-write leaves the state files out of sync
 - Progress logs that grow forever bloat the context window
 - Writing one file without updating the others causes context drift
 
 ## The solution: atomic writes and state-file trimming
+
 - **Sequential writes**, always in this order: `ai/state/progress.md`, then `ai/state/next-steps.md`, then `ai/state/context.md`
 - **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
 - **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
@@ -315,11 +337,13 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 # Keeping context healthy
 
 ## What is context rot?
+
 - Over a long session, the AI's working memory drifts: stale state, token pressure, forgotten rules
 - It starts contradicting earlier decisions, or re-asking questions it already answered
 - Left alone, it erodes the reliability of every answer
 
 ## Built-in defences in this workflow
+
 - **Atomic write protocol**: state files sync together or not at all, so no partial writes
 - **State-file trimming**: the three state files share a 20 KB soft budget, and completed old entries move into the daily checkpoint archive
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
@@ -328,11 +352,13 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
 
 ## The "load context" command
+
 - **Full form**: `"load context using AGENTS.md protocol"`. Use this at the start of every session
 - **Shorthand**: `"load context"`. Fine mid-session, but unreliable for fresh or weaker models
 - **Rule**: always use the full form at the start of a new session, or after a restart
 
 ## Habits that handle the rest
+
 - Checkpoint after each logical unit of work, not just at the end of the day
 - When the AI loses the thread, checkpoint and start a fresh session
 - Set up the per-tool recovery trigger once. After any summary, ask "did you run the post-compaction recovery?" before you trust the next answer

@@ -17,8 +17,9 @@ These are the rules most costly to break. They are active at boot, at load conte
 2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. Only log-like bulk data may be sliced by filter. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
 3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits. Count first, then read it all. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
 4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system. (Universal Operational Guardrails below)
-5. **Secrets check before commit.** Scan for secrets before any `git add` or `git commit`. Stop and warn if found. (Universal Operational Guardrails below)
+5. **Secrets and identifying names before commit.** Before any `git add` or `git commit`, scan the staged changes for secrets and for names that identify a person, company, or organization. Neutralize them or stop. (Universal Operational Guardrails below)
 6. **Human approval on protected branches.** Get explicit approval before any state-changing git operation on `master` or `main`. (Feature Development and Branch-Gating below)
+7. **Author identity.** Never use an AI, model, or harness name, or an auto-generated email, as the author or sender of any output. Use the human user's identity. (Author Identity and Attribution below)
 
 ## Investigation Contract
 
@@ -40,6 +41,7 @@ When implementing new features, architecture changes, or functional code modific
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
 **No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before the first commit.
+Branch prefix and commit format: see Git conventions in Universal Engineering Standards.
 
 ### Conditional Autonomy for Handoffs
 
@@ -99,7 +101,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Canonical Reference Names**: Refer to procedures, steps, and tiers by their canonical ALL-CAPS kebab names (for example PROCEDURE WRITE-CHECKPOINT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES). Never reference them by letter or number.
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
-- **Secrets Awareness**: Check for secrets before any `git add` or `git commit`. Stop and alert if found.
+- **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Applies to everything that enters git (commits, messages, docs, code comments, knowledge files, filenames) and to external systems.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
@@ -111,6 +113,20 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
   - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
   - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 - **Intent over metrics**: When you surface a code quality issue, describe it by intent, never by a bare metric. Say what single job a function should have, or why a parameter list implies a missing abstraction. Never hand the model a bare score like "complexity 11, threshold 5". A bare number is a target: capable models hit the number and ignore the intent behind it (Goodhart's Law). This is most true on strong models, which game bare linter scores more, not less.
+
+## Author Identity and Attribution
+
+Never present an AI, model, or harness name, or an auto-generated email, as the author or sender of any output: git author and committer, commit messages, trailers (`Co-authored-by`, `Signed-off-by`), `GIT_AUTHOR_*` and `GIT_COMMITTER_*` environment variables, `--author` flags, pull requests, tickets, documentation, chat, and external systems. Use the human user's identity.
+
+Identity source order (first match wins):
+
+1. Project git identity (`git config user.name` / `user.email`).
+2. Global `~/.gitconfig`.
+3. Global settings file (`## Identity`, fields `Name` and `Email`), for users who do not use git.
+
+If none is found, ask the user for name and email, record them in the global settings file, and offer the git config setup. If `git` is not installed, use the settings fallback.
+
+This binds sub-agents and non-orchestrator sessions.
 
 ## Compliance Intelligence
 
@@ -271,6 +287,31 @@ If acceptance-criteria quality turns out to be a recurring problem on a project,
 - **Trunk-Based Development**: Use short-lived feature branches branched from and merged back to `main`/`master` frequently (at least once per day). This enables continuous integration, reduces merge conflicts, and supports CI/CD pipelines. Avoid long-lived feature branches and complex branching models.
 - **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
 - **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
+- **Git conventions**: branch prefix and commit type `feature` (never `feat`); subject `<type>(<scope>): <subject>` in imperative mood, with a descriptive body for architectural changes; always feature branches, squash-merged; use conventional commit types.
+
+### Git Configuration
+
+Offer this `.gitconfig` when a global one is missing, or when a repository's config is inadequate:
+
+```ini
+[user]
+    name = <user name>
+    email = <user email>
+[core]
+    autocrlf = input
+    eol = lf
+    whitespace = cr-at-eol
+[init]
+    defaultBranch = main
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+```
+
+A config is adequate when all of these are set: `user.name` (not a placeholder or AI/tool name; for example `Kamran Azeem` is acceptable and `Copilot` is not), `user.email` (not auto-generated), `core.autocrlf`, `core.eol`, and `alias.lg`. If any is missing, offer to create or update the config. Set `defaultBranch` to `main` only when it is not already set.
+
+Detection: a missing global config is `test -f ~/.gitconfig` false or an empty `git config --global --list`; adequacy is `git config --get user.name`, `user.email`, `core.autocrlf`, `core.eol`, `alias.lg`.
+
+Offer at bootstrap and at each load context; strongly suggest when the current directory is a git repository. Never write without approval. If `git` is not available, skip the offer.
 
 ## Design Documentation Standards
 
