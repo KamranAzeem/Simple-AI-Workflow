@@ -238,12 +238,17 @@ The following short forms are recognized as equivalents to their canonical direc
 1.  **STEP-LOAD-ISSUE-MECHANISM**: The issue-management rules live in `ai-policy-common.md`, which is always loaded. There is no separate policy file and no extra load step.
 2.  **STEP-LOCATE-TICKET**: Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No file sits directly under `ai/issues/`.
 3.  **STEP-ACT-ON-ISSUE-REQUEST**:
-    - **Create**: write a new ticket under `ai/issues/open/` using the format in `ai/shared/project-knowledge/issue-template.md`. AI-initiated creation is immediate and never waits on a human; set `Severity`/`Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them.
+    - **Create**: write a new ticket under `ai/issues/open/` using the format in `ai/shared/project-knowledge/issue-template.md`. AI-initiated creation is immediate and never waits on a human; set `Severity`/`Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them, and leave `Label` empty.
     - **Start work**: move the ticket file from `open/` to `in-progress/` (for example `git mv` in a repository that tracks `ai/`).
     - **Close**: move the ticket to `closed/`, append a dated update section, and update any related project knowledge. A ticket reaches `closed/` only when its fix is merged.
     - **Reopen**: move the ticket from `closed/` back to `open/`.
     - **List**: read `ai/issues/open/` and `ai/issues/in-progress/` and report filenames. This action is read-only.
-4.  **STEP-EXIT-ISSUE-MODE**: Return to normal role when the issue action is complete.
+4.  **STEP-ANALYZE-ISSUE**: analyze the ticket for missing information, inconsistencies, and gaps; fill every gap through brainstorming or grilling with the user. If it is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists.
+5.  **STEP-PLAN-MANDATE**: once the ticket is workable, create the plan and append its file name as a dated comment on the ticket. If the project uses TDD, write the failing test first, then the implementation.
+6.  **STEP-PLAN-REVIEW**: pass the plan through review rounds; validate design and architecture decisions with the user during planning, record each as an ADR, and implement only a bullet-proof plan.
+7.  **STEP-BRANCH-REVIEW**: implement on a feature branch and pass it through peer-review rounds until approved.
+8.  **STEP-MERGE-SEQUENCE**: for local work, close the ticket, squash-merge to trunk, then delete the branch, in that order. For external PR/MR work, merge the PR/MR first, then close the ticket.
+9.  **STEP-EXIT-ISSUE-MODE**: Return to normal role when the issue action is complete.
 
 ### PROCEDURE REPAIR-STATE-FILES: When the user says "repair state files", "tidy state files", or "heal state files"
 

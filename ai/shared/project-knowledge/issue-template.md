@@ -16,6 +16,7 @@ Reporter: <name / AI assistant name>
 IssueType: Feature
 Severity: P2
 Size: L
+Label:
 URL:
 Summary: <one readable line>
 
@@ -40,6 +41,8 @@ Description:
   breakdown), or `Human-to-decide (AI estimate: <size>)`.
 - `URL`: left empty until the ticket is migrated to an external tracker such as
   GitHub, GitLab, or Jira.
+- `Label`: empty for a workable ticket, or `Insufficient Information` /
+  `Unworkable` when pre-work analysis finds it unworkable. Never use it as a status.
 - `Summary`: one readable line, placed directly above the `Description:` section.
 - No `Status` field. The ticket's directory is its status.
 
@@ -53,3 +56,5 @@ Description:
 
 Move the file between directories. Never rename it, and never add a status
 prefix or suffix.
+
+The implementation plan is appended to the ticket as a dated comment, not a field.

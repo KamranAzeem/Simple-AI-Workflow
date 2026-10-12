@@ -138,12 +138,19 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ## Issue Management Protocol
 
-Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. The file itself carries no `Status` field, and no file sits directly under `ai/issues/`.
+Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. The file carries no `Status` field, and no file sits directly under `ai/issues/`.
 
 - **Naming**: a ticket filename is its slug only, lowercase kebab-case, with no status prefix or suffix. Moving a ticket between states changes its directory, never its filename.
-- **Lifecycle**: open issue, then implementation, then closed issue plus an update to related project knowledge. A ticket reaches `closed/` only when its fix is merged. Reopening moves it back to `open/`.
-- **Fields**: `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Description`. `IssueType` is one of `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, `Task`. `Severity` is `P1` to `P4`. `Size` is `S`, `M`, `L`, or `XL`. `URL` stays empty until a migration to an external tracker.
+- **Creation channel**: file a ticket under `ai/issues/open/`, or in the user's external tracker (GitHub, GitLab, Bitbucket, Jira, and similar). The user provides external access. Record an external ticket URL in `URL`.
+- **Fields**: `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Label`, `Description`. `IssueType` is one of `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, `Task`. `Severity` is `P1` to `P4`. `Size` is `S`, `M`, `L`, or `XL`. `Label` is empty, `Insufficient Information`, or `Unworkable`. `URL` stays empty until the ticket is migrated to an external tracker.
+- **Minimum prose**: a ticket is a short, customer-facing status update: decisions, outcomes, and blockers. No long paragraphs and no command transcripts; put runbooks and command detail in project knowledge. A ticket is not a technical diary of commands, errors, and fixes.
 - **AI-initiated creation**: when the AI finds something worth tracking, it files the ticket immediately and never waits on a human. Where the user has not chosen `Severity` or `Size`, set `Human-to-decide (AI estimate: ...)`.
+- **Pre-work analysis**: before any work starts, analyze the ticket for missing information, inconsistencies, and gaps. Fill every gap through brainstorming or grilling with the user, and keep the ticket at minimum prose as gaps are filled. If the ticket is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists. For an external tracker with no label mechanism, analyze the ticket and tell the user whether it is workable.
+- **Plan mandate**: once the ticket is workable, create an implementation plan and append its file name as a dated comment on the ticket. If the project uses TDD, write the failing test first, then the implementation.
+- **Plan depth**: a small ticket needs context plus acceptance criteria. A medium or larger ticket needs an HLD, an LLD, acceptance criteria, and an ADR for each design decision. Keep the plan concise and at minimum prose. Depth follows the Pre-Work Gate.
+- **Plan review**: pass the plan through review rounds. Validate design and architecture decisions with the user during planning, record each as an ADR, and implement only a bullet-proof plan.
+- **Branch and merge**: implement on a feature branch and pass it through peer-review rounds. For local work, close the ticket, squash-merge to trunk, then delete the branch, in that order. For external PR/MR work, merge the PR/MR first, then close the ticket.
+- **Lifecycle**: open, then in-progress, then closed. A ticket reaches `closed/` only when its fix is merged. Reopening moves it back to `open/`.
 - **Template file**: the full ticket template lives at `ai/shared/project-knowledge/issue-template.md`. The `AGENTS.md` bootstrap and load-context procedures create it from the compact field list above when it is missing, and never overwrite it.
 
 ## State File Ownership Protocol
@@ -224,6 +231,7 @@ If acceptance-criteria quality turns out to be a recurring problem on a project,
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
 - **Mock external dependencies**: Mock external services (APIs, databases, network, sensors) in unit tests. Use in-memory test doubles or fakes for integration tests.
 - **Test failure modes**: Test error states, edge cases, and failure scenarios — not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
+- **TDD**: If the project uses TDD, write the failing test first, then the implementation.
 
 ## Universal Engineering Standards
 - **SOLID Principles**: Apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion to all object-oriented code. These are non-negotiable for maintainable, testable systems.

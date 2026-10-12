@@ -1337,3 +1337,31 @@ Driven by the 2026-08-21 research file (four videos on AI coding quality). Two s
 
 ### Merge record
 - Squash-merged into `master` on 2026-10-06; branch deleted and `master` pushed to `origin/master`. The ticket `docs-announcements-directory.md` is closed under `ai/issues/closed/`.
+
+---
+
+## 2026-10-12: Issue-management policy upgrade
+
+### Problem
+- The Issue Management Protocol had no pre-work issue analysis, no plan mandate, no plan-review or ADR step, and no stated merge sequence. Work could begin on a half-specified issue, and the local versus external merge order was implied, not written.
+
+### Decision
+- Rewrite the Issue Management Protocol: creation channel (local or the user's external tracker), a `Label` field (`Insufficient Information` / `Unworkable`), minimum prose, pre-work analysis with brainstorming or grilling, a refuse-even-if-insisted rule, a plan mandate with a dated-comment link, conditional TDD (tests first), size-based plan depth (small: context plus acceptance; medium and larger: HLD, LLD, acceptance, ADR), plan review with ADRs, and the branch/merge sequences.
+- Merge sequence: local is close, squash-merge, delete branch; external PR/MR is merge first, then close.
+- The delivery ledger is not referenced by the issue rules; it stays in the Design Documentation Standards.
+- Add a TDD bullet to the Universal Testing Standards.
+
+### Rationale
+- The AI must be able to work an issue independently. A ticket without enough information produces wrong work; a plan without review produces avoidable rework.
+
+### Routing
+- `ai/policies/ai-policy-common.md`: Issue Management Protocol rewritten; TDD bullet added to the Universal Testing Standards.
+- `AGENTS.md`: PROCEDURE MANAGE-ISSUES gained STEP-ANALYZE-ISSUE, STEP-PLAN-MANDATE, STEP-PLAN-REVIEW, STEP-BRANCH-REVIEW, and STEP-MERGE-SEQUENCE.
+- `ai/shared/project-knowledge/issue-template.md`: added the `Label` field and the plan-as-dated-comment note.
+- `docs/workflow-guide.md` section 16, `docs/simple-ai-workflow-slides.md`, and `README.md`: synced.
+
+### Status
+- Implemented on branch `feature/improve-issue-management-policy`. Plan `ai/plans/improve-issue-management-policy-implementation-plan.md` reviewed: review-01 and review-02 CHANGES REQUESTED, review-03 APPROVED. Implementation reviewed: review-04 CHANGES REQUESTED, review-05 APPROVED. Validator v6.0 8/8, reference test PASS (58 steps), markdownlint 0. The delivery-ledger exclusion is a deliberate user decision.
+
+### Merge record
+- Pending squash merge to `master`.

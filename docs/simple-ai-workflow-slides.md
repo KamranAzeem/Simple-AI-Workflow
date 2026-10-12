@@ -38,7 +38,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Token rationing shield**: settings and active policies load in full; Global and Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
 - **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
-- **Issue management**: say `"manage issues"` to work tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template and dated updates
+- **Issue management**: say `"manage issues"` to file, analyze, plan, and review tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template, a `Label` for unworkable tickets, and dated updates
 - **Local-first research**: the AI searches your local sources first, then the web or its own recall, with a bounded probe
 - **Evidence-based investigation by default**: the AI investigates, cites sources, and checks new claims against what it has already read
 - **Atomic write protocol**: checkpoint writes are sequential and transactional. Partial writes abort, with a transaction log in the chat

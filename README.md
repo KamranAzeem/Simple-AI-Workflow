@@ -274,7 +274,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
-- **Issue management**: say `"manage issues"` and the AI works tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, and dated updates.
+- **Issue management**: say `"manage issues"` and the AI files, analyzes, plans, and reviews tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, a `Label` for unworkable tickets, and dated updates.
 - **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.

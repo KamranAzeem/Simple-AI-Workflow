@@ -296,9 +296,11 @@ At the start of each session, the AI checks for these documents and prompts you 
 
 Tickets live under three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status, and no file sits directly under `ai/issues/`.
 
-- Create a ticket with `"file an issue"` or `"new issue"`. It uses the template at `ai/shared/project-knowledge/issue-template.md`.
+- Create a ticket with `"file an issue"` or `"new issue"`, using the template at `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
+- Before work, the AI analyzes the ticket for gaps and fills them with you through brainstorming or grilling. If it is not workable, it gets `Label: Insufficient Information` or `Label: Unworkable`, and the AI refuses to work it, even if you insist.
+- Once workable, the AI creates a plan, appends its file name as a dated comment, and passes it through review rounds. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. If the project uses TDD, tests come first.
 - Start work with `"manage issues"`, which moves the ticket to `in-progress/`.
-- Close it as the final change on the branch, then squash-merge, so the merge carries the closed state and no follow-up commit is needed. A ticket reaches `closed/` only as part of the branch that contains its fix.
+- Local merge: close the ticket as the final change on the branch, squash-merge, then delete the branch. A ticket reaches `closed/` only as part of the branch that contains its fix. For an external PR/MR, merge first, then close the ticket.
 - Reopen by moving it back to `open/`, and list open and in-progress tickets with `"list issues"`.
 
 ## 17. State-File Health and Repair
