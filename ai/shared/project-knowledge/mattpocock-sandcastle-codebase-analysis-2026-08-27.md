@@ -236,11 +236,14 @@ Templates are scaffolded by `sandcastle init`. Each is self-contained (no shared
 between templates; ADR-0009 — divergence prevention).
 
 ### `simple-loop`
+
 One agent, sequential. Picks open issues one by one, works each in a separate iteration.
 `branchStrategy: merge-to-head`. Best starting point for most projects.
 
 ### `parallel-planner`
+
 Three-phase loop:
+
 1. **Plan** (opus, `maxIterations: 1`, structured output): reads open issues, builds
    dependency graph, emits `<plan>` JSON with unblocked parallelizable issues.
 2. **Execute** (N sonnet agents, `Promise.allSettled`): each agent works one issue on
@@ -250,12 +253,15 @@ Three-phase loop:
 Repeats up to `MAX_ITERATIONS` times so newly unblocked issues get picked up.
 
 ### `parallel-planner-with-review`
+
 Same as parallel-planner, with a review step after each implement step, before merge.
 
 ### `sequential-reviewer`
+
 Implement → review cycle, sequential. No planning phase.
 
 ### `blank`
+
 Minimal: one `run()` call, one prompt file.
 
 ---
@@ -285,6 +291,7 @@ Inline prompts are passed through as-is — no expansion, no substitution (ADR-0
 protects users who provide structured prompts from unexpected mutation).
 
 File-based prompts support:
+
 - **`{{KEY}}` substitution**: replaced from `promptArgs` map. Some keys are
   injected automatically (built-in prompt arguments).
 - **Shell expressions** (`` !`command` ``): evaluated inside the sandbox at iteration
@@ -299,6 +306,7 @@ File-based prompts support:
 the agent's stdout for the XML tag and validates the contents against the schema.
 
 Design decisions:
+
 - Orthogonal to the **completion signal** (`<promise>COMPLETE</promise>`). The signal
   says "done"; structured output carries a payload. Never conflated.
 - `maxIterations: 1` required with structured output (single-shot semantics; the loop
@@ -316,6 +324,7 @@ Sessions are agent-provider-owned (ADR-0012). Each agent provider knows where it
 files live. `SessionStore.ts` handles path resolution and transfer between host and sandbox.
 
 After a `run()`, the `RunResult` exposes:
+
 - `result.resume()` — continue the same session (same session ID, record mutated in place,
   ADR-0011: resume counts as one iteration).
 - `result.fork()` — branch to a new session ID, parent record unchanged (ADR-0018:

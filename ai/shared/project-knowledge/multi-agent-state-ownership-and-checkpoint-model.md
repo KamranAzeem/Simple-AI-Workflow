@@ -19,10 +19,13 @@ Four intertwined questions were examined:
 ## 2. Decisions
 
 ### 2.1 Checkpoint direction is memory → disk
+
 The AI's active in-memory context is the freshest source of truth for what was accomplished in a session. A checkpoint **serialises that fresh state INTO** the three files. It is a write-down, not a re-read to discover what is current. The on-disk files are the stale targets being updated.
 
 ### 2.2 The pre-write read is a reconcile, not a memory refresh
+
 "Read before write" is retained but reframed. Its only purposes are:
+
 - **(a) Preserve append-only history**: `ai/state/progress.md` is an append/archive ledger (PROCEDURE WRITE-CHECKPOINT). A blind memory-driven write could drop existing lines; the read prevents that.
 - **(b) Detect drift**: another agent, or context compaction, may have changed the files since the AI last saw them.
 
@@ -31,10 +34,13 @@ The AI's active in-memory context is the freshest source of truth for what was a
 The earlier "Fresh-Read Before Write" wording (CP-2026-06-29-01) read like "distrust your memory and re-read", which is wrong for the normal case and dangerous for weak models (they may parrot disk and drop their own deltas). The reframe fixes that.
 
 ### 2.3 State files are single-writer (orchestrator-owned)
+
 The three state files are the **canonical project narrative**, written **only** by the project-root orchestrator (the AI session that owns the project root). This eliminates the multi-writer contention that motivated read-before-write in the first place.
 
 ### 2.4 Awareness vs. authorship — the key separation
+
 The hard part ("long-running team-mates need to know what others are doing, so they must write the state files") dissolves once you separate two concerns:
+
 - **Awareness** ("who is doing what right now") = **read** the coordination board.
 - **Canonical narrative** = **single writer** (orchestrator).
 
@@ -50,6 +56,7 @@ A role needing awareness does not need to *write* the canonical files. It writes
 | Role-scoped knowledge (`…/project-knowledge/role-*.md`) | that role only | all | Each role's durable memory across sleeps |
 
 ### 2.6 Checkpoint is two-phase
+
 1. **Inbound reconcile** — read the coordination board + new/changed handoffs (+ refresh Project Knowledge index) → fold other agents' work into orchestrator memory.
 2. **Outbound write** — write fresh orchestrator memory → the three state files (memory → disk, single writer).
 
@@ -58,6 +65,7 @@ The "read" in phase 1 is of the board (purpose-built multi-writer surface), not 
 ## 3. The AI-team / role model (deferred runtime)
 
 Two execution models were discussed for role-based agents (developer, marketing, security, doc-controller):
+
 - **Always-on persistent processes** — continuously running team-mates.
 - **Watch-spawned (preferred)** — a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board/handoff/role-knowledge, and sleeps.
 

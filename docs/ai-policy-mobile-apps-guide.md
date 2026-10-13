@@ -15,6 +15,7 @@ One policy file covers all platforms. The AI assistant applies the right rules b
 ## What the Policy Covers
 
 ### Platform-Specific Guidance
+
 Each platform gets its own section with framework preferences, language conventions, and recommended libraries:
 
 | Area | iOS | Android | Cross-Platform |
@@ -29,24 +30,28 @@ Each platform gets its own section with framework preferences, language conventi
 | **Linting** | SwiftLint | ktlint | Platform-specific |
 
 ### Architecture & Design Patterns
+
 - **MVVM or MVI** as the default architecture
 - **Unidirectional data flow** — state flows down, events flow up
 - **Repository pattern** — all data access through repositories
 - **Dependency injection** — use the project's established DI framework
 
 ### Testing & Quality (TDD-First)
+
 - **Write tests before implementation** for all business logic
 - Required coverage: unit tests (90%+), UI tests, integration tests, snapshot tests
 - Tests must be deterministic — no flaky tests
 - Test error states, loading states, and edge cases — not just the happy path
 
 ### Error Handling & Resilience
+
 - Structured error types (sealed classes, enums with associated values)
 - `UiState` sealed class with `Loading`, `Success`, `Error` for every data-driven screen
 - Graceful degradation for offline, denied permissions, corrupt data
 - Exponential backoff with jitter for network retries
 
 ### Security & Data Privacy
+
 - No hardcoded secrets — use BuildConfig, xcconfig, or environment variables
 - Platform secure storage (Keychain for iOS, EncryptedSharedPreferences/KeyStore for Android)
 - Encryption at rest for local databases
@@ -55,18 +60,21 @@ Each platform gets its own section with framework preferences, language conventi
 - GDPR/CCPA compliance support
 
 ### Performance & Resource Management
+
 - Memory leak prevention (weak references, lifecycle-aware cleanup)
 - Battery optimization (batch network calls, avoid polling)
 - Startup under 2 seconds (lazy initialization, defer non-critical work)
 - Jank-free rendering (profile and fix frame drops)
 
 ### Code Quality & Consistency
+
 - Platform naming conventions (camelCase for iOS, PascalCase for Android)
 - Feature-based file organization (not type-based)
 - One class/struct per file
 - Linting enforcement (SwiftLint, ktlint)
 
 ### CI/CD & Release
+
 - Build signing and provisioning profile management
 - Semantic versioning
 - App store compliance (no private APIs, no dynamic code execution)
@@ -76,9 +84,11 @@ Each platform gets its own section with framework preferences, language conventi
 ## How to Use
 
 ### Step 1: Set up the protocol files
+
 Copy [`AGENTS.md`](../AGENTS.md) into your mobile project's root directory, and copy [`ai-customization.md`](ai-customization.md) to `ai-customization.md` at your project root. Set **Global AI Workflow Directory** in `ai-customization.md` to the path of your clone. The protocol resolves all other paths from there.
 
 ### Step 2: Bootstrap
+
 In your AI assistant, run:
 
 ```text
@@ -86,6 +96,7 @@ bootstrap using AGENTS.md protocol
 ```
 
 ### Step 3: Tell the AI you're working on a mobile app
+
 The mobile policy is a specialized policy — it's loaded on demand. Tell the AI:
 
 ```text

@@ -1,5 +1,11 @@
 {
   "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-config-schema.json",
+  "ignores": [
+    "ai/secrets/**",
+    "ai/code-review-reports/**",
+    "ai/artifacts/**",
+    "ai/daily-checkpoints/**"
+  ],
   "config": {
     "line-length": false,
     "single-title": false,

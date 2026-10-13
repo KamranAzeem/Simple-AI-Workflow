@@ -13,6 +13,7 @@ Three activation mechanisms, and what belongs in each:
 - **Active Expertise** in `ai-customization.md`: persistent domain behavior loaded at boot by STEP-POLICY-LOADING in PROCEDURE LOAD-CONTEXT. No per-feature AGENTS.md addition.
 
 Placement test for any new rule:
+
 - Applies to EVERY task and is costly to break? -> TIER READ-FIRST-RULES (rare).
 - Behavior for a SPECIFIC situation, solved with steps? -> its own policy, reached by a trigger phrase or listed in Active Expertise.
 - Explicitly invoked procedure? -> TIER TRIGGERED-PROCEDURES.
@@ -33,5 +34,6 @@ Evaluated the 4-item proposal from the other production instance (provenance tag
 - Item 4 Old-knowledge distrust: REAL gap, worth a crisp clause. The DGH case proved existing knowledge files can be stale and wrong. The Investigation Contract lists project knowledge as a source but does not say to distrust stored facts until re-verified now.
 
 ## Candidate follow-ups (2026-08-31)
+
 - Old-knowledge distrust clause: added then removed 2026-08-31. It was too essay-like and over-broad (it contradicted project knowledge's authority), so it was dropped to keep the Investigation Contract lean. Rely on the checkpoint knowledge update (STEP-PROJECT-KNOWLEDGE-UPDATE in PROCEDURE WRITE-CHECKPOINT) for freshness. Do not re-add unless it can be stated crisply and scoped to time-bound state only.
 - [ ] Consolidate the TIER READ-FIRST-RULES vs Non-Negotiables "always-on" canonical home so there is one source of truth. Ticket: `ai/issues/open/tier2-vs-non-negotiables-consolidation.md`.

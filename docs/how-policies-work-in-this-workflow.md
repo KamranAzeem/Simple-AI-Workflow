@@ -31,15 +31,15 @@
    1. Injects Security: Recalls the policy rule for "Secure Defaults." It adds PublicAccessBlockConfiguration to ensure the bucket is private.
    2. Applies Compliance: Sees gdpr or iso-27001 active in ai-customization.md. It adds BucketEncryption with AES256 and enables Versioning to satisfy data integrity controls.
    3. Enforces Standards: Recalls the rule about "Infrastructure-as-Code Quality." It adds a tagging block (e.g., Environment, Owner) because the policy mandates it.
-   4. Self-Validation: Before presenting the script, it automatically runs terraform fmt and checkov (as per the "Generated File Validation" rule in ai-policy-common.md).
+   4. Self-Validation: Before presenting the script, it automatically runs Terraform fmt and checkov (as per the "Generated File Validation" rule in ai-policy-common.md).
 
   The Result: You receive a secure, compliant, and pre-formatted block of code that requires almost no manual adjustment.
 
   ---
 
   Why this is powerful:
-   * Reduced Cognitive Load: You don't have to remember to ask for "encryption" or "private access" every time; the AI "remembers" for you.
-   * Scalability: You can change a policy in one file (e.g., add a new mandatory tag), and every future generation by any AI teammate will immediately incorporate that
+  * Reduced Cognitive Load: You don't have to remember to ask for "encryption" or "private access" every time; the AI "remembers" for you.
+  * Scalability: You can change a policy in one file (e.g., add a new mandatory tag), and every future generation by any AI teammate will immediately incorporate that
      change.
 
   Does this example clarify how the policies transition from static documents into active "teammate" behavior? I can draft a more technical breakdown of the "Resolution

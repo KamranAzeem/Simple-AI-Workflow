@@ -43,39 +43,47 @@ Use this as a decision helper, not as a price contract.
 ## 1) Beginner, low friction first
 
 Recommended start:
+
 - GitHub Copilot for assistant workflow
 - Optionally add one provider API later for Cline experiments
 
 Why:
+
 - Fewer setup steps
 - Fast time-to-value
 
 ## 2) Cost-aware learner, experimenting with multiple models
 
 Recommended start:
+
 - OpenRouter or one direct provider API
 - Use Cline with strict model and usage choices
 
 Why:
+
 - Easier to compare models and cost behavior
 - Better control for token spending
 
 ## 3) Professional developer working daily in codebase
 
 Recommended start:
+
 - GitHub Copilot for daily speed
 - Add one API provider for advanced tasks in Cline
 
 Why:
+
 - Best of both worlds: convenience + flexibility
 
 ## 4) Enterprise/security/governance heavy team
 
 Recommended start:
+
 - Azure OpenAI or approved enterprise provider path
 - Follow company compliance, identity, logging, and data policies
 
 Why:
+
 - Better alignment with enterprise controls
 
 ## Cost and Usage Checklist

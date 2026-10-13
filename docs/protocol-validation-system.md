@@ -1,9 +1,11 @@
 # Protocol Validation & Maintenance System
 
 ## Objective
+
 This document describes the permanent testing and maintenance system for the [`AGENTS.md`](../AGENTS.md) bootstrap and AI policy protocols. It serves as a reference blueprint for ongoing protocol integrity.
 
 ## Strategy
+
 1. **Bootstrap & Compliance Verification**:
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
    - Confirm directory structure adherence.
@@ -14,17 +16,22 @@ This document describes the permanent testing and maintenance system for the [`A
    - Run `markdownlint` on all policy files to ensure structural consistency and compliance with documentation standards.
 
 ## Permanent Testing Location
+
 - The validation suite is implemented as a script at [`support-files/validate-protocol.sh`](../support-files/validate-protocol.sh).
 - This document serves as the permanent reference for the validation system.
 
 ## Implementation
+
 The validation script [`support-files/validate-protocol.sh`](../support-files/validate-protocol.sh) implements:
+
 - Path existence checks for all mandatory policies.
 - Integration of `markdownlint` checks for policies.
 - Temporary checkpoint cycle (create/verify/delete).
 
 ## Verification Criteria
+
 Success is defined as:
+
 - All policy files present and readable.
 - All files passing `markdownlint` (or documented exceptions).
 - Checkpoint cycle successfully completed.

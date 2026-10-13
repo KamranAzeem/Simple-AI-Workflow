@@ -30,7 +30,7 @@ Examples of assistants people commonly ask about: Cline, ChatGPT, Claude, Gemini
 
 ## Before You Start
 
-- You need a paid API account with at least one provider (OpenAI, Anthropic, Github Copilot, Google Gemini, OpenRouter, and so on).
+- You need a paid API account with at least one provider (OpenAI, Anthropic, GitHub Copilot, Google Gemini, OpenRouter, and so on).
 - Chat subscriptions in websites/apps and API billing are often separate products.
 - Cline may ask you to sign in/register for Cline features. That is separate from your AI provider account.
 - You can use Cline as the chat interface in VS Code while paying for usage through your own provider API subscription.
@@ -113,12 +113,14 @@ If you get a response, setup is complete.
 ## Mistake 1: "I have ChatGPT key, but I cannot find ChatGPT provider in Cline"
 
 Fix:
+
 - Choose `OpenAI` in Cline.
 - Paste your OpenAI API key there.
 
 ## Mistake 2: "I copied the key, but requests fail"
 
 Fix checklist:
+
 - Confirm there are no extra spaces before/after the key.
 - Confirm API billing is active on the provider side.
 - Confirm selected model is valid for your account.
@@ -127,6 +129,7 @@ Fix checklist:
 ## Mistake 3: "My provider name looks different"
 
 Fix:
+
 - Cline UI labels can change between versions.
 - Pick the closest provider name from the mapping table above.
 - If needed, use OpenAI-compatible/custom endpoint mode.
@@ -134,6 +137,7 @@ Fix:
 ## Mistake 4: "I subscribed to GitHub Copilot, why does Cline still ask for provider/API setup?"
 
 Fix:
+
 - GitHub Copilot subscription and Cline provider API configuration are separate setups.
 - In Cline, configure a supported provider key (OpenAI/Anthropic/Gemini/OpenRouter/etc.).
 - If you want Copilot itself, use the GitHub Copilot extension in VS Code.

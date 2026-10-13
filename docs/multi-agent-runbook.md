@@ -96,6 +96,7 @@ Claim and execute the handoff at ai/shared/handoffs/agent-b-create-pages.md
 ```
 
 **Expected outcome**: Agent B:
+
 1. Records ownership in `coordination.md`
 2. Creates `about.html` and `contact.html` matching the existing style
 3. Adds navigation links between all three pages
@@ -141,6 +142,7 @@ Claim and execute the handoff at ai/shared/handoffs/agent-c-review.md
 ```
 
 **Expected outcome**: Agent C:
+
 1. Records ownership in `coordination.md`
 2. Reviews all three pages
 3. Fixes any issues found

@@ -479,3 +479,7 @@ Open the branch before making any file change on a work item, not merely before 
 ## 2026-10-13: A plan is not a design document
 
 A plan is not a design document. Plans live under `ai/` (for example `ai/plans/`), never in `design-docs/`, and carry their own HLD, LLD (with AC), and ADR content inside the plan file. Design documents (vision, PRD, HLD, LLD, risk and gap analysis, ADRs, and the Delivery Ledger) are the solution's durable design and live in `design-docs/`; a plan is temporary and its lifecycle is attached to the issue it is created against. The AI must not suggest moving plan files into `design-docs/`.
+
+## 2026-10-13: Markdown lint ignores local-only directories
+
+The markdown lint config ignores the git-ignored local directories (`ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`) and `ai/daily-checkpoints/`, because these hold local-only working artifacts rather than shipped or living markdown. The shipped and living set (`ai/policies/`, `docs/`, root markdown, and `ai/shared/project-knowledge/`) was brought to zero lint issues in a one-time pass. Markdown enforcement stays going-forward for all other files. `ai/issues/` and `ai/state/` remain linted and are not part of this cleanup.

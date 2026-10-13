@@ -3,6 +3,7 @@
 The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI assistant to a specific project, directory, or group of projects. It uses a flexible "soft composition" model for project customization.
 
 ## Why Customization?
+
 Different projects require different expertise (Cloud vs. Frontend), different behaviors (Mentor vs. Reviewer), and different regulatory standards (GDPR vs. SOC2). Instead of having one massive policy, we "compose" the AI's persona in the project directory using this file.
 
 ---
@@ -112,6 +113,7 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 ---
 
 ## Best Practices
-1.  **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.
-2.  **Explicit Traits**: Be specific with your traits. Instead of just "Teacher," say "Teacher: Focus on explaining Bicep syntax."
-3.  **No Project Copies**: Never copy the `ai-policy-*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest global standards.
+
+1. **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.
+2. **Explicit Traits**: Be specific with your traits. Instead of just "Teacher," say "Teacher: Focus on explaining Bicep syntax."
+3. **No Project Copies**: Never copy the `ai-policy-*.md` files into your project. Referencing them by name keeps your project clean and ensures you always use the latest global standards.

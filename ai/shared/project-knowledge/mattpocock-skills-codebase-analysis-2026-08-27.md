@@ -115,7 +115,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 | Skill | Purpose |
 |---|---|
 | `git-guardrails-claude-code` | Block dangerous git commands via Claude Code hooks |
-| `migrate-to-shoehorn` | Migrate TS type assertions to @total-typescript/shoehorn |
+| `migrate-to-shoehorn` | Migrate TS type assertions to @total-TypeScript/shoehorn |
 | `scaffold-exercises` | Create exercise directories for course content |
 | `setup-pre-commit` | Set up Husky + lint-staged pre-commit hooks |
 
@@ -200,6 +200,7 @@ The `writing-for-agents` skill contains the most sophisticated theory in the rep
 structure agent-consumed documents. Direct summary:
 
 **The information hierarchy ladder:**
+
 1. In-file steps (primary: what the agent does, in order)
 2. In-file reference (consulted on demand within the same file)
 3. Disclosed reference (pushed to a separate file, reached by context pointer)
@@ -208,17 +209,20 @@ structure agent-consumed documents. Direct summary:
 The test: inline what every branch needs; push behind a pointer what only some branches need.
 
 **Completion criteria** must be:
+
 - Checkable (agent can tell done from not-done)
 - Exhaustive (demands thorough work)
 - Not vague ("understanding reached" invites premature completion)
 - Not too revealing of post-completion steps (showing later steps tempts rushing the current one)
 
 **Leading words**: compact pretraining concepts that anchor behavior cheaply. Examples:
+
 - "tight" (for a tight feedback loop), "red" (for the failing test state)
 - Recruit model priors for free. A made-up leading word costs definition tokens.
 - The negation failure mode: "don't do X" makes X more available. Always prompt the positive.
 
 **Pruning rules**:
+
 - One source of truth per meaning (duplication = maintenance cost + inflated prominence)
 - The environment (`package.json`, config files) is a source of truth; a doc that restates
   it is a cache that must earn its load cost. Cache only what the agent cannot find by looking.
@@ -291,6 +295,7 @@ expression of the "codebase-design" skill's conceptual advice.
 ## Architectural Decisions (ADRs)
 
 **ADR-0001: Explicit setup pointer only for hard-dependency skills**
+
 - "Hard dependency" skills (`to-tickets`, `to-spec`, `triage`) include an explicit one-liner:
   "should have been provided to you; run `/setup-matt-pocock-skills` if not."
 - "Soft dependency" skills (`diagnose`, `tdd`, etc.) reference "the project's domain glossary"
@@ -298,6 +303,7 @@ expression of the "codebase-design" skill's conceptual advice.
 - Prevents cargo-culting setup pointers into skills where they are not load-bearing.
 
 **ADR-0002: Ship as Claude Code plugin; defer native Codex plugin**
+
 - Claude Code plugin uses `.claude-plugin/plugin.json` with an explicit skill-path array.
   Allows curating the promoted subset precisely.
 - Codex's plugin manifest accepts only a single path string (no array), and symlinks are
@@ -312,6 +318,7 @@ expression of the "codebase-design" skill's conceptual advice.
 ## Out-of-Scope Records (`.out-of-scope/`)
 
 Three rejected enhancement requests on file:
+
 - `mainstream-issue-trackers-only.md` — requests for niche or custom issue trackers rejected.
 - `question-limits.md` — requests to cap the number of questions during grilling rejected.
 - `setup-skill-verify-mode.md` — a verification mode for setup skills rejected.

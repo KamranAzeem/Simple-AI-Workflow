@@ -1,4 +1,5 @@
 # Shared Knowledge Base: Project Style Guide
+
 - **Tone**: Professional, direct, concise.
 - **Language**: English.
 - **Formatting**: GitHub-flavored Markdown.
