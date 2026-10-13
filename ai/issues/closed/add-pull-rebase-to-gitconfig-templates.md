@@ -16,6 +16,7 @@ Deferred backlog item, now being worked.
 - Make the `defaultBranch` rule explicit: for a new config, `main` is fine; never change a `defaultBranch` that is already set; do not enforce `main`.
 
 Acceptance criteria:
+
 - Both templates carry `pull.rebase = true`; the docs bash block carries `git config --global pull.rebase true`.
 - `pull.rebase` is not added to the adequacy list or the detection command.
 - The policy states plainly that an existing `defaultBranch` is never changed.

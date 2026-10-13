@@ -16,6 +16,7 @@ Scope: `ai/policies/**`, `docs/**`, root markdown (`AGENTS.md`, `README.md`, `ai
 Out of scope: the lint-exempt local directories, and `ai/issues/**` and `ai/state/**`.
 
 Acceptance criteria:
+
 - No em dash (`U+2014`) remains in the shipped/living set.
 - Replacements read naturally (comma, colon, or parentheses as fits), not a blind swap that creates comma splices.
 - Markdown lint stays at 0 for the set; validator green; reference test PASS.
