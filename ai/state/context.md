@@ -8,7 +8,7 @@
 - **Policy count**: 16 modular policies
 - **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive
 - **Project knowledge**: `ai/shared/project-knowledge/` is JIT-indexed; the ADR store is `design-docs/protocol-decisions.md`; ticket background lives here. `ai/notes/` holds only `notes.md`, the processing preamble
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 22 open, 0 in-progress, 36 closed
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 38 closed
 
 ## Active Working Context
 
