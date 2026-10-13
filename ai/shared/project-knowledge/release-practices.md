@@ -47,7 +47,7 @@
 
 1. Confirm the feature branch is squash-merged to `master` and the validator passes 8/8.
 2. Add the release's `## vX.Y.Z (date)` section to this file with the release highlights, so the release history never falls behind.
-3. Run markdownlint on all tracked markdown and confirm 0 issues.
+3. Run markdownlint on the linted set (the repository minus the four ignored directories in `.markdownlint-cli2.jsonc`) and confirm 0 issues. Lint every new markdown file, not just the files you edited.
 4. Finish the release-prep docs sweep (slides, workflow guide, README docs list).
 5. Write the friendly announcement at `docs/announcements/vX.Y.Z.md` and point the README banner at it.
 6. Create the annotated tag on `master`: `git tag -a vX.Y.Z -m "summary"`.
