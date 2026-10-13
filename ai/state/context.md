@@ -8,7 +8,7 @@
 - **Policy count**: 16 modular policies
 - **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive
 - **Project knowledge**: `ai/shared/project-knowledge/` is JIT-indexed; the ADR store is `design-docs/protocol-decisions.md`; ticket background lives here. `ai/notes/` holds only `notes.md`, the processing preamble
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 35 closed
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 22 open, 0 in-progress, 36 closed
 
 ## Active Working Context
 
@@ -18,3 +18,4 @@
 - **Next actions**: none; the open backlog is the issue tracker (23 open).
 - **Lint**: clean across the linted set (policies, docs, root markdown, project knowledge, issues, state); `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.
 - **Style**: no em dashes in the shipped/living set; `pull.rebase = true` is a template recommendation (not an adequacy key) and an existing `defaultBranch` is never changed.
+- **Writing rules**: universal communication and writing rules live in the common policy; `~/.ai/settings/global-user-settings.md` holds only personal preferences.

@@ -22,3 +22,5 @@
 [2026-10-13] Brought the issue tickets and state files to zero lint issues; the ADR records that they stay part of linting. Merged.
 [2026-10-13] Removed every em dash from the shipped/living set (334 across 32 files), replaced by a comma, colon, or parentheses as each fit. Merged; ticket closed.
 [2026-10-13] Added `[pull] rebase = true` to both gitconfig templates as a recommendation (not an adequacy key) and made the `defaultBranch` rule explicit (main for a new config, never change an existing value). Merged; ticket closed.
+[2026-10-13] Committed the pending ai/ tracking files (state, three diaries, and the open ticket) as a routine checkpoint commit; they were tracked by design, only uncommitted.
+[2026-10-13] Centralized the universal writing rules into the common policy: moved the no-decorative-symbols rule and the conversational default into Humanized Output, and thinned the user settings file and the template to personal preferences only. Merged; ticket closed.
