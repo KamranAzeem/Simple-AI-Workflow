@@ -1,14 +1,14 @@
 # Mobile App Development Policy Guide
 
-This guide explains the `ai/policies/ai-policy-mobile-apps.md` policy file — what it covers, how to use it, and how it integrates with the rest of the workflow.
+This guide explains the `ai/policies/ai-policy-mobile-apps.md` policy file: what it covers, how to use it, and how it integrates with the rest of the workflow.
 
 ## Overview
 
 The mobile app policy is a **specialized policy** for AI assistants working on mobile application projects. It covers:
 
-- **iOS** — Swift, SwiftUI, UIKit
-- **Android** — Kotlin, Jetpack Compose, XML layouts
-- **Cross-platform** — Flutter, React Native, Kotlin Multiplatform
+- **iOS**: Swift, SwiftUI, UIKit
+- **Android**: Kotlin, Jetpack Compose, XML layouts
+- **Cross-platform**: Flutter, React Native, Kotlin Multiplatform
 
 One policy file covers all platforms. The AI assistant applies the right rules based on your project's code and your instructions.
 
@@ -32,16 +32,16 @@ Each platform gets its own section with framework preferences, language conventi
 ### Architecture & Design Patterns
 
 - **MVVM or MVI** as the default architecture
-- **Unidirectional data flow** — state flows down, events flow up
-- **Repository pattern** — all data access through repositories
-- **Dependency injection** — use the project's established DI framework
+- **Unidirectional data flow**: state flows down, events flow up
+- **Repository pattern**: all data access through repositories
+- **Dependency injection**: use the project's established DI framework
 
 ### Testing & Quality (TDD-First)
 
 - **Write tests before implementation** for all business logic
 - Required coverage: unit tests (90%+), UI tests, integration tests, snapshot tests
-- Tests must be deterministic — no flaky tests
-- Test error states, loading states, and edge cases — not just the happy path
+- Tests must be deterministic: no flaky tests
+- Test error states, loading states, and edge cases, not just the happy path
 
 ### Error Handling & Resilience
 
@@ -52,7 +52,7 @@ Each platform gets its own section with framework preferences, language conventi
 
 ### Security & Data Privacy
 
-- No hardcoded secrets — use BuildConfig, xcconfig, or environment variables
+- No hardcoded secrets: use BuildConfig, xcconfig, or environment variables
 - Platform secure storage (Keychain for iOS, EncryptedSharedPreferences/KeyStore for Android)
 - Encryption at rest for local databases
 - Certificate pinning for production API endpoints
@@ -97,7 +97,7 @@ bootstrap using AGENTS.md protocol
 
 ### Step 3: Tell the AI you're working on a mobile app
 
-The mobile policy is a specialized policy — it's loaded on demand. Tell the AI:
+The mobile policy is a specialized policy: it's loaded on demand. Tell the AI:
 
 ```text
 Use the mobile app policy for this project

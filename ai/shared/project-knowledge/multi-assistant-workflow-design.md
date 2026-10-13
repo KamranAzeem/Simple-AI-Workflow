@@ -1,4 +1,4 @@
-# Multi-Assistant Workflow + Build AI Team — Design & Requirements
+# Multi-Assistant Workflow + Build AI Team: Design & Requirements
 
 Status: pending. Tracked by `ai/issues/open/multi-assistant-workflow-and-ai-team.md`.
 
@@ -65,7 +65,7 @@ This note combines two related ideas. (1) The **multi-assistant coordination con
 
 ## Iteration 2 (optional)
 
-- Add lightweight coordinator service (local CLI that sequences claims/releases) — only if users need higher concurrency guarantees.
+- Add lightweight coordinator service (local CLI that sequences claims/releases): only if users need higher concurrency guarantees.
 - Add tests and simulated multi-agent runs in a sandbox directory.
 
 ## Acceptance criteria
@@ -80,7 +80,7 @@ This note combines two related ideas. (1) The **multi-assistant coordination con
 
 - Race conditions on locks: keep locks advisory; prefer branch-based isolation for writes.
 - User confusion: present clear human-readable per-task reports and require one-button approval for pushes.
-- Complexity creep: keep MVP simple — avoid centralized services unless necessary.
+- Complexity creep: keep MVP simple: avoid centralized services unless necessary.
 
 ## Next steps (short)
 
@@ -95,13 +95,13 @@ The multi-assistant workflow above defines the **coordination contract** (who ow
 ### Protocol vs runtime boundary (the scope guard)
 
 - **Protocol (this repo)** defines the contract: file ownership, single-writer state rule, awareness-via-board, message formats (board/handoff), checkpoint-reconcile semantics.
-- **Runtime (a separate project — the user's "AI team on another machine")** is the dispatcher/watcher/process lifecycle: spawning roles, queueing, crash recovery, preventing double-dispatch, locking in-progress handoffs.
+- **Runtime (a separate project: the user's "AI team on another machine")** is the dispatcher/watcher/process lifecycle: spawning roles, queueing, crash recovery, preventing double-dispatch, locking in-progress handoffs.
 - The runtime must NOT be built into `AGENTS.md`. The contract lives here; the runtime is built on top of it elsewhere.
 
 ### Execution models for role agents (developer, marketing, security, doc-controller)
 
-- **Always-on persistent processes** — continuously running team-mates.
-- **Watch-spawned (preferred)** — a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board / handoff / role-knowledge, and sleeps.
+- **Always-on persistent processes**: continuously running team-mates.
+- **Watch-spawned (preferred)**: a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board / handoff / role-knowledge, and sleeps.
 - Key insight: watch-spawned decouples **identity** (persistent role that accumulates role-knowledge) from **execution** (ephemeral, runs only per task), so the single-writer ownership rule stays uniform across both models. "Always-on vs watch-spawned" becomes a deployment choice, not a protocol concern.
 
 ### True parallelism (Scenario B)

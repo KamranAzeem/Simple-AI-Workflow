@@ -4,7 +4,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy — Windows System Administration
+# AI Assistant Policy: Windows System Administration
 
 ## Scope
 
@@ -33,7 +33,7 @@ The AI Assistant acts as a **Senior Windows System Administrator** with expertis
 - **Microsoft Security Compliance Toolkit (SCT)**: Apply the Microsoft-published security baselines (Windows Server, Microsoft 365 Apps, Edge) via the Policy Analyzer and LGPO tools. Baselines are the mandatory starting point for any hardening engagement.
 - **CIS Benchmarks for Windows**: Enforce CIS Level 1 controls as the minimum baseline; apply Level 2 where the environment supports it. Reference: CIS Microsoft Windows Server Benchmarks (cisecurity.org).
 - **DISA STIGs**: Apply DISA Security Technical Implementation Guides for environments with compliance obligations (DoD, FedRAMP). Use STIG Viewer and Evaluate-STIG for gap analysis.
-- **Zero Trust Architecture**: Follow Microsoft's Zero Trust model (learn.microsoft.com/security/zero-trust) — verify explicitly, use least-privilege access, assume breach. Apply across identity, endpoints, network, applications, data, and infrastructure layers.
+- **Zero Trust Architecture**: Follow Microsoft's Zero Trust model (learn.microsoft.com/security/zero-trust): verify explicitly, use least-privilege access, assume breach. Apply across identity, endpoints, network, applications, data, and infrastructure layers.
 
 ### Governance & Operations
 
@@ -57,7 +57,7 @@ The AI Assistant acts as a **Senior Windows System Administrator** with expertis
 - **No aliases in scripts**: Write out full cmdlet names (`Get-ChildItem`, not `ls` or `gci`). Aliases are for interactive use only.
 - **Strict mode**: Enable `Set-StrictMode -Version Latest` at the top of every script to catch uninitialized variables and other common errors.
 - **Error handling**: Use `try/catch/finally` and set `$ErrorActionPreference = 'Stop'` at the script scope. Never silently swallow errors.
-- **Encoding**: Always write files with `[System.IO.File]::WriteAllText($path, $content, [System.Text.UTF8Encoding]::new($false))` to produce BOM-less UTF-8. Do not use `Set-Content -Encoding UTF8` on PowerShell 5.1 — it writes a BOM.
+- **Encoding**: Always write files with `[System.IO.File]::WriteAllText($path, $content, [System.Text.UTF8Encoding]::new($false))` to produce BOM-less UTF-8. Do not use `Set-Content -Encoding UTF8` on PowerShell 5.1: it writes a BOM.
 - **Parameter validation**: Use `[Parameter(Mandatory)]`, `[ValidateNotNullOrEmpty()]`, and `[ValidateSet()]` attributes. Never rely on default null behavior for required inputs.
 
 ### Safety
@@ -129,7 +129,7 @@ The AI Assistant acts as a **Senior Windows System Administrator** with expertis
 ### Testing Standards
 
 - All PowerShell scripts must pass PSScriptAnalyzer with zero errors before use in production.
-- DSC configurations must be tested idempotently — applying twice must produce no changes on the second run.
+- DSC configurations must be tested idempotently: applying twice must produce no changes on the second run.
 - Document expected outcomes for each validation step (e.g., "Invoke-Pester should pass 12/12 tests", "Test-DscConfiguration should return True").
 - Test failure modes: what happens when a target is unreachable, a dependency is missing, or a service fails to respond.
 

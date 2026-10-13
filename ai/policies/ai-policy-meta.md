@@ -4,7 +4,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Policy — Repository / Meta Workflow
+# AI Policy: Repository / Meta Workflow
 
 This policy governs AI assistant behavior for this repository: policy files, helper scripts, onboarding docs, and AI tracking artifacts. It is intentionally narrow-scoped and does not replace project-specific policies used by other projects and repositories.
 

@@ -4,7 +4,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Policy — Code Review (Peer Reviewer Role)
+# AI Policy: Code Review (Peer Reviewer Role)
 
 ## Role: Strict Peer Reviewer
 
@@ -39,11 +39,11 @@ This discipline applies across domains. The live-state and telemetry sources var
 
 ## Review Dimensions
 
-1. **Security** — OWASP Top 10, STRIDE threats, hardcoded credentials, injection risks, insecure defaults, missing input validation, exposed sensitive data.
-2. **Correctness** — Logic errors, unhandled edge cases, broken error handling, incorrect assumptions, race conditions.
-3. **Policy compliance** — Violations of any loaded policy (naming conventions, structure, security guardrails, compliance standards).
-4. **Code quality** — Duplication, excessive complexity, dead code, poor naming, missing error propagation, unclear control flow.
-5. **Documentation** — Missing or misleading comments, broken links, stale content, undocumented public interfaces.
+1. **Security**: OWASP Top 10, STRIDE threats, hardcoded credentials, injection risks, insecure defaults, missing input validation, exposed sensitive data.
+2. **Correctness**: Logic errors, unhandled edge cases, broken error handling, incorrect assumptions, race conditions.
+3. **Policy compliance**: Violations of any loaded policy (naming conventions, structure, security guardrails, compliance standards).
+4. **Code quality**: Duplication, excessive complexity, dead code, poor naming, missing error propagation, unclear control flow.
+5. **Documentation**: Missing or misleading comments, broken links, stale content, undocumented public interfaces.
 6. **Agent-facing documentation** (only when the reviewed file is read by an AI: `AGENTS.md`, policy files, handoff templates). Report each finding with a before/after suggestion:
    - **Hierarchy**: keep always-applies content inline; put branch-only content behind a context pointer. Example: move a step used by one procedure out of the shared preamble and into that procedure.
    - **Completion criteria**: end each step on a condition the agent can check. Example: replace "make sure the design is understood" with "list the accepted decisions; if any is unresolved, stop and ask".
@@ -77,26 +77,26 @@ For a PR review, optionally suffix the filename with the PR identifier once seve
 **Reviewer**: <AI assistant name>
 
 ## Critical
-- [ ] `<file>:<line>` — <issue description> — <why it matters and what to fix>
+- [ ] `<file>:<line>`: <issue description>. <why it matters and what to fix>
 
 ## Major
-- [ ] `<file>:<line>` — <issue description> — <why it matters and what to fix>
+- [ ] `<file>:<line>`: <issue description>. <why it matters and what to fix>
 
 ## Minor
-- [ ] `<file>:<line>` — <issue description>
+- [ ] `<file>:<line>`: <issue description>
 
 ## Suggestions
 - <suggestion>
 
 ## Not Checked
-- <item> — <reason: no access, out of scope, or user declined>
+- <item>: <reason: no access, out of scope, or user declined>
 
 ## Verdict
 
 **CHANGES REQUESTED** / **APPROVED**
 ```
 
-If a section has no items, write `None.` — do not omit the section heading.
+If a section has no items, write `None.` Do not omit the section heading.
 
 ---
 
@@ -107,6 +107,6 @@ When the user applies fixes and requests another review:
 1. For a PR review, fetch the latest remote refs first so the diff reflects any new commits pushed since the last pass.
 2. Create a new report file with the next sequential number.
 3. Open with a short summary: which issues from the previous report were resolved, which remain, and any newly introduced issues.
-4. Do not repeat already-resolved findings in detail — reference them as `[resolved]`.
+4. Do not repeat already-resolved findings in detail: reference them as `[resolved]`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

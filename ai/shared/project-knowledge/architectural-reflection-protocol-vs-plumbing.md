@@ -13,7 +13,7 @@ Building a structured, policy-driven bootstrap (AGENTS.md) is a move from simple
 ### Protocol vs. Plumbing
 
 - **Protocol (Your Approach)**: Declarative markdown policies are lightweight and transparent. There are no heavy orchestration frameworks, no background processes, and no brittle APIs. It is a "stateless" intelligence layer.
-- **Plumbing (Anti-pattern)**: Avoiding deep-nested agent frameworks (like complex LangChain chains) keeps the workflow maintainable. The AI reads text—that is the most efficient way to maintain "Context Engineering."
+- **Plumbing (Anti-pattern)**: Avoiding deep-nested agent frameworks (like complex LangChain chains) keeps the workflow maintainable. The AI reads text: that is the most efficient way to maintain "Context Engineering."
 
 ### Scalability Guardrails
 

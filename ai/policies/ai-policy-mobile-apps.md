@@ -108,7 +108,7 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 
 - No hardcoded API keys, tokens, or secrets in source code. Use BuildConfig (Android), xcconfig files (iOS), or environment variables.
 - Store sensitive tokens in platform secure storage (EncryptedSharedPreferences/KeyStore for Android, Keychain for iOS).
-- Never log tokens, passwords, PII, or sensitive user data — even in debug builds.
+- Never log tokens, passwords, PII, or sensitive user data, even in debug builds.
 
 ### Data Protection
 
@@ -118,7 +118,7 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 
 ### Privacy Compliance
 
-- Request permissions contextually — explain why the permission is needed before showing the system dialog.
+- Request permissions contextually: explain why the permission is needed before showing the system dialog.
 - Support data deletion flows for GDPR/CCPA compliance.
 - Minimize data collection. Only collect what the feature actually needs.
 - Provide clear privacy notices for any analytics or crash reporting.
@@ -133,7 +133,7 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 
 ### Battery & Network
 
-- Batch network requests where possible. Avoid polling — use push notifications or WebSockets for real-time updates.
+- Batch network requests where possible. Avoid polling: use push notifications or WebSockets for real-time updates.
 - Use platform power management APIs (BatteryManager, Low Power Mode detection) to adjust behavior on constrained devices.
 - Compress images and assets. Use modern formats (WebP, AVIF) and serve appropriately sized resources.
 
@@ -149,7 +149,7 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 ### Naming & Organization
 
 - Follow platform conventions: `camelCase` for iOS (properties, methods), `PascalCase` for Android (classes), `snake_case` for resources and assets.
-- Organize files by feature, not by type. Example: `features/login/` contains `LoginScreen`, `LoginViewModel`, `LoginRepository` — not a flat `views/`, `viewmodels/`, `repositories/` structure.
+- Organize files by feature, not by type. Example: `features/login/` contains `LoginScreen`, `LoginViewModel`, `LoginRepository`, not a flat `views/`, `viewmodels/`, `repositories/` structure.
 - One class/struct per file, except for small tightly-coupled types (sealed classes, extensions).
 
 ### Documentation
@@ -192,6 +192,6 @@ The AI Assistant acts as a **Senior Mobile App Developer** with expertise across
 - Do not over-engineer solutions. Prefer simple, maintainable patterns over clever abstractions.
 - Solve the user problem at the screen and flow level first before reaching for large architectural changes.
 - Respect the existing codebase patterns. Do not introduce a new architecture, state management approach, or dependency injection framework without user approval.
-- Mobile apps run on constrained devices. Every dependency, animation, and background task has a cost — be deliberate.
+- Mobile apps run on constrained devices. Every dependency, animation, and background task has a cost: be deliberate.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

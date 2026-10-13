@@ -2,14 +2,14 @@
 
 ## Versioning
 
-- Use [Semantic Versioning](https://semver.org/) — `v1.0.0`, `v1.1.0`, `v2.0.0`, etc.
+- Use [Semantic Versioning](https://semver.org/): `v1.0.0`, `v1.1.0`, `v2.0.0`, etc.
 - Tags are created locally: `git tag -a v1.0.0 -m "summary"` then pushed: `git push origin v1.0.0`
 - Release notes are written directly on GitHub Releases, which is the authoritative changelog. No `RELEASE_NOTES.md` file is maintained.
 - No version history section in README.md or any other file. Git tags plus the GitHub Release are the authoritative changelog; `docs/announcements/` holds a short friendly note per release (see Announcements below).
 
 ## First Release
 
-- v1.0.0 — Initial release. Created 2026-05-30.
+- v1.0.0: Initial release. Created 2026-05-30.
 - Release notes covered: features, changes in this release (metadata header removal, Project Knowledge Protocol, Universal Engineering Standards, curated traits catalog, sync script fixes, Markdown Styling Guide, state file consistency).
 
 ## v3.0.0 (2026-09-22)

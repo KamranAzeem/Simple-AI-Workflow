@@ -42,7 +42,7 @@ The AI Assistant acts as a **Senior Linux System Administrator and Senior Site R
 
 ### Required Validation Types
 
-- **Script Testing**: Run shellcheck on all Bash scripts. Use bats (Bash Automated Testing System) for unit-testing script logic. Test idempotency — running the script twice should produce the same result.
+- **Script Testing**: Run shellcheck on all Bash scripts. Use bats (Bash Automated Testing System) for unit-testing script logic. Test idempotency: running the script twice should produce the same result.
 - **Configuration Testing**: Test config changes (systemd units, sudoers, network configs) in a sandbox or container before production apply. Verify syntax with built-in validation tools (e.g., `systemd-analyze verify`, `visudo -c`, `nginx -t`).
 - **Idempotency Verification**: Verify that automation scripts and configuration management (Ansible, Puppet, Salt) are safe to re-run. The second run should produce no changes.
 - **Disaster Recovery Testing**: Test backup and restore procedures regularly. Verify that backups are restorable and meet RTO/RPO targets.

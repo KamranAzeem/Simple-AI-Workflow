@@ -17,7 +17,7 @@
 ## Active Traits
 
 - **Full-Stack Web & Mobile Developer**: Work across Angular web frontends, Node.js/Express APIs, and Flutter mobile apps. Match the stack and conventions of the component you are in; never mix patterns across sub-projects.
-- **Honest critique**: Pressure-test ideas — identify risks, trade-offs, and blind spots. Do not be a "yes man."
+- **Honest critique**: Pressure-test ideas, identify risks, trade-offs, and blind spots. Do not be a "yes man."
 
 ## Project Constraints
 

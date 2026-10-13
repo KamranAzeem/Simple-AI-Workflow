@@ -1,6 +1,6 @@
 # Multi-Agent State Ownership & Checkpoint Model
 
-**Date**: 2026-06-30 — Session CP-2026-06-30-02 (branch `feature/boot-full-load-policies-and-global-knowledge`)
+**Date**: 2026-06-30: Session CP-2026-06-30-02 (branch `feature/boot-full-load-policies-and-global-knowledge`)
 **Status**: Contract decided and partially implemented in the protocol today. Runtime (AI-team dispatcher) and PROCEDURE POST-COMPACTION-RECOVERY precedence rework explicitly deferred.
 
 This note captures a design discussion about context freshness/integrity, checkpoint direction, and multi-agent state ownership, and records what was implemented versus deferred.
@@ -11,10 +11,10 @@ This note captures a design discussion about context freshness/integrity, checkp
 
 Four intertwined questions were examined:
 
-1. **Context freshness / integrity** — when is the AI's in-memory view authoritative, and when is the on-disk copy?
-2. **Checkpoint direction** — does a checkpoint read state into memory, or write memory into state?
-3. **Ownership** — who is allowed to write the three state files (`ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`)?
-4. **Multi-agent state** — how do multiple agents/roles share state without corrupting it?
+1. **Context freshness / integrity**: when is the AI's in-memory view authoritative, and when is the on-disk copy?
+2. **Checkpoint direction**: does a checkpoint read state into memory, or write memory into state?
+3. **Ownership**: who is allowed to write the three state files (`ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`)?
+4. **Multi-agent state**: how do multiple agents/roles share state without corrupting it?
 
 ## 2. Decisions
 
@@ -37,7 +37,7 @@ The earlier "Fresh-Read Before Write" wording (CP-2026-06-29-01) read like "dist
 
 The three state files are the **canonical project narrative**, written **only** by the project-root orchestrator (the AI session that owns the project root). This eliminates the multi-writer contention that motivated read-before-write in the first place.
 
-### 2.4 Awareness vs. authorship — the key separation
+### 2.4 Awareness vs. authorship: the key separation
 
 The hard part ("long-running team-mates need to know what others are doing, so they must write the state files") dissolves once you separate two concerns:
 
@@ -51,14 +51,14 @@ A role needing awareness does not need to *write* the canonical files. It writes
 | Surface | Writer | Readers | Purpose |
 |---|---|---|---|
 | `ai/state/progress.md` / `ai/state/next-steps.md` / `ai/state/context.md` | Orchestrator only | all | Canonical project narrative |
-| Coordination board (`ai/shared/coordination.md`) | whoever claims/releases a task (small own-row write) | all | Live "who's doing what" — awareness channel |
+| Coordination board (`ai/shared/coordination.md`) | whoever claims/releases a task (small own-row write) | all | Live "who's doing what": awareness channel |
 | Handoffs (`ai/shared/handoffs/`) | task author / assignee | dispatcher, assignee | Task in / result out |
 | Role-scoped knowledge (`…/project-knowledge/role-*.md`) | that role only | all | Each role's durable memory across sleeps |
 
 ### 2.6 Checkpoint is two-phase
 
-1. **Inbound reconcile** — read the coordination board + new/changed handoffs (+ refresh Project Knowledge index) → fold other agents' work into orchestrator memory.
-2. **Outbound write** — write fresh orchestrator memory → the three state files (memory → disk, single writer).
+1. **Inbound reconcile**: read the coordination board + new/changed handoffs (+ refresh Project Knowledge index) → fold other agents' work into orchestrator memory.
+2. **Outbound write**: write fresh orchestrator memory → the three state files (memory → disk, single writer).
 
 The "read" in phase 1 is of the board (purpose-built multi-writer surface), not the state files.
 
@@ -66,8 +66,8 @@ The "read" in phase 1 is of the board (purpose-built multi-writer surface), not 
 
 Two execution models were discussed for role-based agents (developer, marketing, security, doc-controller):
 
-- **Always-on persistent processes** — continuously running team-mates.
-- **Watch-spawned (preferred)** — a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board/handoff/role-knowledge, and sleeps.
+- **Always-on persistent processes**: continuously running team-mates.
+- **Watch-spawned (preferred)**: a watcher monitors `ai/shared/handoffs/`; on a new handoff it spawns the right role, hands it the task, the role completes, records its result on the board/handoff/role-knowledge, and sleeps.
 
 **Key insight**: the watch-spawned model decouples **identity** (persistent role, accumulates role-knowledge) from **execution** (ephemeral, only runs per task). From a concurrency standpoint a watch-spawned role behaves like an ephemeral worker, which makes the single-writer ownership rule uniform across both models.
 
@@ -76,7 +76,7 @@ Two execution models were discussed for role-based agents (developer, marketing,
 ## 4. Protocol vs. runtime boundary (scope guard)
 
 - **The protocol (this repo)** defines the **contract**: file ownership, single-writer rule, awareness-via-board, message formats (board/handoff), checkpoint reconcile semantics.
-- **The runtime (separate project — the user's "AI team on another machine")** is the **dispatcher/watcher/process lifecycle**: spawning roles, queueing, crash recovery, preventing double-dispatch, locking in-progress handoffs.
+- **The runtime (separate project: the user's "AI team on another machine")** is the **dispatcher/watcher/process lifecycle**: spawning roles, queueing, crash recovery, preventing double-dispatch, locking in-progress handoffs.
 
 The runtime must NOT be built into AGENTS.md. The contract lives here; the runtime is built on top of it elsewhere.
 
@@ -84,8 +84,8 @@ The runtime must NOT be built into AGENTS.md. The contract lives here; the runti
 
 - The coordination board is still multi-writer. "Read immediately before writing" reduces but does not eliminate races. This is **cooperative coordination, not a lock manager**.
 - Mitigations: append-only / one-owned-row-per-task entries with `agent-id + timestamp`; keep writes tiny.
-- **Robust variant for real parallelism**: one status file per agent/task in a directory (e.g. `ai/shared/coordination/<agent-or-task>.md`) — no shared-file write contention; the orchestrator reads the directory and reconciles. Adopt only if genuine parallelism is expected.
-- Role-scoped knowledge: two agents creating the same filename collide — verbose naming + `agent-id`/task prefix mitigates.
+- **Robust variant for real parallelism**: one status file per agent/task in a directory (e.g. `ai/shared/coordination/<agent-or-task>.md`): no shared-file write contention; the orchestrator reads the directory and reconciles. Adopt only if genuine parallelism is expected.
+- Role-scoped knowledge: two agents creating the same filename collide: verbose naming + `agent-id`/task prefix mitigates.
 
 ## 6. Implemented today (this branch, non-breaking)
 
@@ -101,7 +101,7 @@ The runtime must NOT be built into AGENTS.md. The contract lives here; the runti
 
 - **PROCEDURE POST-COMPACTION-RECOVERY precedence rework**: letting PROCEDURE POST-COMPACTION-RECOVERY read the *latest checkpoint's* state files (single-writer authoritative, fresher than a lossy summary) instead of trusting only the summary. This reverses a deliberate safety rule and is a breaking change; defer and design carefully as one coherent change.
 - **AI-team runtime**: dispatcher/watcher, role startup, process lifecycle. Separate project.
-- **Per-agent status files** (robust concurrency variant) — the safe path for **Scenario B** (multiple agents/sessions writing concurrently). **Revisit trigger**: adopt this the moment more than one agent/session may write the three state files *at the same time* (one file per agent under `ai/shared/coordination/`, orchestrator reconciles — no shared-file write contention). Until then the single-orchestrator model stands, and concurrent sessions are only safe if their writes are **serialized in time**. Sequential role-switching inside one session (**Scenario A**) is unaffected and always safe — it is one writer wearing different hats.
+- **Per-agent status files** (robust concurrency variant): the safe path for **Scenario B** (multiple agents/sessions writing concurrently). **Revisit trigger**: adopt this the moment more than one agent/session may write the three state files *at the same time* (one file per agent under `ai/shared/coordination/`, orchestrator reconciles: no shared-file write contention). Until then the single-orchestrator model stands, and concurrent sessions are only safe if their writes are **serialized in time**. Sequential role-switching inside one session (**Scenario A**) is unaffected and always safe: it is one writer wearing different hats.
 - **TLD.md / LLD.md** scope/size-control documents (user-raised, future).
 
 ## 8. Open decisions for the user

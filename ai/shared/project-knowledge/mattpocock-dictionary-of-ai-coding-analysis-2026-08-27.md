@@ -13,7 +13,7 @@ dictionary for use in the Simple-AI-Workflow protocol.
 ```text
 /
 ├── CLAUDE.md                    (agent-facing writing rules and repo conventions)
-├── README.md                    (GENERATED — built from template + dictionary entries)
+├── README.md                    (GENERATED: built from template + dictionary entries)
 ├── package.json                 (Node.js, tsx/husky/prettier/lint-staged)
 ├── .prettierrc.json             (formatting config)
 ├── .lintstagedrc.json           (runs prettier on staged files)
@@ -26,7 +26,7 @@ dictionary for use in the Simple-AI-Workflow protocol.
     ├── README.template.md       (template for generating README.md)
     ├── generate-readme.ts       (tsx script: Curriculum + entries → README.md)
     ├── domain.md                (tells agents how to use CONTEXT.md and ADRs)
-    ├── issue-tracker.md         (GitHub Issues via gh CLI — commands and conventions)
+    ├── issue-tracker.md         (GitHub Issues via gh CLI: commands and conventions)
     ├── triage-labels.md         (maps canonical triage roles to actual label strings)
     └── tsconfig.json
 ```
@@ -72,36 +72,36 @@ Writing rules from CLAUDE.md:
 
 ## Curriculum: Learning Order (7 sections, 68 terms)
 
-### Section 1 — The Model (16 terms)
+### Section 1: The Model (16 terms)
 
 AI, Model, Parameters, Training, Inference, Effort, Token, Next-token prediction,
 Non-determinism, Model provider, Harness, Model provider request, Input tokens,
 Output tokens, Prefix cache, Cache tokens
 
-### Section 2 — Sessions, Context Windows & Turns (8 terms)
+### Section 2: Sessions, Context Windows & Turns (8 terms)
 
 Stateless, Context, Context window, Stateful, Agent, System prompt, Session, Turn
 
-### Section 3 — Tools & Environment (10 terms)
+### Section 3: Tools & Environment (10 terms)
 
 Environment, Filesystem, Tool, Tool call, Tool result, MCP, Permission request,
 Permission mode, Agent mode, Sandbox
 
-### Section 4 — Failure Modes (9 terms)
+### Section 4: Failure Modes (9 terms)
 
 Sycophancy, Hallucination, Parametric knowledge, Knowledge cutoff, Contextual knowledge,
 Attention relationship, Attention budget, Attention degradation, Smart zone
 
-### Section 5 — Handoffs (9 terms)
+### Section 5: Handoffs (9 terms)
 
 Clearing, Handoff, Primary source, Secondary source, Handoff artifact, Spec, Ticket,
 Compaction, Autocompact
 
-### Section 6 — Memory and Steering (6 terms)
+### Section 6: Memory and Steering (6 terms)
 
 Memory system, AGENTS.md, Progressive disclosure, Context pointer, Skill, Subagent
 
-### Section 7 — Patterns of Work (11 terms)
+### Section 7: Patterns of Work (11 terms)
 
 Human-in-the-loop, AFK, Automated check, Automated review, Human review, Vibe coding,
 Design concept, Grilling, Prototyping, DX, AX
@@ -117,7 +117,7 @@ These are the entries most directly relevant to the Simple-AI-Workflow protocol.
 As a session grows, each token's attention budget spreads over more competitors; signal on
 meaningful relationships shrinks. Manifests as the agent ignoring instructions it followed
 earlier in the session. The mechanism is N² attention relationships: at 100K tokens the
-signal for any one relationship is one in ~10 billion. Fix: clear, compact, or hand off —
+signal for any one relationship is one in ~10 billion. Fix: clear, compact, or hand off,
 not re-paste the ignored instruction (adds more noise).
 
 ### Smart zone / Dumb zone
@@ -144,13 +144,13 @@ history, tool results. Important: the model re-reads the whole thing on every tu
 ### Session
 
 A stateful conversation between user and agent, held in memory by the harness. Ends on
-clearing. The model itself is stateless — the harness supplies continuity within a session.
+clearing. The model itself is stateless: the harness supplies continuity within a session.
 One task per session keeps context relevant; finishing a task is a natural clearing point.
 
 ### Compaction
 
 A handoff done in-memory: the session history is summarised and seeds a fresh session.
-Lossy by design — the transcript is a primary source, the summary a secondary source.
+Lossy by design: the transcript is a primary source, the summary a secondary source.
 Detail traded for headroom. Triggered automatically (autocompact) when context fills, or
 manually. The compaction summary is a secondary source: the next session inherits what
 the summary kept and is blind to what it dropped.
@@ -158,13 +158,13 @@ the summary kept and is blind to what it dropped.
 ### Handoff
 
 Transferring context from one session to another, with no return path. Carry mechanisms:
-a written handoff artifact (file in environment — inspectable, reusable) or compaction
-(in-memory summary — automatic but harder to inspect, feeds one successor only).
+a written handoff artifact (file in environment: inspectable, reusable) or compaction
+(in-memory summary: automatic but harder to inspect, feeds one successor only).
 Distinct from clearing (no transfer at all).
 
 ### Handoff artifact
 
-A document used as the carry mechanism for a handoff — written by one session to be read
+A document used as the carry mechanism for a handoff: written by one session to be read
 by another. Specs, tickets, and plan docs are all handoff artifacts. It is a secondary
 source: records what the writing session believed. Next session should verify against
 primary sources (the code, the tests) where a claim matters. The advantage over compaction:
@@ -173,9 +173,9 @@ parallel sessions.
 
 ### Primary source / Secondary source
 
-- **Primary source**: the authoritative, direct source — the code itself, official docs,
+- **Primary source**: the authoritative, direct source: the code itself, official docs,
   the test output, the running service. The model directly reads from it.
-- **Secondary source**: a derived account — a summary, a handoff artifact, a compaction
+- **Secondary source**: a derived account: a summary, a handoff artifact, a compaction
   summary, a note. Secondary sources are lossy and can go stale. They are convenient but
   inherit the writing session's blind spots.
 - The fix for stale secondary sources: follow the pointer back to the primary.
@@ -183,7 +183,7 @@ parallel sessions.
 ### Progressive disclosure
 
 Loading only the context the agent needs right now, with context pointers to the rest.
-The tell that you need it: an agent ignoring rules it should know — the rules are there
+The tell that you need it: an agent ignoring rules it should know: the rules are there
 but buried in noise. Two costs: input tokens billed every turn + attention budget diluted
 on every turn. Skills are the harness pattern for this: description loaded every session,
 full instructions only when triggered.
@@ -193,7 +193,7 @@ full instructions only when triggered.
 A mention in one document pointing to another, so the agent can pull it in only when the
 task calls for it. Needs two parts to work: a stable path + enough description to know
 when following it is worth it. A bare path is a pointer the agent has no reason to follow.
-Write it to match how tasks present: "release, deploy, or rollback — read `internal/deploy.md`".
+Write it to match how tasks present: "release, deploy, or rollback: read `internal/deploy.md`".
 
 ### Skill
 
@@ -205,7 +205,7 @@ default; the body loads only when triggered. Distinct from Tool (which the agent
 
 ### AGENTS.md
 
-A file the harness loads into the context window at session start — the project's standing
+A file the harness loads into the context window at session start: the project's standing
 brief to the agent. Cross-harness convention. Suitable content: what the agent cannot
 derive from the code (build/test commands, hard constraints). Trade-off: everything in it
 is always loaded, so it costs tokens and dilutes itself. Long AGENTS.md = less reliable
@@ -215,7 +215,7 @@ for content that doesn't apply to every session.
 ### Memory system
 
 A system making the agent stateful across sessions: write to environment during session,
-reload at session start. Same trade-offs as always-loaded content — memories accumulate
+reload at session start. Same trade-offs as always-loaded content: memories accumulate
 and go stale. Most systems load a one-line index and keep bodies behind context pointers
 (same pattern as skills). Memory files are secondary sources: a fact from three months
 ago loads with equal confidence as a recent one.
@@ -226,7 +226,7 @@ An interview technique for developing a design concept: the agent asks the user 
 decision at a time, proposing a recommended answer for each. Prevents the agent from
 silently filling gaps with assumptions (what it does when asked to write a spec from a
 two-line prompt). Human-in-the-loop technique: user answers are the input. When a
-question can't be answered in words — "I'd have to see it" — switch to prototyping.
+question can't be answered in words: "I'd have to see it": switch to prototyping.
 
 ### Design concept
 
@@ -251,7 +251,7 @@ Running the agent unattended. Throughput multiplier: many AFK sessions in parall
 Characteristic failure: hours of coherent work built on a wrong call made in the first
 ten minutes. Preparation matters more than supervision: grill/spec before, automated
 checks during, review the PR (not already-merged changes) after. AFK doesn't remove
-human review — it defers it to the end.
+human review: it defers it to the end.
 
 ### Human-in-the-loop (HITL)
 
@@ -292,7 +292,7 @@ when behavior changes between products or between days, suspect the harness befo
 
 ### Permission mode
 
-The permission-gating slice of agent mode — which tool calls trigger a permission request
+The permission-gating slice of agent mode: which tool calls trigger a permission request
 vs run automatically. Ladder: read-only (reads auto, writes blocked), default (reads auto,
 writes ask), auto-edit (reads + edits auto, shell asks), yolo/full-auto (all auto, for
 sandboxes). Both failure directions are felt: too tight = rubber-stamping approvals on
@@ -300,7 +300,7 @@ autopilot (worst of both worlds); too loose = agent edits files you'd have wante
 
 ### Tool call
 
-The model's output naming a tool and its arguments — structured text only. The harness
+The model's output naming a tool and its arguments: structured text only. The harness
 reads it and executes. Because it is generated by next-token prediction, it can be wrong
 the same way any model output can be wrong (wrong path, non-existent flag). The harness
 executes what was written, not what was meant.
@@ -309,9 +309,9 @@ executes what was written, not what was meant.
 
 ## Tooling
 
-- `npm run generate` — rebuilds README.md from `internal/README.template.md` +
+- `npm run generate`: rebuilds README.md from `internal/README.template.md` +
   `internal/Curriculum.md` + `dictionary/*.md`. Run after adding or modifying entries.
-- `npm run prepare` — installs Husky pre-commit hook (runs lint-staged → prettier).
+- `npm run prepare`: installs Husky pre-commit hook (runs lint-staged → prettier).
 - Prettier enforces formatting on all markdown files.
 - CI enforces that `README.md` is up to date (runs the generate script and checks for diff).
 
@@ -373,7 +373,7 @@ Several terms directly map to concepts already in the Simple-AI-Workflow protoco
 
 3. **Subagent as one-level-deep tree**: The protocol currently defers multi-agent work
    (the AI-team dispatcher is in the deferred section of next-steps.md). The dictionary's
-   "cannot spawn further subagents — tree is one level deep" is a useful constraint to
+   "cannot spawn further subagents: tree is one level deep" is a useful constraint to
    document when that work resumes.
 
 4. **Effort as a session-configuration lever**: The protocol doesn't currently mention

@@ -20,7 +20,7 @@ Build a simple 3-page static website (Home, About, Contact) using three differen
 
 ---
 
-## Phase 1: Agent A (Gemini) — Foundation
+## Phase 1: Agent A (Gemini): Foundation
 
 ### Step 1.1: Bootstrap
 
@@ -77,7 +77,7 @@ checkpoint
 
 ---
 
-## Phase 2: Agent B (Claude) — Page Creation
+## Phase 2: Agent B (Claude): Page Creation
 
 ### Step 2.1: Load Context
 
@@ -123,7 +123,7 @@ checkpoint
 
 ---
 
-## Phase 3: Agent C (DeepSeek) — Review & Finalize
+## Phase 3: Agent C (DeepSeek): Review & Finalize
 
 ### Step 3.1: Load Context
 
@@ -164,4 +164,4 @@ Update ai/shared/coordination.md to mark all tasks complete. Create a final chec
 - **Handoffs** provide clear task boundaries with verification criteria
 - **Coordination.md** acts as a task board, preventing duplicate work
 - **Checkpoints** preserve state so any assistant can resume where another left off
-- **No special tooling needed** — just AGENTS.md, `ai/`, and standard AI chat interfaces
+- **No special tooling needed**: just AGENTS.md, `ai/`, and standard AI chat interfaces

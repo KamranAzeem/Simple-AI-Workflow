@@ -31,7 +31,7 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
     - They are working on a dedicated feature branch.
     - ALL verification steps in the handoff pass with zero errors.
     - The coordination board (`coordination.md`) is updated correctly.
-    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER READ-FIRST-RULES). A sub-agent that is **not** the orchestrator does not merge or write the state files — it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
+    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER READ-FIRST-RULES). A sub-agent that is **not** the orchestrator does not merge or write the state files: it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
 
 ### 2. Global (Cross-Project) Collaboration
 
@@ -70,5 +70,5 @@ All assistants share a mandatory set of operational rules and contracts (branch-
     - **Claim**: Record ownership in `ai/shared/coordination.md`.
     - **Execute**: Work on a feature branch.
     - **Verify**: Run all verification steps.
-    - **Finalize**: If the Conditional Autonomy conditions are met, the agent is acting as the orchestrator for that branch — merge to master and reconcile the state files. If not, record completion on `ai/shared/coordination.md` and leave the three state files for the project-root orchestrator (single-writer rule).
+    - **Finalize**: If the Conditional Autonomy conditions are met, the agent is acting as the orchestrator for that branch: merge to master and reconcile the state files. If not, record completion on `ai/shared/coordination.md` and leave the three state files for the project-root orchestrator (single-writer rule).
     - **Cleanup**: Delete the handoff file and clear the claim in `ai/shared/coordination.md`.

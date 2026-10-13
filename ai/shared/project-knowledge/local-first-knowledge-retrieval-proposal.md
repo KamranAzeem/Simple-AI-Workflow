@@ -1,4 +1,4 @@
-# Local-First Knowledge Retrieval — proposal (discussion)
+# Local-First Knowledge Retrieval: proposal (discussion)
 
 Discussed 2026-09-07. Status: the source-precedence part shipped on 2026-09-19 (Investigation Contract, `ai/policies/ai-policy-common.md`); the bounded staleness heuristic remains open, tracked by `ai/issues/open/bounded-boot-time-staleness-heuristic.md`. Captured here so the open part isn't lost.
 

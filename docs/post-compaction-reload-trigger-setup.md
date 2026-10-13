@@ -65,7 +65,7 @@ instructions", "rules", or "system prompt".
 
 | Assistant | Where the always-on layer lives |
 |---|---|
-| **GitHub Copilot** (VS Code) | A `PreCompact` hook at `~/.copilot/hooks/` fires before every mid-session compaction and shows a warning in the chat — no text-instruction compliance needed. See the hooks section below. For other assistants or for the session-start case, user memory also works: `%APPDATA%\Code\User\globalStorage\github.copilot-chat\memory-tool\memories\`. |
+| **GitHub Copilot** (VS Code) | A `PreCompact` hook at `~/.copilot/hooks/` fires before every mid-session compaction and shows a warning in the chat: no text-instruction compliance needed. See the hooks section below. For other assistants or for the session-start case, user memory also works: `%APPDATA%\Code\User\globalStorage\github.copilot-chat\memory-tool\memories\`. |
 | **Claude** (Claude Code) | Global user memory file `~/.claude/CLAUDE.md` (loaded in every session). A project `./CLAUDE.md` also works but is per-repo. |
 | **Claude** (claude.ai web/desktop) | Settings → Profile → personal preferences / custom instructions, or a Project's custom instructions. |
 | **ChatGPT** | Settings → Personalization → Custom Instructions (and Memory). Paste the trigger into custom instructions. |

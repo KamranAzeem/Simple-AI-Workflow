@@ -14,12 +14,12 @@ mattpocock's agent orchestration library for context on multi-agent patterns.
 /
 ├── AGENTS.md                   (9-byte placeholder only)
 ├── CLAUDE.md                   (agent-facing brief: typecheck, changesets, skills config)
-├── CONTEXT.md                  (12 KB domain vocabulary — the ubiquitous language)
+├── CONTEXT.md                  (12 KB domain vocabulary: the ubiquitous language)
 ├── README.md                   (90 KB, full API reference + examples)
 ├── CHANGELOG.md                (73 KB, full history)
 ├── package.json                (name: @ai-hero/sandcastle, bin: sandcastle)
 ├── tsconfig.json               (strict TypeScript, NodeNext, ES2022)
-├── tsup.config.ts              (build config — multi-entry, ESM only)
+├── tsup.config.ts              (build config: multi-entry, ESM only)
 ├── vitest.config.ts            (test runner)
 ├── .prettierrc                 (formatting)
 ├── lint-staged.config.mjs      (pre-commit formatting)
@@ -29,10 +29,10 @@ mattpocock's agent orchestration library for context on multi-agent patterns.
 ├── .changeset/                 (changesets version management)
 ├── .out-of-scope/              (8 rejected feature scope decisions)
 ├── .claude/                    (Claude Code memory for the repo)
-├── .factory/                   (unknown purpose — not examined)
+├── .factory/                   (unknown purpose, not examined)
 ├── .agents/
 │   └── skills/pre-release/     (pre-release skill for this repo)
-├── src/                        (TypeScript source — 90 files)
+├── src/                        (TypeScript source: 90 files)
 │   ├── index.ts                (public API exports)
 │   ├── main.ts                 (CLI entry point)
 │   ├── run.ts                  (core run() function)
@@ -76,7 +76,7 @@ mattpocock's agent orchestration library for context on multi-agent patterns.
 │       ├── update-branch/      (branch update)
 │       └── shared/             (shared utilities: diff, review context)
 ├── docs/
-│   ├── adr/                    (20 ADRs — authoritative design decisions)
+│   ├── adr/                    (20 ADRs: authoritative design decisions)
 │   ├── agents/                 (issue tracker, triage, domain docs for agents)
 │   ├── content/                (documentation content)
 │   └── (Next.js app for docs site)
@@ -104,7 +104,7 @@ manage the container, branch, agent loop, and commits.
 
 ## Core API
 
-### `run(options)` — Single-agent, multi-iteration loop
+### `run(options)`: Single-agent, multi-iteration loop
 
 ```typescript
 const result = await run({
@@ -121,12 +121,12 @@ const result = await run({
     },
   },
 });
-// result.commits — array of { sha }
-// result.iterations — per-iteration results with optional sessionId
-// result.stdout — full agent stdout
+// result.commits: array of { sha }
+// result.iterations: per-iteration results with optional sessionId
+// result.stdout: full agent stdout
 ```
 
-### `createSandbox(options)` — Reusable sandbox handle
+### `createSandbox(options)`: Reusable sandbox handle
 
 Shares one container across multiple `run()` calls. Uses `await using` (disposable):
 
@@ -144,11 +144,11 @@ const result = await sandbox.run({
   promptFile: ".sandcastle/implement-prompt.md",
   promptArgs: { TASK_ID: "42", BRANCH: issue.branch },
 });
-// result.resume() — continue same session
-// result.fork()   — branch to a new session
+// result.resume(): continue same session
+// result.fork()  : branch to a new session
 ```
 
-### `interactive(options)` — Human-in-the-loop
+### `interactive(options)`: Human-in-the-loop
 
 Starts an interactive TUI session (no automation, human types):
 
@@ -161,7 +161,7 @@ await interactive({
 });
 ```
 
-### `createWorktree(options)` — Worktree-scoped API
+### `createWorktree(options)`: Worktree-scoped API
 
 ```typescript
 const wt = await createWorktree({
@@ -173,7 +173,7 @@ await wt.interactive({ ... });
 await wt.createSandbox({ ... });
 ```
 
-### `Output.object({ tag, schema })` — Structured output
+### `Output.object({ tag, schema })`: Structured output
 
 Extracts and validates a typed JSON payload from the agent's stdout. XML-tagged;
 schema is any Standard Schema validator (Zod, Valibot, ArkType, etc.).
@@ -233,7 +233,7 @@ Worktrees live in `.sandcastle/worktrees/` and are reused by default (ADR-0003).
 ## Template Catalog
 
 Templates are scaffolded by `sandcastle init`. Each is self-contained (no shared code
-between templates; ADR-0009 — divergence prevention).
+between templates; ADR-0009: divergence prevention).
 
 ### `simple-loop`
 
@@ -287,7 +287,7 @@ It runs as `npm run sandcastle`.
 
 Prompts are either inline (`prompt: "..."`) or file-based (`promptFile: "path.md"`).
 
-Inline prompts are passed through as-is — no expansion, no substitution (ADR-0008:
+Inline prompts are passed through as-is: no expansion, no substitution (ADR-0008:
 protects users who provide structured prompts from unexpected mutation).
 
 File-based prompts support:
@@ -325,9 +325,9 @@ files live. `SessionStore.ts` handles path resolution and transfer between host 
 
 After a `run()`, the `RunResult` exposes:
 
-- `result.resume()` — continue the same session (same session ID, record mutated in place,
+- `result.resume()`: continue the same session (same session ID, record mutated in place,
   ADR-0011: resume counts as one iteration).
-- `result.fork()` — branch to a new session ID, parent record unchanged (ADR-0018:
+- `result.fork()`: branch to a new session ID, parent record unchanged (ADR-0018:
   fork is session-only; does not affect source branch or sandbox).
 
 ---
@@ -346,7 +346,7 @@ Key rules enforced in this codebase, worth noting for their design quality:
   idle-timeout detection; buffering breaks the timeout.
 - **Sandbox-destined paths use `posix.join`**. Host-side paths use platform-aware `join`.
   Compare only with normalized separators (forward slashes on both sides).
-- **TDD as vertical slices**: `test1→impl1→test2→impl2` — not all-tests-then-all-impl.
+- **TDD as vertical slices**: `test1→impl1→test2→impl2`, not all-tests-then-all-impl.
 - **Deep modules**: small interface, rich implementation. Minimize methods and params.
 - **Effect DI layers for test overrides**, not `@internal` properties.
 - **No `@internal` test hooks**: use Effect service layers injected differently in tests.
@@ -359,8 +359,8 @@ Key rules enforced in this codebase, worth noting for their design quality:
 
 | File | Rejected feature |
 |---|---|
-| `built-in-agent-providers.md` | New built-in agent providers — the list is curated |
-| `built-in-sandbox-providers.md` | New built-in sandbox providers — the list is curated |
+| `built-in-agent-providers.md` | New built-in agent providers: the list is curated |
+| `built-in-sandbox-providers.md` | New built-in sandbox providers: the list is curated |
 | `bundled-workflow-templates.md` | Large third-party opinionated workflow templates as init options |
 | `configurable-namespace-prefix.md` | Making `.sandcastle` naming configurable |
 | `custom-base-image-abstraction.md` | Abstraction layer for composing Dockerfiles |
@@ -435,42 +435,42 @@ Key terms with the canonical spelling and avoided synonyms:
    as a typed result rather than a Markdown file. More robust than the current text-file
    handoff format.
 
-4. **`await using` for sandbox lifecycle** — disposable pattern ensures cleanup even
+4. **`await using` for sandbox lifecycle**: disposable pattern ensures cleanup even
    on exceptions. The same pattern could apply to any resource with a teardown step in
    the protocol's agent workflows.
 
-5. **CODING_STANDARDS.md co-located with agent entry point** — agent-visible coding
+5. **CODING_STANDARDS.md co-located with agent entry point**: agent-visible coding
    standards live in `.sandcastle/` next to the prompts that reference them. This
    localization is better than embedding standards in a global policy doc that may
    not be in context when needed. The pattern maps to putting project-specific standards
    in `ai/shared/` next to the handoff templates that reference them.
 
-6. **Out-of-scope files as granular per-feature decisions** — 8 explicitly named scope
+6. **Out-of-scope files as granular per-feature decisions**: 8 explicitly named scope
    boundaries, each explaining why that feature won't be built. More targeted than a
    single "protocol-decisions.md"; each decision has its own file so triage can
    cross-reference by name. Could complement the existing protocol-decisions.md for
    feature-specific rejections.
 
-7. **Effect for type-safe error handling** — the rule "never `new Error()` in an
+7. **Effect for type-safe error handling**: the rule "never `new Error()` in an
    Effect closure, always a tagged error" keeps the failure channel narrow and
    discriminated. The principle applies beyond Effect: always use typed/discriminated
    errors so error handling can be precise. Worth noting for any TypeScript work in
    projects that use this protocol.
 
-8. **The self-hosting demonstration** (`.sandcastle/run.ts`) — the repo processes
+8. **The self-hosting demonstration** (`.sandcastle/run.ts`): the repo processes
    its own GitHub issues using its own tool. This "dogfood" pattern is a strong
    signal about the tool's production readiness and is a compelling piece of
    documentation. The Simple-AI-Workflow protocol already partially dogfoods (using
    the workflow to maintain itself), but an explicit note in the README about which
    features are used internally would strengthen this story.
 
-9. **Agent session fork** — the distinction between resume (same session ID) and fork
+9. **Agent session fork**: the distinction between resume (same session ID) and fork
    (new session ID, parent unchanged) is finer-grained than anything in the protocol's
    handoff model. For multi-agent workflows where one agent hands off to a specialized
    agent for a sub-task and then needs to resume its own line of work, fork is the
    right primitive (the parent session isn't lost or mutated).
 
-10. **Prompt expansion fails fast** (ADR-0020) — if a shell expression in a prompt
+10. **Prompt expansion fails fast** (ADR-0020): if a shell expression in a prompt
     template exits non-zero, the run aborts immediately. This prevents agents starting
     work based on bad context (e.g., an issue-fetching command that silently returned
     empty). The same principle applies to the AGENTS.md Pre-Work Gate: if a prerequisite

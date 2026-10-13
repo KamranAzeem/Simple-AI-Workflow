@@ -12,7 +12,7 @@ inspiration in the Simple-AI-Workflow protocol.
 
 ```text
 /
-├── AGENTS.md              (empty — 9 bytes, placeholder only)
+├── AGENTS.md              (empty: 9 bytes, placeholder only)
 ├── CLAUDE.md              (agent-facing repo maintenance rules)
 ├── CONTEXT.md             (domain vocabulary / ubiquitous language)
 ├── README.md              (15 KB, user-facing overview)
@@ -37,11 +37,11 @@ inspiration in the Simple-AI-Workflow protocol.
 │   ├── list-skills.sh     (lists all skills)
 │   └── sync-plugin-version.mjs (keeps plugin.json version = package.json version)
 └── skills/
-    ├── engineering/       (18 PROMOTED skills — daily code work)
-    ├── productivity/      (7 PROMOTED skills — non-code workflow)
-    ├── in-progress/       (8 beta skills — public but not in plugin)
-    ├── misc/              (4 skills — kept but not promoted)
-    └── deprecated/        (empty — retired skills)
+    ├── engineering/       (18 PROMOTED skills: daily code work)
+    ├── productivity/      (7 PROMOTED skills: non-code workflow)
+    ├── in-progress/       (8 beta skills: public but not in plugin)
+    ├── misc/              (4 skills: kept but not promoted)
+    └── deprecated/        (empty: retired skills)
 ```
 
 ---
@@ -62,7 +62,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 
 ## Full Skill Catalog
 
-### Engineering Skills (18 — Promoted)
+### Engineering Skills (18: Promoted)
 
 | Skill | Invocation | One-line purpose |
 |---|---|---|
@@ -85,7 +85,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 | `resolving-merge-conflicts` | model or user | Resolve conflicts using domain model and intent |
 | `wizard` | model or user | Generate interactive bash wizard for manual provisioning steps |
 
-### Productivity Skills (7 — Promoted)
+### Productivity Skills (7: Promoted)
 
 | Skill | Invocation | One-line purpose |
 |---|---|---|
@@ -97,7 +97,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 | `wait-what` | user-only | Re-pitch the last unclear message in simplified English |
 | `writing-for-agents` | model or user | Reference for writing skills, AGENTS.md, CLAUDE.md documents |
 
-### In-Progress Skills (8 — Not in plugin, public beta)
+### In-Progress Skills (8: Not in plugin, public beta)
 
 | Skill | Purpose |
 |---|---|
@@ -110,7 +110,7 @@ markdown body) and an `agents/openai.yaml` for Codex metadata.
 | `writing-fragments` | Mine raw writing fragments, no structure yet |
 | `writing-shape` | Shape raw material into an article paragraph by paragraph |
 
-### Misc Skills (4 — Not promoted)
+### Misc Skills (4: Not promoted)
 
 | Skill | Purpose |
 |---|---|
@@ -319,9 +319,9 @@ expression of the "codebase-design" skill's conceptual advice.
 
 Three rejected enhancement requests on file:
 
-- `mainstream-issue-trackers-only.md` — requests for niche or custom issue trackers rejected.
-- `question-limits.md` — requests to cap the number of questions during grilling rejected.
-- `setup-skill-verify-mode.md` — a verification mode for setup skills rejected.
+- `mainstream-issue-trackers-only.md`: requests for niche or custom issue trackers rejected.
+- `question-limits.md`: requests to cap the number of questions during grilling rejected.
+- `setup-skill-verify-mode.md`: a verification mode for setup skills rejected.
 
 ---
 

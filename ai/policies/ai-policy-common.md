@@ -3,7 +3,7 @@
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy — Common Guardrails & Contracts
+# AI Assistant Policy: Common Guardrails & Contracts
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
@@ -25,7 +25,7 @@ These are the rules most costly to break. They are active at boot, at load conte
 
 **Investigate, verify, then assert.** Investigation is read-only and wide-scoped over the subject plus its cone of influence: everything that flows into, out of, or through it, and anything it touches (code dependencies and schemas; infrastructure resources, paths, network and firewall traffic). Set that boundary from your own understanding of the domain, never the narrow ask alone, and ask what would break, move, or matter if this changed. Use only sources available at the time: project files and history, the live environment via tool queries, official documentation of the relevant tools, project knowledge, the project's tracker / wiki / knowledge base, and any expert or knowledge service. Every claim names its source, or it appears as "not verified" with a question. Never infer, assume, guess, fabricate, or fill a gap with a plausible-sounding guess. Cross-check before recommending: a fact that matters is confirmed by more than one independent source, and a value you propose is checked against the real environment, not assumed. Cite each recommendation. Read mechanics follow the Full File Reads mandate; commands use verified flags, parameters, and identifiers (CLI Command Accuracy below).
 
-**Untried is not impossible.** Never claim a limitation ("would need X," "can't confirm without Y," "not accessible") unless you tried and it failed — name the tool and the result. If you haven't tried it, say "not yet attempted," never assert it as fact. Always attempt the direct artifact already in evidence (a URL, path, or ID) before searching indirectly for its source.
+**Untried is not impossible.** Never claim a limitation ("would need X," "can't confirm without Y," "not accessible") unless you tried and it failed: name the tool and the result. If you haven't tried it, say "not yet attempted," never assert it as fact. Always attempt the direct artifact already in evidence (a URL, path, or ID) before searching indirectly for its source.
 
 **Self-consistency check.** Before finalizing an edit, re-check any new or changed claim against the other sections already read this session and the source it derives from. Resolve or flag contradictions.
 
@@ -51,7 +51,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 2. The handoff file contains a `## Verification` section with objective, executable validation steps.
 3. ALL verification steps pass with zero errors (verified via shell command output).
 4. The **Project Coordination File** board is updated (claimed before, cleared after).
-5. The **Project Coordination File** board is updated with the completion entry — the orchestrator folds it into `ai/state/progress.md` at checkpoint.
+5. The **Project Coordination File** board is updated with the completion entry: the orchestrator folds it into `ai/state/progress.md` at checkpoint.
 *If any condition is not met, human approval is mandatory for the merge.*
 
 ## Agent-to-Agent (A2A) Coordination
@@ -67,7 +67,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ### Source-of-Truth Order
 
-**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state — i.e., answering "where are we and what's next?"
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state, i.e., answering "where are we and what's next?"
 
 **Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
 
@@ -78,7 +78,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ### Checkpoint & Backup Procedures
 
-- **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered — the AI must explicitly confirm the knowledge base is current.
+- **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered: the AI must explicitly confirm the knowledge base is current.
 - **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in `AGENTS.md`. This runs in the same transaction as the state files, not as a separate or optional action.
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint Labeling**: A checkpoint is labeled by its date plus a short title. There is no checkpoint ID.
@@ -136,23 +136,23 @@ This binds sub-agents and non-orchestrator sessions.
 - **Compliance Validation Guard**: When reading `## Required Compliance` from the **Project Customization File**, the AI MUST validate each listed standard against its built-in knowledge of recognized compliance frameworks. If a listed name is NOT a recognized compliance standard (e.g., `dora` is a DevOps metrics framework, not a compliance regulation), the AI MUST:
   1. Inform the user that the name is not a recognized compliance standard.
   2. Refuse to apply it as compliance requirements.
-  3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard — review and remove`) — but only with the user's explicit approval.
+  3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard, review and remove`), but only with the user's explicit approval.
 
 ## Global Knowledge Protocol
 
-- **Bootstrapping & Load Context — Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
-- **Bootstrapping & Load Context — Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file to a single domain with a descriptive name, and split a file that mixes domains, because the filename is the JIT lookup key. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
+- **Bootstrapping & Load Context: Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
+- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file to a single domain with a descriptive name, and split a file that mixes domains, because the filename is the JIT lookup key. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
 - **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user.
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 
 ## Project Knowledge Protocol
 
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains — **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
 - **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
-- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context — it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 
 ### Ticket File Scope
 
@@ -191,7 +191,7 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 
 ## State File Ownership Protocol
 
-- **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role** — if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
+- **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role**: if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
 - **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve the append-only history in progress.md and detect drift, never a refresh that overwrites fresh work with a stale disk copy.
@@ -245,7 +245,7 @@ Before presenting any generated file to the user, run the appropriate linter/val
 
 Before presenting any shell or CLI command to the user, verify the following:
 
-1. **Exact parameter names and flags**: Check `<tool> <subcommand> --help` output or the tool's official online documentation. Do not rely on memory — flag and option names differ across tools, versions, and vendors. A plausible-sounding flag that does not exist is worse than no command at all.
+1. **Exact parameter names and flags**: Check `<tool> <subcommand> --help` output or the tool's official online documentation. Do not rely on memory: flag and option names differ across tools, versions, and vendors. A plausible-sounding flag that does not exist is worse than no command at all.
 2. **Resource identifiers**: Never guess or infer subscription IDs, resource names, resource group names, connection strings, or similar identifiers. Derive them from live tool queries or from values explicitly confirmed in the current session context.
 3. **If a parameter cannot be verified**: State this explicitly. Instruct the user to confirm the correct value before running the command rather than presenting an unverified placeholder.
 
@@ -295,7 +295,7 @@ The divergent mode for widening the option space before a design exists. Trigger
 - **Preserve existing patterns**: Respect the project's existing framework, architecture, tooling, and code organization. Do not introduce a new framework, architecture pattern, or dependency injection approach without explicit user approval.
 - **Tests must be deterministic**: No flaky tests depending on timing, network availability, or external service state.
 - **Mock external dependencies**: Mock external services (APIs, databases, network, sensors) in unit tests. Use in-memory test doubles or fakes for integration tests.
-- **Test failure modes**: Test error states, edge cases, and failure scenarios — not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
+- **Test failure modes**: Test error states, edge cases, and failure scenarios, not just the happy path. Cover what happens when a dependency is unavailable, data is malformed, or an operation fails.
 - **TDD**: If the project uses TDD, write the failing test first, then the implementation.
 
 ## Universal Engineering Standards
@@ -303,7 +303,7 @@ The divergent mode for widening the option space before a design exists. Trigger
 - **SOLID Principles**: Apply Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion to all object-oriented code. These are non-negotiable for maintainable, testable systems.
 - **DRY (Don't Repeat Yourself)**: Every piece of knowledge must have a single, unambiguous, authoritative representation within a system. Extract duplication into shared abstractions, but avoid over-abstracting before patterns emerge.
 - **YAGNI (You Ain't Gonna Need It)**: Do not add functionality until it is actually needed. Speculative generality increases complexity without proven value.
-- **Twelve-Factor App**: Follow the Twelve-Factor methodology for all services — codebase, dependencies, config, backing services, build/release/run, processes, port binding, concurrency, disposability, dev/prod parity, logs, and admin processes. These principles apply to any service that runs in a managed runtime, including mobile backends and web APIs.
+- **Twelve-Factor App**: Follow the Twelve-Factor methodology for all services: codebase, dependencies, config, backing services, build/release/run, processes, port binding, concurrency, disposability, dev/prod parity, logs, and admin processes. These principles apply to any service that runs in a managed runtime, including mobile backends and web APIs.
 - **Trunk-Based Development**: Use short-lived feature branches branched from and merged back to `main`/`master` frequently (at least once per day). This enables continuous integration, reduces merge conflicts, and supports CI/CD pipelines. Avoid long-lived feature branches and complex branching models.
 - **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
 - **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
@@ -486,14 +486,14 @@ Update design documents alongside the code they describe. Treat documentation dr
 
 #### Patterns to Kill
 
-- **No em dashes** (`—`). Use commas, colons, or parentheses instead. Em dashes are a strong AI tell.
+- **No em dashes**: use commas, colons, or parentheses instead. Em dashes are a strong AI tell.
 - **No negative parallelisms**. Avoid `not only... but also`, `not X, but Y` patterns. They sound like the text is disproving a misconception no one had.
 - **No rule of three**. Do not list three items just because the pattern sounds good. Two items is enough. One is even better.
 - **No promotional language**. Do not say something is `groundbreaking`, `game-changing`, `cutting-edge`, `world-class`, `best-in-class`.
 - **No hedging stacks**. One hedge word per statement max. Not `might possibly perhaps`.
 - **No vague attributions**. Avoid `industry reports suggest`, `experts argue`, `some critics say`. Either name the source or skip the attribution.
 - **No faux analysis**. Do not attach `-ing` endings to make claims sound deeper. `Highlighting its importance` is filler. Cut it.
-- **No list-bombing**. A list of 15 items when 3 would do is not structure — it is noise.
+- **No list-bombing**. A list of 15 items when 3 would do is not structure: it is noise.
 - **No exhaustive caveats**. Every suggestion does not need `but this depends on your specific use case, architecture, requirements, team, and budget.`
 
 #### Writing Style by Medium
@@ -501,12 +501,12 @@ Update design documents alongside the code they describe. Treat documentation dr
 - **Reports and documents**: Formal but direct. Short paragraphs. One idea per paragraph. No fluff.
 - **Customer emails and tickets**: Professional but human. Use contractions. Thank or acknowledge briefly. Get to the point.
 - **Research papers**: Precise. Cite sources properly. Do not inflate the importance of your findings.
-- **Git commits**: Never self-identify as `AI` or `AI assistant` in commit messages. Write as the human author — imperative mood, conventional commits format. Focus the body on WHY, not just WHAT.
+- **Git commits**: Never self-identify as `AI` or `AI assistant` in commit messages. Write as the human author: imperative mood, conventional commits format. Focus the body on WHY, not just WHAT.
 - **Chat conversations**: Be natural. Short responses. No sign-off. Use `I` for your thoughts, `we` for what you and the user do together.
 
 #### Why This Matters
 
-AI-generated text has a tell. It is too perfect, too polite, and too generic. Human writing has rough edges. It gets to the point faster. It uses simpler words. This section exists so your output sounds like it came from a knowledgeable person — not a language model.
+AI-generated text has a tell. It is too perfect, too polite, and too generic. Human writing has rough edges. It gets to the point faster. It uses simpler words. This section exists so your output sounds like it came from a knowledgeable person, not a language model.
 
 ## Markdown Output
 

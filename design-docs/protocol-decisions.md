@@ -483,3 +483,7 @@ A plan is not a design document. Plans live under `ai/` (for example `ai/plans/`
 ## 2026-10-13: Markdown lint ignores local-only directories
 
 The markdown lint config ignores the git-ignored local directories (`ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`) and `ai/daily-checkpoints/`, because these hold local-only working artifacts rather than shipped or living markdown. The shipped and living set (`ai/policies/`, `docs/`, root markdown, and `ai/shared/project-knowledge/`) was brought to zero lint issues in a one-time pass. Markdown enforcement stays going-forward for all other files. `ai/issues/` and `ai/state/` remain part of linting and were brought to zero issues in a follow-up pass.
+
+## 2026-10-13: No em dashes in the shipped and living files
+
+The shipped and living markdown (policies, docs, root markdown, and project knowledge) carries no em dashes. Each was replaced by a comma, colon, or parentheses as fit, not by a blind swap. This applies the Humanized Output no-em-dash rule to the existing corpus. The lint-exempt local directories and the historical issue and state files are out of scope.

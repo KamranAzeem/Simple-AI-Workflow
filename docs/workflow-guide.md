@@ -10,7 +10,7 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 - **Status**: Non-version-controlled. Each contributor builds their own project knowledge base.
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
 - **Policy**: AI assistants treat this directory as the source of truth for repository standards.
-- **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session — even if nothing changed (confirmation is mandatory).
+- **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session: even if nothing changed (confirmation is mandatory).
 
 ## 2. Global Knowledge (Cross-Project)
 
@@ -113,7 +113,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Immortality Headers**: A high-visibility `⚠️ STOP` header at the top of `AGENTS.md` prevents AI from modifying the protocol.
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
-- **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only — prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
+- **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only: prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
 - **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
 
@@ -136,7 +136,7 @@ When the conversation is compacted (the harness replaces the live history with a
 
 ### Key rules
 
-- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time — automatically or when you ask for it.
+- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time: automatically or when you ask for it.
 - **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
 
 ### Benefits
@@ -185,7 +185,7 @@ The AI assistant is designed to inherently apply secure coding and infrastructur
 
 The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Universal Engineering Standards** section that applies across all domains:
 
-- **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion — non-negotiable for maintainable OO code.
+- **SOLID Principles**: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion: non-negotiable for maintainable OO code.
 - **DRY (Don't Repeat Yourself)**: Every piece of knowledge has a single, authoritative representation. Extract duplication into shared abstractions, but avoid over-abstracting before patterns emerge.
 - **YAGNI (You Ain't Gonna Need It)**: Do not add functionality until it is actually needed.
 - **Twelve-Factor App**: Codebase, dependencies, config, backing services, build/release/run, processes, port binding, concurrency, disposability, dev/prod parity, logs, admin processes.
@@ -201,7 +201,7 @@ The `ai-customization.md` file at the project root is the **"Single Dial"** for 
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`, `linux-system-admin`, `windows-system-admin`).
 - **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
-- **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge — no on-disk compliance files needed.
+- **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge: no on-disk compliance files needed.
 
 See the [AI Customization Guide](ai-customization-guide.md) for the full catalog and multi-role examples.
 
@@ -211,12 +211,12 @@ Trigger an on-demand code review at any point by saying:
 
 > *"peer review"*, *"code review"*, or *"PR review"*
 
-The AI immediately switches to a **Strict Peer Reviewer** role. It does not write or fix code during this mode — it only identifies, classifies, and explains issues.
+The AI immediately switches to a **Strict Peer Reviewer** role. It does not write or fix code during this mode: it only identifies, classifies, and explains issues.
 
 ### How it works
 
 1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
-2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target — not the local working tree.
+2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target, not the local working tree.
 3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
 4. When the reviewed file is read by an AI (`AGENTS.md`, policy files, handoff templates), it also checks agent readability: hierarchy, completion criteria, leading words, negation, sediment, and sprawl.
 5. It does not stop at the diff: it examines the full file or module the change touches, checks live or runtime state when tooling allows, and states plainly what it did not check.
@@ -231,11 +231,11 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 
 ### Why multiple review rounds are normal
 
-The AI reviews the **full file set** on every pass — not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
+The AI reviews the **full file set** on every pass, not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
 
 ### Compared to GitHub Copilot PR reviewer
 
-Using GitHub Copilot's pull request reviewer involves a frustrating cycle: push your branch, wait for Copilot to review the diff, copy the review comments out of GitHub, paste them into your local AI chat to understand and fix them, apply the fixes, push again, and repeat. Each push triggers a new diff-only review that cannot see issues outside the changed lines. After many rounds, you still may not have a full-codebase verdict. With this workflow's peer review, the entire loop stays in your local AI chat window — no push required, no copy-pasting between tools, and the AI scans the full file set every time.
+Using GitHub Copilot's pull request reviewer involves a frustrating cycle: push your branch, wait for Copilot to review the diff, copy the review comments out of GitHub, paste them into your local AI chat to understand and fix them, apply the fixes, push again, and repeat. Each push triggers a new diff-only review that cannot see issues outside the changed lines. After many rounds, you still may not have a full-codebase verdict. With this workflow's peer review, the entire loop stays in your local AI chat window: no push required, no copy-pasting between tools, and the AI scans the full file set every time.
 
 ### Exiting reviewer mode
 
@@ -243,22 +243,22 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 ### Report structure
 
-- **Critical** — blocks commit (security, data loss, broken functionality)
-- **Major** — fix before commit (policy violations, logic errors)
-- **Minor** — fix when convenient (style, naming)
-- **Suggestions** — optional improvements
-- **Not Checked** — what was out of scope or not verified (other files, live telemetry, and so on), stated plainly rather than omitted
-- **Verdict** — APPROVED or CHANGES REQUESTED
+- **Critical**: blocks commit (security, data loss, broken functionality)
+- **Major**: fix before commit (policy violations, logic errors)
+- **Minor**: fix when convenient (style, naming)
+- **Suggestions**: optional improvements
+- **Not Checked**: what was out of scope or not verified (other files, live telemetry, and so on), stated plainly rather than omitted
+- **Verdict**: APPROVED or CHANGES REQUESTED
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI fully loads the small, always-relevant context — settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
 ### How it works
 
-1. **Global Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
-2. **Active Policies — full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
-3. **Project Knowledge — index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index — paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
+1. **Global Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
+2. **Active Policies: full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
+3. **Project Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
 
@@ -286,8 +286,8 @@ Every item is at most three short bullets. The three files share a 20 KB soft bu
 
 The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
 
-1. **Sequential Writes**: State is written in strict order — `ai/state/progress.md` (past) → `ai/state/next-steps.md` (future) → `ai/state/context.md` (present). Never in a different order.
-2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window — showing exactly what was written to each file and what values changed.
+1. **Sequential Writes**: State is written in strict order: `ai/state/progress.md` (past) → `ai/state/next-steps.md` (future) → `ai/state/context.md` (present). Never in a different order.
+2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window: showing exactly what was written to each file and what values changed.
 3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
 
 ### Daily Checkpoint File
@@ -319,12 +319,12 @@ Before the AI creates the next document, it runs a gap analysis and peer review 
 
 | Document | Purpose |
 |---|---|
-| **Notes** | Raw thoughts, ideas, and requirements — no structure required |
+| **Notes** | Raw thoughts, ideas, and requirements: no structure required |
 | **Vision** | Short plain-language document: what you want to build and why. One to two pages. Written before any formal documentation. |
-| **PRD** | Product Requirements Document — problem, target users, success criteria, scope. Each requirement gets a unique `REQ-NNN` ID. |
-| **HLD** | High-Level Design — architecture, components, technology choices. Each component gets a `HLD-NNN` ID. |
-| **LLD** | Low-Level Design — detailed per-component design: classes, interfaces, APIs, schemas. Each item gets a `LLD-NNN` ID. |
-| **ADRs** | Architecture Decision Records — context and rationale for each significant decision. Each gets an `ADR-NNN` ID. |
+| **PRD** | Product Requirements Document: problem, target users, success criteria, scope. Each requirement gets a unique `REQ-NNN` ID. |
+| **HLD** | High-Level Design: architecture, components, technology choices. Each component gets a `HLD-NNN` ID. |
+| **LLD** | Low-Level Design: detailed per-component design: classes, interfaces, APIs, schemas. Each item gets a `LLD-NNN` ID. |
+| **ADRs** | Architecture Decision Records: context and rationale for each significant decision. Each gets an `ADR-NNN` ID. |
 | **Delivery Ledger** | Tracks which design items (by ID) have been implemented and released. Updated at every checkpoint. |
 
 All design documents live in `ai/shared/project-knowledge/` and follow the verbose naming convention:

@@ -56,12 +56,12 @@ The AI Assistant acts as a **Senior Data Architect and Senior AI Architect** wit
 
 - **Data Pipeline Testing**: Test ETL/ELT logic with sample data that covers expected schemas, data types, and edge cases (nulls, duplicates, out-of-range values).
 - **Schema Validation**: Test schema evolution and backward compatibility. Verify that new fields are additive and existing consumers are not broken.
-- **Data Quality Testing**: Implement automated quality checks as part of the pipeline — row counts, null ratios, data type conformance, referential integrity.
+- **Data Quality Testing**: Implement automated quality checks as part of the pipeline: row counts, null ratios, data type conformance, referential integrity.
 - **Contract Testing**: Validate data contracts between producers and consumers. Ensure schema changes are communicated and compatible.
 
 ### Testing Standards
 
-- Use representative (but anonymized) production-like data for testing — not just synthetic happy-path data.
+- Use representative (but anonymized) production-like data for testing, not just synthetic happy-path data.
 - Test failure modes: what happens when a source system is unavailable, data is malformed, or a transformation fails mid-pipeline.
 - Document expected data quality SLAs and verify them in test runs.
 - Maintain test data sets that cover known edge cases and regressions.

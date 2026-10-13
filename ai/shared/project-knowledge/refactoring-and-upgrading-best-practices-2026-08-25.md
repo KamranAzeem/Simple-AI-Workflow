@@ -1,4 +1,4 @@
-# Refactoring & Upgrading Codebases — Best Practices and Frameworks
+# Refactoring & Upgrading Codebases: Best Practices and Frameworks
 
 Status: research note (2026-08-25). Tracked by `ai/issues/open/refactoring-and-upgrading-policy.md`.
 
@@ -13,7 +13,7 @@ Research from Google on refactoring best practices, whether codebase age/languag
 - **SOLID principles**: five design principles for understandable, flexible, maintainable code.
 - **Boy Scout Rule**: leave the code cleaner than you found it; clean minor issues as you touch files for feature work.
 
-## PHP (10 years old) vs modern Node.js (TypeScript/ES6+) — the big differences
+## PHP (10 years old) vs modern Node.js (TypeScript/ES6+): the big differences
 
 Core refactoring concepts are identical, but context, risk, and tooling differ drastically by age and language.
 
@@ -26,7 +26,7 @@ Core refactoring concepts are identical, but context, risk, and tooling differ d
 
 Risk: a change in one legacy PHP file can break an unrelated global variable. Node.js modules are strictly isolated, so refactoring is usually faster and safer.
 
-## Refactoring vs upgrading — they are different
+## Refactoring vs upgrading: they are different
 
 - **Refactoring** (internal code quality): change internal design, fix smelly code, break up large classes; no external behavior change. Example: split a 2,000-line PHP file into smaller classes. The app behaves the same to the user.
 - **Upgrading** (language & platform): bump the platform, language version, or third-party dependencies. Example: Node 14 → 22, or old PHP → PHP 8.3. Gains performance, security patches, and new features, but requires fixing code that breaks on deprecations.

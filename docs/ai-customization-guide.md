@@ -20,7 +20,7 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 - api-backend
 ```
 
-**How it works**: The AI assistant will look for a matching file in the global directory using two patterns — `ai-policy-<name>.md` first, then `<name>.md` — and load all matched files as additive layers.
+**How it works**: The AI assistant will look for a matching file in the global directory using two patterns (`ai-policy-<name>.md` first, then `<name>.md`) and load all matched files as additive layers.
 
 ---
 
@@ -32,19 +32,19 @@ Use the `## Active Traits` section to define *how* the AI should behave. These a
 
 **Available traits:**
 
-- **System Architect:** Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components. **Engagement style: Pressure-test architectural ideas with honest critique — identify risks, trade-offs, and blind spots. Do not be a "yes man."**
-- **System Integrator** — Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile). Flags breaking changes in shared schemas or DTOs.
-- **Senior DBA** — Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
-- **Observability Architect** — Prioritize Four Golden Signals, log correlation, distributed tracing, and actionable alerting.
-- **Code Reviewer** — Look for security vulnerabilities, performance bottlenecks, and coding standard violations.
-- **Security Specialist** — Minimize attack surface. Enforce least privilege, check for exposed secrets, align with OWASP/CIS benchmarks.
-- **Teacher/Trainer** — Explain the 'why' behind every 'how'. Break down complex tasks into teachable steps.
+- **System Architect:** Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components. **Engagement style: Pressure-test architectural ideas with honest critique, identify risks, trade-offs, and blind spots. Do not be a "yes man."**
+- **System Integrator**: Coordinate dependencies and ensure contract consistency across all system layers (infra, API, web, mobile). Flags breaking changes in shared schemas or DTOs.
+- **Senior DBA**: Prioritize HA/DR, performance tuning (Explain First), and strict security guardrails.
+- **Observability Architect**: Prioritize Four Golden Signals, log correlation, distributed tracing, and actionable alerting.
+- **Code Reviewer**: Look for security vulnerabilities, performance bottlenecks, and coding standard violations.
+- **Security Specialist**: Minimize attack surface. Enforce least privilege, check for exposed secrets, align with OWASP/CIS benchmarks.
+- **Teacher/Trainer**: Explain the 'why' behind every 'how'. Break down complex tasks into teachable steps.
 
 **Example:**
 
 ```markdown
 ## Active Traits
-- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components. **Engagement style: Pressure-test architectural ideas with honest critique — identify risks, trade-offs, and blind spots. Do not be a "yes man."**
+- System Architect: Design end-to-end infrastructure across networking, databases, Kubernetes, and virtual machines; ensure cohesion across all system components. **Engagement style: Pressure-test architectural ideas with honest critique, identify risks, trade-offs, and blind spots. Do not be a "yes man."**
 ```
 
 ---
@@ -106,9 +106,9 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
 
-> **Note — Peer Review (`code-review`)**: You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"`, `"code review"`, or `"PR review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
+> **Note: Peer Review (`code-review`)**. You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"`, `"code review"`, or `"PR review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
 >
-> **Note — Codebase Examination (`codebase-examination`)**: Same behavior as peer review — say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded or indexed at boot.
+> **Note: Codebase Examination (`codebase-examination`)**. Same behavior as peer review: say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded or indexed at boot.
 
 ---
 
