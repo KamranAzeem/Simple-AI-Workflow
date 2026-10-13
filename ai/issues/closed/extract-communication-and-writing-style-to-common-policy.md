@@ -55,3 +55,7 @@ Acceptance criteria:
 - No personal voice or personal list is moved into the universal common policy.
 - The global settings template reflects the same thin shape.
 - Validator passes; an ADR entry is added to `protocol-decisions.md`; peer review APPROVED.
+
+---
+2026-10-13
+Closed on branch `chore/thin-global-settings-style`. Moved two universal rules (no decorative symbols; conversational default) into `ai-policy-common.md`, removed the policy-owned bullets from `~/.ai/settings/global-user-settings.md` and `docs/global-user-settings.md`, and kept only personal preferences in the settings. Verified: markdownlint 0, validator v6.0 8/8, reference test PASS. Peer review review-35 APPROVED.

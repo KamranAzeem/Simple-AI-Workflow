@@ -491,3 +491,7 @@ The shipped and living markdown (policies, docs, root markdown, and project know
 ## 2026-10-13: pull.rebase is a recommendation; defaultBranch is never overridden
 
 The gitconfig templates in `ai/policies/ai-policy-common.md` and `docs/global-user-settings.md` include `[pull] rebase = true`. It is a recommendation, not part of the config adequacy check. For a new config the AI sets `defaultBranch` to `main`; it never changes a `defaultBranch` that is already set, and never enforces `main`.
+
+## 2026-10-13: Universal writing rules live in the common policy
+
+The universal communication and writing-style rules live once, in `ai/policies/ai-policy-common.md` (`Humanized Output`, `Markdown Output`, and the ticket-file scope rule). The user's `~/.ai/settings/global-user-settings.md` and the template `docs/global-user-settings.md` hold only personal preferences. Two rules moved from the settings into the policy: no decorative symbols, and a conversational-by-default style. Personal voice, anecdotes, sign-off style, the personal word list, and Style Sources stay in the settings.

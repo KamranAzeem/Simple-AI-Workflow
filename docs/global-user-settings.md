@@ -25,15 +25,11 @@ Universal rules live in the common policy. This file holds personal preferences 
 
 ### Communication Style
 
-- Direct, low-fluff, concise first. Depth on request.
+The universal writing rules live in the common policy (`Humanized Output`, `Markdown Output`). This section holds only your personal preferences.
+
 - Use "I", not "we" or "us", for client or customer communications.
 - Write directly to the recipient: "you" and "your". Never refer to the client in third person.
 - In Jira, Teams, Slack, and similar tools, use plain paragraphs, headings, bullets, and code blocks. No tables.
-- No decorative symbols (ticks, arrows, emoji). Use `[PASSED]`, `[FAILED]`, `[PENDING]`, and similar.
-- Keep a natural, human, conversational tone. Avoid robotic, AI, or over-formal phrasing.
-- Don't use jargon. Use simple English.
-- Default to conversational writing, not report style: short sentences, one idea at a time, lead with the point. Cut hedging and passive voice. Switch to formal report style only when asked.
-- Ticket files are customer-facing status updates (decisions, outcomes, blockers), not a technical diary of commands, errors, and fixes. Those belong in project knowledge or this file.
 
 ### Preferred shell and tools
 
