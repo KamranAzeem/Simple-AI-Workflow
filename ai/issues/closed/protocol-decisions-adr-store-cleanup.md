@@ -12,12 +12,14 @@ Description:
 `ai/shared/project-knowledge/protocol-decisions.md` is a per-session logbook. Rework it to hold genuine design decisions only.
 
 Requirements:
+
 - Keep entries that are genuine design decisions; each states the decision, its context, and its consequences.
 - Remove session bookkeeping (status, merge record, what was implemented, review counts, validator results). That content belongs in the daily checkpoints.
 - When the design-docs location change lands, the ADR store moves to the protocol repo's own `design-docs/`.
 - Direct what-only rules; no markdown tables.
 
 Acceptance criteria:
+
 - The ADR store holds only design decisions, in the decision/context/consequences shape.
 - Session records live in the daily checkpoints, not duplicated in the store.
 - Validator green; markdownlint 0.

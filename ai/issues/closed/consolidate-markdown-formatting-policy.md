@@ -40,12 +40,14 @@ Where the rules live today (inventory):
 13. IDs and file naming (Design Documentation Standards): every requirement, component, and design item gets an ID (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`, `ADR-NNN`); documents follow the Verbose File Naming rule.
 
 Conflicts and duplication to resolve:
+
 - Tables: the customization rule bans markdown tables in protocol files, but `ai/policy-common.md` (ID Convention) and `ai/policy-code-review.md` (severity classification) contain tables. Decide: ban tables and convert those, or allow them under a stated exception, and make the policy text comply.
 - Lint exemption: `ai/` files are exempt from Generated File Validation, so tickets, plans, checkpoints, and review reports have unconstrained markdown. Decide whether these are linted or explicitly exempt.
 - Em dashes: Humanized Output bans em dashes, but generated docs still contain them (the comparison doc has 38). Decide how the ban is enforced for generated files, not only for chat.
 - Link rules: no hyperlinks in policy files, yet docs and the README use relative links. State the exact scope (which file classes use which link style).
 
 Acceptance criteria:
+
 - AC1: one `## Markdown Output` section in `ai/policies/ai-policy-common.md` holds every markdown-mechanics rule (headings, lists, tables, code fences, links, filenames).
 - AC2: no markdown-formatting rule is duplicated elsewhere; other sections cross-reference the one section. Prose style stays in Humanized Output and is cross-referenced.
 - AC3: the table conflict is resolved (banned and converted, or permitted with a stated exception) and all policy text complies.

@@ -11,6 +11,7 @@ Description:
 Add a worked example for a data engineer, covering typical day-to-day work and documentation: pipelines, transformations, data quality checks, schema changes, and reporting. Show the prompts, the design docs, and the checkpoints at each stage.
 
 Acceptance criteria:
+
 - A realistic data workflow walked end to end.
 - Shows documentation and knowledge capture alongside the code.
 - Links from the README examples section.

@@ -51,6 +51,7 @@ PART 4: Git configuration
 - Trigger: offer at bootstrap and at each "load context" (offer only, never write without approval), and before the first commit.
 
 Scope:
+
 - Docs and slides are updated to match.
 - The global settings sections that the policy now covers are trimmed in the same change-set that adds the policy rules, never before, so no rule is lost.
 - Existing commits are out of scope: the history was rewritten recently for the same problem.
@@ -58,6 +59,7 @@ Scope:
 Acceptance criteria:
 
 File-checkable (validator, reference test, lint):
+
 - AC1: `ai-policy-common.md` carries the identity rule as a Non-Negotiable plus `## Author Identity and Attribution`, with the source order and the ask/record step.
 - AC2: the identifying-names rule is merged into `## Universal Operational Guardrails` and Non-Negotiable 5, with no list embedded and a "consult the settings list first if present" note.
 - AC3: the git conventions are merged into `## Universal Engineering Standards` and `## Feature Development and Branch-Gating`, with no duplication.
@@ -67,6 +69,7 @@ File-checkable (validator, reference test, lint):
 - AC7: validator 8/8, reference test PASS, markdownlint 0.
 
 Behavioral (confirmed by peer review and a live trial, not by a script):
+
 - AC8: the AI resolves identity from git config, then the settings fallback.
 - AC9: the AI judges identifying names on its own, and consults a settings list first if one is present.
 

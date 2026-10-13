@@ -37,6 +37,7 @@ The 2026-06-30 rationale rested on "too small to matter". The set is now growing
 ## Exact locations that read Global Knowledge
 
 `AGENTS.md`:
+
 - Procedure A Step 4 note: "Global Knowledge files ... are NOT loaded here — they are loaded in full in Step 5."
 - Procedure A Step 5 "Knowledge Loading": the Global Knowledge full-text bullet.
 - Procedure A Step 7 bullet (b): "Global Knowledge files fully loaded ... line counts".
@@ -46,15 +47,18 @@ The 2026-06-30 rationale rested on "too small to matter". The set is now growing
 - Procedure E Step 6 and the closing confirmation line: shared-directory index plus the "knowledge files loaded" count wording.
 
 `ai/policies/ai-policy-common.md`:
+
 - A2A Coordination Proof-of-Load: "loaded Global Knowledge files".
 - Global Knowledge Protocol: the "Full Load" bullet.
 - Source-of-Truth Order note: the "loaded during bootstrap" wording.
 - Bounded staleness: currently Project Knowledge only.
 
 `support-files/validate-protocol.sh`:
+
 - Must keep (or update in lockstep, with a version bump) the `Knowledge Loading`, `Global AI Knowledge Directory`, and `Token Rationing` anchors.
 
 Docs:
+
 - `docs/workflow-guide.md` sections 2, 7, and 13 (including the section 13 heading and the "Global Knowledge — full load" step).
 - `docs/simple-ai-workflow-slides.md` (session resume, token rationing shield, Proof-of-Load, and Global Knowledge slides).
 

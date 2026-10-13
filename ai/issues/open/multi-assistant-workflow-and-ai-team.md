@@ -13,6 +13,7 @@ Two related pieces. (1) Multi-assistant coordination contract: how several assis
 The runtime half is tracked separately in `ai-team-runtime-dispatcher-watcher.md`, so this ticket focuses on the contract.
 
 Scope:
+
 - Coordination primitives proposed: optional ai/agent-config.md, advisory .ai-lock, an ai/tasks/ work queue with claimed-by, and checkpoints plus audit history.
 - Roles: repository steward (policy), optional lead/coordinator, worker assistants.
 - Safety: advisory locks, dry-run and diff-first, staged branches per assistant or task, secrets scan before staging.
@@ -25,6 +26,7 @@ Important: the draft predates the current state model (ai/state/, single-writer 
 Size is XL because it needs a breakdown into a contract piece and a separate runtime project.
 
 Acceptance criteria (refine after reconciliation):
+
 - A single coordination contract that does not duplicate the current single-writer and board model.
 - Dry-run for multi-target actions; human approval before any push or merge.
 - No external-tool dependency.

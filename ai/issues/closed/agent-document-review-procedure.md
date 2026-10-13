@@ -19,6 +19,7 @@ Implemented in `ai/policies/ai-policy-code-review.md`, dimension 6, with one exa
 Origin: the mattpocock/skills writing-for-agents analysis in `ai/shared/project-knowledge/mattpocock-skills-codebase-analysis-2026-08-27.md`.
 
 Acceptance criteria:
+
 - The peer-review policy lists the dimension with the six checks and one example each.
 - The dimension is scoped to agent-facing documents, so source-code reviews are unaffected.
 - Validator stays green; markdownlint clean.

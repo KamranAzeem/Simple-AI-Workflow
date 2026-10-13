@@ -16,6 +16,7 @@ in Procedure C creates or appends a dated file in **Project Daily Checkpoints
 Directory** (`ai/daily-checkpoints/`).
 
 The directory is treated as a read-time source everywhere it's referenced:
+
 - Procedure A Step 4 ("Loading") reads "the latest checkpoint file"
 - `ai-policy-common.md` "Source-of-Truth Order" lists it as position #2
 - `ai-policy-common.md` "State File Proof-of-Read" requires the CP identifier to
@@ -63,6 +64,7 @@ what changed this checkpoint (mirrors the informal pattern already seen in
 `2026-09-01-01.md`).
 
 Files likely touched:
+
 - `AGENTS.md` — Procedure C (new step)
 - `ai-policy-common.md` — "Checkpoint & Backup Procedures" section, cross-reference
   the new step

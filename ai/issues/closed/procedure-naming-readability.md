@@ -19,6 +19,7 @@ Note: the 2026-08-05 decision forbids procedure letters and step numbers inside 
 Origin: an unprocessed idea in `ai/notes/notes.md` (removed, captured here).
 
 Acceptance criteria:
+
 - Descriptive names applied consistently in AGENTS.md and validator anchors.
 - External stable identifiers (at minimum Post-Compaction Recovery) preserved or migrated atomically across every external reference.
 - Docs and guides updated; historical records untouched.

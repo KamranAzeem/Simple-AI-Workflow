@@ -151,6 +151,7 @@ mechanism, whose outcome is recorded in
 2026-09-19
 Design resolved and implemented on `feature/state-file-model-v2` (not merged yet).
 Answers to the six open questions:
+
 1. Context Protection: no exception added. Detection is read-only inside load-context; repair runs only through the separate `repair state files` procedure.
 2. Prompt vs script: both are prompt-driven. The mechanical work is limited to reordering and moving entries, and the repair procedure writes the diary mirror before removing anything.
 3. Thresholds: the fixed counts are gone. The budget is 20 KB total (context 8 KB, progress 7 KB, next-steps 5 KB), with a 14-day window for completed progress entries; next-steps never drops unfinished work.

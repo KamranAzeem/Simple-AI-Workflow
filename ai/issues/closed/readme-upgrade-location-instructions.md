@@ -13,6 +13,7 @@ The README "Keeping AGENTS.md up to date" section does not state clearly that bo
 Fix: add an explicit instruction and a copy-paste example that starts by entering the Simple-AI-Workflow clone, for both the pull step and the sync step.
 
 Acceptance criteria:
+
 - README states the working-directory requirement before the commands.
 - Both Linux/Git Bash and Windows PowerShell examples show the directory context.
 - No change to the scripts themselves.

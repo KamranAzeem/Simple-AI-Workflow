@@ -86,6 +86,7 @@ Closed: squash-merged to `master` as `be4e4b1` and pushed to `origin/master`. Th
 2026-09-19
 Future scope carried over from the retired issue-management design note, so no
 design detail is lost:
+
 - External tracker transfer: the `URL` field stays empty until the user asks to
   migrate tickets to GitHub, GitLab, or Jira; each migrated ticket then has its
   `URL` filled in.

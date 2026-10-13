@@ -11,6 +11,7 @@ Description:
 Research and inquiry task. VS Code has a PreCompact hook (fires before compaction, can warn the user) and no PostCompact hook. The workflow needs a hook that fires after compaction and can inject instructions into the model's next turn, or a SessionStart event that distinguishes a fresh session from a compaction resume.
 
 Questions to answer across tools (VS Code/Copilot, Claude Code, Kilo Code, Cursor, Gemini, ChatGPT, and others):
+
 - Is there a hook before compaction, and what is it called?
 - Is there a hook after compaction that can inject context, not just show a UI message?
 - Is there a SessionStart event that distinguishes fresh from resume?

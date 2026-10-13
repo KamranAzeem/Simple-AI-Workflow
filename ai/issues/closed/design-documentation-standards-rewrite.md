@@ -12,6 +12,7 @@ Description:
 Rework the design-documentation rules in `ai/policies/ai-policy-common.md`. The document-location move is a separate ticket.
 
 Requirements:
+
 - Chain: `Notes (in ai/notes) → Vision → PRD → HLD → LLD (with AC) → Risk and Gap Analysis (RSK-NNN) → ADRs → Delivery Ledger`.
 - Write "LLD" as "LLD (with AC)" throughout; define "AC (Acceptance Criteria)" on first use. AC is a coupling, not a container: small work keeps AC without an LLD, and the Acceptance Criteria Quality gate stays.
 - Add Risk and Gap Analysis before ADRs, tracked with an `RSK-NNN` ID.
@@ -23,6 +24,7 @@ Requirements:
 - Direct what-only rules, no why prose, no markdown tables in the policy file.
 
 Acceptance criteria:
+
 - The common policy states the chain, the LLD (with AC) coupling, Risk and Gap Analysis with RSK-NNN, the Notes/Delivery Ledger casing, the ADR decision-only rule, the MVP-first requirement, layering, and proportional depth.
 - Pre-Work Gate and the Issue Management Protocol plan-depth use "LLD (with AC)" and reflect proportionality.
 - Validator green; reference test PASS; markdownlint 0 on the edited files.

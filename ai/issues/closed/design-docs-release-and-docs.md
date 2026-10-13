@@ -12,12 +12,14 @@ Description:
 Documentation and release handling for the design-docs change. Depends on the standards rewrite and the location/indexing tickets.
 
 Requirements:
+
 - Update `docs/workflow-guide.md` and `docs/simple-ai-workflow-slides.md` for the design-docs location, the chain, and proportional depth.
 - Add a README banner at the top and a `docs/announcements/` note for the breaking change.
 - Add an upgrade section describing the optional migration.
 - Bump the version (major).
 
 Acceptance criteria:
+
 - Docs and slides reflect the change; the README banner and announcement exist; the upgrade section is present; the version is bumped.
 - markdownlint 0 on the edited files.
 

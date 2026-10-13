@@ -15,6 +15,7 @@ The proposed rework: allow recovery to read the latest checkpoint and the state 
 Not urgent. Deferred from the 2026-06-30 state-ownership work (CP-2026-06-30-02).
 
 Acceptance criteria:
+
 - A design that defines precedence between the summary and the state files.
 - State files are never read during recovery before that precedence rule is satisfied.
 - Validator anchors updated and green.

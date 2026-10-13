@@ -12,6 +12,7 @@ Description:
 A plan is not a design document. While building an application or solution, you create actual design documents (vision, PRD, HLD, LLD (with AC), risk and gap analysis, ADRs) that live in `design-docs/`. When you work an issue, you create a plan against that issue, and the plan carries its own HLD, LLD, AC, and ADR content inside the plan file. The plan is temporary and its lifecycle is attached to the issue.
 
 Consequences to state:
+
 - A plan is not a design document.
 - A plan lives under `ai/` (for example `ai/plans/`), never under `design-docs/`.
 - The AI must not suggest moving plan files into `design-docs/`.
@@ -21,6 +22,7 @@ Observed: pulling the latest workflow and syncing to a real project, the AI sugg
 Placement: the Design Documentation Standards location rule (which defines what lives in `design-docs/`) and the Issue Management Protocol plan mandate (where plans are created, and where the error occurred).
 
 Acceptance criteria:
+
 - The common policy states that a plan is not a design document, that plans live under `ai/` and never in `design-docs/`, and that the AI must not suggest moving plans there.
 - The plan mandate says the plan's HLD, LLD (with AC), and ADR content lives inside the plan file.
 - Validator green; reference test PASS; markdownlint 0.

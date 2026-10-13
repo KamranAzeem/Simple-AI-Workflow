@@ -11,6 +11,7 @@ Description:
 Brainstorming is the generative complement to grilling (`grilling-procedure.md`). Grilling converges; brainstorming diverges. Brainstorming widens the option space before a design exists.
 
 Shape (revised 2026-10-12; supersedes the earlier on-demand-policy proposal):
+
 - Put the rules in the common policy (`ai/policies/ai-policy-common.md`), not a separate policy file.
 - Role: generative partner. No criticism during divergence; capture every idea; no premature convergence.
 - Method: diverge on the problem and options; cluster related ideas; hand the shortlist to grilling or a design doc.
@@ -21,6 +22,7 @@ Shape (revised 2026-10-12; supersedes the earlier on-demand-policy proposal):
 Relationship to the Pre-Work Gate: brainstorming covers the earlier divergent phase; grilling covers the convergent shared-understanding phase.
 
 Acceptance criteria:
+
 - The common policy carries a Brainstorming section with the role, divergence rules, and output as direct what-only rules.
 - The trigger decision is resolved and reflected (in `AGENTS.md` or the policy alone).
 - Validator green; docs updated.

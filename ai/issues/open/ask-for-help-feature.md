@@ -22,6 +22,7 @@ A feature that produces a complete, evidence-based report of the current session
 - Follow the on-demand procedure pattern (peer review, codebase examination): a dedicated policy loaded by the trigger phrase, so it adds no load cost.
 
 The report should collect:
+
 - The active context, including progress and next steps.
 - Extracts from related knowledge files, with their dates and provenance.
 - Infrastructure details.

@@ -9,6 +9,7 @@ Summary: Add ready-made ai-customization.md presets for common roles
 Description:
 
 Add variants of `ai-customization.md` for common roles, covering expertise (policies), active traits, compliance, project constraints, and developer workflow. Roles to start with:
+
 - Cloud architect (full infrastructure and the software stack).
 - Product or solution architect (multiple microservices, modules, databases, data design, data flow).
 - Web developer (several web components under one project).
@@ -20,6 +21,7 @@ This is broader than the Active Traits work in `active-traits-persona-customizat
 Needs discussion before implementation: confirm the role list and what each preset contains.
 
 Acceptance criteria:
+
 - One preset per role under `docs/examples/` or a presets directory.
 - The customization guide explains how to pick and adapt a preset.
 - Cross-referenced with the Active Traits persona ticket.

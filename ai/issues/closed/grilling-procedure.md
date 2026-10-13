@@ -11,6 +11,7 @@ Description:
 Grilling is the convergent mode in a two-mode pair. Grilling is adversarial: the AI interviews the user, challenges every assumption, and proposes a recommended answer per question so the user reacts instead of inventing. Brainstorming is the divergent counterpart, tracked in `brainstorming-procedure.md`. Both are kept. Grilling serves the Pre-Work Gate's shared-understanding clause.
 
 Shape (revised 2026-10-12; supersedes the earlier on-demand-policy proposal):
+
 - Put the rules in the common policy (`ai/policies/ai-policy-common.md`), not a separate policy file.
 - Role: interviewer, not a yes-man. Propose a recommended answer per question before asking.
 - Method: map the idea as a design tree; work in rounds; ask all pending branches; process answers; find new branches; repeat until none remain. End with a one-paragraph gist that can feed a design doc or a next-steps entry.
@@ -20,6 +21,7 @@ Shape (revised 2026-10-12; supersedes the earlier on-demand-policy proposal):
 Origin: the mattpocock/skills analysis in `ai/shared/project-knowledge/mattpocock-skills-codebase-analysis-2026-08-27.md`.
 
 Acceptance criteria:
+
 - The common policy carries a Grilling section with the role, method, and output as direct what-only rules.
 - The trigger decision is resolved and reflected (in `AGENTS.md` or the policy alone).
 - Validator green; docs updated.

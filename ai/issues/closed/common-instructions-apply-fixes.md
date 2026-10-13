@@ -13,6 +13,7 @@ The "Common instructions" table should include a phrase to apply the fixes from 
 Behavior: read the latest report, apply the fixes, and note which findings were resolved.
 
 Acceptance criteria:
+
 - README "Common instructions" table has a row for applying fixes after a review.
 - The phrase is also covered in the workflow guide if it lists review phrases.
 

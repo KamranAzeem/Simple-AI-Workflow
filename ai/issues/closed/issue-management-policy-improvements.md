@@ -12,6 +12,7 @@ Purpose: upgrade the Issue Management Protocol so issues are analyzed before wor
 
 Requirements:
 0. Creation channel: local (`ai/issues/open/`) or the user's external system (GitHub, GitLab, etc.). The user owns external access and setup; the protocol documents the option, not credentials.
+
 1. Pre-work issue analysis: analyze the issue for missing information, inconsistencies, and gaps; fill the gaps by brainstorming and/or grilling with the user; keep the issue short and to the point. If it is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists. For an external system without label flexibility, analyze the issue and tell the user whether it is workable.
 2. Plan: once the issue has enough information, create a plan and append its file name as a dated comment on the issue. If the project uses TDD, write tests first.
 3. Plan minimums: small issues need context plus acceptance criteria; medium and larger need HLD, LLD, acceptance criteria, and ADR. Concise, minimum prose.
@@ -23,6 +24,7 @@ Out of scope: the delivery ledger. It is not referenced by the issue rules; it s
 Acceptance criteria:
 
 File-checkable (validator, reference test, lint):
+
 - AC1: the Issue Management Protocol states the creation channel (local or external) and that the user owns external access.
 - AC2: the protocol states the pre-work issue analysis, the brainstorming/grilling gap-fill, the minimum-prose rule, and the `Insufficient Information` / `Unworkable` label with the refuse-even-if-insisted rule.
 - AC3: the protocol states the plan mandate, the dated-comment plan link, the conditional TDD tests-first recommendation, and the size-based plan minimums.
@@ -34,6 +36,7 @@ File-checkable (validator, reference test, lint):
 - AC9: validator 8/8, reference test PASS, markdownlint 0.
 
 Behavioral (peer review and a live trial, not a script):
+
 - AC10: the AI refuses to work an `Insufficient Information` / `Unworkable` issue even when the user insists.
 
 ---

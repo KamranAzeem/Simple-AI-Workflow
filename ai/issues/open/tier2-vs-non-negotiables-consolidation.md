@@ -11,16 +11,19 @@ Description:
 Two places claim to hold always-on rules: the TIER READ-FIRST-RULES MANDATORY ACTIONS in `AGENTS.md` and the Non-Negotiables list at the top of `ai-policy-common.md`. Both are always loaded, and several rules appear in both (evidence-based investigation, full file reads). This creates two sources of truth and a drift risk.
 
 Decide and execute one canonical home:
+
 - Option A: keep TIER READ-FIRST-RULES canonical and reduce the common-policy Non-Negotiables to a pointer.
 - Option B: move always-on mechanics into the always-loaded common policy and keep `AGENTS.md` thin and structural.
 - Option C: keep both with a strict division, for example TIER READ-FIRST-RULES holds only rules needed before policy files load.
 
 Constraints:
+
 - Apply the 2026-08-31 routing principle (AGENTS.md is a router, not a catalog).
 - This affects the policies-to-skills rename ticket, so sequence the two together.
 - Historical records stay byte-identical.
 
 Acceptance criteria:
+
 - One canonical home per always-on mechanic; no rule duplicated in both places.
 - `AGENTS.md` and the common policy both stay lean.
 - Validator anchors updated as needed and green.

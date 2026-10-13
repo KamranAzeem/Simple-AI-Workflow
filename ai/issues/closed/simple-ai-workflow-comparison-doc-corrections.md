@@ -21,6 +21,7 @@ Review of `docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md`. 
 5. Cosmetic naming mismatch: the README links to the document as "Simple AI Workflow vs Copilot, Claude, ChatGPT: a full comparison", but the H1 title (line 1) reads differently.
 
 Acceptance criteria:
+
 - `SKILL.md` corrected in both line 34 and the table at line 83, and the "and agents" wording fixed.
 - Compliance cell aligned with the no-on-disk-compliance-files rule.
 - `/memories/` description includes repository scope.
