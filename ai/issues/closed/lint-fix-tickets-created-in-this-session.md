@@ -15,5 +15,6 @@ Two tickets created earlier this session put a list immediately after `Acceptanc
 - `ai/issues/closed/add-pull-rebase-to-gitconfig-templates.md` (line 19).
 
 Acceptance criteria:
+
 - Both tickets pass markdownlint.
 - Full-repo lint returns to 0.
