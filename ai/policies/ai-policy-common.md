@@ -182,7 +182,7 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 - **Minimum prose**: a ticket is a short, customer-facing status update: decisions, outcomes, and blockers. No long paragraphs and no command transcripts; put runbooks and command detail in project knowledge. A ticket is not a technical diary of commands, errors, and fixes.
 - **AI-initiated creation**: when the AI finds something worth tracking, it files the ticket immediately and never waits on a human. Where the user has not chosen `Severity` or `Size`, set `Human-to-decide (AI estimate: ...)`.
 - **Pre-work analysis**: before any work starts, analyze the ticket for missing information, inconsistencies, and gaps. Fill every gap through brainstorming or grilling with the user, and keep the ticket at minimum prose as gaps are filled. If the ticket is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists. For an external tracker with no label mechanism, analyze the ticket and tell the user whether it is workable.
-- **Plan mandate**: once the ticket is workable, create an implementation plan and append its file name as a dated comment on the ticket. If the project uses TDD, write the failing test first, then the implementation.
+- **Plan mandate**: once the ticket is workable, create an implementation plan and append its file name as a dated comment on the ticket. A plan is not a design document; it lives under `ai/plans/`, never in `design-docs/`, and carries its own HLD, LLD (with AC), and ADR content inside the plan file. If the project uses TDD, write the failing test first, then the implementation.
 - **Plan depth**: a small ticket needs context plus acceptance criteria. A medium or larger ticket needs an HLD, an LLD (with AC), and an ADR for each design decision. Keep the plan concise and at minimum prose. Depth follows the Pre-Work Gate.
 - **Plan review**: pass the plan through review rounds. Validate design and architecture decisions with the user during planning, record each as an ADR, and implement only a bullet-proof plan.
 - **Branch and merge**: implement on a feature branch and pass it through peer-review rounds. For local work, close the ticket, squash-merge to trunk, then delete the branch, in that order. For external PR/MR work, merge the PR/MR first, then close the ticket.
@@ -379,6 +379,8 @@ Design documents live beside the code in `design-docs/`, never under `ai/`.
 - Single repo: the `design-docs/` directory at the project root.
 - Multi-repo project root: the solution-level documents in the project-root `design-docs/`, and each component's documents in that repo's own `design-docs/`.
 - The Delivery Ledger lives in `design-docs/`: one per repo, plus a project-root rollup that links to each repo's ledger.
+
+A plan is not a design document. Plans live under `ai/` (for example `ai/plans/`), never in `design-docs/`. Do not suggest moving plan files into `design-docs/`.
 
 ### Migration
 

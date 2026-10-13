@@ -475,3 +475,7 @@ The store records genuine design decisions in a short decision, context, consequ
 ## 2026-10-12: Open the branch before editing
 
 Open the branch before making any file change on a work item, not merely before the first commit. Editing first and branching later risks changes landing on the trunk and breaks the single-branch rule. This refines the 2026-09-22 no-pre-work-commits decision.
+
+## 2026-10-13: A plan is not a design document
+
+A plan is not a design document. Plans live under `ai/` (for example `ai/plans/`), never in `design-docs/`, and carry their own HLD, LLD (with AC), and ADR content inside the plan file. Design documents (vision, PRD, HLD, LLD, risk and gap analysis, ADRs, and the Delivery Ledger) are the solution's durable design and live in `design-docs/`; a plan is temporary and its lifecycle is attached to the issue it is created against. The AI must not suggest moving plan files into `design-docs/`.
