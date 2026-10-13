@@ -487,3 +487,7 @@ The markdown lint config ignores the git-ignored local directories (`ai/secrets/
 ## 2026-10-13: No em dashes in the shipped and living files
 
 The shipped and living markdown (policies, docs, root markdown, and project knowledge) carries no em dashes. Each was replaced by a comma, colon, or parentheses as fit, not by a blind swap. This applies the Humanized Output no-em-dash rule to the existing corpus. The lint-exempt local directories and the historical issue and state files are out of scope.
+
+## 2026-10-13: pull.rebase is a recommendation; defaultBranch is never overridden
+
+The gitconfig templates in `ai/policies/ai-policy-common.md` and `docs/global-user-settings.md` include `[pull] rebase = true`. It is a recommendation, not part of the config adequacy check. For a new config the AI sets `defaultBranch` to `main`; it never changes a `defaultBranch` that is already set, and never enforces `main`.

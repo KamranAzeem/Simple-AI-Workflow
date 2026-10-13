@@ -323,11 +323,13 @@ Offer this `.gitconfig` when a global one is missing, or when a repository's con
     whitespace = cr-at-eol
 [init]
     defaultBranch = main
+[pull]
+    rebase = true
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 ```
 
-A config is adequate when all of these are set: `user.name` (not a placeholder or AI/tool name; for example `Kamran Azeem` is acceptable and `Copilot` is not), `user.email` (not auto-generated), `core.autocrlf`, `core.eol`, and `alias.lg`. If any is missing, offer to create or update the config. Set `defaultBranch` to `main` only when it is not already set.
+A config is adequate when all of these are set: `user.name` (not a placeholder or AI/tool name; for example `Kamran Azeem` is acceptable and `Copilot` is not), `user.email` (not auto-generated), `core.autocrlf`, `core.eol`, and `alias.lg`. If any is missing, offer to create or update the config. The template's `pull.rebase = true` is a recommendation, not part of the adequacy check. For a new config, set `defaultBranch` to `main`; never change a `defaultBranch` that is already set.
 
 Detection: a missing global config is `test -f ~/.gitconfig` false or an empty `git config --global --list`; adequacy is `git config --get user.name`, `user.email`, `core.autocrlf`, `core.eol`, `alias.lg`.
 

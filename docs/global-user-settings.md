@@ -110,6 +110,8 @@ These tools help the AI work faster. Install the ones that apply to your OS, usi
     whitespace = cr-at-eol
 [init]
     defaultBranch = master
+[pull]
+    rebase = true
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 ```
@@ -121,5 +123,6 @@ git config --global core.autocrlf input   # true on Windows
 git config --global core.eol lf
 git config --global core.whitespace cr-at-eol
 git config --global init.defaultBranch master
+git config --global pull.rebase true
 git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 ```
