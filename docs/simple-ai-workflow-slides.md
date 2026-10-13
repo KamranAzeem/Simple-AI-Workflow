@@ -28,6 +28,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Idiot-proof protocol**: structural guardrails so even "lite" models stay safe
 - **Native backups**: on-demand and cross-platform. Say `"backup ai"` to run one (it is not automatic at checkpoints)
 - **Project knowledge sync**: findings, decisions, and discoveries land in `project-knowledge/` at every checkpoint
+- **One-stop checkpoint**: `"checkpoint"` also refreshes Project Knowledge and Global Knowledge and prints a grouped report, so you do not type the knowledge-update commands separately
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
 - **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint and used as the state-file archive

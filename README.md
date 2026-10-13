@@ -28,7 +28,7 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 
 > **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
 
-When you finish a session, type `"checkpoint"`. To pick up later, type `"load context using AGENTS.md protocol"`.  You are encouraged / advised to do frequent checkpoints. Think of checkpoint as "ctrl + s" !
+When you finish a session, type `"checkpoint"`. One checkpoint refreshes the state files, the diary, Project Knowledge, and Global Knowledge, and prints a grouped summary, so you do not run the knowledge updates as separate commands. To pick up later, type `"load context using AGENTS.md protocol"`.  You are encouraged / advised to do frequent checkpoints. Think of checkpoint as "ctrl + s" !
 
 ## How it works
 

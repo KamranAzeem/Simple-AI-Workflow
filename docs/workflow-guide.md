@@ -299,6 +299,17 @@ In the same transaction as the state files, every checkpoint also appends an ent
 - **Fuller narrative than the state files**: this is where the detail lives (files touched, validator or review outcomes), since the state files stay lean.
 - **The archive**: the diary is the only archive. Old `progress.md` entries and resolved `context.md` items move here; there are no separate archive files.
 
+### What a Checkpoint Covers
+
+One `"checkpoint"` runs every upkeep step, so you do not run them separately:
+
+- The three state files (one atomic write) and the daily diary.
+- Project Knowledge, then Global Knowledge.
+- A report-only pass that flags stale items: an `in-progress/` ticket with no live branch, an executed plan left in `ai/plans/`, and knowledge files older than 90 days whose domain matches an active expertise.
+- A grouped summary in chat, one line per step.
+
+Two single-step triggers remain: `"update project knowledge"` and `"update global knowledge"` run just that step. A checkpoint never runs git and never touches design documents; design docs are handled only by a separate, confirmation-gated procedure.
+
 ### State-File Trimming
 
 To prevent the state files from growing unbounded and consuming context window space:

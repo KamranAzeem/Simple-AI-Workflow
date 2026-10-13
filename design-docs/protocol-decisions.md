@@ -495,3 +495,7 @@ The gitconfig templates in `ai/policies/ai-policy-common.md` and `docs/global-us
 ## 2026-10-13: Universal writing rules live in the common policy
 
 The universal communication and writing-style rules live once, in `ai/policies/ai-policy-common.md` (`Humanized Output`, `Markdown Output`, and the ticket-file scope rule). The user's `~/.ai/settings/global-user-settings.md` and the template `docs/global-user-settings.md` hold only personal preferences. Two rules moved from the settings into the policy: no decorative symbols, and a conversational-by-default style. Personal voice, anecdotes, sign-off style, the personal word list, and Style Sources stay in the settings.
+
+## 2026-10-13: One "checkpoint" runs all upkeep
+
+`PROCEDURE WRITE-CHECKPOINT` is the single umbrella for upkeep. One `"checkpoint"` runs, in order: the state files (one atomic write), the diary, state-file trimming, project knowledge, global knowledge, a report-only housekeeping and stale-knowledge pass, and a grouped report. The single-step aliases `"update project knowledge"` and `"update global knowledge"` run just their step. The state-file write and the diary run first and always, and a later failure never prevents them. The checkpoint never runs git and never reads or writes design documents, which stay pure and are handled only by a separate, confirmation-gated procedure.

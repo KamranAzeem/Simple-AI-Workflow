@@ -147,7 +147,13 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### PROCEDURE WRITE-CHECKPOINT: When the user says "checkpoint" or "save checkpoint"
 
-**Aliases**: checkpoint; save checkpoint
+**Aliases**: checkpoint; save checkpoint; update project knowledge; update global knowledge
+
+**Single-step aliases**: when the trigger is `"update project knowledge"` or `"update global knowledge"`, run only the matching step (STEP-PROJECT-KNOWLEDGE-UPDATE or STEP-GLOBAL-KNOWLEDGE-UPDATE) and skip the rest.
+
+**Boundaries**: this procedure never reads or writes design documents; a separate, confirmation-gated procedure handles those. It never runs git or suggests a commit.
+
+**Failure rule**: the state-file write and the diary are the core and run first and always. If a later step fails, run the remaining steps, report the failure loudly in the checkpoint report, and never let a failure prevent the state-file write or the diary.
 
 1. **STEP-ATOMIC-WRITE (The Atomic Write Protocol)**: Sync **Project AI State Files**. To prevent Context Drift, you must treat these state updates as a single atomic transaction. Never update one file without immediately synchronizing the others.
     - **STEP-WRITE-DIRECTION (memory → disk)**: Your active in-memory context is the freshest source of truth for what was accomplished this session. A checkpoint **serialises that fresh in-memory state into Project AI State Files**: it is a write-down, not a re-read to discover what is current. The on-disk files are the stale targets being updated.
@@ -181,7 +187,13 @@ The following short forms are recognized as equivalents to their canonical direc
     - New constraints, blockers, or dependencies identified
     - Key identifiers, configuration values, or reference data confirmed during the session (e.g., resource IDs, API endpoints, library versions, schema names, environment variables: **never raw secrets**)
     - Updates posted to external systems such as issue trackers, project management tools, or communication channels (include timestamp and channel)
-5. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
+5. **STEP-GLOBAL-KNOWLEDGE-UPDATE**: Capture only lessons that are genuinely reusable across projects (a tool's behavior, a pattern that generalizes, a portable fix) into the **Global AI Knowledge Directory**. This step is mandatory like the project-knowledge step: when nothing qualifies, explicitly confirm "nothing to add" instead of forcing an entry. Project-specific material belongs in the **Project AI Knowledge Directory**. If the Global AI Knowledge Directory does not exist, confirm and skip; do not create user-space directories unprompted.
+6. **STEP-HOUSEKEEPING-AND-STALE-SCAN (report-only)**: Report, never act. Flag, without changing anything:
+    - An `in-progress/` ticket with no live branch (it may be finished or abandoned). Closing a ticket stays tied to its merge (PROCEDURE MANAGE-ISSUES), so the checkpoint never moves tickets.
+    - An executed plan left in the **Project Plans Directory**.
+    - Knowledge files flagged by the staleness heuristic (older than 90 days whose domain matches an active expertise): list them, do not edit them.
+7. **STEP-CHECKPOINT-REPORT**: Print one grouped summary of the checkpoint, one line per step, using `updated`, `nothing to add`, or `failed`, followed by the state-file transaction log from STEP-TRANSACTION-LOG. The report is printed in chat only; the diary keeps the narrative.
+8. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
     - Announce: **[Re-affirming key files into context after checkpoint...]**
     - Load the FULL TEXT of `ai-policy-common.md`, every policy file referenced in the **Project Customization File**, and all custom policies discovered in **Project AI Policies Directory**.
       **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the custom-policy scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**.
