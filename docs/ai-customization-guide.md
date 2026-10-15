@@ -90,7 +90,25 @@ By placing this at the top level of the group directory, the AI is "bootstrapped
 
 ---
 
-## 5. Summary of Naming Conventions
+## 5. Choosing Where Design Docs Live
+
+Use the optional `## Design Docs` section to record where your design documents live:
+
+```markdown
+## Design Docs
+**Location**: design-docs/
+```
+
+Two values are recognized:
+
+- `design-docs/`: the documents live beside your code, so they are version-controlled and travel with it.
+- `ai/shared/project-knowledge/`: the documents live under `ai/`, the older location.
+
+This section is optional, and it is normally written for you. Say `"update design documents"` and ask the AI to record your choice. If you have not decided, the AI detects the location from your project and asks when it is unclear.
+
+---
+
+## 6. Summary of Naming Conventions
 
 | Component | Example | Path Inferred |
 | :--- | :--- | :--- |

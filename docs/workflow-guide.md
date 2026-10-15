@@ -338,18 +338,21 @@ Before the AI creates the next document, it runs a gap analysis and peer review 
 | **HLD** | High-Level Design: architecture, components, technology choices. Each component gets a `HLD-NNN` ID. |
 | **LLD** | Low-Level Design: detailed per-component design: classes, interfaces, APIs, schemas. Each item gets a `LLD-NNN` ID. |
 | **ADRs** | Architecture Decision Records: context and rationale for each significant decision. Each gets an `ADR-NNN` ID. |
-| **Delivery Ledger** | Tracks which design items (by ID) have been implemented and released. Updated at every checkpoint. |
+| **Delivery Ledger** | Tracks which design items (by ID) have been implemented and released. Updated when a design document changes. |
 
-All design documents live in `ai/shared/project-knowledge/` and follow the verbose naming convention:
+Design documents live beside your code in `design-docs/`, with simple lowercase names:
 
-- `<project>-vision.md`
-- `<project>-prd.md`
-- `<project>-hld.md`
-- `<project>-lld.md`
-- `<project>-adr-<nnn>-<short-description>.md`
-- `<project>-delivery-ledger.md`
+- `vision.md`
+- `prd.md`
+- `hld.md`
+- `lld.md`
+- `risk-and-gap-analysis.md`
+- `delivery-ledger.md`
+- `adr-<nnn>-<short-description>.md`
 
-At the start of each session, the AI checks for these documents and prompts you to create any that are missing. At every checkpoint, it updates the delivery ledger to reflect what was built during the session.
+If you have not migrated yet, they live under `ai/shared/project-knowledge/` with a project token, for example `payment-gateway-app-prd.md`.
+
+At the start of each session, the AI checks for these documents and prompts you to create any that are missing. To write or update them, say `"update design documents"`; the AI proposes each change, challenges the design decisions, and shows a diff before it writes. It updates the delivery ledger when a design document changes, never at checkpoint.
 
 ## 16. Issue Management (`ai/issues/`)
 
@@ -395,4 +398,6 @@ One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs ever
 
 ## 22. Design Documents
 
-Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; migration is optional.
+Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again after compaction.
+
+To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.

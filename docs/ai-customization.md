@@ -41,6 +41,17 @@ Examples: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa
 
 ---
 
+## Design Docs
+
+<!-- Optional. Record where your design documents live:
+     - design-docs/ : the documents live beside your code (recommended)
+     - ai/shared/project-knowledge/ : the older location, under ai/
+     Leave this section out and the AI detects the location from your project. -->
+
+**Location**: design-docs/
+
+---
+
 <!-- 
 
 ## Example: The Solution Architect Setup

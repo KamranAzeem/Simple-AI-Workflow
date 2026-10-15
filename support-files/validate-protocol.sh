@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v6.0 ---"
+echo "--- Starting Protocol Validation v6.1 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -52,6 +52,14 @@ if ! grep -q '### PROCEDURE MANAGE-ISSUES:' AGENTS.md; then
 fi
 if ! grep -q '### PROCEDURE REPAIR-STATE-FILES:' AGENTS.md; then
     echo "Error: PROCEDURE REPAIR-STATE-FILES anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q '### PROCEDURE UPDATE-DESIGN-DOCS:' AGENTS.md; then
+    echo "Error: PROCEDURE UPDATE-DESIGN-DOCS anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q '### PROCEDURE MIGRATE-DESIGN-DOCS:' AGENTS.md; then
+    echo "Error: PROCEDURE MIGRATE-DESIGN-DOCS anchor missing in AGENTS.md."
     exit 1
 fi
 if ! grep -q "Token Rationing" AGENTS.md; then
@@ -192,7 +200,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/8] Verifying policy baseline (16 modular policies)..."
+echo "[6/8] Verifying policy baseline (17 modular policies)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
 # Policy files use project-root-relative paths and TIER CONFIGURATION anchor references that are
 # correct from the end user's project root — they will always appear broken when checked
@@ -200,7 +208,7 @@ echo "[6/8] Verifying policy baseline (16 modular policies)..."
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "windows-system-admin" "mobile-apps" "dba" "observability"
-    "code-review" "codebase-examination"
+    "code-review" "codebase-examination" "design-docs"
     "accounting" "academic-researcher"
     "career-coaching"
 )
@@ -250,4 +258,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v6.0 Completed Successfully ---"
+echo "--- Protocol Validation v6.1 Completed Successfully ---"

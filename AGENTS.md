@@ -106,7 +106,7 @@ The following short forms are recognized as equivalents to their canonical direc
     Then ensure `ai/shared/project-knowledge/issue-template.md` exists. If and only if it is missing, create it from the compact field list in `ai-policy-common.md`. Never overwrite it.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 3. **STEP-DISCOVERY**: Run `ls -R` or `find` (or other OS equivalents) on **Global User AI Directory** and the project `ai/` directory to list its contents: excluding compressed and archive files per the **Archive File Exclusion** rule in TIER READ-FIRST-RULES. The **Global User AI Directory** contains settings, and **Global AI Knowledge**. **Important**: `ai/` is git-ignored: use shell commands (`ls -la -R` or `find ai/`) to list its contents. **Do not skip this step**, and do not treat the directory as unreadable just because it is git-ignored.
-4. **STEP-LOADING**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) and **Project Knowledge files** are NOT loaded here; they are indexed in STEP-KNOWLEDGE-INDEXING. **Author identity**: resolve the author identity (project git identity, then global `~/.gitconfig`, then the global settings file) and offer the git config setup if it is missing or inadequate; offer only, do not write (the read-only safety barrier still applies). If design documents exist under the old `ai/shared/project-knowledge/` location and no `design-docs/` exists, offer to migrate; offer only, do not move files without approval.
+4. **STEP-LOADING**: Read the **Project Customization File**, all discovered **Global Settings** files (from the **Global AI Settings Directory**), **Project AI State Files**, the latest checkpoint file (from **Project Daily Checkpoints Directory**), and the **Project Coordination File**; and **load their full contents into the active context**. **Global Knowledge files** (from the **Global AI Knowledge Directory**) and **Project Knowledge files** are NOT loaded here; they are indexed in STEP-KNOWLEDGE-INDEXING. **Author identity**: resolve the author identity (project git identity, then global `~/.gitconfig`, then the global settings file) and offer the git config setup if it is missing or inadequate; offer only, do not write (the read-only safety barrier still applies). If design documents exist under the old `ai/shared/project-knowledge/` location and no `design-docs/` exists, offer to migrate; offer only, do not move files without approval. Design documents are written or updated only through the `"update design documents"` trigger, never at load context; `"migrate design docs"` is the only cross-location mover.
     - **STEP-STATE-FILE-PROOF-OF-READ**: After loading **Project AI State Files**, read them fresh and check them without writing: each carries its one-line rule comment; entries are in chronological order with no duplicates; each file is within its size budget and the total is within 20 KB; items are at most three short bullets; and the newest `ai/state/progress.md` entry date matches the newest daily-checkpoint file date. Do not use filesystem metadata. Do not summarise from memory. If any file cannot be read, stop and report it before continuing. Report the findings under ITEM STATE-FILE-HEALTH of STEP-PROOF-OF-LOAD, and repair only via `repair state files`.
 5. **STEP-KNOWLEDGE-INDEXING (JIT Index)**: This is a dedicated required step; do NOT merge it with STEP-LOADING. Both knowledge sets are indexed, never fully loaded at boot.
     - **Global Knowledge** (from **Global AI Knowledge Directory**) and **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories) are both subject to **Token Rationing**. Index both in this one step: run a shell command (`find` or `ls -R`) over both directories, and record paths, filenames, and apparent technical domains as a reference index. Record each file's age from metadata only: the last-commit date for tracked files, or the modified time otherwise. **DO NOT** load the full text of any Global Knowledge or Project Knowledge file at boot time; load a file in full on demand when an active task requires it. The filename is the lookup key, so a vague or bundled name is invisible to the index.
@@ -197,7 +197,7 @@ The following short forms are recognized as equivalents to their canonical direc
     - Announce: **[Re-affirming key files into context after checkpoint...]**
     - Load the FULL TEXT of `ai-policy-common.md`, every policy file referenced in the **Project Customization File**, and all custom policies discovered in **Project AI Policies Directory**.
       **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the custom-policy scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**.
-    - Index the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** (JIT, no full read, the same way STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory).
+    - Index the **Global AI Knowledge Directory**, the **Project AI Knowledge Directory**, and every `design-docs/` directory under the project root, up to five levels deep (JIT, no full read, the same way STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory).
     - Announce on completion: **[Context re-affirmation complete.]**
     If context is still healthy and the operational files are already loaded, skip the reload and state explicitly that it was not needed.
 
@@ -227,12 +227,12 @@ The following short forms are recognized as equivalents to their canonical direc
 1. **STEP-READ-AGENTS**: `AGENTS.md` from the current working directory: the **TIER CONFIGURATION** section plus all procedures.
 2. **STEP-READ-CUSTOMIZATION**: The **Project Customization File**: active Expertise, Traits, and Development Workflow rules.
 3. **STEP-READ-SETTINGS**: Every file in the **Global AI Settings Directory** (full text).
-4. **STEP-INDEX-KNOWLEDGE**: Index the **Global AI Knowledge Directory** (filenames only, JIT); do not read file contents here.
+4. **STEP-INDEX-KNOWLEDGE**: Index, filenames only (JIT, never reading file contents), the **Global AI Knowledge Directory**, the **Project AI Knowledge Directory**, and every `design-docs/` directory under the project root (scan at most five levels deep, prune heavy trees, skip archives). This is the same index that STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT builds.
 5. **STEP-LOAD-POLICIES**: `ai-policy-common.md` from the **Global AI Policies Directory**, every policy referenced in the **Project Customization File**, and every `.md` found by a recursive scan of the **Project AI Policies Directory** (full text).
    **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the recursive scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**. The **Project AI Policies Directory** is the protocol's full distribution tree: most files in it do not apply to protocol development work.
 6. **STEP-READ-COORDINATION**: Read the **Project Coordination File** in full (multi-agent awareness). Then build a filename-only index (no file contents) of everything else under the **Project Shared Directory**, recursively, including the **Project AI Knowledge Directory** and **Project Handoffs Directory**. Load those contents later, on demand, only when a task needs them.
 
-**STEP-RELOAD-REPORT**: Then confirm in one or two lines: the Active Expertise and Traits reloaded, the count of settings and policy files loaded, the count of Global Knowledge files indexed, and the count of shared-directory files indexed. Do not quote or summarise any state file. If any file failed to load, say so and stop.
+**STEP-RELOAD-REPORT**: Then confirm in one or two lines: the Active Expertise and Traits reloaded, the count of settings and policy files loaded, the count of Global Knowledge files indexed, the count of project knowledge files indexed, the count of design docs indexed, and the count of shared-directory files indexed. Do not quote or summarise any state file. If any file failed to load, say so and stop.
 
 ### PROCEDURE CREATE-BACKUP: When the user says "backup ai" or "backup ai state"
 
@@ -284,6 +284,39 @@ The following short forms are recognized as equivalents to their canonical direc
     - Restore the one-line rule comment if missing.
 4. **STEP-REPORT-REPAIR**: List every change made, then confirm the state files are in order.
 5. **STEP-EXIT-REPAIR-MODE**: Return to normal role when the repair is complete.
+
+### PROCEDURE UPDATE-DESIGN-DOCS: When the user says "update design documents"
+
+**Aliases**: update design documents; update design docs; update design-docs
+
+**Boundaries**: handles design documents only. It never updates project knowledge or global knowledge, and never writes operational bookkeeping into a design document. The checkpoint never invokes it. The rules live in `ai/policies/ai-policy-design-docs.md`, loaded at STEP-LOAD-DESIGN-DOCS-POLICY.
+
+**Failure rule**: refuse rather than corrupt. When the scope is ambiguous, a design statement lacks evidence, or content conflicts, stop and ask.
+
+1. **STEP-LOAD-DESIGN-DOCS-POLICY**: Load `ai/policies/ai-policy-design-docs.md` in full.
+2. **STEP-DETERMINE-LOCATION**: Read the `## Design Docs` `**Location**:` entry from the **Project Customization File** if it is present. Detect the current location: a `design-docs/` directory means migrated, otherwise the `ai/shared/project-knowledge/` fallback.
+3. **STEP-RESOLVE-SCOPE**: Parse the qualifier that follows the trigger, for example "related to the payment gateway app". Match it to a component directory, a repo, or a document scope. No qualifier means the session's design context. An ambiguous or unmatched qualifier is resolved with the user before any write.
+4. **STEP-FIND-DOCS**: Find candidate documents using the boot design-docs index, the doc-type vocabulary, and the fallback location.
+5. **STEP-GATHER-DELTAS**: Collect candidate design deltas from the session, and from project knowledge only when the user points at it or a design file is found there. Never invent content.
+6. **STEP-PROPOSE-CHANGESET**: Present the change set: which documents, which sections, and whether each change is an add or a modify.
+7. **STEP-CHALLENGE**: Challenge every substantive design decision with one to three sharp questions, each carrying a recommended answer.
+8. **STEP-CONFIRM**: Show a per-document diff. Get approval per document or as a batch. A dry run writes nothing.
+9. **STEP-WRITE**: Create a missing document from its per-type skeleton only when the discussion names its content, or update an existing one. Dedupe by ID. Keep it concise, with no bookkeeping.
+10. **STEP-UPDATE-LEDGER**: Update the Delivery Ledger for the documents touched. Create the ledger when the first design document lands.
+11. **STEP-OFFER-MIGRATION**: When the project is not migrated, offer migration once per session, state the benefits, and acknowledge any choice. The trigger `"migrate design docs"` performs the move when the user accepts.
+12. **STEP-REPORT**: Summarize the documents created or updated, the location used, and any deferral.
+
+### PROCEDURE MIGRATE-DESIGN-DOCS: When the user says "migrate design docs"
+
+**Aliases**: migrate design docs; migrate design documents
+
+**Boundaries**: moves existing design documents only, from the fallback location into `design-docs/` beside the code. It never edits content and never updates project knowledge. It is the only cross-location mover.
+
+1. **STEP-LOAD-MIGRATION-POLICY**: Load `ai/policies/ai-policy-design-docs.md` in full.
+2. **STEP-FIND-UNMIGRATED-DOCS**: Search `ai/shared/project-knowledge/`, including subdirectories, for the doc-type vocabulary.
+3. **STEP-CONFIRM-MIGRATION**: List every file to move, its target `design-docs/` path, and the git impact (the files become tracked). Get approval before writing.
+4. **STEP-MOVE-FILES**: Move each approved file to `design-docs/`, renaming it to the simple lowercase doc name. Move, never copy.
+5. **STEP-REPORT-MIGRATION**: Report the files moved, the target location, and any file left behind.
 
 ---
 

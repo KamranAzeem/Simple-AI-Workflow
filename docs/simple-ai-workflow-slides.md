@@ -104,7 +104,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | Project instructions | `AGENTS.md`, works with any tool, any editor |
 | User preferences | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | `ai-customization.md` |
-| Domain expertise and rules | 16 modular policies in `ai/policies/` |
+| Domain expertise and rules | 17 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge and decisions | `ai/shared/project-knowledge/` |
@@ -160,6 +160,8 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - `"checkpoint"` after each task
 - `"update project knowledge"` when you make a decision
 - `"backup ai"` when you want a backup
+- `"update design documents"` when a design takes shape
+- `"migrate design docs"` when you are ready to move design docs beside the code
 
 ## Why that friction is actually good
 
@@ -282,10 +284,24 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - It checks for missing documents at the start of every session and offers to create them
 - It reviews each document before writing the next, so problems are fixed before they cascade
 - It assigns IDs as it writes requirements, components, or design items
-- It updates the delivery ledger at every checkpoint
+- It updates the delivery ledger when a design document changes
 - It treats documentation drift as a code smell, and flags design docs that lag behind the code
 
 > **Start with notes. End with a clear record of what was built, and why.**
+
+## Writing and updating design docs
+
+- Say `"update design documents"`, and add what it is about: `"... related to the payment gateway app"`
+- The AI proposes the change, challenges the design decisions, and shows a diff before it writes
+- It updates the Delivery Ledger when a document changes, never at checkpoint
+- Design docs are never part of a checkpoint. Only this trigger touches them
+
+## Not migrated yet?
+
+- Design docs can start life under `ai/shared/project-knowledge/`, with a project token: `payment-gateway-app-prd.md`
+- The AI keeps them there and offers to migrate when it helps
+- Say `"migrate design docs"` to move them into `design-docs/` beside the code
+- Migration is optional. Once moved, the design is version-controlled and travels with the code
 
 ---
 

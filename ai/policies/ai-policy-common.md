@@ -373,7 +373,7 @@ At the start of each session, check for the documents below. For medium or large
 - **LLD (with AC)** (Low-Level Design with Acceptance Criteria): classes, interfaces, data flows, APIs, database schemas, and the acceptance criteria for each item. Each item gets an `LLD-NNN` ID. AC is a coupling, not a container: small work keeps AC without an LLD.
 - **Risk and Gap Analysis**: open risks and gaps. Each gets an `RSK-NNN` ID.
 - **ADRs** (Architecture Decision Records): genuine design decisions only. Each entry states the decision, its context, and its consequences, and gets an `ADR-NNN` ID. Never a changelog, diary, or command log, and never an external reference such as a commit hash.
-- **Delivery Ledger**: tracks which design items (by ID) are implemented and released. Created when implementation begins against a design document. Updated at every checkpoint.
+- **Delivery Ledger**: tracks which design items (by ID) are implemented and released. Created when the first design document lands. Updated when a design document lands or changes, by the `"update design documents"` procedure, never at checkpoint.
 
 ### Location
 
@@ -391,6 +391,7 @@ Design documents under `ai/shared/project-knowledge/` are the old location. Migr
 
 - At load context, if design documents exist there and no `design-docs/` exists, offer to migrate.
 - The trigger `"migrate design docs"` moves the files into `design-docs/` with the user's approval and shows the git impact (they become tracked).
+- The trigger `"update design documents"` updates design documents wherever they live and never crosses locations. `"migrate design docs"` is the only cross-location mover.
 
 ### ID Convention
 
@@ -404,15 +405,12 @@ Every requirement, component, design item, risk, and decision gets a unique sequ
 
 ### Naming Convention
 
-File names identify the project or sub-project: kebab-case with a descriptive prefix and a document-type suffix.
+File names use kebab-case in the suffix form, with the lowercase doc type as the last token.
 
-- `<project>-vision.md`
-- `<project>-prd.md`
-- `<project>-hld.md`
-- `<project>-lld.md`
-- `<project>-risk-and-gap-analysis.md`
-- `<project>-adr-<nnn>-<short-description>.md`
-- `<project>-delivery-ledger.md`
+- Not migrated: a project or component token precedes the doc type.
+  - `<project>-vision.md`, `<project>-prd.md`, `<project>-hld.md`, `<project>-lld.md`, `<project>-risk-and-gap-analysis.md`, `<project>-delivery-ledger.md`, `<project>-adr-<nnn>-<short-description>.md`.
+- Migrated in `design-docs/`: the simple name, with no project token.
+  - `vision.md`, `prd.md`, `hld.md`, `lld.md`, `risk-and-gap-analysis.md`, `delivery-ledger.md`, `adr-<nnn>-<short-description>.md`.
 
 ### Delivery Ledger
 
@@ -438,7 +436,7 @@ One section per design document, one line per item. Status values: `Not Started`
 - `LLD-002`: Email template engine. Status: Not Started.
 ```
 
-At every checkpoint, update the ledger for items completed or progressed. If the ledger does not exist and a design document does, prompt the user.
+Update the ledger when a design document lands or changes, by the `"update design documents"` procedure, never at checkpoint. Create the ledger when the first design document lands, if it does not exist.
 
 ### Supplementary Documents (Consider Also)
 

@@ -8,3 +8,12 @@
 * When updating any documentation, ensure that it is written in easy , common human readable plain english language. Ensure that no links are broken.
 
 ---
+
+Remaining open items (3)
+1- Who writes the ## Design Docs entry: the AI only on your explicit instruction. When AI detects a firm decision, it simply adds it to whatever relevant project-knowledge file is appropriate for storing it. The decision must not be lost simply if the user did not ask for it to be stored.
+2. Granularity: is **Location**: Asnwer: project-wide, with the directory path itself carrying component scope.
+3. Update vs migrate boundary: update never crosses locations; migration is the only cross-location mover. This means the user facing documents (README ++ slides) in this document must mention both under commonly used instructions.
+
+When writing user facing documents, write them in my voice, in my writing style, in my tone (as specified in common policy and global settings file), and ensure no em dashes.
+
+When writing thee policy and the protocol components for this, ensure that the instructions are concise, to the point, effective, cleanly written (as bullet points or numbered lists) and with as less prose/rationale as possible.

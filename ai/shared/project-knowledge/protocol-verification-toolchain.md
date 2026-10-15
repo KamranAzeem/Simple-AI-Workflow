@@ -1,11 +1,11 @@
 # Protocol verification toolchain
 
-How to verify this repo (the Simple-AI-Workflow protocol) after a change. Run every command from the project root. Recorded 2026-10-13.
+How to verify this repo (the Simple-AI-Workflow protocol) after a change. Run every command from the project root. Recorded 2026-10-13; counts refreshed 2026-10-16.
 
 ## Commands
 
-- Protocol validator: `bash support-files/validate-protocol.sh`. Runs eight checks: the AGENTS.md hardening anchors, the configuration mapping, the global and project AI directory structure, the coordination board, the 16-policy baseline, the `.gitignore` safety, and the checkpoint/backup cycle. Expect `Protocol Validation v6.0 Completed Successfully` and 8/8.
-- Reference test: `bash support-files/test-protocol-references.sh`. Confirms every procedure, step, tier, and Proof-of-Load item reference resolves, and that no letter or number references remain. Expect `PASS` plus a definition count (9 procedures, 62 steps, 4 tiers, 9 items at v5.0.0).
+- Protocol validator: `bash support-files/validate-protocol.sh`. Runs eight checks: the AGENTS.md hardening anchors, the configuration mapping, the global and project AI directory structure, the coordination board, the 17-policy baseline, the `.gitignore` safety, and the checkpoint/backup cycle. Expect `Protocol Validation v6.1 Completed Successfully` and 8/8.
+- Reference test: `bash support-files/test-protocol-references.sh`. Confirms every procedure, step, tier, and Proof-of-Load item reference resolves, and that no letter or number references remain. Expect `PASS` plus a definition count (11 procedures, 79 steps, 4 tiers, 9 items at v6.1).
 - Markdown lint: `markdownlint-cli2 "**/*.md" "#node_modules"`. The reference config is `.markdownlint-cli2.jsonc`. Expect `0 issues`. On this machine the binary lives at `~/.nvm/versions/node/v24.19.0/bin/markdownlint-cli2` (machine-specific; use `markdownlint-cli2` from `PATH` where available).
 
 ## Lint scope

@@ -104,6 +104,8 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
 | Apply the fixes from a review report | `"apply fixes for problems identified in code review report"` |
 | Bring out-of-order or bloated state files back into shape | `"repair state files"` |
+| Write or update your design documents | `"update design documents"` |
+| Move design docs beside your code into `design-docs/` | `"migrate design docs"` |
 
 > **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
 
@@ -166,6 +168,40 @@ A few habits help a lot:
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day. This keeps the active state files small and efficient, and all the information keep getting recorded in the state log / diary which is maintained under daily-checkpoint. This is *extremely* helpful to find out what you did three months ago - for example. The AI will go through all the daily checkpoints, and find out the information you were looking for.
 - **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint, compact conversation manually using "/compact" or "/compress", run "post-compaction recovery procedure" and continue working.
 - **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, because it is unreliable with fresh or weaker models. The reason is explained under Common instructions.
+
+## Design documents
+
+When a project grows past a quick script, its design deserves a home of its own. The workflow keeps design documents next to the code, in a `design-docs/` directory that sits beside your source folder and your `docs/` folder.
+
+The stack is short, and each document feeds the next:
+
+- **Vision**: what you want to build and why. Plain language, one to two pages.
+- **PRD**: the requirements, each with a `REQ-NNN` ID.
+- **HLD**: the architecture and components, each with an `HLD-NNN` ID.
+- **LLD (with acceptance criteria)**: the detail per component, each with an `LLD-NNN` ID.
+- **Risk and gap analysis**: open risks, each with an `RSK-NNN` ID.
+- **ADRs**: the real design decisions, each with an `ADR-NNN` ID.
+- **Delivery Ledger**: which items are done, in progress, or not started.
+
+These documents stay clean. They hold design, nothing else: no commit hashes, no session notes, no work logs. Your checkpoint never touches them.
+
+To write or update them, say what you worked on:
+
+```text
+update design documents related to the payment gateway app
+```
+
+The AI finds the right documents, proposes the changes, challenges the decisions with a few sharp questions, and shows you a diff before it writes anything. It updates the Delivery Ledger when a document changes.
+
+If you have not moved to `design-docs/` yet, the documents live under `ai/shared/project-knowledge/` with a project token in the name, for example `payment-gateway-app-prd.md`. The AI keeps working there, and it offers to migrate when it helps. When you are ready, say:
+
+```text
+migrate design docs
+```
+
+Migration is optional. Once your documents live in `design-docs/`, they sit beside the code, so they are version-controlled and travel with it. Six months later, when memory has faded, the design is still there.
+
+> **A plan is not a design document.** Plans live under `ai/plans/`. Design documents live beside your code.
 
 ## Customizing the AI
 
@@ -275,7 +311,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 4 protocol policies (common, meta, code-review, codebase-examination). Load the ones that apply to your project.
+- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 5 protocol policies (common, meta, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.
@@ -283,7 +319,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Auto-sync script**: push `AGENTS.md` to all your projects in one command, and it migrates the old layout for you.
 - **Protocol validator**: `support-files/validate-protocol.sh` checks that everything is wired up correctly.
 - **Post-compaction recovery**: when a session gets auto-summarized, the AI reloads its rules from disk on its own, without losing your working context.
-- **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger at every checkpoint, and reviews each doc before writing the next.
+- **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger when a design document changes, and reviews each doc before writing the next.
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
