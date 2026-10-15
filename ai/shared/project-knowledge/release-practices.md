@@ -35,6 +35,16 @@
 - **Store**: the protocol ADR store is now `design-docs/protocol-decisions.md` and holds design decisions only.
 - **Docs**: README banner, `docs/announcements/v5.0.0.md`, workflow-guide section 22, and a slides bullet.
 
+## v5.1.0 (2026-10-16)
+
+- **Feature**: a new `"update design documents"` trigger, run by PROCEDURE UPDATE-DESIGN-DOCS, writes and updates design documents wherever they live. It proposes each change, challenges the design decisions, and shows a diff before writing. The detail lives in the new `ai-policies/ai-policy-design-docs.md`.
+- **Feature**: a separate `"migrate design docs"` trigger, run by PROCEDURE MIGRATE-DESIGN-DOCS, is the only cross-location mover, moving documents from `ai/shared/project-knowledge/` into `design-docs/`.
+- **Location preference**: an optional `## Design Docs` section with `**Location**:` records a firm decision in `ai-customization.md`.
+- **Fix**: the Delivery Ledger updates when a design document changes, not at a checkpoint, and the checkpoint never touches design documents.
+- **Fix**: post-compaction recovery and the checkpoint re-affirmation now index design docs, along with global and project knowledge.
+- **Tooling**: validator v6.1 with a 17-policy baseline and two new procedure anchors.
+- **Docs**: README common instructions and a "Design documents" section, two slides, workflow-guide sections 15 and 22, the customization guide and template, and `docs/announcements/v5.1.0.md`.
+
 ## Announcements
 
 - Each release gets a short, friendly note at `docs/announcements/vX.Y.Z.md`. It answers "what changed for me, and what should I do", in plain language.

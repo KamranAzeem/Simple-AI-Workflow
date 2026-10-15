@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.0.0 (2026-10-12).** Design documents now live beside your code in a `design-docs/` directory, not inside the hidden `ai/` folder, so your design is versioned, shared, and present months later. Nothing breaks if you do nothing; migration is optional. Read the announcement: [docs/announcements/v5.0.0.md](docs/announcements/v5.0.0.md). |
+| **v5.1.0 (2026-10-16).** Design documents now have their own trigger: say `"update design documents"`, and the AI proposes, challenges, and diffs each change before it writes. A separate `"migrate design docs"` moves them beside your code. Nothing breaks if you do nothing. Read the announcement: [docs/announcements/v5.1.0.md](docs/announcements/v5.1.0.md). |
 
 # Simple AI Workflow
 
