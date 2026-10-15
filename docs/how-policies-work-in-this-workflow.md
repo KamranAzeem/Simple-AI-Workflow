@@ -10,6 +10,8 @@
       When you say "Load context using AGENTS.md protocol," the AI loads the policies your `ai-customization.md` names, plus the common policy. By doing so, it updates its "System Instruction" or "Working Memory" to
   include these rules. It’s no longer just an AI; it’s an AI that knows it must follow your specific Cloud, Backend, or Security standards.
 
+      The full phrase is what makes this work. A bare "load context" would read the assistant's own hidden memory, not your `AGENTS.md`, so the policies would never load. The assistant follows `AGENTS.md` only after you name it.
+
    2. Constraint-Based Code Generation (The "Guardrail" Phase):
       The AI filters its output through these rules. If a policy mandates "Input Validation" (OWASP Top 10), the AI will explicitly generate code that includes validation
   logic, even if you didn't explicitly ask for it. The policies act as a filter through which all generated code must pass before it's offered to you.

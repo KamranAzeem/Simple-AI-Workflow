@@ -499,3 +499,7 @@ The universal communication and writing-style rules live once, in `ai/policies/a
 ## 2026-10-13: One "checkpoint" runs all upkeep
 
 `PROCEDURE WRITE-CHECKPOINT` is the single umbrella for upkeep. One `"checkpoint"` runs, in order: the state files (one atomic write), the diary, state-file trimming, project knowledge, global knowledge, a report-only housekeeping and stale-knowledge pass, and a grouped report. The single-step aliases `"update project knowledge"` and `"update global knowledge"` run just their step. The state-file write and the diary run first and always, and a later failure never prevents them. The checkpoint never runs git and never reads or writes design documents, which stay pure and are handled only by a separate, confirmation-gated procedure.
+
+## 2026-10-15: User-facing docs explain why the full trigger phrase is required
+
+The README explains why the full phrase "... using AGENTS.md protocol" is required, in a subsection below the common-instructions list. A bare "load context" reads the assistant's own hidden memory rather than `AGENTS.md`, and a shortcut cannot work, because it would have to live inside a protocol the assistant has not read yet. The slides and the guides that teach the command carry the same explanation or point to the README. No alias is suggested, because an alias cannot work for the same reason. The explanation is written warm and in plain language, not in the tone of the original ticket.

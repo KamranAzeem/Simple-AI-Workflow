@@ -358,6 +358,8 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Full form**: `"load context using AGENTS.md protocol"`. Use this at the start of every session
 - **Shorthand**: `"load context"`. Fine mid-session, but unreliable for fresh or weaker models
 - **Rule**: always use the full form at the start of a new session, or after a restart
+- **Why**: a bare `"load context"` reads the assistant's own hidden memory. Naming `AGENTS.md` is what makes it read your protocol and your files. A shorter command cannot help, because it would have to live inside the protocol the assistant has not read yet
+- **Same for setup**: use `"bootstrap using AGENTS.md protocol"`, for the same reason
 
 ## Habits that handle the rest
 

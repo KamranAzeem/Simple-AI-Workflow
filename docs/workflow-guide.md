@@ -254,6 +254,8 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
+Note: always use the full phrase `"load context using AGENTS.md protocol"`. A bare `"load context"` loads the assistant's own hidden memory, not your `AGENTS.md`. Naming `AGENTS.md` is what makes the assistant read your protocol and your files. The README explains this under "Common instructions".
+
 ### How it works
 
 1. **Global Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.

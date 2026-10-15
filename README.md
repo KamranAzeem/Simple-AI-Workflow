@@ -113,6 +113,20 @@ Once context is loaded, you can also ask:
 - *"What are the pending tasks?"*
 - *"Where are we in this project?"*
 
+### Why "... using AGENTS.md protocol"?
+
+You may wonder why `"load context"` on its own is not enough.
+
+Your AI assistant already keeps context in its own way. It decides what to remember, and where to keep it. That memory is hidden from you. When you type a plain `"load context"`, the assistant loads from that built-in memory. It has no reason to look for `AGENTS.md`, so it does not read it. You get whatever the assistant decides is relevant, not the project state and knowledge this workflow maintains.
+
+`AGENTS.md` is not a store of context. It is a protocol file: instructions that tell the assistant where your context lives (the `ai/` directory), what your rules are, and how to work. The assistant follows it only after you point to it by name.
+
+This is the job of the full phrase. It tells the assistant to read the protocol first. Once the protocol is loaded, the assistant knows where to find your state and knowledge.
+
+A shorter command cannot do this on its own. A shortcut would have to live inside the protocol for the assistant to know about it, but the assistant cannot learn anything from the protocol until it has read the protocol. That is the chicken and egg. Naming `AGENTS.md` breaks the loop.
+
+The same applies when you first set up a project. Use `"bootstrap using AGENTS.md protocol"`, for the same reason.
+
 ### Review and maintenance phrases
 
 Ask the AI to review something or tidy up the workspace:
@@ -151,7 +165,7 @@ A few habits help a lot:
 
 - **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day. This keeps the active state files small and efficient, and all the information keep getting recorded in the state log / diary which is maintained under daily-checkpoint. This is *extremely* helpful to find out what you did three months ago - for example. The AI will go through all the daily checkpoints, and find out the information you were looking for.
 - **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint, compact conversation manually using "/compact" or "/compress", run "post-compaction recovery procedure" and continue working.
-- **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, as it is unreliable with a fresh or weaker models.
+- **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, because it is unreliable with fresh or weaker models. The reason is explained under Common instructions.
 
 ## Customizing the AI
 

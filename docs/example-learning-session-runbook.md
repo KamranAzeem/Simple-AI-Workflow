@@ -73,7 +73,7 @@ Send this prompt:
 bootstrap using AGENTS.md protocol
 ```
 
-**Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompt `"bootstrap using AGENTS.md protocol"` instead. It works the same way everywhere.
+**Important:** Do not use the built-in `/init` command. It behaves differently across AI tools. Use the text prompt `"bootstrap using AGENTS.md protocol"` instead. It works the same way everywhere. Keep the full phrase: a bare `"bootstrap"` would not tell the assistant to read `AGENTS.md`, so it would never load these instructions.
 
 Expected outcome:
 
