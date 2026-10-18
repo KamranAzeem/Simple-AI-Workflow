@@ -27,12 +27,9 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 
 ## Development Workflow
 
-### Rule: Proactive removal of prose and rationale
+### Rule: Procedure and policy authoring
 
-- While working with any rule / policy / procedure in the protocol directory, you should rewrite the entire unit / procedure (or policy if applicable) with direct, to the point, concise and unambigous rules / statements / sentences representing "what", and avoid any prose representing "why".
-- Use bullet points or numbered lists when needed, but do not over-complicate them.
-- User-facing documentation can contain some prose.
-- The universal markdown mechanics live in the common policy's `## Markdown Output` section.
+- Follow `ai-policy-meta.md` (`## Procedure and Policy Authoring`) when writing or editing `AGENTS.md` or any policy file.
 
 ### Rule: Proactive Peer Review
 
