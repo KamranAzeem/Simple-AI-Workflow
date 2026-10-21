@@ -20,3 +20,7 @@ Description:
 Goal: retitle to `# AI Policy: Web Frontend`, add a purpose sentence and `## References`, convert the modals to definitive rules with a named default, replace the coverage percentage with intent, and replace the TDD mandate with a reference. No behavior change.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/issues/open/policies-to-skills-rename.md`, and `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard. The `80%` coverage target is replaced with behavior-based coverage, the TDD mandate references the common policy, and the vague wording is now definitive. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-16 and review-17 APPROVED. Closed before the merge.

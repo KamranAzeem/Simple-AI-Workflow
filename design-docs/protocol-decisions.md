@@ -553,3 +553,7 @@ The policy is named `ai-policy-coding-baseline.md` with expertise token `coding-
 ## 2026-10-21: The common policy and coding-baseline state their ownership boundary
 
 The common policy now has a `## Scope` section and a `## References` section. It states that `ai-policy-coding-baseline.md` owns code-construction operations while common owns the engineering principles. The coding-baseline Scope states that common owns the principles it applies. The domain migrations reference common for TDD and express coverage by intent. The generated-file validation boundary stays: common owns all file types, and coding-baseline owns code tools. No rule is moved or removed.
+
+## 2026-10-21: The web-frontend policy follows the authoring standard
+
+`ai-policy-web-frontend.md` is rewritten to the authoring standard: title `# AI Policy: Web Frontend`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps component composition, semantic HTML, accessibility, loading and error states, form validation, derived state, dependency discipline, responsive behavior, design-system reuse, URL and local storage state, and the UI test suite. The `80%` coverage target is replaced with behavior-based coverage, and the TDD mandate references the common policy. No domain rule is removed.
