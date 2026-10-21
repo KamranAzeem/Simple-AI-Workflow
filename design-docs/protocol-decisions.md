@@ -557,3 +557,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The web-frontend policy follows the authoring standard
 
 `ai-policy-web-frontend.md` is rewritten to the authoring standard: title `# AI Policy: Web Frontend`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps component composition, semantic HTML, accessibility, loading and error states, form validation, derived state, dependency discipline, responsive behavior, design-system reuse, URL and local storage state, and the UI test suite. The `80%` coverage target is replaced with behavior-based coverage, and the TDD mandate references the common policy. No domain rule is removed.
+
+## 2026-10-21: The API backend policy follows the authoring standard
+
+`ai-policy-api-backend.md` is rewritten to the authoring standard: title `# AI Policy: API Backend`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps framework preservation, input validation, error handling, stable contracts, explicit authorization, persistence safety, idempotency, structured logs and correlation, API-specific metrics, and the test suite. The `90%` and `80%` coverage targets are replaced with behavior-based coverage, the TDD mandate references the common policy, and observability references the observability policy. No domain rule is removed.

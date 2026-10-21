@@ -21,3 +21,7 @@ Description:
 Goal: retitle, add a purpose sentence and `## References`, convert modals to definitive rules, replace coverage with intent, reference TDD, and align the resilience and observability sections with their owners. No behavior change.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard. The 90% and 80% coverage targets are replaced with behavior-based coverage, the TDD mandate references the common policy, and the observability and persistence rules are definitive. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-18 and review-19 APPROVED. Closed before the merge.

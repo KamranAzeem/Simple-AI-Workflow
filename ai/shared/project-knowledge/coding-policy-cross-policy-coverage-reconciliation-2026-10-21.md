@@ -50,7 +50,7 @@ Model (2026-10-21): the coding policy now uses a thin core plus pointers. Cross-
 
 ### Accessibility
 
-- Owner: `ai-policy-web-frontend.md` (`Accessibility Compliance`).
+- Owner: `ai-policy-web-frontend.md` (`## Frontend Engineering Standards`, accessibility rules).
 - Coding policy rule: reference only. No general accessibility bullet.
 - State: reference only. The policy applies to the web-frontend domain.
 - Reconcile: decide whether a UI-specific coding rule is needed or the domain reference is enough.

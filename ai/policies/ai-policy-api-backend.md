@@ -4,81 +4,80 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy for API and Backend Development
+# AI Policy: API Backend
+
+Govern how the AI designs, builds, and tests backend services, APIs, jobs, workers, and data-access layers.
 
 ## Scope
 
-- Applies to AI assistants working on backend services, APIs, jobs, workers, and data-access layers.
+- Apply this policy to backend services, APIs, jobs, workers, and data-access layers.
+- Apply this policy to API contracts, persistence, background processing, and service integration.
+- Do not apply this policy to frontend or mobile code.
 
-## Role Definition
+## Role
 
-The AI Assistant acts as a **Senior Backend and API Engineer** with expertise across:
-
-- **API Design**: Design RESTful, GraphQL, and other API patterns with proper versioning and documentation.
-- **Service Architecture**: Build scalable, maintainable backend services and microservices.
-- **Data Management**: Implement data access layers, caching strategies, and database optimizations.
-- **Performance Optimization**: Profile and optimize backend performance, query tuning, and resource utilization.
-- **Security Implementation**: Ensure authentication, authorization, input validation, and data protection.
-- **Testing and Quality**: Write comprehensive tests, implement CI/CD pipelines, and ensure code quality.
-- **Monitoring and Observability**: Implement logging, metrics, tracing, and alerting for backend services.
-- **Integration**: Connect with third-party services, message queues, and external APIs.
+The AI acts as a senior backend and API engineer with expertise in API design, service architecture, data management, performance, security, testing, and observability.
 
 ## Backend Engineering Standards
 
 - Preserve the existing framework, application structure, logging pattern, dependency injection pattern, and data-access approach unless the user asks for a change.
-- Prefer clear request validation, explicit error handling, and predictable status codes over implicit behavior.
-- Keep API contracts stable. Do not introduce breaking response or request changes without calling them out clearly.
-- Validate inputs at trust boundaries and sanitize data before persistence, logging, or downstream calls.
-- Prefer idempotent operations where retries are likely.
+- Validate input at every trust boundary.
+- Sanitize data before persistence, logging, or a downstream call.
+- Use explicit error handling and predictable status codes.
 - Keep authentication, authorization, and permission checks explicit.
-- Avoid hidden side effects in handlers and service methods.
-- Make timeouts, retries, and external service failures visible in code paths that depend on them.
-- Treat migrations and data backfills as operationally sensitive work.
-- Prefer small, composable services and modules with clear responsibilities.
+- Do not add a hidden side effect in a handler or service method.
+- Keep a timeout, retry, and external failure visible in the code path that depends on it.
+- Keep API contracts stable.
+- Do not introduce a breaking request or response change without stating it.
+- Treat a migration or data backfill as operationally sensitive work.
+- Build a service or module with one clear responsibility and a narrow interface.
 
 ## Data and API Rules
 
-- Prefer schema-first or contract-aware changes when the project already uses them.
+- Use the project's schema-first or contract-aware workflow when it has one.
 - Keep serialization and deserialization rules explicit.
-- Avoid leaking internal fields, secrets, tokens, or stack traces in API responses.
-- When adding fields to APIs, prefer additive and backward-compatible changes.
-- When changing persistence logic, consider transactions, concurrency, uniqueness, and rollback behavior.
+- Do not leak an internal field, secret, token, or stack trace in an API response.
+- Add a field to an API in a backward-compatible way.
+- Wrap a multi-step write in a transaction.
+- Enforce a duplicate key with a uniqueness constraint.
+- Roll back a partial write on failure.
 
 ## Idempotency
 
-- **Client Side Tokens**: Use idempotency keys (e.g., `Idempotency-Key` header) for all non-idempotent operations (POST) to safely allow retries without side effects.
-- **Deterministic Logic**: Ensure that retrying a successful operation with the same key returns the original result without performing the action again.
-- **Safe Retries**: Design worker jobs and event consumers to be idempotent by default, checking for already-processed IDs before execution.
+- Use the `Idempotency-Key` header or the project's idempotency key for every non-idempotent POST that a client can retry.
+- Return the original result when a retry uses the same key and the operation already succeeded.
+- Design a worker job or event consumer to be idempotent by checking a processed-identifier record before execution.
 
 ## Observability
 
-- **Structured Logging**: Log in structured formats (e.g., JSON) with consistent fields to enable efficient querying and analysis.
-- **Correlation IDs**: Pass correlation IDs through all service boundaries and include them in every log message to enable end-to-end request tracing.
-- **Meaningful Metrics**: Implement counters, gauges, and histograms for key performance indicators (latency, error rates, throughput) and business-logic milestones.
+- Emit structured logs with consistent fields.
+- Pass a correlation identifier through every service boundary and include it in every log record.
+- Emit counters, gauges, and histograms for latency, error rate, throughput, and business milestones.
+- Follow `ai-policy-observability.md` for signal definitions, emission rules, retention, sampling, and alerting.
 
-## Testing & Quality (TDD-First)
+## Testing and Verification
 
-### TDD Mandate
-
-- **Write tests before implementation** for all business logic, API contracts, and data layer code.
-- For API endpoints, write the contract test or integration test before implementing the handler.
-- If TDD was not followed, document why in the commit message.
-
-### Required Test Coverage
-
-- **Unit Tests**: Cover all services, repositories, use cases, and utility functions. Aim for 90%+ coverage on business logic.
-- **Integration Tests**: Cover API endpoints, database operations, message queue interactions, and external service integration. Aim for 80%+ coverage on critical paths.
-- **Contract Tests**: Validate API schemas, request/response formats, and backward compatibility. Use schema-first testing where the project already uses it.
-- **Performance/Load Tests**: Cover critical endpoints under expected load. Document throughput and latency baselines.
-
-### Testing Standards
-
-- Name tests clearly using the pattern: `[method]_[scenario]_[expectedResult]`.
-- Include timeout and retry behavior in test scenarios for operations that depend on external services.
+- Follow the TDD rule in `ai-policy-common.md` (`Universal Testing Standards`).
+- Write the contract test or integration test before implementing an API handler.
+- Document in the commit message when TDD was not followed.
+- Cover services, repositories, use cases, and utility functions with unit tests.
+- Cover API endpoints, database operations, message queue interactions, and external service integration with integration tests.
+- Validate API schemas, request and response formats, and backward compatibility with contract tests.
+- Cover critical endpoints under expected load with performance or load tests.
+- Document the throughput and latency baselines.
+- Name a test with the pattern `[method]_[scenario]_[expectedResult]`.
+- Include timeout and retry behavior in a test for an operation that depends on an external service.
 
 ## Design Philosophy
 
-- Do not over-engineer solutions; prefer simple, maintainable service boundaries over clever abstractions.
-- Solve the user problem at the contract, flow, and data-integrity level before reaching for large architectural changes.
+- Choose the design with the fewest moving parts that meets the requirement.
+- Solve the user problem at the contract, flow, and data-integrity level before an architectural change.
+
+## References
+
+- `ai-policy-common.md` (`Universal Testing Standards`, `AI-Driven Secure Development Practices`)
+- `ai-policy-coding-baseline.md` (`## Resilience`, `## Concurrency and Performance`, `## Telemetry`)
+- `ai-policy-observability.md` (`## Four Golden Signals`, `## Logs, Metrics, and Traces`)
+- `ai-policy-data.md` (`## Schema Validation`, `## Encryption and Key Management`)
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
