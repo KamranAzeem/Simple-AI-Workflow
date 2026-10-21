@@ -577,3 +577,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The mobile-apps policy follows the authoring standard
 
 `ai-policy-mobile-apps.md` is rewritten to the authoring standard: title `# AI Policy: Mobile Apps`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps the iOS, Android, and cross-platform guidance, MVVM or MVI, unidirectional data flow, the repository pattern, dependency injection, testing, error handling, graceful degradation, retry, security and privacy, performance, code quality, CI/CD, release, and feature flags. The `90%` coverage target is replaced with behavior-based coverage, the TDD mandate references the common policy, and the general retry, idempotency, secrets, and logging rules reference `coding-baseline`. No domain rule is removed.
+
+## 2026-10-21: The coding-baseline references point at the migrated sections
+
+`ai-policy-coding-baseline.md` now names the actual headings in the migrated domain policies: observability (Four Golden Signals, Logs, Metrics, and Traces), api-backend (Idempotency, Testing and Verification, Backend Engineering Standards), web-frontend (Frontend Engineering Standards), mobile-apps (Retry and Resilience), data (Testing and Validation, Data Security and Compliance), and dba (Data Protection and Privacy). The references no longer point at headings that the migrations renamed. No rule is changed.

@@ -176,12 +176,12 @@ Govern how the AI writes and changes program code in any language when this poli
 ## References
 
 - `ai-policy-common.md` (`Universal Engineering Standards`, `Universal Testing Standards`, `AI-Driven Secure Development Practices`, `Generated File Validation`)
-- `ai-policy-observability.md` (Four Golden Signals, emission rules)
-- `ai-policy-api-backend.md` (Idempotency, caching, contracts)
-- `ai-policy-web-frontend.md` (Accessibility)
-- `ai-policy-mobile-apps.md` (Retry & Resilience, caching)
-- `ai-policy-data.md` (Schema Validation, Encryption and Key Management)
-- `ai-policy-dba.md` (Encryption)
+- `ai-policy-observability.md` (Four Golden Signals, Logs, Metrics, and Traces)
+- `ai-policy-api-backend.md` (Idempotency, Testing and Verification, Backend Engineering Standards)
+- `ai-policy-web-frontend.md` (Frontend Engineering Standards)
+- `ai-policy-mobile-apps.md` (Retry and Resilience)
+- `ai-policy-data.md` (Testing and Validation, Data Security and Compliance)
+- `ai-policy-dba.md` (Data Protection and Privacy)
 - `ai-policy-cloud.md` (Cloud Engineering Standards, Infrastructure Security)
 - `ai-policy-linux-system-admin.md` (OS-Specific Standards)
 - `ai-policy-windows-system-admin.md` (PowerShell Standards)
