@@ -52,6 +52,13 @@
 - **Tooling**: validator baseline 18 policies.
 - **Docs**: README banner and a "Coding baseline policy" section, slides, customization guide, and `docs/announcements/v5.2.0.md`.
 
+## v5.2.1 (2026-10-21)
+
+- **Patch**: policy authoring-standard migration. The web-frontend, API backend, mobile-apps, cloud, DBA, data, and observability policies now follow the authoring standard; the deprecated modals and bare coverage targets are gone; the observability policy owns the emission rules; the common and coding-baseline policies state their ownership boundary; and the coding-baseline references point at the migrated sections.
+- **No behavior change**: the rules are reworded and reorganized, not removed. The v5.2.0 coding-baseline banner stays.
+- **Tooling**: authoring validator PASSED on all nine policies, main validator 8/8, reference test PASS, markdownlint 0.
+- **Docs**: `docs/announcements/v5.2.1.md`.
+
 ## Announcements
 
 - Each release gets a short, friendly note at `docs/announcements/vX.Y.Z.md`. It answers "what changed for me, and what should I do", in plain language.
