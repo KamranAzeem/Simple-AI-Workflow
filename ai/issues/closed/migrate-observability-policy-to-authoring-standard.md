@@ -23,3 +23,7 @@ Goal: retitle, add a purpose sentence and `## References`, normalize the normati
 The coding policy now points to this policy for telemetry emission, so this policy must own the emission rules it absorbs: structured logs with named fields, trace context in every log record, correlation identifiers, bounded metric label dimensions, the high-cardinality ban, log levels, health and readiness signals, a startup record, and the missing-signal defect rule. The two code-level rules "keep telemetry out of business logic" and "never fail a request or job on export" stay in the coding policy.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard and absorbed the emission rules from `coding-baseline`. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-12 and review-13 APPROVED. Closed before the merge.
