@@ -104,3 +104,4 @@ These have no other policy owner. The coding policy is their single source:
 
 - 2026-10-21: Created with the coding policy expansion. Eleven shared practices and five coding-owned practices were mapped.
 - 2026-10-21: Observability migration complete; the emission rules are now owned by `ai-policy-observability.md`.
+- 2026-10-21: Authoring-standard migrations complete for web-frontend, API backend, mobile-apps, cloud, DBA, data, and observability; the coding-baseline references are aligned.
