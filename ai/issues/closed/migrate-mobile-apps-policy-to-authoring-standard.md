@@ -20,3 +20,7 @@ Description:
 Goal: retitle, add a purpose sentence and `## References`, convert modals to definitive rules, replace coverage with intent, reference TDD, and split the shared concerns so the coding policy owns the general rule and this policy owns the iOS, Android, and cross-platform detail. No behavior change.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard. Replaced the 90% coverage target with behavior-based coverage, referenced the common TDD rule, and moved the general retry, idempotency, secrets, and logging rules to `coding-baseline` while keeping the platform detail. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-26 and review-27 APPROVED. Closed before the merge.

@@ -573,3 +573,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The cloud policy follows the authoring standard
 
 `ai-policy-cloud.md` is rewritten to the authoring standard: title `# AI Policy: Cloud`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps infrastructure as code, no portal drift, managed services, cost evaluation, automation, naming, encryption, least privilege, secrets, network segmentation, vulnerability scanning, plan and validate before apply, policy-as-code testing, isolated pipeline testing, expected state, drift detection, and the validation standards. No domain rule is removed.
+
+## 2026-10-21: The mobile-apps policy follows the authoring standard
+
+`ai-policy-mobile-apps.md` is rewritten to the authoring standard: title `# AI Policy: Mobile Apps`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps the iOS, Android, and cross-platform guidance, MVVM or MVI, unidirectional data flow, the repository pattern, dependency injection, testing, error handling, graceful degradation, retry, security and privacy, performance, code quality, CI/CD, release, and feature flags. The `90%` coverage target is replaced with behavior-based coverage, the TDD mandate references the common policy, and the general retry, idempotency, secrets, and logging rules reference `coding-baseline`. No domain rule is removed.
