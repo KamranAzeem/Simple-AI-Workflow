@@ -70,6 +70,8 @@ Think of it as turning your AI from a chat buddy into a teammate that actually r
 
 ### Why I built it
 
+The idea started in a conversation with my friend [Muddassar Muneer](https://github.com/mudassarmuneer). Earlier this year, he showed me a workflow he had built for working with AI assistants. It worked well, but it had too many moving parts and a pile of task-specific scripts. I wanted something simpler and self-standing, with no dependency on external scripts or services. I built this workflow from scratch and borrowed two ideas from his approach: state management and hand-offs. The only user-facing script is the sync tool that copies the latest protocol into your projects.
+
 If you only ever use one AI assistant, you probably don't need this. Your assistant keeps its own context, and that mostly works fine.
 
 But do you know where its knowledge, state, and rules actually live? What happens when you move the project to another directory, or to another computer? How do you back up the AI state, your project knowledge, and the rules?
