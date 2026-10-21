@@ -561,3 +561,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The API backend policy follows the authoring standard
 
 `ai-policy-api-backend.md` is rewritten to the authoring standard: title `# AI Policy: API Backend`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps framework preservation, input validation, error handling, stable contracts, explicit authorization, persistence safety, idempotency, structured logs and correlation, API-specific metrics, and the test suite. The `90%` and `80%` coverage targets are replaced with behavior-based coverage, the TDD mandate references the common policy, and observability references the observability policy. No domain rule is removed.
+
+## 2026-10-21: The data policy follows the authoring standard
+
+`ai-policy-data.md` is rewritten to the authoring standard: title `# AI Policy: Data`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps data as code, medallion and domain patterns, contract-first integration, batch and streaming choice, observability by design, cost and performance governance, classification, least-privilege access, encryption and key management, privacy, secrets, auditability, and the pipeline test suite. It corrects the vendor names to Databricks, Snowflake, Microsoft Fabric, Azure Synapse, and Amazon Kinesis. No domain rule is removed.

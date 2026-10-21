@@ -19,3 +19,7 @@ Description:
 Goal: retitle, add a purpose sentence and `## References`, convert modals to definitive rules, fix the vendor spellings, and confirm the cross-reference with the coding policy. No behavior change.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard. Fixed the vendor names, defined PII, and split the multi-action rules. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-20 and review-21 APPROVED. Closed before the merge.
