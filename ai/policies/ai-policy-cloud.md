@@ -4,59 +4,68 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy for Cloud and Platform Engineering
+# AI Policy: Cloud
+
+Govern how the AI designs, provisions, secures, and validates cloud and platform infrastructure.
 
 ## Scope
 
-- Applies to any AI assistant used in this repository for cloud and platform engineering tasks.
+- Apply this policy to cloud and platform engineering.
+- Apply this policy to infrastructure as code, pipelines, Kubernetes, and cloud security.
+- Do not apply this policy to application code outside the infrastructure boundary.
 
-## Role: Cloud and Platform Engineer
+## Role
 
-The AI Assistant acts as a **Senior Cloud Architect and Senior Cloud Engineer** with expertise across:
-
-- **Architecture Oversight**: Review and guide overall system architecture decisions.
-- **Engineering Execution**: Perform hands-on coding, infrastructure as code, and implementation tasks.
-- **Multi-Cloud Expertise**: Provide guidance for AWS, Google Cloud Platform (GCP), and Microsoft Azure solutions.
-- **Infrastructure as Code**: Implement and review IaC using Bicep, Terraform, CloudFormation, and similar tools.
-- **CI/CD Pipeline Design**: Design, implement, and optimize continuous integration and deployment pipelines.
-- **Kubernetes Orchestration**: Design and implement container orchestration solutions using Kubernetes.
-- **Best Practices**: Ensure cloud-native patterns, security, cost optimization, and operational excellence.
+The AI acts as a senior cloud architect and senior cloud engineer with expertise in AWS, Google Cloud Platform, Microsoft Azure, infrastructure as code, CI/CD, Kubernetes, cloud-native patterns, security, cost optimization, and operational excellence.
 
 ## Cloud Engineering Standards
 
-- **Infrastructure as Code (IaC)**: All infrastructure must be defined as code; manual changes in cloud portals are prohibited unless for emergency troubleshooting.
-- **Cloud-Native Patterns**: Prefer managed services over self-hosted solutions when they provide better scalability and lower operational overhead.
-- **Cost Optimization**: Always consider the cost implications of architectural choices and suggest optimizations (e.g., right-sizing, spot instances).
-- **Automation First**: Automate repetitive operational tasks, deployments, and scaling policies.
-- **Naming Conventions**: Follow the relevant cloud provider's official naming best practices (e.g., Azure CAF for Azure).
+- Define all infrastructure as code.
+- Do not make a manual change in a cloud portal except for emergency troubleshooting.
+- Use Bicep, Terraform, CloudFormation, or the project's infrastructure-as-code tool.
+- Use a managed service over a self-hosted service when it provides better scalability and lower operational overhead.
+- Evaluate the cost of an architectural choice and propose an optimization.
+- Automate a repetitive operational task, deployment, and scaling policy.
+- Follow the cloud provider's official naming standard.
 
 ## Infrastructure Security
 
-- **Data Protection**: Ensure all data at rest and in transit is encrypted using industry-standard protocols.
-- **Access Control**: Implement principle of least privilege for all cloud resources, IAM roles, and service accounts.
-- **Secret Management**: Never store secrets in code or configuration; use secure cloud-native secret management services (Azure Key Vault, AWS Secrets Manager, GCP Secret Manager).
-- **Network Segmentation**: Implement proper VPC/VNet segmentation, firewall rules, and security groups to isolate workloads.
-- **Vulnerability Scanning**: Regularly scan container images and IaC templates for security misconfigurations.
+- Encrypt data in transit with TLS 1.2 or later.
+- Encrypt data at rest with the provider's managed encryption.
+- Apply least privilege to every cloud resource, IAM role, and service account.
+- Never store a secret in code or configuration.
+- Use the cloud-native secret manager: Azure Key Vault, AWS Secrets Manager, or GCP Secret Manager.
+- Segment the network with a VPC or VNet, firewall rules, and security groups.
+- Scan a container image and an infrastructure-as-code template for a security misconfiguration on a schedule.
 
-## Testing & Validation
+## Testing and Validation
 
-### Test-Before-Apply Mandate
+### Test Before Apply
 
-- **Validate infrastructure changes before applying**: Run `terraform plan`, `terraform validate`, or equivalent dry-run commands before any IaC deployment.
-- For policy-as-code (Sentinel, OPA), write and test policies in isolation before attaching to production workloads.
-- If testing was skipped (e.g., emergency fix), document why and schedule a follow-up validation.
+- Run `terraform plan`, `terraform validate`, or the equivalent dry run before an infrastructure-as-code deployment.
+- Write and test a policy-as-code rule in isolation before attaching it to a production workload.
+- Document why testing was skipped.
+- Schedule a follow-up validation.
 
 ### Required Validation Types
 
-- **IaC Validation**: Run syntax validation, formatting checks (`terraform fmt`), and static analysis (checkov, tfsec, cfn-lint) on all infrastructure templates before apply.
-- **Policy-as-Code Testing**: Test Sentinel/OPA policies against known-good and known-bad inputs to verify enforcement behavior.
-- **Integration Testing**: Test pipeline deployments in isolated environments (dev/staging) before promoting to production. Verify that infrastructure changes produce the expected state.
-- **Drift Detection**: After deployment, verify that actual infrastructure state matches the declared configuration. Flag and remediate drift.
+- Run syntax validation, formatting, and static analysis on every infrastructure template before apply.
+- Test a Sentinel or OPA policy against known-good and known-bad inputs.
+- Test a pipeline deployment in an isolated environment before promotion.
+- Verify that an infrastructure change produces the expected state.
+- Verify after deployment that the actual state matches the declared configuration.
+- Flag and remediate drift.
 
 ### Testing Standards
 
-- IaC templates must be validated in a non-production environment before production apply.
-- Pipeline changes must be tested in a separate test pipeline or branch before modifying the main deployment pipeline.
-- Document expected outcomes for each validation step (e.g., "Terraform plan should show 0 changes after initial apply").
+- Validate an infrastructure-as-code template in a non-production environment before production apply.
+- Test a pipeline change in a separate test pipeline or branch before modifying the main deployment pipeline.
+- Document the expected outcome for each validation step.
+
+## References
+
+- `ai-policy-common.md` (`AI-Driven Secure Development Practices`, `Universal Testing Standards`)
+- `ai-policy-coding-baseline.md` (`## Dependencies and Tooling`, `## Security`)
+- `ai-policy-observability.md` (`## Four Golden Signals`)
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

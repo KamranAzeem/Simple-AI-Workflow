@@ -569,3 +569,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The DBA policy follows the authoring standard
 
 `ai-policy-dba.md` is rewritten to the authoring standard: title `# AI Policy: Database Administration`, a purpose sentence, `## Scope`, `## References`, domain-named headings, and lowercase normative rules. It keeps the destructive-operation protocol and its SQL block, production migration safety, role-based access, modern authentication, encryption at rest and in transit, masking, secrets, high-availability topologies, point-in-time recovery, RTO and RPO, explain-first tuning, index and bloat guidance, connection pooling, data lifecycle, database as code, restore testing, and idempotent migrations. No domain rule is removed.
+
+## 2026-10-21: The cloud policy follows the authoring standard
+
+`ai-policy-cloud.md` is rewritten to the authoring standard: title `# AI Policy: Cloud`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps infrastructure as code, no portal drift, managed services, cost evaluation, automation, naming, encryption, least privilege, secrets, network segmentation, vulnerability scanning, plan and validate before apply, policy-as-code testing, isolated pipeline testing, expected state, drift detection, and the validation standards. No domain rule is removed.
