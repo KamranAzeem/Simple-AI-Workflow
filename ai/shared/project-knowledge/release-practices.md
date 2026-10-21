@@ -45,6 +45,13 @@
 - **Tooling**: validator v6.1 with a 17-policy baseline and two new procedure anchors.
 - **Docs**: README common instructions and a "Design documents" section, two slides, workflow-guide sections 15 and 22, the customization guide and template, and `docs/announcements/v5.1.0.md`.
 
+## v5.2.0 (2026-10-21)
+
+- **Feature**: new `coding-baseline` policy (token `coding-baseline`): one language-neutral coding standard for most code work, applying Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, OWASP secure coding, resilience patterns, and telemetry.
+- **Behavior**: opt-in and additive. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out; tests, examples, exercises, and one-off scripts stay telemetry-free by default. Existing code changes only inside the requested scope.
+- **Tooling**: validator baseline 18 policies.
+- **Docs**: README banner and a "Coding baseline policy" section, slides, customization guide, and `docs/announcements/v5.2.0.md`.
+
 ## Announcements
 
 - Each release gets a short, friendly note at `docs/announcements/vX.Y.Z.md`. It answers "what changed for me, and what should I do", in plain language.

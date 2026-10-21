@@ -120,6 +120,7 @@ This section is optional, and it is normally written for you. Say `"update desig
 | **Expertise** | `accounting` | `ai/policies/ai-policy-accounting.md` |
 | **Expertise** | `academic-researcher` | `ai/policies/ai-policy-academic-researcher.md` |
 | **Expertise** | `career-coaching` | `ai/policies/ai-policy-career-coaching.md` |
+| **Expertise** | `coding-baseline` | `ai/policies/ai-policy-coding-baseline.md` |
 | **Expertise** | `windows-system-admin` | `ai/policies/ai-policy-windows-system-admin.md` |
 | **Compliance**| `gdpr` | (AI built-in knowledge) |
 | **Compliance**| `hipaa` | (AI built-in knowledge) |
@@ -127,6 +128,8 @@ This section is optional, and it is normally written for you. Say `"update desig
 > **Note: Peer Review (`code-review`)**. You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"`, `"code review"`, or `"PR review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
 >
 > **Note: Codebase Examination (`codebase-examination`)**. Same behavior as peer review: say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded or indexed at boot.
+>
+> **Note: Coding Baseline (`coding-baseline`)**. This policy is opt-in. Add `coding-baseline` to `## Active Expertise` to load it, or ask for the coding baseline policy by name. It gives the AI one language-neutral coding standard for most code work, covering Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, OWASP secure coding, resilience, and telemetry. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out. Tests, examples, exercises, and one-off scripts stay telemetry-free by default. Existing code changes only inside the requested scope.
 
 ---
 

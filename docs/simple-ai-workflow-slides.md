@@ -30,6 +30,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Project knowledge sync**: findings, decisions, and discoveries land in `project-knowledge/` at every checkpoint
 - **One-stop checkpoint**: `"checkpoint"` also refreshes Project Knowledge and Global Knowledge and prints a grouped report, so you do not type the knowledge-update commands separately
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
+- **Coding baseline policy**: opt-in; one language-neutral standard for most code work, applying Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, and OWASP secure coding, with telemetry on by default for production code and no out-of-scope rewrites
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
 - **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint and used as the state-file archive
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
@@ -51,7 +52,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Codebase examination mode**: say `"codebase examination"` or `"examine this codebase"`. It uses tiered, disk-backed skeleton maps, no vector DBs or external tools
 - **Career coaching policy**: job-search strategy, resume and cover-letter work, interview prep (STAR method), and career-transition narrative
 - **Windows system admin policy**: Windows Server, Active Directory, Group Policy, PowerShell, Microsoft security baselines (SCT, CIS, DISA STIGs), Intune, MECM, and Zero Trust
-- **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger at every checkpoint
+- **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger when a design document changes
 - **Shared understanding before building**: for feature work, the AI interviews you to a shared design concept before creating files
 - **Privacy-safe commits**: a pre-commit sensitive-name scan, with a full-history purge and a migration path when something slips through
 - **Investigation Contract**: evidence-based by default, cross-checked against what was already read (self-consistency), and "Untried is not impossible" (never assert a limitation you did not test)
@@ -104,7 +105,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | Project instructions | `AGENTS.md`, works with any tool, any editor |
 | User preferences | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | `ai-customization.md` |
-| Domain expertise and rules | 17 modular policies in `ai/policies/` |
+| Domain expertise and rules | 18 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge and decisions | `ai/shared/project-knowledge/` |

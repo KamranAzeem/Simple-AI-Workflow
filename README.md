@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.1.0 (2026-10-16).** Design documents now have their own trigger: say `"update design documents"`, and the AI proposes, challenges, and diffs each change before it writes. A separate `"migrate design docs"` moves them beside your code. Nothing breaks if you do nothing. Read the announcement: [docs/announcements/v5.1.0.md](docs/announcements/v5.1.0.md). |
+| **v5.2.0 (2026-10-21).** New coding baseline policy. Add `coding-baseline` to your Active Expertise and the AI follows one language-neutral coding standard for most code work, from a script to a service. It applies Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, and OWASP secure coding. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out. Nothing breaks if you do nothing. Read the announcement: [docs/announcements/v5.2.0.md](docs/announcements/v5.2.0.md). |
 
 # Simple AI Workflow
 
@@ -169,6 +169,29 @@ A few habits help a lot:
 - **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint, compact conversation manually using "/compact" or "/compress", run "post-compaction recovery procedure" and continue working.
 - **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, because it is unreliable with fresh or weaker models. The reason is explained under Common instructions.
 
+## Coding baseline policy
+
+Until now, the AI had no general coding standard. It followed the domain policy for the task, and for a script, a CLI, or a mixed repository there was no standard at all.
+
+`coding-baseline` fills that gap. Add it to your Active Expertise and the AI follows one language-neutral standard for most code work. It applies industry-recognized practices:
+
+- Clean Code: meaningful names, one job per function, comments that explain why, and explicit error handling.
+- SOLID, DRY, YAGNI, and Twelve-Factor.
+- TDD.
+- OWASP secure coding.
+- Resilience patterns: timeouts, bounded retries, and idempotency.
+- Telemetry.
+
+For production code, telemetry is on by default. The AI classifies the work, tells you what it recommends, and proceeds unless you decline. Tests, examples, exercises, and one-off scripts stay telemetry-free by default.
+
+It also sets the no-disturbance rule: new code follows the policy, and existing code changes only inside the requested scope. It is opt-in and additive. Nothing changes until you enable it.
+
+```markdown
+## Active Expertise
+
+- coding-baseline
+```
+
 ## Design documents
 
 When a project grows past a quick script, its design deserves a home of its own. The workflow keeps design documents next to the code, in a `design-docs/` directory that sits beside your source folder and your `docs/` folder.
@@ -215,7 +238,7 @@ Your own profile: name, role, skills, preferences, writing style, words you don'
 
 This is the one file you edit to tailor the AI to a project. You can set:
 
-1. **Expertise**: load a domain policy (for example `cloud`, `api-backend`, `windows-system-admin`).
+1. **Expertise**: load a policy (for example `coding-baseline`, `cloud`, `api-backend`, `windows-system-admin`).
 2. **Traits**: pick a persona (for example Senior DBA, Security Specialist, Mentor).
 3. **Compliance**: turn on regulatory standards (for example `gdpr`, `soc2`, `hipaa`).
 4. **Developer Workflow**: set project-specific working rules, for example a proactive peer review after every change set.
@@ -311,7 +334,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 5 protocol policies (common, meta, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.

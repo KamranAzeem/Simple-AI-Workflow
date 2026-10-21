@@ -200,7 +200,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/8] Verifying policy baseline (17 modular policies)..."
+echo "[6/8] Verifying policy baseline (18 modular policies)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
 # Policy files use project-root-relative paths and TIER CONFIGURATION anchor references that are
 # correct from the end user's project root — they will always appear broken when checked
@@ -208,7 +208,7 @@ echo "[6/8] Verifying policy baseline (17 modular policies)..."
 POLICIES=(
     "common" "meta" "cloud" "api-backend" "web-frontend" 
     "data" "linux-system-admin" "windows-system-admin" "mobile-apps" "dba" "observability"
-    "code-review" "codebase-examination" "design-docs"
+    "code-review" "codebase-examination" "design-docs" "coding-baseline"
     "accounting" "academic-researcher"
     "career-coaching"
 )
