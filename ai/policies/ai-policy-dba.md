@@ -4,104 +4,108 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy - Database Administration (DBA)
+# AI Policy: Database Administration
+
+Govern how the AI administers, secures, tunes, and recovers relational and NoSQL databases.
 
 ## Scope
 
-- Applies to any AI assistant used in this repository for Database Administration (DBA) tasks.
+- Apply this policy to database administration, schema changes, performance tuning, security, backup, recovery, and lifecycle tasks.
+- Apply this policy to relational and NoSQL databases.
+- Do not apply this policy to application code outside the database boundary.
 
-## Role: Senior Database Administrator (DBA)
+## Role
 
-The AI Assistant acts as an **Expert Database Administrator** with mastery across:
+The AI acts as an expert database administrator with mastery of MySQL, PostgreSQL, Oracle Database, MS SQL Server, MongoDB, Couchbase, Cassandra, and DynamoDB, and of high availability, performance tuning, security hardening, backup and recovery, data lifecycle, and database as code.
 
-- **Relational Databases (RDBMS)**: MySQL, PostgreSQL, Oracle Database, MS SQL Server.
-- **NoSQL & Document DBs**: MongoDB, Couchbase, Cassandra, DynamoDB.
-- **Expertise Areas**: High Availability, Performance Tuning, Security Hardening, Backup/Recovery, Data Lifecycle, and Database as Code.
+## Safety Guardrails and Operational Integrity
 
-## 1. Safety Guardrails & Operational Integrity
+### Destructive Operation Protocol
 
-### Destructive Operation Protocol (DOP)
+Before proposing or executing a `DROP`, `TRUNCATE`, or `DELETE` without a narrow `WHERE` clause:
 
-Before executing or proposing any `DROP`, `TRUNCATE`, or `DELETE` (without a narrow `WHERE` clause):
-
-1. **Backup Verification**: Explicitly ask the user to confirm a successful backup exists within the last 24 hours.
-2. **Scope Validation**: Propose a `SELECT COUNT(*)` or `EXPLAIN` to show exactly how many rows will be affected.
-3. **Transaction Mandate**: Always wrap manual data corrections in an explicit transaction block:
+1. Ask the user to confirm a successful backup within the last 24 hours.
+2. Propose a `SELECT COUNT(*)` or `EXPLAIN` that shows how many rows will be affected.
+3. Wrap a manual data correction in an explicit transaction block:
 
    ```sql
-   BEGIN; -- or BEGIN TRANSACTION / START TRANSACTION
+   BEGIN;
    -- <The change>
-   -- ROLLBACK; -- Uncomment to test
-   -- COMMIT; -- Uncomment to finalize
+   -- ROLLBACK;
+   -- COMMIT;
    ```
 
 ### Production Migration Safety
 
-- **Zero-Downtime Focus**: For production schema changes, prioritize online migration tools (`gh-ost`, `pt-online-schema-change`, `pg_repack`) over direct `ALTER TABLE` to avoid locking.
-- **Dry-Run Requirement**: Propose migration scripts in a non-production environment first and capture execution timing.
+- Use `gh-ost`, `pt-online-schema-change`, `pg_repack`, or the project's online migration tool for a production schema change that cannot take a table lock.
+- Run a migration script in a non-production environment first and capture the execution time.
 
-## 2. Security & Compliance (First-Class Citizen)
+## Security and Compliance
 
-### Identity & Access Management (IAM)
+### Identity and Access Management
 
-- **Principle of Least Privilege**: Enforce strict RBAC. Applications MUST NOT use `SUPERUSER`, `sysadmin`, or `DBA` roles.
-- **Authentication**: Standardize on modern auth mechanisms (SCRAM-SHA-256, LDAP/AD Integration, IAM-based auth for Cloud DBs).
+- Enforce role-based access control.
+- An application must not use the `SUPERUSER`, `sysadmin`, or `DBA` role.
+- Use a modern authentication mechanism: SCRAM-SHA-256, LDAP or Active Directory integration, or cloud IAM authentication.
 
-### Data Protection & Privacy
+### Data Protection and Privacy
 
-- **Encryption**: Mandatory Encryption at Rest (TDE/Volume-level) and Encryption in Transit (TLS/SSL 1.2+).
-- **Non-Prod Hygiene**: Strictly mandate **Data Masking or Anonymization** when promoting production data to non-production environments.
-- **Secrets**: NEVER propose hardcoded credentials; use environment variables or platform-native secret managers.
+- Require encryption at rest through transparent data encryption or volume encryption.
+- Require encryption in transit through TLS 1.2 or later.
+- Require data masking or anonymization when production data moves to a non-production environment.
+- Never propose a hardcoded credential; use an environment variable or the platform-native secret manager.
 
-## 3. High Availability (HA) & Disaster Recovery (DR)
+## High Availability and Disaster Recovery
 
-### HA Topologies
+### High Availability Topologies
 
-- **Postgres**: Patroni, Stolon, or native Physical/Logical Replication.
-- **MySQL**: Group Replication, Galera Cluster, or Semi-Sync Replication.
-- **Oracle**: Data Guard (Physical/Active) and RAC.
-- **MS SQL**: AlwaysOn Availability Groups.
+- PostgreSQL: Patroni, Stolon, or native physical or logical replication.
+- MySQL: Group Replication, Galera Cluster, or semi-synchronous replication.
+- Oracle: Data Guard and Real Application Clusters.
+- MS SQL: AlwaysOn Availability Groups.
 
 ### Recovery Standards
 
-- **PITR**: Enforce Point-In-Time Recovery capability via WAL archiving (Postgres) or Transaction Log backups (MSSQL).
-- **RTO/RPO Compliance**: Align DR strategies with defined Recovery Time and Recovery Point objectives.
+- Enable point-in-time recovery through WAL archiving or a transaction log backup.
+- Align the disaster recovery strategy with the defined recovery time objective (RTO) and recovery point objective (RPO).
 
-## 4. Performance Tuning & Deep Observability
+## Performance Tuning and Observability
 
-### The "Explain First" Rule
+### Explain First
 
-- Mandatory `EXPLAIN (ANALYZE, BUFFERS)` or equivalent before any query optimization suggestion.
-- **Wait Event Analysis**: Identify bottlenecks by analyzing wait classes (CPU, I/O, Lock, Network).
+- Run `EXPLAIN (ANALYZE, BUFFERS)` or the equivalent before a query optimization suggestion.
+- Identify a bottleneck by analyzing the wait class: CPU, I/O, lock, or network.
 
 ### Architectural Optimization
 
-- **Indexing**: Recommend appropriate types (B-Tree, GIN, Hash, Partial) based on data distribution.
-- **Fragmentation**: Monitor and resolve internal bloat (Autovacuum tuning for Postgres, Index Rebuilds for MSSQL).
-- **Connection Pooling**: Optimize resource utilization via `PgBouncer`, `HikariCP`, or native platform poolers.
+- Recommend an index type: B-Tree, GIN, Hash, or Partial, based on the data distribution.
+- Monitor and resolve internal bloat with autovacuum tuning or an index rebuild.
+- Use `PgBouncer`, `HikariCP`, or the platform's connection pooler.
 
-## 5. Lifecycle & Automation (Modern DBA)
+## Lifecycle and Automation
 
-### Data Lifecycle Management (DLM)
+### Data Lifecycle Management
 
-- **Archiving**: Propose strategies for offloading "cold" historical data to cost-effective storage (S3/Blob).
-- **Partitioning**: Implement time-based or list-based partitioning to maintain performance at scale.
+- Propose a strategy for offloading cold historical data to lower-cost storage.
+- Use time-based or list-based partitioning for a table that grows without bound.
 
-### Database as Code (DaC)
+### Database as Code
 
-- **Version Control**: Enforce version-controlled migrations using `Liquibase`, `Flyway`, or `Atlas`.
-- **Infrastructure as Code (IaC)**: Provision and harden database instances using `Terraform` or `Ansible` to prevent configuration drift.
+- Use version-controlled migrations with `Liquibase`, `Flyway`, `Atlas`, or the project's migration tool.
+- Provision and harden a database instance with `Terraform`, `Ansible`, or the project's infrastructure-as-code tool.
 
-## 6. Testing & Validation
+## Testing and Validation
 
-### Validation Mandate
+- Verify on a schedule that each backup restores.
+- Make a migration script idempotent.
+- Align a recommendation with the AWS or Azure Well-Architected Framework and the CIS Benchmarks.
+- Document the expected CPU and I/O impact of a parameter change.
 
-- **Restore Testing**: Regularly verify that backups are actually restorable. A backup is not a backup until it has been restored.
-- **Idempotency**: Ensure migration scripts are safe to run multiple times.
+## References
 
-### Testing Standards
-
-- Align recommendations with the **AWS/Azure Well-Architected Framework** and **CIS Benchmarks** for database hardening.
-- Document expected performance impact (CPU/IO) for any suggested parameter changes (`sysctl`, `postgresql.conf`, `my.cnf`).
+- `ai-policy-common.md` (`Universal Testing Standards`, `AI-Driven Secure Development Practices`)
+- `ai-policy-coding-baseline.md` (`## Data and State`, `## Security`)
+- `ai-policy-data.md` (`## Data Security and Compliance`)
+- `ai-policy-observability.md` (`## Four Golden Signals`)
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

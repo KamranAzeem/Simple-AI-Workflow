@@ -565,3 +565,7 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The data policy follows the authoring standard
 
 `ai-policy-data.md` is rewritten to the authoring standard: title `# AI Policy: Data`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps data as code, medallion and domain patterns, contract-first integration, batch and streaming choice, observability by design, cost and performance governance, classification, least-privilege access, encryption and key management, privacy, secrets, auditability, and the pipeline test suite. It corrects the vendor names to Databricks, Snowflake, Microsoft Fabric, Azure Synapse, and Amazon Kinesis. No domain rule is removed.
+
+## 2026-10-21: The DBA policy follows the authoring standard
+
+`ai-policy-dba.md` is rewritten to the authoring standard: title `# AI Policy: Database Administration`, a purpose sentence, `## Scope`, `## References`, domain-named headings, and lowercase normative rules. It keeps the destructive-operation protocol and its SQL block, production migration safety, role-based access, modern authentication, encryption at rest and in transit, masking, secrets, high-availability topologies, point-in-time recovery, RTO and RPO, explain-first tuning, index and bloat guidance, connection pooling, data lifecycle, database as code, restore testing, and idempotent migrations. No domain rule is removed.

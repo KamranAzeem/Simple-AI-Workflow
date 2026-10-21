@@ -20,3 +20,7 @@ Description:
 Goal: retitle, add a purpose sentence and `## References`, rename the numbered headings, normalize the normative style, and keep the destructive-operation protocol. No behavior change.
 
 Related: `ai/issues/open/validator-checks-for-banned-modals-and-tables.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Migrated to the authoring standard. Renamed the numbered headings, normalized the normative style, kept the destructive-operation protocol and SQL block, and restored the TLS 1.2 rule. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-22 and review-23 APPROVED. Closed before the merge.
