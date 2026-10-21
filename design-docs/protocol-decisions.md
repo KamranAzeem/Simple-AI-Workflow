@@ -549,3 +549,7 @@ The policy is named `ai-policy-coding-baseline.md` with expertise token `coding-
 ## 2026-10-21: The observability policy absorbs the emission rules
 
 `ai-policy-observability.md` is rewritten to the authoring standard: title `# AI Policy: Observability and Reliability`, a purpose sentence, `## Scope`, `## References`, domain-named sections, and definitive rules. It keeps the Four Golden Signals and the three pillars, and it now owns the emission detail that `ai-policy-coding-baseline.md` points at: structured logs, trace context, correlation identifiers, bounded metric labels, log levels, health and readiness, the startup record, and the missing-signal defect rule. It also keeps retention, sampling, alerting, and validation. No rule is removed. The two code-level rules (keep telemetry out of business logic and never fail a request or job on export) stay in the coding policy.
+
+## 2026-10-21: The common policy and coding-baseline state their ownership boundary
+
+The common policy now has a `## Scope` section and a `## References` section. It states that `ai-policy-coding-baseline.md` owns code-construction operations while common owns the engineering principles. The coding-baseline Scope states that common owns the principles it applies. The domain migrations reference common for TDD and express coverage by intent. The generated-file validation boundary stays: common owns all file types, and coding-baseline owns code tools. No rule is moved or removed.

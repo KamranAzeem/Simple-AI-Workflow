@@ -57,10 +57,10 @@ Model (2026-10-21): the coding policy now uses a thin core plus pointers. Cross-
 
 ### Observability
 
-- Owner: `ai-policy-observability.md` (`Four Golden Signals`, `Three Pillars Correlation Mandate`).
+- Owner: `ai-policy-observability.md` (`## Four Golden Signals`, `## Logs, Metrics, and Traces`).
 - Coding policy rule: `## Telemetry`.
-- State: referenced. The coding policy keeps the production/non-production classification and the default-on gate. Emission detail belongs to the observability policy.
-- Reconcile: absorb the emission rules into the observability policy per `migrate-observability-policy-to-authoring-standard.md`.
+- State: owned by the observability policy. The emission rules are now in the policy, and the coding policy keeps only the production/non-production classification and the default-on gate.
+- Reconcile: confirm the coding-baseline reference points at the migrated section names.
 
 ### Generated file validation
 
@@ -103,3 +103,4 @@ These have no other policy owner. The coding policy is their single source:
 ## Change Log
 
 - 2026-10-21: Created with the coding policy expansion. Eleven shared practices and five coding-owned practices were mapped.
+- 2026-10-21: Observability migration complete; the emission rules are now owned by `ai-policy-observability.md`.

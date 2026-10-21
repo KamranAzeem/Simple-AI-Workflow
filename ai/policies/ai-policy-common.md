@@ -9,6 +9,13 @@ This file contains the universal operating rules for all AI assistants in this r
 
 > **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the **Global AI Policies Directory** defined in the configuration section of `AGENTS.md`.
 
+## Scope
+
+- Apply this policy to every AI session in this repository.
+- Apply this policy to every task and every domain.
+- Apply this policy before a domain policy loads and while a domain policy is active.
+- Treat a domain policy as the owner of its domain detail and this policy as the owner of the universal baseline.
+
 ## Non-Negotiables (read first, apply always)
 
 These are the rules most costly to break. They are active at boot, at load context, at compaction recovery, and mid-work. Each has a detailed section below or in `AGENTS.md`.
@@ -309,6 +316,7 @@ The divergent mode for widening the option space before a design exists. Trigger
 - **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
 - **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
 - **Git conventions**: branch prefix and commit type `feature` (never `feat`); subject `<type>(<scope>): <subject>` in imperative mood, with a descriptive body for architectural changes; always feature branches, squash-merged; use conventional commit types.
+- **Code construction ownership**: `ai-policy-coding-baseline.md` owns the code-construction operations; this policy owns the engineering principles those operations apply.
 
 ### Git Configuration
 
@@ -527,5 +535,14 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
   - Multiple top-level headings are allowed, and a file need not start with a heading.
   - Emphasis used as a heading is allowed.
   - Duplicate headings are allowed unless they are siblings.
+
+## References
+
+- `ai-policy-coding-baseline.md` (`## Telemetry`, `## Cross-Cutting Pointers`)
+- `ai-policy-observability.md` (`## Four Golden Signals`, `## Logs, Metrics, and Traces`)
+- `ai-policy-api-backend.md`, `ai-policy-web-frontend.md`, `ai-policy-mobile-apps.md`, `ai-policy-data.md`, `ai-policy-dba.md`, `ai-policy-cloud.md`, `ai-policy-linux-system-admin.md`, `ai-policy-windows-system-admin.md`
+- `ai-policy-meta.md` (`## Procedure and Policy Authoring`)
+- `ai-policy-code-review.md`, `ai-policy-codebase-examination.md`, `ai-policy-design-docs.md`
+- Domain and specialty policies live in `ai/policies/`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

@@ -14,6 +14,7 @@ Govern how the AI writes and changes program code in any language when this poli
 - Apply this policy to source files, tests, build scripts, and infrastructure-as-code for that project.
 - Do not apply this policy to protocol files, project knowledge, plans, or project documentation unless the user includes them in the request.
 - Treat this policy as the base layer for code construction, not a replacement for a domain policy.
+- Treat `ai-policy-common.md` as the owner of the engineering principles this policy applies.
 - Load and follow the domain policy that owns the concern at hand.
 - Activate this policy when the **Project Customization File** lists `coding-baseline` under `## Active Expertise` or the user asks for the coding baseline policy by name.
 - Apply this policy for the rest of the session after activation.

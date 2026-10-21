@@ -23,3 +23,7 @@ A read-only review found:
 Goal: add explicit cross-references, keep the common policy the always-on baseline, and do not move its rules. No behavior change.
 
 Related: `ai/issues/open/tier2-vs-non-negotiables-consolidation.md`, `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
+
+---
+2026-10-21
+Added the `## Scope` and `## References` sections to the common policy and the ownership pointers in both common and coding-baseline. The domain migrations reference common for TDD and express coverage by intent. Validation: authoring PASSED, main 8/8, reference test PASS, markdownlint 0; reviews review-14 and review-15 APPROVED. Closed before the merge.
