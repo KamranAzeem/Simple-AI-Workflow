@@ -29,3 +29,4 @@
 [2026-10-27] Released v5.3.0: canonical state-file headers, soft targets, the authoring exception, the README banner, the announcement, and the release-practices entry. Tag and GitHub Release published at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.3.0>.
 [2026-10-27] Dropped the remaining Matt Pocock backlog items: wayfinding, dictionary vocabulary, and Sandcastle. Closed the wayfinding and dictionary evaluation tickets; Sandcastle had no ticket. Decision recorded in the ADR store; do not re-raise.
 [2026-10-27] Implemented the visible protocol-file banner in AGENTS.md: a blockquote after the immutable warning comment and before the H1. The HTML comment and validator anchor stay. ADR recorded, ticket closed, no release. Validator 8/8, authoring PASSED, reference PASS, markdownlint 0.
+[2026-10-27] Checkpoint after the visible protocol-file banner merge; state-file health verified, headers canonical, sizes within soft targets; no open work.
