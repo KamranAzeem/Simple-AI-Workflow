@@ -205,13 +205,85 @@ Tickets live under `ai/issues/` in exactly three status directories: `open/`, `i
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve the append-only history in progress.md and detect drift, never a refresh that overwrites fresh work with a stale disk copy.
 - **Chronological Order (all state files)**: Entries run oldest at the top and newest at the bottom. New content is always appended at the tail, never inserted above existing entries. This governs insertion order; deletion and in-place dashboard edits follow the per-file rules below.
 - **next-steps.md is forward-only (the future)**: It is a backlog, not a history. Append new items at the tail. Delete each item the moment it is done; never leave a ticked, checked, or struck-through entry. Work oldest-first by default, but delete a finished item wherever it sits. No history accumulates here and it has no archive.
-- **progress.md is recent history (the past)**: Completed work, newest at the bottom. Keep about 14 days or up to 7 KB. When it is over budget or holds older entries, move the oldest completed entries to the daily checkpoints (the archive) in the same checkpoint.
-- **next-steps.md is the future**: Open items only, oldest first, delete on done. Keep it to 5 KB. Never drop an unfinished item; record any dropped item in the daily checkpoints first.
-- **context.md is the present**: A `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. No chronological history. Keep it to 8 KB and its live items to short one-liners with a pointer to Project Knowledge.
+- **progress.md is recent history (the past)**: Completed work, newest at the bottom. Use about 14 days and a 7 KB soft target. When the file is over the target or holds entries older than 14 days, move the oldest completed entries to the daily checkpoints (the archive) in the same checkpoint. If the file is still over target, let it exceed and report the overage.
+- **next-steps.md is the future**: Open items only, oldest first, delete on done. Use 5 KB as a soft target. Delete completed items; if open items still exceed the target, keep them and report the overage. Never drop an unfinished item; record any dropped item in the daily checkpoints first.
+- **context.md is the present**: A `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. No chronological history. Use 8 KB as a soft target. Move resolved items to the diary first; if live items still exceed the target, keep them and report the overage. Keep live items to short one-liners with a pointer to Project Knowledge.
 - **State-File Brevity Rule**: Every item is at most three short bullets. No prose, no command transcripts, no decision rationale, no step-by-step detail. Condense any item that grows longer before writing the checkpoint.
 - **State File Scope Rule**: State files are summaries only (what was done, what is pending, current context). They are never runbooks, plans, or ledgers. They MUST NOT contain implementation steps, CLI commands, investigation notes, or knowledge content. Those belong in **Project AI Knowledge Directory** or **Global AI Knowledge Directory**. Write durable knowledge to its proper file before recording a summary checkpoint entry.
 - **Daily Checkpoints Are the Only Archive**: The diary under **Project Daily Checkpoints Directory** is the single, chronological, unbounded archive. No separate archive file exists.
 - **Bloat and Order Check**: When loading or checking state files, if any file is bloated (items longer than three bullets, runbook or ledger content, duplicate or stale entries) or out of chronological order, report it and propose a fix. Repair is a separate, user-triggered procedure (`repair state files`); the load-context check never writes.
+
+### Canonical State-File Headers
+
+- Designate the four blocks below as normative literal artifacts.
+- Copy the block for the file type exactly as the first lines of the file.
+- Add one blank line after the block.
+- Use `repair state files` to replace an existing block.
+- Copy the canonical block in bootstrap and checkpoint creation.
+
+**`ai/state/context.md`**
+
+```markdown
+<!-- STATE-FILE-HEADER: context.md START -->
+**State-file header. Source: `ai-policy-common.md`, section `## State File Ownership Protocol`, subsection `### Canonical State-File Headers`. Canonical; copy verbatim; do not edit.**
+
+- **Write only:** the present, in `## Current Status` and `## Active Working Context`, edited in place.
+- **Never write:** history, completed work, plans, runbooks, ledgers, commands, implementation steps, investigation notes, transcripts, or git metadata. Completed work goes to `progress.md`, pending work to `next-steps.md`, and durable detail to Project Knowledge.
+- **Brevity:** at most three short bullets per item, with a pointer to Project Knowledge for detail.
+- **Size:** 8 KB soft target. Move resolved items to the diary first; if live items still exceed the target, keep them and report the overage.
+- **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
+- **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
+
+<!-- STATE-FILE-HEADER: context.md END -->
+```
+
+**`ai/state/progress.md`**
+
+```markdown
+<!-- STATE-FILE-HEADER: progress.md START -->
+**State-file header. Source: `ai-policy-common.md`, section `## State File Ownership Protocol`, subsection `### Canonical State-File Headers`. Canonical; copy verbatim; do not edit.**
+
+- **Write only:** completed work, one entry per line, newest at the bottom.
+- **Never write:** transcripts, rationale, plans, commands, implementation steps, investigation notes, or git metadata. Detail goes to the daily checkpoints or Project Knowledge.
+- **Brevity:** at most three short bullets per item.
+- **Size and archive:** 7 KB soft target; move the oldest completed entries to the daily checkpoints when the file is over the target or holds entries older than 14 days. If the file is still over target, let it exceed and report the overage.
+- **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
+- **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
+
+<!-- STATE-FILE-HEADER: progress.md END -->
+```
+
+**`ai/state/next-steps.md`**
+
+```markdown
+<!-- STATE-FILE-HEADER: next-steps.md START -->
+**State-file header. Source: `ai-policy-common.md`, section `## State File Ownership Protocol`, subsection `### Canonical State-File Headers`. Canonical; copy verbatim; do not edit.**
+
+- **Write only:** open items only, oldest first, one item per line; no commands, implementation steps, investigation notes, or rationale.
+- **Delete on done:** remove each item when it is finished; never keep completed items or history.
+- **Never drop:** an unfinished item stays until it is done.
+- **Brevity:** at most three short bullets per item.
+- **Size:** 5 KB soft target. Delete completed items; if open items still exceed the target, keep them and report the overage. Never drop an unfinished item.
+- **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
+- **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
+
+<!-- STATE-FILE-HEADER: next-steps.md END -->
+```
+
+**`ai/daily-checkpoints/YYYY-MM-DD.md`**
+
+```markdown
+<!-- STATE-FILE-HEADER: daily-checkpoint START -->
+**State-file header. Source: `ai-policy-common.md`, section `## State File Ownership Protocol`, subsection `### Canonical State-File Headers`. Canonical; copy verbatim; do not edit.**
+
+- **Write only:** one file per calendar day; append a new dated section at the bottom; the H1 date matches the filename.
+- **Never do:** edit, reorder, or delete an earlier section. This file is the only archive.
+- **Move here:** completed `progress.md` entries and resolved `context.md` items when the source file is over its soft target, or for `progress.md`, holds entries older than 14 days.
+- **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
+- **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
+
+<!-- STATE-FILE-HEADER: daily-checkpoint END -->
+```
 
 ## Operational Standards
 

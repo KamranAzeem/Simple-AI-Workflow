@@ -86,6 +86,18 @@ if ! grep -q "STEP-FRESH-READ-BEFORE-WRITE" AGENTS.md; then
     echo "Error: STEP-FRESH-READ-BEFORE-WRITE guarantee missing from STEP-ATOMIC-WRITE in PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
     exit 1
 fi
+if ! grep -q "Before writing, verify each state-file header." AGENTS.md; then
+    echo "Error: state-file header pre-write check missing from STEP-ATOMIC-WRITE in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Before appending, verify today's header." AGENTS.md; then
+    echo "Error: checkpoint header pre-append check missing from STEP-DAILY-CHECKPOINT-FILE in AGENTS.md."
+    exit 1
+fi
+if ! grep -q "Preserve each header verbatim." AGENTS.md; then
+    echo "Error: header preservation check missing from STEP-STATE-FILE-TRIMMING in AGENTS.md."
+    exit 1
+fi
 if ! grep -q "Single-Writer" AGENTS.md; then
     echo "Error: State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
     exit 1
@@ -157,6 +169,142 @@ for sub in "${GLOBAL_SUBS[@]}"; do
 done
 echo "Global structure checked."
 
+warn_state_header() {
+    echo "[WARNING] State-file health is degraded and work quality is at risk. Run \"repair state files\" now."
+}
+
+check_state_file_header() {
+    local type="$1"
+    local file="$2"
+    local policy="ai/policies/ai-policy-common.md"
+    local start="<!-- STATE-FILE-HEADER: $type START -->"
+    local end="<!-- STATE-FILE-HEADER: $type END -->"
+    local policy_start_count policy_end_count
+
+    if [ ! -f "$policy" ]; then
+        echo "[FAILED] $policy: policy file missing"
+        return 1
+    fi
+    policy_start_count=$(grep -Fxc "$start" "$policy" || true)
+    policy_end_count=$(grep -Fxc "$end" "$policy" || true)
+    if [ "$policy_start_count" -ne 1 ] || [ "$policy_end_count" -ne 1 ]; then
+        echo "[FAILED] $policy: canonical header blocks missing or duplicated"
+        return 1
+    fi
+    if [ ! -f "$file" ]; then
+        echo "[FAILED] $file: missing state file; restore it before continuing"
+        return 1
+    fi
+
+    local norm start_count end_count start_line end_line total
+    norm=$(mktemp)
+    awk 'NR==1{sub(/^\357\273\277/, "")} {sub(/\r$/, ""); sub(/[ \t]+$/, ""); print}' "$file" > "$norm"
+    start_count=$(grep -Fxc "$start" "$norm" || true)
+    end_count=$(grep -Fxc "$end" "$norm" || true)
+
+    if [ "$start_count" -eq 0 ]; then
+        if head -n 1 "$norm" | grep -Eq '^(<!-- )?(State file \(|Daily checkpoint \()'; then
+            echo "[FAILED] $file header: legacy header at line 1"
+        else
+            echo "[FAILED] $file header: missing START marker"
+        fi
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ "$start_count" -gt 1 ]; then
+        echo "[FAILED] $file header: duplicate START marker"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ "$end_count" -eq 0 ]; then
+        echo "[FAILED] $file header: missing END marker"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ "$end_count" -gt 1 ]; then
+        echo "[FAILED] $file header: duplicate END marker"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+
+    start_line=$(grep -Fxn "$start" "$norm" | cut -d: -f1)
+    end_line=$(grep -Fxn "$end" "$norm" | cut -d: -f1)
+    if [ "$start_line" -ne 1 ]; then
+        echo "[FAILED] $file header: block not first"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ "$end_line" -le "$start_line" ]; then
+        echo "[FAILED] $file header: END before START"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+
+    total=$(awk 'END{print NR}' "$norm")
+    if [ $((end_line + 1)) -gt "$total" ] || [ -n "$(sed -n "$((end_line + 1))p" "$norm")" ]; then
+        echo "[FAILED] $file header: expected exactly one blank line after END"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ $((end_line + 2)) -le "$total" ] && [ -z "$(sed -n "$((end_line + 2))p" "$norm")" ]; then
+        echo "[FAILED] $file header: expected exactly one blank line after END"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+
+    local fblock pblock first_diff
+    fblock=$(mktemp)
+    pblock=$(mktemp)
+    sed -n "${start_line},${end_line}p" "$norm" > "$fblock"
+    awk -v s="$start" -v e="$end" '$0==s{f=1} f{print} $0==e && f{exit}' "$policy" > "$pblock"
+    if ! cmp -s "$pblock" "$fblock"; then
+        first_diff=$(awk 'NR==FNR{a[NR]=$0; next} $0!=a[FNR]{print FNR; exit}' "$pblock" "$fblock")
+        if [ -z "$first_diff" ]; then
+            first_diff=$(awk 'END{print NR}' "$fblock")
+        fi
+        echo "[FAILED] $file header: mismatch at line $first_diff"
+        warn_state_header
+        rm -f "$norm" "$fblock" "$pblock"
+        return 1
+    fi
+    rm -f "$norm" "$fblock" "$pblock"
+    echo "[PASSED] $file header"
+    return 0
+}
+
+check_diary_title() {
+    local file="$1"
+    local today="$2"
+    local norm h1_count h1_line
+    norm=$(mktemp)
+    awk 'NR==1{sub(/^\357\273\277/, "")} {sub(/\r$/, ""); sub(/[ \t]+$/, ""); print}' "$file" > "$norm"
+    h1_count=$(awk '/^```/{f=!f; next} !f && /^# /{c++} END{print c+0}' "$norm")
+    h1_line=$(awk '/^```/{f=!f; next} !f && /^# /{print; exit}' "$norm")
+    if [ "$h1_count" -ne 1 ]; then
+        echo "[FAILED] $file title: expected exactly one \"# Daily Checkpoint YYYY-MM-DD\""
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    if [ "$h1_line" != "# Daily Checkpoint $today" ]; then
+        echo "[FAILED] $file title: date does not match the filename"
+        warn_state_header
+        rm -f "$norm"
+        return 1
+    fi
+    rm -f "$norm"
+    echo "[PASSED] $file title"
+    return 0
+}
+
 # 4. Project Structure
 echo "[4/8] Verifying project AI directory structure..."
 PROJECT_SUBS=(
@@ -179,15 +327,30 @@ if [ ! -f "ai/shared/project-knowledge/issue-template.md" ]; then
     echo "Error: Mandatory issue template ai/shared/project-knowledge/issue-template.md missing."
     exit 1
 fi
+HEADER_FAILED=0
 for sf in context.md progress.md next-steps.md; do
-    if ! grep -q 'State file (' "ai/state/$sf"; then
-        echo "Error: ai/state/$sf is missing its one-line state-file comment."
-        exit 1
+    if ! check_state_file_header "$sf" "ai/state/$sf"; then
+        HEADER_FAILED=1
     fi
 done
+TODAY=$(date +%F)
+DIARY="ai/daily-checkpoints/$TODAY.md"
+if [ -f "$DIARY" ]; then
+    if ! check_state_file_header "daily-checkpoint" "$DIARY"; then
+        HEADER_FAILED=1
+    fi
+    if ! check_diary_title "$DIARY" "$TODAY"; then
+        HEADER_FAILED=1
+    fi
+else
+    echo "[PENDING] $DIARY: no checkpoint for today; run a checkpoint"
+fi
+if [ "$HEADER_FAILED" -ne 0 ]; then
+    exit 1
+fi
 STATE_BYTES=$(wc -c ai/state/context.md ai/state/progress.md ai/state/next-steps.md | awk 'END {print $1}')
 if [ "$STATE_BYTES" -gt 20480 ]; then
-    echo "Advisory: the three state files total $STATE_BYTES bytes, over the 20 KB soft budget (non-fatal)."
+    echo "Advisory: the three state files total $STATE_BYTES bytes, over the 20 KB soft target (non-fatal)."
 fi
 echo "Project structure verified."
 
@@ -227,6 +390,14 @@ for p in "${POLICIES[@]}"; do
         exit 1
     fi
 done
+if ! grep -q '^## State File Ownership Protocol$' ai/policies/ai-policy-common.md; then
+    echo "Error: ai-policy-common.md missing '## State File Ownership Protocol'."
+    exit 1
+fi
+if ! grep -q '^### Canonical State-File Headers$' ai/policies/ai-policy-common.md; then
+    echo "Error: ai-policy-common.md missing '### Canonical State-File Headers'."
+    exit 1
+fi
 echo "Policy baseline verified."
 
 # 7. Git Safety

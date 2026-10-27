@@ -32,14 +32,14 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
 - **Coding baseline policy**: opt-in; one language-neutral standard for most code work, applying Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, and OWASP secure coding, with telemetry on by default for production code and no out-of-scope rewrites
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
-- **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint and used as the state-file archive
+- **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint, each file starting with the canonical diary header, and used as the state-file archive
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
 - **Intent-based quality findings**: code smells are described by intent, never a bare linter score, so fixes are genuine, not gamed
 - **Session resume (compacted context)**: re-reads the standing rules and active policies, and re-indexes Global Knowledge and the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
 - **Token rationing shield**: settings and active policies load in full; Global and Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
-- **State-file trimming**: the three state files share a 20 KB soft budget. Old completed entries move into the daily checkpoint archive, and there are no side archive files
-- **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
+- **State-file trimming**: the three state files share a 20 KB soft target. Old completed entries move into the daily checkpoint archive, and there are no side archive files
+- **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
 - **Issue management**: say `"manage issues"` to file, analyze, plan, and review tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template, a `Label` for unworkable tickets, and dated updates
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email; it uses your identity (git config, then global settings) and offers to create or fix `.gitconfig`
 - **Markdown output**: one policy for structure (headings, lists, code, links), a table ban unless you explicitly ask, and a reference `.markdownlint-cli2.jsonc`
@@ -347,7 +347,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
 - **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
 - **Daily checkpoint file**: the same transaction appends a short-named section to `ai/daily-checkpoints/YYYY-MM-DD.md`, one file per day. The diary is the archive
-- **State-file trimming**: the three state files share a 20 KB soft budget; completed `progress.md` entries older than 14 days move into the diary. No separate archive file
+- **State-file trimming**: the three state files share a 20 KB soft target; completed `progress.md` entries older than 14 days move into the diary. No separate archive file
 
 > **Consistent state. Every checkpoint. No silent failures.**
 
@@ -364,8 +364,8 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ## Built-in defences in this workflow
 
 - **Atomic write protocol**: state files sync together or not at all, so no partial writes
-- **State-file trimming**: the three state files share a 20 KB soft budget, and completed old entries move into the daily checkpoint archive
-- **State-file health and repair**: every load checks the state files read-only for order, size, and structure; `"repair state files"` fixes them on demand
+- **State-file trimming**: the three state files share a 20 KB soft target, and completed old entries move into the daily checkpoint archive
+- **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint

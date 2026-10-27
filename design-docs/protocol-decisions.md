@@ -581,3 +581,21 @@ The common policy now has a `## Scope` section and a `## References` section. It
 ## 2026-10-21: The coding-baseline references point at the migrated sections
 
 `ai-policy-coding-baseline.md` now names the actual headings in the migrated domain policies: observability (Four Golden Signals, Logs, Metrics, and Traces), api-backend (Idempotency, Testing and Verification, Backend Engineering Standards), web-frontend (Frontend Engineering Standards), mobile-apps (Retry and Resilience), data (Testing and Validation, Data Security and Compliance), and dba (Data Protection and Privacy). The references no longer point at headings that the migrations renamed. No rule is changed.
+
+## 2026-10-27: Canonical state-file headers are visible, exact, and repairable
+
+The common policy owns the literal header block for each state file and the daily checkpoint. The common policy designates the four blocks as normative literal artifacts. Each file starts with the marked block, copied verbatim. The rules are visible markdown, so a fresh agent, or any agent that reads the state file, sees them. The HTML comment markers delimit the block for repair and validation. Load context compares the block exactly and warns, without writing. Repair is the only writer of an existing block; bootstrap and checkpoint creation copy the block for new files. The validator checks the same text inside the existing validator script.
+
+This supersedes the one-line rule comment and the all-comment header parts of the State-File Model v2 decisions. The header is now a visible rules block with comment markers, and presence is no longer enough. Adoption applies to checkpoints written on or after this decision; historical checkpoints are not backfilled.
+
+## 2026-10-27: State-file size figures are soft targets
+
+The 8 KB, 7 KB, 5 KB, and 20 KB figures are soft targets. Move completed entries to the diary first. Exceed a target only when the file is still over target after that move. Report the overage. Never drop an unfinished item or live work to meet a number.
+
+This clarifies the State-File Model v2 budget rule. The target still guides trimming, but it never caps working ability.
+
+## 2026-10-27: Designated literal runtime blocks are normative artifacts
+
+A fenced block that the owning policy explicitly designates as a normative literal artifact is copied verbatim into another file. It is exempt from the whole `### Rule Structure` shape, including the one-sentence, one-action, and imperative-mood rules, and it must be precise and free of vague terms. It is not an example and is not marked non-normative. The common policy designates the four state-file header blocks. Other fenced blocks, such as the Git config example, are not designated and keep the normal example rule.
+
+The authoring standard gains a literal-artifact clause. This lets the headers stay visible and self-contained without forcing them into policy-prose shape.

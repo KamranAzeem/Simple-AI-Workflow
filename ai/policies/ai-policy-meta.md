@@ -105,6 +105,13 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 - Do not write a multi-sentence bullet.
 - Do not nest bullets deeper than one level.
 
+### Literal Artifacts
+
+- Treat a fenced block as a normative literal artifact only when the owning policy designates it as one.
+- Exempt a designated normative literal artifact from the `### Rule Structure` shape.
+- Keep a designated normative literal artifact precise and free of vague terms.
+- Do not mark a designated normative literal artifact as an example or non-normative.
+
 ### Procedure Headers
 
 - Start each procedure with `### PROCEDURE <NAME>: <description>`.

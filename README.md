@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.2.0 (2026-10-21).** New coding baseline policy. Add `coding-baseline` to your Active Expertise and the AI follows one language-neutral coding standard for most code work, from a script to a service. It applies Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, and OWASP secure coding. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out. Nothing breaks if you do nothing. Read the announcement: [docs/announcements/v5.2.0.md](docs/announcements/v5.2.0.md). |
+| **v5.3.0 (2026-10-27).** Canonical state-file headers. Each state file and new daily checkpoint starts with a visible rules block; load context compares it exactly and repair restores it. The 8/7/5 KB figures are soft targets. Nothing breaks; run `"repair state files"` once if load context reports a header mismatch. Read the announcement: [docs/announcements/v5.3.0.md](docs/announcements/v5.3.0.md). |
 
 # Simple AI Workflow
 
@@ -351,7 +351,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Issue management**: say `"manage issues"` and the AI files, analyzes, plans, and reviews tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, a `Label` for unworkable tickets, and dated updates.
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
-- **State-file health and repair**: every `"load context"` checks the three state files read-only for order, size, and structure; say `"repair state files"` to bring them back into shape on demand.
+- **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
 - **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.

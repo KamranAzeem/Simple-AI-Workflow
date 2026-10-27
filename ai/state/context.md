@@ -1,25 +1,30 @@
-<!-- State file (present). Dashboard plus active working context. Short bullets with a pointer to Project Knowledge. No history, no git metadata. -->
+<!-- STATE-FILE-HEADER: context.md START -->
+**State-file header. Source: `ai-policy-common.md`, section `## State File Ownership Protocol`, subsection `### Canonical State-File Headers`. Canonical; copy verbatim; do not edit.**
+
+- **Write only:** the present, in `## Current Status` and `## Active Working Context`, edited in place.
+- **Never write:** history, completed work, plans, runbooks, ledgers, commands, implementation steps, investigation notes, transcripts, or git metadata. Completed work goes to `progress.md`, pending work to `next-steps.md`, and durable detail to Project Knowledge.
+- **Brevity:** at most three short bullets per item, with a pointer to Project Knowledge for detail.
+- **Size:** 8 KB soft target. Move resolved items to the diary first; if live items still exceed the target, keep them and report the overage.
+- **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
+- **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
+
+<!-- STATE-FILE-HEADER: context.md END -->
+
 # Project Context
 
 ## Current Status
 
-- **Milestone**: v5.2.1 released on 2026-10-21 (the policy authoring-standard migration; no behavior change).
-- **Validator**: v6.1, 8/8 checks; the authoring validator runs separately on changed files
-- **Policy count**: 18 modular policies
-- **State files**: `ai/state/` in v2 shape; daily checkpoints under `ai/daily-checkpoints/` are the only archive
-- **Project knowledge**: `ai/shared/project-knowledge/` is JIT-indexed; the ADR store is `design-docs/protocol-decisions.md`; ticket background lives here. `ai/notes/` holds only `notes.md`, the processing preamble
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 26 open, 0 in-progress, 50 closed
+- **Milestone**: v5.3.0 (2026-10-27) prepared: canonical state-file headers, exact boot verification, repair restoration, and soft targets.
+- **Validator**: v6.1, 8/8; authoring validator PASSED; reference test PASS; markdownlint 0.
+- **Policy count**: 18 modular policies.
+- **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive.
+- **Project knowledge**: JIT-indexed; ADR store `design-docs/protocol-decisions.md`; ticket background lives in Project Knowledge; `ai/notes/` holds `notes.md`.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 26 open, 0 in-progress, 51 closed.
 
 ## Active Working Context
 
-- **Objective**: maintain the released protocol at `v5.2.1`; the open backlog is 26 tickets under `ai/issues/open/`.
-- **Live decisions**: ticket background lives in Project Knowledge until the work is implemented; grilling and brainstorming are separate modes; agent document review is a peer-review dimension, not a separate procedure; policy instructions are concise what-focused text; external-tool dependency is Won't fix; the call-a-friend feature redacts by default and its "help a friend" intake is read-only and isolated; the workflow directory path is set in `ai-customization.md`, not `AGENTS.md`; global user settings is an OS-agnostic template; the full git history was purged of sensitive identifiers and a pre-commit name guardrail lives in the global settings file; no pre-work commits; every protocol or policy change adds an ADR entry; Global Knowledge is JIT-indexed like Project Knowledge while Global Settings and active policies stay full-load; procedures, steps, and tiers are referenced by stable ALL-CAPS kebab names, never letters or numbers; friendly per-release announcements live in `docs/announcements/` while GitHub Releases stay the authoritative changelog; the writing voice guide lives in the global settings file (always loaded), not global knowledge; identity resolves from git config, then global .gitconfig, then the global settings file as the last fallback; the identifying-names rule is self-sufficient and consults a settings list first only if present; the global settings file is being kept thin; the issue-management policy mandates pre-work analysis, a `Label` for unworkable tickets, a reviewed plan, and defined branch/merge sequences; ADR entries must be self-contained (no commit hashes, branch names, removed-plan references, or non-committed reports); markdown formatting is consolidated into the common policy's `## Markdown Output` section, protocol files are table-free while slides and user-facing docs may use tables when they aid clarity, and the linter conventions are stated in linter-agnostic terms with going-forward enforcement; grilling and brainstorming are common-policy sections (`## Grilling`, `## Brainstorming`) with trigger phrases; design documents live beside the code in `design-docs/` (single repo at the project root, multi-repo per component plus a root rollup), the chain is Notes through Delivery Ledger, depth is proportional and role-aware, and the ADR store holds decisions only; open the branch before editing; user-facing docs explain why the full "... using AGENTS.md protocol" phrase is required (README canonical, others point to it; no alias suggested). Durable rationale in `design-docs/protocol-decisions.md`.
-- **Design docs**: the `"update design documents"` trigger writes design docs in place, `"migrate design docs"` is the only cross-location mover, the Delivery Ledger updates on document change (never at checkpoint), and design docs are JIT-indexed at boot, recovery, and re-affirmation. See `design-docs/protocol-decisions.md`.
-- **Authoring standard**: `ai-policy-meta.md` holds `## Procedure and Policy Authoring`; `support-files/validate-policy-authoring.sh` checks changed `AGENTS.md` and policy files; `## Triggers` is reserved for the plugin model. See `design-docs/protocol-decisions.md`.
-- **Coding baseline policy**: `ai-policy-coding-baseline.md` (token `coding-baseline`) is an opt-in, language-neutral thin core for code construction. Telemetry defaults on for production code and off for non-production code, with a clear recommendation and an easy opt-out. It references, not restates, the domain policies. The plugin v0 (trigger dispatch) is deferred. See `design-docs/protocol-decisions.md` and `ai/shared/project-knowledge/coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`.
-- **Policy migrations**: observability, web-frontend, API backend, data, DBA, cloud, and mobile-apps now follow the authoring standard; the common policy and `coding-baseline` state their ownership boundary; the coding-baseline references are aligned. See `design-docs/protocol-decisions.md`.
-- **Findings**: short-hash references recorded in tracked files are stale after the 2026-09-22 history rewrite; the PowerShell sync-script symlink fix is mirrored but untested (no pwsh on this machine).
-- **Next actions**: no pending migration work. The plugin v0 is deferred in `ai/issues/open/policy-plugin-v0-trigger-dispatch.md`; the rest of the backlog is the issue tracker (26 open).
-- **Lint**: clean across the linted set (policies, docs, root markdown, project knowledge, issues, state); `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.
-- **Style**: no em dashes in the shipped/living set; `pull.rebase = true` is a template recommendation (not an adequacy key) and an existing `defaultBranch` is never changed.
-- **Writing rules**: universal communication and writing rules live in the common policy; `~/.ai/settings/global-user-settings.md` holds only personal preferences.
+- **Objective**: complete the v5.3.0 release from the squash-merged master; the backlog is the issue tracker.
+- **Live decisions**: state-file headers are canonical, visible, and exactly compared; repair is the only writer of an existing block; historical checkpoints are not backfilled; the KB figures are soft targets; designated literal artifacts are exempt from the Rule Structure shape. See `design-docs/protocol-decisions.md`.
+- **Release**: v5.3.0 is a minor feature release; the README banner and announcement are in the squash commit; the tag and GitHub Release follow the merge.
+- **Next actions**: publish the v5.3.0 tag and GitHub Release; no open migration work.
+- **Lint**: clean across the linted set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.

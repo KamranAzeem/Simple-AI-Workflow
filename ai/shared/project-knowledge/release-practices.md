@@ -59,6 +59,13 @@
 - **Tooling**: authoring validator PASSED on all nine policies, main validator 8/8, reference test PASS, markdownlint 0.
 - **Docs**: `docs/announcements/v5.2.1.md`.
 
+## v5.3.0 (2026-10-27)
+
+- **Feature**: canonical state-file headers. Each state file and new daily checkpoint starts with a visible rules block; load context compares it exactly; repair restores it with a full-file backup and a body checksum; historical checkpoints are not backfilled.
+- **Behavior**: the 8/7/5 KB and 20 KB figures are soft targets; completed entries move to the diary first, and live work may exceed the target.
+- **Tooling**: the existing validator gained the header check and two policy anchors; no new script.
+- **Docs**: README banner, `docs/announcements/v5.3.0.md`, workflow guide, slides.
+
 ## Announcements
 
 - Each release gets a short, friendly note at `docs/announcements/vX.Y.Z.md`. It answers "what changed for me, and what should I do", in plain language.
