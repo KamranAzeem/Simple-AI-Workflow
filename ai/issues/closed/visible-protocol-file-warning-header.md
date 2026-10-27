@@ -52,3 +52,13 @@ The warning that `AGENTS.md` is a protocol file, not a context file, exists only
 
 - `ai/issues/closed/clarify-load-context-in-readme.md` explains the protocol-versus-context distinction in the README and docs.
 - `ai/issues/closed/canonical-state-file-headers.md` is about state-file headers, not the `AGENTS.md` file header.
+
+---
+
+2026-10-27
+Plan: `ai/plans/visible-protocol-file-warning-header-plan.md`. Pre-work decision: add a visible blockquote banner after the immutable HTML comment and before the H1. Keep the comment, the validator anchor, and the only-H1 hierarchy. No release.
+
+---
+
+2026-10-27
+Closed. Implemented the visible protocol banner in `AGENTS.md` after the warning comment and before the H1. Resolved: blockquote shape, placement after the comment (HTML comments do not render, so it is still the first rendered content), keep the HTML comment, repeat the no-modification rule, and no release. Verification: validator 8/8, authoring validator PASSED, reference test PASS, markdownlint 0, one H1, and the read-only anchor intact. Squash merge to master follows.

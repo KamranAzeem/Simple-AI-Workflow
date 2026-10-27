@@ -603,3 +603,7 @@ The authoring standard gains a literal-artifact clause. This lets the headers st
 ## 2026-10-27: Matt Pocock backlog drops
 
 Wayfinding, the dictionary vocabulary concepts, and Sandcastle are dropped. Wayfinding duplicates `ai/state/` plus `ai/plans/` and was already skipped by the 2026-09-19 backlog triage. The dictionary concepts add no value and get no glossary or policy addition. Sandcastle is an external sandbox dependency; its parallel planner was already dropped. Do not reopen these items without a new request.
+
+## 2026-10-27: AGENTS.md opens with a visible protocol banner
+
+Rendered markdown hides HTML comments, so the existing protocol-file warning in `AGENTS.md` can be missed. The file keeps the immutable read-only comment and gains a visible blockquote banner immediately after it. The banner says the file is a protocol file, not a context storage file, tells AI assistants to follow it as a protocol, and says not to modify it. The comment remains first in raw text and keeps the validator anchor. The banner is the first rendered content, and `# AI Bootstrap Entry Point` remains the only H1. This edit was made under the Protocol Developer Mode exception, after loading the decision store and with human approval before committing.

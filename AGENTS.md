@@ -10,6 +10,8 @@
   ========================================================================
 -->
 
+> **Protocol file. Not a context storage file.** This file tells AI assistants how to work and where the context lives. AI assistants must follow it as a protocol, not as project context, and must not modify it.
+
 # AI Bootstrap Entry Point
 
 This is the single startup entry point for all AI assistants in this repository.
