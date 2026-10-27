@@ -73,4 +73,7 @@ Plan: `ai/plans/canonical-state-file-headers-plan.md`. Peer review rounds 1 thro
 ---
 
 2026-10-27
-Closed. Implemented on `feature/canonical-state-file-headers`; the squash merge to master and the v5.3.0 release follow. The common policy now owns four canonical header blocks; `AGENTS.md` checks them at load and repair restores them; `validate-protocol.sh` checks them; the KB figures are soft targets; the literal-artifact authoring clause is recorded. Main validator 8/8, authoring validator PASSED, reference test PASS, markdownlint 0; the header negative fixtures pass. Plan: `ai/plans/canonical-state-file-headers-plan.md`. Review rounds 1 through 7; round 7 APPROVED.
+Closed. Implemented on the feature branch and squash-merged to master for v5.3.0. The common policy now owns four canonical header blocks; `AGENTS.md` checks them at load and repair restores them; `validate-protocol.sh` checks them; the KB figures are soft targets; the literal-artifact authoring clause is recorded. Main validator 8/8, authoring validator PASSED, reference test PASS, markdownlint 0; the header negative fixtures pass. Plan: `ai/plans/canonical-state-file-headers-plan.md`. Review rounds 1 through 7; round 7 APPROVED.
+
+2026-10-27
+Released as v5.3.0: <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.3.0>.

@@ -14,7 +14,7 @@
 
 ## Current Status
 
-- **Milestone**: v5.3.0 (2026-10-27) prepared: canonical state-file headers, exact boot verification, repair restoration, and soft targets.
+- **Milestone**: v5.3.0 (2026-10-27) released: canonical state-file headers, exact boot verification, repair restoration, and soft targets.
 - **Validator**: v6.1, 8/8; authoring validator PASSED; reference test PASS; markdownlint 0.
 - **Policy count**: 18 modular policies.
 - **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive.
@@ -23,8 +23,8 @@
 
 ## Active Working Context
 
-- **Objective**: complete the v5.3.0 release from the squash-merged master; the backlog is the issue tracker.
+- **Objective**: maintain v5.3.0; the backlog is the issue tracker.
 - **Live decisions**: state-file headers are canonical, visible, and exactly compared; repair is the only writer of an existing block; historical checkpoints are not backfilled; the KB figures are soft targets; designated literal artifacts are exempt from the Rule Structure shape. See `design-docs/protocol-decisions.md`.
-- **Release**: v5.3.0 is a minor feature release; the README banner and announcement are in the squash commit; the tag and GitHub Release follow the merge.
-- **Next actions**: publish the v5.3.0 tag and GitHub Release; no open migration work.
+- **Release**: v5.3.0 is published at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.3.0>. The README banner and announcement are in the squash commit.
+- **Next actions**: none; the backlog is the issue tracker.
 - **Lint**: clean across the linted set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.

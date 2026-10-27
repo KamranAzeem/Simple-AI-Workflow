@@ -2,7 +2,7 @@
 
 Ticket: `ai/issues/closed/canonical-state-file-headers.md`
 Date: 2026-10-27
-Status: Implemented; prepared for v5.3.0. Squash merge and GitHub release pending.
+Status: Released as v5.3.0.
 
 ## Context
 
@@ -608,7 +608,7 @@ The validator-only scope change is approved. Apply these notes during implementa
 - Main validator 8/8; authoring validator PASSED; reference test PASS; markdownlint 0.
 - Header negative fixtures: corrupt word, missing END, duplicate START, two blank separators, and a legacy header all fail with the expected lines; BOM and CRLF pass.
 - State files: canonical headers in place; progress trimmed from 7,655 bytes to 6,053 bytes by moving the oldest entries to `ai/daily-checkpoints/2026-10-27.md`; the three files total 9,849 bytes.
-- Release: v5.3.0 is prepared in the same squash commit; the tag and GitHub Release follow the merge.
+- Release: v5.3.0 was prepared in the same squash commit; the tag and GitHub Release were published after the merge.
 
 ## Peer Review Log
 
