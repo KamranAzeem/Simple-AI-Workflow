@@ -13,3 +13,8 @@ The mattpocock/dictionary-of-ai-coding analysis produced concepts: smart zone, c
 Decide one of: adopt the concepts as a small shared glossary, use them only where they naturally sharpen a doc with no formal addition, or drop them entirely.
 
 Origin: `ai/notes/mattpocock-analysis-deferrals-and-readme-note.md` (removed, dictionary item captured here).
+
+---
+
+2026-10-27
+Closed as dropped. The user decided the dictionary vocabulary concepts add no value: no shared glossary, no policy addition. The prior "use only where it sharpens a document" position is retired. Do not reopen or re-raise without a new request.

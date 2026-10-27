@@ -599,3 +599,7 @@ This clarifies the State-File Model v2 budget rule. The target still guides trim
 A fenced block that the owning policy explicitly designates as a normative literal artifact is copied verbatim into another file. It is exempt from the whole `### Rule Structure` shape, including the one-sentence, one-action, and imperative-mood rules, and it must be precise and free of vague terms. It is not an example and is not marked non-normative. The common policy designates the four state-file header blocks. Other fenced blocks, such as the Git config example, are not designated and keep the normal example rule.
 
 The authoring standard gains a literal-artifact clause. This lets the headers stay visible and self-contained without forcing them into policy-prose shape.
+
+## 2026-10-27: Matt Pocock backlog drops
+
+Wayfinding, the dictionary vocabulary concepts, and Sandcastle are dropped. Wayfinding duplicates `ai/state/` plus `ai/plans/` and was already skipped by the 2026-09-19 backlog triage. The dictionary concepts add no value and get no glossary or policy addition. Sandcastle is an external sandbox dependency; its parallel planner was already dropped. Do not reopen these items without a new request.

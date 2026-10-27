@@ -13,3 +13,8 @@ Evaluate a "Wayfinding" mode (fog-of-war planning for large, uncertain work, fro
 Decide one of: adopt a lightweight file-based version, adopt only if an issue tracker is used, or drop it as redundant. Compare it against the existing `next-steps.md` plus `ai/plans/` flow.
 
 Background: `ai/shared/project-knowledge/mattpocock-dictionary-of-ai-coding-analysis-2026-08-27.md` and `ai/shared/project-knowledge/mattpocock-sandcastle-codebase-analysis-2026-08-27.md`.
+
+---
+
+2026-10-27
+Closed as dropped. The 2026-09-19 backlog triage decision already skipped wayfinding as duplicative of `ai/state/` plus `ai/plans/`; the user confirmed the drop on 2026-10-27. No implementation. Do not reopen or re-raise without a new request.
