@@ -26,6 +26,8 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 7. Add expertise, traits, or compliance settings if you want them (see the [customization guide](docs/ai-customization-guide.md)).
 8. Open your project in VS Code and type this in the AI chat: `"bootstrap using AGENTS.md protocol"`.
 
+> **Note:** The sync script updates projects that already have `AGENTS.md` and checks or creates `ai-customization.md` with defaults. It does not create `AGENTS.md` for a new project; use steps 5 and 6 for the first copy. After that, the sync script is the recommended update path.
+>
 > **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
 
 When you finish a session, type `"checkpoint"`. One checkpoint refreshes the state files, the diary, Project Knowledge, and Global Knowledge, and prints a grouped summary, so you do not run the knowledge updates as separate commands. To pick up later, type `"load context using AGENTS.md protocol"`.  You are encouraged / advised to do frequent checkpoints. Think of checkpoint as "ctrl + s" !
@@ -41,7 +43,7 @@ When you finish a session, type `"checkpoint"`. One checkpoint refreshes the sta
    |-- support-files/               |-- ...
 ```
 
-The repo holds the workflow and its policy files. You copy `AGENTS.md` and `ai-customization.md` into your project. The AI creates and maintains the project's `ai/` directory (state, knowledge, issues) as it works.
+The repo holds the workflow and its policy files. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file and migrates state files.
 
 `AGENTS.md` is kept deliberately short by design (progressive disclosure): everything that applies to every session stays inline, and everything else sits behind a context pointer that the AI opens only when a task needs it.
 
@@ -249,7 +251,7 @@ See the [AI Customization Guide](docs/ai-customization-guide.md) for the full li
 
 ## Keeping this workflow up to date
 
-> Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it migrates for you, or follow the [manual steps](docs/ai-customization-guide.md).
+> Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it updates existing `AGENTS.md` files, checks the customization file, and migrates the old layout for you. This is the recommended update path; the [manual steps](docs/ai-customization-guide.md) are for a new project's first copy.
 
 When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
 
@@ -288,7 +290,7 @@ So, the process is as follows:
    powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
    ```
 
-**Note:** You *can* simply copy the `AGENTS.md` file from the Simple-AI-Workflow directory (where you pulled latest changes), and paste / overwrite the `AGENTS.md` in the projects you are interested in. However copying in several directories is cumbersome. Also, sometimes the changes are more than just an updated `AGENTS.md` file, so using the sync script is better.
+**Note:** You *can* copy the `AGENTS.md` file from the Simple-AI-Workflow directory (where you pulled latest changes) and paste or overwrite it in the projects you are interested in. That gives you the latest protocol file, but it is only half the work. The sync script also checks or creates `ai-customization.md` with the correct `Global AI Workflow Directory` and migrates state files to `ai/state/`. If you copy manually, you must do those maintenance steps yourself. Using the sync script is highly recommended.
 
 1. Go to the project directory you started from, start the IDEA again (e.g. VsCode), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
 
@@ -341,7 +343,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.
 - **Multi-agent coordination**: handoffs, a coordination board, and single-writer state ownership, so several AI sessions don't step on each other.
-- **Auto-sync script**: push `AGENTS.md` to all your projects in one command, and it migrates the old layout for you.
+- **Auto-sync script**: update existing `AGENTS.md` files in all your projects in one command; it also checks the customization file and migrates the old layout. It does not create a new project's `AGENTS.md`.
 - **Protocol validator**: `support-files/validate-protocol.sh` checks that everything is wired up correctly.
 - **Post-compaction recovery**: when a session gets auto-summarized, the AI reloads its rules from disk on its own, without losing your working context.
 - **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger when a design document changes, and reviews each doc before writing the next.

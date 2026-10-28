@@ -85,7 +85,7 @@ Each platform gets its own section with framework preferences, language conventi
 
 ### Step 1: Set up the protocol files
 
-Copy [`AGENTS.md`](../AGENTS.md) into your mobile project's root directory, and copy [`ai-customization.md`](ai-customization.md) to `ai-customization.md` at your project root. Set **Global AI Workflow Directory** in `ai-customization.md` to the path of your clone. The protocol resolves all other paths from there.
+Copy [`AGENTS.md`](../AGENTS.md) into your mobile project's root directory, and copy [`ai-customization.md`](ai-customization.md) to `ai-customization.md` at your project root. Set **Global AI Workflow Directory** in `ai-customization.md` to the path of your clone. The protocol resolves all other paths from there. For later updates, use the sync script; it updates existing `AGENTS.md` files and checks or creates `ai-customization.md`. A manual copy updates only `AGENTS.md`.
 
 ### Step 2: Bootstrap
 

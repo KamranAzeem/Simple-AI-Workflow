@@ -1,5 +1,5 @@
 Reported: 2026-10-28
-Reporter: Kamran Azeem (bug report from Waqar on macOS)
+Reporter: Kamran Azeem (bug report from a macOS user)
 IssueType: Defect/Bugfix
 Severity: Human-to-decide (AI estimate: P2)
 Size: Human-to-decide (AI estimate: M)
@@ -15,9 +15,9 @@ On macOS, running `./support-files/sync-agents-md.sh --source ./AGENTS.md --targ
 
 Log evidence:
 
-- Workflow directory: `/Users/waqar/projects/Simple-AI-Workflow`
-- Target found: `/Users/waqar/Projects/Simple-AI-Workflow/AGENTS.md`
-- Error: `cp: /Users/waqar/Projects/Simple-AI-Workflow/AGENTS.md and /Users/waqar/projects/Simple-AI-Workflow/AGENTS.md are identical (not copied)`
+- Workflow directory: `/Users/<user>/projects/Simple-AI-Workflow`
+- Target found: `/Users/<user>/Projects/Simple-AI-Workflow/AGENTS.md`
+- Error: `cp: /Users/<user>/Projects/Simple-AI-Workflow/AGENTS.md and /Users/<user>/projects/Simple-AI-Workflow/AGENTS.md are identical (not copied)`
 
 **Root cause**
 
@@ -77,3 +77,18 @@ Proposed README wording:
 - Continue after a per-target failure. Recommended: yes, with a summary and non-zero exit.
 - Use inode comparison for path identity. Recommended: yes; it handles macOS case differences without a Darwin-only branch.
 - Include docs manual-copy claims in the same change. Recommended: align only the places that repeat the claim.
+
+---
+
+2026-10-28
+Plan: `ai/plans/sync-script-self-exclusion-and-readme-clarification-plan.md`. Pre-work decision: discovery-first list, workflow-tree exclusion via an inode ancestor walk, identical-file skip, per-target continuation with a failure summary, and the README manual-copy clarification.
+
+---
+
+2026-10-28
+Plan approved after three peer review rounds; ready to implement. Report: `ai/code-review-reports/2026-10-28_18-55_review-03.md` (APPROVED). No code changes yet.
+
+---
+
+2026-10-28
+Closed. Implemented on `fix/sync-agents-md-self-exclusion`; squash merge to master follows. The scripts discover targets first, exclude the workflow clone with an inode ancestor walk, skip identical files, and continue after a failed target. The README and live docs clarify that a manual copy is only the `AGENTS.md` half. Verification: bash regression suite all cases pass, `validate-protocol.sh` 8/8, markdownlint 0; PowerShell reviewed statically because `pwsh` is unavailable; macOS runtime not exercised on this host. No release.

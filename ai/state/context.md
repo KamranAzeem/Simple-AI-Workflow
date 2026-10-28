@@ -19,7 +19,7 @@
 - **Policy count**: 18 modular policies.
 - **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive.
 - **Project knowledge**: JIT-indexed; ADR store `design-docs/protocol-decisions.md`; ticket background lives in Project Knowledge; `ai/notes/` holds `notes.md`.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 25 open, 0 in-progress, 54 closed.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 1 in-progress, 54 closed.
 
 ## Active Working Context
 
@@ -27,5 +27,5 @@
 - **Live decisions**: state-file headers are canonical, visible, and exactly compared; repair is the only writer of an existing block; historical checkpoints are not backfilled; the KB figures are soft targets; designated literal artifacts are exempt from the Rule Structure shape. See `design-docs/protocol-decisions.md`.
 - **AGENTS.md banner**: the file opens with a visible protocol banner inside the immutable block; the HTML comment stays first in raw text and keeps the validator anchor.
 - **Release**: v5.3.0 is published at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.3.0>. The README banner and announcement are in the squash commit.
-- **Next actions**: none; the backlog is the issue tracker.
+- **Next actions**: implement the sync-script self-exclusion fix; the plan is approved and the ticket is in progress.
 - **Lint**: clean across the linted set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.

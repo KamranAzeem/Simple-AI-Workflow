@@ -30,6 +30,7 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
 ### 3. Project Configuration
 
 - Copy `AGENTS.md` from the global Simple-AI-Workflow repository to your example project directory. `AGENTS.md` itself stays unchanged.
+- For later updates, use `support-files/sync-agents-md.sh` or `sync-agents-md.ps1`. The script updates existing `AGENTS.md` files and checks or creates `ai-customization.md`; a manual copy updates only `AGENTS.md`.
 - Copy `docs/ai-customization.md` from the clone to `ai-customization.md` at your example project root.
 - Open `ai-customization.md` and set **Global AI Workflow Directory** to the absolute path of your clone (**"full/absolute path"**):
   - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`

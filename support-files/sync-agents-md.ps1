@@ -7,7 +7,9 @@
 .DESCRIPTION
   Recursively finds files named AGENTS.md under a root path and replaces them
   while updating the target's ai-customization.md with the correct workflow
-  directory path derived from the source location.
+  directory path. The workflow directory is derived from the script location,
+  not from the source path. The workflow clone itself is excluded, identical
+  files are skipped, and a failed target does not stop the remaining targets.
 
 USAGE
   ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
@@ -40,23 +42,47 @@ try {
   exit 2
 }
 
-$workflowDir = Split-Path -Parent $srcPath
+$scriptDir = $PSScriptRoot
+$workflowDir = Split-Path -Parent $scriptDir
+$sepChars = [char[]]@([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
+$workflowDirFull = (Get-Item -LiteralPath $workflowDir -Force).FullName.TrimEnd($sepChars)
+
+if (-not $srcPath.StartsWith($workflowDirFull + [System.IO.Path]::DirectorySeparatorChar, [System.StringComparison]::OrdinalIgnoreCase)) {
+  Write-Warning "Source $srcPath is outside the workflow clone $workflowDirFull; the clone root still drives the config and exclusion."
+}
 
 Write-Host "Source: $srcPath"
-Write-Host "Workflow directory: $workflowDir"
+Write-Host "Workflow directory: $workflowDirFull"
 Write-Host "Searching under: $targetAbs"
 
-$foundFiles = Get-ChildItem -Path $targetAbs -Recurse -Filter AGENTS.md -File -ErrorAction SilentlyContinue |
-  Where-Object { $_.FullName -ne $srcPath -and $_.FullName.StartsWith($targetAbs, [System.StringComparison]::OrdinalIgnoreCase) }
+$discoveryErrors = @()
+$foundFiles = @(
+  Get-ChildItem -Path $targetAbs -Recurse -Filter AGENTS.md -File -ErrorAction SilentlyContinue -ErrorVariable +discoveryErrors |
+    Where-Object {
+      $full = $_.FullName
+      -not $full.Equals($srcPath, [System.StringComparison]::OrdinalIgnoreCase) -and
+      -not $full.StartsWith(
+        $workflowDirFull + [System.IO.Path]::DirectorySeparatorChar,
+        [System.StringComparison]::OrdinalIgnoreCase
+      )
+    }
+)
 
-$matchCount = ($foundFiles | Measure-Object).Count
-if ($matchCount -eq 0) {
+if ($discoveryErrors.Count -gt 0) {
+  Write-Warning "Some directories under $targetAbs could not be read; processing the matches that were found."
+  $discoveryErrors | ForEach-Object { Write-Warning $_.Exception.Message }
+}
+
+if ($foundFiles.Count -eq 0 -and $discoveryErrors.Count -eq 0) {
   Write-Host "No AGENTS.md files found under $targetAbs"
   exit 0
 }
+if ($foundFiles.Count -eq 0 -and $discoveryErrors.Count -gt 0) {
+  exit 2
+}
 
 Write-Host ""
-Write-Host "Found $matchCount AGENTS.md file(s)"
+Write-Host "Found $($foundFiles.Count) AGENTS.md file(s)"
 Write-Host "------------------------------------------------------------"
 
 function Get-ConfigSection {
@@ -119,14 +145,14 @@ function Ensure-CustomizationFile {
       Write-Host "  WARNING: both $oldFile and $customizationFile exist."
       Write-Host "  Renaming $oldFile to ai-customization.md.bak"
       if (-not $WhatIf) {
-        Move-Item -Path $oldFile -Destination $bakFile -Force
+        Move-Item -Path $oldFile -Destination $bakFile -Force -ErrorAction Stop
       }
       return
     } else {
       Write-Host "  Moving $oldFile to $customizationFile and adding config section"
       if (-not $WhatIf) {
-        Move-Item -Path $oldFile -Destination $customizationFile -Force
-        $content = Get-Content -Raw -Path $customizationFile
+        Move-Item -Path $oldFile -Destination $customizationFile -Force -ErrorAction Stop
+        $content = Get-Content -Raw -Path $customizationFile -ErrorAction Stop
         $configSection = Get-ConfigSection -WorkflowDir $WorkflowDir
         # Insert config section after the first line (# AI Customization)
         $lines = $content -split "`n"
@@ -141,7 +167,7 @@ function Ensure-CustomizationFile {
 
   # CASE C: root customization file exists
   if (Test-Path -Path $customizationFile -PathType Leaf) {
-    $content = Get-Content -Raw -Path $customizationFile
+    $content = Get-Content -Raw -Path $customizationFile -ErrorAction Stop
     if ($content -match $configHeader) {
       # Check if the path is correct
       $expectedLine = "**Global AI Workflow Directory**: $WorkflowDir"
@@ -152,6 +178,9 @@ function Ensure-CustomizationFile {
         if (-not $WhatIf) {
           $newContent = $content -replace "$configLinePattern .*", "**Global AI Workflow Directory**: $WorkflowDir"
           [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
+          if (-not $newContent.Contains($expectedLine)) {
+            throw "Failed to update the workflow directory path in $customizationFile"
+          }
         }
       }
     } else {
@@ -185,16 +214,16 @@ function Ensure-StateFilesMigration {
 
   if (Test-Path -Path $aiDir -PathType Container) {
     if (-not $WhatIf) {
-      New-Item -ItemType Directory -Force -Path $stateDir | Out-Null
+      New-Item -ItemType Directory -Force -Path $stateDir -ErrorAction Stop | Out-Null
     }
     foreach ($fname in $oldFiles) {
       $oldPath = Join-Path -Path $aiDir -ChildPath $fname
       $newPath = Join-Path -Path $stateDir -ChildPath $fname
       if ((Test-Path -Path $oldPath -PathType Leaf) -and -not (Test-Path -Path $newPath -PathType Leaf)) {
         if (-not $WhatIf) {
-          Move-Item -Path $oldPath -Destination $newPath -Force
-          Add-Content -Path $newPath -Value ""
-          Add-Content -Path $newPath -Value "[MIGRATION-$(Get-Date -Format 'yyyy-MM-dd')] State files relocated from ai/ to ai/state/ per AGENTS.md TIER CONFIGURATION (resolve **Project AI State Files** to ai/state/)"
+          Move-Item -Path $oldPath -Destination $newPath -Force -ErrorAction Stop
+          Add-Content -Path $newPath -Value "" -ErrorAction Stop
+          Add-Content -Path $newPath -Value "[MIGRATION-$(Get-Date -Format 'yyyy-MM-dd')] State files relocated from ai/ to ai/state/ per AGENTS.md TIER CONFIGURATION (resolve **Project AI State Files** to ai/state/)" -ErrorAction Stop
         }
         Write-Host "  Migrated $fname to ai/state/"
       } elseif ((Test-Path -Path $oldPath -PathType Leaf) -and (Test-Path -Path $newPath -PathType Leaf)) {
@@ -206,29 +235,65 @@ function Ensure-StateFilesMigration {
 
 # Read source once; written BOM-less to each target (PS 5.1 Set-Content would add a BOM).
 $srcContent = [System.IO.File]::ReadAllText($srcPath)
+$srcBytes = [System.Text.UTF8Encoding]::new($false).GetBytes($srcContent)
+$sha = [System.Security.Cryptography.SHA256]::Create()
+$srcHash = [Convert]::ToBase64String($sha.ComputeHash($srcBytes))
+
+$failedTargets = @()
 
 foreach ($m in $foundFiles) {
   $target = $m.FullName
   $targetRoot = Split-Path -Parent $target
   Write-Host "Target: $target"
 
-  # Step 1: Copy source AGENTS.md to target (no path manipulation needed)
-  if ($WhatIf) {
-    Write-Host "  DRY-RUN: would update $target from source"
-    Write-Host "  (AGENTS.md sync)"
-  } else {
-    [System.IO.File]::WriteAllText($target, $srcContent, [System.Text.UTF8Encoding]::new($false))
-    Write-Host "  AGENTS.md synced"
+  try {
+    $ErrorActionPreference = 'Stop'
+    if ($WhatIf) {
+      $targetBytes = [System.IO.File]::ReadAllBytes($target)
+      $targetHash = [Convert]::ToBase64String($sha.ComputeHash($targetBytes))
+      if ($srcHash -eq $targetHash) {
+        Write-Host "  AGENTS.md already up to date"
+      } else {
+        Write-Host "  DRY-RUN: would update $target from source"
+        Write-Host "  (AGENTS.md sync)"
+      }
+    } else {
+      $targetBytes = [System.IO.File]::ReadAllBytes($target)
+      $targetHash = [Convert]::ToBase64String($sha.ComputeHash($targetBytes))
+      if ($srcHash -eq $targetHash) {
+        Write-Host "  AGENTS.md already up to date"
+      } else {
+        [System.IO.File]::WriteAllText($target, $srcContent, [System.Text.UTF8Encoding]::new($false))
+        Write-Host "  AGENTS.md synced"
+      }
+    }
+
+    # Step 2: Migrate state files from ai/ to ai/state/ if needed
+    Ensure-StateFilesMigration -ProjectRoot $targetRoot
+
+    # Step 3: Ensure ai-customization.md has correct workflow directory
+    Ensure-CustomizationFile -ProjectRoot $targetRoot -WorkflowDir $workflowDirFull
+  } catch {
+    Write-Host "  ERROR: $($_.Exception.Message)"
+    $failedTargets += $target
   }
-
-  # Step 2: Migrate state files from ai/ to ai/state/ if needed
-  Ensure-StateFilesMigration -ProjectRoot $targetRoot
-
-  # Step 3: Ensure ai-customization.md has correct workflow directory
-  Ensure-CustomizationFile -ProjectRoot $targetRoot -WorkflowDir $workflowDir
 
   Write-Host "------------------------------------------------------------"
 }
 
 Write-Host ""
+Write-Host "Processed $($foundFiles.Count) target(s); $($failedTargets.Count) failed."
+if ($failedTargets.Count -gt 0) {
+  Write-Host "Failed targets:"
+  foreach ($target in $failedTargets) {
+    Write-Host "  $target"
+  }
+}
+if ($discoveryErrors.Count -gt 0) {
+  Write-Host "Discovery failure: some directories could not be read."
+  exit 2
+}
+if ($failedTargets.Count -gt 0) {
+  exit 1
+}
 Write-Host "Done."
