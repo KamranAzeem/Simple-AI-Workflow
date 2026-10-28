@@ -76,11 +76,12 @@
 
 ## Release Checklist
 
-1. Confirm the feature branch is squash-merged to `master` and the validator passes 8/8.
-2. Add the release's `## vX.Y.Z (date)` section to this file with the release highlights, so the release history never falls behind.
-3. Run markdownlint on the linted set (the repository minus the four ignored directories in `.markdownlint-cli2.jsonc`) and confirm 0 issues. Lint every new markdown file, not just the files you edited.
-4. Finish the release-prep docs sweep (slides, workflow guide, README docs list).
-5. Write the friendly announcement at `docs/announcements/vX.Y.Z.md` and point the README banner at it.
-6. Create the annotated tag on `master`: `git tag -a vX.Y.Z -m "summary"`.
-7. Push `master` and the tag: `git push origin master && git push origin vX.Y.Z`.
-8. Write the release notes on GitHub Releases (the authoritative changelog; no version file).
+1. Before the merge, add the release's `## vX.Y.Z (date)` section to this file with the release highlights.
+2. Before the merge, run markdownlint on the linted set and confirm 0 issues. Lint every new markdown file, not just the files you edited.
+3. Before the merge, finish the release-prep docs sweep (slides, workflow guide, README docs list).
+4. Before the merge, write the friendly announcement at `docs/announcements/vX.Y.Z.md` and point the README banner at it.
+5. Include all release documentation in the feature branch.
+6. Squash-merge the branch to `master` and confirm the validator passes 8/8.
+7. Create the annotated tag on `master`: `git tag -a vX.Y.Z -m "summary"`.
+8. Push `master` and the tag: `git push origin master && git push origin vX.Y.Z`.
+9. Write the release notes on GitHub Releases (the authoritative changelog; no version file).

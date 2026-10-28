@@ -49,12 +49,16 @@ Description:
 ## Lifecycle
 
 1. File the ticket in `ai/issues/open/`.
-2. When work starts, move it to `ai/issues/in-progress/`.
-3. When the fix is merged, move it to `ai/issues/closed/`, append a dated update
-   section, and update any related project knowledge.
-4. To reopen, move it back to `ai/issues/open/`.
+2. When work starts, open the feature branch, then move the ticket to `ai/issues/in-progress/`.
+3. For local work, attach the plan and close the ticket on the branch before the squash merge.
+4. For external work, merge the PR/MR first, then attach the plan and close the ticket.
+5. To reopen a local ticket, open a new branch and move it to `ai/issues/open/`.
+6. Reopen an external ticket in its tracker.
 
 Move the file between directories. Never rename it, and never add a status
 prefix or suffix.
 
-The implementation plan is appended to the ticket as a dated comment, not a field.
+The plan file name is appended to the ticket as a dated comment while active. At
+close, append the final plan under `## Implementation Plan` and replace the
+dated plan link with `Plan attached below.`. Delete the plan file from
+`ai/plans/`.

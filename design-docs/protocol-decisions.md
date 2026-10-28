@@ -607,3 +607,19 @@ Wayfinding, the dictionary vocabulary concepts, and Sandcastle are dropped. Wayf
 ## 2026-10-27: AGENTS.md opens with a visible protocol banner
 
 Rendered markdown hides HTML comments, so the existing protocol-file warning in `AGENTS.md` can be missed. The file keeps the immutable read-only comment and gains a visible blockquote banner immediately after it. The banner says the file is a protocol file, not a context storage file, tells AI assistants to follow it as a protocol, and says not to modify it. The comment remains first in raw text and keeps the validator anchor. The banner is the first rendered content, and `# AI Bootstrap Entry Point` remains the only H1. This edit was made under the Protocol Developer Mode exception, after loading the decision store and with human approval before committing.
+
+## 2026-10-28: Local work uses one branch and one squash commit
+
+Treat a local ticket as one unit of work on one feature branch. Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on the branch. Close the ticket on the branch before the squash merge. Do not make post-merge commits for a local work item. For an external PR/MR, merge first, then close the ticket, attach the plan, and delete the plan file. Put release documentation in the branch. Tag the release commit after the merge. This supersedes the 2026-09-17 close-only-when-merged wording for local work.
+
+Context: post-merge maintenance commits and plan-only pushes created noise and inconsistent records.
+
+Consequences: the plan file is transient; the closed ticket carries the plan; the external close, plan appendix, and plan-file deletion are the only post-merge changes.
+
+## 2026-10-28: Plans carry evidence and automatic peer review
+
+Require an `## Evidence` section in every plan. Run independent peer review automatically. Use the severity definitions in `ai-policy-code-review.md`. Fix every Critical finding. Fix every Major finding. Re-review after each fix. Announce the plan ready only after an `APPROVED` verdict. Record each round and verdict in the plan's Peer Review Log.
+
+Context: plans were reviewed only when asked, and evidence was not explicit.
+
+Consequences: plan creation is slower and more reliable; a focused review is enough for an `S` ticket.

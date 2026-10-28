@@ -182,20 +182,107 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ## Issue Management Protocol
 
-Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. The file carries no `Status` field, and no file sits directly under `ai/issues/`.
+### Ticket Storage
 
-- **Naming**: a ticket filename is its slug only, lowercase kebab-case, with no status prefix or suffix. Moving a ticket between states changes its directory, never its filename.
-- **Creation channel**: file a ticket under `ai/issues/open/`, or in the user's external tracker (GitHub, GitLab, Bitbucket, Jira, and similar). The user provides external access. Record an external ticket URL in `URL`.
-- **Fields**: `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Label`, `Description`. `IssueType` is one of `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, `Task`. `Severity` is `P1` to `P4`. `Size` is `S`, `M`, `L`, or `XL`. `Label` is empty, `Insufficient Information`, or `Unworkable`. `URL` stays empty until the ticket is migrated to an external tracker.
-- **Minimum prose**: a ticket is a short, customer-facing status update: decisions, outcomes, and blockers. No long paragraphs and no command transcripts; put runbooks and command detail in project knowledge. A ticket is not a technical diary of commands, errors, and fixes.
-- **AI-initiated creation**: when the AI finds something worth tracking, it files the ticket immediately and never waits on a human. Where the user has not chosen `Severity` or `Size`, set `Human-to-decide (AI estimate: ...)`.
-- **Pre-work analysis**: before any work starts, analyze the ticket for missing information, inconsistencies, and gaps. Fill every gap through brainstorming or grilling with the user, and keep the ticket at minimum prose as gaps are filled. If the ticket is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists. For an external tracker with no label mechanism, analyze the ticket and tell the user whether it is workable.
-- **Plan mandate**: once the ticket is workable, create an implementation plan and append its file name as a dated comment on the ticket. A plan is not a design document; it lives under `ai/plans/`, never in `design-docs/`, and carries its own HLD, LLD (with AC), and ADR content inside the plan file. If the project uses TDD, write the failing test first, then the implementation.
-- **Plan depth**: a small ticket needs context plus acceptance criteria. A medium or larger ticket needs an HLD, an LLD (with AC), and an ADR for each design decision. Keep the plan concise and at minimum prose. Depth follows the Pre-Work Gate.
-- **Plan review**: pass the plan through review rounds. Validate design and architecture decisions with the user during planning, record each as an ADR, and implement only a bullet-proof plan.
-- **Branch and merge**: implement on a feature branch and pass it through peer-review rounds. For local work, close the ticket, squash-merge to trunk, then delete the branch, in that order. For external PR/MR work, merge the PR/MR first, then close the ticket.
-- **Lifecycle**: open, then in-progress, then closed. A ticket reaches `closed/` only when its fix is merged. Reopening moves it back to `open/`.
-- **Template file**: the full ticket template lives at `ai/shared/project-knowledge/issue-template.md`. The `AGENTS.md` bootstrap and load-context procedures create it from the compact field list above when it is missing, and never overwrite it.
+- Store tickets under `ai/issues/` in `open/`, `in-progress/`, or `closed/`.
+- Treat the directory as the ticket status.
+- Keep no file directly under `ai/issues/`.
+- Use a lowercase kebab-case slug only.
+- Do not add a status prefix or suffix.
+- Move the file to change status.
+- Do not rename the ticket when moving it.
+- Do not add a status field.
+
+### Ticket Fields
+
+- Include `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Label`, and `Description`.
+- Set `IssueType` to `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, or `Task`.
+- Set `Severity` to `P1`, `P2`, `P3`, or `P4`.
+- Set `Size` to `S`, `M`, `L`, or `XL`.
+- Set `Label` to empty, `Insufficient Information`, or `Unworkable`.
+- Record the external ticket URL in `URL`.
+- Keep `URL` empty until the ticket moves to an external tracker.
+- Set `Severity` and `Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them.
+
+### Ticket Content
+
+- Keep the active description short: decisions, outcomes, and blockers.
+- Omit long paragraphs and command transcripts.
+- Do not turn the ticket into a technical diary of commands, errors, and fixes.
+- Put runbooks and command detail in Project Knowledge.
+- Allow a long `## Implementation Plan` appendix in a closed ticket.
+- File a ticket under `ai/issues/open/` or in the user's external tracker.
+- Use the external tracker when the user provides access.
+- File a ticket immediately when the AI finds work worth tracking.
+- Analyze the ticket for gaps before starting work.
+- Fill every gap through brainstorming or grilling.
+- Tell the user whether the ticket is workable when an external tracker has no label mechanism.
+- Set `Label: Insufficient Information` or `Label: Unworkable` when the ticket is not workable.
+- Refuse to work an unworkable ticket.
+
+### Plan
+
+- Open the feature branch before creating the plan.
+- Create the plan under `ai/plans/`.
+- Append the plan file name to the ticket as a dated comment.
+- Treat the plan as a working artifact, not a design document.
+- Include an `## Evidence` section in every plan.
+- Record sources, commands, results, confirmed facts, and open questions in the evidence section.
+- Use context plus acceptance criteria for an `S` ticket.
+- Use an HLD and an LLD with acceptance criteria for an `M`, `L`, or `XL` ticket.
+- Keep the HLD, LLD, and ADR content inside the plan file.
+- Record each design decision as an ADR.
+- Keep the plan concise.
+- Set the plan depth by the Pre-Work Gate.
+- Write the failing test first when the project uses TDD.
+- Validate design and architecture decisions with the user during planning.
+- Run independent peer review on every plan automatically.
+- Use the severity definitions in `ai-policy-code-review.md` `## Severity Classifications`.
+- Fix every Critical finding.
+- Fix every Major finding.
+- Re-review after each fix.
+- Announce the plan ready only after an `APPROVED` verdict.
+- Implement only a plan with no Critical or Major finding.
+- Record each review round and verdict in the plan's Peer Review Log.
+
+### Branch and Merge
+
+- Treat a local ticket as one unit of work on one feature branch.
+- Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on that branch.
+- Run the implementation peer review on the branch.
+- Fix every Critical finding.
+- Fix every Major finding.
+- Re-review until no Critical or Major finding remains.
+- Attach the final plan to the ticket under `## Implementation Plan`.
+- Replace the active plan link with `Plan attached below.` at close.
+- Delete the plan file from `ai/plans/` at close.
+- Close a local ticket on the branch before the squash merge.
+- Run the checkpoint that records the completed work on the branch before the merge.
+- Squash merge the branch to trunk.
+- Delete the branch after the merge.
+- Do not commit a plan-only, start-work, or placeholder change to trunk.
+- Do not make post-merge commits for a local work item.
+- Open a new branch when local work is missing after the merge.
+- Reopen the ticket on the new branch.
+- Merge an external PR/MR first.
+- Close the external ticket after the merge.
+- Attach the plan as part of the external close.
+- Delete the plan file as part of the external close.
+- Treat the external close, plan appendix, and plan-file deletion as the only post-merge changes for that work item.
+- Put local release documentation in the branch.
+- Tag the release commit after the merge.
+- Publish the GitHub Release after the tag.
+
+### Lifecycle
+
+- Move a ticket from `open/` to `in-progress/` when work starts.
+- Close a local ticket on the branch before the squash merge.
+- Close an external ticket after the PR/MR merges.
+- Reopen a local ticket by moving it to `open/`.
+- Reopen an external ticket in its tracker.
+- Use the template at `ai/shared/project-knowledge/issue-template.md`.
+- Create the template during bootstrap or load context when it is missing.
+- Do not overwrite the template.
 
 ## State File Ownership Protocol
 

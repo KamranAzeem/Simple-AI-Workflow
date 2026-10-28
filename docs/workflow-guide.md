@@ -360,12 +360,13 @@ At the start of each session, the AI checks for these documents and prompts you 
 
 Tickets live under three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status, and no file sits directly under `ai/issues/`.
 
-- Create a ticket with `"file an issue"` or `"new issue"`, using the template at `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
+- Create a ticket with `"file an issue"`, using the template at `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
 - Before work, the AI analyzes the ticket for gaps and fills them with you through brainstorming or grilling. If it is not workable, it gets `Label: Insufficient Information` or `Label: Unworkable`, and the AI refuses to work it, even if you insist.
-- Once workable, the AI creates a plan, appends its file name as a dated comment, and passes it through review rounds. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. If the project uses TDD, tests come first.
-- Start work with `"manage issues"`, which moves the ticket to `in-progress/`.
-- Local merge: close the ticket as the final change on the branch, squash-merge, then delete the branch. A ticket reaches `closed/` only as part of the branch that contains its fix. For an external PR/MR, merge first, then close the ticket.
-- Reopen by moving it back to `open/`, and list open and in-progress tickets with `"list issues"`.
+- Start work with `"manage issues"`, which opens the feature branch and moves the ticket to `in-progress/`.
+- Once workable, the AI creates a plan with an `## Evidence` section, appends its file name as a dated comment, and runs automatic review rounds. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. If the project uses TDD, tests come first. A plan is ready only after an `APPROVED` verdict.
+- For local work, the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint stay on one branch.
+- Local merge: attach the plan, replace its link with `Plan attached below.`, delete the plan file, close the ticket, run the checkpoint, squash-merge, delete the branch, and push. Do not make post-merge commits for the work item. For an external PR/MR, merge first, then attach the plan, delete the plan file, and close the ticket. Release documentation stays in the branch; the tag follows the merge.
+- Reopen a local ticket on a new branch and move it to `open/`. Reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
 
 ## 17. State-File Health and Repair
 

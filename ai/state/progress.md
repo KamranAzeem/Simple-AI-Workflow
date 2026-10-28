@@ -10,9 +10,6 @@
 
 <!-- STATE-FILE-HEADER: progress.md END -->
 
-[2026-10-21] Created the coding base policy `ai-policy-coding-base.md` (token `coding-base`): opt-in, language-neutral code-construction rules, an opt-in telemetry gate, and domain dispatch. Iterated from mandatory telemetry to an opt-in gate, then a thin core with pointers. Moved the ticket to in-progress; the plugin v0 stays deferred.
-[2026-10-21] Renamed the policy (code-authoring -> coding -> coding-base), added the domain-dispatch read instructions, and registered `coding-base` in the validator baseline (18 policies). Updated docs, plan, ADR entries, and the coverage reconciliation note. Peer reviews review-01 through review-10 APPROVED; authoring validator PASSED, main 8/8, reference test PASS, markdownlint 0.
-[2026-10-21] Filed eight migration tickets for the legacy domain policies (web-frontend, api-backend, mobile-apps, cloud, dba, data, observability) and the common-policy ownership boundary, each carrying the authoring-standard gaps and the coding overlap.
 [2026-10-21] Released v5.2.0: renamed the policy to `coding-baseline`, defaulted telemetry on for production code, updated the README banner and section, slides, guide, announcement, and release practices, tagged and published the GitHub Release. Closed the coding ticket and split the plugin v0 into `policy-plugin-v0-trigger-dispatch.md`.
 [2026-10-21] Added the workflow history and the Muddassar Muneer acknowledgement to the README "Why I built it" section; marked the notes item Processed. Merged the docs branch.
 [2026-10-21] Migrated `ai-policy-observability.md` to the authoring standard: new title, purpose, scope, references, definitive rules, defined terms, and the emission rules absorbed from `coding-baseline` (structured logs, trace context, bounded labels, log levels, health and readiness, startup record, missing-signal defect). Ticket closed and merged; reviews review-12 and review-13 APPROVED.
@@ -30,3 +27,4 @@
 [2026-10-27] Dropped the remaining Matt Pocock backlog items: wayfinding, dictionary vocabulary, and Sandcastle. Closed the wayfinding and dictionary evaluation tickets; Sandcastle had no ticket. Decision recorded in the ADR store; do not re-raise.
 [2026-10-27] Implemented the visible protocol-file banner in AGENTS.md: a blockquote after the immutable warning comment and before the H1. The HTML comment and validator anchor stay. ADR recorded, ticket closed, no release. Validator 8/8, authoring PASSED, reference PASS, markdownlint 0.
 [2026-10-27] Checkpoint after the visible protocol-file banner merge; state-file health verified, headers canonical, sizes within soft targets; no open work.
+[2026-10-28] Implemented the work-item branch and plan lifecycle policy: local one-branch and one-squash rule, evidence and automatic plan review, plan appendix at close, plan deletion, checkpoint on branch, external PR/MR exception, release docs before merge. Validators pass; ticket closed; no release.

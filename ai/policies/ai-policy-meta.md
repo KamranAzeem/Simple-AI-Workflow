@@ -141,6 +141,7 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 - Pass a changed policy file through peer review.
 - Apply the peer review's Agent-facing documentation dimension.
 - Migrate a non-compliant policy only when the policy is touched.
+- Rewrite every touched policy section to this standard.
 - Do not rewrite the whole policy corpus in one pass.
 
 ### Standard References
