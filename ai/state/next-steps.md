@@ -13,7 +13,7 @@
 
 ## Pending
 
-Nothing pending.
+- [ ] Get approval to commit, squash merge, push, tag v5.4.0, and publish the release.
 
 ## Deferred
 

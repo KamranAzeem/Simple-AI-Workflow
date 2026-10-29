@@ -28,4 +28,4 @@ Acceptance criteria:
 - `AGENTS.md` and the common policy both stay lean.
 - Validator anchors updated as needed and green.
 
-Background: `ai/shared/project-knowledge/protocol-routing-principle-and-consolidation-follow-up.md`.
+Background: `ai/shared/project-knowledge/protocol-routing-principle.md`.

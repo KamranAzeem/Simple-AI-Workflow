@@ -18,4 +18,13 @@ Questions to answer across tools (VS Code/Copilot, Claude Code, Kilo Code, Curso
 
 Deliverable: a comparison in the setup guide or a knowledge file, with a recommended per-tool configuration.
 
+## Detailed research questions
+
+- Which hook fires before compaction or summarization, what is it called, and where is it configured?
+- Which hook fires after compaction and injects instructions or additional context into the next response, rather than only showing a chat message?
+- Which SessionStart event distinguishes a fresh session from a compaction resume, and can it inject context?
+- If such hooks exist, what is the mechanism name, how is it configured, and does it support injecting into the model context?
+- Does the tooling expose a post-compaction event that can add `additionalContext` or a `systemMessage` directly?
+- Does the tooling expose a SessionResume event?
+
 Background: `ai/shared/project-knowledge/compaction-trigger-problem.md`.

@@ -19,7 +19,7 @@ The meta policy name does not say what it governs. The name `meta` is also the A
 - Change `## Active Expertise` in `ai-customization.md` from `meta` to `protocol-developer`.
 - Update the policy baseline and error messages in `support-files/validate-protocol.sh`.
 - Update live references in `docs/example-learning-session-runbook.md` and `docs/ai-customization-guide.md`.
-- Update the living design reference in `ai/shared/project-knowledge/multi-assistant-workflow-design.md`.
+- Update the open multi-assistant issue in `ai/issues/open/multi-assistant-workflow-and-ai-team.md`; the old design draft is in the local repair artifact.
 - Leave historical ADR entries unchanged. Add one short ADR entry for the rename.
 - Check the dependency on `policies-to-skills-rename.md`, which would drop the `ai-policy-` prefix entirely.
 

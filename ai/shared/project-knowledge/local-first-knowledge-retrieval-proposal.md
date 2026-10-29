@@ -1,24 +1,34 @@
-# Local-First Knowledge Retrieval: proposal (discussion)
+> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
 
-Discussed 2026-09-07. Status: the source-precedence part shipped on 2026-09-19 (Investigation Contract, `ai/policies/ai-policy-common.md`); the bounded staleness heuristic remains open, tracked by `ai/issues/open/bounded-boot-time-staleness-heuristic.md`. Captured here so the open part isn't lost.
+# Local-First Knowledge Retrieval
 
-## Idea
+## Context
 
-Have the AI always search the local knowledge base (Project Knowledge + Global Knowledge) and other local sources of truth first (project files, live environment, cloned repos), and only go out to the model's own knowledge / web / official docs **after** local sources are exhausted.
+The workflow prefers local sources before the model's own recall, the web, or official docs. Project Knowledge is indexed by filename at boot and loaded on demand. Global Knowledge follows the same model. The source-precedence rule shipped in the Investigation Contract.
 
-## Where the protocol already does this
+## Rule or Fix
 
-- Project Knowledge is already a retrievable corpus: indexed (filename-only) at boot, loaded on demand; verbose filenames are the JIT lookup key.
-- Global Knowledge is indexed (filename-only) at boot, like Project Knowledge, and read on demand. Changed 2026-10-06 from full-load; see `protocol-decisions.md`.
-- The Investigation Contract used to list allowed sources without ordering them. That gap is now closed by the local-first source-precedence paragraph added on 2026-09-19.
+- Search the project files, Project Knowledge, Global Knowledge, the live environment, and cloned repositories first.
+- Use a bounded probe: read the index, open the likely candidates, then escalate.
+- Use filename and domain matching, not embeddings, vector stores, or chunking.
+- Load a knowledge file in full only when a task needs it.
+- Keep each knowledge file to one domain with a descriptive name.
 
-## Decisions
+## Why
 
-- **Terminology**: not "RAG." No embedding store / vector DB / chunking is intended. Prefer "local-first knowledge retrieval" or "JIT knowledge index."
-- **Source precedence**: shipped 2026-09-19 as a short paragraph in the Investigation Contract, with a bounded probe (index, then open likely candidates, then escalate).
-- **Staleness at boot vs JIT**: open. A real staleness check that reads files at boot defeats the JIT/token-saving goal. Prefer heuristic staleness at boot (filename/domain match plus the existing bloat/order check), and confirm deep staleness only when a file is loaded for a task.
-- **Bound the local probe**: closed by the shipped wording.
+- Local sources reflect the project and the live environment.
+- A bounded probe avoids a token sink.
+- Filename indexing keeps boot context small.
+- Project Knowledge takes precedence over Global Knowledge.
 
-## Remaining open item
+## Verify
 
-- The bounded boot-time staleness heuristic. Tracked as deferred in `ai/state/next-steps.md`.
+- Confirm the AI reads the local index before searching the web.
+- Confirm the AI opens the likely local files before escalating.
+- Confirm no vector database or embedding index is in use.
+- Confirm a task loads only the knowledge files it needs.
+
+## Caveats
+
+- The boot-time flag is metadata-only; verify a candidate against current state when a task loads it.
+- A vague filename is invisible to the index.

@@ -14,4 +14,4 @@ The candidate design: one status file per agent or task under `ai/shared/coordin
 
 Adopt only when real parallelism is introduced.
 
-Background: `ai/shared/project-knowledge/multi-agent-state-ownership-and-checkpoint-model.md`.
+Background: `ai/policies/ai-policy-common.md` (`## State File Ownership Protocol`); the full design note is in the local repair artifact.

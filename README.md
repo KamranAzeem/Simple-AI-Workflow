@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.3.0 (2026-10-27).** Canonical state-file headers. Each state file and new daily checkpoint starts with a visible rules block; load context compares it exactly and repair restores it. The 8/7/5 KB figures are soft targets. Nothing breaks; run `"repair state files"` once if load context reports a header mismatch. Read the announcement: [docs/announcements/v5.3.0.md](docs/announcements/v5.3.0.md). |
+| **v5.4.0 (2026-10-29).** Knowledge files now follow one standard and start with a visible header. The checkpoint flags a missing header, a table, or a file that has grown too long. Say `"repair knowledge files"` once to clean up your project store; add `global` for global knowledge. Heads up: it takes a while on a real knowledge base. Let it finish. It's important; it's how your files get fixed. This release also has the visible protocol banner, the sync fix, and the one-branch work-item lifecycle. Read the announcement: [docs/announcements/v5.4.0.md](docs/announcements/v5.4.0.md). |
 
 # Simple AI Workflow
 
@@ -103,6 +103,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
+| Clean up knowledge files | `"repair knowledge files"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
 | Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
 | Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
@@ -166,6 +167,7 @@ The workflow pushes back with a few built-in defences:
 | Rules lost after auto-summary | Post-Compaction Recovery reloads rules from disk; you can also trigger it manually |
 | AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
+| Knowledge files drifting from the standard | The checkpoint flags a missing header, a table, or a file that has grown too long; `"repair knowledge files"` fixes them. It takes a while on a real knowledge base, so let it finish. |
 
 A few habits help a lot:
 
@@ -294,6 +296,8 @@ So, the process is as follows:
 
 1. Go to the project directory you started from, start the IDEA again (e.g. VsCode), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
 
+2. Run `"repair knowledge files"` once in each project. It takes a while on a real knowledge base, so let it finish. It adds the header, removes tables, and splits files that got too long; it shows you the plan and asks before it changes anything. If you keep global knowledge, run `"repair knowledge files global"` too. The checkpoint only flags problems; it never edits your knowledge files.
+
 ## Examples
 
 Working examples you can copy:
@@ -326,6 +330,16 @@ If one of your global knowledge files has grown into a mix of topics, ask the AI
 Look at my global knowledge directory (~/.ai/global-knowledge/). Propose a split of any file that covers more than one topic into separate, descriptively named files. Show me the plan and the proposed new names before you create anything. After I approve, create the files with the content preserved and remove the old file.
 ```
 
+### Knowledge file standards
+
+Every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` starts with a header that points at the rules. It's the first thing in the file. Then the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there's a catch.
+
+Keep it to one lesson per file and about 100 lines. Use flat bullets, not tables. Don't put commit hashes, branch names, checkpoint or diary references, or state-file paths in a knowledge file. That's bookkeeping, not knowledge.
+
+The checkpoint checks the header before it writes. It also flags a missing header, a table, or a file over 100 lines, but it never edits anything. Say `"repair knowledge files"` when you want the AI to audit and fix the project store. Add `global` for the global store. The repair shows you what it plans to do, backs up the old files, and asks before it changes or deletes anything.
+
+Heads up: the repair takes a while on a real knowledge base. Let it finish. It's how your files get fixed. `issue-template.md` and design docs in the old fallback location are exempt.
+
 ## How does this compare to Copilot, Claude, or ChatGPT?
 
 Each AI assistant stores context its own way, in its own hidden directories, its own memory format, its own rules. They are all black boxes of different shades. Switch from one to another and you start from scratch, because the new assistant has no idea what the old one knew.
@@ -354,6 +368,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.
+- **Knowledge file standards and repair**: every knowledge file follows one shape and starts with a visible header. The checkpoint flags a missing header, a table, or a file that has grown too long. Say `"repair knowledge files"` to clean up the project store; add `global` for the global store. It takes a while, but it's worth running once.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
 - **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.

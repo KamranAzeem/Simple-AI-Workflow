@@ -8,7 +8,7 @@ Summary: Add a refactoring and codebase-upgrade policy
 
 Description:
 
-Add an on-demand policy for refactor or upgrade requests. Research completed 2026-08-25 and stored in `ai/shared/project-knowledge/refactoring-and-upgrading-best-practices-2026-08-25.md`.
+Add an on-demand policy for refactor or upgrade requests. The distilled lesson is `ai/shared/project-knowledge/upgrade-before-refactor.md`; the full research is in the local repair artifact.
 
 Candidate principles the research supports:
 

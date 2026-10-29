@@ -54,6 +54,14 @@ if ! grep -q '### PROCEDURE REPAIR-STATE-FILES:' AGENTS.md; then
     echo "Error: PROCEDURE REPAIR-STATE-FILES anchor missing in AGENTS.md."
     exit 1
 fi
+if ! grep -q '### PROCEDURE REPAIR-KNOWLEDGE-FILES:' AGENTS.md; then
+    echo "Error: PROCEDURE REPAIR-KNOWLEDGE-FILES anchor missing in AGENTS.md."
+    exit 1
+fi
+if ! grep -q 'STEP-KNOWLEDGE-HEADER-PRE-WRITE' AGENTS.md; then
+    echo "Error: STEP-KNOWLEDGE-HEADER-PRE-WRITE anchor missing in AGENTS.md."
+    exit 1
+fi
 if ! grep -q '### PROCEDURE UPDATE-DESIGN-DOCS:' AGENTS.md; then
     echo "Error: PROCEDURE UPDATE-DESIGN-DOCS anchor missing in AGENTS.md."
     exit 1

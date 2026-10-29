@@ -1,87 +1,61 @@
+> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+
 # Release Practices
 
-## Versioning
+## Context
 
-- Use [Semantic Versioning](https://semver.org/): `v1.0.0`, `v1.1.0`, `v2.0.0`, etc.
-- Tags are created locally: `git tag -a v1.0.0 -m "summary"` then pushed: `git push origin v1.0.0`
-- Release notes are written directly on GitHub Releases, which is the authoritative changelog. No `RELEASE_NOTES.md` file is maintained.
-- No version history section in README.md or any other file. Git tags plus the GitHub Release are the authoritative changelog; `docs/announcements/` holds a short friendly note per release (see Announcements below).
+The workflow uses semantic versioning. GitHub Releases is the authoritative changelog. Each release also gets a short friendly announcement under `docs/announcements/`, and the README banner links to it.
 
-## First Release
+## Rule or Fix
 
-- v1.0.0: Initial release. Created 2026-05-30.
-- Release notes covered: features, changes in this release (metadata header removal, Project Knowledge Protocol, Universal Engineering Standards, curated traits catalog, sync script fixes, Markdown Styling Guide, state file consistency).
+### Versioning and announcement
 
-## v3.0.0 (2026-09-22)
+- Use `MAJOR.MINOR.PATCH`.
+- Create an annotated tag after the merge: `git tag -a vX.Y.Z -m "summary"`.
+- Push the branch and the tag: `git push origin master && git push origin vX.Y.Z`.
+- Write the release notes on GitHub Releases.
+- Write a short announcement at `docs/announcements/vX.Y.Z.md`.
+- Point the README banner at the announcement.
+- Do not keep a version history in the README or a `RELEASE_NOTES.md` file.
 
-- **MAJOR**: the full history was rewritten to purge sensitive identifiers, so existing clones must run `git fetch origin && git reset --hard origin/master`. All tags were recreated.
-- **Features**: issue management (`ai/issues/` with `open/`, `in-progress/`, `closed/`), State-File Model v2 with `"repair state files"`, the bounded boot-time staleness heuristic, the self-consistency check, `"Untried is not impossible"`, and the agent-facing documentation dimension in peer review.
-- **Privacy**: a sensitive-name guardrail in the global settings, and a full history purge with no credentials found.
-- **Docs**: README overhaul, global user settings template (Git configuration guide, CLI tools by role), slides and workflow guide synced, documentation cleanup, markdownlint clean.
+### Release checklist
 
-## v4.0.0 (2026-10-06)
+1. Add a `### vX.Y.Z (date)` section under `## Rule or Fix` with the release highlights.
+2. Run markdownlint on the linted set and confirm 0 issues; lint every new markdown file.
+3. Finish the docs sweep: slides, workflow guide, README docs list.
+4. Write the announcement and point the README banner at it.
+5. Keep all release documentation on the feature branch.
+6. Squash merge the branch and confirm the validator passes 8/8.
+7. Create the annotated tag on `master`.
+8. Push `master` and the tag.
+9. Publish the GitHub Release.
 
-- **MAJOR**: procedures, steps, and tiers were renamed from letters and numbers to stable ALL-CAPS kebab names, so old references like "Procedure A" no longer match live files. Migration map: `protocol-name-migration-map-2026-10-06.md`.
-- **Behavior**: Global Knowledge is now JIT-indexed at boot, on reload, and on Post-Compaction Recovery instead of fully loaded; the 90-day staleness flag covers both knowledge sets; each procedure gained an Aliases line of user phrases.
-- **Policy**: pre-work commits on `master` are banned, and every protocol or policy change requires an ADR entry; a canonical-reference-names rule forbids letter and number references.
-- **Tooling**: validator v6.0 with updated anchors and a no-letter/no-number guard; new `support-files/test-protocol-references.sh`; sync scripts updated.
-- **Docs**: migration map and README banner; workflow guide, slides, agent-collaboration, codebase-examination guide, and examples updated.
+### v5.4.0 (2026-10-29)
 
-## v5.0.0 (2026-10-12)
+- Add one shared knowledge capture pass, one knowledge file standard, and the canonical knowledge header.
+- Add the conservation-gated `repair knowledge files` procedure and the report-only checkpoint hygiene flag.
+- Repair the project and global knowledge corpora.
+- Include the visible protocol-file banner, the Matt Pocock backlog cleanup, and the sync-script self-exclusion fix.
+- Include the work-item branch and plan lifecycle.
+- Upgrade action: run `repair knowledge files` once; run `repair knowledge files global` when you keep global knowledge.
 
-- **MAJOR**: design documents moved beside the code into `design-docs/`, never under `ai/`. Existing documents under `ai/shared/project-knowledge/` are grandfathered and migration is optional: say `"migrate design docs"`.
-- **Standards**: the design-documentation standards were rewritten. The chain is `Notes -> Vision -> PRD -> HLD -> LLD (with AC) -> Risk and Gap Analysis -> ADRs -> Delivery Ledger`, with `RSK-NNN` risks, decision-only ADRs, MVP-first requirements, proportional and role-aware depth, and layering.
-- **Features**: the issue-management workflow, the consolidated `Markdown Output` policy with a stricter `.markdownlint-cli2.jsonc`, author-identity and identifying-names rules, and the Grilling and Brainstorming modes.
-- **Store**: the protocol ADR store is now `design-docs/protocol-decisions.md` and holds design decisions only.
-- **Docs**: README banner, `docs/announcements/v5.0.0.md`, workflow-guide section 22, and a slides bullet.
+## Why
 
-## v5.1.0 (2026-10-16)
+- GitHub Releases gives one authoritative changelog.
+- A short announcement answers what changed and what to do.
+- A checklist keeps the docs, tag, and release in sync.
+- The branch carries the release documentation before the merge.
 
-- **Feature**: a new `"update design documents"` trigger, run by PROCEDURE UPDATE-DESIGN-DOCS, writes and updates design documents wherever they live. It proposes each change, challenges the design decisions, and shows a diff before writing. The detail lives in the new `ai-policies/ai-policy-design-docs.md`.
-- **Feature**: a separate `"migrate design docs"` trigger, run by PROCEDURE MIGRATE-DESIGN-DOCS, is the only cross-location mover, moving documents from `ai/shared/project-knowledge/` into `design-docs/`.
-- **Location preference**: an optional `## Design Docs` section with `**Location**:` records a firm decision in `ai-customization.md`.
-- **Fix**: the Delivery Ledger updates when a design document changes, not at a checkpoint, and the checkpoint never touches design documents.
-- **Fix**: post-compaction recovery and the checkpoint re-affirmation now index design docs, along with global and project knowledge.
-- **Tooling**: validator v6.1 with a 17-policy baseline and two new procedure anchors.
-- **Docs**: README common instructions and a "Design documents" section, two slides, workflow-guide sections 15 and 22, the customization guide and template, and `docs/announcements/v5.1.0.md`.
+## Verify
 
-## v5.2.0 (2026-10-21)
+- Confirm the release section is in this file before the merge.
+- Confirm markdownlint reports 0 issues.
+- Confirm the README banner links to the announcement.
+- Confirm the validator passes 8/8.
+- Confirm the tag and GitHub Release exist after the merge.
 
-- **Feature**: new `coding-baseline` policy (token `coding-baseline`): one language-neutral coding standard for most code work, applying Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, OWASP secure coding, resilience patterns, and telemetry.
-- **Behavior**: opt-in and additive. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out; tests, examples, exercises, and one-off scripts stay telemetry-free by default. Existing code changes only inside the requested scope.
-- **Tooling**: validator baseline 18 policies.
-- **Docs**: README banner and a "Coding baseline policy" section, slides, customization guide, and `docs/announcements/v5.2.0.md`.
+## Caveats
 
-## v5.2.1 (2026-10-21)
-
-- **Patch**: policy authoring-standard migration. The web-frontend, API backend, mobile-apps, cloud, DBA, data, and observability policies now follow the authoring standard; the deprecated modals and bare coverage targets are gone; the observability policy owns the emission rules; the common and coding-baseline policies state their ownership boundary; and the coding-baseline references point at the migrated sections.
-- **No behavior change**: the rules are reworded and reorganized, not removed. The v5.2.0 coding-baseline banner stays.
-- **Tooling**: authoring validator PASSED on all nine policies, main validator 8/8, reference test PASS, markdownlint 0.
-- **Docs**: `docs/announcements/v5.2.1.md`.
-
-## v5.3.0 (2026-10-27)
-
-- **Feature**: canonical state-file headers. Each state file and new daily checkpoint starts with a visible rules block; load context compares it exactly; repair restores it with a full-file backup and a body checksum; historical checkpoints are not backfilled.
-- **Behavior**: the 8/7/5 KB and 20 KB figures are soft targets; completed entries move to the diary first, and live work may exceed the target.
-- **Tooling**: the existing validator gained the header check and two policy anchors; no new script.
-- **Docs**: README banner, `docs/announcements/v5.3.0.md`, workflow guide, slides.
-
-## Announcements
-
-- Each release gets a short, friendly note at `docs/announcements/vX.Y.Z.md`. It answers "what changed for me, and what should I do", in plain language.
-- Role split: the GitHub Release is the exhaustive, authoritative changelog; the announcement is a friendly summary that links to the release. Do not duplicate the full changelog in the announcement.
-- The README banner links to the latest announcement.
-- The announcement doubles as the source for the release email.
-- Release email sent: the v5.0.0 announcement was emailed to the primary users on 2026-10-12.
-
-## Release Checklist
-
-1. Before the merge, add the release's `## vX.Y.Z (date)` section to this file with the release highlights.
-2. Before the merge, run markdownlint on the linted set and confirm 0 issues. Lint every new markdown file, not just the files you edited.
-3. Before the merge, finish the release-prep docs sweep (slides, workflow guide, README docs list).
-4. Before the merge, write the friendly announcement at `docs/announcements/vX.Y.Z.md` and point the README banner at it.
-5. Include all release documentation in the feature branch.
-6. Squash-merge the branch to `master` and confirm the validator passes 8/8.
-7. Create the annotated tag on `master`: `git tag -a vX.Y.Z -m "summary"`.
-8. Push `master` and the tag: `git push origin master && git push origin vX.Y.Z`.
-9. Write the release notes on GitHub Releases (the authoritative changelog; no version file).
+- The announcement is a summary, not a second changelog.
+- The release email is optional and uses the announcement as its source.
+- The historical release records are not part of the shipped corpus; Git tags and GitHub Releases are the authoritative history.

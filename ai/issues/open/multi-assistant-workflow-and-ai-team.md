@@ -21,7 +21,7 @@ Scope:
 - Runtime execution models: always-on persistent processes, or watch-spawned (preferred) where a watcher sees a new handoff, spawns the role, the role completes and reports, then sleeps. Identity is persistent, execution is ephemeral.
 - True parallelism (Scenario B): the board is read-before-write, not a lock, so concurrent writers to the same state files can lose updates. The safe path is one status file per agent or task under ai/shared/coordination/, with the orchestrator reconciling.
 
-Important: the draft predates the current state model (ai/state/, single-writer ownership, ai/shared/coordination.md). Reconcile it with the current model before resuming, to avoid two competing designs. Full design moved to `ai/shared/project-knowledge/multi-assistant-workflow-design.md`.
+Important: the draft predates the current state model (ai/state/, single-writer ownership, ai/shared/coordination.md). Reconcile it with the current model before resuming, to avoid two competing designs. The full design is in the local repair artifact; this issue is the durable draft index.
 
 Size is XL because it needs a breakdown into a contract piece and a separate runtime project.
 

@@ -17,7 +17,7 @@ Scope:
 - Support watch-spawned roles: identity is persistent, execution is ephemeral.
 - No external-tool dependency.
 
-Reconcile with the current protocol model (single-writer state, coordination board) before designing. Background: `ai/shared/project-knowledge/multi-assistant-workflow-design.md`.
+Reconcile with the current protocol model (single-writer state, coordination board) before designing. Background: `ai/issues/open/multi-assistant-workflow-and-ai-team.md` and `ai/policies/ai-policy-common.md` (`## State File Ownership Protocol`).
 
 Acceptance criteria (refine after reconciliation):
 

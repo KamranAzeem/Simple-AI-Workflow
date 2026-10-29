@@ -532,7 +532,7 @@ The policy is `ai-policy-coding.md` with expertise token `coding`, because users
 
 ## 2026-10-21: The coding policy gains an operational baseline
 
-The coding policy states a concrete action for each practice it covers. It adds operational rules for resilience, configuration, dependency supply chain, cryptography, time handling, test quality, caching, log levels, named constants, and public contracts. Domain policies keep the detail for API idempotency and retries, contracts, encryption and key management, accessibility, observability, caching, and dependency injection. A Project Knowledge note, `coding-policy-cross-policy-coverage-reconciliation-2026-10-21.md`, maps each shared practice to its owner and the coding policy rule, so the two can be reconciled. The policy names the action and points at the owner for detail, so it does not become a second source of truth.
+The coding policy states a concrete action for each practice it covers. It adds operational rules for resilience, configuration, dependency supply chain, cryptography, time handling, test quality, caching, log levels, named constants, and public contracts. Domain policies keep the detail for API idempotency and retries, contracts, encryption and key management, accessibility, observability, caching, and dependency injection. The coding policy's `## References` and section-level pointers name the owning policies; a separate coverage map is not required. The policy names the action and points at the owner for detail, so it does not become a second source of truth.
 
 ## 2026-10-21: The coding policy becomes a thin core with pointers
 
@@ -623,3 +623,75 @@ Require an `## Evidence` section in every plan. Run independent peer review auto
 Context: plans were reviewed only when asked, and evidence was not explicit.
 
 Consequences: plan creation is slower and more reliable; a focused review is enough for an `S` ticket.
+
+## 2026-10-29: Knowledge files share one standard and one visible header
+
+Every knowledge file in the global and project stores follows one common-policy section. The file starts with a visible blockquote header that names the policy and section. The header is a normative literal artifact. The standard requires Context, Rule or Fix, Why, and Verify, bans tables and session bookkeeping, and sets a 100-line soft target. `issue-template.md` and design documents in the fallback location are exempt.
+
+Context: The two stores had no shared structure, and a model editing a file had no in-file authority pointer.
+
+Consequences: Both stores follow one shape, and the header travels with the file. Repair restores the header.
+
+## 2026-10-29: One knowledge capture pass feeds both stores
+
+The checkpoint captures findings once, classifies each as project, global, or both, and writes the project store first. The global store promotes from the same list. `update project knowledge` runs capture and the project store. `update global knowledge` runs capture, the project store, and the global promotion. A full checkpoint runs both stores in that order.
+
+Context: The two stores evaluated separately and could reach different conclusions.
+
+Consequences: No finding is lost between stores. The global store never creates a separate list.
+
+## 2026-10-29: Knowledge repair is conservation-gated
+
+The repair procedure audits read-only, builds an item manifest, backs up the old file, writes a temporary candidate, verifies the manifest, gets independent review and human approval, and replaces the old file only after approval. Every old item needs a disposition. The checks preserve numbers, identifiers, commands, versions, paths, errors, why, and caveats, add no new claim, and convert tables row by row. The size target never overrides completeness.
+
+Context: A rewrite can silently drop a number, a reason, or a caveat.
+
+Consequences: Loss is explicit, reviewable, and reversible. A missing disposition blocks the repair.
+
+## 2026-10-29: Knowledge files use a 100-line soft target
+
+Knowledge files use a 100-line soft target. A long file splits or moves its full analysis to the project's local artifact area or `design-docs/` and keeps the distilled lesson in the knowledge store.
+
+Context: The ticket's draft said about 120 lines; the approved target is 100.
+
+Consequences: A long analysis stays available as an artifact while the knowledge file stays usable for lookup.
+
+## 2026-10-29: Knowledge enforcement uses the existing checklist
+
+Knowledge enforcement uses the existing checklist, the authoring validator, the main validator, and review. It adds no new validator script. The checkpoint reports a missing header, a table line, and a file over 100 lines with cheap checks; the full content audit belongs to `repair knowledge files`.
+
+Context: The issue left a validator script open; the operating surface already has enough checks.
+
+Consequences: The protocol surface stays small. Content judgments run only during repair.
+
+## 2026-10-29: The project corpus is repaired on the branch; global knowledge stays local
+
+The project corpus is repaired and committed on the feature branch. The global corpus is repaired in the same session with a user-space backup and stays outside git. Project backups live in the project's local artifact area. Global backups live under the user's repair backup area, outside the project and outside the Global AI Backups Directory. The protocol-name migration map moves to `docs/` as a shipped upgrade reference. Long analyses move to the project's local artifact area or `design-docs/`.
+
+Context: The issue requires both corpora to comply. Global knowledge is not repository content, and the project artifacts directory is purgeable.
+
+Consequences: The branch carries the shipped corpus. The user's global store is repaired locally with a durable backup.
+
+## 2026-10-29: The coding coverage map retires to the coding policy references
+
+The separate coding cross-policy coverage map is retired from the shipped corpus. The coding policy's `## References` and section-level pointers are the durable coverage. The 2026-10-21 decision entry is updated to that home.
+
+Context: The map was a supporting artifact for the thin-core decision, and a committed decision must not depend on a local-only artifact.
+
+Consequences: The decision store is self-contained. The shipped corpus has one less multi-lesson reference file.
+
+## 2026-10-29: v5.4.0 is one release
+
+v5.4.0 is one minor release. It covers the visible protocol-file banner, the Matt Pocock backlog cleanup, the sync-script self-exclusion fix, the work-item branch and plan lifecycle, and the knowledge file standards and repair. The release documentation lives in the feature branch. The tag and GitHub Release follow the merge.
+
+Context: The user chose one release over several small ones.
+
+Consequences: The announcement and the release-practices entry cover all five changes.
+
+## 2026-10-29: Knowledge standards exempt non-lesson artifacts
+
+`issue-template.md` and design documents that still live under `ai/shared/project-knowledge/` are exempt from the knowledge header and structure. The template is canonical. The design-docs policy owns the design documents.
+
+Context: Both are not lessons and already have a canonical owner.
+
+Consequences: The standard applies to knowledge files, and the existing canonical artifacts keep their own shape.

@@ -11,6 +11,7 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
 - **Policy**: AI assistants treat this directory as the source of truth for repository standards.
 - **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session: even if nothing changed (confirmation is mandatory).
+- **Format**: Each file starts with a visible header and follows one shape. See Section 23.
 
 ## 2. Global Knowledge (Cross-Project)
 
@@ -20,6 +21,7 @@ Lessons learned, architectural patterns, and reusable snippets that apply across
 - **Status**: Personal persistent memory that follows you into every project.
 - **Usage**: Indexed at initialization (index-at-boot, load-on-demand) under the same Token Rationing model as **Project Knowledge**; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
 - **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify; the filename is also the lookup key for index-only Global and Project Knowledge. See **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
+- **Format**: Same standard as project knowledge; see Section 23.
 
 ## 3. Task Handoffs (`ai/shared/handoffs/`)
 
@@ -272,6 +274,8 @@ Note: always use the full phrase `"load context using AGENTS.md protocol"`. A ba
 
 A metadata-only check flags Global and Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
 
+The checkpoint also does a quick, report-only check for a missing header, a table, or a file over 100 lines. It doesn't read the whole file. The full cleanup is `"repair knowledge files"`; see section 23.
+
 ## 14. Atomic Write Protocol & State-File Trimming
 
 ### The Three State Files
@@ -308,11 +312,13 @@ In the same transaction as the state files, every checkpoint also appends an ent
 One `"checkpoint"` runs every upkeep step, so you do not run them separately:
 
 - The three state files (one atomic write) and the daily diary.
-- Project Knowledge, then Global Knowledge.
-- A report-only pass that flags stale items: an `in-progress/` ticket with no live branch, an executed plan left in `ai/plans/`, and knowledge files older than 90 days whose domain matches an active expertise.
+- One capture pass, then Project Knowledge, then Global Knowledge.
+- A report-only pass that flags stale items: an `in-progress/` ticket with no live branch, an executed plan left in `ai/plans/`, knowledge files older than 90 days whose domain matches an active expertise, and a knowledge file with a missing header, a table, or more than 100 lines.
 - A grouped summary in chat, one line per step.
 
-Two single-step triggers remain: `"update project knowledge"` and `"update global knowledge"` run just that step. A checkpoint never runs git and never touches design documents; design docs are handled only by a separate, confirmation-gated procedure.
+Two single-step triggers remain: `"update project knowledge"` runs the capture and the project store; `"update global knowledge"` runs the capture, the project store, and the global promotion. A checkpoint never runs git and never touches design documents; design docs are handled only by a separate, confirmation-gated procedure.
+
+The checkpoint checks the knowledge header before it writes, and it never edits a knowledge file. If you upgraded, run `"repair knowledge files"` once; see section 23.
 
 ### State-File Trimming
 
@@ -372,6 +378,8 @@ Tickets live under three status directories: `open/`, `in-progress/`, and `close
 
 Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the soft target, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries over the soft target or older than 14 days into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
 
+Knowledge files have their own repair. Say `"repair knowledge files"` if you want the AI to audit and fix the project store; see section 23.
+
 ## 18. Evidence and the Investigation Contract
 
 The Investigation Contract in `ai/policies/ai-policy-common.md` governs how the AI reasons:
@@ -404,3 +412,19 @@ One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs ever
 Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again after compaction.
 
 To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.
+
+## 23. Knowledge File Standards and Repair
+
+Every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` starts with a visible header that points at the rules. It's the first thing in the file. After that, the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there's a catch.
+
+Keep it to one lesson per file and about 100 lines. Use flat bullets, not tables. Leave out commit hashes, branch names, checkpoint and diary references, and state-file paths. That's bookkeeping, not knowledge. `issue-template.md` and design docs in the old fallback location are exempt.
+
+The checkpoint checks the header before it writes. It also flags a missing header, a table, or a file over 100 lines, but it never edits anything. The one capture pass feeds both stores: it classifies each finding as project, global, or both, writes the project store first, then promotes the global findings from the same list. If the header is missing or wrong, it stops and asks you to run the repair.
+
+Say `"repair knowledge files"` when you want the AI to fix the project store. Add `global` for global knowledge, `both` for both, or `dry run` to see the plan first.
+
+Heads up: the repair takes a while on a real knowledge base. Let it finish. It's important; it's how your files get fixed.
+
+The repair reads the files first, builds a list of every item and where it will go, backs up the old files, writes a candidate, checks that nothing was lost, runs an independent review, and asks before it deletes, merges, or moves anything. If something fails, it puts the backup back. The 100-line target never beats keeping the content. A long analysis moves in full to `ai/artifacts/` or `design-docs/` and the short lesson stays in the knowledge store. A shipped reference like the migration map goes to `docs/`. The repair never runs at checkpoint.
+
+Run it once after you upgrade. Add `global` if you keep global knowledge. The checkpoint flags the problems in the meantime, but it doesn't edit your files.

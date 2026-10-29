@@ -147,11 +147,11 @@ The following short forms are recognized as equivalents to their canonical direc
 6. **STEP-AUTHOR-IDENTITY**: Resolve the author identity (project git identity, then global `~/.gitconfig`, then the global settings file). If no global `~/.gitconfig` exists, offer to create one from the common policy template. If the current directory is a git repository with an inadequate config, suggest creating one. If `git` is not available, use the settings fallback and skip the offer. Offer only; never write without approval.
 7. **STEP-FINALIZE-BOOTSTRAP**: Proceed to PROCEDURE LOAD-CONTEXT.
 
-### PROCEDURE WRITE-CHECKPOINT: When the user says "checkpoint" or "save checkpoint"
+### PROCEDURE WRITE-CHECKPOINT: When the user says "checkpoint"
 
-**Aliases**: checkpoint; save checkpoint; update project knowledge; update global knowledge
+**Aliases**: checkpoint; update project knowledge; update global knowledge
 
-**Single-step aliases**: when the trigger is `"update project knowledge"` or `"update global knowledge"`, run only the matching step (STEP-PROJECT-KNOWLEDGE-UPDATE or STEP-GLOBAL-KNOWLEDGE-UPDATE) and skip the rest.
+**Single-step aliases**: `update project knowledge` runs `STEP-KNOWLEDGE-CAPTURE` and `STEP-PROJECT-KNOWLEDGE-UPDATE`; `update global knowledge` runs those two steps and `STEP-GLOBAL-KNOWLEDGE-UPDATE`; skip the rest.
 
 **Boundaries**: this procedure never reads or writes design documents; a separate, confirmation-gated procedure handles those. It never runs git or suggests a commit.
 
@@ -185,20 +185,17 @@ The following short forms are recognized as equivalents to their canonical direc
     - **Ordering rule**: An entry leaves a state file only after its content is in the diary, in the same checkpoint.
     - **No git metadata**: The state files never record a branch, hash, or push status, and the AI does not prompt the user to commit them.
     - **Gate scope**: The atomic-write and same-day-append header gates run before their writes. A gate failure aborts the checkpoint intentionally. The checkpoint failure rule, that the state files and diary run first and always, applies after the gate passes and the write starts. A trimming header failure stops the trim only, after the core writes.
-4. **STEP-PROJECT-KNOWLEDGE-UPDATE**: Review all work done since the last checkpoint. For any findings, decisions, or discoveries not yet written into the **Project AI Knowledge Directory**, update or create the relevant files now. This step is **mandatory**: even when no new material exists, you must explicitly confirm that the knowledge base is current before proceeding. This applies to all project types. Capture any of the following that occurred since the last checkpoint:
-    - Decisions made and the rationale behind them
-    - Resolved issues and their root causes
-    - Investigation and research conclusions (technical findings, confirmed values, analysis outcomes)
-    - New constraints, blockers, or dependencies identified
-    - Key identifiers, configuration values, or reference data confirmed during the session (e.g., resource IDs, API endpoints, library versions, schema names, environment variables: **never raw secrets**)
-    - Updates posted to external systems such as issue trackers, project management tools, or communication channels (include timestamp and channel)
-5. **STEP-GLOBAL-KNOWLEDGE-UPDATE**: Capture only lessons that are genuinely reusable across projects (a tool's behavior, a pattern that generalizes, a portable fix) into the **Global AI Knowledge Directory**. This step is mandatory like the project-knowledge step: when nothing qualifies, explicitly confirm "nothing to add" instead of forcing an entry. Project-specific material belongs in the **Project AI Knowledge Directory**. If the Global AI Knowledge Directory does not exist, confirm and skip; do not create user-space directories unprompted.
-6. **STEP-HOUSEKEEPING-AND-STALE-SCAN (report-only)**: Report, never act. Flag, without changing anything:
+4. **STEP-KNOWLEDGE-CAPTURE**: Review the work since the last checkpoint. Collect decisions, root causes, investigation conclusions, constraints, identifiers, and external updates. Classify each finding as project, global, or both. Record each finding, its classification, and its source once. Pass the list to the project store and the global store. Run the capture once in a full checkpoint.
+5. **STEP-PROJECT-KNOWLEDGE-UPDATE**: Write the project findings from `STEP-KNOWLEDGE-CAPTURE` into the **Project AI Knowledge Directory**. Apply `## Knowledge File Standards`. This step is **mandatory**: even when no new material exists, confirm that the project knowledge base is current. Project-specific material belongs here.
+    - **STEP-KNOWLEDGE-HEADER-PRE-WRITE**: For a new file, write the canonical header as the first content and use the standard structure. For an existing file, read the first blockquote line; if the header is missing or does not match `## Knowledge File Standards`, stop the write and tell the user to run `repair knowledge files`. Do not rewrite an existing header by hand.
+6. **STEP-GLOBAL-KNOWLEDGE-UPDATE**: Promote the global findings from `STEP-KNOWLEDGE-CAPTURE` into the **Global AI Knowledge Directory**. Apply `## Knowledge File Standards`. Run `STEP-KNOWLEDGE-HEADER-PRE-WRITE` before each write. This step is mandatory: when nothing qualifies, confirm "nothing to add" instead of forcing an entry. Project-specific material belongs in the **Project AI Knowledge Directory**. If the Global AI Knowledge Directory does not exist, confirm and skip; do not create user-space directories unprompted.
+7. **STEP-HOUSEKEEPING-AND-STALE-SCAN (report-only)**: Report, never act. Flag, without changing anything:
     - An `in-progress/` ticket with no live branch (it may be finished or abandoned). Closing a ticket stays tied to its merge (PROCEDURE MANAGE-ISSUES), so the checkpoint never moves tickets.
     - An executed plan left in the **Project Plans Directory**.
+    - A knowledge file with a missing canonical header, a table line, or more than 100 lines; use cheap header, line-count, and table-line checks and do not read file bodies for content judgments.
     - Knowledge files flagged by the staleness heuristic (older than 90 days whose domain matches an active expertise): list them, do not edit them.
-7. **STEP-CHECKPOINT-REPORT**: Print one grouped summary of the checkpoint, one line per step, using `updated`, `nothing to add`, or `failed`, followed by the state-file transaction log from STEP-TRANSACTION-LOG. The report is printed in chat only; the diary keeps the narrative.
-8. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
+8. **STEP-CHECKPOINT-REPORT**: Print one grouped summary of the checkpoint, one line per step, using `updated`, `nothing to add`, or `failed`, followed by the state-file transaction log from STEP-TRANSACTION-LOG. The report is printed in chat only; the diary keeps the narrative.
+9. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
     - Announce: **[Re-affirming key files into context after checkpoint...]**
     - Load the FULL TEXT of `ai-policy-common.md`, every policy file referenced in the **Project Customization File**, and all custom policies discovered in **Project AI Policies Directory**.
       **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the custom-policy scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**.
@@ -307,6 +304,26 @@ The following short forms are recognized as equivalents to their canonical direc
     - The existing reorder, trim, and diary-mirror repairs still run. Move completed progress entries and resolved context items to the latest checkpoint before removing them. Never drop an unfinished next-steps item.
 4. **STEP-REPORT-REPAIR**: List each header replaced or inserted, each title date fixed, the body checksum result, and every other change, then confirm the state files are in order.
 5. **STEP-EXIT-REPAIR-MODE**: Return to normal role when the repair is complete.
+
+### PROCEDURE REPAIR-KNOWLEDGE-FILES: Audit and repair knowledge files with a conservation manifest
+
+**Aliases**: repair knowledge files; tidy knowledge files; heal knowledge files
+
+**Boundaries**: This procedure audits and repairs knowledge files only. It never edits a design document or a state file, and it never runs at checkpoint.
+
+**Failure rule**: Refuse rather than corrupt. When the manifest is incomplete, an old item has no disposition, or a source and candidate conflict, stop and ask.
+
+1. **STEP-LOAD-KNOWLEDGE-RULES**: Load `ai-policy-common.md` and read `## Knowledge File Standards` and `### Knowledge Repair Conservation Contract`.
+2. **STEP-RESOLVE-KNOWLEDGE-SCOPE**: Default to the project store. Read `global`, `both`, or `dry run` after the trigger. Treat those words as scope or option words, not aliases.
+3. **STEP-INDEX-KNOWLEDGE-CORPUS**: Index the selected stores and read every selected file in full.
+4. **STEP-AUDIT-KNOWLEDGE**: Audit structure, tables, workflow references, secrets, size, one lesson per file, duplicates, and headers. Write nothing.
+5. **STEP-BUILD-KNOWLEDGE-MANIFEST**: Build one row per old item with old ID, old location, new location, disposition, and a one-line reason. Stop when an item has no disposition.
+6. **STEP-REPORT-KNOWLEDGE-REPAIR**: Report every proposed rewrite, split, merge, move, or delete. Stop after this report for a `dry run`.
+7. **STEP-BACKUP-KNOWLEDGE**: Copy the old project files to `ai/artifacts/knowledge-repair-<date>/project/` and the old global files to `~/.ai/knowledge-repair-backups/<date>/global/`. Keep both outside git and outside the **Global AI Backups Directory**.
+8. **STEP-WRITE-KNOWLEDGE-CANDIDATE**: Write the candidate to a temporary path. Do not overwrite the old file. Move a long analysis in full to `ai/artifacts/` or `design-docs/`, then write the distilled candidate and record the move. Move a shipped reference to `docs/` and record the move.
+9. **STEP-VERIFY-KNOWLEDGE-CANDIDATE**: Verify the manifest, every number, identifier, command, version, path, and error, every why and caveat, no new claim, every table row, duplicate pointers, the header, and the standard. Run an independent peer review of the old and new files.
+10. **STEP-APPROVE-KNOWLEDGE-REPAIR**: Get human approval for every deletion, merge, move, or obsolete disposition. Replace the old file only after approval. Restore the backup on failure.
+11. **STEP-RECORD-KNOWLEDGE-REPAIR**: Record the project and global manifest and backup paths in the checkpoint and diary. Report the files changed, moved, split, or deleted.
 
 ### PROCEDURE UPDATE-DESIGN-DOCS: When the user says "update design documents"
 

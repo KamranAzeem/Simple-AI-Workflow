@@ -8,7 +8,7 @@ What this is: on 2026-10-06, procedures, steps, and tiers moved from single lett
 |---|---|---|
 | PROCEDURE A | PROCEDURE LOAD-CONTEXT | load context; load context using AGENTS.md protocol |
 | PROCEDURE B | PROCEDURE BOOTSTRAP-PROJECT | bootstrap; bootstrap using AGENTS.md protocol |
-| PROCEDURE C | PROCEDURE WRITE-CHECKPOINT | checkpoint; save checkpoint |
+| PROCEDURE C | PROCEDURE WRITE-CHECKPOINT | checkpoint; update project knowledge; update global knowledge |
 | PROCEDURE D | PROCEDURE RUN-PEER-REVIEW | peer review; code review; PR review |
 | PROCEDURE E | PROCEDURE POST-COMPACTION-RECOVERY | post-compaction recovery; run post-compaction recovery procedure |
 | PROCEDURE F | PROCEDURE CREATE-BACKUP | backup ai; backup ai state |

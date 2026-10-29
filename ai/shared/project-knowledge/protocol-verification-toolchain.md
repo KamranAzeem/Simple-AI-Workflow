@@ -1,39 +1,42 @@
-# Protocol verification toolchain
+> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
 
-How to verify this repo (the Simple-AI-Workflow protocol) after a change. Run every command from the project root. Recorded 2026-10-13; refreshed 2026-10-18.
+# Protocol Verification Toolchain
 
-## Commands
+## Context
 
-- Protocol validator: `bash support-files/validate-protocol.sh`. Runs eight checks: the AGENTS.md hardening anchors, the configuration mapping, the global and project AI directory structure, the coordination board, the 17-policy baseline, the `.gitignore` safety, and the checkpoint/backup cycle. Expect `Protocol Validation v6.1 Completed Successfully` and 8/8.
-- Authoring validator: `./support-files/validate-policy-authoring.sh <file> [<file>...]`. Checks the authoring shape of changed `AGENTS.md` and policy files: the guard, marker order, title, purpose line, `## Scope`, `## References`, domain sections, procedure metadata, trigger uniqueness, and the `## Triggers` reservation. Expect `PASSED`.
-- Reference test: `bash support-files/test-protocol-references.sh`. Confirms every procedure, step, tier, and Proof-of-Load item reference resolves, and that no letter or number references remain. The script is not executable, so invoke it with `bash`. Expect `PASS` plus a definition count (11 procedures, 79 steps, 4 tiers, 9 items at v6.1).
-- Markdown lint: `markdownlint-cli2 "**/*.md" "#node_modules"`. The reference config is `.markdownlint-cli2.jsonc`. Expect `0 issues`. On this machine the binary lives at `~/.nvm/versions/node/v24.19.0/bin/markdownlint-cli2` (machine-specific; use `markdownlint-cli2` from `PATH` where available).
+Run these checks from the project root after a change to the protocol, a policy, or a script. They cover the protocol surface, the authoring shape, reference integrity, and markdown style.
 
-## Lint scope
+## Rule or Fix
 
-`.markdownlint-cli2.jsonc` ignores four local or archival directories, so the lint covers the living set only:
+- Run the protocol validator with `bash support-files/validate-protocol.sh`.
+- Run the authoring validator on every changed `AGENTS.md` or policy file with `./support-files/validate-policy-authoring.sh <file> [<file>...]`.
+- Run the reference test with `bash support-files/test-protocol-references.sh`.
+- Run markdownlint with `markdownlint-cli2 "**/*.md" "#node_modules"`.
+- Lint every new markdown file, not only the edited files.
 
-- `ai/secrets/**` (local credentials)
-- `ai/code-review-reports/**` (session-local review reports)
-- `ai/artifacts/**` (local report artifacts)
-- `ai/daily-checkpoints/**` (the diary)
+## Why
 
-Everything else is linted, including `ai/issues/**` and `ai/state/**`.
+- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, git safety, and checkpoint cycle.
+- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` reservation.
+- The reference test confirms that every procedure, step, tier, and load item resolves.
+- Markdownlint catches structural defects before review.
 
-## Lesson (2026-10-13)
+## Verify
 
-Lint every new markdown file before committing it, not only the files you edited. Three tickets created in one session were committed with an MD032 error (a list directly after `Acceptance criteria:` with no blank line) because only the edited policy and docs files were linted. Write the blank line between a lead-in line and a list.
+- Confirm `Protocol Validation v6.1 Completed Successfully` and 8/8.
+- Confirm the authoring validator prints `PASSED`.
+- Confirm the reference test prints `PASS` with 12 procedures, 93 steps, 4 tiers, and 9 items.
+- Confirm markdownlint reports `0 issues`.
 
-## Lesson (2026-10-18)
+## Caveats
 
-- The authoring validator's `# AI Assistant Policy:` title exception applies only to `ai-policy-common.md`; every other policy uses `# AI Policy: <Domain>`.
-- A `## Triggers` section is reserved for the plugin model and is rejected until that model lands.
-- `shellcheck` is not installed on this machine; use `bash -n` for syntax checks and note the missing linter.
-- The repo has `core.fileMode=false`. After `chmod +x`, record the executable bit with `git update-index --chmod=+x <file>`; otherwise the commit records `100644`.
-
-## Related
-
-- `.markdownlint-cli2.jsonc` and the `Markdown Output` section of `ai/policies/ai-policy-common.md` are the source of truth for the rules.
+- Lint ignores `ai/secrets/**`, `ai/code-review-reports/**`, `ai/artifacts/**`, and `ai/daily-checkpoints/**`; it covers `ai/issues/**` and `ai/state/**`.
+- A list directly after a lead-in line needs a blank line; three tickets were committed with MD032 because only some files were linted. The global `markdown-lint-new-files-before-commit.md` captures the general rule.
+- `.markdownlint-cli2.jsonc` and the common policy `Markdown Output` are the source of truth for markdown rules.
 - `ai/policies/ai-policy-meta.md` (`## Procedure and Policy Authoring`) owns the authoring standard.
 - `support-files/validate-policy-authoring.sh` checks changed policy files and `AGENTS.md`.
-- `ai/shared/coordination.md` and `ai/state/context.md` carry the current status.
+- On this machine the markdownlint binary is at `~/.nvm/versions/node/v24.19.0/bin/markdownlint-cli2`; use `markdownlint-cli2` from `PATH` where available.
+- The `# AI Assistant Policy:` title exception applies only to `ai-policy-common.md`.
+- A `## Triggers` section is reserved until the plugin model lands.
+- `shellcheck` is not installed on this machine; use `bash -n` for syntax checks.
+- The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.

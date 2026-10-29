@@ -152,7 +152,8 @@ This binds sub-agents and non-orchestrator sessions.
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
 - **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user.
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
-- **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's global-knowledge step captures these and confirms "nothing to add" when none qualify.
+- **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's capture step collects these; the global step promotes them and confirms "nothing to add" when none qualify.
+- **Format**: Apply `## Knowledge File Standards` to every global knowledge file.
 
 ## Project Knowledge Protocol
 
@@ -161,6 +162,7 @@ This binds sub-agents and non-orchestrator sessions.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+- **Format**: Apply `## Knowledge File Standards` to every project knowledge file.
 
 ### Ticket File Scope
 
@@ -179,6 +181,65 @@ They do NOT contain:
 - Any content not directly shared with or by the customer through the ticket
 
 All such content belongs in named project knowledge files. When creating or updating a ticket file, apply this boundary strictly. Existing content that violates it must be migrated to the appropriate knowledge file, not left in place.
+
+## Knowledge File Standards
+
+- Apply this section to every knowledge file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory**.
+- Exempt `issue-template.md` from this section.
+- Exempt a design document under `ai/shared/project-knowledge/` from this section; `ai-policy-design-docs.md` owns it.
+- Use one descriptive H1 per knowledge file.
+- Use one lesson per knowledge file.
+- Include `## Context`, `## Rule or Fix`, `## Why`, and `## Verify`.
+- Include `## Caveats` only when a limitation exists.
+- Write short sentences and flat bullets.
+- Do not use tables.
+- Do not nest bullets deeper than one level.
+- Do not write a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path.
+- Write a domain term such as commit, branch, or checkpoint only when the lesson requires it; the ban targets session bookkeeping.
+- Do not write a secret or an identifying name.
+- Keep each file at or below 100 lines.
+- Split a file or move a long analysis to `ai/artifacts/` or `design-docs/` when it passes the target.
+- Do not delete a nuance to meet the target.
+- Check the header before writing a knowledge file; see `### Knowledge File Header`.
+- Stop the write and tell the user to run `repair knowledge files` when the header is missing or does not match.
+
+### Knowledge File Header
+
+- Treat the block below as a normative literal artifact.
+- Copy the block verbatim as the first content before the H1.
+- Add one blank line after the block.
+- Replace a missing or edited block only through `repair knowledge files`.
+- Do not edit the block by hand.
+
+```markdown
+> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+```
+
+### Knowledge Repair Conservation Contract
+
+- Treat every old file as a set of atomic items: fact, rule or decision, why, caveat, verification step, identifier, and example.
+- Build one manifest before any write.
+- Record one row per old item with old ID, old location, new location, disposition, and a one-line reason.
+- Set the disposition to a new location, `merged`, `moved`, `obsolete`, or `deleted with approval`.
+- Stop the repair when an old item has no disposition.
+- Audit the old file read-only first.
+- Copy the full old file to the project or global backup path before the first change.
+- Write the candidate to a temporary path.
+- Verify every old item maps to a new location or an approved disposition.
+- Verify every number, identifier, command, version, path, and error message survives, unless the item is marked obsolete.
+- Verify every why and caveat has a home; shorten the wording, never drop the item.
+- Add no new claim; flag a correction for separate approval.
+- Convert every table row by row.
+- Merge a duplicate with a pointer to the surviving item.
+- Apply `## Knowledge File Standards` to the candidate.
+- Run an independent review of the old and new files.
+- Get human approval for a deletion, merge, move, or obsolete disposition.
+- Replace the old file only after verification and approval.
+- Restore the backup on failure.
+- Never let the 100-line target override completeness.
+- Remove a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path as session bookkeeping.
+- Keep the substantive evidence through a non-hash reference or an artifact.
+- Move a long analysis in full to `ai/artifacts/` or `design-docs/`, then create the distilled knowledge file and record the move.
 
 ## Issue Management Protocol
 
