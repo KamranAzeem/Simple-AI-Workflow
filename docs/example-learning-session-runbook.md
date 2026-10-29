@@ -200,13 +200,13 @@ Expected outcome:
 Send this prompt:
 
 ```text
-Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/shared/project-knowledge: minimal-page-pattern.md and branch-squash-merge-pattern.md. Start each knowledge file with the header from ai-policy-common.md, then use Context, Rule or Fix, Why, and Verify. Show paths.
+Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/shared/project-knowledge: minimal-page-pattern.md and branch-squash-merge-pattern.md. Start each knowledge file with the self-contained header from ai-policy-common.md, then use Context, Rule or Fix, Why, and Verify. Keep each file self-standing, with no pointers to other files. Show paths.
 ```
 
 Expected outcome:
 
 - 1 handoff + 2 project-knowledge files created.
-- Each knowledge file starts with the header and uses Context, Rule or Fix, Why, and Verify.
+- Each knowledge file starts with the self-contained header, uses Context, Rule or Fix, Why, and Verify, and stands on its own.
 
 The user then inspects the newly created files, and uses the handoff file to create a new task for AI.
 

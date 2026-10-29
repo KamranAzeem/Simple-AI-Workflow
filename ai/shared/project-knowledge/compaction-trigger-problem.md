@@ -1,10 +1,10 @@
-> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
 # Reliable Post-Compaction Recovery
 
 ## Context
 
-Long AI sessions fill the context window. Most assistants then compact the conversation and replace the history with a summary. Standing rules loaded from files at session start are no longer in context. Background lives in `ai/issues/open/compaction-trigger-hook-research.md` and `ai/issues/open/kilo-code-documentation.md`.
+Long AI sessions fill the context window. Most assistants then compact the conversation and replace the history with a summary. Standing rules loaded from files at session start are no longer in context.
 
 ## Rule or Fix
 
@@ -49,5 +49,4 @@ Long AI sessions fill the context window. Most assistants then compact the conve
 - A PostCompact or SessionResume hook could inject `additionalContext` or a `systemMessage` into that turn.
 - Session-start compaction fires no PreCompact event.
 - VS Code has no PostCompact hook.
-- Open questions about hooks in other tools are tracked in `ai/issues/open/compaction-trigger-hook-research.md`.
 - The human prompt remains the backstop.

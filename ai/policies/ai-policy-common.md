@@ -106,9 +106,9 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 ## Universal Operational Guardrails
 
 - **Canonical Reference Names**: Refer to procedures, steps, and tiers by their canonical ALL-CAPS kebab names (for example PROCEDURE WRITE-CHECKPOINT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES). Never reference them by letter or number.
-- **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions.
+- **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
-- **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Applies to everything that enters git (commits, messages, docs, code comments, knowledge files, filenames) and to external systems.
+- **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Applies to everything that enters git (commits, messages, docs, code comments, knowledge files, filenames) and to external systems. A project knowledge file outside git may keep an identifying name. A tracked knowledge file follows this scan. A global knowledge file never keeps an identifying name. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
@@ -148,9 +148,9 @@ This binds sub-agents and non-orchestrator sessions.
 ## Global Knowledge Protocol
 
 - **Bootstrapping & Load Context: Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
-- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file to a single domain with a descriptive name, and split a file that mixes domains, because the filename is the JIT lookup key. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
+- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. Keep each file together with a descriptive name for its dominant domain; merge or trim a mixed file; never split it. The filename is the JIT lookup key; accept the one-file lookup trade-off. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
 - **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
-- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user.
+- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user. The explicit `repair knowledge files` trigger is that instruction for the global repair; the repair asks no further question.
 - **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
 - **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's capture step collects these; the global step promotes them and confirms "nothing to add" when none qualify.
 - **Format**: Apply `## Knowledge File Standards` to every global knowledge file.
@@ -160,7 +160,7 @@ This binds sub-agents and non-orchestrator sessions.
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
 - **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The agent MUST NOT delete or restructure Project Knowledge files without explicit human approval.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 - **Format**: Apply `## Knowledge File Standards` to every project knowledge file.
 
@@ -188,18 +188,29 @@ All such content belongs in named project knowledge files. When creating or upda
 - Exempt `issue-template.md` from this section.
 - Exempt a design document under `ai/shared/project-knowledge/` from this section; `ai-policy-design-docs.md` owns it.
 - Use one descriptive H1 per knowledge file.
-- Use one lesson per knowledge file.
 - Include `## Context`, `## Rule or Fix`, `## Why`, and `## Verify`.
 - Include `## Caveats` only when a limitation exists.
+- Use `## Rule or Fix` for a checklist.
 - Write short sentences and flat bullets.
 - Do not use tables.
+- Convert every table row to a flat bullet and preserve a row that has no home.
 - Do not nest bullets deeper than one level.
 - Do not write a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path.
 - Write a domain term such as commit, branch, or checkpoint only when the lesson requires it; the ban targets session bookkeeping.
-- Do not write a secret or an identifying name.
-- Keep each file at or below 100 lines.
-- Split a file or move a long analysis to `ai/artifacts/` or `design-docs/` when it passes the target.
-- Do not delete a nuance to meet the target.
+- Keep the file self-standing: include the facts, rules, reasons, and checks it needs.
+- Do not point at another knowledge file, code file, doc, policy, artifact, backup, or state file.
+- Treat a domain command, a system path, or a path that a checklist step writes or edits as content, not a cross-file pointer.
+- Do not write a raw secret.
+- Do not write an identifying name in a global knowledge file.
+- Keep an identifying name in a project knowledge file outside git; a tracked knowledge file follows the commit guardrail.
+- Define an identifying name as a person, client, employer, or customer; a technology vendor or product name is content.
+- Use 10,000 bytes as a soft target; never let it override completeness.
+- Review a file at 15,000 bytes with the automatic cleanup in `PROCEDURE REPAIR-KNOWLEDGE-FILES`.
+- Never split a knowledge file.
+- Keep a checklist in one file.
+- Merge or trim a file that mixes topics; do not split it.
+- Keep the file count from increasing during a repair.
+- Keep a file over 15,000 bytes after cleanup as one file and report it.
 - Check the header before writing a knowledge file; see `### Knowledge File Header`.
 - Stop the write and tell the user to run `repair knowledge files` when the header is missing or does not match.
 
@@ -212,34 +223,43 @@ All such content belongs in named project knowledge files. When creating or upda
 - Do not edit the block by hand.
 
 ```markdown
-> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 ```
 
 ### Knowledge Repair Conservation Contract
 
 - Treat every old file as a set of atomic items: fact, rule or decision, why, caveat, verification step, identifier, and example.
-- Build one manifest before any write.
+- Build one manifest in memory before any write.
 - Record one row per old item with old ID, old location, new location, disposition, and a one-line reason.
-- Set the disposition to a new location, `merged`, `moved`, `obsolete`, or `deleted with approval`.
-- Stop the repair when an old item has no disposition.
+- Set the disposition to `kept`, `merged`, `trimmed`, `removed as defined garbage`, `preserved ambiguous`, or `aborted unchanged`.
+- Stop a file with an item that has no disposition and leave it unchanged.
 - Audit the old file read-only first.
-- Copy the full old file to the project or global backup path before the first change.
-- Write the candidate to a temporary path.
-- Verify every old item maps to a new location or an approved disposition.
-- Verify every number, identifier, command, version, path, and error message survives, unless the item is marked obsolete.
-- Verify every why and caveat has a home; shorten the wording, never drop the item.
-- Add no new claim; flag a correction for separate approval.
-- Convert every table row by row.
-- Merge a duplicate with a pointer to the surviving item.
-- Apply `## Knowledge File Standards` to the candidate.
-- Run an independent review of the old and new files.
-- Get human approval for a deletion, merge, move, or obsolete disposition.
-- Replace the old file only after verification and approval.
+- Define garbage as recording or learned dates, commit hashes, branch names, checkpoint and diary references, state-file paths, artifact and backup pointers, cross-file pointers (except a path a checklist step writes or edits), table markup, and duplicates.
+- Preserve every fact, rule, why, caveat, verification, identifier, and example that is not garbage.
+- Preserve an ambiguous content item and report it.
+- Treat a cross-file pointer as never ambiguous: resolve the fact into the file, or abort the file unchanged and report.
+- Merge a duplicate into the survivor with no pointer.
+- Do not keep evidence in an artifact or move a long analysis to an artifact.
+- Convert every table row to a flat bullet; preserve a row that has no home and report it.
+- Add no new claim; report a correction.
+- Run an independent review of the old and new files and require an `APPROVED` verdict.
+- On `CHANGES REQUESTED`, fix and re-review; if it cannot pass without content loss, leave the old file unchanged and report.
+- Require no human approval beyond the trigger; the `repair knowledge files` trigger is the approval.
+- Replace a file only after verification and an `APPROVED` review.
+- Delete the temporary candidate after replacement or abort.
+- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old global file to `~/.ai/knowledge-repair-backups/<date>/global/` before the first change.
+- Write the manifest to `ai/artifacts/knowledge-repair-<date>/manifest.md` only for a non-dry run.
+- Stop a dry run after the manifest report; write and replace nothing.
 - Restore the backup on failure.
-- Never let the 100-line target override completeness.
+- Never let the 10,000-byte target override completeness.
+- Keep a file over 15,000 bytes after cleanup as one file and report it.
 - Remove a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path as session bookkeeping.
-- Keep the substantive evidence through a non-hash reference or an artifact.
-- Move a long analysis in full to `ai/artifacts/` or `design-docs/`, then create the distilled knowledge file and record the move.
+- Keep the substantive evidence in the file; do not point at an artifact.
+- Never split a file; keep the file count from increasing.
+- Keep a checklist in one file.
+- Remove a raw secret in both stores.
+- Keep an identifying name in a project file; remove it from a global file.
+- Record the manifest, project backup, and global backup paths in the checkpoint and diary.
 
 ## Issue Management Protocol
 

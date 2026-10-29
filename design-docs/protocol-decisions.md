@@ -695,3 +695,67 @@ Consequences: The announcement and the release-practices entry cover all five ch
 Context: Both are not lessons and already have a canonical owner.
 
 Consequences: The standard applies to knowledge files, and the existing canonical artifacts keep their own shape.
+
+## 2026-10-29: Knowledge files use size-based limits
+
+A knowledge file uses a 10,000-byte soft target and a 15,000-byte automatic review trigger. No line target applies. The repair aims for 10 KB and reviews at 15 KB without splitting.
+
+Context: The 100-line target forced 59 files into 233 in a live project.
+
+Consequences: Size reflects actual content. A long file stays together and is reported if it remains over 15 KB.
+
+## 2026-10-29: Knowledge repair never splits
+
+The repair never splits a file. It trims and merges. A checklist stays one file. The file count cannot increase.
+
+Context: Splitting produced 233 files from 59.
+
+Consequences: File boundaries stay stable. A long checklist is reviewed and compressed, not divided.
+
+## 2026-10-29: Knowledge files are self-standing
+
+A knowledge file contains the context it needs and points at no other knowledge, code, doc, policy, artifact, backup, or state file. The header is self-contained. A domain command, a system path, or a path a checklist step writes or edits is content.
+
+Context: The v5.4.0 repair left pointers to artifacts, backups, docs, policies, and state.
+
+Consequences: A file is readable on its own. A pointer for more context is removed or replaced with the short fact. The design-docs policy no longer keeps a source pointer.
+
+## 2026-10-29: Knowledge repair is autonomous with a safety abort
+
+The repair asks no question. It removes defined garbage and duplicates, preserves ambiguous content, backs up, verifies, runs an independent review, replaces only after an approved verdict, and reports. An incomplete manifest leaves the file unchanged. A dry run stops after the manifest.
+
+Context: The approval questions made a live repair slow and intrusive.
+
+Consequences: The repair is deterministic and reportable. An ambiguous item is preserved. An unsafe or unapproved file is not replaced.
+
+## 2026-10-29: Sensitive names are scoped by store
+
+Project knowledge may keep identifying names. Global knowledge removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content.
+
+Context: The earlier ban treated both stores the same, but the user needs project names in project knowledge.
+
+Consequences: The global store stays portable. The project store keeps its context. A tracked project file follows the commit guardrail. Vendor names stay.
+
+## 2026-10-29: v5.4.1 is a patch release
+
+v5.4.1 is a patch release for the v5.4.0 repair behavior. It covers the size limits, no split, self-standing files, autonomous repair, sensitive scope, corpus updates, docs, ADRs, and tests. The release documentation lives in the feature branch. The tag and GitHub Release follow the merge.
+
+Context: v5.4.0 shipped the bad repair behavior and the correction is urgent.
+
+Consequences: The announcement and release-practices entry describe the new behavior. Users run the repair once on their own stores.
+
+## 2026-10-29: v5.4.1 supersedes the line and split decisions
+
+The v5.4.1 standard supersedes the v5.4.0 100-line decision, the one-lesson decision, the split decision, the long-analysis move decision, the approval-gated repair decision, the header decision, the checkpoint 100-line decision, the 2026-10-06 split decision, and the 2026-10-15 one-line design-doc source-pointer decision.
+
+Context: The old decisions conflict with the new size, self-standing, and no-split rules.
+
+Consequences: The decision store has one self-contained supersession entry. The old entries stay as history.
+
+## 2026-10-29: The repair trigger is the approval
+
+The explicit `repair knowledge files` trigger authorizes the repair's merges, trims, restructures, backups, and removals. The repair asks no further question.
+
+Context: The common policy requires approval for side effects and restructures, and the user wants no questions inside the repair.
+
+Consequences: The trigger is the consent. The repair documents the result. A tracked file still follows the commit guardrail.

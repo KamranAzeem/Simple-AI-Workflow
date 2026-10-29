@@ -1,4 +1,4 @@
-> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
 # Agent-Facing Document Hierarchy
 
@@ -42,4 +42,3 @@ Agent-facing documents are read under attention pressure. `AGENTS.md`, policy fi
 
 - A made-up leading word costs definition tokens.
 - Not every section should move down the ladder; inline what every branch needs.
-- The full source analysis is not part of the shipped corpus.

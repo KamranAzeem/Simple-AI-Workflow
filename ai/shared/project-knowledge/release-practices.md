@@ -1,4 +1,4 @@
-> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
 # Release Practices
 
@@ -12,7 +12,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 
 - Use `MAJOR.MINOR.PATCH`.
 - Create an annotated tag after the merge: `git tag -a vX.Y.Z -m "summary"`.
-- Push the branch and the tag: `git push origin master && git push origin vX.Y.Z`.
+- Push the default branch and the tag: `git push origin <default-branch> && git push origin vX.Y.Z`.
 - Write the release notes on GitHub Releases.
 - Write a short announcement at `docs/announcements/vX.Y.Z.md`.
 - Point the README banner at the announcement.
@@ -26,18 +26,19 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 4. Write the announcement and point the README banner at it.
 5. Keep all release documentation on the feature branch.
 6. Squash merge the branch and confirm the validator passes 8/8.
-7. Create the annotated tag on `master`.
-8. Push `master` and the tag.
+7. Create the annotated tag on the default branch.
+8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
-### v5.4.0 (2026-10-29)
+### v5.4.1 (2026-10-29)
 
-- Add one shared knowledge capture pass, one knowledge file standard, and the canonical knowledge header.
-- Add the conservation-gated `repair knowledge files` procedure and the report-only checkpoint hygiene flag.
-- Repair the project and global knowledge corpora.
-- Include the visible protocol-file banner, the Matt Pocock backlog cleanup, and the sync-script self-exclusion fix.
-- Include the work-item branch and plan lifecycle.
-- Upgrade action: run `repair knowledge files` once; run `repair knowledge files global` when you keep global knowledge.
+- Replace the 100-line and one-lesson rule with a 10 KB soft target and a 15 KB automatic review.
+- Never split; trim and merge; a checklist stays one file; the file count cannot increase.
+- Make knowledge files self-standing; remove cross-file pointers; use the self-contained header.
+- Make the repair autonomous; no questions; preserve ambiguous content; abort an incomplete file; require an `APPROVED` review before replacement.
+- Project knowledge may keep identifying names; global knowledge removes them; raw secrets are banned in both.
+- Repair the project and global corpora, the docs, the announcement, the release practices, and the ADRs.
+- Upgrade action: run `repair knowledge files` once; add `global` if you keep global knowledge.
 
 ## Why
 

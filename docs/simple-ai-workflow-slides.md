@@ -40,7 +40,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Token rationing shield**: settings and active policies load in full; Global and Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
 - **State-file trimming**: the three state files share a 20 KB soft target. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
-- **Knowledge file standards and repair**: every knowledge file starts with a visible header and follows one shape; the checkpoint flags drift, and `"repair knowledge files"` fixes it. It takes a while, but run it once.
+- **Knowledge file standards and repair**: every knowledge file starts with a self-contained header and follows one shape. Files aim for a 10 KB soft target, get reviewed at 15 KB, and never split; merges and trims only. The checkpoint flags drift, and `"repair knowledge files"` fixes it without questions. It takes a while, but run it once.
 - **Issue management**: say `"manage issues"` to file, analyze, plan, and review tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, with a short template, a `Label` for unworkable tickets, and dated updates
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email; it uses your identity (git config, then global settings) and offers to create or fix `.gitconfig`
 - **Markdown output**: one policy for structure (headings, lists, code, links), a table ban unless you explicitly ask, and a reference `.markdownlint-cli2.jsonc`
@@ -370,7 +370,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
-- **Knowledge repair**: every knowledge file follows one shape; the checkpoint flags a missing header, a table, or a file that has grown too long, and `"repair knowledge files"` fixes it. It takes a while, so let it finish.
+- **Knowledge repair**: every knowledge file follows one shape; the checkpoint flags a missing header, a table, or a file over 15 KB, and `"repair knowledge files"` fixes it. It takes a while, so let it finish.
 
 ## The "load context" command
 
@@ -429,8 +429,10 @@ never touched. Only the rules reload.
 
 # Knowledge file standards and repair
 
-- Every knowledge file starts with a visible header and follows one shape: Context, Rule or Fix, Why, Verify
-- One lesson per file, about 100 lines. Flat bullets, no tables, no commit hashes or diary references
-- The checkpoint flags a missing header, a table, or a file that has grown too long. It never edits your knowledge files
-- `"repair knowledge files"` fixes the project store. Add `global` for global knowledge
-- Heads up: it takes a while. Let it finish. It's how your files get fixed
+- Every knowledge file starts with a self-contained header and follows one shape: Context, Rule or Fix, Why, Verify
+- Use 10 KB as a soft target; a file over 15 KB gets an automatic cleanup. No line target
+- Never split. Merge duplicates and trim what doesn't belong; the file count can't grow. A checklist stays one file
+- Every file stands on its own, with no pointers to other files. A project file may keep identifying names; a global file removes them; raw secrets are banned in both
+- The checkpoint flags a missing header, a table, or a file over 15 KB. It never edits your knowledge files
+- `"repair knowledge files"` fixes the project store and asks no questions; it preserves anything ambiguous and reports it. Add `global` for global knowledge
+- Heads up: the repair takes a while. Let it finish. It's how your files get fixed

@@ -62,6 +62,12 @@ if ! grep -q 'STEP-KNOWLEDGE-HEADER-PRE-WRITE' AGENTS.md; then
     echo "Error: STEP-KNOWLEDGE-HEADER-PRE-WRITE anchor missing in AGENTS.md."
     exit 1
 fi
+for anchor in STEP-DRY-RUN-KNOWLEDGE-REPAIR STEP-REPLACE-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-SIZE STEP-REPORT-KNOWLEDGE-REPAIR; do
+    if ! grep -q "$anchor" AGENTS.md; then
+        echo "Error: $anchor anchor missing in AGENTS.md."
+        exit 1
+    fi
+done
 if ! grep -q '### PROCEDURE UPDATE-DESIGN-DOCS:' AGENTS.md; then
     echo "Error: PROCEDURE UPDATE-DESIGN-DOCS anchor missing in AGENTS.md."
     exit 1

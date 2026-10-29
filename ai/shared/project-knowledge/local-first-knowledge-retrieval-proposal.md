@@ -1,10 +1,10 @@
-> **Knowledge file.** Follow `ai-policy-common.md`, section `## Knowledge File Standards`. This header is canonical: copy it verbatim and do not edit it. If it is missing, run `repair knowledge files`.
+> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
 # Local-First Knowledge Retrieval
 
 ## Context
 
-The workflow prefers local sources before the model's own recall, the web, or official docs. Project Knowledge is indexed by filename at boot and loaded on demand. Global Knowledge follows the same model. The source-precedence rule shipped in the Investigation Contract.
+The workflow prefers local sources before the model's own recall, the web, or official docs. Project Knowledge is indexed by filename at boot and loaded on demand. Global Knowledge follows the same model. The source-precedence rule is part of this lesson.
 
 ## Rule or Fix
 
@@ -12,7 +12,7 @@ The workflow prefers local sources before the model's own recall, the web, or of
 - Use a bounded probe: read the index, open the likely candidates, then escalate.
 - Use filename and domain matching, not embeddings, vector stores, or chunking.
 - Load a knowledge file in full only when a task needs it.
-- Keep each knowledge file to one domain with a descriptive name.
+- Keep the file together with a descriptive name for its dominant domain.
 
 ## Why
 

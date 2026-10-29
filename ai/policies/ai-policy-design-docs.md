@@ -8,6 +8,12 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Loaded by `PROCEDURE UPDATE-DESIGN-DOCS`, only when the user says `"update design documents"` (alias `"update design docs"`).
 
+## Scope
+
+- Apply this policy to design documents in `design-docs/` and in the `ai/shared/project-knowledge/` fallback.
+- This policy owns document types, naming, creation, update, extraction, migration, and the delivery ledger.
+- It does not own knowledge file standards, state files, or issue tickets.
+
 ## Nature
 
 - A design document describes a solution, an application, a module, a component, or infrastructure.
@@ -64,7 +70,7 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 ## Extraction
 
 - A design file found under the fallback location moves to its proper location. It is never copied.
-- Design content embedded in a broader knowledge file is extracted into a design document. The source file keeps a one-line pointer to the extracted document.
+- Design content embedded in a broader knowledge file is extracted into a design document. The extracted document is the authority; the source knowledge file does not keep a pointer.
 
 ## Confirmation and Challenge
 
@@ -102,5 +108,11 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 - No operational bookkeeping in any design document.
 - No design document is written without confirmation.
 - No invented doc types, IDs, or content.
+
+## References
+
+- `ai-policy-common.md` for the common guardrails and the knowledge boundary.
+- `AGENTS.md` for `PROCEDURE UPDATE-DESIGN-DOCS` and `PROCEDURE MIGRATE-DESIGN-DOCS`.
+- The Project Customization File for the design-docs location.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
