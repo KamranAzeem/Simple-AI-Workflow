@@ -13,7 +13,7 @@
 
 ## Pending
 
-- [ ] Release v5.5.0.
+- [ ] Release v5.5.1.
 
 ## Deferred
 

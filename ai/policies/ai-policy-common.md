@@ -309,8 +309,9 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ### Plan
 
-- Open the feature branch before creating the plan.
-- Create the plan under `ai/plans/`.
+- Create the plan under `ai/plans/` while the ticket stays in `open/`.
+- Do not open a feature branch for planning.
+- Name the branch to be created at implementation in the close sequence.
 - Append the plan file name to the ticket as a dated comment.
 - Treat the plan as a working artifact, not a design document.
 - Bind every close action to its repo, branch, base ref, artifact, and evidence in a `## Close Sequence` section.
@@ -338,7 +339,7 @@ All such content belongs in named project knowledge files. When creating or upda
 ### Branch and Merge
 
 - Treat a local ticket as one unit of work on one feature branch.
-- Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on that branch.
+- Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on that branch from implementation onward.
 - Run the implementation peer review on the branch.
 - Fix every Critical finding.
 - Fix every Major finding.
@@ -370,7 +371,7 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ### Lifecycle
 
-- Move a ticket from `open/` to `in-progress/` when work starts.
+- Move a ticket from `open/` to `in-progress/` when implementation starts.
 - Close a local ticket on the branch before the squash merge.
 - Close an external ticket after the PR/MR merges.
 - Reopen a local ticket by moving it to `open/`.

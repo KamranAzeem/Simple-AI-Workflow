@@ -791,3 +791,27 @@ The code-review policy gains a procedural-completeness dimension. It applies onl
 Context: reviews checked acceptance criteria and design, and a plan missing every close action passed.
 
 Consequences: A missing close step fails at plan review, not at merge time.
+
+## 2026-10-31: Planning does not open a feature branch
+
+File and analyze the issue in `open/`. Write and review the plan with no branch and no commits. Open the feature branch only when the user asks to implement the plan. This supersedes the planning half of the 2026-10-12 "Open the branch before editing" decision. The old entry stays as history.
+
+Context: the protocol opened the branch before the plan, so a planning-only request changed the repository state.
+
+Consequences: Planning is read-mostly and branch-free. The plan file is an untracked working artifact until implementation.
+
+## 2026-10-31: Implementation opens the branch and moves the ticket
+
+The explicit implement request opens the feature branch and moves the ticket from `open/` to `in-progress/`. The plan file joins the branch at that point.
+
+Context: "start work" was ambiguous and fired at planning time.
+
+Consequences: The branch boundary is the planning and implementation boundary. The one-branch and one-squash decision applies from implementation onward.
+
+## 2026-10-31: The branch-before-edit rule exempts planning artifacts
+
+Code and configuration changes require the feature branch. The plan file and the ticket status or comment are exempt while the ticket is in `open/`.
+
+Context: the 2026-10-12 rule treated every file change as implementation work.
+
+Consequences: Planning runs on the trunk working tree without committing. The exemption is narrow.

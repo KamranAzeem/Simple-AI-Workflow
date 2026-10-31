@@ -49,7 +49,7 @@ Description:
 ## Lifecycle
 
 1. File the ticket in `ai/issues/open/`.
-2. When work starts, open the feature branch, then move the ticket to `ai/issues/in-progress/`.
+2. When the user asks to implement the plan, open the feature branch, then move the ticket to `ai/issues/in-progress/`.
 3. For local work, attach the plan and close the ticket on the branch before the squash merge.
 4. For external work, merge the PR/MR first, then attach the plan and close the ticket.
 5. To reopen a local ticket, open a new branch and move it to `ai/issues/open/`.

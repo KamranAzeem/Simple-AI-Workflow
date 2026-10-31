@@ -30,6 +30,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.5.1 (2026-10-31)
+
+- File and analyze an issue with no branch.
+- Write and review the plan while the ticket is in `open/`, with no branch and no commit.
+- Open the feature branch and move the ticket to `in-progress/` only on the implement request.
+- Narrow the branch-before-edit rule to code changes; planning artifacts are exempt.
+- Update `AGENTS.md`, the common policy, the issue template, the guide, README, slides, ADRs, and the announcement.
+- Upgrade action: none beyond the usual sync.
+
 ### v5.5.0 (2026-10-31)
 
 - Add a bound `## Close Sequence` to every plan.
