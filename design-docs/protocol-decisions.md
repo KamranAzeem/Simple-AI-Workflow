@@ -759,3 +759,35 @@ The explicit `repair knowledge files` trigger authorizes the repair's merges, tr
 Context: The common policy requires approval for side effects and restructures, and the user wants no questions inside the repair.
 
 Consequences: The trigger is the consent. The repair documents the result. A tracked file still follows the commit guardrail.
+
+## 2026-10-31: Work items have a terminal state and a bound close sequence
+
+A work item is complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release. Every plan carries a `## Close Sequence` section that binds each close action to its repo, branch, base ref, artifact, and evidence. A plan whose last action is an approval request is incomplete.
+
+Context: a plan ended at "request merge approval", passed six review rounds, and never committed, closed, or checked in.
+
+Consequences: The procedure owns the order, and the plan owns the addresses. Plan review checks the binding.
+
+## 2026-10-31: Feature-branch approval covers commits and pushes
+
+Approval of a feature branch authorizes local commits and pushes on that branch. Trunk merge, tags, releases, and external system writes need separate approval.
+
+Context: the protocol never said whether branch approval covered git writes, and a session stopped at "verified" because committing looked unapproved.
+
+Consequences: The unblocked close actions run without another approval round. The protected-branch and external-system gates remain.
+
+## 2026-10-31: AI state lives only under the project root ai/
+
+AI state and checkpoints live under the project root `ai/` directory, whether or not it is version controlled. A secondary repository never holds a checkpoint. When `ai/` is tracked, the checkpoint commit goes on the project root repo's branch.
+
+Context: a multi-repo work item made "checkpoint on the branch" ambiguous.
+
+Consequences: One state location. Secondary repos carry only their own changes.
+
+## 2026-10-31: Reviews check procedural completeness on plans and close claims
+
+The code-review policy gains a procedural-completeness dimension. It applies only when the reviewed artifact is a plan or a work-item close claim. It checks the close-sequence binding and the terminal gate. A missing, unowned, or unverified close action is a Major finding.
+
+Context: reviews checked acceptance criteria and design, and a plan missing every close action passed.
+
+Consequences: A missing close step fails at plan review, not at merge time.

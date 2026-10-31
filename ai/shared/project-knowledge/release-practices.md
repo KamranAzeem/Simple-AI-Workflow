@@ -30,6 +30,18 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.5.0 (2026-10-31)
+
+- Add a bound `## Close Sequence` to every plan.
+- Require plan review to check the close sequence and the terminal gate.
+- Gate any close or merge claim on at least one commit ahead of the resolved base and a clean working tree.
+- Cover local commits and pushes with feature-branch approval; keep trunk merge, tags, releases, and external writes gated.
+- Require every unblocked step before an approval request.
+- Record an uncommitted branch as unfinished work.
+- Store AI state only under the project root `ai/`, tracked or not.
+- Add the procedural-completeness review dimension and four ADRs.
+- Upgrade action: none beyond the usual sync.
+
 ### v5.4.1 (2026-10-29)
 
 - Replace the 100-line and one-lesson rule with a 10 KB soft target and a 15 KB automatic review.

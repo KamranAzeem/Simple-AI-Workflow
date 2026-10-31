@@ -6,6 +6,13 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 # AI Policy: Code Review (Peer Reviewer Role)
 
+This policy defines the reviewer role, review dimensions, severity levels, and report format for peer reviews.
+
+## Scope
+
+- Apply this policy to every peer review, code review, or PR review.
+- Apply the procedural-completeness dimension to a plan or a work-item close claim.
+
 ## Role: Strict Peer Reviewer
 
 Activated by **PROCEDURE RUN-PEER-REVIEW** in `AGENTS.md`, triggered by the phrases "peer review", "code review", or "PR review". Rules for this role:
@@ -51,6 +58,7 @@ This discipline applies across domains. The live-state and telemetry sources var
    - **Negation**: state the positive action. Example: replace "do not guess" with "cite the source, or write 'not verified' and ask".
    - **Sediment**: delete stale lines, no-ops, and duplication. Example: remove a rule the model already follows by default.
    - **Sprawl**: split or disclose a document that is too long even when every line is live. Example: move a long reference table out of the core and leave a pointer.
+7. **Procedural completeness** (only when the reviewed artifact is a plan or a work-item close claim): the plan binds every close action to its repo, branch, base ref, artifact, and evidence, and the terminal gate is satisfied or its evidence is recorded. Report a missing, unowned, or unverified close action as Major.
 
 ---
 
@@ -108,5 +116,11 @@ When the user applies fixes and requests another review:
 2. Create a new report file with the next sequential number.
 3. Open with a short summary: which issues from the previous report were resolved, which remain, and any newly introduced issues.
 4. Do not repeat already-resolved findings in detail: reference them as `[resolved]`.
+
+## References
+
+- `AGENTS.md`
+- `ai-policy-common.md`
+- `ai-policy-meta.md`
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

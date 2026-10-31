@@ -368,15 +368,18 @@ Tickets live under three status directories: `open/`, `in-progress/`, and `close
 
 - Create a ticket with `"file an issue"`, using the template at `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
 - Before work, the AI analyzes the ticket for gaps and fills them with you through brainstorming or grilling. If it is not workable, it gets `Label: Insufficient Information` or `Label: Unworkable`, and the AI refuses to work it, even if you insist.
-- Start work with `"manage issues"`, which opens the feature branch and moves the ticket to `in-progress/`.
+- Start work with `"manage issues"`, which opens the feature branch and moves the ticket to `in-progress/`. Approving the feature branch covers commits and pushes on that branch. Merging to the trunk, tagging, releasing, and changing an external system still need your approval.
 - Once workable, the AI creates a plan with an `## Evidence` section, appends its file name as a dated comment, and runs automatic review rounds. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. If the project uses TDD, tests come first. A plan is ready only after an `APPROVED` verdict.
+- The plan includes a close sequence. It binds each close action to a repo, branch, base ref, and evidence, so a plan that stops at "request merge approval" is incomplete. Plan review rejects a missing, unowned, or unverified close action.
 - For local work, the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint stay on one branch.
-- Local merge: attach the plan, replace its link with `Plan attached below.`, delete the plan file, close the ticket, run the checkpoint, squash-merge, delete the branch, and push. Do not make post-merge commits for the work item. For an external PR/MR, merge first, then attach the plan, delete the plan file, and close the ticket. Release documentation stays in the branch; the tag follows the merge.
+- Local merge: attach the plan, replace its link with `Plan attached below.`, delete the plan file, close the ticket, run the checkpoint, squash-merge, delete the branch, and push. Do not make post-merge commits for the work item. For an external PR/MR, merge first, then attach the plan, delete the plan file, and close the ticket. Release documentation stays in the branch; the tag follows the merge. Before any close or merge claim, the AI checks each repo: at least one commit ahead of the resolved base, and a clean working tree. A zero-commit branch or a dirty tree is unfinished work, not a pending approval.
 - Reopen a local ticket on a new branch and move it to `open/`. Reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
 
 ## 17. State-File Health and Repair
 
 Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the soft target, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries over the soft target or older than 14 days into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
+
+All AI state lives under the project root `ai/`, whether or not it is a git repository. In a multi-repo project, the project root repo owns the state, and a checkpoint never goes into a secondary repo.
 
 Knowledge files have their own repair. Say `"repair knowledge files"` to audit and fix the project store; add `global` for global knowledge. It keeps files at a 10 KB soft target, reviews anything over 15 KB, merges and trims instead of splitting, and asks no questions; see section 23.
 

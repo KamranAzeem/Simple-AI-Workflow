@@ -47,6 +47,10 @@ When implementing new features, architecture changes, or functional code modific
 1. **Discussion**: Propose and wait for approval.
 2. **Branch**: Work on a human-approved feature branch (e.g., `feature/xyz`).
 3. **Integration**: Merge only after human approval.
+
+- Approval of the feature branch authorizes local commits and pushes on that branch.
+- Trunk merge, tags, releases, and external system writes need separate approval.
+
 **No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before making any change to the files, so every edit lands on the branch.
 Branch prefix and commit format: see Git conventions in Universal Engineering Standards.
 
@@ -90,6 +94,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint Labeling**: A checkpoint is labeled by its date plus a short title. There is no checkpoint ID.
 - **No Git Metadata in State Files**: The state files never record a branch, commit hash, or push status, and the AI does not prompt the user to commit them. Git history is the source of truth for version control.
+- **Uncommitted Work**: Record an uncommitted branch as unfinished work, never as a pending approval. Name the next unblocked step in a pending item.
 
 ## AI-Driven Secure Development Practices
 
@@ -107,6 +112,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 - **Canonical Reference Names**: Refer to procedures, steps, and tiers by their canonical ALL-CAPS kebab names (for example PROCEDURE WRITE-CHECKPOINT, STEP PROOF-OF-LOAD, TIER TRIGGERED-PROCEDURES). Never reference them by letter or number.
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question.
+- **Unblocked steps first**: Complete every procedure step that needs no approval before requesting an approval.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
 - **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Applies to everything that enters git (commits, messages, docs, code comments, knowledge files, filenames) and to external systems. A project knowledge file outside git may keep an identifying name. A tracked knowledge file follows this scan. A global knowledge file never keeps an identifying name. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
@@ -307,6 +313,9 @@ All such content belongs in named project knowledge files. When creating or upda
 - Create the plan under `ai/plans/`.
 - Append the plan file name to the ticket as a dated comment.
 - Treat the plan as a working artifact, not a design document.
+- Bind every close action to its repo, branch, base ref, artifact, and evidence in a `## Close Sequence` section.
+- Bind the procedure actions to the plan's repos and branches.
+- Treat a plan whose last action is an approval request as incomplete.
 - Include an `## Evidence` section in every plan.
 - Record sources, commands, results, confirmed facts, and open questions in the evidence section.
 - Use context plus acceptance criteria for an `S` ticket.
@@ -334,6 +343,10 @@ All such content belongs in named project knowledge files. When creating or upda
 - Fix every Critical finding.
 - Fix every Major finding.
 - Re-review until no Critical or Major finding remains.
+- Run the terminal gate before any close or merge claim.
+- Resolve the base ref from the plan, never from a hardcoded branch name.
+- Confirm the branch is at least one commit ahead of its base and the working tree is clean.
+- Report a zero-commit branch or a dirty working tree as unfinished work.
 - Attach the final plan to the ticket under `## Implementation Plan`.
 - Replace the active plan link with `Plan attached below.` at close.
 - Delete the plan file from `ai/plans/` at close.
@@ -353,6 +366,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Put local release documentation in the branch.
 - Tag the release commit after the merge.
 - Publish the GitHub Release after the tag.
+- Treat the work item as complete only after the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
 
 ### Lifecycle
 
@@ -368,6 +382,9 @@ All such content belongs in named project knowledge files. When creating or upda
 ## State File Ownership Protocol
 
 - **Single-Writer Rule**: **Project AI State Files** are the canonical project narrative and are written **only** by the project-root orchestrator (the AI session that owns the project root). Ownership is by **session/process identity, not by role**: if the one owning session changes hats mid-session (manager → developer → document-controller), it is still the orchestrator and writes the state files normally. The prohibition applies to **separate** sub-agent sessions/processes that are not the owning session: those MUST NOT write **Project AI State Files**.
+- Store AI state only under the project root `ai/` directory, tracked or not.
+- Never store a checkpoint in a secondary repository.
+- Commit the checkpoint on the project root repo's branch when `ai/` is tracked.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
 - **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve the append-only history in progress.md and detect drift, never a refresh that overwrites fresh work with a stale disk copy.
