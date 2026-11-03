@@ -13,7 +13,7 @@
 
 ## Pending
 
-- Finish the v5.6.0 close: commit, gate, merge, tag, push, release, and verify.
+Nothing pending.
 
 ## Deferred
 
