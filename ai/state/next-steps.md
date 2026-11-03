@@ -13,7 +13,7 @@
 
 ## Pending
 
-- Finish the v5.5.2 close: merge, tag, push, release, and close #2.
+Nothing pending.
 
 ## Deferred
 

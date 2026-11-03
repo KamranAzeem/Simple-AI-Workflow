@@ -107,7 +107,7 @@ ai/
 │   ├── progress.md       ← what was done
 │   ├── next-steps.md     ← what comes next
 │   └── context.md        ← where things stand right now
-├── policies/            ← domain rules and expertise
+├── policies/            ← your own custom policies (optional)
 ├── shared/
 │   ├── project-knowledge/   ← decisions, findings, architecture notes
 │   └── handoffs/            ← task transfers between sessions

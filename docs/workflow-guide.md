@@ -217,7 +217,7 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 
 ### How it works
 
-1. The AI reads `ai/policies/ai-policy-code-review.md` for its reviewer role definition.
+1. The AI reads the code-review policy (`ai-policy-code-review.md`) from the **Global AI Policies Directory** for its reviewer role definition.
 2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target, not the local working tree.
 3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
 4. When the reviewed file is read by an AI (`AGENTS.md`, policy files, handoff templates), it also checks agent readability: hierarchy, completion criteria, leading words, negation, sediment, and sprawl.
