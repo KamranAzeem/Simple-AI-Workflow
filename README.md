@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.5.2 (2026-11-03).** Policy loads resolve from the global policies directory. No protocol step hardcodes a policy path, so peer review, codebase examination, and design-doc steps find their policy files in a user project. Read the announcement: [docs/announcements/v5.5.2.md](docs/announcements/v5.5.2.md). |
+| **v5.6.0 (2026-11-03).** One delivery flow in two procedures. `MANAGE-ISSUES` files, closes, and plans; `IMPLEMENT-PLAN` delivers. Merge Policy adds `direct`, `pr`, and `auto` with no CLI requirement. Read the announcement: [docs/announcements/v5.6.0.md](docs/announcements/v5.6.0.md). |
 
 # Simple AI Workflow
 
@@ -370,7 +370,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
-- **Issue management**: say `"manage issues"` and the AI files, analyzes, plans, and reviews tickets under `ai/issues/open/`, `ai/issues/in-progress/`, and `ai/issues/closed/`, using a short template with type, severity, size, a `Label` for unworkable tickets, and dated updates. From implementation onward, each local ticket stays on one branch, ends in one squash commit, and carries the final plan in the closed ticket. Planning stays in `open/` and opens no branch until you ask to implement. The plan carries a close sequence, and the AI checks for at least one commit on the branch and a clean working tree before it calls the work ready or closes the ticket.
+- **Issue management and delivery**: `PROCEDURE MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and writes and reviews a plan on request. `PROCEDURE IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. The implementation request covers the branch, commit, merge, push, and the release the plan names. Set `## Merge Policy` `**Merge Mode**: direct` for solo work or `pr` for a team repository; `auto` behaves as direct and falls back to a pull request when a direct push is rejected. No CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands.
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.

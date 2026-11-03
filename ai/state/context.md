@@ -14,19 +14,19 @@
 
 ## Current Status
 
-- **Milestone**: v5.5.2 (2026-11-03) released: policy loads resolve from the Global AI Policies Directory, and no protocol file hardcodes a policy path.
-- **Validator**: 8/8; authoring validator PASSED; reference test PASS; shellcheck clean; markdownlint 0.
+- **Milestone**: v5.6.0 (2026-11-03) implemented: work-item delivery runs through `MANAGE-ISSUES` and `IMPLEMENT-PLAN`, with merge modes from `## Merge Policy`. The release is pending.
+- **Validator**: 8/8; authoring validator PASSED; reference test PASS at 13 procedures and 96 steps; shellcheck clean; markdownlint 0.
 - **Policy count**: 18 modular policies.
 - **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive; today's file exists.
 - **Project knowledge**: 9 lesson files plus the template; global knowledge 26 files; JIT-indexed; ADR store `design-docs/protocol-decisions.md`; ticket background lives in Project Knowledge; `ai/notes/` holds `notes.md`.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 22 open, 0 in-progress, 61 closed.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 62 closed.
 
 ## Active Working Context
 
-- **Objective**: maintain v5.5.2; the backlog is the issue tracker.
-- **Live decisions**: a policy file named without a directory resolves from the Global AI Policies Directory; the meta policy's maintainer paths resolve from the workflow directory; the reference test guards hardcoded policy paths; user-facing docs that speak to a project name the directory anchor, while clone-layout docs keep the clone paths; planning files and reviews the issue in `open/` with no branch and no commit; only the implement request opens the feature branch; a work item has a terminal state and a bound close sequence; feature-branch approval covers commits and pushes, while trunk merge, tags, releases, and external writes stay gated; AI state lives only under the project root `ai/`. See `design-docs/protocol-decisions.md`.
-- **Work-item lifecycle**: planning stays in `open/` with no branch; implementation uses one branch and one squash commit; the final plan is attached to the ticket and the plan file is deleted; the checkpoint runs on the branch.
+- **Objective**: finish and release v5.6.0; the backlog is the issue tracker.
+- **Live decisions**: a policy file named without a directory resolves from the Global AI Policies Directory; the meta policy's maintainer paths resolve from the workflow directory; the reference test guards hardcoded policy paths; user-facing docs that speak to a project name the directory anchor, while clone-layout docs keep the clone paths; work-item delivery runs through `MANAGE-ISSUES` and `IMPLEMENT-PLAN`, with the merge mode from `## Merge Policy`; planning files and reviews the issue in `open/` with no branch and no commit; only the implement request opens the feature branch; a work item has a terminal state and a bound close sequence; the approved plan and implement request cover the branch, commit, merge, push, release, and external writes the plan names; AI state lives only under the project root `ai/`. See `design-docs/protocol-decisions.md`.
+- **Work-item lifecycle**: `MANAGE-ISSUES` files and plans, and stops at each request; `IMPLEMENT-PLAN` delivers. A branch may hold several commits; trunk receives one squash commit. Merge mode comes from `## Merge Policy`. The final plan is attached to the ticket and the plan file is deleted; the checkpoint runs on the branch.
 - **Knowledge standards**: 10 KB soft and 15 KB review, no split, self-standing files, no-question repair, project/global sensitive scope.
-- **Release**: v5.5.2 is published at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.5.2>.
-- **Next actions**: none; the backlog is the issue tracker.
+- **Release**: v5.5.2 is published; the v5.6.0 tag and GitHub Release are pending.
+- **Next actions**: finish the v5.6.0 close.
 - **Lint**: clean on the v5.5.2 set and `ai/notes/notes.md`; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.

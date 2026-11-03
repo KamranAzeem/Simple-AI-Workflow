@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy for Codebase Examination
+# AI Policy: Codebase Examination
+
+Defines the examiner role and the map, plan, perform, and reconcile workflow for a codebase too large to load fully.
 
 ## Scope
 
@@ -60,7 +62,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 
 ## Safety Net (reuse existing guardrails, do not reinvent)
 
-- **Branch-gating**: Any refactor that changes functional code follows the common policy's Branch-Gating Requirement: discussion, human-approved feature branch, merge only after approval.
+- **Branch-gating**: Any refactor that changes functional code follows the common policy's Branch-Gating Requirement and PROCEDURE IMPLEMENT-PLAN. The approved plan is the approval for the branch and the merge it names.
 - **TDD**: When the project's Development Workflow mandates TDD, examination-driven refactors are not exempt. Characterize existing behavior with tests before changing it where feasible.
 - **Peer review**: Treat a completed refactor as a module: run a peer review (PROCEDURE RUN-PEER-REVIEW) before declaring it done.
 - **No silent large rewrites**: Sweeping changes are proposed and approved in batches, never applied as one opaque mass edit.
@@ -72,5 +74,11 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 - Treating `AGENTS.md` as a code skeleton map: in this repository `AGENTS.md` is the protocol entry point, not a code map.
 - Holding examination state only in the conversation; it must be persisted to disk to survive compaction.
 - Beginning refactors before the examination map and change plan exist on disk.
+
+## References
+
+- Common policy: `ai-policy-common.md`
+- Code review policy: `ai-policy-code-review.md`
+- Agent document hierarchy: `ai/shared/project-knowledge/agent-facing-document-hierarchy.md`
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

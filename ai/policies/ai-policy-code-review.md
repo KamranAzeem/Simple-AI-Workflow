@@ -58,7 +58,7 @@ This discipline applies across domains. The live-state and telemetry sources var
    - **Negation**: state the positive action. Example: replace "do not guess" with "cite the source, or write 'not verified' and ask".
    - **Sediment**: delete stale lines, no-ops, and duplication. Example: remove a rule the model already follows by default.
    - **Sprawl**: split or disclose a document that is too long even when every line is live. Example: move a long reference table out of the core and leave a pointer.
-7. **Procedural completeness** (only when the reviewed artifact is a plan or a work-item close claim): the plan binds every close action to its repo, branch, base ref, artifact, and evidence, and the terminal gate is satisfied or its evidence is recorded. Report a missing, unowned, or unverified close action as Major.
+7. **Procedural completeness** (only when the reviewed artifact is a plan or a work-item close claim): the plan binds every close action to its repo, base ref, branch, merge mode, ticket reference, release, and evidence, and the terminal gate is satisfied or its evidence is recorded. Report a missing, unowned, or unverified close action as Major.
 
 ---
 

@@ -823,3 +823,11 @@ A policy file is named without a directory and resolved from the **Global AI Pol
 Context: the configuration anchors already existed at the top of `AGENTS.md`, and five steps bypassed them. The 2026-06-19 single-source rule forbids duplicating an anchor path inline.
 
 Consequences: one rule governs every policy load. A reintroduced hardcoded path fails the reference test. A meta-policy reader sees the repository boundary once instead of at every maintainer path.
+
+## 2026-11-03: Work-item delivery lives in two procedures, with merge modes
+
+`PROCEDURE MANAGE-ISSUES` owns ticket actions and planning, and ends at the step the user asked for. `PROCEDURE IMPLEMENT-PLAN` owns delivery from an approved plan to a merged release. The delivery order is stated only in `AGENTS.md`; the common policy keeps invariants, and the issue template, workflow guide, README, and collaboration doc point to the procedures. A new `## Merge Policy` setting chooses `direct`, `pr`, or `auto`; `auto` behaves as direct and falls back to a PR when a direct push is rejected, and no CLI is required. A ticket is a local file or an external issue by reference. A local ticket closes in the branch commit; an external ticket closes when the merge lands. Branches may carry several commits; trunk receives one squash commit. The reference test gains an order-drift guard. This supersedes the order and tracker parts of the 2026-10-31 entries, the merge-sequence parts of 2026-10-12, the one-branch-commit and external-close parts of 2026-10-28, and the step-name set of 2026-10-06.
+
+Context: the order was written in five places and drifted; filing cascaded into planning; "external" conflated a tracker with a PR/MR; and the meta policy required per-action approval, so the same work stopped at different points.
+
+Consequences: one order, one approval boundary, and two merge paths. The old entries and the closed tickets `work-item-close-sequence-and-terminal-state`, `issue-management-policy-improvements`, and `post-merge-maintenance-commits-on-master` remain as history.

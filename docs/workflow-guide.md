@@ -362,19 +362,19 @@ If you have not migrated yet, they live under `ai/shared/project-knowledge/` wit
 
 At the start of each session, the AI checks for these documents and prompts you to create any that are missing. To write or update them, say `"update design documents"`; the AI proposes each change, challenges the design decisions, and shows a diff before it writes. It updates the delivery ledger when a design document changes, never at checkpoint.
 
-## 16. Issue Management (`ai/issues/`)
+## 16. Issue Management and Delivery (`ai/issues/`)
 
-Tickets live under three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status, and no file sits directly under `ai/issues/`.
+Two procedures own the work. `PROCEDURE MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and writes and reviews a plan on request. `PROCEDURE IMPLEMENT-PLAN` delivers an approved plan. Each request ends at its own step: a ticket-only request does not cascade into planning, and a plan request does not open a branch.
 
-- Create a ticket with `"file an issue"`, using the template at `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
-- Before work, the AI analyzes the ticket for gaps and fills them with you through brainstorming or grilling. If it is not workable, it gets `Label: Insufficient Information` or `Label: Unworkable`, and the AI refuses to work it, even if you insist.
-- When you ask to implement the plan, the AI opens the feature branch and moves the ticket to `in-progress/`. Approving the feature branch covers commits and pushes on that branch. Merging to the trunk, tagging, releasing, and changing an external system still need your approval.
-- Once workable, the AI creates a plan with an `## Evidence` section, appends its file name as a dated comment, and runs automatic review rounds. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. If the project uses TDD, tests come first. A plan is ready only after an `APPROVED` verdict.
-- Planning stays in `open/`. Writing and reviewing the plan opens no branch and makes no commit.
-- The plan includes a close sequence. It binds each close action to a repo, branch, base ref, and evidence, so a plan that stops at "request merge approval" is incomplete. Plan review rejects a missing, unowned, or unverified close action.
-- Once implementation starts, the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint stay on one branch.
-- Local merge: attach the plan, replace its link with `Plan attached below.`, delete the plan file, close the ticket, run the checkpoint, squash-merge, delete the branch, and push. Do not make post-merge commits for the work item. For an external PR/MR, merge first, then attach the plan, delete the plan file, and close the ticket. Release documentation stays in the branch; the tag follows the merge. Before any close or merge claim, the AI checks each repo: at least one commit ahead of the resolved base, and a clean working tree. A zero-commit branch or a dirty tree is unfinished work, not a pending approval.
-- Reopen a local ticket on a new branch and move it to `open/`. Reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
+Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's directory is its status; an external ticket's state is its status. Create a ticket with `"file an issue"` using `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
+
+The plan carries an `## Evidence` section and a close block. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. Plan review runs automatically, and a plan is ready only after `APPROVED`.
+
+The implementation request is the approval for the full delivery: the branch, the commit, the merge, the push, and the release the plan names. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
+
+For `direct`, the AI squash-merges the branch to the trunk, deletes the branch, and pushes. For `pr`, it pushes the branch, opens the pull request or gives you the URL, waits for the team to merge, then pulls the trunk. The release tag follows the merge.
+
+A local ticket closes in the branch commit. An external ticket closes when the merge lands. Reopen a local ticket on a new branch and move it to `open/`; reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
 
 ## 17. State-File Health and Repair
 

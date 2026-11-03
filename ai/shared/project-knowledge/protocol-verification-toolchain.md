@@ -18,14 +18,14 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, git safety, and checkpoint cycle.
 - The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` reservation.
-- The reference test confirms that every procedure, step, tier, and load item resolves.
+- The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
 - Markdownlint catches structural defects before review.
 
 ## Verify
 
 - Confirm `Protocol Validation v6.1 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 12 procedures, 95 steps, 4 tiers, and 9 items.
+- Confirm the reference test prints `PASS` with 13 procedures, 96 steps, 4 tiers, and 9 items.
 - Confirm markdownlint reports `0 issues`.
 
 ## Caveats
@@ -34,5 +34,5 @@ Run these checks from the project root after a change to the protocol, a policy,
 - A list directly after a lead-in line needs a blank line; three tickets were committed with MD032 because only some files were linted.
 - On this machine the markdownlint binary is at `~/.nvm/versions/node/v24.19.0/bin/markdownlint-cli2`; use `markdownlint-cli2` from `PATH` where available.
 - A `## Triggers` section is reserved until the plugin model lands.
-- `shellcheck` is not installed on this machine; use `bash -n` for syntax checks.
+- `shellcheck` is installed at `/usr/bin/shellcheck`; run it on changed shell scripts.
 - The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.

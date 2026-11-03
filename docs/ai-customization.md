@@ -50,6 +50,12 @@ Examples: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa
 
 **Location**: design-docs/
 
+## Merge Policy
+
+**Merge Mode**: auto
+
+<!-- Use pr for team repositories that require a pull request; direct for solo work. -->
+
 ---
 
 <!-- 

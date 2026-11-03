@@ -99,6 +99,33 @@ See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customiz
 "@
 }
 
+function Get-MergePolicySection {
+  @"
+
+## Merge Policy
+
+**Merge Mode**: auto
+
+<!-- Use pr for team repositories that require a pull request; direct for solo work. -->
+"@
+}
+
+function Add-MergePolicySection {
+  param([string]$CustomizationFile)
+  $content = Get-Content -Raw -Path $CustomizationFile -ErrorAction Stop
+  if ($content -match '(?m)^## Merge Policy') {
+    return
+  }
+  if ($WhatIf) {
+    Write-Host "  ai-customization.md: would add Merge Policy"
+    return
+  }
+  $section = Get-MergePolicySection
+  $newContent = $content.TrimEnd() + "`n" + $section + "`n"
+  [System.IO.File]::WriteAllText($CustomizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
+  Write-Host "  ai-customization.md: added Merge Policy"
+}
+
 function Get-DefaultCustomizationFile {
   param([string]$WorkflowDir)
   @"
@@ -111,6 +138,12 @@ function Get-DefaultCustomizationFile {
 **Global AI Workflow Directory**: $WorkflowDir
 
 See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+
+## Merge Policy
+
+**Merge Mode**: auto
+
+<!-- Use pr for team repositories that require a pull request; direct for solo work. -->
 
 ## Active Expertise
 - web-frontend
@@ -147,6 +180,7 @@ function Ensure-CustomizationFile {
       if (-not $WhatIf) {
         Move-Item -Path $oldFile -Destination $bakFile -Force -ErrorAction Stop
       }
+      Add-MergePolicySection -CustomizationFile $customizationFile
       return
     } else {
       Write-Host "  Moving $oldFile to $customizationFile and adding config section"
@@ -161,6 +195,7 @@ function Ensure-CustomizationFile {
           [System.IO.File]::WriteAllText($customizationFile, $newContent, [System.Text.UTF8Encoding]::new($false))
         }
       }
+      Add-MergePolicySection -CustomizationFile $customizationFile
       return
     }
   }
@@ -194,6 +229,7 @@ function Ensure-CustomizationFile {
         }
       }
     }
+    Add-MergePolicySection -CustomizationFile $customizationFile
     return
   }
 

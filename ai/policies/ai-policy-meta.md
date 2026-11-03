@@ -32,20 +32,19 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 - Run `support-files/validate-protocol.sh`.
 - Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md` or policy file.
 - Present a summary and a proposed commit message.
-- Wait for human approval before staging or committing.
+- Treat the approved plan and the implement request as the human approval for staging, committing, merging, pushing, opening a pull request, releasing, and the external writes the work names.
 - Apply the ADR entry rule in `design-docs/protocol-decisions.md` to every protocol or policy change.
 
 ## Forbidden Actions
 
-- Do not push, create a pull request, merge, or release without explicit human approval.
-- Do not edit a policy file marked read-only without prior approval.
+- Do not push, create a pull request, merge, or release beyond what the approved plan names without explicit human approval.
+- Do not edit a policy file marked read-only unless the approved plan names it.
 - Do not write a secret or identifying name to a tracked file.
 
 ## Approval and Escalation
 
 - Get human approval before running a script that writes to multiple projects.
-- Get human approval before creating or pushing a commit to a remote.
-- Get human approval before changing an authoritative policy, meaning a policy referenced by `AGENTS.md`.
+- Change an authoritative policy, meaning a policy referenced by `AGENTS.md`, only when the approved plan names it.
 - Notify the repository owner when a change affects multiple projects, an authoritative policy, a remote system, or has no clear precedent in the protocol.
 - Wait for direction before proceeding.
 

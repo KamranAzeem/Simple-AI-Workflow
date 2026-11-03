@@ -30,6 +30,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.6.0 (2026-11-03)
+
+- Deliver work items through two procedures: `MANAGE-ISSUES` for ticket work and planning, `IMPLEMENT-PLAN` for delivery.
+- State the order once in `AGENTS.md`; the common policy keeps invariants and the template, guide, README, and collaboration doc point to the procedures.
+- Add `## Merge Policy` with `Merge Mode: direct`, `pr`, or `auto`; no CLI is required.
+- Keep tickets by reference: local by default, external when supplied. A local ticket closes in the branch commit; an external ticket closes on merge.
+- Allow several branch commits; trunk receives one squash commit.
+- Add the order-drift guard to the reference test.
+- Upgrade action: run the sync script to add `## Merge Policy`; set `pr` for a team repository that requires a pull request.
+
 ### v5.5.2 (2026-11-03)
 
 - Resolve policy loads from the Global AI Policies Directory; no protocol file hardcodes a policy path.

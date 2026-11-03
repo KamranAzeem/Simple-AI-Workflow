@@ -255,26 +255,25 @@ The following short forms are recognized as equivalents to their canonical direc
 2. **STEP-RUN-EXAMINATION-WORKFLOW**: Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
 3. **STEP-EXIT-EXAMINATION**: Return to normal role when the examination session concludes.
 
-### PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "close issue", or "list issues"
+### PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "close issue", "list issues", "plan the issue", or "plan issue #N"
 
-**Aliases**: manage issues; file an issue; close issue; list issues
+**Aliases**: manage issues; file an issue; close issue; list issues; plan the issue; plan issue #N
 
-1. **STEP-LOAD-ISSUE-MECHANISM**: The issue-management rules live in `ai-policy-common.md`, which is always loaded. There is no separate policy file and no extra load step.
-2. **STEP-LOCATE-TICKET**: Tickets live under `ai/issues/` in exactly three status directories: `open/`, `in-progress/`, and `closed/`. A ticket's directory is its status. No file sits directly under `ai/issues/`.
-3. **STEP-ACT-ON-ISSUE-REQUEST**:
-    - **Create**: write a new ticket under `ai/issues/open/` using the format in `ai/shared/project-knowledge/issue-template.md`. AI-initiated creation is immediate and never waits on a human; set `Severity`/`Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them, and leave `Label` empty.
-    - **Start implementation**: when the user asks to implement the plan, open the feature branch, then move the ticket file from `open/` to `in-progress/` (for example `git mv` in a repository that tracks `ai/`).
-    - **Close local**: attach the plan, close the ticket on the branch before the squash merge, and update related project knowledge.
-    - **Close external**: merge the PR/MR first, then attach the plan, delete the plan file, and close the ticket.
-    - **Reopen local**: open a new branch and move the ticket from `closed/` back to `open/`.
-    - **Reopen external**: reopen the ticket in its tracker.
-    - **List**: read `ai/issues/open/` and `ai/issues/in-progress/` and report filenames. This action is read-only.
-4. **STEP-ANALYZE-ISSUE**: analyze the ticket for missing information, inconsistencies, and gaps; fill every gap through brainstorming or grilling with the user. If it is not workable, set `Label: Insufficient Information` or `Label: Unworkable` and refuse to work it, even if the user insists.
-5. **STEP-PLAN-MANDATE**: create the plan under `ai/plans/` while the ticket is in `open/`, with an `## Evidence` section and the depth from the common policy. Do not open a feature branch for planning. Append the plan file name as a dated comment on the ticket. Include a `## Close Sequence` section that binds every close action to its repo, branch, base ref, ticket, review record, checkpoint location, and evidence of done. A plan whose last action is an approval request is incomplete. Write the failing test first when the project uses TDD.
-6. **STEP-PLAN-REVIEW**: run independent peer review automatically. Check the plan against PROCEDURE MANAGE-ISSUES and its `## Close Sequence`; return `CHANGES REQUESTED` when a close action is missing, unowned, or unverified. Fix every Critical finding. Fix every Major finding. Re-review after each fix. Announce the plan ready only after an `APPROVED` verdict. Record each round in the plan's Peer Review Log.
-7. **STEP-BRANCH-REVIEW**: when the user asks to implement the plan, open the feature branch and move the ticket to `in-progress/`. Implement on the feature branch. Include tests, documentation, release announcement, ADRs, and the checkpoint. Run the terminal gate before any close or merge claim: for each repo in scope, resolve the base ref from the plan, confirm the branch is at least one commit ahead of that base, and confirm `git status --porcelain` is empty. A zero-commit branch or a dirty working tree blocks the claim. Run the implementation peer review. Fix every Critical finding. Fix every Major finding. Re-review until no Critical or Major finding remains.
-8. **STEP-MERGE-SEQUENCE**: append the final plan under `## Implementation Plan`. Replace the plan link with `Plan attached below.`. Delete the plan file. Close the local ticket. Run the checkpoint on the branch. Squash-merge to trunk. Delete the branch. Push. Do not make post-merge commits for a local work item. For external work, merge the PR/MR first, then attach the plan, delete the plan file, and close the ticket. Tag the release commit after the merge. Publish the GitHub Release after the tag. Treat the work item as complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
-9. **STEP-EXIT-ISSUE-MODE**: Return to normal role when the issue action is complete.
+1. **STEP-TICKET**: Create, list, close, or reopen a ticket. Create under `ai/issues/open/` by default, or in an external tracker when the user supplies an issue or asks for one. A list request reads `ai/issues/open/` and `ai/issues/in-progress/` and reports filenames. Set the fields from the template. A ticket-only request ends here. To reopen, move a local ticket to `open/` on a new branch, or reopen the external issue in its tracker.
+2. **STEP-PLAN**: On a plan request only, analyze the ticket for gaps and fill them with the user. Write the plan under `ai/plans/` with an `## Evidence` section, the depth from the common policy, and a `## Close Sequence` block. Append or post the dated plan entry. Do not open a branch.
+3. **STEP-REVIEW-PLAN**: Run peer review on the plan automatically. Fix every Critical and Major finding and re-review until `APPROVED`. Record every round in the plan's Peer Review Log.
+4. **STEP-STOP**: Return control. The ticket stays in `open/` until the user asks to implement. No step starts another phase.
+
+### PROCEDURE IMPLEMENT-PLAN: When the user says "implement the plan" or "implement issue #N"
+
+**Aliases**: implement the plan; implement issue #N
+
+1. **STEP-PREFLIGHT**: Require an `APPROVED` plan and its ticket. Read the plan's close block. Resolve the merge mode from `## Merge Policy` in `ai-customization.md`; a missing section or `auto` behaves as `direct`. Open the feature branch. Move a local ticket to `in-progress/`. Carry any planning state changes.
+2. **STEP-BUILD**: Implement on the branch. Write the failing test first when the project uses TDD. Include the documentation, release notes, and ADRs the plan names.
+3. **STEP-REVIEW**: Run the implementation peer review. Fix every Critical and Major finding and re-review until none remains.
+4. **STEP-RECORD**: Attach the plan to the ticket under `## Implementation Plan`. Replace the active plan link with `Plan attached below.`. Close a local ticket and update related project knowledge. Leave an external ticket open for `STEP-SHIP`. Delete the plan file. Run the checkpoint on the branch.
+5. **STEP-COMMIT**: Commit the branch. The commit carries the work, the closed ticket, the checkpoint, and the carried state.
+6. **STEP-SHIP**: Run the terminal gate: resolve the base ref from the plan, confirm the branch is at least one commit ahead, and confirm the tree is clean. For `direct`, squash merge to trunk, delete the branch, and push. For `pr`, push the branch, open the PR/MR with `gh` or `glab` when available or give the create or compare URL, wait for the user's merge confirmation, pull the trunk, and delete the branch. A rejected direct push switches to `pr` and reports the fallback. Tag and publish the release when the plan names one. Close an external ticket when the merge lands. Report the definition of done.
 
 ### PROCEDURE REPAIR-STATE-FILES: When the user says "repair state files", "tidy state files", or "heal state files"
 

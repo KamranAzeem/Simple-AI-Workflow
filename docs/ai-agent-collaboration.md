@@ -31,7 +31,7 @@ To ensure safety while allowing progress across AI sessions, the system uses a *
     - They are working on a dedicated feature branch.
     - ALL verification steps in the handoff pass with zero errors.
     - The coordination board (`coordination.md`) is updated correctly.
-    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER READ-FIRST-RULES). A sub-agent that is **not** the orchestrator does not merge or write the state files: it records completion on the board and hands off. Otherwise, human approval is mandatory before any merge.*
+    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER READ-FIRST-RULES). A sub-agent that is **not** the orchestrator does not merge or write the state files: it records completion on the board and hands off. Otherwise, the approved plan and the implement request are the human approval; a handoff that does not meet these conditions waits for the user. The merge mode is set in `## Merge Policy`.*
 
 ### 2. Global (Cross-Project) Collaboration
 

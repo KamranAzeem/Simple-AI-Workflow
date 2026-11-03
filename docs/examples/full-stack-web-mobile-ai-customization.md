@@ -44,3 +44,7 @@
 ### Design Docs (always)
 
 - **Always create the recommended design documents** before implementation starts: Vision → PRD (REQ-NNN) → HLD (HLD-NNN) → LLD (LLD-NNN) → ADRs (ADR-NNN) → delivery ledger (see the Design Documentation Standards in the common policy (`ai-policy-common.md`) in the **Global AI Policies Directory**).
+
+## Merge Policy
+
+**Merge Mode**: pr

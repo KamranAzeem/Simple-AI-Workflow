@@ -134,6 +134,45 @@ See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customiz
 EOF
 }
 
+# Generate the merge policy snippet. The value stays user-editable.
+make_merge_policy_section() {
+  cat <<EOF
+
+## Merge Policy
+
+**Merge Mode**: auto
+
+<!-- Use pr for team repositories that require a pull request; direct for solo work. -->
+EOF
+}
+
+# Add the merge policy section only when it is missing. Never overwrite a value.
+ensure_merge_policy_section() {
+  local file="$1" tmp
+  if grep -q '^## Merge Policy' "$file"; then
+    return 0
+  fi
+  if [ "$DRY_RUN" -eq 1 ]; then
+    echo "  ai-customization.md: would add Merge Policy"
+    return 0
+  fi
+  tmp=$(mktemp) || return 1
+  if ! cat "$file" > "$tmp"; then
+    rm -f "$tmp"
+    return 1
+  fi
+  if ! make_merge_policy_section >> "$tmp"; then
+    rm -f "$tmp"
+    return 1
+  fi
+  if ! replace_file "$tmp" "$file"; then
+    rm -f "$tmp"
+    return 1
+  fi
+  echo "  ai-customization.md: added Merge Policy"
+  return 0
+}
+
 # Write temp file $1 to $2, keeping $2 a symlink. A plain mv would replace the
 # symlink with a regular file.
 replace_file() {
@@ -199,6 +238,7 @@ ensure_customization_file() {
         prepend_config_section "$customization_file" || return 1
       fi
     fi
+    ensure_merge_policy_section "$customization_file" || return 1
     return 0
   fi
 
@@ -235,6 +275,7 @@ ensure_customization_file() {
         prepend_config_section "$customization_file" || return 1
       fi
     fi
+    ensure_merge_policy_section "$customization_file" || return 1
     return 0
   fi
 
@@ -251,6 +292,12 @@ ensure_customization_file() {
 **Global AI Workflow Directory**: $WORKFLOW_DIR
 
 See https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md for help.
+
+## Merge Policy
+
+**Merge Mode**: auto
+
+<!-- Use pr for team repositories that require a pull request; direct for solo work. -->
 
 ## Active Expertise
 - web-frontend

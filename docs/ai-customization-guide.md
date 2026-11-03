@@ -108,7 +108,26 @@ This section is optional, and it is normally written for you. Say `"update desig
 
 ---
 
-## 6. Summary of Naming Conventions
+## 6. Choosing the Merge Mode
+
+Use the optional `## Merge Policy` section to tell the AI how to deliver an approved plan:
+
+```markdown
+## Merge Policy
+**Merge Mode**: auto
+```
+
+Three values are recognized:
+
+- `auto` (default): behaves as `direct`.
+- `direct`: the AI squash-merges the branch to the trunk, deletes the branch, and pushes.
+- `pr`: the AI pushes the branch and opens a pull request or merge request, or gives you the URL. It waits for the team to merge, then pulls the trunk.
+
+Set `pr` when your team requires a pull request even if the remote would accept a direct push. `auto` falls back to `pr` when a direct push is rejected. No CLI is required: without `gh` or `glab`, the AI gives you the create or compare URL.
+
+---
+
+## 7. Summary of Naming Conventions
 
 | Component | Example | Path Inferred |
 | :--- | :--- | :--- |

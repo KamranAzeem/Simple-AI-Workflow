@@ -1,7 +1,7 @@
 #!/bin/bash
 # Reference-integrity test for protocol entity names.
 #
-# Three check groups:
+# Four check groups:
 #   1. Resolvability: every PROCEDURE / STEP / TIER / ITEM reference in the live
 #      protocol files resolves to exactly one definition in AGENTS.md, and every
 #      defined name is unique.
@@ -10,6 +10,9 @@
 #   3. Path conformance: no live protocol file hardcodes a protocol-tree policy
 #      path. A policy file is named without a directory and resolved from the
 #      Global AI Policies Directory.
+#   4. Order conformance: the two work-item procedures exist exactly once, the
+#      ordered close phrases stay out of the pointer documents, and the Merge
+#      Policy section is present in the customization template and sync scripts.
 #
 # Live protocol files are AGENTS.md, ai/shared/coordination.md, and ai/policies/*.md.
 # Historical records (daily checkpoints, closed tickets, ADR history) and ordinary
@@ -95,8 +98,33 @@ if [ -n "$path_hits" ]; then
     fail=1
 fi
 
+# --- order conformance: one authoritative work-item order ---
+for proc in MANAGE-ISSUES IMPLEMENT-PLAN; do
+    count="$(grep -cE "^### PROCEDURE ${proc}:" AGENTS.md 2>/dev/null || true)"
+    if [ "$count" -ne 1 ]; then
+        echo "FAIL: PROCEDURE ${proc} must be defined exactly once in AGENTS.md (found ${count})."
+        fail=1
+    fi
+done
+
+for f in ai/policies/ai-policy-common.md ai/shared/project-knowledge/issue-template.md docs/workflow-guide.md README.md docs/ai-agent-collaboration.md; do
+    for phrase in "Squash-merge to trunk" "Run the checkpoint on the branch" "Attach the final plan" "Replace the active plan link" "replace its link with"; do
+        if grep -Fiq "$phrase" "$f" 2>/dev/null; then
+            echo "FAIL: ordered close phrase '$phrase' found in $f; the order belongs only in AGENTS.md."
+            fail=1
+        fi
+    done
+done
+
+for f in docs/ai-customization.md support-files/sync-agents-md.sh support-files/sync-agents-md.ps1; do
+    if ! grep -Fq "## Merge Policy" "$f" 2>/dev/null; then
+        echo "FAIL: $f is missing the ## Merge Policy section."
+        fail=1
+    fi
+done
+
 if [ "$fail" -eq 0 ]; then
-    echo "PASS: all references resolve; no letter, numeric, or hardcoded path remains."
+    echo "PASS: all references resolve; no letter, numeric, hardcoded path, or order drift remains."
     exit 0
 fi
 exit 1

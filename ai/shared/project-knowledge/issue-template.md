@@ -48,17 +48,9 @@ Description:
 
 ## Lifecycle
 
-1. File the ticket in `ai/issues/open/`.
-2. When the user asks to implement the plan, open the feature branch, then move the ticket to `ai/issues/in-progress/`.
-3. For local work, attach the plan and close the ticket on the branch before the squash merge.
-4. For external work, merge the PR/MR first, then attach the plan and close the ticket.
-5. To reopen a local ticket, open a new branch and move it to `ai/issues/open/`.
-6. Reopen an external ticket in its tracker.
+Follow `PROCEDURE MANAGE-ISSUES` to file, list, close, or reopen, and `PROCEDURE IMPLEMENT-PLAN` to deliver an approved plan. A local ticket's directory is its status; an external ticket's state is its status.
 
 Move the file between directories. Never rename it, and never add a status
 prefix or suffix.
 
-The plan file name is appended to the ticket as a dated comment while active. At
-close, append the final plan under `## Implementation Plan` and replace the
-dated plan link with `Plan attached below.`. Delete the plan file from
-`ai/plans/`.
+Append or post the plan file name as a dated entry while active. At close, attach the plan under `## Implementation Plan`, replace the dated link with `Plan attached below.`, and delete the plan file from `ai/plans/`.

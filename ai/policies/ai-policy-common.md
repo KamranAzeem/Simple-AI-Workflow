@@ -271,8 +271,8 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ### Ticket Storage
 
-- Store tickets under `ai/issues/` in `open/`, `in-progress/`, or `closed/`.
-- Treat the directory as the ticket status.
+- Store a local ticket under `ai/issues/` in `open/`, `in-progress/`, or `closed/`.
+- Treat the directory as the status of a local ticket and the tracker state as the status of an external ticket.
 - Keep no file directly under `ai/issues/`.
 - Use a lowercase kebab-case slug only.
 - Do not add a status prefix or suffix.
@@ -298,8 +298,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Do not turn the ticket into a technical diary of commands, errors, and fixes.
 - Put runbooks and command detail in Project Knowledge.
 - Allow a long `## Implementation Plan` appendix in a closed ticket.
-- File a ticket under `ai/issues/open/` or in the user's external tracker.
-- Use the external tracker when the user provides access.
+- File a ticket under `ai/issues/open/` by default, or in the user's external tracker when the user supplies an issue or asks for one.
 - File a ticket immediately when the AI finds work worth tracking.
 - Analyze the ticket for gaps before starting work.
 - Fill every gap through brainstorming or grilling.
@@ -312,9 +311,9 @@ All such content belongs in named project knowledge files. When creating or upda
 - Create the plan under `ai/plans/` while the ticket stays in `open/`.
 - Do not open a feature branch for planning.
 - Name the branch to be created at implementation in the close sequence.
-- Append the plan file name to the ticket as a dated comment.
+- Append or post the plan file name to the ticket as a dated entry.
 - Treat the plan as a working artifact, not a design document.
-- Bind every close action to its repo, branch, base ref, artifact, and evidence in a `## Close Sequence` section.
+- Bind every close action to its repo, base ref, branch, merge mode, ticket reference, release, and evidence in a `## Close Sequence` block.
 - Bind the procedure actions to the plan's repos and branches.
 - Treat a plan whose last action is an approval request as incomplete.
 - Include an `## Evidence` section in every plan.
@@ -336,49 +335,23 @@ All such content belongs in named project knowledge files. When creating or upda
 - Implement only a plan with no Critical or Major finding.
 - Record each review round and verdict in the plan's Peer Review Log.
 
-### Branch and Merge
+### Work-Item Invariants
 
-- Treat a local ticket as one unit of work on one feature branch.
+- The work-item order lives in PROCEDURE MANAGE-ISSUES and PROCEDURE IMPLEMENT-PLAN; do not restate it here.
+- Treat one unit of work as one feature branch.
 - Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on that branch from implementation onward.
-- Run the implementation peer review on the branch.
-- Fix every Critical finding.
-- Fix every Major finding.
-- Re-review until no Critical or Major finding remains.
-- Run the terminal gate before any close or merge claim.
-- Resolve the base ref from the plan, never from a hardcoded branch name.
-- Confirm the branch is at least one commit ahead of its base and the working tree is clean.
-- Report a zero-commit branch or a dirty working tree as unfinished work.
-- Attach the final plan to the ticket under `## Implementation Plan`.
-- Replace the active plan link with `Plan attached below.` at close.
-- Delete the plan file from `ai/plans/` at close.
-- Close a local ticket on the branch before the squash merge.
-- Run the checkpoint that records the completed work on the branch before the merge.
-- Squash merge the branch to trunk.
-- Delete the branch after the merge.
+- Allow several commits on the branch; deliver one squash commit to trunk.
+- Run the terminal gate before any merge claim: resolve the base ref from the plan, confirm the branch is at least one commit ahead, and confirm the tree is clean.
+- Report a zero-commit branch or a dirty tree as unfinished work.
+- Fix every Critical and Major finding from the implementation peer review before the commit.
+- Attach the plan to the ticket before deleting the plan file.
+- Write the checkpoint on the branch before the commit.
+- Close the ticket with the merged change: move a local ticket to `closed/` in the branch commit, and close an external ticket when the merge lands.
+- Do not make post-merge commits or post-merge repository changes.
 - Do not commit a plan-only, start-work, or placeholder change to trunk.
-- Do not make post-merge commits for a local work item.
-- Open a new branch when local work is missing after the merge.
-- Reopen the ticket on the new branch.
-- Merge an external PR/MR first.
-- Close the external ticket after the merge.
-- Attach the plan as part of the external close.
-- Delete the plan file as part of the external close.
-- Treat the external close, plan appendix, and plan-file deletion as the only post-merge changes for that work item.
-- Put local release documentation in the branch.
-- Tag the release commit after the merge.
-- Publish the GitHub Release after the tag.
-- Treat the work item as complete only after the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
-
-### Lifecycle
-
-- Move a ticket from `open/` to `in-progress/` when implementation starts.
-- Close a local ticket on the branch before the squash merge.
-- Close an external ticket after the PR/MR merges.
-- Reopen a local ticket by moving it to `open/`.
-- Reopen an external ticket in its tracker.
-- Use the template at `ai/shared/project-knowledge/issue-template.md`.
-- Create the template during bootstrap or load context when it is missing.
-- Do not overwrite the template.
+- Put release documentation in the branch; tag the release commit after the merge; publish the GitHub Release after the tag.
+- Treat the work item as complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
+- Use the template at `ai/shared/project-knowledge/issue-template.md`; create it when missing and never overwrite it.
 
 ## State File Ownership Protocol
 
