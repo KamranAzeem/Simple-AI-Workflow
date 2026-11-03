@@ -30,6 +30,14 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.5.2 (2026-11-03)
+
+- Resolve policy loads from the Global AI Policies Directory; no protocol file hardcodes a policy path.
+- Name the workflow, home, and settings directories from the user's project perspective in `AGENTS.md`.
+- Resolve the meta policy's protocol-repository paths from the Global AI Workflow Directory.
+- Add a path-conformance check to the reference test.
+- Upgrade action: none beyond the usual sync.
+
 ### v5.5.1 (2026-10-31)
 
 - File and analyze an issue with no branch.

@@ -1,12 +1,15 @@
 #!/bin/bash
 # Reference-integrity test for protocol entity names.
 #
-# Two check groups:
+# Three check groups:
 #   1. Resolvability: every PROCEDURE / STEP / TIER / ITEM reference in the live
 #      protocol files resolves to exactly one definition in AGENTS.md, and every
 #      defined name is unique.
 #   2. Conformance: no letter-based procedure reference, and no numeric tier or
 #      step reference, remains in the live protocol files.
+#   3. Path conformance: no live protocol file hardcodes a protocol-tree policy
+#      path. A policy file is named without a directory and resolved from the
+#      Global AI Policies Directory.
 #
 # Live protocol files are AGENTS.md, ai/shared/coordination.md, and ai/policies/*.md.
 # Historical records (daily checkpoints, closed tickets, ADR history) and ordinary
@@ -84,8 +87,16 @@ if grep -nE '\bStep [0-9]\b' "${LIVE_FILES[@]}" >/dev/null 2>&1; then
     fail=1
 fi
 
+# --- conformance: no protocol-tree policy paths in live protocol files ---
+path_hits="$(grep -nE 'ai/policies/ai-policy-[a-z0-9-]+\.md' "${LIVE_FILES[@]}" 2>/dev/null || true)"
+if [ -n "$path_hits" ]; then
+    echo "FAIL: hardcoded policy path found; name the file and the Global AI Policies Directory:"
+    printf '%s\n' "$path_hits"
+    fail=1
+fi
+
 if [ "$fail" -eq 0 ]; then
-    echo "PASS: all references resolve and no letter or numeric references remain."
+    echo "PASS: all references resolve; no letter, numeric, or hardcoded path remains."
     exit 0
 fi
 exit 1

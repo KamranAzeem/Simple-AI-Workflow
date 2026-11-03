@@ -7,7 +7,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
-> **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the **Global AI Policies Directory** defined in the configuration section of `AGENTS.md`.
+> **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the configuration anchors in `AGENTS.md`. A policy file named without a directory resolves from the **Global AI Policies Directory**. Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
 
 ## Scope
 
@@ -784,8 +784,8 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
 - **Headings**: ATX headings (`#`, `##`, `###`) in order; do not skip levels. Surround every heading with a blank line above and below. A file does not have to start with a heading, and more than one `#` title is allowed. No trailing punctuation in headings.
 - **Lists**: any consistent unordered marker (`-` or `*`) or ordered prefix (`1.`). One space after each marker. One item per line. Indent nested items 2 spaces per level; never tabs. Surround every list with a blank line above and below.
 - **Code**: fenced code blocks with a language tag where it is known (for example `bash` or `markdown`). Put multi-line commands in fenced blocks, not inline. Keep blocks copy-friendly.
-- **Tables**: do not use markdown tables in protocol files (`AGENTS.md`, `ai/policies/*`, `ai/issues/*`, `ai/plans/*`); use a list. Tables are fine in slides, and in user-facing documentation (`docs/`, `README.md`) when they aid clarity, and whenever the user asks for one.
-- **Links**: do not use markdown hyperlinks `[text](path)` in policy files or `AGENTS.md`; use a Bold Anchor or backticks. Inside `ai/policies/`, relative links use `../`. Links in `docs/` to other docs must not repeat the `docs/` prefix.
+- **Tables**: do not use markdown tables in protocol files (`AGENTS.md`, policy files, `ai/issues/*`, `ai/plans/*`); use a list. Tables are fine in slides, and in user-facing documentation (`docs/`, `README.md`) when they aid clarity, and whenever the user asks for one.
+- **Links**: do not use markdown hyperlinks `[text](path)` in policy files or `AGENTS.md`; use a Bold Anchor or backticks. Inside a policy directory, relative links use `../`. Links in `docs/` to other docs must not repeat the `docs/` prefix.
 - **Emphasis**: use `**bold**` for key terms and `code` for identifiers, paths, and commands. Emphasis as a heading is allowed; prefer a real heading.
 - **Line length**: no maximum; do not hard-wrap paragraphs.
 - **Filenames**: follow the Verbose File Naming rule.
@@ -801,6 +801,6 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
 - `ai-policy-api-backend.md`, `ai-policy-web-frontend.md`, `ai-policy-mobile-apps.md`, `ai-policy-data.md`, `ai-policy-dba.md`, `ai-policy-cloud.md`, `ai-policy-linux-system-admin.md`, `ai-policy-windows-system-admin.md`
 - `ai-policy-meta.md` (`## Procedure and Policy Authoring`)
 - `ai-policy-code-review.md`, `ai-policy-codebase-examination.md`, `ai-policy-design-docs.md`
-- Domain and specialty policies live in `ai/policies/`.
+- Domain and specialty policies live in the **Global AI Policies Directory**.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

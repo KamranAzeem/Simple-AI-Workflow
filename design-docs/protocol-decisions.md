@@ -815,3 +815,11 @@ Code and configuration changes require the feature branch. The plan file and the
 Context: the 2026-10-12 rule treated every file change as implementation work.
 
 Consequences: Planning runs on the trunk working tree without committing. The exemption is narrow.
+
+## 2026-11-03: Policy references resolve from the Global AI Policies Directory
+
+A policy file is named without a directory and resolved from the **Global AI Policies Directory**, so no protocol file hardcodes a protocol-tree path. Five procedure steps named `ai/policies/ai-policy-<name>.md`, which is the Project policies directory in a user project and does not hold the distribution tree. The resolution rule is stated once in TIER CONFIGURATION and mirrored in the common policy. The meta policy states once that its `support-files/` and `design-docs/protocol-decisions.md` paths resolve from the **Global AI Workflow Directory** and exist only in the protocol repository. The reference test gains a path-conformance check. User-facing docs keep their clone-layout literals and are verified, not rewritten.
+
+Context: the configuration anchors already existed at the top of `AGENTS.md`, and five steps bypassed them. The 2026-06-19 single-source rule forbids duplicating an anchor path inline.
+
+Consequences: one rule governs every policy load. A reintroduced hardcoded path fails the reference test. A meta-policy reader sees the repository boundary once instead of at every maintainer path.

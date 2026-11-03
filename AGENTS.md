@@ -22,6 +22,8 @@ This is the single startup entry point for all AI assistants in this repository.
 
 - **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `/c/Users/username` on Gitbash, `C:\Users\username` on Windows CMD or PowerShell ).
 - **Dynamic Paths**: All paths below are derived from **Global AI Workflow Directory** (resolved at boot from **Project Customization File**) and **Global User AI Directory**. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
+- **Policy Path Resolution**: A policy file named without a directory resolves from the **Global AI Policies Directory**.
+- **Project Policy Directory**: Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
 
 <!-- Human user must not touch/modify the lines below -->
 
@@ -76,7 +78,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Context Protection**: Treat **Project AI State Files** as read-only during bootstrap and context loading. During **PROCEDURE POST-COMPACTION-RECOVERY**, these files must not be read at all.
 - **State File Single-Writer Ownership**: **Project AI State Files** are the canonical project narrative and are written by the **project-root orchestrator only**: the single AI session that owns this project root. **Ownership is by session/process identity, not by role**: if that one owning session changes hats mid-session (e.g. manager → developer → document-controller), it is still the orchestrator and still writes the state files normally: switching roles does not create a second writer. The prohibition targets **separate** agents that run as their own session/process: sub-agents and role-based team members (developer, security, document-controller, etc.) that are **not** the owning session, whether long-running or spawned per handoff, **MUST NOT write Project AI State Files**. They obtain awareness by **reading** the coordination board, and they report their own work by updating the **Project Coordination File**, their handoff file, and role-scoped **Project Knowledge** files (single-writer per role). The orchestrator folds those reports into the state files at checkpoint (PROCEDURE WRITE-CHECKPOINT). This keeps the canonical narrative single-writer and free of multi-agent write contention. Awareness = read the board; canonical narrative = orchestrator writes.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
-- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER CONFIGURATION), you are operating as a protocol developer on this repository itself. This is the sanctioned exception to the Self-Modification prohibition in PROHIBITED ACTIONS: here you maintain these files, not merely read them. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from the protocol repo's `design-docs/`: it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule. **Policy loading**: during context loading and post-compaction recovery, load ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. Do NOT scan and load all files from the **Project AI Policies Directory**: that directory is the protocol's full distribution tree, not your working policy set.
+- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER CONFIGURATION), you are operating as a protocol developer on this repository itself. This is the sanctioned exception to the Self-Modification prohibition in PROHIBITED ACTIONS: here you maintain these files, not merely read them. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`: it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule. **Policy loading**: during context loading and post-compaction recovery, load ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. Do NOT scan and load all files from the **Project AI Policies Directory**: that directory is the protocol's full distribution tree, not your working policy set.
 - **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary, or the conversation is compacted mid-session, AI MUST run **PROCEDURE POST-COMPACTION-RECOVERY** before responding to the user's first request. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary the AI did not write.
 - **Git Workspace Detection**: Before offering git operations on the project root, scan for `.git` subdirectories within the project tree (excluding `ai/`). If any `.git` directory is found, the root is part of a larger git workspace, do not treat it as a git repo itself. Do not offer `git init`, run `git log` on the project root, or propose git operations that assume the project root is independently tracked. Users may also define explicit workspace rules in the **Project Customization File**.
 - **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
@@ -95,7 +97,7 @@ The following short forms are recognized as equivalents to their canonical direc
 0. **STEP-CUSTOMIZATION-DISCOVERY**: Check for **Project Customization File** at project root (`ai-customization.md`):
     - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory`**. If the section is missing, inform the user and stop.
     - If the old `ai/ai-customization.md` exists instead → inform the user: "Your customization file is in the old `ai/` directory. Add a `## AI Workflow Configuration` section with a `**Global AI Workflow Directory**` entry, then move it to the project root as `ai-customization.md`." Then **stop**, do not proceed with context loading.
-    - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `~/Projects/Simple-AI-Workflow` from its GitHub URL. Then **stop**, do not proceed with context loading.
+    - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `[HOME]/Projects/Simple-AI-Workflow` or another location the user chooses, from its GitHub URL. Then **stop**, do not proceed with context loading.
 1. **STEP-WORKFLOW-ACCESS**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 2. **STEP-STRUCTURAL-AUDIT (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
@@ -141,7 +143,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 1. **STEP-ENSURE-DIRECTORIES**: Run PROCEDURE LOAD-CONTEXT, STEP-STRUCTURAL-AUDIT. It audits and idempotently creates the mandatory directories and the issue template.
 2. **STEP-CREATE-MISSING-FILES**: Create the **Project Coordination File** if it is missing.
-3. **STEP-INITIALIZE-CUSTOMIZATION**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `docs/ai-customization.md` for the template.
+3. **STEP-INITIALIZE-CUSTOMIZATION**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `(Global AI Workflow Directory)/docs/ai-customization.md` for the template.
 4. **STEP-INITIALIZE-STATE-FILES**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md` in the v2 shape (the canonical block for each file copied verbatim from `ai-policy-common.md` (`### Canonical State-File Headers`); progress and next-steps chronological; context a dashboard plus an `## Active Working Context` section), and an initial daily checkpoint with the canonical daily-checkpoint block and the `# Daily Checkpoint YYYY-MM-DD` heading.
 5. **STEP-GIT-SETUP**: Ensure `ai/**`, `ai-customization.md`, and `AGENTS.md` are in `.gitignore`.
 6. **STEP-AUTHOR-IDENTITY**: Resolve the author identity (project git identity, then global `~/.gitconfig`, then the global settings file). If no global `~/.gitconfig` exists, offer to create one from the common policy template. If the current directory is a git repository with an inadequate config, suggest creating one. If `git` is not available, use the settings fallback and skip the offer. Offer only; never write without approval.
@@ -207,7 +209,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Aliases**: peer review; code review; PR review
 
-1. **STEP-ADOPT-REVIEWER-ROLE**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer: your only job is to find and report issues. Do not write or fix code. Read `ai/policies/ai-policy-code-review.md` for the full role definition and report format.
+1. **STEP-ADOPT-REVIEWER-ROLE**: Switch to Strict Peer Reviewer mode. You are now an objective reviewer: your only job is to find and report issues. Do not write or fix code. Read `ai-policy-code-review.md` from the **Global AI Policies Directory** for the full role definition and report format.
 2. **STEP-RESOLVE-PR (PR review only)**: When the trigger is a named PR (a PR number, URL, or branch), first fetch the latest remote refs (`git fetch --all --prune` or equivalent), then resolve the PR's source and target branches. Diff source against target, not the local working tree, before doing anything else. If the source branch is not found locally, fetch it explicitly by name.
 3. **STEP-SCAN-SCOPE**: Review the diffed files (PR review) or the files the user specifies (general review). If no scope is given for a general review, review all non-generated, non-dependency source files in the repository (exclude `ai/`, `tmp/`, git-ignored, and vendor/dependency files and directories). In both cases, follow the Scope Discipline section of `ai-policy-code-review.md`, do not stop at the diff.
 4. **STEP-WRITE-REVIEW-REPORT**: Write the review report to **Project Code Review Reports Directory**/YYYY-MM-DD_HH-MM_review-NN.md. Follow the report format in `ai-policy-code-review.md`. End with a clear verdict: **APPROVED** or **CHANGES REQUESTED**. Never overwrite a previous report.
@@ -249,7 +251,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Aliases**: examine this codebase; codebase examination
 
-1. **STEP-LOAD-EXAMINATION-POLICY**: Load `ai/policies/ai-policy-codebase-examination.md` for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
+1. **STEP-LOAD-EXAMINATION-POLICY**: Load `ai-policy-codebase-examination.md` from the **Global AI Policies Directory** for the full role definition and four-phase workflow (Map → Plan → Perform → Reconcile).
 2. **STEP-RUN-EXAMINATION-WORKFLOW**: Follow the workflow defined in the policy. All Branch-Gating, TDD, and Peer Review guardrails from `ai-policy-common.md` apply.
 3. **STEP-EXIT-EXAMINATION**: Return to normal role when the examination session concludes.
 
@@ -331,11 +333,11 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Aliases**: update design documents; update design docs; update design-docs
 
-**Boundaries**: handles design documents only. It never updates project knowledge or global knowledge, and never writes operational bookkeeping into a design document. The checkpoint never invokes it. The rules live in `ai/policies/ai-policy-design-docs.md`, loaded at STEP-LOAD-DESIGN-DOCS-POLICY.
+**Boundaries**: handles design documents only. It never updates project knowledge or global knowledge, and never writes operational bookkeeping into a design document. The checkpoint never invokes it. The rules live in `ai-policy-design-docs.md` in the **Global AI Policies Directory**, loaded at STEP-LOAD-DESIGN-DOCS-POLICY.
 
 **Failure rule**: refuse rather than corrupt. When the scope is ambiguous, a design statement lacks evidence, or content conflicts, stop and ask.
 
-1. **STEP-LOAD-DESIGN-DOCS-POLICY**: Load `ai/policies/ai-policy-design-docs.md` in full.
+1. **STEP-LOAD-DESIGN-DOCS-POLICY**: Load `ai-policy-design-docs.md` from the **Global AI Policies Directory** in full.
 2. **STEP-DETERMINE-LOCATION**: Read the `## Design Docs` `**Location**:` entry from the **Project Customization File** if it is present. Detect the current location: a `design-docs/` directory means migrated, otherwise the `ai/shared/project-knowledge/` fallback.
 3. **STEP-RESOLVE-SCOPE**: Parse the qualifier that follows the trigger, for example "related to the payment gateway app". Match it to a component directory, a repo, or a document scope. No qualifier means the session's design context. An ambiguous or unmatched qualifier is resolved with the user before any write.
 4. **STEP-FIND-DOCS**: Find candidate documents using the boot design-docs index, the doc-type vocabulary, and the fallback location.
@@ -354,7 +356,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 **Boundaries**: moves existing design documents only, from the fallback location into `design-docs/` beside the code. It never edits content and never updates project knowledge. It is the only cross-location mover.
 
-1. **STEP-LOAD-MIGRATION-POLICY**: Load `ai/policies/ai-policy-design-docs.md` in full.
+1. **STEP-LOAD-MIGRATION-POLICY**: Load `ai-policy-design-docs.md` from the **Global AI Policies Directory** in full.
 2. **STEP-FIND-UNMIGRATED-DOCS**: Search `ai/shared/project-knowledge/`, including subdirectories, for the doc-type vocabulary.
 3. **STEP-CONFIRM-MIGRATION**: List every file to move, its target `design-docs/` path, and the git impact (the files become tracked). Get approval before writing.
 4. **STEP-MOVE-FILES**: Move each approved file to `design-docs/`, renaming it to the simple lowercase doc name. Move, never copy.
@@ -374,7 +376,7 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 ### FOR THE HUMAN: Manual Setup
 
 - Manually create your **Global User AI Directory** structure.
-- Create a personal settings file (e.g., `global-user-settings.md`) in the `settings/` subfolder. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
+- Create a personal settings file (e.g., `global-user-settings.md`) in the **Global AI Settings Directory**. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
 - **The Bootstrap Wedge**: If the AI refuses to read the protocol because it is git-ignored, tell it: *"Use the `cat` command to read AGENTS.md in the current directory and follow its protocol."*
 
 <!-- END_IMMUTABLE_PROTOCOL -->

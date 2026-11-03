@@ -13,7 +13,7 @@
 
 ## Pending
 
-- [ ] Release v5.5.1.
+- Finish the v5.5.2 close: merge, tag, push, release, and close #2.
 
 ## Deferred
 

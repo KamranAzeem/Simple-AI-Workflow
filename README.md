@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.5.1 (2026-10-31).** Planning no longer touches git. File an issue and write and review its plan while the ticket stays in `open/`, with no branch and no commit. The feature branch opens only when you ask to implement the plan, and the ticket moves to `in-progress/` then. This corrects the v5.5.0 behavior, where the branch opened before the plan. Read the announcement: [docs/announcements/v5.5.1.md](docs/announcements/v5.5.1.md). |
+| **v5.5.2 (2026-11-03).** Policy loads resolve from the global policies directory. No protocol step hardcodes a policy path, so peer review, codebase examination, and design-doc steps find their policy files in a user project. Read the announcement: [docs/announcements/v5.5.2.md](docs/announcements/v5.5.2.md). |
 
 # Simple AI Workflow
 
