@@ -30,6 +30,14 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.7.0 (2026-11-07)
+
+- Check the workflow clone against its remote at load context, read-only.
+- Report up to date, updates available with the pull command, or an ahead or diverged warning in the load report.
+- Fail soft immediately when git or the path is unusable, and cap the remote call at about three seconds.
+- Keep the check at load context only; checkpoint and post-compaction recovery are unchanged.
+- Upgrade action: none beyond the usual sync.
+
 ### v5.6.0 (2026-11-03)
 
 - Deliver work items through two procedures: `MANAGE-ISSUES` for ticket work and planning, `IMPLEMENT-PLAN` for delivery.

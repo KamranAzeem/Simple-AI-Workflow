@@ -13,7 +13,7 @@
 
 ## Pending
 
-Nothing pending.
+- Merge `feature/load-context-workflow-update-check`, tag v5.7.0, publish the release, and close issue #3.
 
 ## Deferred
 

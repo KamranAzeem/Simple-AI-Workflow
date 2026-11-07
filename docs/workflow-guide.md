@@ -118,6 +118,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only: prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
 - **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
+- **Update Check**: The AI compares your workflow clone with its remote at load time and tells you when a pull is available. It never pulls for you.
 
 ### Benefits
 

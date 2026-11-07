@@ -88,6 +88,10 @@ if ! grep -q "STEP-POLICY-LOADING" AGENTS.md; then
     echo "Error: STEP-POLICY-LOADING missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (referenced policies must be fully loaded at boot)."
     exit 1
 fi
+if ! grep -q "STEP-WORKFLOW-VERSION-CHECK" AGENTS.md; then
+    echo "Error: STEP-WORKFLOW-VERSION-CHECK missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (the workflow clone update check must be reported)."
+    exit 1
+fi
 if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
     echo "Error: Global AI Knowledge Directory reference missing from STEP-KNOWLEDGE-INDEXING in AGENTS.md."
     exit 1

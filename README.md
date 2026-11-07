@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.6.0 (2026-11-03).** One delivery flow in two procedures. `MANAGE-ISSUES` files, closes, and plans; `IMPLEMENT-PLAN` delivers. Merge Policy adds `direct`, `pr`, and `auto` with no CLI requirement. Read the announcement: [docs/announcements/v5.6.0.md](docs/announcements/v5.6.0.md). |
+| **v5.7.0 (2026-11-07).** Load context checks your workflow clone against its remote and tells you when to pull. The check is read-only, skips itself when it cannot reach the remote, and never pulls for you. Read the announcement: [docs/announcements/v5.7.0.md](docs/announcements/v5.7.0.md). |
 
 # Simple AI Workflow
 
@@ -172,6 +172,7 @@ The workflow pushes back with a few built-in defences:
 | Progress log growing forever | Old entries move into the daily checkpoint archive when the list gets too long |
 | Rules lost after auto-summary | Post-Compaction Recovery reloads rules from disk; you can also trigger it manually |
 | AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
+| Workflow clone falling behind | Load context compares the clone with its remote and tells you when to pull |
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
 | Knowledge files drifting from the standard | The checkpoint flags a missing header, a table, or a file over 15 KB; `"repair knowledge files"` fixes them without questions. It takes a while on a real knowledge base, so let it finish. |
 
@@ -263,6 +264,8 @@ See the [AI Customization Guide](docs/ai-customization-guide.md) for the full li
 > Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it updates existing `AGENTS.md` files, checks the customization file, adds `## Merge Policy` when missing, and migrates the old layout for you. This is the recommended update path; the [manual steps](docs/ai-customization-guide.md) are for a new project's first copy.
 
 When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
+
+Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 
 So, the process is as follows:
 

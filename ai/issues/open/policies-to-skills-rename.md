@@ -38,3 +38,7 @@ Draft acceptance criteria:
 - Downstream sync verified green.
 
 Origin: `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md` (removed, captured here).
+
+---
+2026-11-03
+Paused pending `ai/issues/open/skills-subsystem-and-drop-in-compatibility.md`. Policies and skills may be distinct layers, so this rename may be dropped.

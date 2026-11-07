@@ -831,3 +831,11 @@ Consequences: one rule governs every policy load. A reintroduced hardcoded path 
 Context: the order was written in five places and drifted; filing cascaded into planning; "external" conflated a tracker with a PR/MR; and the meta policy required per-action approval, so the same work stopped at different points.
 
 Consequences: one order, one approval boundary, and two merge paths. The old entries and the closed tickets `work-item-close-sequence-and-terminal-state`, `issue-management-policy-improvements`, and `post-merge-maintenance-commits-on-master` remain as history.
+
+## 2026-11-07: Load context reports workflow-clone freshness
+
+PROCEDURE LOAD-CONTEXT gains a read-only STEP-WORKFLOW-VERSION-CHECK after STEP-CUSTOMIZATION-DISCOVERY, and STEP-PROOF-OF-LOAD reports ITEM WORKFLOW-VERSION. The check compares local HEAD with the remote HEAD of the clone resolved from the **Global AI Workflow Directory** anchor. It never fetches, pulls, or writes a file; it disables credential helpers for the call, captures stderr only to choose a fixed reason and never emits it, and caps the remote call at about three seconds. It compares full 40-character SHAs and shortens them only for display. Behind reports the pull command and does not run it. Ahead and diverged are reported as anomalies because users must not modify the workflow clone. Every failure produces one skip line and never blocks the load: missing git, a non-repository path, a subdirectory of another work tree, a shallow clone, a missing origin, an empty remote head, a failed or timed-out call, required authentication, or an unreadable revision. The check trusts the configured origin, including a fork.
+
+Context: a user could run an old clone indefinitely with no signal. The load-context safety barrier forbids a fetch, so the check is limited to a network head query and local ancestry tests.
+
+Consequences: one new step and one report item in `AGENTS.md`, one validator anchor, and no new policy. The check adds at most about three seconds to an offline load and never blocks it.

@@ -191,6 +191,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - **No-overwrite mandates**: the context-loading sequence forbids overwriting existing files
 - **Recursive discovery**: the AI runs `ls -R` on the **Global User AI Directory** to find everything
 - **Proof-of-Load**: the AI lists the Settings and policy files it fully loaded, and the Global and Project Knowledge files it indexed, before it starts
+- **Update check**: load context compares your workflow clone with its remote and tells you when to pull; it never pulls for you
 
 > **Safe with any model.** Use lower-cost models without risking your project state.
 
@@ -369,6 +370,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
+- **Update check**: load context compares your workflow clone with its remote and tells you when to pull
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
 - **Knowledge repair**: every knowledge file follows one shape; the checkpoint flags a missing header, a table, or a file over 15 KB, and `"repair knowledge files"` fixes it. It takes a while, so let it finish.
 
