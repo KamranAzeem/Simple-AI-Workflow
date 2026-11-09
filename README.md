@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.8.0 (2026-11-09).** Policies can declare their own trigger phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored. Read the announcement: [docs/announcements/v5.8.0.md](docs/announcements/v5.8.0.md). |
+| **v6.0.0 (2026-11-09).** The 13 procedure bodies move to `ai/procedures/` in the clone, and `AGENTS.md` becomes a thin router. Pull, run the sync script, and restart. Read the announcement: [docs/announcements/v6.0.0.md](docs/announcements/v6.0.0.md). |
 
 # Simple AI Workflow
 
@@ -30,6 +30,8 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 >
 > **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
 
+For Windows path formats, the manual setup, and the bootstrap wedge, see [docs/setup.md](docs/setup.md).
+
 When you finish a session, type `"checkpoint"`. One checkpoint refreshes the state files, the diary, Project Knowledge, and Global Knowledge, and prints a grouped summary, so you do not run the knowledge updates as separate commands. To pick up later, type `"load context using AGENTS.md protocol"`. Checkpoint often. Think of a checkpoint as "ctrl + s".
 
 ## How it works
@@ -39,13 +41,14 @@ When you finish a session, type `"checkpoint"`. One checkpoint refreshes the sta
    |-- AGENTS.md            -->     |-- AGENTS.md
    |-- ai-customization.md  -->     |-- ai-customization.md
    |-- ai/policies/                 |-- ai/ (state, notes, issues)
-   |-- docs/                        |-- src/
-   |-- support-files/               |-- ...
+   |-- ai/procedures/               |-- src/
+   |-- docs/                        |-- ...
+   |-- support-files/
 ```
 
-The repo holds the workflow and its policy files. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file, adds `## Merge Policy` when it is missing, and migrates state files.
+The repo holds the workflow, its policy files, and its procedure modules. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. The procedure modules stay in the clone and load from `(Global AI Workflow Directory)/ai/procedures/`; a project does not copy them. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file, adds `## Merge Policy` when it is missing, and migrates state files.
 
-`AGENTS.md` follows progressive disclosure: the rules that apply to every session stay inline, and the rest sits behind a context pointer that the AI opens only when a task needs it.
+`AGENTS.md` follows progressive disclosure: the always-on rules, the shared index step, and the dispatch stay inline; the procedure bodies and the detail sit behind the module store and a context pointer that the AI opens only when a task needs it.
 
 ## What it is, and what it isn't
 
@@ -259,7 +262,7 @@ This is the one file you edit to tailor the AI to a project. You can set:
 
 See the [AI Customization Guide](docs/ai-customization-guide.md) for the full list and examples.
 
-Some policies can also load by phrase, without an Active Expertise entry. Say `"cloud standards"`, `"data standards"`, `"database standards"`, or `"backend standards"` and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A project policy with triggers is still loaded at boot and is reported as active when its phrase is used.
+Some policies can also load by phrase, without an Active Expertise entry. Say `"cloud standards"`, `"data standards"`, `"database standards"`, or `"backend standards"` and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A project policy with triggers is still loaded at boot and reported as active; its triggers are also indexed.
 
 ## Keeping this workflow up to date
 
@@ -267,7 +270,7 @@ Some policies can also load by phrase, without an Active Expertise entry. Say `"
 
 When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
 
-v5.8.0 changes `AGENTS.md`. After pulling, run the sync script and restart the session so the new dispatch section and the shared index step reach your projects.
+v6.0.0 changes `AGENTS.md` and moves the procedures into the clone's `ai/procedures/`. After pulling, run the sync script and restart the session so the thin router reaches your projects. Your project keeps its own `AGENTS.md` and `ai-customization.md`; the procedures load from the clone.
 
 Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 
@@ -375,6 +378,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 ## What's included
 
 - **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **Procedure modules and a thin `AGENTS.md`**: the 13 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.

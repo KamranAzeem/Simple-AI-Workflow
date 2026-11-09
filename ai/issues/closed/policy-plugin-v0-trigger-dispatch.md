@@ -24,7 +24,7 @@ Related: `ai/issues/open/self-contained-policy-triggers-and-heading-jit-index.md
 
 Plan attached below.
 
-Implemented 2026-11-09; implementation reviews APPROVED; local merge and tag pending.
+Implemented 2026-11-09; implementation reviews APPROVED; merged locally and tagged v5.8.0; publication pending.
 
 ## Implementation Plan
 

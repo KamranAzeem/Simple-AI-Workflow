@@ -1,7 +1,7 @@
 #!/bin/bash
-# Validate the authoring shape of AGENTS.md and policy files.
+# Validate the authoring shape of AGENTS.md, policy files, and procedure modules.
 # Usage: ./support-files/validate-policy-authoring.sh [--triggers] <file> [<file>...]
-#   --triggers  check the trigger namespace and names only; skip the full policy shape.
+#   --triggers  check the trigger namespace and names for policies, and the procedure-module shape; skip the full policy shape.
 # Exit 0 when all checks pass, 1 on a violation, 2 on a usage error.
 
 set -u
@@ -218,115 +218,157 @@ check_policy_file() {
     check_trigger_block "$file" "$title_line" "$purpose_line"
 }
 
-check_agents_file() {
-    local file="$1" ln msg alias_text base
+check_thin_agents() {
+    local file="$1" ln step section
 
-    while IFS=: read -r ln msg; do
-        if [ -n "$ln" ]; then
-            fail_msg "$file" "$ln" "$msg"
-        fi
-    done < <(awk '
-        /^### PROCEDURE / {
-            if (in_proc && !has_alias) {
-                print start ":procedure missing **Aliases** line"
-            }
-            in_proc = 1
-            has_alias = 0
-            start = NR
-            if ($0 !~ /^### PROCEDURE [A-Z][A-Z0-9-]*: /) {
-                print NR ":procedure name must be ALL-CAPS kebab-case"
-            }
-        }
-        /^## / {
-            if (in_proc && !has_alias) {
-                print start ":procedure missing **Aliases** line"
-            }
-            in_proc = 0
-        }
-        /^\*\*Aliases\*\*:/ {
-            if (in_proc) { has_alias = 1 }
-        }
-        END {
-            if (in_proc && !has_alias) {
-                print start ":procedure missing **Aliases** line"
-            }
-        }
-    ' "$file")
+    if grep -qE '^### PROCEDURE |^# PROCEDURE |^\*\*Aliases\*\*:' "$file"; then
+        ln="$(grep -nE '^### PROCEDURE |^# PROCEDURE |^\*\*Aliases\*\*:' "$file" | cut -d: -f1 | head -1)"
+        fail_msg "$file" "$ln" "procedure content is not allowed in the thin AGENTS.md"
+    fi
+    if grep -qE '^\*\*Loads\*\*:' "$file"; then
+        ln="$(grep -nE '^\*\*Loads\*\*:' "$file" | cut -d: -f1 | head -1)"
+        fail_msg "$file" "$ln" "**Loads** line is not allowed"
+    fi
 
-    while IFS=: read -r ln alias_text; do
+    while IFS=: read -r ln step; do
         [ -n "$ln" ] || continue
-        case "$alias_text" in
-            none) continue ;;
-        esac
-        base="$alias_text"
-        case "$base" in
-            *'#N') base="${base%#N}" ;;
-        esac
-        if [ -z "$base" ] || ! printf '%s\n' "$base" | grep -qE '^[A-Za-z0-9 .-]+$'; then
-            fail_msg "$file" "$ln" "invalid trigger block: '$alias_text'"
+        if ! printf '%s' "$step" | grep -q '\*\*STEP-PROTOCOL-INDEX\*\*'; then
+            fail_msg "$file" "$ln" "procedure step definition is not allowed in the thin AGENTS.md"
         fi
-    done < <(awk '
-        /^\*\*Aliases\*\*:/ {
-            line = NR
-            sub(/^\*\*Aliases\*\*:[[:space:]]*/, "")
-            n = split($0, parts, ";")
-            for (i = 1; i <= n; i++) {
-                t = parts[i]
-                gsub(/^[ \t]+/, "", t)
-                gsub(/[ \t]+$/, "", t)
-                gsub(/^"|"$/, "", t)
-                if (t != "" && t != "none") { print line ":" t }
-            }
-        }
-    ' "$file")
+    done < <(grep -nE '\*\*STEP-[A-Z0-9-]+\*\*' "$file")
+
+    for section in '## TIER CONFIGURATION' '## TIER READ-FIRST-RULES' '## Shared Protocol Steps' '## Protocol Dispatch' '## TIER TRIGGERED-PROCEDURES' '## TIER APPENDIX'; do
+        if ! grep -qxF "$section" "$file"; then
+            fail_msg "$file" "0" "missing required section: $section"
+        fi
+    done
+}
+
+check_procedure_module() {
+    local file="$1" base name stem title_line trig_line count ln line raw base_phrase norm bullets first_section intervening
+
+    base="$(basename "$file")"
+    title_line="$(first_match_line "$file" '^# PROCEDURE [A-Z][A-Z0-9-]*: .+')"
+    if [ -z "$title_line" ]; then
+        fail_msg "$file" "0" "invalid policy shape: procedure module missing '# PROCEDURE <NAME>: <description>'"
+    else
+        name="$(sed -n "${title_line}p" "$file" | sed -E 's/^# PROCEDURE ([A-Z][A-Z0-9-]*): .*/\1/')"
+        stem="${base%.md}"
+        if [ "$stem" != "$(printf '%s' "$name" | tr 'A-Z' 'a-z')" ]; then
+            fail_msg "$file" "$title_line" "name mismatch: file stem '$stem' must match the lowercase procedure name"
+        fi
+    fi
+
+    if ! sed -n '1p' "$file" | grep -qE '^# PROCEDURE [A-Z][A-Z0-9-]*: .+'; then
+        fail_msg "$file" "1" "invalid policy shape: procedure module must start with '# PROCEDURE <NAME>: <description>'"
+    fi
 
     if grep -qE '^\*\*Loads\*\*:' "$file"; then
-        ln="$(grep -nE '^\*\*Loads\*\*:' "$file" | cut -d: -f1 | tr '\n' ' ')"
+        ln="$(grep -nE '^\*\*Loads\*\*:' "$file" | cut -d: -f1 | head -1)"
         fail_msg "$file" "$ln" "**Loads** line is not allowed"
+    fi
+
+    first_section="$(awk 'NR > 1 && /^## / { print NR; exit }' "$file")"
+    if [ -n "$first_section" ] && ! sed -n "${first_section}p" "$file" | grep -qE '^## Triggers[[:space:]]*$'; then
+        fail_msg "$file" "$first_section" "invalid policy shape: '## Triggers' must be the first section"
+    fi
+
+    if grep -qE '^\*\*Aliases\*\*:' "$file"; then
+        ln="$(grep -nE '^\*\*Aliases\*\*:' "$file" | cut -d: -f1 | head -1)"
+        fail_msg "$file" "$ln" "aliases are not allowed in a procedure module"
+    fi
+
+    count="$(count_matches "$file" '^## Triggers[[:space:]]*$')"
+    if [ "$count" -eq 0 ]; then
+        fail_msg "$file" "0" "missing triggers: procedure module needs a '## Triggers' section"
+        return 0
+    fi
+    if [ "$count" -gt 1 ]; then
+        fail_msg "$file" "0" "invalid trigger block: more than one '## Triggers' section"
+        return 0
+    fi
+
+    trig_line="$(first_match_line "$file" '^## Triggers[[:space:]]*$')"
+    intervening="$(awk -v end="$trig_line" 'NR > 1 && NR < end && !/^[[:space:]]*$/ { print NR; exit }' "$file")"
+    if [ -n "$intervening" ]; then
+        fail_msg "$file" "$intervening" "invalid policy shape: '## Triggers' must immediately follow the H1"
+    fi
+    bullets=0
+    ln=$trig_line
+    while IFS= read -r line; do
+        ln=$((ln + 1))
+        if [ -z "$line" ]; then
+            if [ "$bullets" -gt 0 ]; then
+                break
+            fi
+            continue
+        fi
+        if ! printf '%s\n' "$line" | grep -qE '^- [A-Za-z0-9 .#-]+$'; then
+            fail_msg "$file" "$ln" "invalid trigger block: '$line'"
+            continue
+        fi
+        raw="${line#- }"
+        base_phrase="$raw"
+        case "$base_phrase" in
+            *'#N') base_phrase="${base_phrase%#N}" ;;
+        esac
+        if printf '%s' "$base_phrase" | grep -q '#' || ! printf '%s' "$base_phrase" | grep -qE '^[a-z0-9 .-]+$'; then
+            fail_msg "$file" "$ln" "invalid trigger block: only lowercase text and one trailing #N are allowed"
+            continue
+        fi
+        norm="$(normalize_phrase "$base_phrase")"
+        if [ -z "$norm" ]; then
+            fail_msg "$file" "$ln" "invalid trigger block: empty phrase"
+            continue
+        fi
+        bullets=$((bullets + 1))
+    done < <(sed -n "$((trig_line + 1)),\$p" "$file")
+    if [ "$bullets" -eq 0 ]; then
+        fail_msg "$file" "$trig_line" "empty trigger block"
     fi
 }
 
 collect_raw_triggers() {
-    local file="$1" base module
+    local file="$1" base module name
     base="$(basename "$file")"
-    if [ "$base" = "AGENTS.md" ]; then
-        awk '
-            /^### PROCEDURE [A-Z][A-Z0-9-]*:/ {
-                name = $3
-                sub(/:$/, "", name)
-            }
-            /^\*\*Aliases\*\*:/ {
-                line = NR
-                sub(/^\*\*Aliases\*\*:[[:space:]]*/, "")
-                n = split($0, parts, ";")
-                for (i = 1; i <= n; i++) {
-                    t = parts[i]
-                    gsub(/^[ \t]+/, "", t)
-                    gsub(/[ \t]+$/, "", t)
-                    gsub(/^"|"$/, "", t)
-                    if (t == "" || t == "none") { continue }
+    case "$file" in
+        ai/procedures/*|*/ai/procedures/*)
+            name="$(sed -n '1s/^# PROCEDURE \([A-Z][A-Z0-9-]*\): .*/\1/p' "$file")"
+            awk -v module="procedure:$name" '
+                /^## Triggers[[:space:]]*$/ { in_trig = 1; seen = 0; next }
+                in_trig && /^[[:space:]]*$/ { if (seen) { in_trig = 0 }; next }
+                in_trig && /^- / {
+                    seen = 1
+                    t = $0
+                    sub(/^- /, "", t)
                     pat = 0
                     if (t ~ /#N$/) {
                         sub(/[[:space:]]*#N$/, "", t)
                         pat = 1
                     }
-                    print name "|" FILENAME "|" line "|" t "|" pat
+                    print module "|" FILENAME "|" NR "|" t "|" pat
+                    next
                 }
-            }
-        ' "$file"
-    else
-        module="${base#ai-policy-}"
-        module="${module%.md}"
-        awk -v module="$module" '
-            /^## Triggers[[:space:]]*$/ { in_trig = 1; next }
-            in_trig && /^##[[:space:]]/ { in_trig = 0 }
-            in_trig && /^- / {
-                t = $0
-                sub(/^- /, "", t)
-                print module "|" FILENAME "|" NR "|" t "|0"
-            }
-        ' "$file"
-    fi
+                in_trig { in_trig = 0 }
+            ' "$file"
+            ;;
+        AGENTS.md)
+            return 0
+            ;;
+        *)
+            module="policy:${base#ai-policy-}"
+            module="${module%.md}"
+            awk -v module="$module" '
+                /^## Triggers[[:space:]]*$/ { in_trig = 1; next }
+                in_trig && /^##[[:space:]]/ { in_trig = 0 }
+                in_trig && /^- / {
+                    t = $0
+                    sub(/^- /, "", t)
+                    print module "|" FILENAME "|" NR "|" t "|0"
+                }
+            ' "$file"
+            ;;
+    esac
 }
 
 for file in "$@"; do
@@ -337,23 +379,30 @@ for file in "$@"; do
         continue
     fi
 
-    case "$(basename "$file")" in
-        AGENTS.md)
-            check_agents_file "$file"
+    case "$file" in
+        ai/procedures/*|*/ai/procedures/*)
+            check_procedure_module "$file"
             ;;
         *)
-            if [ "$MODE" = default ]; then
-                check_policy_file "$file"
-            else
-                check_policy_name "$file"
-                title_line="$(first_match_line "$file" '^# AI (Policy|Assistant Policy): .+')"
-                if [ -n "$title_line" ]; then
-                    purpose_line="$(purpose_line_for "$file" "$title_line")"
-                else
-                    purpose_line=""
-                fi
-                check_trigger_block "$file" "$title_line" "$purpose_line"
-            fi
+            case "$(basename "$file")" in
+                AGENTS.md)
+                    check_thin_agents "$file"
+                    ;;
+                *)
+                    if [ "$MODE" = default ]; then
+                        check_policy_file "$file"
+                    else
+                        check_policy_name "$file"
+                        title_line="$(first_match_line "$file" '^# AI (Policy|Assistant Policy): .+')"
+                        if [ -n "$title_line" ]; then
+                            purpose_line="$(purpose_line_for "$file" "$title_line")"
+                        else
+                            purpose_line=""
+                        fi
+                        check_trigger_block "$file" "$title_line" "$purpose_line"
+                    fi
+                    ;;
+            esac
             ;;
     esac
 

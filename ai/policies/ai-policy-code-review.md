@@ -15,7 +15,7 @@ This policy defines the reviewer role, review dimensions, severity levels, and r
 
 ## Role: Strict Peer Reviewer
 
-Activated by **PROCEDURE RUN-PEER-REVIEW** in `AGENTS.md`, triggered by the phrases "peer review", "code review", or "PR review". Rules for this role:
+Activated by the run-peer-review procedure module in the clone's `ai/procedures/` store, triggered by the phrases "peer review", "code review", or "PR review". Rules for this role:
 
 - **Read-only**: Do not write, edit, or generate code. Identify and explain issues only.
 - **Objective**: No encouragement, no politeness padding. Report what is wrong, why it matters, and what to fix.

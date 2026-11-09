@@ -155,7 +155,7 @@ Set `pr` when your team requires a pull request even if the remote would accept 
 
 > **Note: Peer Review (`code-review`)**. You do not need to add `code-review` to `ai-customization.md`. The peer review policy is loaded automatically when you say `"peer review"`, `"code review"`, or `"PR review"` in your AI chat. It is an on-demand mode, not a persistent expertise module.
 >
-> **Note: Codebase Examination (`codebase-examination`)**. Same behavior as peer review: say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded or indexed at boot.
+> **Note: Codebase Examination (`codebase-examination`)**. Same behavior as peer review: say `"codebase examination"` or `"examine this codebase"` to activate it. Not an Active Expertise entry; not loaded in full at boot, and its metadata is indexed.
 >
 > **Note: Coding Baseline (`coding-baseline`)**. This policy is opt-in. Add `coding-baseline` to `## Active Expertise` to load it, or ask for the coding baseline policy by name. It gives the AI one language-neutral coding standard for most code work, covering Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, OWASP secure coding, resilience, and telemetry. Telemetry is on by default for production code, with a clear recommendation and an easy opt-out. Tests, examples, exercises, and one-off scripts stay telemetry-free by default. Existing code changes only inside the requested scope.
 

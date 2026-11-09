@@ -30,6 +30,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v6.0.0 (2026-11-09)
+
+- Move the 13 procedure bodies to `ai/procedures/`, one self-standing module each with H1 titles and `## Triggers`.
+- `AGENTS.md` becomes a thin router: always-on rules, the shared index step, and dispatch.
+- Migrate the validators and the reference test to the procedure store; add the thin-AGENTS and procedure-module checks.
+- Move the setup appendix to `docs/setup.md`.
+- The `#N` procedure trigger persists for `plan issue #N` and `implement issue #N`.
+- Upgrade action: pull the clone, run the sync script, and restart the session.
+- Published 2026-11-09 with the final approval.
+
 ### v5.8.0 (2026-11-09)
 
 - Policies can declare `## Triggers`; an approved phrase loads the policy for the session.
@@ -37,7 +47,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - The authoring validator gains trigger shape, namespace, name, and placeholder checks, plus a `--triggers` aggregate mode; a fixture test covers the rules.
 - Initial declarations: `cloud standards`, `data standards`, `database standards`, and `backend standards`.
 - Upgrade action: pull the clone, run the sync script, and restart the session.
-- Prepared locally; publish with the final approval.
+- Published 2026-11-09 with the final approval.
 
 ### v5.7.0 (2026-11-07)
 

@@ -30,8 +30,8 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 - Apply the common policy's generated-file validation checks to changed scripts.
 - Run a changed sync script with `--dry-run` or `-WhatIf`.
 - Run `support-files/validate-protocol.sh`.
-- Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md` or policy file.
-- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies -name '*.md' -print)` after a trigger change.
+- Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md`, policy file, or procedure module.
+- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies ai/procedures -name '*.md' -print)` after a trigger change.
 - Present a summary and a proposed commit message.
 - Treat the approved plan and the implement request as the human approval for staging, committing, merging, pushing, opening a pull request, releasing, and the external writes the work names.
 - Apply the ADR entry rule in `design-docs/protocol-decisions.md` to every protocol or policy change.
@@ -59,11 +59,14 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 
 ## Procedure and Policy Authoring
 
-This section defines how to write and edit `AGENTS.md` and policy files.
+This section defines how to write and edit `AGENTS.md`, policy files, and procedure modules.
 
 ### Applies To
 
-- Apply this section to `AGENTS.md` and `ai/policies/*`.
+- Apply the trigger, procedure-header, and enforcement rules to `AGENTS.md`, policy files, and procedure modules.
+- Apply `### Policy Structure`, `### Normative Language`, `### Rule Structure`, and `### Policy Filenames` only to policy files.
+- Exempt procedure bodies from `### Rule Structure` and `### Normative Language`; they are executable steps, not policy rules.
+- Apply `### Literal Artifacts` to a policy's or procedure module's `## Triggers` list, and to fenced literal artifacts in policy rules.
 - Do not apply this section to issues, plans, design documents, or user-facing docs.
 - Apply the common policy's `## Markdown Output` section to tables, links, emphasis, line length, and validation.
 - Apply the common policy's `## Humanized Output` section to sentence structure, tone, banned words, and em dashes.
@@ -111,7 +114,7 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 ### Literal Artifacts
 
 - Treat a fenced block as a normative literal artifact only when the owning policy designates it as one.
-- Treat a policy's `## Triggers` bullet list as a normative literal artifact.
+- Treat a policy's or procedure module's `## Triggers` bullet list as a normative literal artifact.
 - Exempt a designated normative literal artifact from the `### Rule Structure` shape.
 - Exempt the `## Triggers` bullet list from the `### Rule Structure` shape.
 - Keep a designated normative literal artifact precise and free of vague terms.
@@ -120,31 +123,24 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 ### Trigger Declarations
 
 - Allow an optional `## Triggers` section in a policy.
-- Require at least one trigger in a procedure module from the second stage.
+- Require at least one trigger in a procedure module.
 - Write one phrase per bullet.
 - Use lowercase ASCII letters, digits, spaces, and hyphens in a phrase.
-- Use letters, digits, spaces, hyphens, periods, and one trailing #N in a procedure alias.
+- Use lowercase letters, digits, spaces, hyphens, periods, and one trailing #N in a procedure trigger.
 - Forbid inline markup, quotes, backticks, and placeholders in a policy trigger.
 - Forbid an empty `## Triggers` section.
 - Forbid a phrase that duplicates another module's phrase or is contained in another module's phrase across modules.
 - Allow close variants within one module and deduplicate them.
 - Treat the `## Triggers` bullet list as data, not rules.
 - Name a policy file `ai-policy-<name>.md`.
-- Match a procedure module file name to its H1 procedure name from the second stage.
 
 ### Procedure Headers
 
-- Start each procedure with `### PROCEDURE <NAME>: <description>`.
+- Start each procedure module with `# PROCEDURE <NAME>: <description>`.
 - Use an ALL-CAPS kebab-case name.
-- Include one `**Aliases**` line in the procedure header block.
-- Write `**Aliases**: none` when the procedure has no alias.
-- Use one canonical phrase.
-- Use aliases that are close variants of the canonical phrase or explicit subcommands.
-- Use at most three aliases for a new procedure.
-- Reduce a touched procedure to at most three aliases.
-- Keep the aliases of an untouched procedure.
-- Do not use an internal identifier as a trigger.
-- Keep each trigger unique across modules; allow close variants within one module.
+- Include a `## Triggers` section with one phrase per bullet and at least one phrase.
+- Forbid an `**Aliases**` line.
+- Match the file stem to the lowercase kebab name.
 - Do not add a `**Loads**` line.
 - Name the policy to load in the first step that needs it.
 
@@ -156,10 +152,10 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 
 ### Enforcement
 
-- Run `support-files/validate-protocol.sh` after a change to `AGENTS.md` or a policy file.
-- Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md` or policy file.
-- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies -name '*.md' -print)` after a trigger change.
-- Pass a changed policy file through peer review.
+- Run `support-files/validate-protocol.sh` after a change to `AGENTS.md`, a policy file, or a procedure module.
+- Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md`, policy file, or procedure module.
+- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies ai/procedures -name '*.md' -print)` after a trigger change.
+- Pass a changed policy file or procedure module through peer review.
 - Apply the peer review's Agent-facing documentation dimension.
 - Migrate a non-compliant policy only when the policy is touched.
 - Rewrite every touched policy section to this standard.

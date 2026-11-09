@@ -1,5 +1,5 @@
 #!/bin/bash
-# Dev-time fixture test for the trigger declaration rules.
+# Dev-time fixture test for the trigger declarations.
 # Usage: ./support-files/test-trigger-rules.sh
 # Exit 0 when every case passes, 1 otherwise.
 
@@ -35,14 +35,36 @@ make_policy() {
     } > "$path"
 }
 
-make_agents() {
-    local path="$1" aliases="$2"
+make_procedure() {
+    local path="$1" name="$2" triggers="$3"
+    mkdir -p "$(dirname "$path")"
     {
-        printf '## TIER TRIGGERED-PROCEDURES\n\n'
-        printf '### PROCEDURE LOAD-CONTEXT: When the user says "load context"\n\n'
-        printf '**Aliases**: %s\n\n' "$aliases"
-        printf '### PROCEDURE UPDATE-DESIGN-DOCS: When the user says "update design documents"\n\n'
-        printf '**Aliases**: update design-docs; update design docs\n'
+        printf '# PROCEDURE %s: Fixture procedure\n\n' "$name"
+        printf '## Triggers\n\n'
+        printf '%s\n\n' "$triggers"
+        printf '1. **STEP-ONE**: Do the fixture.\n'
+    } > "$path"
+}
+
+make_procedure_no_triggers() {
+    local path="$1" name="$2"
+    mkdir -p "$(dirname "$path")"
+    {
+        printf '# PROCEDURE %s: Fixture procedure\n\n' "$name"
+        printf '1. **STEP-ONE**: Do the fixture.\n'
+    } > "$path"
+}
+
+make_thin_agents() {
+    local path="$1" extra="${2:-}"
+    {
+        printf '## TIER CONFIGURATION\n\n- Fixture.\n\n'
+        printf '## TIER READ-FIRST-RULES\n\n- Fixture.\n\n'
+        printf '## Shared Protocol Steps\n\n- **STEP-PROTOCOL-INDEX**: Rebuild.\n\n'
+        printf '## Protocol Dispatch\n\n- Resolve.\n\n'
+        printf '## TIER TRIGGERED-PROCEDURES\n\n- Store.\n\n'
+        printf '## TIER APPENDIX\n\n- Pointer.\n'
+        [ -n "$extra" ] && printf '\n%s\n' "$extra"
     } > "$path"
 }
 
@@ -72,7 +94,7 @@ run_case() {
     printf 'PASS: %s\n' "$name"
 }
 
-mkdir -p "$WORK/ai/policies"
+mkdir -p "$WORK/ai/policies" "$WORK/ai/procedures"
 
 make_policy "$WORK/ai/policies/ai-policy-cloud.md" "Cloud" "- cloud standards"
 run_case "valid policy with a trigger" 0 "PASSED" "$WORK/ai/policies/ai-policy-cloud.md"
@@ -82,38 +104,38 @@ run_case "policy without triggers" 0 "PASSED" "$WORK/ai/policies/ai-policy-empty
 
 make_policy "$WORK/ai/policies/ai-policy-one.md" "One" "- cloud standards"
 make_policy "$WORK/ai/policies/ai-policy-two.md" "Two" "- cloud standards"
-run_case "cross-module duplicate" 1 'duplicate trigger' "$WORK/ai/policies/ai-policy-one.md" "$WORK/ai/policies/ai-policy-two.md"
+run_case "cross-module policy duplicate" 1 'duplicate trigger' "$WORK/ai/policies/ai-policy-one.md" "$WORK/ai/policies/ai-policy-two.md"
 
 make_policy "$WORK/ai/policies/ai-policy-short.md" "Short" "- cloud"
 make_policy "$WORK/ai/policies/ai-policy-long.md" "Long" "- cloud standards"
-run_case "cross-module containment" 1 'trigger overlap' "$WORK/ai/policies/ai-policy-short.md" "$WORK/ai/policies/ai-policy-long.md"
+run_case "cross-module policy containment" 1 'trigger overlap' "$WORK/ai/policies/ai-policy-short.md" "$WORK/ai/policies/ai-policy-long.md"
 
-make_agents "$WORK/AGENTS.md" "load context; load context using AGENTS.md protocol"
-run_case "same-module close variants" 0 "PASSED" "$WORK/AGENTS.md"
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" $'- load context\n- load context using agents.md protocol'
+run_case "same-module procedure close variants" 0 "PASSED" "$WORK/ai/procedures/load-context.md"
 
-make_agents "$WORK/AGENTS.md" "load context; load-context"
-run_case "same-module exact duplicate" 0 "PASSED" "$WORK/AGENTS.md"
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" $'- load context\n- load-context'
+run_case "same-module procedure exact duplicate" 0 "PASSED" "$WORK/ai/procedures/load-context.md"
 
 make_policy "$WORK/ai/policies/ai-policy-emptyblock.md" "Empty Block" "- placeholder standard"
 rewrite "$WORK/ai/policies/ai-policy-emptyblock.md" '!/^- placeholder standard$/{print}'
-run_case "empty trigger block" 1 'empty trigger block' "$WORK/ai/policies/ai-policy-emptyblock.md"
+run_case "empty policy trigger block" 1 'empty trigger block' "$WORK/ai/policies/ai-policy-emptyblock.md"
 
 make_policy "$WORK/ai/policies/ai-policy-two-sections.md" "Two Sections" "- one standard"
 printf '\n## Triggers\n\n- two standard\n' >> "$WORK/ai/policies/ai-policy-two-sections.md"
-run_case "second trigger section" 1 'more than one' "$WORK/ai/policies/ai-policy-two-sections.md"
+run_case "second policy trigger section" 1 'more than one' "$WORK/ai/policies/ai-policy-two-sections.md"
 
 make_policy "$WORK/ai/policies/ai-policy-upper.md" "Upper" "- Cloud Standards"
-run_case "uppercase phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-upper.md"
+run_case "uppercase policy phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-upper.md"
 
 make_policy "$WORK/ai/policies/ai-policy-nonascii.md" "Non ASCII" "- cloud standärds"
-run_case "non-ASCII phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-nonascii.md"
+run_case "non-ASCII policy phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-nonascii.md"
 
 make_policy "$WORK/ai/policies/ai-policy-emptynorm.md" "Empty Normalized" "- -"
-run_case "empty normalized phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-emptynorm.md"
+run_case "empty normalized policy phrase" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-emptynorm.md"
 
 make_policy "$WORK/ai/policies/ai-policy-misplaced.md" "Misplaced" ""
 rewrite "$WORK/ai/policies/ai-policy-misplaced.md" '{print} /^## Rules$/{print ""; print "## Triggers"; print ""; print "- misplaced standard"}'
-run_case "misplaced trigger section" 1 'invalid policy shape' "$WORK/ai/policies/ai-policy-misplaced.md"
+run_case "misplaced policy trigger" 1 'invalid policy shape' "$WORK/ai/policies/ai-policy-misplaced.md"
 
 make_policy "$WORK/ai/policies/random.md" "Random" "- random standard"
 run_case "bad policy filename" 1 'name mismatch' "$WORK/ai/policies/random.md"
@@ -121,8 +143,8 @@ run_case "bad policy filename" 1 'name mismatch' "$WORK/ai/policies/random.md"
 make_policy "$WORK/ai/policies/ai-policy-placeholder.md" "Placeholder" "- cloud #N"
 run_case "placeholder in a policy trigger" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-placeholder.md"
 
-make_agents "$WORK/AGENTS.md" "plan issue #N; implement issue #N"
-run_case "placeholder alias is allowed" 0 "PASSED" "$WORK/AGENTS.md"
+make_procedure "$WORK/ai/procedures/manage-issues.md" "MANAGE-ISSUES" "- plan issue #N"
+run_case "placeholder in a procedure trigger" 0 "PASSED" "$WORK/ai/procedures/manage-issues.md"
 
 make_policy "$WORK/ai/policies/ai-policy-norefs.md" "No References" "- no refs standard" "yes"
 run_case "shape failure in default mode" 1 "missing '## References'" "$WORK/ai/policies/ai-policy-norefs.md"
@@ -141,18 +163,18 @@ run_case "punctuation duplicate" 1 'duplicate trigger' "$WORK/ai/policies/ai-pol
 run_case "punctuation duplicate in --triggers mode" 1 'duplicate trigger' --triggers "$WORK/ai/policies/ai-policy-punct-a.md" "$WORK/ai/policies/ai-policy-punct-b.md"
 
 make_policy "$WORK/ai/policies/ai-policy-malformed.md" "Malformed" $'- valid standard\nprose line'
-run_case "prose inside the trigger block" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-malformed.md"
+run_case "prose inside a policy trigger" 1 'invalid trigger block' "$WORK/ai/policies/ai-policy-malformed.md"
 
-make_agents "$WORK/AGENTS.md" "cloud*"
-run_case "wildcard alias" 1 'invalid trigger block' "$WORK/AGENTS.md"
-make_agents "$WORK/AGENTS.md" "plan #N issue"
-run_case "non-trailing placeholder" 1 'invalid trigger block' "$WORK/AGENTS.md"
-make_agents "$WORK/AGENTS.md" "#N"
-run_case "placeholder alone" 1 'invalid trigger block' "$WORK/AGENTS.md"
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- cloud*"
+run_case "wildcard procedure trigger" 1 'invalid trigger block' "$WORK/ai/procedures/load-context.md"
+make_procedure "$WORK/ai/procedures/manage-issues.md" "MANAGE-ISSUES" "- plan #N issue"
+run_case "non-trailing procedure placeholder" 1 'invalid trigger block' "$WORK/ai/procedures/manage-issues.md"
+make_procedure "$WORK/ai/procedures/manage-issues.md" "MANAGE-ISSUES" "- #N"
+run_case "procedure placeholder alone" 1 'invalid trigger block' "$WORK/ai/procedures/manage-issues.md"
 
-make_agents "$WORK/AGENTS.md" "plan issue #N"
+make_procedure "$WORK/ai/procedures/manage-issues.md" "MANAGE-ISSUES" "- plan issue #N"
 make_policy "$WORK/ai/policies/ai-policy-base.md" "Base" "- plan issue"
-run_case "placeholder base collision" 1 'duplicate trigger' "$WORK/AGENTS.md" "$WORK/ai/policies/ai-policy-base.md"
+run_case "placeholder base collision" 1 'duplicate trigger' "$WORK/ai/procedures/manage-issues.md" "$WORK/ai/policies/ai-policy-base.md"
 
 make_policy "$WORK/ai/policies/ai-policy-domain-first.md" "Domain First" ""
 rewrite "$WORK/ai/policies/ai-policy-domain-first.md" '/^## Scope$/{print "## Overview"; print ""; print "- overview"; print ""; print "## Triggers"; print ""; print "- after overview"; print ""} {print}'
@@ -161,6 +183,68 @@ run_case "trigger after a domain section" 1 'first section after the purpose' "$
 make_policy "$WORK/ai/policies/ai-policy-subheading.md" "Subheading" "- subheading standard"
 rewrite "$WORK/ai/policies/ai-policy-subheading.md" '/^## Triggers$/{print "### Note"; print ""; print "note text"; print ""} {print}'
 run_case "subheading before the trigger section" 1 'immediately follow the purpose' "$WORK/ai/policies/ai-policy-subheading.md"
+
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- load context"
+run_case "valid procedure module" 0 "PASSED" "$WORK/ai/procedures/load-context.md"
+
+make_procedure_no_triggers "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT"
+run_case "procedure module without triggers" 1 'missing triggers' "$WORK/ai/procedures/load-context.md"
+
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- load context"
+printf '\n**Aliases**: load context\n' >> "$WORK/ai/procedures/load-context.md"
+run_case "procedure module with aliases" 1 'aliases are not allowed' "$WORK/ai/procedures/load-context.md"
+
+make_procedure "$WORK/ai/procedures/wrong-name.md" "LOAD-CONTEXT" "- load context"
+run_case "procedure module bad stem" 1 'name mismatch' "$WORK/ai/procedures/wrong-name.md"
+
+make_thin_agents "$WORK/AGENTS.md"
+run_case "thin AGENTS.md" 0 "PASSED" "$WORK/AGENTS.md"
+
+make_thin_agents "$WORK/AGENTS.md" "### PROCEDURE LOAD-CONTEXT: old"
+run_case "AGENTS.md with a procedure" 1 'procedure content' "$WORK/AGENTS.md"
+
+make_procedure "$WORK/ai/procedures/cloud-standards.md" "CLOUD-STANDARDS" "- cloud standards"
+make_policy "$WORK/ai/policies/ai-policy-cloud-dup.md" "Cloud Dup" "- cloud standards"
+run_case "policy and procedure duplicate" 1 'duplicate trigger' "$WORK/ai/procedures/cloud-standards.md" "$WORK/ai/policies/ai-policy-cloud-dup.md"
+
+make_thin_agents "$WORK/AGENTS.md" "# PROCEDURE LOAD-CONTEXT: old"
+run_case "thin AGENTS.md with an H1 procedure" 1 'procedure content' "$WORK/AGENTS.md"
+
+make_thin_agents "$WORK/AGENTS.md" "**Aliases**: load context"
+run_case "thin AGENTS.md with aliases" 1 'procedure content' "$WORK/AGENTS.md"
+
+make_thin_agents "$WORK/AGENTS.md"
+rewrite "$WORK/AGENTS.md" '!/^## Protocol Dispatch$/{print}'
+run_case "thin AGENTS.md missing a section" 1 'missing required section' "$WORK/AGENTS.md"
+
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- load context"
+printf '\n**Loads**: ai-policy-common.md\n' >> "$WORK/ai/procedures/load-context.md"
+run_case "procedure module with a Loads line" 1 '**Loads** line is not allowed' "$WORK/ai/procedures/load-context.md"
+
+mkdir -p "$WORK/ai/procedures"
+{
+    printf '<!-- leading comment -->\n'
+    printf '# PROCEDURE LOAD-CONTEXT: Fixture procedure\n\n'
+    printf '## Triggers\n\n- load context\n'
+} > "$WORK/ai/procedures/load-context.md"
+run_case "procedure module H1 not first" 1 'must start with' "$WORK/ai/procedures/load-context.md"
+
+{
+    printf '# PROCEDURE LOAD-CONTEXT: Fixture procedure\n\n'
+    printf '## Body\n\n- body content\n\n'
+    printf '## Triggers\n\n- load context\n'
+} > "$WORK/ai/procedures/load-context.md"
+run_case "procedure triggers after a body section" 1 'first section' "$WORK/ai/procedures/load-context.md"
+
+{
+    printf '# PROCEDURE LOAD-CONTEXT: Fixture procedure\n\n'
+    printf '1. **STEP-ONE**: Before the triggers.\n\n'
+    printf '## Triggers\n\n- load context\n'
+} > "$WORK/ai/procedures/load-context.md"
+run_case "procedure body before triggers" 1 'immediately follow the H1' "$WORK/ai/procedures/load-context.md"
+
+make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- load context"
+run_case "valid procedure module in --triggers mode" 0 "PASSED" --triggers "$WORK/ai/procedures/load-context.md"
 
 echo "---"
 if [ "$failures" -ne 0 ]; then

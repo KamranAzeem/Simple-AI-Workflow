@@ -133,7 +133,7 @@ When the conversation is compacted (the harness replaces the live history with a
 ### How it works
 
 1. The AI notices the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary it did not write.
-2. It re-reads `AGENTS.md`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
+2. It re-reads the thin `AGENTS.md`, every procedure module in the clone's `ai/procedures/`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
 3. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
 4. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
 
@@ -141,7 +141,7 @@ When the conversation is compacted (the harness replaces the live history with a
 
 - **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time: automatically or when you ask for it.
 - **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
-- **Trigger index**: The AI rebuilds the trigger index from the live policy files and aliases. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction; say the phrase again.
+- **Trigger index**: The AI rebuilds the trigger index from the live policy files and procedure modules. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction; say the phrase again.
 
 ### Benefits
 
@@ -172,9 +172,9 @@ recovery?" before trusting the next answer.
 
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
 
-- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in `AGENTS.md` PROCEDURE CREATE-BACKUP.
+- **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in the `create-backup` procedure module in the clone's `ai/procedures/`.
 - **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
-- **Not automatic**: Backups are **not** part of the checkpoint procedure (PROCEDURE WRITE-CHECKPOINT). They are a separate procedure (PROCEDURE CREATE-BACKUP) invoked only by explicit user request.
+- **Not automatic**: Backups are **not** part of the checkpoint procedure (the `write-checkpoint` module). They are a separate procedure (the `create-backup` module) invoked only by explicit user request.
 
 ### Benefits
 
@@ -370,7 +370,7 @@ At the start of each session, the AI checks for these documents and prompts you 
 
 ## 16. Issue Management and Delivery (`ai/issues/`)
 
-Two procedures own the work. `PROCEDURE MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and writes and reviews a plan on request. `PROCEDURE IMPLEMENT-PLAN` delivers an approved plan. Each request ends at its own step: a ticket-only request does not cascade into planning, and a plan request does not open a branch.
+Two procedures own the work. The `manage-issues` procedure module in the clone's `ai/procedures/` files, lists, closes, or reopens a ticket, and writes and reviews a plan on request. The `implement-plan` module delivers an approved plan. Each request ends at its own step: a ticket-only request does not cascade into planning, and a plan request does not open a branch.
 
 Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's directory is its status; an external ticket's state is its status. Create a ticket with `"file an issue"` using `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
 

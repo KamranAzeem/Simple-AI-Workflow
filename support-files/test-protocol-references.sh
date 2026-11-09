@@ -3,8 +3,8 @@
 #
 # Four check groups:
 #   1. Resolvability: every PROCEDURE / STEP / TIER / ITEM reference in the live
-#      protocol files resolves to exactly one definition in AGENTS.md, and every
-#      defined name is unique.
+#      protocol files resolves to exactly one definition in AGENTS.md or the
+#      procedure store, and every defined name is unique.
 #   2. Conformance: no letter-based procedure reference, and no numeric tier or
 #      step reference, remains in the live protocol files.
 #   3. Path conformance: no live protocol file hardcodes a protocol-tree policy
@@ -14,7 +14,8 @@
 #      ordered close phrases stay out of the pointer documents, and the Merge
 #      Policy section is present in the customization template and sync scripts.
 #
-# Live protocol files are AGENTS.md, ai/shared/coordination.md, and ai/policies/*.md.
+# Live protocol files are AGENTS.md, ai/shared/coordination.md, ai/policies/*.md,
+# and ai/procedures/*.md.
 # Historical records (daily checkpoints, closed tickets, ADR history) and ordinary
 # "step" usage in runbooks/scripts are intentionally out of scope.
 #
@@ -29,14 +30,17 @@ LIVE_FILES=(AGENTS.md ai/shared/coordination.md)
 while IFS= read -r f; do
     LIVE_FILES+=("$f")
 done < <(find ai/policies -maxdepth 1 -name '*.md' 2>/dev/null | sort)
+while IFS= read -r f; do
+    LIVE_FILES+=("$f")
+done < <(find ai/procedures -maxdepth 1 -name '*.md' 2>/dev/null | sort)
 
 fail=0
 
-# --- definitions from AGENTS.md ---
-defined_procedures="$(grep -oE '^### PROCEDURE [A-Z][A-Z-]*:' AGENTS.md | sed -E 's/^### PROCEDURE ([A-Z][A-Z-]*):/\1/' | sort)"
-defined_steps="$(grep -oE '\*\*STEP-[A-Z][A-Z-]*' AGENTS.md | sed -E 's/\*\*STEP-//' | sort)"
+# --- definitions from AGENTS.md and the procedure modules ---
+defined_procedures="$(grep -hoE '^# PROCEDURE [A-Z][A-Z0-9-]*:' ai/procedures/*.md | sed -E 's/^# PROCEDURE ([A-Z][A-Z0-9-]*):/\1/' | sort)"
+defined_steps="$(grep -hoE '\*\*STEP-[A-Z][A-Z0-9-]*' AGENTS.md ai/procedures/*.md | sed -E 's/\*\*STEP-//' | sort)"
 defined_tiers="$(grep -oE '^## TIER [A-Z][A-Z-]*' AGENTS.md | sed -E 's/^## TIER //' | sort)"
-defined_items="$(grep -oE '\*\*ITEM [A-Z][A-Z-]*' AGENTS.md | sed -E 's/\*\*ITEM //' | sort)"
+defined_items="$(grep -hoE '\*\*ITEM [A-Z][A-Z-]*' AGENTS.md ai/procedures/*.md | sed -E 's/\*\*ITEM //' | sort)"
 
 check_unique() {
     local label="$1" list="$2" dups
@@ -62,7 +66,7 @@ check_refs() {
         | sort -u)"
     for r in $refs; do
         if ! printf '%s\n' "$defs" | grep -qx "$r"; then
-            echo "FAIL: $kind reference '$r' has no definition in AGENTS.md"
+            echo "FAIL: $kind reference '$r' has no definition in the live protocol files"
             fail=1
         fi
     done
@@ -100,9 +104,9 @@ fi
 
 # --- order conformance: one authoritative work-item order ---
 for proc in MANAGE-ISSUES IMPLEMENT-PLAN; do
-    count="$(grep -cE "^### PROCEDURE ${proc}:" AGENTS.md 2>/dev/null || true)"
+    count="$(grep -hE "^# PROCEDURE ${proc}:" ai/procedures/*.md 2>/dev/null | wc -l | tr -d ' ')"
     if [ "$count" -ne 1 ]; then
-        echo "FAIL: PROCEDURE ${proc} must be defined exactly once in AGENTS.md (found ${count})."
+        echo "FAIL: PROCEDURE ${proc} must be defined exactly once in the procedure store (found ${count})."
         fail=1
     fi
 done
@@ -110,7 +114,7 @@ done
 for f in ai/policies/ai-policy-common.md ai/shared/project-knowledge/issue-template.md docs/workflow-guide.md README.md docs/ai-agent-collaboration.md; do
     for phrase in "Squash-merge to trunk" "Run the checkpoint on the branch" "Attach the final plan" "Replace the active plan link" "replace its link with"; do
         if grep -Fiq "$phrase" "$f" 2>/dev/null; then
-            echo "FAIL: ordered close phrase '$phrase' found in $f; the order belongs only in AGENTS.md."
+            echo "FAIL: ordered close phrase '$phrase' found in $f; the order belongs only in the procedure modules."
             fail=1
         fi
     done

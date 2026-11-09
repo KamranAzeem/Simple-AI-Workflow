@@ -7,7 +7,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
-> **Applies to all domain policies**: All policies are activated through the `AGENTS.md` bootstrap procedure. Paths resolve using the configuration anchors in `AGENTS.md`. A policy file named without a directory resolves from the **Global AI Policies Directory**. Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
+> **Applies to all domain policies**: All policies are activated through the load-context procedure module in the clone's `ai/procedures/` store. Paths resolve using the configuration anchors in `AGENTS.md`. A policy file named without a directory resolves from the **Global AI Policies Directory**. Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
 
 ## Scope
 
@@ -68,7 +68,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 ## Agent-to-Agent (A2A) Coordination
 
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
-2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the `AGENTS.md` bootstrap procedure). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
+2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the load-context procedure module). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
 4. **Valid Handoff Definition & Refusal Mandate**:
     - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
@@ -78,7 +78,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ### Source-of-Truth Order
 
-**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the `AGENTS.md` bootstrap procedure and are consulted alongside these state files. The order below applies specifically to resuming session state, i.e., answering "where are we and what's next?"
+**Note**: Knowledge bases (Global Knowledge and Project Knowledge) are indexed during the load-context procedure module and are consulted alongside these state files. The order below applies specifically to resuming session state, i.e., answering "where are we and what's next?"
 
 **Exception (Post-Compaction Recovery)**: When **Post-Compaction Recovery** is active, the compaction summary is the **sole authoritative source** and supersedes all state files below. Do not read the state files during Post-Compaction Recovery.
 
@@ -89,8 +89,8 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 
 ### Checkpoint & Backup Procedures
 
-- **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in `AGENTS.md`. This step is mandatory even when nothing new was discovered: the AI must explicitly confirm the knowledge base is current.
-- **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in `AGENTS.md`. This runs in the same transaction as the state files, not as a separate or optional action.
+- **Checkpoint Mandate**: Every checkpoint operation MUST include a review and update of the **Project AI Knowledge Directory** as defined in the checkpoint knowledge update steps in the write-checkpoint procedure module. This step is mandatory even when nothing new was discovered: the AI must explicitly confirm the knowledge base is current.
+- **Daily Checkpoint File Mandate**: Every checkpoint operation MUST also append an entry to **Project Daily Checkpoints Directory**, one file per calendar day with a new section per checkpoint, as defined in the daily-checkpoint-file write step in the write-checkpoint procedure module. This runs in the same transaction as the state files, not as a separate or optional action.
 - **Backup**: Backups are a **separate, on-demand procedure**. Run the native backup command only when the user explicitly says "backup ai" or "backup ai state". Backups are NOT part of the checkpoint procedure.
 - **Checkpoint Labeling**: A checkpoint is labeled by its date plus a short title. There is no checkpoint ID.
 - **No Git Metadata in State Files**: The state files never record a branch, commit hash, or push status, and the AI does not prompt the user to commit them. Git history is the source of truth for version control.
@@ -163,10 +163,10 @@ This binds sub-agents and non-orchestrator sessions.
 
 ## Project Knowledge Protocol
 
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the `AGENTS.md` bootstrap procedure. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
+- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the load-context procedure module. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
 - **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in `AGENTS.md`) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
+- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in the write-checkpoint procedure module) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
 - **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
 - **Format**: Apply `## Knowledge File Standards` to every project knowledge file.
 
@@ -360,7 +360,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Never store a checkpoint in a secondary repository.
 - Commit the checkpoint on the project root repo's branch when `ai/` is tracked.
 - **Awareness vs. Authorship**: An agent that needs to know what others are doing READS the **Project Coordination File**; it does not gain that awareness by writing the state files. Awareness = read the board. Canonical narrative = orchestrator writes.
-- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the checkpoint procedure in `AGENTS.md`).
+- **Reporting Channel**: Non-orchestrator agents report their work via the coordination board, their handoff file, and role-scoped Project Knowledge files (single-writer per role). The orchestrator reconciles these into the state files at checkpoint (see the write-checkpoint procedure module).
 - **Checkpoint Direction**: A checkpoint serialises the orchestrator's fresh in-memory context INTO the state files (memory → disk). The pre-write read of the state files is a reconcile to preserve the append-only history in progress.md and detect drift, never a refresh that overwrites fresh work with a stale disk copy.
 - **Chronological Order (all state files)**: Entries run oldest at the top and newest at the bottom. New content is always appended at the tail, never inserted above existing entries. This governs insertion order; deletion and in-place dashboard edits follow the per-file rules below.
 - **next-steps.md is forward-only (the future)**: It is a backlog, not a history. Append new items at the tail. Delete each item the moment it is done; never leave a ticked, checked, or struck-through entry. Work oldest-first by default, but delete a finished item wherever it sits. No history accumulates here and it has no archive.

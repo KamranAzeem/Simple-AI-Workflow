@@ -10,142 +10,66 @@ if ! grep -q "⚠️ STOP: READ-ONLY PROTOCOL" AGENTS.md; then
     echo "Error: Immortality Header missing in AGENTS.md"
     exit 1
 fi
-if ! grep -q "### PROCEDURE LOAD-CONTEXT: When the user says \"load context\"" AGENTS.md; then
-    echo "Error: PROCEDURE LOAD-CONTEXT anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "### PROCEDURE RUN-PEER-REVIEW: When the user says \"peer review\"" AGENTS.md; then
-    echo "Error: PROCEDURE RUN-PEER-REVIEW anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "### PROCEDURE POST-COMPACTION-RECOVERY:" AGENTS.md; then
-    echo "Error: PROCEDURE POST-COMPACTION-RECOVERY anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "### PROCEDURE CREATE-BACKUP: When the user says \"backup ai\"" AGENTS.md; then
-    echo "Error: PROCEDURE CREATE-BACKUP anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "### PROCEDURE EXAMINE-CODEBASE: When the user says" AGENTS.md; then
-    echo "Error: PROCEDURE EXAMINE-CODEBASE anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-ATOMIC-WRITE" AGENTS.md; then
-    echo "Error: STEP-ATOMIC-WRITE missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-STATE-FILE-TRIMMING" AGENTS.md; then
-    echo "Error: STEP-STATE-FILE-TRIMMING missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-DAILY-CHECKPOINT-FILE" AGENTS.md; then
-    echo "Error: STEP-DAILY-CHECKPOINT-FILE missing from PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q 'Index `open/` and `in-progress/`' AGENTS.md; then
-    echo "Error: Project Issues indexing step (three-directory status convention) missing from PROCEDURE LOAD-CONTEXT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q '### PROCEDURE MANAGE-ISSUES:' AGENTS.md; then
-    echo "Error: PROCEDURE MANAGE-ISSUES anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q '### PROCEDURE REPAIR-STATE-FILES:' AGENTS.md; then
-    echo "Error: PROCEDURE REPAIR-STATE-FILES anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q '### PROCEDURE REPAIR-KNOWLEDGE-FILES:' AGENTS.md; then
-    echo "Error: PROCEDURE REPAIR-KNOWLEDGE-FILES anchor missing in AGENTS.md."
-    exit 1
-fi
-if ! grep -q 'STEP-KNOWLEDGE-HEADER-PRE-WRITE' AGENTS.md; then
-    echo "Error: STEP-KNOWLEDGE-HEADER-PRE-WRITE anchor missing in AGENTS.md."
-    exit 1
-fi
-for anchor in STEP-DRY-RUN-KNOWLEDGE-REPAIR STEP-REPLACE-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-SIZE STEP-REPORT-KNOWLEDGE-REPAIR; do
-    if ! grep -q "$anchor" AGENTS.md; then
-        echo "Error: $anchor anchor missing in AGENTS.md."
+
+require_in() {
+    local file="$1" pattern="$2" message="$3"
+    if ! grep -q "$pattern" "$file"; then
+        echo "Error: $message"
         exit 1
     fi
+}
+
+require_in "ai/procedures/load-context.md" '# PROCEDURE LOAD-CONTEXT: When the user says "load context"' "PROCEDURE LOAD-CONTEXT anchor missing in ai/procedures/load-context.md."
+require_in "ai/procedures/bootstrap-project.md" '# PROCEDURE BOOTSTRAP-PROJECT: Empty repository' "PROCEDURE BOOTSTRAP-PROJECT anchor missing in ai/procedures/bootstrap-project.md."
+require_in "ai/procedures/write-checkpoint.md" '# PROCEDURE WRITE-CHECKPOINT: When the user says "checkpoint"' "PROCEDURE WRITE-CHECKPOINT anchor missing in ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/run-peer-review.md" '# PROCEDURE RUN-PEER-REVIEW: When the user says "peer review"' "PROCEDURE RUN-PEER-REVIEW anchor missing in ai/procedures/run-peer-review.md."
+require_in "ai/procedures/post-compaction-recovery.md" '# PROCEDURE POST-COMPACTION-RECOVERY:' "PROCEDURE POST-COMPACTION-RECOVERY anchor missing in ai/procedures/post-compaction-recovery.md."
+require_in "ai/procedures/create-backup.md" '# PROCEDURE CREATE-BACKUP: When the user says "backup ai"' "PROCEDURE CREATE-BACKUP anchor missing in ai/procedures/create-backup.md."
+require_in "ai/procedures/examine-codebase.md" '# PROCEDURE EXAMINE-CODEBASE: When the user says' "PROCEDURE EXAMINE-CODEBASE anchor missing in ai/procedures/examine-codebase.md."
+require_in "ai/procedures/manage-issues.md" '# PROCEDURE MANAGE-ISSUES:' "PROCEDURE MANAGE-ISSUES anchor missing in ai/procedures/manage-issues.md."
+require_in "ai/procedures/implement-plan.md" '# PROCEDURE IMPLEMENT-PLAN:' "PROCEDURE IMPLEMENT-PLAN anchor missing in ai/procedures/implement-plan.md."
+require_in "ai/procedures/repair-state-files.md" '# PROCEDURE REPAIR-STATE-FILES:' "PROCEDURE REPAIR-STATE-FILES anchor missing in ai/procedures/repair-state-files.md."
+require_in "ai/procedures/repair-knowledge-files.md" '# PROCEDURE REPAIR-KNOWLEDGE-FILES:' "PROCEDURE REPAIR-KNOWLEDGE-FILES anchor missing in ai/procedures/repair-knowledge-files.md."
+require_in "ai/procedures/update-design-docs.md" '# PROCEDURE UPDATE-DESIGN-DOCS:' "PROCEDURE UPDATE-DESIGN-DOCS anchor missing in ai/procedures/update-design-docs.md."
+require_in "ai/procedures/migrate-design-docs.md" '# PROCEDURE MIGRATE-DESIGN-DOCS:' "PROCEDURE MIGRATE-DESIGN-DOCS anchor missing in ai/procedures/migrate-design-docs.md."
+
+require_in "ai/procedures/write-checkpoint.md" "STEP-ATOMIC-WRITE" "STEP-ATOMIC-WRITE missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "STEP-STATE-FILE-TRIMMING" "STEP-STATE-FILE-TRIMMING missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "STEP-DAILY-CHECKPOINT-FILE" "STEP-DAILY-CHECKPOINT-FILE missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "STEP-KNOWLEDGE-HEADER-PRE-WRITE" "STEP-KNOWLEDGE-HEADER-PRE-WRITE anchor missing in ai/procedures/write-checkpoint.md."
+for anchor in STEP-DRY-RUN-KNOWLEDGE-REPAIR STEP-REPLACE-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-REPAIR STEP-REVIEW-KNOWLEDGE-SIZE STEP-REPORT-KNOWLEDGE-REPAIR; do
+    require_in "ai/procedures/repair-knowledge-files.md" "$anchor" "$anchor anchor missing in ai/procedures/repair-knowledge-files.md."
 done
-if ! grep -q '### PROCEDURE UPDATE-DESIGN-DOCS:' AGENTS.md; then
-    echo "Error: PROCEDURE UPDATE-DESIGN-DOCS anchor missing in AGENTS.md."
+
+require_in "ai/procedures/load-context.md" 'Index `open/` and `in-progress/`' "Project Issues indexing step missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "Token Rationing" "Token Rationing steps missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "STEP-KNOWLEDGE-INDEXING" "STEP-KNOWLEDGE-INDEXING missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "STEP-POLICY-LOADING" "STEP-POLICY-LOADING missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "STEP-WORKFLOW-VERSION-CHECK" "STEP-WORKFLOW-VERSION-CHECK missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "Global AI Knowledge Directory" "Global AI Knowledge Directory reference missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "ITEM PROTOCOL-INDEX" "ITEM PROTOCOL-INDEX missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "STEP-STATE-FILE-PROOF-OF-READ" "STEP-STATE-FILE-PROOF-OF-READ missing from ai/procedures/load-context.md."
+require_in "ai/procedures/write-checkpoint.md" "STEP-FRESH-READ-BEFORE-WRITE" "STEP-FRESH-READ-BEFORE-WRITE missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "Before writing, verify each state-file header." "State-file header pre-write check missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "Before appending, verify today's header." "Checkpoint header pre-append check missing from ai/procedures/write-checkpoint.md."
+require_in "ai/procedures/write-checkpoint.md" "Preserve each header verbatim." "Header preservation check missing from ai/procedures/write-checkpoint.md."
+
+require_in "AGENTS.md" "^## Shared Protocol Steps$" "Shared Protocol Steps section missing from AGENTS.md."
+require_in "AGENTS.md" "STEP-PROTOCOL-INDEX" "STEP-PROTOCOL-INDEX missing from AGENTS.md."
+require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
+require_in "AGENTS.md" "Single-Writer" "State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
+require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
+
+if grep -qE "\bPROCEDURE [A-I]\b|\bProcedure [A-I]\b|\bprocedure [A-I]\b" AGENTS.md ai/procedures/*.md; then
+    echo "Error: letter-based procedure reference found; use PROCEDURE <NAME> instead."
     exit 1
 fi
-if ! grep -q '### PROCEDURE MIGRATE-DESIGN-DOCS:' AGENTS.md; then
-    echo "Error: PROCEDURE MIGRATE-DESIGN-DOCS anchor missing in AGENTS.md."
+if grep -qE "\bTIER [0-9]\b|\bStep [0-9]\b" AGENTS.md ai/procedures/*.md; then
+    echo "Error: numeric tier or step reference found; use TIER <NAME> or STEP <NAME> instead."
     exit 1
 fi
-if ! grep -q "Token Rationing" AGENTS.md; then
-    echo "Error: Token Rationing steps missing from PROCEDURE LOAD-CONTEXT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-KNOWLEDGE-INDEXING" AGENTS.md; then
-    echo "Error: STEP-KNOWLEDGE-INDEXING missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (must cover both Global and Project Knowledge)."
-    exit 1
-fi
-if ! grep -q "STEP-POLICY-LOADING" AGENTS.md; then
-    echo "Error: STEP-POLICY-LOADING missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (referenced policies must be fully loaded at boot)."
-    exit 1
-fi
-if ! grep -q "STEP-WORKFLOW-VERSION-CHECK" AGENTS.md; then
-    echo "Error: STEP-WORKFLOW-VERSION-CHECK missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (the workflow clone update check must be reported)."
-    exit 1
-fi
-if ! grep -q "^## Shared Protocol Steps$" AGENTS.md; then
-    echo "Error: Shared Protocol Steps section missing from AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-PROTOCOL-INDEX" AGENTS.md; then
-    echo "Error: STEP-PROTOCOL-INDEX missing from AGENTS.md."
-    exit 1
-fi
-if ! grep -q "^## Protocol Dispatch$" AGENTS.md; then
-    echo "Error: Protocol Dispatch section missing from AGENTS.md."
-    exit 1
-fi
-if ! grep -q "ITEM PROTOCOL-INDEX" AGENTS.md; then
-    echo "Error: ITEM PROTOCOL-INDEX missing from STEP-PROOF-OF-LOAD in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
-    echo "Error: Global AI Knowledge Directory reference missing from STEP-KNOWLEDGE-INDEXING in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-STATE-FILE-PROOF-OF-READ" AGENTS.md; then
-    echo "Error: STEP-STATE-FILE-PROOF-OF-READ guarantee missing from STEP-LOADING in PROCEDURE LOAD-CONTEXT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "STEP-FRESH-READ-BEFORE-WRITE" AGENTS.md; then
-    echo "Error: STEP-FRESH-READ-BEFORE-WRITE guarantee missing from STEP-ATOMIC-WRITE in PROCEDURE WRITE-CHECKPOINT in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Before writing, verify each state-file header." AGENTS.md; then
-    echo "Error: state-file header pre-write check missing from STEP-ATOMIC-WRITE in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Before appending, verify today's header." AGENTS.md; then
-    echo "Error: checkpoint header pre-append check missing from STEP-DAILY-CHECKPOINT-FILE in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Preserve each header verbatim." AGENTS.md; then
-    echo "Error: header preservation check missing from STEP-STATE-FILE-TRIMMING in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Single-Writer" AGENTS.md; then
-    echo "Error: State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
-    exit 1
-fi
-if ! grep -q "Full File Reads" AGENTS.md; then
-    echo "Error: Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
-    exit 1
-fi
-if grep -qE "\bPROCEDURE [A-I]\b|\bProcedure [A-I]\b|\bprocedure [A-I]\b" AGENTS.md; then
-    echo "Error: letter-based procedure reference found in AGENTS.md; use PROCEDURE <NAME> instead."
-    exit 1
-fi
-if grep -qE "\bTIER [0-9]\b|\bStep [0-9]\b" AGENTS.md; then
-    echo "Error: numeric tier or step reference found in AGENTS.md; use TIER <NAME> or STEP <NAME> instead."
+if [ "$(wc -l < AGENTS.md)" -gt 160 ] || [ "$(wc -w < AGENTS.md)" -gt 2400 ] || [ "$(wc -c < AGENTS.md)" -gt 24900 ]; then
+    echo "Error: AGENTS.md exceeds the thin targets (160 lines, 2,400 words, 24,900 bytes)."
     exit 1
 fi
 echo "Hardening anchors verified."

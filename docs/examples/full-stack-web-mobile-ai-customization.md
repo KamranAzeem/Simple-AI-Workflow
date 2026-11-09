@@ -33,7 +33,7 @@
 
 - Always pull/fetch the latest from the remote before starting work.
 - **One branch per feature**: `feature/<feature-name>`. Peer review (PROCEDURE RUN-PEER-REVIEW) passes and tests are green before proposing a merge; merging to master always requires explicit human approval (see `ai-policy-common.md` in the **Global AI Policies Directory**).
-- **Proactive peer review**: After completing each module, run peer review (AGENTS.md PROCEDURE RUN-PEER-REVIEW) and write the report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. A module is complete only when it passes with no blocking issues.
+- **Proactive peer review**: After completing each module, run peer review (the run-peer-review procedure module in the clone's `ai/procedures/`) and write the report to `ai/code-review-reports/YYYY-MM-DD_HH-MM_review-NN.md`. A module is complete only when it passes with no blocking issues.
 
 ### Methodologies (mandatory)
 

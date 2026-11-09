@@ -865,7 +865,7 @@ Claims
 - Close variants and overlapping aliases within one module are allowed and deduplicated; they resolve to the same module.
 - The existing aliases `load context` and `load context using AGENTS.md protocol`, `bootstrap` and `bootstrap using AGENTS.md protocol`, `post-compaction recovery` and `run post-compaction recovery procedure`, and `backup ai` and `backup ai state` are intentional same-module variants.
 - `update design-docs` and `update design docs` normalize to the same phrase within one module and are deduplicated.
-- The parameterized aliases `plan issue #N` and `implement issue #N` use the only placeholder form, `#N`, which matches an optional `#` and one or more digits.
+- The parameterized aliases `plan issue #N` and `implement issue #N` use the only placeholder form, `#N`, which matches an optional `#` and one or more digits; it persists in the procedure `## Triggers` after the alias form is removed.
 - Active Expertise tokens and module file names are not triggers.
 - A same-name project module replaces the global module. Its declared triggers replace the global module's triggers, and the replaced triggers remain reserved and unavailable to a different-name project module.
 - A project module with a different name may not use a shipped trigger.
@@ -924,7 +924,7 @@ Invariants
 - INV-013: a triggered policy is session-scoped; nothing persisted; compaction drops it and the AI says so; procedures run once; no unload command.
 - INV-014: the thin `AGENTS.md` holds no procedure bodies and no static procedure list; the size and boot-payload targets hold and are checked by the validator.
 - INV-015: two sequential stages, the first minor and the second major; skills are separate and reuse the model.
-- INV-016: the only pattern syntax is the declared suffix `#N`, which matches an optional `#` and one or more digits; no other placeholder or wildcard is allowed; it applies to the alias transition only and is removed with the `**Aliases**` form.
+- INV-016: the only pattern syntax is the declared suffix `#N`, which matches an optional `#` and one or more digits; no other placeholder or wildcard is allowed; it applies to the alias transition and persists in procedure triggers after the alias form is removed.
 
 Change rule
 
@@ -937,3 +937,11 @@ Change rule
 Context: the model must stay stable across the policy plugin, the procedure modules, and the later skills work. Without a frozen contract, the same behavior would be re-decided in each stage.
 
 Consequences: the validators and the reference test encode the machine-checkable invariants. The Directive versus Inquiry gate is covered by the manual matrix in the first stage. Every plan for this model references invariant IDs instead of restating the criteria.
+
+## 2026-11-09: INV-016 amendment for procedure triggers
+
+INV-016 is amended: the trailing `#N` placeholder persists in procedure `## Triggers` after the `**Aliases**` form is removed. It remains the only pattern syntax and matches an optional `#` and one or more digits. The parameterized commands `plan issue #N` and `implement issue #N` use it.
+
+Context: Stage 2 moves the procedure bodies to modules and replaces aliases with `## Triggers`. Dropping `#N` would break the two parameterized commands.
+
+Consequences: the procedure-module trigger shape allows the suffix; policy triggers still forbid placeholders; the shared step and the meta policy name procedure triggers rather than aliases.

@@ -13,5 +13,4 @@
 
 ## Pending
 
-- Local squash merge to `master` and local tag v5.8.0, with no push.
-- Plan Stage 2 on a new branch from local `master`.
+- Publish v5.8.0 and v6.0.0: push `master`, push both tags, and publish both releases.

@@ -9,7 +9,7 @@ policies, and project knowledge the assistant had loaded. It then keeps working
 with a thinner context and can quietly break your conventions.
 
 The Simple-AI-Workflow protocol has a recovery routine for exactly this: the
-**Post-Compaction Recovery** procedure in `AGENTS.md`. It reloads the standing
+**Post-Compaction Recovery** procedure in the clone's `ai/procedures/` store. It reloads the standing
 rules from disk, and it only adds those files to context, so it never wipes the
 working conversation.
 

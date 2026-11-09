@@ -275,6 +275,16 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ---
 
+# A thin AGENTS.md and a procedure store
+
+- The 13 procedures live in `ai/procedures/` in the clone, one self-standing module each
+- `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch
+- The boot payload drops by roughly three quarters
+- A new procedure is a new module; no `AGENTS.md` edit
+- The modules load from the clone, so a project does not copy them
+
+---
+
 # Design Documentation Flow
 
 ## The Stack
@@ -382,6 +392,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
 - **Update check**: load context compares your workflow clone with its remote and tells you when to pull
 - **On-demand policy triggers**: a policy can declare a phrase, so `"cloud standards"` loads the cloud policy for the session without editing the customization file
+- **Thin AGENTS.md and procedure modules**: the procedures load from the clone's `ai/procedures/`, so the boot payload stays small
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
 - **Knowledge repair**: every knowledge file follows one shape; the checkpoint flags a missing header, a table, or a file over 15 KB, and `"repair knowledge files"` fixes it. It takes a while, so let it finish.
 

@@ -6,7 +6,7 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 # AI Policy: Design Documents
 
-Loaded by `PROCEDURE UPDATE-DESIGN-DOCS`, only when the user says `"update design documents"` (alias `"update design docs"`).
+Loaded by the update-design-docs procedure module, only when the user says `"update design documents"` (the phrase `"update design docs"` is a trigger).
 
 ## Scope
 
@@ -112,7 +112,7 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 ## References
 
 - `ai-policy-common.md` for the common guardrails and the knowledge boundary.
-- `AGENTS.md` for `PROCEDURE UPDATE-DESIGN-DOCS` and `PROCEDURE MIGRATE-DESIGN-DOCS`.
+- The clone's `ai/procedures/` store for the update-design-docs and migrate-design-docs modules.
 - The Project Customization File for the design-docs location.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

@@ -12,7 +12,7 @@ Defines the examiner role and the map, plan, perform, and reconcile workflow for
 
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.
 - **Domain-neutral**: This policy applies equally to application source code (PHP, Node.js, Python, Go, etc.), infrastructure-as-code (Terraform, Bicep, CloudFormation, Kubernetes manifests), and database structures (schemas, migrations, stored procedures).
-- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see the codebase examination trigger procedure in `AGENTS.md`, PROCEDURE EXAMINE-CODEBASE). This policy is not loaded or indexed at boot time.
+- **On-demand activation**: Activated when the user says "examine this codebase" or "codebase examination" (see the examine-codebase procedure module in the clone's `ai/procedures/` store). This policy is not loaded in full at boot time; the shared index records its filename, triggers, and headings only.
 
 ## Role: Codebase Examiner
 

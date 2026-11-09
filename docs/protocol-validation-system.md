@@ -8,6 +8,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 1. **Bootstrap & Compliance Verification**:
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
+   - Verify the 13 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
    - Verify readability and format of tracking files (`ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`).
@@ -27,9 +28,12 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - Path existence checks for all mandatory policies.
 - Integration of `markdownlint` checks for policies.
 - Temporary checkpoint cycle (create/verify/delete).
-- Anchor checks for the shared index step, the dispatch section, and the protocol index report item.
-- Trigger declaration checks in `support-files/validate-policy-authoring.sh`: shape, placement, ASCII phrases, cross-module duplicates and containment, policy names, and the `#N` alias placeholder.
-- A `--triggers` mode that runs the namespace check over the full policy set, plus a fixture test at `support-files/test-trigger-rules.sh`.
+- Anchor checks for the shared index step, the dispatch section, the procedure modules, and the protocol index report item.
+- The thin-`AGENTS.md` size check and the procedure-store anchors.
+- Trigger declaration checks in `support-files/validate-policy-authoring.sh`: shape, placement, ASCII phrases, cross-module duplicates and containment, policy names, procedure-module names, the `#N` procedure trigger, and the thin-`AGENTS.md` shape.
+- A `--triggers` mode that runs the namespace check over the full policy and procedure set, plus a fixture test at `support-files/test-trigger-rules.sh`.
+- The reference test reads `ai/procedures/*.md` for procedure and step definitions and the order-conformance check.
+- The validator's own `v6.1` label is the script's label, not the workflow release.
 
 ## Verification Criteria
 
