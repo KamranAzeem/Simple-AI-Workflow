@@ -30,6 +30,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v6.3.0 (2026-11-09)
+
+- Add the skills layer: the global and project `ai/skills/` roots, package-only `SKILL.md` with `name` and a one-line description, a boot index, explicit and description activation, a project override, and cross-type collision reporting.
+- Add the helper-approval and path-containment rule; no trust scan (the user is responsible for the source).
+- Add `ITEM SKILLS-INDEX`, the checkpoint count and package names, the repair exclusion, the lint coverage, and the docs examples.
+- Add the validator anchors and the skills fixture; the reference counts become 13 procedures, 99 steps, 4 tiers, and 12 items.
+- Upgrade action: pull, run the sync script, restart the session; put global skills in the clone and project skills in the project.
+- Published 2026-11-09.
+
 ### v6.2.0 (2026-11-09)
 
 - Name knowledge files for the task with six or fewer hyphenated segments; split only by topic; merge files under 3 KB.

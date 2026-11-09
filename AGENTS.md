@@ -33,6 +33,8 @@ This is the single startup entry point for all AI assistants in this repository.
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
 **Global AI Backups Directory**: (Global User AI Directory)/backups/
 **Global AI Settings Directory**: (Global User AI Directory)/settings/
+**Global AI Skills Directory**: (Global AI Workflow Directory)/ai/skills/
+**Project AI Skills Directory**: `ai/skills/`
 
 **Project Artifacts Directory**: `ai/artifacts/`
 **Project Code Review Reports Directory**: `ai/code-review-reports/`
@@ -67,7 +69,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Self-Modification**: **STRICTLY PROHIBITED** in ordinary projects. Do not rewrite, regenerate, or edit this file. **Exception**: in **Protocol Developer Mode** (see MANDATORY ACTIONS), when the current working directory is the **Global AI Workflow Directory**, the AI is the protocol maintainer and may edit `AGENTS.md` and other protocol files, but only after fully loading `protocol-decisions.md` and with explicit human approval before committing.
 - **Unprompted Exploration**: **STRICTLY PROHIBITED** from scanning or ingesting directories outside the `ai/` folder (e.g., `src/`, `logs/`, `tmp/`) unless explicitly directed by a specific task. Indexing directories named `design-docs` by name is the one standing exception.
 - **Local State Creation**: **STRICTLY PROHIBITED** from creating tool-specific dot-directories (e.g., `.cursor/`, `.copilot`, `.gemini/`, `.claude/`, etc.). All AI state must live in `ai/`.
-- **PWD-Only Scope**: Strictly load `AGENTS.md` and scan the `ai/` directory from the **current working directory (PWD) only**. Honor `AGENTS.md` and `ai-customization.md` only from the project root: do not scan subdirectories for additional `AGENTS.md` files, and do not read or load any `AGENTS.md` or `ai-customization.md` file from any other location in the directory tree. If `AGENTS.md` is not found in PWD, report it missing and stop. Do not read or scan files that belong to various AI assistants, such as `CLAUDE.md`, `GEMINI.md`, etc.
+- **PWD-Only Scope**: Strictly load `AGENTS.md` and scan the `ai/` directory from the **current working directory (PWD) only**. Honor `AGENTS.md` and `ai-customization.md` only from the project root: do not scan subdirectories for additional `AGENTS.md` files, and do not read or load any `AGENTS.md` or `ai-customization.md` file from any other location in the directory tree. If `AGENTS.md` is not found in PWD, report it missing and stop. Do not read another assistant's files such as `CLAUDE.md`.
 
 ### ✅ MANDATORY ACTIONS
 
@@ -98,7 +100,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - Exclude archives.
 - Exclude the **Global AI Backups Directory**.
 - Never list the **Project Secrets Directory** or the **Global AI Backups Directory**.
-- Treat an excluded path as out of bounds even when a command would include it.
+- Treat an excluded path as out of bounds.
 
 ---
 
@@ -118,6 +120,10 @@ The following short forms are recognized as equivalents to their canonical direc
   - Permit only read operations; write no file and create no cache. Rebuild before dispatch when a module file changed in the session.
   - Use the fixed error vocabulary: `invalid trigger block`, `empty trigger block`, `duplicate trigger`, `trigger overlap`, `missing triggers`, `name mismatch`, `invalid policy shape`, `unreadable module`, `trigger collision`, and `unknown policy`.
 
+- **STEP-SKILLS-INDEX**: Build an ephemeral name, description, path, and scope index from both skill roots; read no body and write no file.
+  - One level: a `SKILL.md` package; `name` and a one-line `description` of at most 200 characters; lowercase-kebab directory matches `name`; skip and report a hidden entry, symlink, invalid package, or empty root.
+  - A project skill replaces a global skill; report the override and a cross-type name collision; keep the index within 16 KB.
+
 ## Protocol Dispatch
 
 - Resolve a user message against the module index.
@@ -130,6 +136,8 @@ The following short forms are recognized as equivalents to their canonical direc
 - Run a procedure once per invocation.
 - A policy trigger never overrides the always-on rules, `AGENTS.md`, the customization file, or an explicit user instruction.
 - `"use policy <name>"` is an explicit instruction; `<name>` is the Active Expertise token; it needs no trigger and bypasses the intent gate but not the always-on rules.
+- `"use skill <name>"` loads the body for the task and announces it; a single best description match may load a skill; ambiguity asks; a miss reports `unknown skill`.
+- A skill cannot override `AGENTS.md`, a policy, the user, or the customization file; a helper needs explicit approval and stays inside the package.
 - A project policy with triggers is still loaded at boot by STEP-POLICY-LOADING and is reported as active.
 - A runtime collision lists the candidates and dispatches nothing.
 - Static violations fail validation before release; runtime violations are reported and skipped.

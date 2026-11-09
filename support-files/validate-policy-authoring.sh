@@ -240,8 +240,8 @@ check_thin_agents() {
 
     while IFS=: read -r ln step; do
         [ -n "$ln" ] || continue
-        if ! printf '%s' "$step" | grep -q '\*\*STEP-PROTOCOL-INDEX\*\*'; then
-            fail_msg "$file" "$ln" "procedure step definition is not allowed in the thin AGENTS.md"
+        if ! printf '%s' "$step" | grep -qE '\*\*STEP-(PROTOCOL|SKILLS)-INDEX\*\*'; then
+            fail_msg "$file" "$ln" "shared step definition is not allowed in the thin AGENTS.md"
         fi
     done < <(grep -nE '\*\*STEP-[A-Z0-9-]+\*\*' "$file")
 

@@ -291,6 +291,19 @@ All such content belongs in named project knowledge files. When creating or upda
 - Keep an identifying name in a project file; remove it from a global file.
 - Record the manifest, project backup, and global backup paths in the checkpoint and diary.
 
+## Skills
+
+- Treat a skill as a narrow, on-demand task package, separate from a policy, a procedure, and a knowledge file.
+- Resolve a skill from the **Global AI Skills Directory** or the **Project AI Skills Directory**; a project skill replaces a global skill with the same name and the override is reported.
+- Skip an absent or empty skills root.
+- Require one package per skill: `ai/skills/<name>/SKILL.md`, a `name` and a one-line `description` of at most 200 characters, and a lowercase-kebab directory name that matches `name`.
+- Index the name, description, path, and scope at boot, recovery, and checkpoint re-affirmation; read no skill body at boot; load a body for one task only when the skill is activated.
+- Activate a skill by `"use skill <name>"` or a single best description match; announce the skill; ask on an ambiguous match; report `unknown skill` on a miss.
+- Keep a skill outside the policy and procedure trigger namespace; report a cross-type name collision.
+- Keep a skill under the instruction hierarchy: it cannot override `AGENTS.md`, a policy, the user, or the customization file.
+- Never run a skill helper without explicit approval; keep a helper path inside the skill package.
+- Do not scan a skill for trust or record a trust decision; the user is responsible for the source of a skill.
+
 ## Issue Management Protocol
 
 ### Ticket Storage

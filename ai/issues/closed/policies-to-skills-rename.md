@@ -42,3 +42,6 @@ Origin: `ai/notes/policies-to-skills-rename-proposal-2026-09-04.md` (removed, ca
 ---
 2026-11-03
 Paused pending `ai/issues/open/skills-subsystem-and-drop-in-compatibility.md`. Policies and skills may be distinct layers, so this rename may be dropped.
+
+2026-11-09
+Closed as superseded. Skills are a separate on-demand layer with their own `ai/skills/` directories and package shape; policies remain the always-on and domain layer. See the closed skills subsystem ticket and the skills ADR entry in `design-docs/protocol-decisions.md`.

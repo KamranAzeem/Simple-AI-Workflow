@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v6.2 ---"
+echo "--- Starting Protocol Validation v6.3 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -57,6 +57,10 @@ require_in "ai/procedures/write-checkpoint.md" "Preserve each header verbatim." 
 
 require_in "AGENTS.md" "^## Shared Protocol Steps$" "Shared Protocol Steps section missing from AGENTS.md."
 require_in "AGENTS.md" "STEP-PROTOCOL-INDEX" "STEP-PROTOCOL-INDEX missing from AGENTS.md."
+require_in "AGENTS.md" "STEP-SKILLS-INDEX" "STEP-SKILLS-INDEX missing from AGENTS.md."
+require_in "AGENTS.md" 'use skill <name>' "use skill dispatch missing from AGENTS.md."
+require_in "ai/procedures/load-context.md" "ITEM SKILLS-INDEX" "ITEM SKILLS-INDEX missing from ai/procedures/load-context.md."
+require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missing from ai-policy-common.md."
 require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
 require_in "AGENTS.md" "Single-Writer" "State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
 require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
@@ -82,6 +86,7 @@ CONFIG_KEYS=(
     "Global User AI Directory"
     "Global AI Policies Directory"
     "Global AI Knowledge Directory"
+    "Global AI Skills Directory"
     "Global AI Backups Directory"
     "Global AI Settings Directory"
     "Project Artifacts Directory"
@@ -97,6 +102,7 @@ CONFIG_KEYS=(
     "Project Pending Directory"
     "Project Plans Directory"
     "Project AI Policies Directory"
+    "Project AI Skills Directory"
     "Project Secrets Directory"
     "Project Shared Directory"
     "Project AI State Files"
@@ -270,7 +276,7 @@ PROJECT_SUBS=(
     "artifacts" "code-review-reports" "daily-checkpoints" "issues"
     "issues/open" "issues/in-progress" "issues/closed" "notes"
     "pending" "plans" "policies" "policies/compliance" "secrets"
-    "shared" "shared/handoffs" "shared/project-knowledge" "state"
+    "shared" "shared/handoffs" "shared/project-knowledge" "skills" "state"
 )
 for sub in "${PROJECT_SUBS[@]}"; do
     if [ ! -d "ai/$sub" ]; then
@@ -409,4 +415,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v6.2 Completed Successfully ---"
+echo "--- Protocol Validation v6.3 Completed Successfully ---"

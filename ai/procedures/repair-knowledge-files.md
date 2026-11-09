@@ -6,7 +6,7 @@
 - tidy knowledge files
 - heal knowledge files
 
-**Boundaries**: This procedure audits and repairs knowledge files only. It never edits a design document or a state file, and it never runs at checkpoint.
+**Boundaries**: This procedure audits and repairs knowledge files only. It never edits a design document or a state file, and it never edits a skill package under `ai/skills/`. It never runs at checkpoint.
 
 **Failure rule**: Preserve rather than corrupt. When the manifest is incomplete or an item has no disposition, leave that file unchanged, report the conflict, and continue with the other files; do not ask.
 

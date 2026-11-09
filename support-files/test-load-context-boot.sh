@@ -10,10 +10,11 @@ WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 HOME="$WORK/home"
 PROJECT="$WORK/project"
+GLOBAL_SKILLS="$WORK/global-skills"
 export HOME
 
 mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"
-mkdir -p "$PROJECT/ai"/{state,shared/project-knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies}
+mkdir -p "$PROJECT/ai"/{state,shared/project-knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies,skills}
 mkdir -p "$PROJECT/design-docs/.git"
 
 for d in secrets artifacts code-review-reports notes pending plans; do
@@ -25,6 +26,9 @@ printf 'canary\n' > "$PROJECT/ai/shared/archive.tar.gz"
 printf 'canary\n' > "$HOME/.ai/backups/canary-backup.txt"
 printf 'settings\n' > "$HOME/.ai/settings/global-user-settings.md"
 printf 'knowledge\n' > "$HOME/.ai/global-knowledge/global-topic.md"
+mkdir -p "$GLOBAL_SKILLS/global-skill" "$PROJECT/ai/skills/example-skill"
+printf -- '---\nname: global-skill\ndescription: A fixture global skill.\n---\n\nGLOBAL-SKILL-BODY-CANARY\n' > "$GLOBAL_SKILLS/global-skill/SKILL.md"
+printf -- '---\nname: example-skill\ndescription: A fixture project skill.\n---\n\nPROJECT-SKILL-BODY-CANARY\n' > "$PROJECT/ai/skills/example-skill/SKILL.md"
 
 printf '# Test customization\n' > "$PROJECT/ai-customization.md"
 for f in context progress next-steps; do printf 'state\n' > "$PROJECT/ai/state/$f.md"; done
@@ -36,6 +40,22 @@ printf '# DO NOT MODIFY THIS FILE\n\nFixture.\n\n<!-- AI-ASSISTANT: READ-ONLY ST
 
 for i in $(seq 1 1000); do printf 'k\n' > "$PROJECT/ai/shared/project-knowledge/k$i.md"; done
 for i in $(seq 1 1000); do printf 'a\n' > "$PROJECT/ai/artifacts/a$i.txt"; done
+
+skills_index() {
+    local pair base scope dir name desc
+    for pair in "$GLOBAL_SKILLS:global" "$PROJECT/ai/skills:project"; do
+        base="${pair%:*}"
+        scope="${pair##*:}"
+        find "$base" -mindepth 1 -maxdepth 1 -type d ! -name '.*' 2>/dev/null | LC_ALL=C sort | while IFS= read -r dir; do
+            [ -f "$dir/SKILL.md" ] || continue
+            name="$(awk -v key=name 'NR == 1 && $0 == "---" {f=1; next} f && $0 == "---" {exit} f && index($0, key ": ") == 1 {sub("^" key ": ", ""); print; exit}' "$dir/SKILL.md")"
+            desc="$(awk -v key=description 'NR == 1 && $0 == "---" {f=1; next} f && $0 == "---" {exit} f && index($0, key ": ") == 1 {sub("^" key ": ", ""); print; exit}' "$dir/SKILL.md")"
+            [ -n "$name" ] && [ -n "$desc" ] || continue
+            [ "$(basename "$dir")" = "$name" ] || continue
+            printf '%s|%s|%s|%s\n' "$name" "$desc" "$dir" "$scope"
+        done
+    done
+}
 
 discovery() {
     cd "$PROJECT" || return 1
@@ -53,6 +73,9 @@ discovery() {
     printf 'global-knowledge: %s files\n' "$(find "$HOME/.ai/global-knowledge" -type f | wc -l)"
     printf 'global-policies: %s files\n' "$(find "$ROOT/ai/policies" -type f | wc -l)"
     printf 'procedures: %s files\n' "$(find "$ROOT/ai/procedures" -type f | wc -l)"
+    printf 'skills: %s files\n' "$(find ai/skills -type f | wc -l)"
+    printf 'skills-index:\n'
+    skills_index
 }
 
 fail=0
@@ -69,6 +92,18 @@ if [ "$bytes" -gt 16384 ]; then
 fi
 if ! printf '%s\n' "$out" | grep -q 'project-knowledge: 1000 files'; then
     echo "FAIL: project-knowledge count is not 1000."
+    fail=1
+fi
+if ! printf '%s\n' "$out" | grep -q 'skills: 1 files'; then
+    echo "FAIL: project skills count is not 1."
+    fail=1
+fi
+if ! printf '%s\n' "$out" | grep -q 'example-skill|A fixture project skill.|.*|project'; then
+    echo "FAIL: the project skill index line is missing."
+    fail=1
+fi
+if ! printf '%s\n' "$out" | grep -q 'global-skill|A fixture global skill.|.*|global'; then
+    echo "FAIL: the global skill index line is missing."
     fail=1
 fi
 if printf '%s\n' "$out" | grep -q 'ai/artifacts'; then

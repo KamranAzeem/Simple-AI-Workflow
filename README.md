@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.2.0 (2026-11-09).** Knowledge files use task names, split only by topic, and use a 50-file review threshold. Read the announcement: [docs/announcements/v6.2.0.md](docs/announcements/v6.2.0.md). |
+| **v6.3.0 (2026-11-09).** Skills are a separate on-demand layer: drop-in `SKILL.md` packages in two directories. Read the announcement: [docs/announcements/v6.3.0.md](docs/announcements/v6.3.0.md). |
 
 # Simple AI Workflow
 
@@ -40,13 +40,14 @@ When you finish a session, type `"checkpoint"`. One checkpoint refreshes the sta
    Simple-AI-Workflow/              Your Project/
    |-- AGENTS.md            -->     |-- AGENTS.md
    |-- ai-customization.md  -->     |-- ai-customization.md
-   |-- ai/policies/                 |-- ai/ (state, notes, issues)
+   |-- ai/policies/                 |-- ai/ (state, notes, issues, skills)
    |-- ai/procedures/               |-- src/
+   |-- ai/skills/                   |
    |-- docs/                        |-- ...
    |-- support-files/
 ```
 
-The repo holds the workflow, its policy files, and its procedure modules. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. The procedure modules stay in the clone and load from `(Global AI Workflow Directory)/ai/procedures/`; a project does not copy them. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file, adds `## Merge Policy` when it is missing, and migrates state files.
+The repo holds the workflow, its policy files, its procedure modules, and the global skill root. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. The procedure modules stay in the clone and load from `(Global AI Workflow Directory)/ai/procedures/`; a project does not copy them. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file, adds `## Merge Policy` when it is missing, and migrates state files.
 
 `AGENTS.md` follows progressive disclosure: the always-on rules, the shared index step, and the dispatch stay inline; the procedure bodies and the detail sit behind the module store and a context pointer that the AI opens only when a task needs it.
 
@@ -110,6 +111,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
+| Load a skill for one task | `"use skill <name>"` |
 | Clean up knowledge files (header, tables, task names, files over 15 KB, 50-file review threshold) | `"repair knowledge files"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
 | Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
@@ -242,6 +244,21 @@ Migration is optional. Once your documents live in `design-docs/`, they sit besi
 
 > **A plan is not a design document.** Plans live under `ai/plans/`. Design documents live beside your code.
 
+## Skills
+
+A skill is a small, task-specific package that loads on demand, separate from policies and knowledge. It works well for a procedure you want to share with other harnesses, or a task you do not want active all the time.
+
+- **Two homes**: global skills live in the clone's `ai/skills/`; project skills live in your project root's `ai/skills/`. A project skill with the same name overrides a global one, and the AI tells you.
+- **Package shape**: `ai/skills/<name>/SKILL.md` with `name` and a one-line `description` of at most 200 characters. The directory name matches `name`. Extra files and helper scripts are allowed.
+- **Indexed, not loaded**: at boot the AI indexes the name, description, path, and scope. It reads no skill body until the skill is activated.
+- **Activation**: say `"use skill <name>"`, or let a single best description match load it for the task. An ambiguous match asks; an unknown name reports `unknown skill`. The body is for that task only.
+- **Hierarchy**: a skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`.
+- **Helpers**: the AI never runs a skill helper without your explicit approval, and the path stays inside the package.
+- **No scan**: the protocol does not scan a skill. You are responsible for the source of a skill you drop in.
+- **Not synced**: the sync script updates `AGENTS.md` and the customization file only; it does not copy skills. Global skills come from the clone; project skills stay local.
+
+See [the skills examples](docs/examples/skills/) for a minimal package.
+
 ## Customizing the AI
 
 Two files shape how the AI behaves. One is global, one is per project.
@@ -275,6 +292,8 @@ v6.0.0 changes `AGENTS.md` and moves the procedures into the clone's `ai/procedu
 v6.1.0 changes load context only. After pulling, run the sync script if `AGENTS.md` changed and restart the session. The procedure modules update from the clone.
 
 v6.2.0 changes the knowledge rules only. After pulling, run the sync script if `AGENTS.md` changed and restart the session, then run `"repair knowledge files"` once (add `global` for the global store) to adopt task names, topic splits, and the 50-file review threshold.
+
+v6.3.0 adds the skills layer. After pulling, run the sync script and restart the session. Put global skills in the clone's `ai/skills/`, project skills in your project's `ai/skills/`; no repair is needed.
 
 Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 
@@ -328,6 +347,7 @@ Working examples you can copy:
 - [Full-stack web and mobile customization](docs/examples/full-stack-web-mobile-ai-customization.md): a filled-in `ai-customization.md` for a mixed web and mobile project.
 - [Handoff examples](docs/examples/handoffs/): what a handoff between sessions looks like.
 - [Knowledge base examples](docs/examples/knowledge-base/): how project knowledge is organized.
+- [Skills examples](docs/examples/skills/): a minimal `SKILL.md` package.
 - [Personas](docs/personas/): example traits for an architect reviewer, a mentor, and a security specialist.
 - [Example learning session](docs/example-learning-session-runbook.md): a full walkthrough of a session from setup to checkpoint.
 
@@ -390,6 +410,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 ## What's included
 
 - **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
 - **Procedure modules and a thin `AGENTS.md`**: the 13 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
@@ -420,7 +441,8 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 Other docs:
 
-- [Workflow guide](docs/workflow-guide.md): handoffs, knowledge base, issue management, delivery, state files
+- [Workflow guide](docs/workflow-guide.md): handoffs, knowledge base, issue management, delivery, state files, skills
+- [Skills example](docs/examples/skills/example-skill/SKILL.md): a minimal package
 - [AI Customization Guide](docs/ai-customization-guide.md)
 - [Compliance guide](docs/compliance-guide.md)
 - [How policies work in this workflow](docs/how-policies-work-in-this-workflow.md)

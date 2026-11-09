@@ -965,3 +965,19 @@ Knowledge files use task-based names of six or fewer hyphen-separated segments, 
 Context: issue #5 recorded a v5.7.0 customer project with a 70 KB mixed file, an unsearchable store, and unbounded ticket, plan, and artifact accumulation. The customer store was fixed ad hoc with these rules, so the protocol must carry them.
 
 Consequences: the common policy, the repair and checkpoint modules, the rebuilt knowledge fixture, the validator anchors and legacy-form guard, the docs, and v6.2.0 change. The protocol's own knowledge names migrate on touch or repair, not in a mass rewrite.
+
+## 2026-11-09: Skills are a separate on-demand layer with drop-in packages
+
+Skills are a separate layer from policies, procedures, and knowledge. Policies stay the broad, persistent domain layer; procedures stay the triggered workflows; knowledge stays the durable findings; a skill is a narrow, task-scoped package. Two roots exist: the workflow clone's `ai/skills/` for the protocol's own skills and the project root's `ai/skills/` for the user's; a project skill replaces a global skill with the same name and the override is reported.
+
+A skill is package-only: `ai/skills/<name>/SKILL.md` with required `name` and `description` frontmatter. The description is one line of at most 200 characters, the directory name is lowercase kebab and matches `name`, discovery is one level, and hidden entries and symlinks are skipped. The body is free-form and is never read at boot.
+
+One shared step, `STEP-SKILLS-INDEX`, is defined once in `AGENTS.md` and referenced by load context, post-compaction recovery, and checkpoint re-affirmation. It records the name, description, path, and scope, reports the project override, reports a skill name that collides with a policy or procedure, bounds the index at 16 KB, and writes no file. The load proof gains `ITEM SKILLS-INDEX`.
+
+Activation is `"use skill <name>"` or a single best description match; an ambiguous match asks; the body loads for the task only and the AI announces the skill; a miss reports `unknown skill`. Skills stay outside the policy and procedure trigger namespace. A skill is untrusted task content and cannot override `AGENTS.md`, a policy, the user, or the customization file. A skill helper never runs without explicit approval and stays inside the package. The security scan, trust record, and failed-scan gate are not part of this version; the user is responsible for the source of a skill.
+
+The checkpoint records the skills count and package names in the context, compares them at the next checkpoint, and reports a new package; it never edits a skill. The repair never edits a skill package. Markdown lint covers `SKILL.md`. The sync script does not copy skills. Hash-based change detection is out of v1. The `policies-to-skills-rename.md` ticket is closed as superseded. v1 ships documentation examples only; bundled third-party skills come later. The release is v6.3.0.
+
+Context: users want to drop in skill packages from other harnesses and write their own, but the policy, procedure, and knowledge layers are persistent or durable, not task-scoped. The protocol cannot enforce a trust scan for user-authored or third-party skills, so the instruction hierarchy and the user's responsibility are the controls. INV-015 stays; the trigger model is unchanged and reserved for policies and procedures. The 2026-11-08 note that skills reuse the declaration model is narrowed: a skill uses its package frontmatter and the description index, not `## Triggers`.
+
+Consequences: `AGENTS.md` gains the two anchors, the shared step, and the dispatch; the common policy gains `## Skills`; the load, recovery, checkpoint, and repair modules gain the index, count, and boundary; the validator, reference test, boot fixture, and a new skills fixture encode the contract; the docs, examples, release announcement, and v6.3.0 ship the layer.

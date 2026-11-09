@@ -68,6 +68,7 @@ This section defines how to write and edit `AGENTS.md`, policy files, and proced
 - Exempt procedure bodies from `### Rule Structure` and `### Normative Language`; they are executable steps, not policy rules.
 - Apply `### Literal Artifacts` to a policy's or procedure module's `## Triggers` list, and to fenced literal artifacts in policy rules.
 - Do not apply this section to issues, plans, design documents, or user-facing docs.
+- Do not apply this section to a skill package; its public frontmatter is authoritative.
 - Apply the common policy's `## Markdown Output` section to tables, links, emphasis, line length, and validation.
 - Apply the common policy's `## Humanized Output` section to sentence structure, tone, banned words, and em dashes.
 - Apply the common policy's `## Universal Operational Guardrails` section to filenames and side effects.
@@ -163,7 +164,7 @@ This section defines how to write and edit `AGENTS.md`, policy files, and proced
 
 ### Standard References
 
-- `ai-policy-common.md` (`## Markdown Output`, `## Humanized Output`, `## Universal Operational Guardrails`).
+- `ai-policy-common.md` (`## Markdown Output`, `## Humanized Output`, `## Universal Operational Guardrails`, `## Skills`).
 - `design-docs/protocol-decisions.md`.
 - `support-files/validate-protocol.sh`.
 - `support-files/validate-policy-authoring.sh`.

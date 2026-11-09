@@ -285,6 +285,19 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ---
 
+# Skills on demand
+
+- A skill is a small task package: `ai/skills/<name>/SKILL.md`
+- Two homes: the clone's `ai/skills/` for global skills, the project root's `ai/skills/` for local skills
+- A project skill overrides a global skill with the same name, and the AI reports it
+- Required frontmatter: `name` and a one-line `description` of at most 200 characters
+- Indexed at boot by name, description, path, and scope; no body read until activation
+- Activate with `"use skill <name>"` or a single best description match; the body stays task-scoped
+- A skill cannot override the protocol, a policy, or your instructions; helpers need explicit approval
+- No trust scan: you are responsible for the source of a skill
+
+---
+
 # Design Documentation Flow
 
 ## The Stack

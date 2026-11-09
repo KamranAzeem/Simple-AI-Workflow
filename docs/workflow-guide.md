@@ -452,3 +452,53 @@ Say `"repair knowledge files"` when you want the AI to fix the project store. Ad
 Heads up: the repair takes a while on a real knowledge base. Let it finish. It's important; it's how your files get fixed.
 
 Run it once after you upgrade. Add `global` if you keep global knowledge. The checkpoint flags the problems in the meantime, but it doesn't edit your files.
+
+## 24. Skills
+
+A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules; procedures are triggered workflows; knowledge is durable findings; a skill is a small instruction package for one task.
+
+### The two directories
+
+- **Global**: `ai/skills/` in the workflow clone. These skills travel with the workflow.
+- **Project**: `ai/skills/` at your project root. These are local to the project.
+- A project skill with the same name replaces a global skill, and the AI reports the override.
+
+### The package shape
+
+- One directory per skill: `ai/skills/<name>/SKILL.md`.
+- Required frontmatter: `name` and `description`. The description is one line of at most 200 characters.
+- The directory name is lowercase kebab and matches `name`.
+- Extra files and helper scripts are allowed.
+
+Example:
+
+```markdown
+---
+name: example-skill
+description: A minimal example skill package.
+---
+
+# Example Skill
+
+Use this when ...
+```
+
+### Boot index and activation
+
+The AI indexes the name, description, path, and scope at load context, recovery, and checkpoint re-affirmation. It reads no body at boot. Activate a skill with `"use skill <name>"` or a single best description match; the AI announces the skill, asks on an ambiguous match, and reports `unknown skill` on a miss. The body loads for that task only, not for the session.
+
+A skill name that matches a policy or procedure name is reported as a cross-type collision. Skills are outside the trigger namespace, so the policy or procedure keeps its phrase.
+
+### Hierarchy and helpers
+
+A skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`. The AI never runs a skill helper without your explicit approval, and a helper path stays inside the package.
+
+The protocol does not scan a skill for trust. You are responsible for the source of every skill you drop in.
+
+### Maintenance
+
+- The checkpoint records the skills count and package names in the context, compares them next time, and reports a new package; it never edits a skill.
+- `"repair knowledge files"` never edits a skill package.
+- Markdown lint covers `SKILL.md`.
+- The sync script does not copy skills. Global skills come from the clone; project skills stay in the project.
+- Hash-based change detection is not part of this version.

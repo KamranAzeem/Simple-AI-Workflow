@@ -37,16 +37,16 @@
 3. **STEP-WORKFLOW-ACCESS**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 4. **STEP-STRUCTURAL-AUDIT (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
-    - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
-    - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Backups Directory**
+    - **Project Notes Directory**, **Project Pending Directory**, **Project Plans Directory**, **Project AI Policies Directory**, **Project AI Skills Directory**, **Project Secrets Directory**, **Project Shared Directory**, **Project AI State Files**
+    - Global: **Global AI Settings Directory**, **Global AI Knowledge Directory**, **Global AI Skills Directory**, **Global AI Backups Directory**
     Verify **Project Coordination File** exists.
     Then ensure the mandatory directories exist. Run one idempotent `mkdir -p` over this fixed path list, and report any directory that had to be created:
-    - `ai/artifacts/`, `ai/code-review-reports/`, `ai/daily-checkpoints/`, `ai/issues/`, `ai/issues/open/`, `ai/issues/in-progress/`, `ai/issues/closed/`, `ai/notes/`, `ai/pending/`, `ai/plans/`, `ai/policies/`, `ai/policies/compliance/`, `ai/secrets/`, `ai/shared/`, `ai/shared/handoffs/`, `ai/shared/project-knowledge/`, `ai/state/`
+    - `ai/artifacts/`, `ai/code-review-reports/`, `ai/daily-checkpoints/`, `ai/issues/`, `ai/issues/open/`, `ai/issues/in-progress/`, `ai/issues/closed/`, `ai/notes/`, `ai/pending/`, `ai/plans/`, `ai/policies/`, `ai/policies/compliance/`, `ai/secrets/`, `ai/shared/`, `ai/shared/handoffs/`, `ai/shared/project-knowledge/`, `ai/skills/`, `ai/state/`
     - Do not branch, prompt, or stall on silent output. `mkdir -p` is safe and silent when the directory already exists.
     Then ensure `ai/shared/project-knowledge/issue-template.md` exists. If and only if it is missing, create it from the compact field list in `ai-policy-common.md`. Never overwrite it.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 5. **STEP-DISCOVERY**: Produce a bounded, sorted index of the boot roots, at or under 16 KB.
-    - Roots: the project root (`ai-customization.md`), the **Project AI State Files**, the **Project Coordination File**, the **Project AI Knowledge Directory**, the **Project Handoffs Directory**, the `open/` and `in-progress/` directories under the **Project Issues Directory**, the **Project Daily Checkpoints Directory**, the **Project AI Policies Directory**, every `design-docs/` directory under the project root, the **Global AI Settings Directory**, the **Global AI Knowledge Directory**, the **Global AI Policies Directory**, and the procedure store under the **Global AI Workflow Directory**.
+    - Roots: the project root (`ai-customization.md`), the **Project AI State Files**, the **Project Coordination File**, the **Project AI Knowledge Directory**, the **Project Handoffs Directory**, the `open/` and `in-progress/` directories under the **Project Issues Directory**, the **Project Daily Checkpoints Directory**, the **Project AI Policies Directory**, the **Project AI Skills Directory**, the **Global AI Skills Directory**, every `design-docs/` directory under the project root, the **Global AI Settings Directory**, the **Global AI Knowledge Directory**, the **Global AI Policies Directory**, and the procedure store under the **Global AI Workflow Directory**.
     - Apply the **Boot Scan Exclusions** rule from TIER READ-FIRST-RULES in listing and reading.
     - State the outcome, constraints, and expected output before choosing a command form. The reference form is standard Linux Bash (`find`, `sort`, `wc`, `grep`; no optional tools). The POSIX/BSD `find` equivalent and the `pwsh` 7+ form are examples. Any OS, shell, or default terminal uses equivalent standard tools, reports the command used and any deviation, and stops and reports when no compliant tool exists. Never install tools.
     - Use one command block. Sort with `LC_ALL=C`. Display forward slashes. Emit UTF-8 without a BOM. Run no per-file subprocess.
@@ -59,6 +59,7 @@
     - **Global Knowledge** (from **Global AI Knowledge Directory**) and **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories) are both subject to **Token Rationing**. Index both in this one step: run a shell command (`find` or `ls -R`) over both directories, and record paths, filenames, and apparent technical domains as a reference index. Record each file's age from metadata only: the last-commit date for tracked files, or the modified time otherwise. **DO NOT** load the full text of any Global Knowledge or Project Knowledge file at boot time; load a file in full on demand when an active task requires it. The filename is the lookup key, so a vague or bundled name is invisible to the index. Bound the combined index output at 16 KB; when over, print the per-root counts and query the remainder on demand. Use one command block; run no per-file subprocess.
     - **Project Issues** (from **Project Issues Directory**): Index `open/` and `in-progress/` by filename + line count only. Files under `closed/` are not indexed at boot.
     - **Design Docs** (every `design-docs/` directory under the project root): Index by filename and a short domain, read-only and never loaded in full. Scan at most 5 levels deep, prune `.git`, `node_modules`, `vendor`, and `target`, and skip archives. Scanning `design-docs` by name is permitted.
+    - **Skills**: Run `STEP-SKILLS-INDEX` over the two skills roots; the step is defined once in `AGENTS.md`; index no body.
     If a directory is completely empty, explicitly note it in your state tracking.
 8. **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
@@ -75,6 +76,7 @@
     - **ITEM HANDOFFS**: `[PASSED]` with the pending handoff count, or `[PASSED] none`.
     - **ITEM STATE-FILE-HEALTH**: `[PASSED]` with the three state-file byte sizes and budgets.
     - **ITEM KNOWLEDGE-INDEX**: `[PASSED]` with the Global and Project Knowledge file counts.
+    - **ITEM SKILLS-INDEX**: `[PASSED]` with the skills count and any override or collision.
     - **ITEM DESIGN-DOCS-INDEX**: `[PASSED]` with the design-document count, or `none`.
     - **ITEM STATE-FILE-COUNTS**: `[PASSED]` with the three line counts and the newest progress date.
     - **ITEM ISSUES-INDEX**: `[PASSED]` with the open and in-progress counts.

@@ -13,4 +13,4 @@
 
 ## Pending
 
-Nothing pending.
+- Ship v6.3.0: squash merge, delete the branch, push, tag, publish the release, and run the post-release checkpoint.

@@ -12,22 +12,29 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the authoring validator on every changed `AGENTS.md` or policy file with `./support-files/validate-policy-authoring.sh <file> [<file>...]`.
 - Run the reference test with `bash support-files/test-protocol-references.sh`.
 - Run the knowledge-repair fixture with `bash support-files/test-knowledge-repair-fixture.sh --all`.
+- Run the skills fixture with `bash support-files/test-skills-index.sh`.
+- Run the trigger fixture with `bash support-files/test-trigger-rules.sh`.
+- Run the boot fixture with `bash support-files/test-load-context-boot.sh`.
 - Run markdownlint with `markdownlint-cli2 "**/*.md" "#node_modules"`.
 - Lint every new markdown file, not only the edited files.
 
 ## Why
 
-- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, the knowledge anchors and legacy-phrase guard, git safety, and checkpoint cycle.
-- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` shape.
+- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
+- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` shape; it permits only the two shared steps in the thin `AGENTS.md`.
 - The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
+- The skills fixture checks the two roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project override, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Markdownlint catches structural defects before review.
 
 ## Verify
 
-- Confirm `Protocol Validation v6.2 Completed Successfully` and 8/8.
+- Confirm `Protocol Validation v6.3 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 13 procedures, 98 steps, 4 tiers, and 11 items.
+- Confirm the reference test prints `PASS` with 13 procedures, 99 steps, 4 tiers, and 12 items.
 - Confirm the knowledge-repair fixture prints `PASS`.
+- Confirm the skills fixture prints `PASSED`.
+- Confirm the boot fixture prints `PASSED`.
+- Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
 
 ## Caveats
