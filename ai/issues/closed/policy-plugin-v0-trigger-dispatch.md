@@ -24,7 +24,7 @@ Related: `ai/issues/open/self-contained-policy-triggers-and-heading-jit-index.md
 
 Plan attached below.
 
-Implemented 2026-11-09; implementation reviews APPROVED; merged locally and tagged v5.8.0; publication pending.
+Implemented 2026-11-09; implementation reviews APPROVED; merged and tagged v5.8.0; released at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.8.0>.
 
 ## Implementation Plan
 

@@ -246,6 +246,29 @@ run_case "procedure body before triggers" 1 'immediately follow the H1' "$WORK/a
 make_procedure "$WORK/ai/procedures/load-context.md" "LOAD-CONTEXT" "- load context"
 run_case "valid procedure module in --triggers mode" 0 "PASSED" --triggers "$WORK/ai/procedures/load-context.md"
 
+# --- --index oracle ---
+make_policy "$WORK/ai/policies/ai-policy-fixture-one.md" "Fixture One" "- fixture one"
+make_procedure "$WORK/ai/procedures/fixture-proc.md" "FIXTURE-PROC" "- fixture proc"
+index_out="$(cd "$WORK" && bash "$VALIDATOR" --index ai/policies/ai-policy-fixture-one.md ai/procedures/fixture-proc.md 2>&1)"
+index_rc=$?
+cases=$((cases + 1))
+expected_index='policy|global|fixture-one|ai/policies/ai-policy-fixture-one.md|triggers=fixture one|headings=# DO NOT MODIFY THIS FILE;# AI Policy: Fixture One;## Triggers;## Scope;## Rules;## References|effective=yes|conflict=none
+procedure|global|FIXTURE-PROC|ai/procedures/fixture-proc.md|triggers=fixture proc|headings=# PROCEDURE FIXTURE-PROC: Fixture procedure;## Triggers|effective=yes|conflict=none
+summary|modules=2|policies=1|procedures=1|triggers=2|conflicts=0|errors=0|error_classes=none'
+if [ "$index_rc" -ne 0 ] || [ "$index_out" != "$expected_index" ]; then
+    printf 'FAIL: index golden (exit %s)\n--- expected ---\n%s\n--- actual ---\n%s\n' "$index_rc" "$expected_index" "$index_out"
+    failures=$((failures + 1))
+else
+    printf 'PASS: index golden\n'
+fi
+
+make_policy "$WORK/ai/policies/ai-policy-index-bad.md" "Index Bad" "- Bad"
+run_case "index invalid trigger" 1 "summary|" --index "$WORK/ai/policies/ai-policy-index-bad.md"
+make_procedure_no_triggers "$WORK/ai/procedures/index-no-trig.md" "INDEX-NO-TRIG"
+run_case "index procedure without triggers" 1 "summary|" --index "$WORK/ai/procedures/index-no-trig.md"
+make_policy "$WORK/ai/policies/ai-policy-index-shape.md" "Index Shape" "- index shape" "yes"
+run_case "index tolerates a shape gap" 0 "errors=1" --index "$WORK/ai/policies/ai-policy-index-shape.md"
+
 echo "---"
 if [ "$failures" -ne 0 ]; then
     printf 'FAILED: %s of %s cases failed.\n' "$failures" "$cases"

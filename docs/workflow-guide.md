@@ -260,6 +260,8 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
+The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The validator's `--index` mode is a developer tool; the AI builds the index inline, so it adapts to Windows and macOS without a runtime validator.
+
 A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
 Note: always use the full phrase `"load context using AGENTS.md protocol"`. A bare `"load context"` loads the assistant's own hidden memory, not your `AGENTS.md`. Naming `AGENTS.md` is what makes the assistant read your protocol and your files. The README explains this under "Common instructions".

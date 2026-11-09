@@ -945,3 +945,15 @@ INV-016 is amended: the trailing `#N` placeholder persists in procedure `## Trig
 Context: Stage 2 moves the procedure bodies to modules and replaces aliases with `## Triggers`. Dropping `#N` would break the two parameterized commands.
 
 Consequences: the procedure-module trigger shape allows the suffix; policy triggers still forbid placeholders; the shared step and the meta policy name procedure triggers rather than aliases.
+
+## 2026-11-09: Load-context boot discovery is targeted, bounded, and OS-agnostic
+
+Load context lists only the boot roots and never scans the whole project `ai/` tree. A canonical Boot Scan Exclusions rule in the read-first-rules tier keeps secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups out of every boot scan and index; secrets and backups are never listed. The discovery output is bounded at 16 KB per boot phase; when a root would exceed it, the procedure prints the counts and queries the remainder on demand. The latest daily checkpoint is read once, and the proof reuses that read. The compact proof reports one line per item, counts only, and expands a failing item.
+
+The instruction states the outcome, constraints, and expected output first and presents a standard Linux Bash example; the GNU, BSD, and `pwsh` forms are examples. Any OS, shell, or default terminal uses equivalent standard tools, reports the command used and any deviation, and stops only when no compliant tool exists. The runtime module index is built inline with standard tools; `validate-policy-authoring.sh --index` is a Protocol Developer Mode test oracle, not a runtime dependency. The authoring validator's trigger checks, the reference test, the boot fixture, and the golden fixtures pin the behavior.
+
+There is no wall-time baseline. Acceptance is structural: no whole-tree scan, the exclusion canary, the 16 KB bound, the single checkpoint read, the compact proof, and one index call. Windows and macOS runtime verification is not claimed in this release; the instruction is the only assurance there. macOS is supported by instruction; Windows, if used, requires `pwsh` 7+ and never Windows PowerShell 5.x. The change ships in v6.1.0.
+
+Context: the v5.7.0 load context was slow because the whole tree was scanned and the output could spill; issue #4 documented the cost. The protocol is prose executed by an AI, so the index must remain ephemeral and the instruction must adapt to the environment.
+
+Consequences: `AGENTS.md` gains the Boot Scan Exclusions section and the OS-sensitive wording; `load-context.md` scopes discovery, tunes the checkpoint read, and compacts the proof; the authoring validator gains the developer `--index` oracle; the boot fixture and the index cases pin the contract; the release notes state the unverified paths.

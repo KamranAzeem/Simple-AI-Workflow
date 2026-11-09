@@ -1,7 +1,8 @@
 #!/bin/bash
 # Validate the authoring shape of AGENTS.md, policy files, and procedure modules.
-# Usage: ./support-files/validate-policy-authoring.sh [--triggers] <file> [<file>...]
+# Usage: ./support-files/validate-policy-authoring.sh [--triggers|--index] <file> [<file>...]
 #   --triggers  check the trigger namespace and names for policies, and the procedure-module shape; skip the full policy shape.
+#   --index     print the read-only module index and a summary; tolerate shape gaps, fail only on an unreadable module, an invalid trigger block, or a name mismatch.
 # Exit 0 when all checks pass, 1 on a violation, 2 on a usage error.
 
 set -u
@@ -11,10 +12,17 @@ MODE=default
 if [ "${1:-}" = "--triggers" ]; then
     MODE=triggers
     shift
+elif [ "${1:-}" = "--index" ]; then
+    MODE=index
+    shift
+fi
+
+if [ "$MODE" = index ] && [ "$#" -eq 0 ]; then
+    set -- ai/policies/*.md ai/procedures/*.md
 fi
 
 if [ "$#" -eq 0 ]; then
-    echo "Usage: $0 [--triggers] <file> [<file>...]" >&2
+    echo "Usage: $0 [--triggers|--index] <file> [<file>...]" >&2
     exit 2
 fi
 
@@ -370,6 +378,98 @@ collect_raw_triggers() {
             ;;
     esac
 }
+
+index_mode() {
+    local fatal=0 modules=0 policies=0 procedures=0 triggers_total=0 errors_total=0 conflicts=0
+    local file base type name source trigs headings shape_out shape_count error_classes
+    local idxdir
+    idxdir="$(mktemp -d)"
+    : > "$idxdir/trig"
+    : > "$idxdir/errors"
+
+    for file in "$@"; do
+        if [ ! -f "$file" ] || [ ! -r "$file" ]; then
+            printf '[FAILED] %s:0: unreadable module\n' "$file"
+            fatal=1
+            continue
+        fi
+        base="$(basename "$file")"
+        case "$file" in
+            */ai/procedures/*|ai/procedures/*)
+                type=procedure
+                name="$(sed -n '1s/^# PROCEDURE \([A-Z][A-Z0-9-]*\): .*/\1/p' "$file")"
+                [ -n "$name" ] || name="${base%.md}"
+                procedures=$((procedures + 1))
+                ;;
+            *)
+                type=policy
+                name="${base#ai-policy-}"
+                name="${name%.md}"
+                policies=$((policies + 1))
+                ;;
+        esac
+        source="$file"
+        trigs="$(awk '
+            /^## Triggers[[:space:]]*$/ { in_trig = 1; next }
+            in_trig && /^##[[:space:]]/ { in_trig = 0 }
+            in_trig && /^- / { t = $0; sub(/^- /, "", t); printf "%s%s", sep, t; sep = ";" }
+        ' "$file")"
+        headings="$(grep -E '^#{1,6} ' "$file" | sed 's/|/ /g' | awk '{ printf "%s%s", sep, $0; sep = ";" }')"
+        printf '%s|global|%s|%s|triggers=%s|headings=%s|effective=yes|conflict=none\n' \
+            "$type" "$name" "$source" "${trigs:-none}" "${headings:-none}"
+
+        while IFS='|' read -r _ f ln raw pattern; do
+            [ -z "$raw" ] && continue
+            norm="$(normalize_phrase "$raw")"
+            [ -z "$norm" ] && continue
+            printf '%s|%s|%s|%s|%s\n' "$type:$name" "$f" "$ln" "$norm" "$pattern" >> "$idxdir/trig"
+            triggers_total=$((triggers_total + 1))
+        done < <(collect_raw_triggers "$file")
+
+        shape_out="$(bash "$0" "$file" 2>&1 || true)"
+        shape_count="$(printf '%s\n' "$shape_out" | grep -c '^\[FAILED\]' || true)"
+        errors_total=$((errors_total + shape_count))
+        if printf '%s\n' "$shape_out" | grep -qE 'invalid trigger block|empty trigger block|missing triggers|name mismatch|unreadable module'; then
+            fatal=1
+        fi
+        printf '%s\n' "$shape_out" | grep -oE 'invalid policy shape|invalid trigger block|empty trigger block|missing triggers|name mismatch|unreadable module' >> "$idxdir/errors" || true
+        modules=$((modules + 1))
+    done
+
+    if [ -s "$idxdir/trig" ]; then
+        conflicts="$(awk -F'|' '
+            {
+                n++
+                mod[n] = $1
+                phr[n] = " " $4 " "
+            }
+            END {
+                c = 0
+                for (i = 1; i <= n; i++) {
+                    for (j = i + 1; j <= n; j++) {
+                        if (mod[i] == mod[j]) { continue }
+                        if (phr[i] == phr[j] || index(phr[j], phr[i]) > 0 || index(phr[i], phr[j]) > 0) { c++ }
+                    }
+                }
+                print c
+            }
+        ' "$idxdir/trig")"
+    fi
+
+    error_classes="$(sort "$idxdir/errors" | uniq -c | awk '{ printf "%s%s=%s", sep, substr($0, index($0, $2)), $1; sep = "," }')"
+
+    printf 'summary|modules=%s|policies=%s|procedures=%s|triggers=%s|conflicts=%s|errors=%s|error_classes=%s\n' \
+        "$modules" "$policies" "$procedures" "$triggers_total" "$conflicts" "$errors_total" "${error_classes:-none}"
+    rm -rf "$idxdir"
+    if [ "$fatal" -ne 0 ]; then
+        exit 1
+    fi
+    exit 0
+}
+
+if [ "$MODE" = index ]; then
+    index_mode "$@"
+fi
 
 for file in "$@"; do
     file_fail=0

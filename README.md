@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.0.0 (2026-11-09).** The 13 procedure bodies move to `ai/procedures/` in the clone, and `AGENTS.md` becomes a thin router. Pull, run the sync script, and restart. Read the announcement: [docs/announcements/v6.0.0.md](docs/announcements/v6.0.0.md). |
+| **v6.1.0 (2026-11-09).** Load context scans only the boot roots, excludes local-only trees, and bounds the discovery at 16 KB. Read the announcement: [docs/announcements/v6.1.0.md](docs/announcements/v6.1.0.md). |
 
 # Simple AI Workflow
 
@@ -271,6 +271,8 @@ Some policies can also load by phrase, without an Active Expertise entry. Say `"
 When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
 
 v6.0.0 changes `AGENTS.md` and moves the procedures into the clone's `ai/procedures/`. After pulling, run the sync script and restart the session so the thin router reaches your projects. Your project keeps its own `AGENTS.md` and `ai-customization.md`; the procedures load from the clone.
+
+v6.1.0 changes load context only. After pulling, run the sync script if `AGENTS.md` changed and restart the session. The procedure modules update from the clone.
 
 Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 

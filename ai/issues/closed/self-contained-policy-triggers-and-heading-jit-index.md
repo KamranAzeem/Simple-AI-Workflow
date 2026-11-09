@@ -48,7 +48,7 @@ Triggers are registered in `AGENTS.md`, so every new policy or procedure needs a
 
 Plan attached below.
 
-Implemented 2026-11-09; implementation reviews APPROVED; merged locally and tagged v6.0.0; publication pending.
+Implemented 2026-11-09; implementation reviews APPROVED; merged and tagged v6.0.0; released at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v6.0.0>.
 
 ## Implementation Plan
 

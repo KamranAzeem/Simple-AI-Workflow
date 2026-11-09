@@ -48,6 +48,7 @@ require_in "ai/procedures/load-context.md" "STEP-POLICY-LOADING" "STEP-POLICY-LO
 require_in "ai/procedures/load-context.md" "STEP-WORKFLOW-VERSION-CHECK" "STEP-WORKFLOW-VERSION-CHECK missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "Global AI Knowledge Directory" "Global AI Knowledge Directory reference missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "ITEM PROTOCOL-INDEX" "ITEM PROTOCOL-INDEX missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "Boot Scan Exclusions" "Boot Scan Exclusions reference missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-STATE-FILE-PROOF-OF-READ" "STEP-STATE-FILE-PROOF-OF-READ missing from ai/procedures/load-context.md."
 require_in "ai/procedures/write-checkpoint.md" "STEP-FRESH-READ-BEFORE-WRITE" "STEP-FRESH-READ-BEFORE-WRITE missing from ai/procedures/write-checkpoint.md."
 require_in "ai/procedures/write-checkpoint.md" "Before writing, verify each state-file header." "State-file header pre-write check missing from ai/procedures/write-checkpoint.md."

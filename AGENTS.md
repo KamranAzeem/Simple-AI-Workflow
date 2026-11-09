@@ -71,7 +71,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### ✅ MANDATORY ACTIONS
 
-- **OS-Sensitive Execution**: Identify the active shell (Bash, PowerShell, etc.) and adapt command syntax accordingly (e.g., `mkdir -p` vs `New-Item`).
+- **OS-Sensitive Execution**: Identify the active OS, shell, and default terminal. State the outcome, constraints, and expected output before choosing a command form. Use the reference form or an equivalent standard tool, report the command used and any deviation, and stop and report when no compliant tool exists. Never install tools to satisfy a boot step.
 - **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context where permitted. Never refuse to read a file or directory solely because it is git-ignored.
 - **Full File Reads (No Partial Reads)**: Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. This holds at boot, at load context, at Post-Compaction Recovery, and mid-work. The only exception is log-like bulk data you are searching rather than comprehending (logs, dumps, large JSON or CSV), which you may slice by filter. Never truncate investigation command output with `head`, `tail`, or `-N` limits, since truncated output is fabricated evidence. When a read drives a decision or change, state the file and its line count so the read is auditable. (Evidence-Based Investigation)
 - **Evidence-Based Investigation**: Investigate before you assert. No claim without a source; no assumptions or guesses. If you cannot verify, write "not verified" and ask. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract in `ai-policy-common.md`.
@@ -83,6 +83,22 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Git Workspace Detection**: Before offering git operations on the project root, scan for `.git` subdirectories within the project tree (excluding `ai/`). If any `.git` directory is found, the root is part of a larger git workspace, do not treat it as a git repo itself. Do not offer `git init`, run `git log` on the project root, or propose git operations that assume the project root is independently tracked. Users may also define explicit workspace rules in the **Project Customization File**.
 - **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
 - **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
+
+### Boot Scan Exclusions
+
+- **Boot Scan Exclusions**: Exclude these paths from every boot scan, index, and proof, in listing and reading.
+- Exclude the **Project Secrets Directory**.
+- Exclude the **Project Artifacts Directory**.
+- Exclude the **Project Code Review Reports Directory**.
+- Exclude the **Project Notes Directory**.
+- Exclude the **Project Pending Directory**.
+- Exclude the **Project Plans Directory**.
+- Exclude `ai/issues/closed/`.
+- Exclude every `.git/` directory.
+- Exclude archives.
+- Exclude the **Global AI Backups Directory**.
+- Never list the **Project Secrets Directory** or the **Global AI Backups Directory**.
+- Treat an excluded path as out of bounds even when a command would include it.
 
 ---
 
