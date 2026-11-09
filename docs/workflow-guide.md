@@ -141,6 +141,7 @@ When the conversation is compacted (the harness replaces the live history with a
 
 - **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time: automatically or when you ask for it.
 - **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
+- **Trigger index**: The AI rebuilds the trigger index from the live policy files and aliases. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction; say the phrase again.
 
 ### Benefits
 
@@ -206,6 +207,8 @@ The `ai-customization.md` file at the project root is the **"Single Dial"** for 
 - **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
 - **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge: no on-disk compliance files needed.
 
+Policies may also declare their own trigger phrases. Say `"cloud standards"` and the cloud policy loads for the session without an Active Expertise entry. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a compaction; say the phrase again. `"use policy <name>"` loads a policy by its Active Expertise name. The same Directive versus Inquiry rule decides whether a phrase runs.
+
 See the [AI Customization Guide](ai-customization-guide.md) for the full catalog and multi-role examples.
 
 ## 12. Peer Review Mode
@@ -256,6 +259,8 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 ## 13. Token Rationing & JIT Context Loading
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
+
+A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
 Note: always use the full phrase `"load context using AGENTS.md protocol"`. A bare `"load context"` loads the assistant's own hidden memory, not your `AGENTS.md`. Naming `AGENTS.md` is what makes the assistant read your protocol and your files. The README explains this under "Common instructions".
 

@@ -839,3 +839,101 @@ PROCEDURE LOAD-CONTEXT gains a read-only STEP-WORKFLOW-VERSION-CHECK after STEP-
 Context: a user could run an old clone indefinitely with no signal. The load-context safety barrier forbids a fetch, so the check is limited to a network head query and local ancestry tests.
 
 Consequences: one new step and one report item in `AGENTS.md`, one validator anchor, and no new policy. The check adds at most about three seconds to an offline load and never blocks it.
+
+## 2026-11-08: Policy trigger declarations and the shared namespace
+
+A policy may declare an optional `## Triggers` section immediately after its purpose sentence and before `## Scope`. The section holds one literal phrase per bullet and nothing else: no prose, sub-bullets, comments, fences, or inline markup. Phrases use lowercase ASCII letters, digits, spaces, and hyphens. The list is a normative literal artifact: the meta policy extends its literal-artifact rule so an owning policy may designate its `## Triggers` list as one. A policy without the section is valid and keeps its current loading path. A procedure module requires at least one trigger in the end state. An empty section is invalid everywhere.
+
+Definitions
+
+- A module is a policy or a procedure.
+- The effective set is the modules that remain after a same-name project module replaces the global one.
+- A shipped trigger is a trigger declared by a module in the global clone.
+- Normalization is: lowercase; map every character that is not an ASCII letter or digit to a space; collapse runs of spaces; trim.
+- A module name is the policy file stem after `ai-policy-` and `.md`, or the procedure name.
+- A name mismatch is a procedure module file stem that disagrees with its H1 procedure name, or a policy file whose name does not follow `ai-policy-<name>.md`.
+- A placeholder is the suffix `#N` in a declared phrase; it matches an optional `#` followed by one or more digits, and no other pattern is allowed.
+- The intent gate is the Directive versus Inquiry decision that decides whether a matched trigger runs.
+
+Claims
+
+- The phrase list is data, not rules: the owning policy designates it, and the parser reads only the bullets.
+- Policies and procedures share one trigger namespace.
+- Procedure aliases and policy triggers are the same namespace during the transition.
+- A phrase declared by two different modules is a duplicate and is invalid.
+- A phrase that is a whole-word substring of another module's phrase is a containment collision and is invalid.
+- Close variants and overlapping aliases within one module are allowed and deduplicated; they resolve to the same module.
+- The existing aliases `load context` and `load context using AGENTS.md protocol`, `bootstrap` and `bootstrap using AGENTS.md protocol`, `post-compaction recovery` and `run post-compaction recovery procedure`, and `backup ai` and `backup ai state` are intentional same-module variants.
+- `update design-docs` and `update design docs` normalize to the same phrase within one module and are deduplicated.
+- The parameterized aliases `plan issue #N` and `implement issue #N` use the only placeholder form, `#N`, which matches an optional `#` and one or more digits.
+- Active Expertise tokens and module file names are not triggers.
+- A same-name project module replaces the global module. Its declared triggers replace the global module's triggers, and the replaced triggers remain reserved and unavailable to a different-name project module.
+- A project module with a different name may not use a shipped trigger.
+- The initial declarations are `cloud standards`, `data standards`, `database standards`, and `backend standards` on the cloud, data, DBA, and API backend policies.
+
+Context: policies were loaded only through `## Active Expertise` or a procedure that named them, so a user could not reach a domain policy by phrase. Procedures already registered their phrases as `**Aliases**`, and the authoring validator checked uniqueness only inside `AGENTS.md`. One namespace is the only way to keep dispatch deterministic without a precedence table.
+
+Consequences: the meta policy replaces its `## Triggers` reservation with the declaration shape and extends its literal-artifact rule to the trigger bullet list. The authoring validator replaces its hard rejection of `## Triggers` with shape, uniqueness, containment, and normalization checks. Four policy files gain the section. The declaration format does not change when procedure modules and skills arrive.
+
+## 2026-11-08: Trigger index, dispatch, and failure behavior
+
+The trigger index exists only in the AI's working context. It is rebuilt at load context, at post-compaction recovery, at checkpoint re-affirmation, and before dispatch when a module file changed in the session. It is never written to a file, cached, or produced by a runtime script. One named step, `STEP-PROTOCOL-INDEX`, is defined once in the always-on part of `AGENTS.md`, in a shared-steps section before `TIER TRIGGERED-PROCEDURES`. References use plain text or a backtick; only the definition is bold, so the reference test does not count references as definitions.
+
+The index records derived metadata only: type, scope, name, source relative to its anchor, literal and normalized triggers, headings with levels, effective, and conflict. It never contains a procedure step or a policy rule. In the first stage the procedure source is the `**Aliases**` lines in `AGENTS.md`; in the later stage it is the flat procedure store. Discovery covers the global and project policy directories, recursively, including the compliance subdirectory, and the procedure source. Same-path deduplication runs first; a project file with the same module name then replaces the global entry. Hidden entries, `tmp`, archives, and symlinks that escape the directory are skipped. A policy without triggers appears with an empty trigger set. The index creates no directory; the load-context structural audit remains the only directory creator.
+
+Dispatch uses whole-word phrase matching after normalization. A phrase maps to one module. A phrase with the suffix `#N` matches its literal prefix plus an optional `#` and one or more digits. A bare trigger, an imperative, or a polite action question is a Directive and dispatches. A concept question, a statement, a past-tense mention, a hypothetical, or a negation is an Inquiry and does not dispatch; on ambiguity the AI asks before acting. Multiple distinct triggers run once each, in the order they appear in the user's message. A policy trigger loads the policy for the session and never overrides the always-on rules, `AGENTS.md`, the customization file, or an explicit user instruction. A procedure trigger runs the procedure once. An already active policy is reported, not reloaded. `"use policy <name>"` is an explicit instruction; `<name>` is the Active Expertise token, it needs no declared trigger, and it bypasses the Directive versus Inquiry gate but not the always-on rules.
+
+Static violations fail validation before release: malformed or empty block, duplicate across modules, containment across modules, a procedure without triggers, a non-ASCII phrase, a name mismatch, or an invalid policy shape. A non-ASCII phrase reports `invalid trigger block`. At runtime the static violations and the runtime classes are reported and skipped; one bad module never blocks the load and never removes valid modules. A conflicted phrase is refused with its candidates. A module body that cannot be read is reported as not loaded. The AI never edits, renames, deletes, or auto-fixes a module while handling a failure. The proof-of-load reports `ITEM PROTOCOL-INDEX` with module counts by type and scope, the trigger count, the conflict count, and error counts by class; post-compaction recovery and checkpoint re-affirmation rebuild the index silently.
+
+The fixed error vocabulary is: `invalid trigger block`, `empty trigger block`, `duplicate trigger`, `trigger overlap`, `missing triggers`, `name mismatch`, `invalid policy shape`, `unreadable module`, `trigger collision`, and `unknown policy`. `trigger collision`, `unreadable module`, and `unknown policy` are runtime classes; the rest occur in both layers.
+
+Context: the protocol is prose executed by an AI, so a parser script at runtime would add a deployment dependency and contradict the self-standing design. A written shared step keeps one source and works on every platform.
+
+Consequences: `AGENTS.md` gains a shared step, a dispatch section, and `ITEM PROTOCOL-INDEX`; `validate-protocol.sh` gains anchors; `validate-policy-authoring.sh` remains a dev-time test. The index is not a stored contract, so no parity or cache mechanism is needed.
+
+## 2026-11-08: Procedure modules, session semantics, and staged delivery
+
+Procedure bodies move to `(Global AI Workflow Directory)/ai/procedures/`, one file per procedure, in a later stage. `AGENTS.md` keeps the always-on rules, the router, the shared step, and the dispatch. Policies never hold procedure bodies. No project procedure directory is defined, and a project-level directory is not scanned.
+
+A triggered policy is session-scoped. Nothing about the active set is persisted in `ai/state/`, the customization file, or any new file. Compaction may drop the policy; after compaction the AI states that runtime-triggered policies do not survive and asks for a re-trigger, and it never claims one survived. A procedure runs once per invocation. No unload command exists. Persistence across sessions is an explicit `## Active Expertise` change, with user approval.
+
+Delivery is two sequential stages. The first stage is the policy plugin and a minor release. The second stage is the procedure modules and the thin `AGENTS.md`, and a major release. Skills are a later, separate work item and reuse the same module and declaration model; a change to that model brings its own amendment.
+
+The thin `AGENTS.md` holds no procedure body and no static procedure list. Its target is at most 160 lines, 2,400 words, and 24,900 bytes, with a boot payload at least 60 percent smaller than the 404-line, 8,804-word, 62,263-byte file of 2026-11-08. A migration manifest maps every removed block and rule; no rule is lost. Procedure modules use an H1 `# PROCEDURE <NAME>: ...` title and `## Triggers`. The second stage updates the meta policy's procedure-header rule and adds a size check to `validate-protocol.sh` so the targets cannot drift.
+
+Context: procedure bodies are about 81 percent of `AGENTS.md`, so trigger registration alone would not thin the boot payload.
+
+Consequences: the second stage is a structural change for every user, because the definition home changes and the sync script must run. The `**Aliases**` form is temporary and removed in that stage. The shared step and dispatch section stay in the always-on file and survive the move. The same stage migrates the procedure anchors in `validate-protocol.sh`, teaches `test-protocol-references.sh` to discover `ai/procedures/*.md` and H1 `# PROCEDURE` definitions, and extends `validate-policy-authoring.sh` to check the procedure-module shape.
+
+## 2026-11-08: Trigger model invariants and change rule
+
+Invariants
+
+- INV-001: one declaration format, `## Triggers`, one literal phrase per bullet, no other content, one syntax in the end state.
+- INV-002: one shared namespace across modules; a phrase declared by two different modules, or contained in another module's phrase, is invalid; close variants within one module are allowed and deduplicated.
+- INV-003: case-insensitive, whitespace, hyphen, and punctuation-insensitive whole-word phrase matching; ASCII-only phrases.
+- INV-004: policy triggers optional; procedure modules require at least one; empty sections invalid.
+- INV-005: one shared index step, defined once in `AGENTS.md`, referenced by load, recovery, and checkpoint; no restated scan logic.
+- INV-006: the index is ephemeral; no file, cache, or runtime script; validators remain dev-time tests.
+- INV-007: dispatch is deterministic candidate detection plus the Directive versus Inquiry gate; ambiguity asks; multiple distinct triggers run in order; no module twice.
+- INV-008: static violations fail validation; runtime violations are reported and skipped; one fixed error vocabulary.
+- INV-009: the index holds type, scope, name, source, literal and normalized triggers, headings, effective, and conflict; no body text.
+- INV-010: procedure bodies live only in `(Global AI Workflow Directory)/ai/procedures/`; policies never hold procedures; no project procedure directory.
+- INV-011: global and project policies with same-path deduplication; recursive policies, flat procedures; hidden, archive, and escaping-symlink entries skipped; the index creates no directory.
+- INV-012: a same-name project module replaces the global one and its triggers; replaced global triggers stay reserved; a different-name trigger collision is invalid.
+- INV-013: a triggered policy is session-scoped; nothing persisted; compaction drops it and the AI says so; procedures run once; no unload command.
+- INV-014: the thin `AGENTS.md` holds no procedure bodies and no static procedure list; the size and boot-payload targets hold and are checked by the validator.
+- INV-015: two sequential stages, the first minor and the second major; skills are separate and reuse the model.
+- INV-016: the only pattern syntax is the declared suffix `#N`, which matches an optional `#` and one or more digits; no other placeholder or wildcard is allowed; it applies to the alias transition only and is removed with the `**Aliases**` form.
+
+Change rule
+
+- Allowed without an amendment: wording, examples, non-normative ordering, and bug fixes that preserve behavior.
+- Requires an amendment: any invariant change, a new module type, a new syntax, a scope change, a lifecycle change, or a failure-behavior change.
+- Requires a release note: any user-visible change.
+- Requires the same change: every validator, test, or fixture that encodes the invariant.
+- Forbidden: reinterpreting an invariant in a plan without amending this record.
+
+Context: the model must stay stable across the policy plugin, the procedure modules, and the later skills work. Without a frozen contract, the same behavior would be re-decided in each stage.
+
+Consequences: the validators and the reference test encode the machine-checkable invariants. The Directive versus Inquiry gate is covered by the manual matrix in the first stage. Every plan for this model references invariant IDs instead of restating the criteria.

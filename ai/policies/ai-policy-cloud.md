@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, provisions, secures, and validates cloud and platform infrastructure.
 
+## Triggers
+
+- cloud standards
+
 ## Scope
 
 - Apply this policy to cloud and platform engineering.

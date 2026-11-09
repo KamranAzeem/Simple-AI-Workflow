@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, validates, secures, and tests data platforms, analytics pipelines, and AI architecture.
 
+## Triggers
+
+- data standards
+
 ## Scope
 
 - Apply this policy to data platforms, analytics, pipelines, and AI architecture.

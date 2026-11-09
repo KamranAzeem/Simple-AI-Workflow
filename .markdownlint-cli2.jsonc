@@ -4,7 +4,8 @@
     "ai/secrets/**",
     "ai/code-review-reports/**",
     "ai/artifacts/**",
-    "ai/daily-checkpoints/**"
+    "ai/daily-checkpoints/**",
+    "ai/notes/**"
   ],
   "config": {
     "line-length": false,

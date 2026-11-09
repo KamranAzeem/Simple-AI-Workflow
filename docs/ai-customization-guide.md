@@ -22,6 +22,15 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 
 **How it works**: The AI assistant will look for a matching file in the global directory using two patterns (`ai-policy-<name>.md` first, then `<name>.md`) and load all matched files as additive layers.
 
+### On-demand policy triggers
+
+A policy may declare its own trigger phrases in a `## Triggers` section. Say one of its phrases, such as `"cloud standards"`, and the AI loads that policy for the session without an Active Expertise entry. The initial phrases are `cloud standards`, `data standards`, `database standards`, and `backend standards`.
+
+- The trigger list is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation; it is never written to disk.
+- A policy loaded only by a trigger is session-scoped. It does not survive a compaction; say the phrase again.
+- `"use policy <name>"` loads any policy by its Active Expertise name, with or without a declared trigger.
+- A duplicate or contained phrase across policies and procedures is rejected by the validator.
+
 ---
 
 ## 2. Activating Traits (Functional Personas)

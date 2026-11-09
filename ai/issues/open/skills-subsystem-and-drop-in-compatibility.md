@@ -113,4 +113,5 @@ A skill is untrusted content. A malicious skill can try to override the protocol
 - User preference: package-only. The security scan is mandatory for bundled, dropped-in, and user-authored skills.
 - The core threat is instruction override, where a skill tries to become the authoritative protocol. The defense is a fixed instruction hierarchy plus a scan and a trust record, not AI trust.
 - Related tickets: `policies-to-skills-rename.md`, `policy-plugin-v0-trigger-dispatch.md`, `self-contained-policy-triggers-and-heading-jit-index.md`.
+- Runtime namespace (2026-11-08): a shipped repo validator cannot enforce trigger uniqueness for user-authored or third-party skills. The runtime index must detect collisions at ingest and activation, report the candidates, and dispatch nothing. Decide this when the ticket is planned.
 - No plan yet.

@@ -14,19 +14,20 @@
 
 ## Current Status
 
-- **Milestone**: v5.7.0 (2026-11-07) implemented and approved: load context reports workflow-clone freshness; release pending.
-- **Validator**: 8/8; authoring PASSED; reference test PASS at 13 procedures, 97 steps, 10 items; shellcheck warning-clean; markdownlint 0.
+- **Milestone**: v5.8.0 Stage 1 is implemented and approved; local merge and tag pending. v5.7.0 is the last published release.
+- **Validator**: 8/8; authoring default and aggregate PASSED; reference test PASS at 13 procedures, 98 steps, 4 tiers, 11 items; fixture 28/28; shellcheck warning-clean; markdownlint 0.
 - **Policy count**: 18 modular policies.
 - **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive; today's file exists.
 - **Project knowledge**: 9 lesson files plus the template; global knowledge 27 files; JIT-indexed; ADR store `design-docs/protocol-decisions.md`; ticket background lives in Project Knowledge; `ai/notes/` holds `notes.md`.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 63 closed.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 64 closed.
 
 ## Active Working Context
 
-- **Objective**: release v5.7.0; the backlog is the issue tracker.
+- **Objective**: local merge and tag for v5.8.0, then plan Stage 2; the backlog is the issue tracker.
+- **Trigger model**: policies and procedures declare `## Triggers` in one normalized namespace; one shared `STEP-PROTOCOL-INDEX`; an ephemeral index in the AI's context; script-free runtime; Stage 1 implemented, then Stage 2 procedure modules and thinning. INV-001..INV-016 and the change rule are in `design-docs/protocol-decisions.md`; the Stage 1 plan is attached to the closed ticket.
 - **Live decisions**: the read-only update check compares local `HEAD` with the remote `HEAD` of the **Global AI Workflow Directory** clone and reports up to date, updates available with the pull command, ahead, diverged, or skipped; it runs at load context only; full SHAs compare and seven characters display; credential helpers are disabled, stderr is never emitted, and the remote call is capped at about three seconds. See `design-docs/protocol-decisions.md`.
 - **Work-item lifecycle**: `MANAGE-ISSUES` files and plans and stops at each request; `IMPLEMENT-PLAN` delivers. The final plan is attached to the ticket and the plan file is deleted; the checkpoint runs on the branch.
 - **Knowledge standards**: 10 KB soft and 15 KB review, no split, self-standing files, no-question repair, project/global sensitive scope.
-- **Release**: v5.6.0 is published at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.6.0>.
-- **Next actions**: merge `feature/load-context-workflow-update-check`, tag v5.7.0, publish the release, and close issue #3.
+- **Release**: v5.7.0 is the last published release at <https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v5.7.0>; v5.8.0 is prepared locally.
+- **Next actions**: local merge and tag v5.8.0; plan Stage 2.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, and `ai/daily-checkpoints/` are exempt.

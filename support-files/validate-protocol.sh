@@ -92,6 +92,22 @@ if ! grep -q "STEP-WORKFLOW-VERSION-CHECK" AGENTS.md; then
     echo "Error: STEP-WORKFLOW-VERSION-CHECK missing from PROCEDURE LOAD-CONTEXT in AGENTS.md (the workflow clone update check must be reported)."
     exit 1
 fi
+if ! grep -q "^## Shared Protocol Steps$" AGENTS.md; then
+    echo "Error: Shared Protocol Steps section missing from AGENTS.md."
+    exit 1
+fi
+if ! grep -q "STEP-PROTOCOL-INDEX" AGENTS.md; then
+    echo "Error: STEP-PROTOCOL-INDEX missing from AGENTS.md."
+    exit 1
+fi
+if ! grep -q "^## Protocol Dispatch$" AGENTS.md; then
+    echo "Error: Protocol Dispatch section missing from AGENTS.md."
+    exit 1
+fi
+if ! grep -q "ITEM PROTOCOL-INDEX" AGENTS.md; then
+    echo "Error: ITEM PROTOCOL-INDEX missing from STEP-PROOF-OF-LOAD in AGENTS.md."
+    exit 1
+fi
 if ! grep -q "Global AI Knowledge Directory" AGENTS.md; then
     echo "Error: Global AI Knowledge Directory reference missing from STEP-KNOWLEDGE-INDEXING in AGENTS.md."
     exit 1
@@ -417,6 +433,19 @@ if ! grep -q '^### Canonical State-File Headers$' ai/policies/ai-policy-common.m
     exit 1
 fi
 echo "Policy baseline verified."
+for pair in "cloud:cloud standards" "data:data standards" "dba:database standards" "api-backend:backend standards"; do
+    name="${pair%%:*}"
+    phrase="${pair#*:}"
+    if ! awk -v phrase="- $phrase" '
+        /^## Triggers[[:space:]]*$/ { in_trig = 1; next }
+        in_trig && /^##[[:space:]]/ { in_trig = 0 }
+        in_trig && $0 == phrase { found = 1 }
+        END { exit(found ? 0 : 1) }
+    ' "ai/policies/ai-policy-$name.md"; then
+        echo "Error: ai-policy-$name.md missing the trigger '- $phrase' under '## Triggers'."
+        exit 1
+    fi
+done
 
 # 7. Git Safety
 echo "[7/8] Verifying Git safety (.gitignore)..."

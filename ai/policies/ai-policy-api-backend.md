@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, builds, and tests backend services, APIs, jobs, workers, and data-access layers.
 
+## Triggers
+
+- backend standards
+
 ## Scope
 
 - Apply this policy to backend services, APIs, jobs, workers, and data-access layers.

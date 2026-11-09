@@ -265,6 +265,16 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ---
 
+# On-demand policy triggers
+
+- A policy can declare its own trigger phrases
+- Say `"cloud standards"` and the cloud policy loads for the session, without editing `ai-customization.md`
+- The trigger list is rebuilt at load, never written to disk
+- A policy loaded only by a trigger does not survive compaction; say the phrase again
+- `"use policy <name>"` loads a policy by its Active Expertise name
+
+---
+
 # Design Documentation Flow
 
 ## The Stack
@@ -371,6 +381,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
 - **Update check**: load context compares your workflow clone with its remote and tells you when to pull
+- **On-demand policy triggers**: a policy can declare a phrase, so `"cloud standards"` loads the cloud policy for the session without editing the customization file
 - **Mandatory knowledge sync**: project decisions land in `project-knowledge/` at every checkpoint
 - **Knowledge repair**: every knowledge file follows one shape; the checkpoint flags a missing header, a table, or a file over 15 KB, and `"repair knowledge files"` fixes it. It takes a while, so let it finish.
 

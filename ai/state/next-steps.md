@@ -13,8 +13,5 @@
 
 ## Pending
 
-- Merge `feature/load-context-workflow-update-check`, tag v5.7.0, publish the release, and close issue #3.
-
-## Deferred
-
-- [ ] Plugin v0 in `ai/issues/open/policy-plugin-v0-trigger-dispatch.md`.
+- Local squash merge to `master` and local tag v5.8.0, with no push.
+- Plan Stage 2 on a new branch from local `master`.

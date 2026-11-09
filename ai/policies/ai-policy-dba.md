@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI administers, secures, tunes, and recovers relational and NoSQL databases.
 
+## Triggers
+
+- database standards
+
 ## Scope
 
 - Apply this policy to database administration, schema changes, performance tuning, security, backup, recovery, and lifecycle tasks.

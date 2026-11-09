@@ -31,6 +31,7 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 - Run a changed sync script with `--dry-run` or `-WhatIf`.
 - Run `support-files/validate-protocol.sh`.
 - Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md` or policy file.
+- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies -name '*.md' -print)` after a trigger change.
 - Present a summary and a proposed commit message.
 - Treat the approved plan and the implement request as the human approval for staging, committing, merging, pushing, opening a pull request, releasing, and the external writes the work names.
 - Apply the ADR entry rule in `design-docs/protocol-decisions.md` to every protocol or policy change.
@@ -90,8 +91,8 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 - Include a `## Scope` section.
 - Include `## Rules` or domain-named sections.
 - Include a `## References` section.
-- Reserve a `## Triggers` section for the plugin model.
-- Do not add a `## Triggers` section until the plugin model lands.
+- Include an optional `## Triggers` section immediately after the purpose sentence and before `## Scope`.
+- List one literal trigger phrase per bullet in `## Triggers`, with no other content.
 - Place the READ-ONLY END marker at the end.
 - Do not use a `## Purpose` heading.
 - Do not use a `## Notes` heading.
@@ -110,9 +111,26 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 ### Literal Artifacts
 
 - Treat a fenced block as a normative literal artifact only when the owning policy designates it as one.
+- Treat a policy's `## Triggers` bullet list as a normative literal artifact.
 - Exempt a designated normative literal artifact from the `### Rule Structure` shape.
+- Exempt the `## Triggers` bullet list from the `### Rule Structure` shape.
 - Keep a designated normative literal artifact precise and free of vague terms.
 - Do not mark a designated normative literal artifact as an example or non-normative.
+
+### Trigger Declarations
+
+- Allow an optional `## Triggers` section in a policy.
+- Require at least one trigger in a procedure module from the second stage.
+- Write one phrase per bullet.
+- Use lowercase ASCII letters, digits, spaces, and hyphens in a phrase.
+- Use letters, digits, spaces, hyphens, periods, and one trailing #N in a procedure alias.
+- Forbid inline markup, quotes, backticks, and placeholders in a policy trigger.
+- Forbid an empty `## Triggers` section.
+- Forbid a phrase that duplicates another module's phrase or is contained in another module's phrase across modules.
+- Allow close variants within one module and deduplicate them.
+- Treat the `## Triggers` bullet list as data, not rules.
+- Name a policy file `ai-policy-<name>.md`.
+- Match a procedure module file name to its H1 procedure name from the second stage.
 
 ### Procedure Headers
 
@@ -126,7 +144,7 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 - Reduce a touched procedure to at most three aliases.
 - Keep the aliases of an untouched procedure.
 - Do not use an internal identifier as a trigger.
-- Keep each trigger unique across `AGENTS.md` and all policies.
+- Keep each trigger unique across modules; allow close variants within one module.
 - Do not add a `**Loads**` line.
 - Name the policy to load in the first step that needs it.
 
@@ -140,6 +158,7 @@ This section defines how to write and edit `AGENTS.md` and policy files.
 
 - Run `support-files/validate-protocol.sh` after a change to `AGENTS.md` or a policy file.
 - Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md` or policy file.
+- Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies -name '*.md' -print)` after a trigger change.
 - Pass a changed policy file through peer review.
 - Apply the peer review's Agent-facing documentation dimension.
 - Migrate a non-compliant policy only when the policy is touched.

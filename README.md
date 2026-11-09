@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v5.7.0 (2026-11-07).** Load context checks your workflow clone against its remote and tells you when to pull. The check is read-only, skips itself when it cannot reach the remote, and never pulls for you. Read the announcement: [docs/announcements/v5.7.0.md](docs/announcements/v5.7.0.md). |
+| **v5.8.0 (2026-11-09).** Policies can declare their own trigger phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored. Read the announcement: [docs/announcements/v5.8.0.md](docs/announcements/v5.8.0.md). |
 
 # Simple AI Workflow
 
@@ -259,11 +259,15 @@ This is the one file you edit to tailor the AI to a project. You can set:
 
 See the [AI Customization Guide](docs/ai-customization-guide.md) for the full list and examples.
 
+Some policies can also load by phrase, without an Active Expertise entry. Say `"cloud standards"`, `"data standards"`, `"database standards"`, or `"backend standards"` and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A project policy with triggers is still loaded at boot and is reported as active when its phrase is used.
+
 ## Keeping this workflow up to date
 
 > Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it updates existing `AGENTS.md` files, checks the customization file, adds `## Merge Policy` when missing, and migrates the old layout for you. This is the recommended update path; the [manual steps](docs/ai-customization-guide.md) are for a new project's first copy.
 
 When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
+
+v5.8.0 changes `AGENTS.md`. After pulling, run the sync script and restart the session so the new dispatch section and the shared index step reach your projects.
 
 Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 
@@ -371,6 +375,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 ## What's included
 
 - **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
 - **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.

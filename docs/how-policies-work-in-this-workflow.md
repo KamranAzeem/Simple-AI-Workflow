@@ -18,7 +18,10 @@
 
    3. Audit & Linting (The "Verification" Phase):
       The policies mandate specific tools (e.g., markdownlint, shellcheck). Before the AI shows you a file, it checks the policy, runs the required validation, and fixes
-  issues. This ensures the output is "pre-approved" against your standards.
+      issues. This ensures the output is "pre-approved" against your standards.
+
+   4. On-Demand Triggers (The "Reach for It" Phase):
+      A policy can declare its own trigger phrases. Say `"cloud standards"` and the AI loads the cloud policy for the session without adding it to Active Expertise. The trigger list is rebuilt at load context and never written to disk. A policy loaded only by a trigger does not survive compaction; say the phrase again. `"use policy <name>"` loads a policy by its Active Expertise name.
 
   ---
 

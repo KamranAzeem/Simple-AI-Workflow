@@ -27,6 +27,9 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - Path existence checks for all mandatory policies.
 - Integration of `markdownlint` checks for policies.
 - Temporary checkpoint cycle (create/verify/delete).
+- Anchor checks for the shared index step, the dispatch section, and the protocol index report item.
+- Trigger declaration checks in `support-files/validate-policy-authoring.sh`: shape, placement, ASCII phrases, cross-module duplicates and containment, policy names, and the `#N` alias placeholder.
+- A `--triggers` mode that runs the namespace check over the full policy set, plus a fixture test at `support-files/test-trigger-rules.sh`.
 
 ## Verification Criteria
 

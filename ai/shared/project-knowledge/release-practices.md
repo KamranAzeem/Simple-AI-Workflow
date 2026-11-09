@@ -30,6 +30,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v5.8.0 (2026-11-09)
+
+- Policies can declare `## Triggers`; an approved phrase loads the policy for the session.
+- One shared trigger-index step and a dispatch section; load context reports a protocol index item.
+- The authoring validator gains trigger shape, namespace, name, and placeholder checks, plus a `--triggers` aggregate mode; a fixture test covers the rules.
+- Initial declarations: `cloud standards`, `data standards`, `database standards`, and `backend standards`.
+- Upgrade action: pull the clone, run the sync script, and restart the session.
+- Prepared locally; publish with the final approval.
+
 ### v5.7.0 (2026-11-07)
 
 - Check the workflow clone against its remote at load context, read-only.
