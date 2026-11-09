@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.1.0 (2026-11-09).** Load context scans only the boot roots, excludes local-only trees, and bounds the discovery at 16 KB. Read the announcement: [docs/announcements/v6.1.0.md](docs/announcements/v6.1.0.md). |
+| **v6.2.0 (2026-11-09).** Knowledge files use task names, split only by topic, and use a 50-file review threshold. Read the announcement: [docs/announcements/v6.2.0.md](docs/announcements/v6.2.0.md). |
 
 # Simple AI Workflow
 
@@ -110,7 +110,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
-| Clean up knowledge files (header, tables, files over 15 KB, no split) | `"repair knowledge files"` |
+| Clean up knowledge files (header, tables, task names, files over 15 KB, 50-file review threshold) | `"repair knowledge files"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
 | Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
 | Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
@@ -177,7 +177,7 @@ The workflow pushes back with a few built-in defences:
 | AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
 | Workflow clone falling behind | Load context compares the clone with its remote and tells you when to pull |
 | Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
-| Knowledge files drifting from the standard | The checkpoint flags a missing header, a table, or a file over 15 KB; `"repair knowledge files"` fixes them without questions. It takes a while on a real knowledge base, so let it finish. |
+| Knowledge files drifting from the standard | The checkpoint flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence; `"repair knowledge files"` fixes them without questions. It takes a while on a real knowledge base, so let it finish. |
 
 A few habits help a lot:
 
@@ -274,6 +274,8 @@ v6.0.0 changes `AGENTS.md` and moves the procedures into the clone's `ai/procedu
 
 v6.1.0 changes load context only. After pulling, run the sync script if `AGENTS.md` changed and restart the session. The procedure modules update from the clone.
 
+v6.2.0 changes the knowledge rules only. After pulling, run the sync script if `AGENTS.md` changed and restart the session, then run `"repair knowledge files"` once (add `global` for the global store) to adopt task names, topic splits, and the 50-file review threshold.
+
 Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
 
 So, the process is as follows:
@@ -317,7 +319,7 @@ After the sync:
 
 1. Go to the project directory you started from, start the IDE again (for example VS Code), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
 
-2. Run `"repair knowledge files"` once in each project. It takes a while on a real knowledge base, so let it finish. It adds the header, removes tables, merges duplicates, and trims files over 15 KB; it never splits a file, asks no questions, and reports what it did. If you keep global knowledge, run `"repair knowledge files global"` too. The checkpoint only flags problems; it never edits your knowledge files.
+2. Run `"repair knowledge files"` once in each project. It takes a while on a real knowledge base, so let it finish. It adds the header, removes tables, gives task names, splits only by topic, merges files under 3 KB, deletes incident evidence, and reports the store count against the 50-file review threshold; it asks no questions and reports what it did. If you keep global knowledge, run `"repair knowledge files global"` too. The checkpoint only flags problems; it never edits your knowledge files.
 
 ## Examples
 
@@ -340,12 +342,12 @@ The AI doesn't load knowledge files at startup. It builds a name-based index and
 
 This rule covers AI-generated files too, and the common policy enforces it. Source code is exempt, so use whatever your language and framework expect.
 
-**Keep global knowledge merged, not split.** The AI finds global knowledge files by name, and the filename is the lookup key. Give each file a descriptive name for its dominant domain.
+**Name knowledge files for the task.** The filename is the lookup key. Use a tool or domain, then the task, with six or fewer hyphenated segments: no ticket IDs, dates, or incident names.
 
-- Good: `azure-cli-subscription-context.md`, `postgresql-naming-conventions.md`, `shell-scripting-sed-portability.md`
-- Bad: `general-notes.md`, `misc-lessons.md`, `notes-and-lessons.md`
+- Good: `postgresql-grs-and-restore.md`, `postgresql-migration-service-replication.md`, `azure-cli-subscription-context.md`
+- Bad: `general-notes.md`, `PROJ-812-postgres-incident-2026-10-29.md`, `notes-and-lessons.md`
 
-When one of your global knowledge files grows into a mix of topics, don't split it. Run `"repair knowledge files"` to merge duplicates and trim what doesn't belong. Keep it as one file with a descriptive name for its dominant domain. A file that covers two domains is a little harder to spot in the name index; that's the accepted trade-off. One file beats a growing pile.
+**Split by topic.** A knowledge file that grows into a mix of topics splits by task topic, never by ticket, incident, date, phase, or environment. A file under 3 KB merges into its nearest topic. The AI then reads the matching files by name before acting.
 
 ### Knowledge file standards
 
@@ -355,15 +357,23 @@ Every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` start
 
 Then the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there's a catch. A checklist uses the same shape, with the checklist under Rule or Fix.
 
-Use 10 KB as a soft target; never let it override completeness. A file that passes 15 KB gets an automatic cleanup during repair. There's no line target. Use flat bullets, not tables. Don't put commit hashes, branch names, checkpoint or diary references, or state-file paths in a knowledge file. That's bookkeeping, not knowledge.
+Name the file for the task it answers: a tool or domain, then the task, with six or fewer hyphenated segments. Use 10 KB as a soft target; never let it override completeness. A file that passes 15 KB gets an automatic cleanup during repair. There's no line target. Use flat bullets, not tables. Don't put commit hashes, branch names, checkpoint or diary references, or state-file paths in a knowledge file. That's bookkeeping, not knowledge.
+
+Completeness means every reusable rule, fix, reason, check, identifier, and example, not every observation. Delete incident narrative, rehearsal logs, timelines, and per-ticket evidence once the reusable rule is written.
+
+Split a file only by task topic; do not split by ticket, incident, date, phase, or environment. Merge a file under 3 KB into its nearest topic file. A checklist stays one file, and a file over 15 KB after cleanup splits by topic or, if it cannot, stays one file and is reported.
 
 Each file stands on its own. Keep the facts, rules, reasons, and checks it needs, and don't point at another knowledge file, code file, doc, policy, artifact, backup, or state file. A domain command, a system path, or a path a checklist step writes or edits is content, not a pointer.
 
 A project knowledge file may keep identifying names. A global knowledge file removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content and stays.
 
-Never split a file. The repair merges duplicates and trims what doesn't belong, and the file count can't increase. A checklist stays one file, and a file that is still over 15 KB after cleanup stays one file and is reported.
+One lesson lives in one place: the global store for a cross-project lesson, the project store for its application, no duplicate. A per-PR or per-ticket review finding goes into one topic rules file. A generated inventory or deliverable is not a knowledge file.
 
-The checkpoint checks the header before it writes. It also flags a missing header, a table, or a file over 15 KB, but it never edits anything. Say `"repair knowledge files"` when you want the AI to audit and fix the project store. Add `global` for the global store. The trigger is the approval: the repair asks no further questions. It backs up the old files, preserves anything ambiguous, and reports what it merged, trimmed, or left alone.
+Use 50 files per store as a review threshold. The checkpoint reports the count; at 50 or more, run a repair. The repair merges, deduplicates, deletes evidence, and retires, and it reports any remaining overage. A new topic is never blocked.
+
+At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with shell find and grep and absolute paths.
+
+The checkpoint checks the header before it writes. It also flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence, but it never edits anything. Say `"repair knowledge files"` when you want the AI to audit and fix the project store. Add `global` for the global store. The trigger is the approval: the repair asks no further questions. It backs up the old files, preserves anything ambiguous, and reports what it merged, split, trimmed, or left alone.
 
 Heads up: the repair takes a while on a real knowledge base. Let it finish. It's how your files get fixed. `issue-template.md` and design docs in the old fallback location are exempt.
 
@@ -397,7 +407,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.
-- **Knowledge file standards and repair**: every knowledge file follows one shape and starts with a self-contained header. Files aim for a 10 KB soft target, get reviewed at 15 KB, and never split; the repair merges and trims instead. The checkpoint flags a missing header, a table, or a file over 15 KB. Say `"repair knowledge files"` to clean up the project store; add `global` for the global store. The repair asks no questions. It takes a while, but it's worth running once.
+- **Knowledge file standards and repair**: every knowledge file follows one shape and starts with a self-contained header. Files use task names of six or fewer hyphenated segments, aim for a 10 KB soft target, and get reviewed at 15 KB. The repair splits only by topic, merges files under 3 KB, deletes incident evidence, and retires closed ticket files, executed plans, and finished artifacts. Each store has a 50-file review threshold: the checkpoint reports the count and recommends a repair at 50 or more. Say `"repair knowledge files"` to clean up the project store; add `global` for the global store. The repair asks no questions. It takes a while, but it's worth running once.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
 - **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.

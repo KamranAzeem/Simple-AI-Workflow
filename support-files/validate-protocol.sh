@@ -2,7 +2,7 @@
 
 set -e
 
-echo "--- Starting Protocol Validation v6.1 ---"
+echo "--- Starting Protocol Validation v6.2 ---"
 
 # 1. AGENTS.md Anchors & Hardening
 echo "[1/8] Verifying AGENTS.md hardening..."
@@ -358,6 +358,14 @@ if ! grep -q '^### Canonical State-File Headers$' ai/policies/ai-policy-common.m
     exit 1
 fi
 echo "Policy baseline verified."
+for anchor in "### Knowledge Lookup" "### Knowledge Retirement" "six or fewer hyphen-separated segments" "50 knowledge files per store" "3,000 bytes" "Split a file only by task topic"; do
+    require_in "ai/policies/ai-policy-common.md" "$anchor" "Knowledge rule missing: $anchor"
+done
+require_in "ai/procedures/repair-knowledge-files.md" "split only by task topic" "Knowledge repair topic-split rule missing."
+if grep -nE 'never split a file|never split it|no split|file count (cannot|can.t|must not) increase' ai/policies/ai-policy-common.md ai/procedures/repair-knowledge-files.md docs/workflow-guide.md README.md docs/simple-ai-workflow-slides.md; then
+    echo "Error: legacy no-split wording remains in the current knowledge rules."
+    exit 1
+fi
 for pair in "cloud:cloud standards" "data:data standards" "dba:database standards" "api-backend:backend standards"; do
     name="${pair%%:*}"
     phrase="${pair#*:}"
@@ -401,4 +409,4 @@ else
     exit 1
 fi
 
-echo "--- Protocol Validation v6.1 Completed Successfully ---"
+echo "--- Protocol Validation v6.2 Completed Successfully ---"

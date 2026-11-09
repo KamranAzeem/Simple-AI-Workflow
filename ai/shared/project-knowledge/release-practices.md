@@ -30,6 +30,26 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v6.2.0 (2026-11-09)
+
+- Name knowledge files for the task with six or fewer hyphenated segments; split only by topic; merge files under 3 KB.
+- Replace the no-split rule with topic splits, evidence deletion (`removed as incident evidence`), one lesson in one place, per-PR findings folded into topic files, and inventories kept out of the knowledge stores.
+- Use a 50-file review threshold per store; the checkpoint reports the count and recommends a repair; the repair reports a remaining overage.
+- Add the task-to-filename lookup rule and the retirement report for closed ticket files, executed plans, and finished artifacts.
+- Rebuild the knowledge fixture and add the validator anchors and legacy-phrase guard.
+- The protocol's own knowledge names migrate on touch or repair.
+- Upgrade action: pull, run the sync script, restart, and run `repair knowledge files` once (add `global`).
+- Published 2026-11-09.
+
+### v6.1.0 (2026-11-09)
+
+- Scope the boot discovery to the boot roots, add the Boot Scan Exclusions, and bound the output at 16 KB.
+- Read the latest checkpoint once and compact the proof to counts only.
+- Add the developer `--index` oracle to the authoring validator and a boot fixture.
+- State the OS- and terminal-agnostic instruction; Windows requires `pwsh` 7 or higher.
+- Upgrade action: pull, run the sync script, restart the session.
+- Published 2026-11-09.
+
 ### v6.0.0 (2026-11-09)
 
 - Move the 13 procedure bodies to `ai/procedures/`, one self-standing module each with H1 titles and `## Triggers`.

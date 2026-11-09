@@ -11,21 +11,23 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the protocol validator with `bash support-files/validate-protocol.sh`.
 - Run the authoring validator on every changed `AGENTS.md` or policy file with `./support-files/validate-policy-authoring.sh <file> [<file>...]`.
 - Run the reference test with `bash support-files/test-protocol-references.sh`.
+- Run the knowledge-repair fixture with `bash support-files/test-knowledge-repair-fixture.sh --all`.
 - Run markdownlint with `markdownlint-cli2 "**/*.md" "#node_modules"`.
 - Lint every new markdown file, not only the edited files.
 
 ## Why
 
-- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, git safety, and checkpoint cycle.
-- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` reservation.
+- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, the knowledge anchors and legacy-phrase guard, git safety, and checkpoint cycle.
+- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` shape.
 - The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
 - Markdownlint catches structural defects before review.
 
 ## Verify
 
-- Confirm `Protocol Validation v6.1 Completed Successfully` and 8/8.
+- Confirm `Protocol Validation v6.2 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 13 procedures, 96 steps, 4 tiers, and 9 items.
+- Confirm the reference test prints `PASS` with 13 procedures, 98 steps, 4 tiers, and 11 items.
+- Confirm the knowledge-repair fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
 
 ## Caveats
@@ -33,6 +35,6 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Lint ignores secrets, review reports, artifacts, and the daily checkpoint diary; it covers the issue and state trees.
 - A list directly after a lead-in line needs a blank line; three tickets were committed with MD032 because only some files were linted.
 - On this machine the markdownlint binary is at `~/.nvm/versions/node/v24.19.0/bin/markdownlint-cli2`; use `markdownlint-cli2` from `PATH` where available.
-- A `## Triggers` section is reserved until the plugin model lands.
+- The `## Triggers` section is live for policies and procedure modules; the plugin model landed.
 - `shellcheck` is installed at `/usr/bin/shellcheck`; run it on changed shell scripts.
 - The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.
