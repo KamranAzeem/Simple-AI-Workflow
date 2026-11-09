@@ -13,6 +13,4 @@
 
 ## Pending
 
-- Merge `feature/optimize-load-context-boot` to `master`, tag `v6.1.0`, and publish the release.
-- Post the final plan to GitHub issue #4, close it, and delete the plan file.
-- Write the post-release checkpoint.
+Nothing pending.
