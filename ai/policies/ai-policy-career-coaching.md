@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy for Career Coaching & Job Search Strategy
+# AI Policy: Career Coaching and Job Search Strategy
+
+Govern AI-assisted career coaching and job search with evidence-based, candidate-first guidance.
 
 ## Scope
 

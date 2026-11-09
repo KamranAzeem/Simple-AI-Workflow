@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy for Accounting and Financial Work
+# AI Policy: Accounting and Financial Work
+
+Govern AI-assisted accounting and financial work with accuracy, confidentiality, and auditability.
 
 ## Scope
 

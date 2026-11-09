@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy: Academic Research (International)
+# AI Policy: Academic Research (International)
+
+Govern AI-assisted academic research with integrity, evidence discipline, and reproducible methods.
 
 ## Scope
 
@@ -386,5 +388,11 @@ The original policy left several areas unaddressed. The following are covered ab
 2. **§16 Post-Publication Responsibilities**, not addressed in the original. Added COPE-based correction/retraction guidance.
 3. **§17 Supervision checkpoints**, not addressed in the original. Added checkpoint call-outs at problem formulation, design, and pre-submission (advisory for supervised research).
 4. **§9 example AI-disclosure statement**, not addressed in the original. Added an adaptable example.
+
+## References
+
+- COPE (Committee on Publication Ethics) guidance
+- ICMJE (International Committee of Medical Journal Editors) recommendations
+- Institutional research-ethics and IRB requirements
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

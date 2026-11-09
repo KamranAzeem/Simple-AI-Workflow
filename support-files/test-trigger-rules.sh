@@ -269,6 +269,16 @@ run_case "index procedure without triggers" 1 "summary|" --index "$WORK/ai/proce
 make_policy "$WORK/ai/policies/ai-policy-index-shape.md" "Index Shape" "- index shape" "yes"
 run_case "index tolerates a shape gap" 0 "errors=1" --index "$WORK/ai/policies/ai-policy-index-shape.md"
 
+# --- legacy shape coverage ---
+make_policy "$WORK/ai/policies/ai-policy-legacy-title.md" "Legacy Title" "- legacy title"
+sed -i 's/^# AI Policy: .*/# AI Assistant Policy: Legacy Title/' "$WORK/ai/policies/ai-policy-legacy-title.md"
+run_case "legacy old title" 1 "missing policy title" "$WORK/ai/policies/ai-policy-legacy-title.md"
+make_policy "$WORK/ai/policies/ai-policy-legacy-refs.md" "Legacy Refs" "- legacy refs" "yes"
+run_case "legacy missing references" 1 "missing '## References'" "$WORK/ai/policies/ai-policy-legacy-refs.md"
+make_policy "$WORK/ai/policies/ai-policy-legacy-purpose.md" "Legacy Purpose" "- legacy purpose"
+sed -i '/^Govern the fixture behavior\.$/d' "$WORK/ai/policies/ai-policy-legacy-purpose.md"
+run_case "legacy missing purpose" 1 "purpose must be a one-line sentence" "$WORK/ai/policies/ai-policy-legacy-purpose.md"
+
 echo "---"
 if [ "$failures" -ne 0 ]; then
     printf 'FAILED: %s of %s cases failed.\n' "$failures" "$cases"

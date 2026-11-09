@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy - Linux System Administration
+# AI Policy: Linux System Administration
+
+Govern AI-assisted Linux system administration with safe, reversible, and verified operations.
 
 ## Scope
 
@@ -53,5 +55,11 @@ The AI Assistant acts as a **Senior Linux System Administrator and Senior Site R
 - Configuration changes must be validated in a non-production environment before production apply.
 - Document expected outcomes for each test (e.g., "script should exit 0 on first run, exit 0 with no changes on second run").
 - Test failure modes: what happens when a target host is unreachable, a package is missing, or a service fails to start.
+
+## References
+
+- CIS Benchmarks for Linux
+- Distribution vendor security guidance
+- NIST SP 800-53 security controls
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

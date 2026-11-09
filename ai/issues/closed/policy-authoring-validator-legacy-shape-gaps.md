@@ -20,3 +20,5 @@ Scope:
 - Keep the trigger namespace rules unchanged.
 
 Related: `ai/issues/closed/policy-plugin-v0-trigger-dispatch.md`, `design-docs/protocol-decisions.md`.
+
+Status: Fixed 2026-11-09. The five titles use `# AI Policy: <Domain>` with a one-line purpose; the three missing `## References` sections are added; the fixture covers the old title, the missing references, and the missing purpose. The default authoring run reports zero failures and `--index` reports zero errors. Merged to `master` in the `fix/policy-shape-legacy` squash commit. No release was made in this work item.

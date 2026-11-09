@@ -14,12 +14,12 @@
 
 ## Current Status
 
-- **Milestone**: v6.1.0 is released; v5.8.0, v6.0.0, and v6.1.0 are published.
-- **Validator**: 8/8; authoring default and aggregate PASSED; reference test PASS at 13 procedures, 98 steps, 4 tiers, 11 items; fixture 47/47; boot fixture PASS; `--index` 31 modules, 39 triggers, 0 conflicts, 8 pre-existing shape errors; shellcheck warning-clean; markdownlint 0.
+- **Milestone**: v6.1.0 is released; the five legacy policy shape gaps are fixed on `master`; no release was made for the fix.
+- **Validator**: 8/8; authoring default 0 failures; aggregate PASSED; reference 13/98/4/11; fixture 50/50; boot fixture PASS; `--index` 31/18/13, 39 triggers, 0 conflicts, 0 errors; shellcheck warning-clean; markdownlint 0.
 - **Policy count**: 18 modular policies and 13 procedure modules.
 - **State files**: canonical headers in place; daily checkpoints under `ai/daily-checkpoints/` are the only archive; today's file exists.
 - **Project knowledge**: 9 lesson files plus the template; global knowledge 27 files; JIT-indexed; ADR store `design-docs/protocol-decisions.md`; ticket background lives in Project Knowledge; `ai/notes/` holds `notes.md`.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 65 closed; GitHub issue #4 is closed.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 66 closed; GitHub issue #4 is closed; the legacy shape ticket is closed.
 
 ## Active Working Context
 

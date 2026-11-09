@@ -4,7 +4,9 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy: Windows System Administration
+# AI Policy: Windows System Administration
+
+Govern AI-assisted Windows system administration with safe, reversible, and verified operations.
 
 ## Scope
 
@@ -132,5 +134,11 @@ The AI Assistant acts as a **Senior Windows System Administrator** with expertis
 - DSC configurations must be tested idempotently: applying twice must produce no changes on the second run.
 - Document expected outcomes for each validation step (e.g., "Invoke-Pester should pass 12/12 tests", "Test-DscConfiguration should return True").
 - Test failure modes: what happens when a target is unreachable, a dependency is missing, or a service fails to respond.
+
+## References
+
+- CIS Benchmarks for Windows
+- Microsoft security baselines
+- NIST SP 800-53 security controls
 
 <!-- AI-ASSISTANT: READ-ONLY END -->
