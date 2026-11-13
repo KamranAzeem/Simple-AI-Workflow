@@ -50,29 +50,17 @@ When implementing new features, architecture changes, or functional code modific
 
 - Approval of the feature branch authorizes local commits and pushes on that branch.
 - Trunk merge, tags, releases, and external system writes need separate approval.
+- The handoff autonomy in `ai-policy-handoff.md` is the exception for a trunk merge; its conditions live there.
 
 **No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before making any change to the files, so every edit lands on the branch.
 Branch prefix and commit format: see Git conventions in Universal Engineering Standards.
-
-### Conditional Autonomy for Handoffs
-
-AI assistants are authorized to autonomously merge a feature branch to `master`/`main` **ONLY IF** all of the following conditions are met:
-
-1. The task is being processed from a handoff file in **Project Handoffs Directory**.
-2. The handoff file contains a `## Verification` section with objective, executable validation steps.
-3. ALL verification steps pass with zero errors (verified via shell command output).
-4. The **Project Coordination File** board is updated (claimed before, cleared after).
-5. The **Project Coordination File** board is updated with the completion entry: the orchestrator folds it into `ai/state/progress.md` at checkpoint.
-*If any condition is not met, human approval is mandatory for the merge.*
 
 ## Agent-to-Agent (A2A) Coordination
 
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
 2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the load-context procedure module). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
-4. **Valid Handoff Definition & Refusal Mandate**:
-    - A **Valid Handoff** MUST contain a `## Verification` (or `## Validation`) section defining how the AI can programmatically confirm the task is complete.
-    - **Refusal Mandate**: AI assistants MUST refuse to process any handoff that lacks this section. They must inform the user: "This handoff lacks a Verification section and cannot be processed autonomously per ai-policy-common.md."
+4. **Valid Handoff Definition & Refusal Mandate**: A Valid Handoff follows `ai-policy-handoff.md`. Refuse a handoff until that policy is loaded and the definition is met.
 
 ## Operational Restart and Checkpoint Contract
 
@@ -188,6 +176,7 @@ Apply this section before any artifact leaves the project. The intended destinat
 
 - `PROCEDURE MANAGE-ISSUES` applies this section to an external ticket creation, a plan-entry comment, and a close or reopen comment.
 - `PROCEDURE IMPLEMENT-PLAN` applies this section to a PR/MR title and body and to release notes.
+- `PROCEDURE CREATE-HANDOFF` applies this section only when the handoff leaves the project.
 - A local ticket skips the name scrub and still removes secrets.
 
 ## Author Identity and Attribution
@@ -873,6 +862,7 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
 - `ai-policy-observability.md` (`## Four Golden Signals`, `## Logs, Metrics, and Traces`)
 - `ai-policy-api-backend.md`, `ai-policy-web-frontend.md`, `ai-policy-mobile-apps.md`, `ai-policy-data.md`, `ai-policy-dba.md`, `ai-policy-cloud.md`, `ai-policy-linux-system-admin.md`, `ai-policy-windows-system-admin.md`
 - `ai-policy-meta.md` (`## Procedure and Policy Authoring`)
+- `ai-policy-handoff.md` (`## Valid Handoff`, `## Conditional Autonomy`)
 - `ai-policy-code-review.md`, `ai-policy-codebase-examination.md`, `ai-policy-design-docs.md`
 - Domain and specialty policies live in the **Global AI Policies Directory**.
 

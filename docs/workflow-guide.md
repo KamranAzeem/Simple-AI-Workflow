@@ -29,22 +29,9 @@ Used for transferring specific tasks and context between AI assistants or sessio
 
 ### How to Create a Handoff Task
 
-**Human Instructions**:
+Say `create handoff` and give the task, the receiver, the parallel work, the destination, and the authorization. The `CREATE-HANDOFF` procedure loads `ai-policy-handoff.md`, drafts the handoff under `ai/artifacts/handoffs/<handoff-slug>/`, runs a peer review, and writes the final handoff only after APPROVED.
 
-1. Create a Markdown file in `ai/shared/handoffs/` (e.g., `my-task-handoff.md`).
-2. Use the following template:
-
-```markdown
-# Handoff: [Task Name]
-- **Status**: Pending
-- **Assigned To**: [Agent Name or leave blank]
-- **Goal**: [Clear objective]
-- **Requirements**: [List constraints or steps]
-- **Reference**: [Relevant file paths]
-
-## Verification
-- [An objective, executable check that proves the task is done, for example a test command that must pass, a build that must succeed, or a specific file that must exist. A handoff without this section cannot be processed autonomously.]
-```
+The handoff policy owns the template: Objective, Authorization, Read first, Scope, Starting facts, Steps, Binding rules, Shared output paths, Report back, Review, and Verification. The final file is `ai/shared/handoffs/<handoff-slug>.md`.
 
 **Instruction to AI**:
 To have the AI generate and save a handoff for you:
@@ -57,10 +44,12 @@ To tell the AI to start working on a handoff:
 
 The AI will:
 
-1. Verify and record ownership in `ai/shared/coordination.md`.
-2. Implement the requirements.
-3. Delete the handoff file and ownership claim upon successful verification.
-4. Record the completion in `ai/state/progress.md`.
+1. Load `ai-policy-handoff.md` and verify the handoff is valid.
+2. Record ownership in `ai/shared/coordination.md`.
+3. Work on a feature branch and run every verification step.
+4. Merge the branch when the conditional autonomy conditions pass; the receiver does not write the three state files.
+5. Append a `## Completion` note to the handoff and clear the claim.
+6. Leave the handoff for the original orchestrator, which records it at the next checkpoint and then deletes it.
 
 ## 4. Working with Git
 
@@ -390,7 +379,7 @@ Before an external issue, PR/MR, comment, or release note leaves the project, th
 
 The AI shows the scrubbed text and a category report, then waits for approval. A public destination defaults to redaction and needs explicit approval. The report lists categories and counts only and stays in chat. Private IP addresses stay; public addresses become documentation addresses. Images, screenshots, rendered exports, and document metadata get a visual review and a metadata strip.
 
-The first release covers external ticket creation, plan-entry comments, close or reopen comments, PR/MR titles and bodies, and release notes. Report sharing, presentation decks, and handoffs get their own steps later, and they reference the same contract.
+The first release covers external ticket creation, plan-entry comments, close or reopen comments, PR/MR titles and bodies, release notes, and a handoff that leaves the project. Report sharing and presentation decks get their own steps later, and they reference the same contract.
 
 ## 17. State-File Health and Repair
 

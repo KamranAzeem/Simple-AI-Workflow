@@ -8,7 +8,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 1. **Bootstrap & Compliance Verification**:
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
-   - Verify the 13 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
+   - Verify the 14 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
    - Verify readability and format of tracking files (`ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`).
@@ -31,7 +31,7 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - Anchor checks for the shared index step, the dispatch section, the procedure modules, and the protocol index report item.
 - The thin-`AGENTS.md` size check and the procedure-store anchors.
 - Trigger declaration checks in `support-files/validate-policy-authoring.sh`: shape, placement, ASCII phrases, cross-module duplicates and containment, policy names, procedure-module names, the `#N` procedure trigger, and the thin-`AGENTS.md` shape.
-- A `--triggers` mode that runs the namespace check over the full policy and procedure set, plus a fixture test at `tests/test-trigger-rules.sh`.
+- A `--triggers` mode that runs the namespace check over the full policy and procedure set, plus a fixture test at `tests/test-trigger-rules.sh`. The fixture includes a fence-aware regression that a fenced example heading is not indexed as a policy heading.
 - A developer `--index` oracle: `support-files/validate-policy-authoring.sh --index` prints one read-only module line per policy and procedure, then a summary with module counts, trigger count, conflict count, error count, and error classes. It exits 0 when the index is produced, even with existing shape gaps; it exits non-zero only for an unreadable module, an invalid trigger block, or a name mismatch. It is a Protocol Developer Mode tool; the end-user AI builds the index inline and never runs it. On the current distribution, `--index` reports 0 errors and exits 0.
 - A boot-discovery fixture at `tests/test-load-context-boot.sh`: canaries in every excluded path, 1,000 artifact and knowledge files, a project and global skill package, the 16 KB bound, the single checkpoint read, and the index oracle.
 - A skills fixture at `tests/test-skills-index.sh`: the two roots, the package shape and frontmatter, the one-level rule, hidden and symlink skip, the project override, the cross-type collision report, the 200-character description, the no-body rule, and the 16 KB bound.
@@ -39,6 +39,7 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - The reference test at `tests/test-protocol-references.sh` reads `ai/procedures/*.md` for procedure and step definitions and the order-conformance check.
 - A sync-script fixture at `tests/test-sync-agents-md.sh` covers the customization, exclusion, and failure paths.
 - An outbound content scrub fixture at `tests/test-outbound-content-scrub.sh` covers the Class A and Class B fixtures, the placeholders, the private-IP exception, and the policy and procedure anchors.
+- A handoff fixture at `tests/test-create-handoff.sh` covers the policy template, the procedure triggers and steps, the valid draft, the incomplete draft, and the final handoff.
 - The validator's own `v6.3` label is the script's label, not the workflow release.
 
 ## Verification Criteria

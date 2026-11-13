@@ -54,3 +54,7 @@ Related: `ai/issues/open/protected-specification-paths-and-spec-change-approval.
 ---
 2026-11-13
 The `/tests/` structural move is delivered as step 0 of `ai/plans/outbound-content-scrub-implementation-plan.md`. The phases below start from the new layout. This ticket still owns the test strategy, the protected-spec mechanism, and the phased coverage.
+
+---
+2026-11-13
+The handoff validity fixture is delivered as part of the handoff work at `tests/test-create-handoff.sh`, which covers a phase 2 item. The phases below start with the handoff fixture in place.

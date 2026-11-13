@@ -30,6 +30,7 @@ fail=0
 file_fail=0
 TRIGGERS_FILE="$(mktemp)"
 
+# shellcheck disable=SC2329
 cleanup() {
     rm -f "$TRIGGERS_FILE"
 }
@@ -50,13 +51,49 @@ first_match_line() {
     awk -v re="$pattern" '$0 ~ re { print NR; exit }' "$file"
 }
 
-count_matches() {
+heading_lines_outside_fences() {
     local file="$1" pattern="$2"
-    awk -v re="$pattern" '$0 ~ re { n++ } END { print n+0 }' "$file"
+    awk -v re="$pattern" '
+        FNR == 1 { fence = 0 }
+        /^```/ { fence = !fence; next }
+        fence { next }
+        $0 ~ re { print }
+    ' "$file"
+}
+
+first_heading_line_outside_fences() {
+    local file="$1" pattern="$2"
+    awk -v re="$pattern" '
+        FNR == 1 { fence = 0 }
+        /^```/ { fence = !fence; next }
+        fence { next }
+        $0 ~ re { print NR; exit }
+    ' "$file"
+}
+
+count_headings_outside_fences() {
+    local file="$1" pattern="$2"
+    awk -v re="$pattern" '
+        FNR == 1 { fence = 0; n = 0 }
+        /^```/ { fence = !fence; next }
+        fence { next }
+        $0 ~ re { n++ }
+        END { print n + 0 }
+    ' "$file"
+}
+
+next_heading_line_outside_fences() {
+    local file="$1" start="$2" pattern="$3"
+    awk -v start="$start" -v re="$pattern" '
+        FNR == 1 { fence = 0 }
+        /^```/ { fence = !fence; next }
+        fence { next }
+        NR > start && $0 ~ re { print NR; exit }
+    ' "$file"
 }
 
 normalize_phrase() {
-    printf '%s' "$1" | tr 'A-Z' 'a-z' | sed 's/[^a-z0-9]/ /g' | tr -s ' ' | sed 's/^ //; s/ $//'
+    printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/ /g' | tr -s ' ' | sed 's/^ //; s/ $//'
 }
 
 purpose_line_for() {
@@ -91,14 +128,14 @@ check_policy_name() {
 check_trigger_block() {
     local file="$1" title_line="$2" purpose_line="$3"
     local count trig_line scope_line ln line raw norm bullets next_heading intervening
-    count="$(count_matches "$file" '^## Triggers[[:space:]]*$')"
+    count="$(count_headings_outside_fences "$file" '^## Triggers[[:space:]]*$')"
     [ "$count" -eq 0 ] && return 0
     if [ "$count" -gt 1 ]; then
         fail_msg "$file" "0" "invalid trigger block: more than one '## Triggers' section"
         return 0
     fi
-    trig_line="$(first_match_line "$file" '^## Triggers[[:space:]]*$')"
-    scope_line="$(first_match_line "$file" '^## Scope[[:space:]]*$')"
+    trig_line="$(first_heading_line_outside_fences "$file" '^## Triggers[[:space:]]*$')"
+    scope_line="$(first_heading_line_outside_fences "$file" '^## Scope[[:space:]]*$')"
     if [ -n "$purpose_line" ] && [ -n "$scope_line" ]; then
         if [ "$trig_line" -lt "$purpose_line" ] || [ "$trig_line" -gt "$scope_line" ]; then
             fail_msg "$file" "$trig_line" "invalid policy shape: '## Triggers' must sit after the purpose and before '## Scope'"
@@ -106,7 +143,7 @@ check_trigger_block() {
         fi
     fi
     if [ -n "$purpose_line" ]; then
-        next_heading="$(awk -v start="$purpose_line" 'NR > start && /^## / { print NR; exit }' "$file")"
+        next_heading="$(next_heading_line_outside_fences "$file" "$purpose_line" '^## ')"
         if [ -n "$next_heading" ] && [ "$next_heading" -ne "$trig_line" ]; then
             fail_msg "$file" "$trig_line" "invalid policy shape: '## Triggers' must be the first section after the purpose"
             return 0
@@ -151,11 +188,11 @@ check_policy_file() {
     base="$(basename "$file")"
     check_policy_name "$file"
 
-    title_line="$(first_match_line "$file" '^# AI Policy: .+')"
+    title_line="$(first_heading_line_outside_fences "$file" '^# AI Policy: .+')"
     case "$file" in
         ai/policies/ai-policy-common.md|*/ai/policies/ai-policy-common.md)
             if [ -z "$title_line" ]; then
-                title_line="$(first_match_line "$file" '^# AI Assistant Policy: .+')"
+                title_line="$(first_heading_line_outside_fences "$file" '^# AI Assistant Policy: .+')"
             fi
             ;;
     esac
@@ -202,24 +239,24 @@ check_policy_file() {
         fi
     fi
 
-    if ! grep -qE '^## Scope[[:space:]]*$' "$file"; then
+    if [ -z "$(first_heading_line_outside_fences "$file" '^## Scope[[:space:]]*$')" ]; then
         fail_msg "$file" "0" "invalid policy shape: missing '## Scope' heading"
     fi
 
-    if ! grep -qE '^## References[[:space:]]*$' "$file"; then
+    if [ -z "$(first_heading_line_outside_fences "$file" '^## References[[:space:]]*$')" ]; then
         fail_msg "$file" "0" "invalid policy shape: missing '## References' heading"
     fi
 
-    domain_sections="$(grep -E '^## ' "$file" | sed 's/^## //; s/[[:space:]]*$//' | grep -vE '^(Scope|References|Purpose|Notes|Triggers)$')"
+    domain_sections="$(heading_lines_outside_fences "$file" '^## ' | sed 's/^## //; s/[[:space:]]*$//' | grep -vE '^(Scope|References|Purpose|Notes|Triggers)$')"
     if [ -z "$domain_sections" ]; then
         fail_msg "$file" "0" "invalid policy shape: missing '## Rules' or a domain-named section"
     fi
 
-    if grep -qE '^## Purpose[[:space:]]*$' "$file"; then
+    if [ "$(count_headings_outside_fences "$file" '^## Purpose[[:space:]]*$')" -gt 0 ]; then
         fail_msg "$file" "0" "invalid policy shape: '## Purpose' heading is not allowed"
     fi
 
-    if grep -qE '^## Notes[[:space:]]*$' "$file"; then
+    if [ "$(count_headings_outside_fences "$file" '^## Notes[[:space:]]*$')" -gt 0 ]; then
         fail_msg "$file" "0" "invalid policy shape: '## Notes' heading is not allowed"
     fi
 
@@ -256,13 +293,13 @@ check_procedure_module() {
     local file="$1" base name stem title_line trig_line count ln line raw base_phrase norm bullets first_section intervening
 
     base="$(basename "$file")"
-    title_line="$(first_match_line "$file" '^# PROCEDURE [A-Z][A-Z0-9-]*: .+')"
+    title_line="$(first_heading_line_outside_fences "$file" '^# PROCEDURE [A-Z][A-Z0-9-]*: .+')"
     if [ -z "$title_line" ]; then
         fail_msg "$file" "0" "invalid policy shape: procedure module missing '# PROCEDURE <NAME>: <description>'"
     else
         name="$(sed -n "${title_line}p" "$file" | sed -E 's/^# PROCEDURE ([A-Z][A-Z0-9-]*): .*/\1/')"
         stem="${base%.md}"
-        if [ "$stem" != "$(printf '%s' "$name" | tr 'A-Z' 'a-z')" ]; then
+        if [ "$stem" != "$(printf '%s' "$name" | tr '[:upper:]' '[:lower:]')" ]; then
             fail_msg "$file" "$title_line" "name mismatch: file stem '$stem' must match the lowercase procedure name"
         fi
     fi
@@ -276,7 +313,7 @@ check_procedure_module() {
         fail_msg "$file" "$ln" "**Loads** line is not allowed"
     fi
 
-    first_section="$(awk 'NR > 1 && /^## / { print NR; exit }' "$file")"
+    first_section="$(next_heading_line_outside_fences "$file" 1 '^## ')"
     if [ -n "$first_section" ] && ! sed -n "${first_section}p" "$file" | grep -qE '^## Triggers[[:space:]]*$'; then
         fail_msg "$file" "$first_section" "invalid policy shape: '## Triggers' must be the first section"
     fi
@@ -286,7 +323,7 @@ check_procedure_module() {
         fail_msg "$file" "$ln" "aliases are not allowed in a procedure module"
     fi
 
-    count="$(count_matches "$file" '^## Triggers[[:space:]]*$')"
+    count="$(count_headings_outside_fences "$file" '^## Triggers[[:space:]]*$')"
     if [ "$count" -eq 0 ]; then
         fail_msg "$file" "0" "missing triggers: procedure module needs a '## Triggers' section"
         return 0
@@ -296,7 +333,7 @@ check_procedure_module() {
         return 0
     fi
 
-    trig_line="$(first_match_line "$file" '^## Triggers[[:space:]]*$')"
+    trig_line="$(first_heading_line_outside_fences "$file" '^## Triggers[[:space:]]*$')"
     intervening="$(awk -v end="$trig_line" 'NR > 1 && NR < end && !/^[[:space:]]*$/ { print NR; exit }' "$file")"
     if [ -n "$intervening" ]; then
         fail_msg "$file" "$intervening" "invalid policy shape: '## Triggers' must immediately follow the H1"
@@ -414,7 +451,7 @@ index_mode() {
             in_trig && /^##[[:space:]]/ { in_trig = 0 }
             in_trig && /^- / { t = $0; sub(/^- /, "", t); printf "%s%s", sep, t; sep = ";" }
         ' "$file")"
-        headings="$(grep -E '^#{1,6} ' "$file" | sed 's/|/ /g' | awk '{ printf "%s%s", sep, $0; sep = ";" }')"
+        headings="$(heading_lines_outside_fences "$file" '^#{1,6} ' | sed 's/|/ /g' | awk '{ printf "%s%s", sep, $0; sep = ";" }')"
         printf '%s|global|%s|%s|triggers=%s|headings=%s|effective=yes|conflict=none\n' \
             "$type" "$name" "$source" "${trigs:-none}" "${headings:-none}"
 

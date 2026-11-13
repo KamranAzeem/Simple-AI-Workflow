@@ -262,6 +262,31 @@ else
     printf 'PASS: index golden\n'
 fi
 
+# --- fenced headings are not policy headings ---
+{
+    printf '# DO NOT MODIFY THIS FILE\n\n'
+    printf 'Test fixture.\n\n'
+    printf '<!-- AI-ASSISTANT: READ-ONLY START -->\n\n'
+    printf '# AI Policy: Fenced Heading\n\n'
+    printf 'Govern the fixture behavior.\n\n'
+    printf '## Scope\n\n- Fixture scope.\n\n'
+    printf '## Rules\n\n- Follow the fixture.\n\n'
+    printf '```text\n'
+    printf '## Example\n'
+    printf '```\n\n'
+    printf '## References\n\n- Fixture reference.\n\n'
+    printf '<!-- AI-ASSISTANT: READ-ONLY END -->\n'
+} > "$WORK/ai/policies/ai-policy-fenced-heading.md"
+fenced_out="$(cd "$WORK" && bash "$VALIDATOR" --index ai/policies/ai-policy-fenced-heading.md 2>&1)"
+fenced_rc=$?
+cases=$((cases + 1))
+if [ "$fenced_rc" -ne 0 ] || printf '%s' "$fenced_out" | grep -o 'headings=[^|]*' | grep -q '## Example'; then
+    printf 'FAIL: fenced heading excluded from index (exit %s)\n%s\n' "$fenced_rc" "$fenced_out"
+    failures=$((failures + 1))
+else
+    printf 'PASS: fenced heading excluded from index\n'
+fi
+
 make_policy "$WORK/ai/policies/ai-policy-index-bad.md" "Index Bad" "- Bad"
 run_case "index invalid trigger" 1 "summary|" --index "$WORK/ai/policies/ai-policy-index-bad.md"
 make_procedure_no_triggers "$WORK/ai/procedures/index-no-trig.md" "INDEX-NO-TRIG"

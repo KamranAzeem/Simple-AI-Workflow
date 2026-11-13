@@ -17,13 +17,14 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the boot fixture with `bash tests/test-load-context-boot.sh`.
 - Run the sync fixture with `bash tests/test-sync-agents-md.sh`.
 - Run the outbound content scrub fixture with `bash tests/test-outbound-content-scrub.sh`.
+- Run the handoff fixture with `bash tests/test-create-handoff.sh`.
 - Run markdownlint with `markdownlint-cli2 "**/*.md" "#node_modules"`.
 - Lint every new markdown file, not only the edited files.
 
 ## Why
 
-- The protocol validator checks the hardening anchors, configuration, directory structure, board, 18-policy baseline, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
-- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` shape; it permits only the two shared steps in the thin `AGENTS.md`.
+- The protocol validator checks the hardening anchors, configuration, directory structure, board, 19-policy baseline, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
+- The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, and `## Triggers` shape; it permits only the two shared steps in the thin `AGENTS.md`. It ignores heading-like lines inside fenced code blocks when it builds the index and checks the policy and procedure shape.
 - The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
 - The skills fixture checks the two roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project override, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Markdownlint catches structural defects before review.
@@ -32,9 +33,10 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - Confirm `Protocol Validation v6.3 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 13 procedures, 101 steps, 4 tiers, and 12 items.
+- Confirm the reference test prints `PASS` with 14 procedures, 108 steps, 4 tiers, and 12 items.
 - Confirm the knowledge-repair fixture prints `PASS`.
 - Confirm the outbound content scrub fixture prints `PASSED`.
+- Confirm the handoff fixture prints `PASSED`.
 - Confirm the skills fixture prints `PASSED`.
 - Confirm the boot fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.

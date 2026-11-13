@@ -28,6 +28,7 @@ require_in "ai/procedures/create-backup.md" '# PROCEDURE CREATE-BACKUP: When the
 require_in "ai/procedures/examine-codebase.md" '# PROCEDURE EXAMINE-CODEBASE: When the user says' "PROCEDURE EXAMINE-CODEBASE anchor missing in ai/procedures/examine-codebase.md."
 require_in "ai/procedures/manage-issues.md" '# PROCEDURE MANAGE-ISSUES:' "PROCEDURE MANAGE-ISSUES anchor missing in ai/procedures/manage-issues.md."
 require_in "ai/procedures/implement-plan.md" '# PROCEDURE IMPLEMENT-PLAN:' "PROCEDURE IMPLEMENT-PLAN anchor missing in ai/procedures/implement-plan.md."
+require_in "ai/procedures/create-handoff.md" '# PROCEDURE CREATE-HANDOFF:' "PROCEDURE CREATE-HANDOFF anchor missing in ai/procedures/create-handoff.md."
 require_in "ai/procedures/manage-issues.md" "STEP-SCRUB-OUTBOUND" "STEP-SCRUB-OUTBOUND anchor missing in ai/procedures/manage-issues.md."
 require_in "ai/procedures/implement-plan.md" "STEP-SCRUB-OUTBOUND" "STEP-SCRUB-OUTBOUND reference missing in ai/procedures/implement-plan.md."
 require_in "ai/procedures/repair-state-files.md" '# PROCEDURE REPAIR-STATE-FILES:' "PROCEDURE REPAIR-STATE-FILES anchor missing in ai/procedures/repair-state-files.md."
@@ -65,6 +66,7 @@ require_in "AGENTS.md" 'use skill <name>' "use skill dispatch missing from AGENT
 require_in "ai/procedures/load-context.md" "ITEM SKILLS-INDEX" "ITEM SKILLS-INDEX missing from ai/procedures/load-context.md."
 require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missing from ai-policy-common.md."
 require_in "ai/policies/ai-policy-common.md" '^## Outbound Content Scrub$' "Outbound Content Scrub section missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-handoff.md" '^## Valid Handoff$' "Valid Handoff section missing from ai-policy-handoff.md."
 require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
 require_in "AGENTS.md" "Single-Writer" "State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
 require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
@@ -332,7 +334,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/8] Verifying policy baseline (18 modular policies)..."
+echo "[6/8] Verifying policy baseline (19 modular policies)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
 # Policy files use project-root-relative paths and TIER CONFIGURATION anchor references that are
 # correct from the end user's project root — they will always appear broken when checked
@@ -342,7 +344,7 @@ POLICIES=(
     "data" "linux-system-admin" "windows-system-admin" "mobile-apps" "dba" "observability"
     "code-review" "codebase-examination" "design-docs" "coding-baseline"
     "accounting" "academic-researcher"
-    "career-coaching"
+    "career-coaching" "handoff"
 )
 for p in "${POLICIES[@]}"; do
     POLICY_FILE="ai/policies/ai-policy-$p.md"

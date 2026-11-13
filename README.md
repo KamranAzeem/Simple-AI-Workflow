@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.4.0 (2026-11-13).** Outbound content scrub: secrets and audience-inappropriate identifying data are removed before an external issue, PR/MR, comment, or release note leaves the project. Read the announcement: [docs/announcements/v6.4.0.md](docs/announcements/v6.4.0.md). |
+| **v6.5.0 (2026-11-13).** Handoff creation: a dedicated handoff policy, a `create handoff` procedure, and a peer-review gate before the final handoff exists. Read the announcement: [docs/announcements/v6.5.0.md](docs/announcements/v6.5.0.md). |
 
 # Simple AI Workflow
 
@@ -409,9 +409,9 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, and Career Coaching), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **Policies**: 13 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching, and Handoffs), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
 - **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
-- **Procedure modules and a thin `AGENTS.md`**: the 13 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
+- **Procedure modules and a thin `AGENTS.md`**: the 14 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
@@ -426,6 +426,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
 - **Issue management and delivery**: `MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request; `IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. Merge mode comes from `## Merge Policy`, and no CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands. External ticket writes and PR/MR or release text pass the outbound content scrub before they leave the project.
 - **Outbound content scrub**: before an external issue, PR/MR, comment, or release note leaves the project, the AI removes secrets and audience-inappropriate identifying data. Class A, internal or same audience, keeps customer names and infrastructure detail; Class B, external or different audience, removes them. Secrets are never overridable.
+- **Handoff creation**: `CREATE-HANDOFF` drafts a handoff under `ai/artifacts/handoffs/<handoff-slug>/`, runs a peer review, and writes the final file only after APPROVED. `ai-policy-handoff.md` owns the template, the lifecycle, and the conditional autonomy.
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.

@@ -25,13 +25,9 @@ This system enables multiple agents to work on a **single repository** concurren
 
 To ensure safety while allowing progress across AI sessions, the system uses a **Refined Handoff Protocol**:
 
-1. **Valid Handoff Definition**: A handoff is only valid if it contains a `## Verification` (or `## Validation`) section with objective, executable steps to confirm completion.
-2. **Refusal Mandate**: AI assistants MUST refuse to process any handoff lacking this section to prevent unverified autonomous work.
-3. **Conditional Autonomy**: AI assistants are permitted to autonomously squash-merge a feature branch to `master`/`main` ONLY if:
-    - They are working on a dedicated feature branch.
-    - ALL verification steps in the handoff pass with zero errors.
-    - The coordination board (`coordination.md`) is updated correctly.
-    *When an agent meets all of these conditions it is acting as the **project-root orchestrator** for that branch, and as the orchestrator it reconciles the state files (`ai/state/progress.md`, `ai/state/next-steps.md`, `ai/state/context.md`) itself per the single-writer rule (`AGENTS.md` TIER READ-FIRST-RULES). A sub-agent that is **not** the orchestrator does not merge or write the state files: it records completion on the board and hands off. Otherwise, the approved plan and the implement request are the human approval; a handoff that does not meet these conditions waits for the user. The merge mode is set in `## Merge Policy`.*
+1. **Valid Handoff Definition**: A handoff is valid only when it contains every section in `## Handoff Template` in `ai-policy-handoff.md`, including a `## Verification` section with objective, executable steps.
+2. **Refusal Mandate**: AI assistants MUST load `ai-policy-handoff.md` and refuse to process any handoff that lacks a required section.
+3. **Conditional Autonomy**: A receiver may merge the branch to trunk only when the handoff is valid, the creation review is APPROVED, every verification step passes with zero errors, and the coordination board (`coordination.md`) is updated. The receiver does not write the three state files. The original orchestrator records the state at the next checkpoint and deletes the handoff. Tags, releases, and external writes need separate approval, and the merge mode is set in `## Merge Policy`.
 
 ### 2. Global (Cross-Project) Collaboration
 
@@ -57,7 +53,7 @@ All assistants share a mandatory set of operational rules and contracts (branch-
 2. **Announce**: Update `ai/shared/coordination.md` when starting a session.
 3. **Learn**: Read recent files in `ai/shared/project-knowledge/` and `ai/shared/handoffs/`.
 4. **Document**: Save technical research to the `project-knowledge/` to save tokens for future sessions.
-5. **Handoff**: Leave a note in `handoffs/` if a task is incomplete.
+5. **Handoff**: Append a `## Completion` note to the handoff and clear the claim; the original orchestrator records and deletes it at the next checkpoint.
 
 ### A2A Rules (Mandatory)
 
@@ -66,9 +62,10 @@ All assistants share a mandatory set of operational rules and contracts (branch-
 3. **Task Claiming**: Agents must record ownership in `ai/shared/coordination.md` before starting tasks in `ai/state/next-steps.md`.
 4. **Handoff Claim & Execute Lifecycle**:
     - **Scan**: Check `ai/shared/handoffs/` for pending tasks.
-    - **Validate**: Confirm the handoff is "Valid" (contains Verification section).
+    - **Validate**: Load `ai-policy-handoff.md` and confirm the handoff is a Valid Handoff.
     - **Claim**: Record ownership in `ai/shared/coordination.md`.
     - **Execute**: Work on a feature branch.
     - **Verify**: Run all verification steps.
-    - **Finalize**: If the Conditional Autonomy conditions are met, the agent is acting as the orchestrator for that branch: merge to master and reconcile the state files. If not, record completion on `ai/shared/coordination.md` and leave the three state files for the project-root orchestrator (single-writer rule).
-    - **Cleanup**: Delete the handoff file and clear the claim in `ai/shared/coordination.md`.
+    - **Finalize**: If the conditional autonomy conditions pass, merge to trunk. The receiver does not write the three state files.
+    - **Report back**: Append a `## Completion` note to the handoff and clear the claim in `ai/shared/coordination.md`.
+    - **Cleanup**: The original orchestrator records the handoff in the state files at the next checkpoint, then deletes the handoff.

@@ -13,4 +13,4 @@
 
 ## Pending
 
-- Ship the approved outbound scrub change, tag v6.4.0, and close GitHub #7 after the merge.
+- Ship the handoff change, tag v6.5.0, and close GitHub #6 after the merge.

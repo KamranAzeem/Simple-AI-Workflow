@@ -57,6 +57,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Shared understanding before building**: for feature work, the AI interviews you to a shared design concept before creating files
 - **Privacy-safe commits**: a pre-commit sensitive-name scan, with a full-history purge and a migration path when something slips through
 - **Outbound content scrub**: secrets and audience-inappropriate identifying data are removed before an external issue, PR/MR, comment, or release note leaves the project. Two classes cover the internal or same-audience case and the external or different-audience case
+- **Handoff creation**: a dedicated handoff policy, a `create handoff` procedure, and a peer-review gate before the final handoff exists
 - **Investigation Contract**: evidence-based by default, cross-checked against what was already read (self-consistency), and "Untried is not impossible" (never assert a limitation you did not test)
 - **Progressive disclosure**: `AGENTS.md` stays short; detail sits behind context pointers the AI opens only when a task needs it
 - **Git setup guidance**: a recommended global `.gitconfig` (identity, CRLF handling, a readable `git lg` alias) in the global settings template
@@ -278,7 +279,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 # A thin AGENTS.md and a procedure store
 
-- The 13 procedures live in `ai/procedures/` in the clone, one self-standing module each
+- The 14 procedures live in `ai/procedures/` in the clone, one self-standing module each
 - `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch
 - The boot payload drops by roughly three quarters
 - A new procedure is a new module; no `AGENTS.md` edit

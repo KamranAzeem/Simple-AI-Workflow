@@ -59,13 +59,12 @@ Update ai/shared/coordination.md to record that Agent A (Gemini) has completed t
 ### Step 1.5: Create Handoff for Agent B
 
 ```text
-Create a handoff file at ai/shared/handoffs/agent-b-create-pages.md with:
-- Objective: Create about.html and contact.html matching index.html style
-- Requirements: Consistent CSS, navigation links between all pages
-- Verification: All three pages link to each other, consistent styling
+create handoff
 ```
 
-**Expected outcome**: Handoff file created with clear requirements and verification steps.
+Give the task, the receiver, the parallel work, the destination, and the authorization. The procedure loads `ai-policy-handoff.md`, drafts the handoff, runs the peer review, and writes the final file only after APPROVED.
+
+**Expected outcome**: The reviewed handoff is at `ai/shared/handoffs/agent-b-create-pages.md`.
 
 ### Step 1.6: Checkpoint
 
@@ -92,26 +91,27 @@ load context using AGENTS.md protocol
 ### Step 2.2: Claim and Execute Handoff
 
 ```text
-Claim and execute the handoff at ai/shared/handoffs/agent-b-create-pages.md
+load ai-policy-handoff.md
+claim and execute the handoff at ai/shared/handoffs/agent-b-create-pages.md
 ```
 
 **Expected outcome**: Agent B:
 
-1. Records ownership in `coordination.md`
+1. Loads the handoff policy and records ownership in `coordination.md`
 2. Creates `about.html` and `contact.html` matching the existing style
 3. Adds navigation links between all three pages
 4. Runs verification steps
+5. Appends a `## Completion` note and clears the claim; the original orchestrator records and deletes the handoff at the next checkpoint
 
 ### Step 2.3: Create Handoff for Agent C
 
 ```text
-Create a handoff file at ai/shared/handoffs/agent-c-review.md with:
-- Objective: Review all three pages for consistency, fix any issues
-- Requirements: Check styling consistency, navigation, HTML validity
-- Verification: All pages pass review with zero issues noted
+create handoff
 ```
 
-**Expected outcome**: Handoff for Agent C created.
+Give the review task, the receiver, the parallel work, the destination, and the authorization.
+
+**Expected outcome**: The reviewed handoff is at `ai/shared/handoffs/agent-c-review.md`.
 
 ### Step 2.4: Checkpoint
 
@@ -138,15 +138,17 @@ load context using AGENTS.md protocol
 ### Step 3.2: Claim and Execute Review
 
 ```text
-Claim and execute the handoff at ai/shared/handoffs/agent-c-review.md
+load ai-policy-handoff.md
+claim and execute the handoff at ai/shared/handoffs/agent-c-review.md
 ```
 
 **Expected outcome**: Agent C:
 
-1. Records ownership in `coordination.md`
+1. Loads the handoff policy and records ownership in `coordination.md`
 2. Reviews all three pages
 3. Fixes any issues found
 4. Runs verification steps
+5. Appends a `## Completion` note and clears the claim; the original orchestrator records and deletes the handoff at the next checkpoint
 
 ### Step 3.3: Finalize
 
