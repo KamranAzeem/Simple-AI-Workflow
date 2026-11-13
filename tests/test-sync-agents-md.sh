@@ -3,10 +3,11 @@
 # Builds throwaway projects in a temp directory and checks each layout.
 set -euo pipefail
 
-DIR=$(cd "$(dirname "$0")" && pwd)
-SCRIPT="$DIR/sync-agents-md.sh"
-EXPECTED_WORKFLOW_DIR=$(cd "$DIR/.." && pwd -P)
+ROOT=$(cd "$(dirname "$0")/.." && pwd -P)
+SCRIPT="$ROOT/support-files/sync-agents-md.sh"
+EXPECTED_WORKFLOW_DIR="$ROOT"
 WORK=$(mktemp -d)
+# shellcheck disable=SC2329
 cleanup() {
   chmod -R u+w "$WORK" 2>/dev/null || true
   rm -rf "$WORK"

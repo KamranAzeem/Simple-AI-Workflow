@@ -28,6 +28,8 @@ require_in "ai/procedures/create-backup.md" '# PROCEDURE CREATE-BACKUP: When the
 require_in "ai/procedures/examine-codebase.md" '# PROCEDURE EXAMINE-CODEBASE: When the user says' "PROCEDURE EXAMINE-CODEBASE anchor missing in ai/procedures/examine-codebase.md."
 require_in "ai/procedures/manage-issues.md" '# PROCEDURE MANAGE-ISSUES:' "PROCEDURE MANAGE-ISSUES anchor missing in ai/procedures/manage-issues.md."
 require_in "ai/procedures/implement-plan.md" '# PROCEDURE IMPLEMENT-PLAN:' "PROCEDURE IMPLEMENT-PLAN anchor missing in ai/procedures/implement-plan.md."
+require_in "ai/procedures/manage-issues.md" "STEP-SCRUB-OUTBOUND" "STEP-SCRUB-OUTBOUND anchor missing in ai/procedures/manage-issues.md."
+require_in "ai/procedures/implement-plan.md" "STEP-SCRUB-OUTBOUND" "STEP-SCRUB-OUTBOUND reference missing in ai/procedures/implement-plan.md."
 require_in "ai/procedures/repair-state-files.md" '# PROCEDURE REPAIR-STATE-FILES:' "PROCEDURE REPAIR-STATE-FILES anchor missing in ai/procedures/repair-state-files.md."
 require_in "ai/procedures/repair-knowledge-files.md" '# PROCEDURE REPAIR-KNOWLEDGE-FILES:' "PROCEDURE REPAIR-KNOWLEDGE-FILES anchor missing in ai/procedures/repair-knowledge-files.md."
 require_in "ai/procedures/update-design-docs.md" '# PROCEDURE UPDATE-DESIGN-DOCS:' "PROCEDURE UPDATE-DESIGN-DOCS anchor missing in ai/procedures/update-design-docs.md."
@@ -41,6 +43,7 @@ for anchor in STEP-DRY-RUN-KNOWLEDGE-REPAIR STEP-REPLACE-KNOWLEDGE-REPAIR STEP-R
     require_in "ai/procedures/repair-knowledge-files.md" "$anchor" "$anchor anchor missing in ai/procedures/repair-knowledge-files.md."
 done
 
+# shellcheck disable=SC2016
 require_in "ai/procedures/load-context.md" 'Index `open/` and `in-progress/`' "Project Issues indexing step missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "Token Rationing" "Token Rationing steps missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-KNOWLEDGE-INDEXING" "STEP-KNOWLEDGE-INDEXING missing from ai/procedures/load-context.md."
@@ -61,6 +64,7 @@ require_in "AGENTS.md" "STEP-SKILLS-INDEX" "STEP-SKILLS-INDEX missing from AGENT
 require_in "AGENTS.md" 'use skill <name>' "use skill dispatch missing from AGENTS.md."
 require_in "ai/procedures/load-context.md" "ITEM SKILLS-INDEX" "ITEM SKILLS-INDEX missing from ai/procedures/load-context.md."
 require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" '^## Outbound Content Scrub$' "Outbound Content Scrub section missing from ai-policy-common.md."
 require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
 require_in "AGENTS.md" "Single-Writer" "State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
 require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."

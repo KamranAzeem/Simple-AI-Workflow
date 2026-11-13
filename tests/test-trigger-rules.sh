@@ -1,6 +1,6 @@
 #!/bin/bash
 # Dev-time fixture test for the trigger declarations.
-# Usage: ./support-files/test-trigger-rules.sh
+# Usage: ./tests/test-trigger-rules.sh
 # Exit 0 when every case passes, 1 otherwise.
 
 set -u

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.3.0 (2026-11-09).** Skills are a separate on-demand layer: drop-in `SKILL.md` packages in two directories. Read the announcement: [docs/announcements/v6.3.0.md](docs/announcements/v6.3.0.md). |
+| **v6.4.0 (2026-11-13).** Outbound content scrub: secrets and audience-inappropriate identifying data are removed before an external issue, PR/MR, comment, or release note leaves the project. Read the announcement: [docs/announcements/v6.4.0.md](docs/announcements/v6.4.0.md). |
 
 # Simple AI Workflow
 
@@ -424,7 +424,8 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
 - **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
 - **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
-- **Issue management and delivery**: `MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request; `IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. Merge mode comes from `## Merge Policy`, and no CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands.
+- **Issue management and delivery**: `MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request; `IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. Merge mode comes from `## Merge Policy`, and no CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands. External ticket writes and PR/MR or release text pass the outbound content scrub before they leave the project.
+- **Outbound content scrub**: before an external issue, PR/MR, comment, or release note leaves the project, the AI removes secrets and audience-inappropriate identifying data. Class A, internal or same audience, keeps customer names and infrastructure detail; Class B, external or different audience, removes them. Secrets are never overridable.
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.

@@ -10,11 +10,13 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - Run the protocol validator with `bash support-files/validate-protocol.sh`.
 - Run the authoring validator on every changed `AGENTS.md` or policy file with `./support-files/validate-policy-authoring.sh <file> [<file>...]`.
-- Run the reference test with `bash support-files/test-protocol-references.sh`.
-- Run the knowledge-repair fixture with `bash support-files/test-knowledge-repair-fixture.sh --all`.
-- Run the skills fixture with `bash support-files/test-skills-index.sh`.
-- Run the trigger fixture with `bash support-files/test-trigger-rules.sh`.
-- Run the boot fixture with `bash support-files/test-load-context-boot.sh`.
+- Run the reference test with `bash tests/test-protocol-references.sh`.
+- Run the knowledge-repair fixture with `bash tests/test-knowledge-repair-fixture.sh --all`.
+- Run the skills fixture with `bash tests/test-skills-index.sh`.
+- Run the trigger fixture with `bash tests/test-trigger-rules.sh`.
+- Run the boot fixture with `bash tests/test-load-context-boot.sh`.
+- Run the sync fixture with `bash tests/test-sync-agents-md.sh`.
+- Run the outbound content scrub fixture with `bash tests/test-outbound-content-scrub.sh`.
 - Run markdownlint with `markdownlint-cli2 "**/*.md" "#node_modules"`.
 - Lint every new markdown file, not only the edited files.
 
@@ -30,8 +32,9 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - Confirm `Protocol Validation v6.3 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 13 procedures, 99 steps, 4 tiers, and 12 items.
+- Confirm the reference test prints `PASS` with 13 procedures, 101 steps, 4 tiers, and 12 items.
 - Confirm the knowledge-repair fixture prints `PASS`.
+- Confirm the outbound content scrub fixture prints `PASSED`.
 - Confirm the skills fixture prints `PASSED`.
 - Confirm the boot fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.

@@ -56,6 +56,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Design documentation flow**: a document stack of Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs and updates the ledger when a design document changes
 - **Shared understanding before building**: for feature work, the AI interviews you to a shared design concept before creating files
 - **Privacy-safe commits**: a pre-commit sensitive-name scan, with a full-history purge and a migration path when something slips through
+- **Outbound content scrub**: secrets and audience-inappropriate identifying data are removed before an external issue, PR/MR, comment, or release note leaves the project. Two classes cover the internal or same-audience case and the external or different-audience case
 - **Investigation Contract**: evidence-based by default, cross-checked against what was already read (self-consistency), and "Untried is not impossible" (never assert a limitation you did not test)
 - **Progressive disclosure**: `AGENTS.md` stays short; detail sits behind context pointers the AI opens only when a task needs it
 - **Git setup guidance**: a recommended global `.gitconfig` (identity, CRLF handling, a readable `git lg` alias) in the global settings template

@@ -24,7 +24,7 @@ These are the rules most costly to break. They are active at boot, at load conte
 2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. Only log-like bulk data may be sliced by filter. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
 3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits. Count first, then read it all. (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES)
 4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system. (Universal Operational Guardrails below)
-5. **Secrets and identifying names before commit.** Before any `git add` or `git commit`, scan the staged changes for secrets and for names that identify a person, company, or organization. Neutralize them or stop. (Universal Operational Guardrails below)
+5. **Secrets and identifying names before commit and before outbound.** Before any `git add` or `git commit`, scan the staged changes for secrets and for names that identify a person, company, or organization. Before any artifact leaves the project, apply `## Outbound Content Scrub`. Neutralize or stop. (Universal Operational Guardrails and Outbound Content Scrub below)
 6. **Human approval on protected branches.** Get explicit approval before any state-changing git operation on `master` or `main`. (Feature Development and Branch-Gating below)
 7. **Author identity.** Never use an AI, model, or harness name, or an auto-generated email, as the author or sender of any output. Use the human user's identity. (Author Identity and Attribution below)
 
@@ -114,7 +114,7 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
 - **No side effects without approval**: Ask before file creation/deletion, package installation, or Git write actions. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question.
 - **Unblocked steps first**: Complete every procedure step that needs no approval before requesting an approval.
 - **External system mutations require explicit approval**: Never post, update, transition, comment on, or otherwise change any external system of record (issue trackers such as Jira, Azure DevOps, or GitHub; wikis such as Confluence; chat such as Teams or Slack) without the user's explicit instruction. Propose the exact text first and wait for approval before sending.
-- **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Applies to everything that enters git (commits, messages, docs, code comments, knowledge files, filenames) and to external systems. A project knowledge file outside git may keep an identifying name. A tracked knowledge file follows this scan. A global knowledge file never keeps an identifying name. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content.
+- **Secrets and identifying names**: Before any `git add` or `git commit`, check the staged changes for secrets and for names that identify a person, company, or organization. If the global settings file holds a names list, check it first. Neutralize with a generic phrase (`a client project`, `an external project`) or stop and ask. Apply `## Outbound Content Scrub` before any artifact leaves the project. A project knowledge file outside git may keep an identifying name. A tracked knowledge file follows this scan. A global knowledge file never keeps an identifying name. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content.
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
@@ -126,6 +126,69 @@ AI assistants are authorized to autonomously merge a feature branch to `master`/
   - **Surgical Edits**: Prefer `replace` (targeted edits) over `write_file` (full rewrites) to reduce token payload and processing time.
   - **Throttle Management**: If rate limits are encountered, pause execution and propose a throttled batch strategy to the user.
 - **Intent over metrics**: When you surface a code quality issue, describe it by intent, never by a bare metric. Say what single job a function should have, or why a parameter list implies a missing abstraction. Never hand the model a bare score like "complexity 11, threshold 5". A bare number is a target: capable models hit the number and ignore the intent behind it (Goodhart's Law). This is most true on strong models, which game bare linter scores more, not less.
+
+## Outbound Content Scrub
+
+Apply this section before any artifact leaves the project. The intended destination and audience decide the class, not the file's physical path. Secrets are removed in every class.
+
+### Destination Classes
+
+- **Class A, internal or same audience**: Keep customer names and infrastructure detail; remove secrets.
+- **Class B, external or different audience**: Remove names, internal hosts, URLs, identifiers, ticket keys, and named file paths; remove secrets.
+- Infer the class from the request, state it before drafting, and ask when the destination is ambiguous.
+
+### Always Remove
+
+- Remove passwords, tokens, API keys, private keys, connection strings, session cookies, signed URLs, and other credentials in every class.
+- Do not offer an override for a secret.
+- Remove a secret even when the recipient is the same customer and direct the recipient to a secure channel.
+
+### Keep
+
+- Keep technology vendor names, public product names, public documentation URLs, and technical facts.
+- Keep private IP addresses in `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.0/8`, `169.254.0.0/16`, `fc00::/7`, and `fe80::/10`.
+- Replace a public IP address with a documentation address unless the user confirms it is public and necessary.
+
+### Detection
+
+- Run a judgment pass over the whole artifact.
+- Run a mechanical pass over the exact text that leaves for email addresses, public IP addresses, GUIDs, non-public URLs, token shapes, private-key markers, and signed-URL query parameters.
+- Read the global settings names list, an optional project `## Sensitive Names` list, and project knowledge.
+- Treat an uncertain item as sensitive and ask.
+- Redact by default for a public destination and report the redaction.
+
+### Placeholders
+
+- Replace a person, company, or internal name with a neutral phrase.
+- Use `example.com` for a public host, `user@example.com` for an email address, `PROJECT-123` for a ticket key, `<redacted-id>` for an identifier, `<redacted-secret>` for a secret, and `<internal-host>` for an internal host.
+- Preserve the technical shape when it keeps the artifact useful.
+
+### Approval and Report
+
+- Show the scrubbed text and a category report before an external write.
+- Report categories and counts only, never a removed value.
+- Keep the report in chat and write no report file.
+- Warn that a public or irreversible post cannot be undone and wait for explicit approval.
+- Keep the unscrubbed draft inside the project, for example under `ai/artifacts/`.
+
+### Override
+
+- Allow an override for a non-secret identifying name after a warning, and record the override in chat.
+- Require explicit confirmation for an override on a public destination.
+- Refuse an override for a secret.
+
+### Non-Text Artifacts
+
+- Review images, screenshots, and rendered exports visually for names, hosts, keys, and dashboard data.
+- Strip EXIF, PDF author fields, tracked changes, comments, and slide speaker notes.
+- Scrub the exported artifact, not only the source.
+- Write "not verified" and wait when an image or attachment cannot be reviewed.
+
+### Procedure Use
+
+- `PROCEDURE MANAGE-ISSUES` applies this section to an external ticket creation, a plan-entry comment, and a close or reopen comment.
+- `PROCEDURE IMPLEMENT-PLAN` applies this section to a PR/MR title and body and to release notes.
+- A local ticket skips the name scrub and still removes secrets.
 
 ## Author Identity and Attribution
 

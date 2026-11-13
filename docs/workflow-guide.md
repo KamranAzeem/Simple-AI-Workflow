@@ -384,6 +384,14 @@ For `direct`, the AI squash-merges the branch to the trunk, deletes the branch, 
 
 A local ticket closes in the branch commit. An external ticket closes when the merge lands. Reopen a local ticket on a new branch and move it to `open/`; reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
 
+### Outbound content scrub
+
+Before an external issue, PR/MR, comment, or release note leaves the project, the AI applies the `## Outbound Content Scrub` contract in `ai/policies/ai-policy-common.md`. It states the destination class before drafting. Class A covers an internal or same-audience artifact and keeps customer names and infrastructure detail. Class B covers an external or different-audience artifact and removes names, internal hosts, URLs, identifiers, ticket keys, and named file paths. Secrets are removed in every class and cannot be overridden.
+
+The AI shows the scrubbed text and a category report, then waits for approval. A public destination defaults to redaction and needs explicit approval. The report lists categories and counts only and stays in chat. Private IP addresses stay; public addresses become documentation addresses. Images, screenshots, rendered exports, and document metadata get a visual review and a metadata strip.
+
+The first release covers external ticket creation, plan-entry comments, close or reopen comments, PR/MR titles and bodies, and release notes. Report sharing, presentation decks, and handoffs get their own steps later, and they reference the same contract.
+
 ## 17. State-File Health and Repair
 
 Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the soft target, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries over the soft target or older than 14 days into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.

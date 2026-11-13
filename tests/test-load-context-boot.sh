@@ -1,6 +1,6 @@
 #!/bin/bash
 # Dev-time fixture for the load-context boot discovery contract.
-# Usage: ./support-files/test-load-context-boot.sh
+# Usage: ./tests/test-load-context-boot.sh
 # Exit 0 when every assertion passes, 1 otherwise.
 
 set -u

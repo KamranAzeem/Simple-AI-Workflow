@@ -15,6 +15,13 @@ Universal rules live in the common policy. This file holds personal preferences 
 - Certifications: `<your certifications, or leave blank>`
 - Computer OS and Environment: `<your OS and version>`
 
+## Sensitive Names
+
+List the people, companies, clients, and internal names that must never appear in commits or in outbound artifacts. Use whole names. The AI treats this list as a hard scrub target and never copies it into its output. Leave the list empty if you have none.
+
+- `<name or company>`
+- `<name or company>`
+
 ## Technical Expertise
 
 - Expert In: `<the skills you want the AI to treat as your strongest>`

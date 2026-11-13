@@ -13,4 +13,4 @@
 
 ## Pending
 
-Nothing pending.
+- Ship the approved outbound scrub change, tag v6.4.0, and close GitHub #7 after the merge.

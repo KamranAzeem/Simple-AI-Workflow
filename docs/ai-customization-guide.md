@@ -176,6 +176,18 @@ See the [example skill](examples/skills/example-skill/SKILL.md).
 
 ---
 
+## 9. Sensitive Names
+
+Use the optional `## Sensitive Names` section to list the people, companies, clients, and internal names that must never appear in outbound artifacts for this project. The AI reads the list at run time and treats each entry as a hard scrub target. It never copies the list into its output.
+
+```markdown
+## Sensitive Names
+- <name or company>
+- <name or company>
+```
+
+---
+
 ## Best Practices
 
 1. **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.
