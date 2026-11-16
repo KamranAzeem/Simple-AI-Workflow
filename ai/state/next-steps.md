@@ -13,4 +13,6 @@
 
 ## Pending
 
-- Ship the handoff change, tag v6.5.0, and close GitHub #6 after the merge.
+- File the TDD policy-configuration child ticket under the TDD parent: the `## Loading` shape, the load-path test, the shape wrapper, and the scenario spec template.
+- Open `feature/plugin-extraction` from trunk before any file edit and push it.
+- Plan the prerequisite and the boundary child on that branch; no trunk merge, tag, or release until the live test passes.
