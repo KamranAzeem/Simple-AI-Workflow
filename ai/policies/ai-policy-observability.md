@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, emits, and validates telemetry for services, APIs, workers, scheduled jobs, and the infrastructure that runs them.
 
+## Loading
+
+- Mode: expertise
+
 ## Scope
 
 - Apply this policy to telemetry design, emission, retention, sampling, alerting, and validation.

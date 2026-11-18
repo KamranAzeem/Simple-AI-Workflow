@@ -12,6 +12,10 @@ Govern how the AI administers, secures, tunes, and recovers relational and NoSQL
 
 - database standards
 
+## Loading
+
+- Mode: trigger
+
 ## Scope
 
 - Apply this policy to database administration, schema changes, performance tuning, security, backup, recovery, and lifecycle tasks.

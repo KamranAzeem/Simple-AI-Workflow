@@ -27,3 +27,4 @@
 [2026-11-18] Refactored AGENTS.md: the boot scan exclusions and the two index step bodies moved to load-context, git workspace detection moved to bootstrap-project, Single-Writer is a pointer, the long bullets are split, and the router-shape fixture is added; the suite and both validators are green, and the v6.6.1 release is prepared.
 [2026-11-18] Released v6.6.1 and published its GitHub release: the thinner AGENTS.md is live, the shape fixture guards it, and the release notes are in the user's voice.
 [2026-11-18] Rewrote the v6.6.0 and v6.6.1 release notes in the user's voice from his approved drafts, updated the banner, and recorded the voice, draft-first, and no-invented-events rules; no version bump.
+[2026-11-18] Added the loading declarations to 12 policies, recorded the common-policy exemption in the ADR, moved the legacy test case, and prepared the v6.6.2 release note from the user's approved text; no rule changed.

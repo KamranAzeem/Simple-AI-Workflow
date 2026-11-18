@@ -19,4 +19,3 @@
 - Add the #10 documentation section and the short prompt.
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Revisit GitHub #9 after the live test.
-- Declare the missing policy loading modes.

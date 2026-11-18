@@ -8,6 +8,11 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Defines the examiner role and the map, plan, perform, and reconcile workflow for a codebase too large to load fully.
 
+## Loading
+
+- Mode: procedure
+- Load in: examine-codebase
+
 ## Scope
 
 - Applies to any AI assistant used in this repository when examining, understanding, auditing, or refactoring an existing codebase that is too large to load fully into the active context window.

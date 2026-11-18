@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, builds, and tests frontend web applications and design systems.
 
+## Loading
+
+- Mode: expertise
+
 ## Scope
 
 - Apply this policy to frontend web applications and design systems.

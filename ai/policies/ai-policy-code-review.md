@@ -8,6 +8,11 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 This policy defines the reviewer role, review dimensions, severity levels, and report format for peer reviews.
 
+## Loading
+
+- Mode: procedure
+- Load in: run-peer-review
+
 ## Scope
 
 - Apply this policy to every peer review, code review, or PR review.

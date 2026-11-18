@@ -191,16 +191,27 @@ else
     pass 'index reports mode and project scope'
 fi
 
-global_out="$(bash "$VALIDATOR" --index "$ROOT/ai/policies/ai-policy-cloud.md" 2>&1)"
-if ! printf '%s\n' "$global_out" | grep -q 'mode=legacy'; then
-    fail_case 'index oracle does not report legacy for a policy without Loading'
-    printf '%s\n' "$global_out"
-elif ! printf '%s\n' "$global_out" | grep -q '|global|'; then
-    fail_case 'index oracle does not report global scope for a repo policy'
-    printf '%s\n' "$global_out"
-else
-    pass 'index reports legacy and global scope'
-fi
+assert_mode() {
+    local policy="$1" mode="$2" out
+    out="$(bash "$VALIDATOR" --index "$ROOT/ai/policies/$policy" 2>&1)"
+    if ! printf '%s\n' "$out" | grep -q "mode=$mode"; then
+        fail_case "index oracle does not report mode=$mode for $policy"
+        printf '%s\n' "$out"
+        return 1
+    fi
+    if ! printf '%s\n' "$out" | grep -q '|global|'; then
+        fail_case "index oracle does not report global scope for $policy"
+        printf '%s\n' "$out"
+        return 1
+    fi
+    pass "index reports mode=$mode and global scope for $policy"
+}
+
+# `common` is the recorded exemption: STEP-WORKFLOW-ACCESS loads it before any policy scan.
+assert_mode ai-policy-common.md legacy
+assert_mode ai-policy-cloud.md trigger
+assert_mode ai-policy-code-review.md procedure
+assert_mode ai-policy-web-frontend.md expertise
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: policy loading fixture."

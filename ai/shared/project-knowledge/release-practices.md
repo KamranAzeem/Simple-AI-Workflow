@@ -17,6 +17,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Show the exact draft to the user and wait for the user's edits and approval before writing the final files or publishing.
 - Write in the user's first-person voice from the global settings (`### Voice`, `### Structure`, and `### Words and Phrases to Avoid`).
 - Put the reason before the detail in the announcement.
+- Explain each internal term in plain words the first time it appears, and do not write a changelog.
 - Never invent an event, feeling, or reason the user did not state.
 - Write the release notes on GitHub Releases.
 - Write a short announcement at `docs/announcements/vX.Y.Z.md`.

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.6.1 (2026-11-18).** I moved the detail out of AGENTS.md and into the procedures that own it. The file every session loads is 135 lines instead of 157. Read the announcement: [docs/announcements/v6.6.1.md](docs/announcements/v6.6.1.md). |
+| **v6.6.2 (2026-11-18).** Twelve policy files now say how they get loaded, and the test fails if that path breaks. The common policy is the one exception. No rule changed. Read the announcement: [docs/announcements/v6.6.2.md](docs/announcements/v6.6.2.md). |
 
 # Simple AI Workflow
 

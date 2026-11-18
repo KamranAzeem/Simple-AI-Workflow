@@ -12,6 +12,10 @@ Govern how the AI designs, provisions, secures, and validates cloud and platform
 
 - cloud standards
 
+## Loading
+
+- Mode: trigger
+
 ## Scope
 
 - Apply this policy to cloud and platform engineering.

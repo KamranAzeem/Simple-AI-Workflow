@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI designs, builds, tests, and releases iOS, Android, and cross-platform mobile applications.
 
+## Loading
+
+- Mode: expertise
+
 ## Scope
 
 - Apply this policy to iOS, Android, and cross-platform mobile applications.

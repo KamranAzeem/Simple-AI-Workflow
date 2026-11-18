@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern AI behavior when maintaining this repository and the protocol itself.
 
+## Loading
+
+- Mode: expertise
+
 ## Scope
 
 - Apply this policy to `AGENTS.md`, files under `ai/`, `README.md`, and `docs/`.

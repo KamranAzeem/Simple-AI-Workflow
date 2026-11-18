@@ -12,6 +12,10 @@ Govern how the AI designs, builds, and tests backend services, APIs, jobs, worke
 
 - backend standards
 
+## Loading
+
+- Mode: trigger
+
 ## Scope
 
 - Apply this policy to backend services, APIs, jobs, workers, and data-access layers.

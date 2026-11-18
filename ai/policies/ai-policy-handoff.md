@@ -6,6 +6,11 @@
 
 Define the handoff contract, the creation review, and the autonomous execution rules for a parallel session.
 
+## Loading
+
+- Mode: procedure
+- Load in: create-handoff
+
 ## Scope
 
 - Apply this policy to every handoff file in the Project Handoffs Directory and to every session that creates, claims, executes, or reconciles one.

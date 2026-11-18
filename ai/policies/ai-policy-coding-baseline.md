@@ -8,6 +8,10 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 Govern how the AI writes and changes program code in any language when this policy is active.
 
+## Loading
+
+- Mode: expertise
+
 ## Scope
 
 - Apply this policy to program code the AI creates or changes in the active project.

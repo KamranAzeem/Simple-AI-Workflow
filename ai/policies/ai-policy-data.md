@@ -12,6 +12,10 @@ Govern how the AI designs, validates, secures, and tests data platforms, analyti
 
 - data standards
 
+## Loading
+
+- Mode: trigger
+
 ## Scope
 
 - Apply this policy to data platforms, analytics, pipelines, and AI architecture.

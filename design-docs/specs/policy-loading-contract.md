@@ -29,7 +29,7 @@
 - Each valid fixture exits 0.
 - Each invalid fixture exits 1 with its `invalid loading block: <reason>` line.
 - `--index` prints `mode=boot` and `|project|` for the project fixture.
-- `--index` prints `mode=legacy` and `|global|` for the repository policy.
+- `--index` prints `mode=legacy` and `|global|` for a repository policy without a declaration.
 - Every `Load in:` resolves to `ai/procedures/<stem>.md`.
 - Every `ai-policy-*.md` named in a procedure module exists.
 
