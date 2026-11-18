@@ -80,12 +80,11 @@ Write the handoff with these sections in this order.
 - Keep secrets out of every handoff, including the `## Verification` commands.
 - Read the names list from the settings file at run time, and never embed it in the handoff.
 
-## Loading
+## Load Behavior
 
 - Load `ai-policy-handoff.md` explicitly in `PROCEDURE CREATE-HANDOFF` and in the receiver start phrases.
 - Do not add this policy to `## Active Expertise`.
 - Do not auto-load this policy in `PROCEDURE LOAD-CONTEXT`.
-- Rely on the always-on pointer in the common policy when the policy has not been loaded.
 
 ## References
 

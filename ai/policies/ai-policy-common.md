@@ -1,9 +1,10 @@
 # 🚫 DO NOT MODIFY THIS FILE
 
 The AI Assistant must not edit, rewrite, regenerate, or replace this file. All edits must be manually approved by the user.
+
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Assistant Policy: Common Guardrails & Contracts
+# AI Policy: Common Guardrails
 
 This file contains the universal operating rules for all AI assistants in this repository.
 
@@ -50,7 +51,7 @@ When implementing new features, architecture changes, or functional code modific
 
 - Approval of the feature branch authorizes local commits and pushes on that branch.
 - Trunk merge, tags, releases, and external system writes need separate approval.
-- The handoff autonomy in `ai-policy-handoff.md` is the exception for a trunk merge; its conditions live there.
+- A valid handoff may carry its own trunk-merge authorization; the handoff contract owns the conditions.
 
 **No pre-work commits.** Every commit carries the work itself. Never open a work item with a "start work" or placeholder commit. When a work item goes on a branch, open the branch before making any change to the files, so every edit lands on the branch.
 Branch prefix and commit format: see Git conventions in Universal Engineering Standards.
@@ -60,7 +61,7 @@ Branch prefix and commit format: see Git conventions in Universal Engineering St
 1. **Atomic Update Protocol**: Fresh `read` followed by immediate `write` for all AI tracking files.
 2. **Operational Synthesis & Proof-of-Load**: Bootstrap is incomplete until requirements are synthesized and a "Proof-of-Load" summary is provided (as defined in the load-context procedure module). This summary must explicitly list active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks.
 3. **Task Claiming**: Record ownership in the **Project Coordination File** before starting tasks.
-4. **Valid Handoff Definition & Refusal Mandate**: A Valid Handoff follows `ai-policy-handoff.md`. Refuse a handoff until that policy is loaded and the definition is met.
+4. **Valid Handoff Definition & Refusal Mandate**: A Valid Handoff follows the handoff contract. Refuse a handoff until the contract is loaded and the definition is met.
 
 ## Operational Restart and Checkpoint Contract
 
@@ -106,7 +107,7 @@ Branch prefix and commit format: see Git conventions in Universal Engineering St
 - **Protected Branches**: Strictly obtain explicit human approval before performing ANY state-changing Git operation (add, commit, push, merge, etc.) on the \`master\` or \`main\` branches.
 - **No watch loops**: Do not run autonomous monitoring; generate scripts for the user to run instead.
 - **Built-in Tools First (File Edits)**: Use the AI assistant's built-in file-edit tools (e.g. string-replace, file-write) for all file modifications. Never use CLI commands (`printf`, `echo >`, `tee`, `python`, `sed -i`, etc.) to write or overwrite file content. CLI is permitted only when a built-in tool explicitly fails and the failure has been reported to the user.
-- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file, whether requested by the user or on its own initiative, it MUST give the file a verbose, descriptive, kebab-case name. The name must let the file's purpose be inferred without opening it (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; separate words with hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. For a knowledge file, apply the naming rule in `## Knowledge File Standards`; the generic rule continues to govern other AI-generated artifacts. **Source code is exempt**: application and source-code files, and their tests, configs, and framework-dictated files, MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`). Never use the verbose knowledge-file style for source code; it would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search, not by inferring contents from the filename, so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
+- **Verbose File Naming (AI-Generated Files)**: Whenever the AI creates a file, whether requested by the user or on its own initiative, it MUST give the file a verbose, descriptive, kebab-case name. The name must let the file's purpose be inferred without opening it (the filename is the JIT-index lookup key). Use only lowercase letters, digits, hyphens, underscores, and dots; separate words with hyphens. This applies to AI-generated **knowledge, documentation, and workflow artifacts**: files under `ai/` (**Project AI Knowledge Directory**, **Project Handoffs Directory**, **Project Notes Directory**, **Project Artifacts Directory**, **Project Code Review Reports Directory**) and under `docs/`. Prefer `azure-postgresql-flexible-server-migration-decisions.md` over `decisions.md`. For a knowledge file, apply the naming rule in the knowledge contract; the generic rule continues to govern other AI-generated artifacts. **Source code is exempt**: application and source-code files, and their tests, configs, and framework-dictated files, MUST follow the conventions of their language, framework, and ecosystem (e.g. `Button.tsx`, `user.rb`, `models.py`, `index.js`, `[id].tsx`, `UserService.java`). Never use the verbose knowledge-file style for source code; it would break imports, autoloading, and routing. The AI navigates code by structure, imports, and symbol search, not by inferring contents from the filename, so verbose naming provides no benefit there. Other protocol/tooling-fixed names are also exempt (e.g. `AGENTS.md`, `progress.md`, `next-steps.md`, `context.md`, dated checkpoints/reports, `README.md`).
 - **Acknowledge-before-execute**: Restate constraints in 3-5 bullets before side-effecting actions.
 - **Execution Modes**: `strict` (default) vs `fast-state` (authorized only for AI tracking files).
 - **API Rate-Limit Awareness**:
@@ -117,67 +118,7 @@ Branch prefix and commit format: see Git conventions in Universal Engineering St
 
 ## Outbound Content Scrub
 
-Apply this section before any artifact leaves the project. The intended destination and audience decide the class, not the file's physical path. Secrets are removed in every class.
-
-### Destination Classes
-
-- **Class A, internal or same audience**: Keep customer names and infrastructure detail; remove secrets.
-- **Class B, external or different audience**: Remove names, internal hosts, URLs, identifiers, ticket keys, and named file paths; remove secrets.
-- Infer the class from the request, state it before drafting, and ask when the destination is ambiguous.
-
-### Always Remove
-
-- Remove passwords, tokens, API keys, private keys, connection strings, session cookies, signed URLs, and other credentials in every class.
-- Do not offer an override for a secret.
-- Remove a secret even when the recipient is the same customer and direct the recipient to a secure channel.
-
-### Keep
-
-- Keep technology vendor names, public product names, public documentation URLs, and technical facts.
-- Keep private IP addresses in `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `127.0.0.0/8`, `169.254.0.0/16`, `fc00::/7`, and `fe80::/10`.
-- Replace a public IP address with a documentation address unless the user confirms it is public and necessary.
-
-### Detection
-
-- Run a judgment pass over the whole artifact.
-- Run a mechanical pass over the exact text that leaves for email addresses, public IP addresses, GUIDs, non-public URLs, token shapes, private-key markers, and signed-URL query parameters.
-- Read the global settings names list, an optional project `## Sensitive Names` list, and project knowledge.
-- Treat an uncertain item as sensitive and ask.
-- Redact by default for a public destination and report the redaction.
-
-### Placeholders
-
-- Replace a person, company, or internal name with a neutral phrase.
-- Use `example.com` for a public host, `user@example.com` for an email address, `PROJECT-123` for a ticket key, `<redacted-id>` for an identifier, `<redacted-secret>` for a secret, and `<internal-host>` for an internal host.
-- Preserve the technical shape when it keeps the artifact useful.
-
-### Approval and Report
-
-- Show the scrubbed text and a category report before an external write.
-- Report categories and counts only, never a removed value.
-- Keep the report in chat and write no report file.
-- Warn that a public or irreversible post cannot be undone and wait for explicit approval.
-- Keep the unscrubbed draft inside the project, for example under `ai/artifacts/`.
-
-### Override
-
-- Allow an override for a non-secret identifying name after a warning, and record the override in chat.
-- Require explicit confirmation for an override on a public destination.
-- Refuse an override for a secret.
-
-### Non-Text Artifacts
-
-- Review images, screenshots, and rendered exports visually for names, hosts, keys, and dashboard data.
-- Strip EXIF, PDF author fields, tracked changes, comments, and slide speaker notes.
-- Scrub the exported artifact, not only the source.
-- Write "not verified" and wait when an image or attachment cannot be reviewed.
-
-### Procedure Use
-
-- `PROCEDURE MANAGE-ISSUES` applies this section to an external ticket creation, a plan-entry comment, and a close or reopen comment.
-- `PROCEDURE IMPLEMENT-PLAN` applies this section to a PR/MR title and body and to release notes.
-- `PROCEDURE CREATE-HANDOFF` applies this section only when the handoff leaves the project.
-- A local ticket skips the name scrub and still removes secrets.
+Apply this section before any artifact leaves the project. Remove secrets, credentials, tokens, and identifying data in every class. The outbound-content-scrub contract owns the destination classes, the keep list, the detection passes, the placeholders, the approval, and the override rules.
 
 ## Author Identity and Attribution
 
@@ -203,145 +144,11 @@ This binds sub-agents and non-orchestrator sessions.
   2. Refuse to apply it as compliance requirements.
   3. Propose to annotate it in the **Project Customization File** with a comment (e.g., `# NOT a compliance standard, review and remove`), but only with the user's explicit approval.
 
-## Global Knowledge Protocol
+## Knowledge Invariant
 
-- **Bootstrapping & Load Context: Settings (Full Load)**: Upon session initiation or when executing "load context" commands, the agent MUST fully read all files in the **Global AI Settings Directory** and load their contents into active context. These files are authoritative for personal preferences and cross-project configuration.
-- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. The filename is the JIT lookup key; apply the naming, split, and lookup rules in `## Knowledge File Standards`; accept the one-file lookup trade-off. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
-- **Store size**: apply the 50-file review threshold in `## Knowledge File Standards`.
-- **Precedence**: Project configuration files override **Global AI Settings Directory** files if there is a conflict.
-- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user. The explicit `repair knowledge files` trigger is that instruction for the global repair; the repair asks no further question.
-- **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
-- **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's capture step collects these; the global step promotes them and confirms "nothing to add" when none qualify.
-- **Format**: Apply `## Knowledge File Standards` to every global knowledge file.
-
-## Project Knowledge Protocol
-
-- **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the load-context procedure module. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
-- **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
-- **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
-- **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in the write-checkpoint procedure module) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
-- **Store size, lookup, and retirement**: apply the 50-file review threshold, the task-to-filename lookup, and the retirement rules in `## Knowledge File Standards`.
-- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
-- **Format**: Apply `## Knowledge File Standards` to every project knowledge file.
-
-### Ticket File Scope
-
-Files under a `tickets/` subdirectory of the **Project AI Knowledge Directory** represent the status exchange that flows through the customer ticket system (Jira, etc.). They contain:
-
-- Decisions and outcomes communicated through the ticket
-- Blockers raised and resolved, as visible to the customer
-- References to PRs, builds, and key identifiers as they appear in ticket comments
-- Closing conditions and final status
-
-They do NOT contain:
-
-- Technical investigation notes, CLI output, or diagnostic data
-- Step-by-step runbooks or command sequences
-- AI model handover notes or session diary entries
-- Any content not directly shared with or by the customer through the ticket
-
-All such content belongs in named project knowledge files. When creating or updating a ticket file, apply this boundary strictly. Existing content that violates it must be migrated to the appropriate knowledge file, not left in place.
-
-## Knowledge File Standards
-
-- Apply this section to every knowledge file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory**.
-- Exempt `issue-template.md` from this section.
-- Exempt a design document under `ai/shared/project-knowledge/` from this section; `ai-policy-design-docs.md` owns it.
-- Use one descriptive H1 per knowledge file.
-- Include `## Context`, `## Rule or Fix`, `## Why`, and `## Verify`.
-- Include `## Caveats` only when a limitation exists.
-- Use `## Rule or Fix` for a checklist.
-- Write short sentences and flat bullets.
-- Do not use tables.
-- Convert every table row to a flat bullet and preserve a row that has no home.
-- Do not nest bullets deeper than one level.
-- Do not write a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path.
-- Write a domain term such as commit, branch, or checkpoint only when the lesson requires it; the ban targets session bookkeeping.
-- Keep the file self-standing: include the facts, rules, reasons, and checks it needs.
-- Do not point at another knowledge file, code file, doc, policy, artifact, backup, or state file.
-- Treat a domain command, a system path, or a path that a checklist step writes or edits as content, not a cross-file pointer.
-- Do not write a raw secret.
-- Do not write an identifying name in a global knowledge file.
-- Keep an identifying name in a project knowledge file outside git; a tracked knowledge file follows the commit guardrail.
-- Define an identifying name as a person, client, employer, or customer; a technology vendor or product name is content.
-- Use 10,000 bytes as a soft target; never let it override completeness.
-- Review a file at 15,000 bytes with the automatic cleanup in `PROCEDURE REPAIR-KNOWLEDGE-FILES`.
-- Completeness means every reusable rule, fix, reason, check, identifier, and example; it does not mean every observation.
-- Delete incident narrative, rehearsal logs, timelines, and per-ticket evidence once the reusable rule is written.
-- Name a knowledge file for the task it answers: `<tool-or-domain>-<task>`, lowercase, hyphenated, six or fewer hyphen-separated segments, with no ticket ID, date, or incident name. Count each hyphen-separated segment as one word. The filename is the only index.
-- Split a file only by task topic. Do not split by ticket, incident, date, phase, or environment.
-- Merge a file under 3,000 bytes into its nearest topic file.
-- Use 50 knowledge files per store as a review threshold. The checkpoint reports the count; at 50 or more, it recommends a repair. A new topic is never blocked.
-- Split a file over 15,000 bytes after cleanup by task topic. Keep a checklist in one file and report a file that cannot be split.
-- Store a cross-project lesson in the global store and its project-specific application in the project store; do not duplicate the same lesson in both. Keep the project store authoritative on a conflict.
-- Put a per-PR or per-ticket review finding into one topic rules file; do not keep it as its own knowledge file.
-- Keep a generated inventory or deliverable in the project artifacts area or a design document; it is not a knowledge file.
-- Check the header before writing a knowledge file; see `### Knowledge File Header`.
-- Stop the write and tell the user to run `repair knowledge files` when the header is missing or does not match.
-
-### Knowledge Lookup
-
-- At task start, match the task's tool and domain to the indexed filenames of both stores.
-- Read every matching file in full before acting.
-- Search the global store with shell `find` and `grep` and absolute paths; the workspace search tools cannot reach it.
-
-### Knowledge Retirement
-
-- Delete a ticket file when the ticket is Done in the live tracker, checked live.
-- Delete an executed plan once its reusable content is in a knowledge file.
-- Delete finished investigation evidence from the project artifacts area after writing its rules and findings to a knowledge file.
-- The checkpoint reports these candidates; only the repair deletes.
-
-### Knowledge File Header
-
-- Treat the block below as a normative literal artifact.
-- Copy the block verbatim as the first content before the H1.
-- Add one blank line after the block.
-- Replace a missing or edited block only through `repair knowledge files`.
-- Do not edit the block by hand.
-
-```markdown
-> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
-```
-
-### Knowledge Repair Conservation Contract
-
-- Treat every old file as a set of atomic items: fact, rule or decision, why, caveat, verification step, identifier, and example.
-- Build one manifest in memory before any write.
-- Record one row per old item with old ID, old location, new location, disposition, and a one-line reason.
-- Set the disposition to `kept`, `merged`, `trimmed`, `removed as defined garbage`, `removed as incident evidence`, `preserved ambiguous`, or `aborted unchanged`.
-- Stop a file with an item that has no disposition and leave it unchanged.
-- Audit the old file read-only first.
-- Define garbage as recording or learned dates, commit hashes, branch names, checkpoint and diary references, state-file paths, artifact and backup pointers, cross-file pointers (except a path a checklist step writes or edits), table markup, and duplicates.
-- Preserve every fact, rule, why, caveat, verification, identifier, and example that is not garbage.
-- Preserve an ambiguous content item and report it.
-- Treat a cross-file pointer as never ambiguous: resolve the fact into the file, or abort the file unchanged and report.
-- Merge a duplicate into the survivor with no pointer.
-- Do not keep evidence in an artifact or move a long analysis to an artifact.
-- Convert every table row to a flat bullet; preserve a row that has no home and report it.
-- Add no new claim; report a correction.
-- Run an independent review of the old and new files and require an `APPROVED` verdict.
-- On `CHANGES REQUESTED`, fix and re-review; if it cannot pass without content loss, leave the old file unchanged and report.
-- Require no human approval beyond the trigger; the `repair knowledge files` trigger is the approval.
-- Replace a file only after verification and an `APPROVED` review.
-- Delete the temporary candidate after replacement or abort.
-- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old global file to `~/.ai/knowledge-repair-backups/<date>/global/` before the first change.
-- Write the manifest to `ai/artifacts/knowledge-repair-<date>/manifest.md` only for a non-dry run.
-- Stop a dry run after the manifest report; write and replace nothing.
-- Restore the backup on failure.
-- Never let the 10,000-byte target override completeness.
-- Keep a file over 15,000 bytes after cleanup as one file and report it.
-- Remove a specific commit hash, branch name, checkpoint date or title, diary date or title, or state-file path as session bookkeeping.
-- Keep the substantive evidence in the file; do not point at an artifact.
-- Split a file by task topic only; never by ticket, incident, date, phase, or environment.
-- Merge a file under 3,000 bytes into its nearest topic file.
-- Keep each store at the 50-file review threshold; the repair reports a remaining overage.
-- Delete incident evidence under the `removed as incident evidence` disposition once the reusable rule is written.
-- Search the settings, issues, handoffs, and ticket files for pointers to a renamed or deleted file; update project-owned pointers and report a user-space settings pointer.
-- Keep a checklist in one file.
-- Remove a raw secret in both stores.
-- Keep an identifying name in a project file; remove it from a global file.
-- Record the manifest, project backup, and global backup paths in the checkpoint and diary.
+- Read every file in the **Global AI Settings Directory** in full at boot; project configuration overrides a global setting.
+- Index every file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** at boot and record filenames, paths, and apparent technical domains; read a file in full only when a task needs it.
+- Treat the knowledge contract as the owner of the store thresholds, the lookup, the retirement, the header, and the repair conservation rules.
 
 ## Skills
 
@@ -356,91 +163,10 @@ All such content belongs in named project knowledge files. When creating or upda
 - Never run a skill helper without explicit approval; keep a helper path inside the skill package.
 - Do not scan a skill for trust or record a trust decision; the user is responsible for the source of a skill.
 
-## Issue Management Protocol
+## Issue Invariant
 
-### Ticket Storage
-
-- Store a local ticket under `ai/issues/` in `open/`, `in-progress/`, or `closed/`.
-- Treat the directory as the status of a local ticket and the tracker state as the status of an external ticket.
-- Keep no file directly under `ai/issues/`.
-- Use a lowercase kebab-case slug only.
-- Do not add a status prefix or suffix.
-- Move the file to change status.
-- Do not rename the ticket when moving it.
-- Do not add a status field.
-
-### Ticket Fields
-
-- Include `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Label`, and `Description`.
-- Set `IssueType` to `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, or `Task`.
-- Set `Severity` to `P1`, `P2`, `P3`, or `P4`.
-- Set `Size` to `S`, `M`, `L`, or `XL`.
-- Set `Label` to empty, `Insufficient Information`, or `Unworkable`.
-- Record the external ticket URL in `URL`.
-- Keep `URL` empty until the ticket moves to an external tracker.
-- Set `Severity` and `Size` to `Human-to-decide (AI estimate: ...)` when the user has not chosen them.
-
-### Ticket Content
-
-- Keep the active description short: decisions, outcomes, and blockers.
-- Omit long paragraphs and command transcripts.
-- Do not turn the ticket into a technical diary of commands, errors, and fixes.
-- Put runbooks and command detail in Project Knowledge.
-- Allow a long `## Implementation Plan` appendix in a closed ticket.
-- File a ticket under `ai/issues/open/` by default, or in the user's external tracker when the user supplies an issue or asks for one.
-- File a ticket immediately when the AI finds work worth tracking.
-- Analyze the ticket for gaps before starting work.
-- Fill every gap through brainstorming or grilling.
-- Tell the user whether the ticket is workable when an external tracker has no label mechanism.
-- Set `Label: Insufficient Information` or `Label: Unworkable` when the ticket is not workable.
-- Refuse to work an unworkable ticket.
-
-### Plan
-
-- Create the plan under `ai/plans/` while the ticket stays in `open/`.
-- Do not open a feature branch for planning.
-- Name the branch to be created at implementation in the close sequence.
-- Append or post the plan file name to the ticket as a dated entry.
-- Treat the plan as a working artifact, not a design document.
-- Bind every close action to its repo, base ref, branch, merge mode, ticket reference, release, and evidence in a `## Close Sequence` block.
-- Bind the procedure actions to the plan's repos and branches.
-- Treat a plan whose last action is an approval request as incomplete.
-- Include an `## Evidence` section in every plan.
-- Record sources, commands, results, confirmed facts, and open questions in the evidence section.
-- Use context plus acceptance criteria for an `S` ticket.
-- Use an HLD and an LLD with acceptance criteria for an `M`, `L`, or `XL` ticket.
-- Keep the HLD, LLD, and ADR content inside the plan file.
-- Record each design decision as an ADR.
-- Keep the plan concise.
-- Set the plan depth by the Pre-Work Gate.
-- Write the failing test first when the project uses TDD.
-- Validate design and architecture decisions with the user during planning.
-- Run independent peer review on every plan automatically.
-- Use the severity definitions in `ai-policy-code-review.md` `## Severity Classifications`.
-- Fix every Critical finding.
-- Fix every Major finding.
-- Re-review after each fix.
-- Announce the plan ready only after an `APPROVED` verdict.
-- Implement only a plan with no Critical or Major finding.
-- Record each review round and verdict in the plan's Peer Review Log.
-
-### Work-Item Invariants
-
-- The work-item order lives in PROCEDURE MANAGE-ISSUES and PROCEDURE IMPLEMENT-PLAN; do not restate it here.
-- Treat one unit of work as one feature branch.
-- Keep the plan, implementation, tests, documentation, release announcement, ADRs, ticket close, plan appendix, and checkpoint on that branch from implementation onward.
-- Allow several commits on the branch; deliver one squash commit to trunk.
-- Run the terminal gate before any merge claim: resolve the base ref from the plan, confirm the branch is at least one commit ahead, and confirm the tree is clean.
-- Report a zero-commit branch or a dirty tree as unfinished work.
-- Fix every Critical and Major finding from the implementation peer review before the commit.
-- Attach the plan to the ticket before deleting the plan file.
-- Write the checkpoint on the branch before the commit.
-- Close the ticket with the merged change: move a local ticket to `closed/` in the branch commit, and close an external ticket when the merge lands.
-- Do not make post-merge commits or post-merge repository changes.
-- Do not commit a plan-only, start-work, or placeholder change to trunk.
-- Put release documentation in the branch; tag the release commit after the merge; publish the GitHub Release after the tag.
-- Treat the work item as complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
-- Use the template at `ai/shared/project-knowledge/issue-template.md`; create it when missing and never overwrite it.
+- Treat one unit of work as one ticket in the local tracker, or in the user's external tracker when one is connected.
+- Treat the ticket as the work item; the issue contract owns the storage, the fields, the content, the plan, the delivery invariants, and the issue template rule.
 
 ## State File Ownership Protocol
 
@@ -583,8 +309,8 @@ Complete these checks before starting any work item. Do not write code or config
 
 1. **Scope discovery**: Find and list every repository and configuration the work item touches or implies. If a repository cannot be found, check whether it was archived or decommissioned: query the version control system directly for a current list, then cross-reference the issue tracker and the documentation platform. Do not assume a missing repository is out of scope.
 2. **Acceptance criteria review**: Review the work item's acceptance criteria before you produce any design document. If they are missing, untestable, or ambiguous, flag it to the user and do not proceed until it is resolved. See the Acceptance Criteria Quality section below.
-3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the proportionality rule above. For the convergence method, see the Grilling section.
-4. **HLD and LLD (with AC)**: Produce an HLD and an LLD (with AC) per the Design Documentation Standards below, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the Mandatory Design Artifacts rule.
+3. **Shared understanding (features and architecture only)**: For feature or architectural work, reach a shared design concept with the user before creating any files or writing implementation. Walk the design tree branch by branch, asking questions and resolving dependencies one decision at a time, until you and the user agree on what is being built. Only then produce the HLD and LLD. Small, low-risk changes keep their light pass per the design contract. For the convergence method, see the thinking-modes contract.
+4. **HLD and LLD (with AC)**: Produce an HLD and an LLD (with AC) per the design contract, grounded in evidence-based investigation (see Evidence-Based Investigation above). They must be detailed enough to drive implementation without ambiguity. Propose the documents and get the user's agreement before creating them, in line with the no-side-effects norm and the design contract's artifact rule.
 5. **Removal safety**: When a work item removes items or configuration, gather positive evidence. Confirm that everything meant to stay in place is still present and correct after the change, not just that the target was removed.
 6. **Pre-work announcement**: Write a brief Markdown pre-work summary of the work item. Post it to any external system only on the user's explicit instruction (see the external-system-mutation rule in Universal Operational Guardrails).
 7. **Framework alignment**: Apply the established best-practice framework for the target platform or domain (for example a cloud provider's well-architected framework). Platform-specific detail belongs in the relevant domain policy, not here.
@@ -598,25 +324,10 @@ Acceptance criteria are the contract between a work item and its outcome. Two ch
 
 If acceptance-criteria quality turns out to be a recurring problem on a project, note the patterns in normal project knowledge at checkpoints. Do not stand up a dedicated guide file unless it earns its keep.
 
-## Grilling
+## Thinking Modes
 
-The convergent mode for reaching shared understanding. Trigger it with "grill me on this" or "grill this [plan/design/idea]". It also runs inside Pre-Work Gate item 3.
-
-- **Role**: interviewer, not a yes-man. Challenge every assumption.
-- **Recommended answer**: propose an answer for each question before asking it, so the user reacts instead of inventing one.
-- **Method**: map the idea as a design tree. Work in rounds. Ask all pending branches, process the answers, find new branches, and repeat.
-- **Output**: a one-paragraph gist that can feed a design document or a next-steps entry.
-- **Stop**: when no branch remains unanswered.
-
-## Brainstorming
-
-The divergent mode for widening the option space before a design exists. Trigger it with "brainstorm this" or "let's brainstorm [topic]".
-
-- **Role**: generative partner. Do not criticize during divergence.
-- **Method**: generate options freely on the problem and the design. Capture every idea and defer judgment.
-- **Cluster**: group related ideas once the flow slows.
-- **Output**: a grouped list of ideas plus a short recommended shortlist.
-- **Handoff**: pass the shortlist to Grilling or a design document.
+- Reach shared understanding with the user before writing implementation.
+- Use the thinking-modes contract for convergent grilling and divergent brainstorming.
 
 ## Universal Testing Standards
 
@@ -636,7 +347,7 @@ The divergent mode for widening the option space before a design exists. Trigger
 - **Semantic Versioning**: Use SemVer (MAJOR.MINOR.PATCH) for all published packages, APIs, and shared libraries. Breaking changes increment MAJOR, new features increment MINOR, bug fixes increment PATCH.
 - **Conventional Commits**: Use structured commit messages (`feature:`, `fix:`, `chore:`, `docs:`, `refactor:`, `test:`) to enable automated changelog generation and semantic version bumps.
 - **Git conventions**: branch prefix and commit type `feature` (never `feat`); subject `<type>(<scope>): <subject>` in imperative mood, with a descriptive body for architectural changes; always feature branches, squash-merged; use conventional commit types.
-- **Code construction ownership**: `ai-policy-coding-baseline.md` owns the code-construction operations; this policy owns the engineering principles those operations apply.
+- **Code construction ownership**: The coding-baseline contract owns the code-construction operations; this policy owns the engineering principles those operations apply.
 
 ### Git Configuration
 
@@ -664,121 +375,11 @@ Detection: a missing global config is `test -f ~/.gitconfig` false or an empty `
 
 Offer at bootstrap and at each load context; strongly suggest when the current directory is a git repository. Never write without approval. If `git` is not available, skip the offer.
 
-## Design Documentation Standards
+## Design Invariant
 
-### Document Chain
-
-Documents form a chain; each feeds the next:
-
-`Notes (in ai/notes) → Vision → PRD → HLD → LLD (with AC) → Risk and Gap Analysis → ADRs → Delivery Ledger`
-
-One document at a time. Before creating the next document, run a gap analysis and peer review on the existing ones and resolve every finding. Never skip from Notes or Vision to implementation.
-
-### Requirement Gathering
-
-Gather enough requirements to build an MVP. Then iterate.
-
-### Proportional Depth
-
-- Small work: context plus acceptance criteria.
-- Medium, large, and architectural work: the full document set.
-
-Roles differ. Application developers mostly need the light path plus ADRs for real decisions. Solution architects need the layered, multi-repo set. Infrastructure engineers need requirements, design, and runbook.
-
-### Layering
-
-A large solution may use layered design documents. Layer 1 is the bird's-eye view: major components, modules, and subsystems. Each later layer details one component. Repeat as needed.
-
-### Mandatory Design Artifacts
-
-Design documents live beside the code in `design-docs/`, never under `ai/`. The single-repo and multi-repo layouts are defined with the location rules.
-
-At the start of each session, check for the documents below. For medium or larger work, if any are missing, tell the user and ask whether to create them.
-
-- **Vision**: What, Why, Goals, Out of scope. One to two pages.
-- **PRD** (Product Requirements Document): problem, target users, success criteria, scope. Each requirement gets a `REQ-NNN` ID.
-- **HLD** (High-Level Design): architecture, component decomposition, module boundaries, technology choices. Each component gets an `HLD-NNN` ID.
-- **LLD (with AC)** (Low-Level Design with Acceptance Criteria): classes, interfaces, data flows, APIs, database schemas, and the acceptance criteria for each item. Each item gets an `LLD-NNN` ID. AC is a coupling, not a container: small work keeps AC without an LLD.
-- **Risk and Gap Analysis**: open risks and gaps. Each gets an `RSK-NNN` ID.
-- **ADRs** (Architecture Decision Records): genuine design decisions only. Each entry states the decision, its context, and its consequences, and gets an `ADR-NNN` ID. Never a changelog, diary, or command log, and never an external reference such as a commit hash.
-- **Delivery Ledger**: tracks which design items (by ID) are implemented and released. Created when the first design document lands. Updated when a design document lands or changes, by the `"update design documents"` procedure, never at checkpoint.
-
-### Location
-
-Design documents live beside the code in `design-docs/`, never under `ai/`.
-
-- Single repo: the `design-docs/` directory at the project root.
-- Multi-repo project root: the solution-level documents in the project-root `design-docs/`, and each component's documents in that repo's own `design-docs/`.
-- The Delivery Ledger lives in `design-docs/`: one per repo, plus a project-root rollup that links to each repo's ledger.
-
-A plan is not a design document. Plans live under `ai/` (for example `ai/plans/`), never in `design-docs/`. Do not suggest moving plan files into `design-docs/`.
-
-### Migration
-
-Design documents under `ai/shared/project-knowledge/` are the old location. Migration is optional.
-
-- At load context, if design documents exist there and no `design-docs/` exists, offer to migrate.
-- The trigger `"migrate design docs"` moves the files into `design-docs/` with the user's approval and shows the git impact (they become tracked).
-- The trigger `"update design documents"` updates design documents wherever they live and never crosses locations. `"migrate design docs"` is the only cross-location mover.
-
-### ID Convention
-
-Every requirement, component, design item, risk, and decision gets a unique sequential ID, starting at `001`. Never reuse or delete an ID. Mark a cancelled item `[CANCELLED]` and leave the ID in place.
-
-- PRD requirement: `REQ-NNN`.
-- HLD component: `HLD-NNN`.
-- LLD item: `LLD-NNN`.
-- Risk or gap: `RSK-NNN`.
-- ADR: `ADR-NNN`.
-
-### Naming Convention
-
-File names use kebab-case in the suffix form, with the lowercase doc type as the last token.
-
-- Not migrated: a project or component token precedes the doc type.
-  - `<project>-vision.md`, `<project>-prd.md`, `<project>-hld.md`, `<project>-lld.md`, `<project>-risk-and-gap-analysis.md`, `<project>-delivery-ledger.md`, `<project>-adr-<nnn>-<short-description>.md`.
-- Migrated in `design-docs/`: the simple name, with no project token.
-  - `vision.md`, `prd.md`, `hld.md`, `lld.md`, `risk-and-gap-analysis.md`, `delivery-ledger.md`, `adr-<nnn>-<short-description>.md`.
-
-### Delivery Ledger
-
-The Delivery Ledger tracks which design items (by ID) are implemented and released. It lives in `design-docs/` alongside the design documents it references.
-
-One section per design document, one line per item. Status values: `Not Started`, `In Progress`, `Done`, `Cancelled`.
-
-```markdown
-## PRD Requirements
-
-- `REQ-001`: User registration. Status: Done. Released in v1.0.
-- `REQ-002`: Password reset. Status: In Progress.
-- `REQ-003`: Social login. Status: Not Started.
-
-## HLD Components
-
-- `HLD-001`: Auth service. Status: Done. Released in v1.0.
-- `HLD-002`: Notification pipeline. Status: In Progress.
-
-## LLD Items
-
-- `LLD-001`: JWT token generation. Status: Done. Released in v1.0.
-- `LLD-002`: Email template engine. Status: Not Started.
-```
-
-Update the ledger when a design document lands or changes, by the `"update design documents"` procedure, never at checkpoint. Create the ledger when the first design document lands, if it does not exist.
-
-### Supplementary Documents (Consider Also)
-
-Create these when the project's complexity warrants them:
-
-- **API Specification** (OpenAPI/AsyncAPI): Contract-first service boundaries.
-- **Data Model / ERD**: Schema definitions, entity relationships, and data flow.
-- **Security Architecture**: Threat model, auth flows, authorization model, data protection controls.
-- **Deployment Architecture**: Infrastructure topology, release strategy, environment map, CI/CD overview.
-- **Glossary**: Shared domain terminology to align humans and AI on project-specific language.
-
-### Update Discipline
-
-Update design documents alongside the code they describe. Treat documentation drift as a defect.
+- Keep design documents in `design-docs/`, never under `ai/`.
+- Write or update them only through the `"update design documents"` trigger.
+- Treat the design-docs contract as the owner of the chain, types, depth, ledger, naming, location, migration, and update discipline.
 
 ## Communication Standards
 
@@ -858,12 +459,7 @@ Applies to every markdown file the AI generates or edits. Prose style is in Huma
 
 ## References
 
-- `ai-policy-coding-baseline.md` (`## Telemetry`, `## Cross-Cutting Pointers`)
-- `ai-policy-observability.md` (`## Four Golden Signals`, `## Logs, Metrics, and Traces`)
-- `ai-policy-api-backend.md`, `ai-policy-web-frontend.md`, `ai-policy-mobile-apps.md`, `ai-policy-data.md`, `ai-policy-dba.md`, `ai-policy-cloud.md`, `ai-policy-linux-system-admin.md`, `ai-policy-windows-system-admin.md`
-- `ai-policy-meta.md` (`## Procedure and Policy Authoring`)
-- `ai-policy-handoff.md` (`## Valid Handoff`, `## Conditional Autonomy`)
-- `ai-policy-code-review.md`, `ai-policy-codebase-examination.md`, `ai-policy-design-docs.md`
-- Domain and specialty policies live in the **Global AI Policies Directory**.
+- `AGENTS.md` for the boot protocol, dispatch, and shared steps.
+- The procedure layer in the **Global AI Workflow Directory** for the task steps.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

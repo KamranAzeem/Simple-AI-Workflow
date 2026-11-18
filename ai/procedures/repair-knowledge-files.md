@@ -10,7 +10,7 @@
 
 **Failure rule**: Preserve rather than corrupt. When the manifest is incomplete or an item has no disposition, leave that file unchanged, report the conflict, and continue with the other files; do not ask.
 
-1. **STEP-LOAD-KNOWLEDGE-RULES**: Load `ai-policy-common.md` and read `## Knowledge File Standards` and `### Knowledge Repair Conservation Contract`.
+1. **STEP-LOAD-KNOWLEDGE-RULES**: Load `ai-policy-knowledge.md` and read `## Knowledge File Standards` and `### Knowledge Repair Conservation Contract`.
 2. **STEP-RESOLVE-KNOWLEDGE-SCOPE**: Default to the project store. Read `global`, `both`, or `dry run` after the trigger. Treat those words as scope or option words, not aliases. The scope includes the store's ticket files, executed plans, finished artifact evidence, and pointers to its files.
 3. **STEP-INDEX-KNOWLEDGE-CORPUS**: Index the selected stores and read every selected file in full.
 4. **STEP-AUDIT-KNOWLEDGE**: Audit structure, tables, cross-file pointers, sensitive scope, secrets, size, duplicates, headers, the 50-file count, the six-segment names, the under-3 KB files, incident evidence, and dangling pointers in the settings, issues, handoffs, and ticket files. Write nothing.

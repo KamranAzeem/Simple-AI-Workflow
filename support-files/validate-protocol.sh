@@ -334,30 +334,24 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-echo "[6/8] Verifying policy baseline (19 modular policies)..."
+POLICY_FLOOR=23
+POLICY_COUNT="$(find ai/policies -maxdepth 1 -type f -name 'ai-policy-*.md' | wc -l | tr -d ' ')"
+echo "[6/8] Verifying policy baseline ($POLICY_COUNT modular policies, floor $POLICY_FLOOR)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
 # Policy files use project-root-relative paths and TIER CONFIGURATION anchor references that are
 # correct from the end user's project root — they will always appear broken when checked
 # from inside the protocol repo. See protocol-decisions.md "No markdown hyperlinks" entry.
-POLICIES=(
-    "common" "meta" "cloud" "api-backend" "web-frontend" 
-    "data" "linux-system-admin" "windows-system-admin" "mobile-apps" "dba" "observability"
-    "code-review" "codebase-examination" "design-docs" "coding-baseline"
-    "accounting" "academic-researcher"
-    "career-coaching" "handoff"
-)
-for p in "${POLICIES[@]}"; do
-    POLICY_FILE="ai/policies/ai-policy-$p.md"
-    if [ ! -f "$POLICY_FILE" ]; then
-        echo "Error: Policy file ai-policy-$p.md missing."
-        exit 1
-    fi
+if [ "$POLICY_COUNT" -lt "$POLICY_FLOOR" ]; then
+    echo "Error: only $POLICY_COUNT policy files found; the floor is $POLICY_FLOOR. Record a retirement and lower the floor in the same change."
+    exit 1
+fi
+for POLICY_FILE in ai/policies/ai-policy-*.md; do
     if ! grep -q "READ-ONLY START" "$POLICY_FILE"; then
-        echo "Error: ai-policy-$p.md missing READ-ONLY START marker."
+        echo "Error: $POLICY_FILE missing READ-ONLY START marker."
         exit 1
     fi
     if ! grep -q "READ-ONLY END" "$POLICY_FILE"; then
-        echo "Error: ai-policy-$p.md missing READ-ONLY END marker."
+        echo "Error: $POLICY_FILE missing READ-ONLY END marker."
         exit 1
     fi
 done
@@ -371,10 +365,10 @@ if ! grep -q '^### Canonical State-File Headers$' ai/policies/ai-policy-common.m
 fi
 echo "Policy baseline verified."
 for anchor in "### Knowledge Lookup" "### Knowledge Retirement" "six or fewer hyphen-separated segments" "50 knowledge files per store" "3,000 bytes" "Split a file only by task topic"; do
-    require_in "ai/policies/ai-policy-common.md" "$anchor" "Knowledge rule missing: $anchor"
+    require_in "ai/policies/ai-policy-knowledge.md" "$anchor" "Knowledge rule missing: $anchor"
 done
 require_in "ai/procedures/repair-knowledge-files.md" "split only by task topic" "Knowledge repair topic-split rule missing."
-if grep -nE 'never split a file|never split it|no split|file count (cannot|can.t|must not) increase' ai/policies/ai-policy-common.md ai/procedures/repair-knowledge-files.md docs/workflow-guide.md README.md docs/simple-ai-workflow-slides.md; then
+if grep -nE 'never split a file|never split it|no split|file count (cannot|can.t|must not) increase' ai/policies/ai-policy-knowledge.md ai/procedures/repair-knowledge-files.md docs/workflow-guide.md README.md docs/simple-ai-workflow-slides.md; then
     echo "Error: legacy no-split wording remains in the current knowledge rules."
     exit 1
 fi

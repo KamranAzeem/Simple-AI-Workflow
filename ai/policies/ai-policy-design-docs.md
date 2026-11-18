@@ -6,11 +6,17 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 # AI Policy: Design Documents
 
-Loaded by the update-design-docs procedure module, only when the user says `"update design documents"` (the phrase `"update design docs"` is a trigger).
+Govern the design document chain, types, naming, location, and delivery ledger.
+
+## Loading
+
+- Mode: procedure
+- Load in: update-design-docs
 
 ## Scope
 
 - Apply this policy to design documents in `design-docs/` and in the `ai/shared/project-knowledge/` fallback.
+- Exempt acceptance specs under `design-docs/specs/`; the owning procedure or test work writes and updates them, and they are not design documents.
 - This policy owns document types, naming, creation, update, extraction, migration, and the delivery ledger.
 - It does not own knowledge file standards, state files, or issue tickets.
 
@@ -20,6 +26,7 @@ Loaded by the update-design-docs procedure module, only when the user says `"upd
 - It is self-standing. It holds design content only.
 - Prohibited in a design document: work logs, checkpoint targets, version-control references (commit hashes, branch names), session trivia, command transcripts, and prose filler.
 - A plan is not a design document.
+- Plans live under `ai/`, never in `design-docs/`; do not suggest moving a plan into `design-docs/`.
 - Prefer refusing over corrupting an existing document.
 
 ## Document Types
@@ -35,6 +42,28 @@ Fixed lowercase doc-type tokens, and nothing else:
 - `adr-<nnn>-<short>`
 
 Acceptance criteria are coupled to the LLD. They are not a separate document type. An unknown doc type is never invented; ask.
+
+## Document Chain
+
+- Documents form a chain; each feeds the next: notes, vision, PRD, HLD, LLD with acceptance criteria, risk and gap analysis, ADRs, and the delivery ledger.
+- Work one document at a time. Before creating the next, run a gap analysis and peer review on the existing ones and resolve every finding.
+- Never skip from notes or vision to implementation.
+
+## Requirement Gathering
+
+- Gather enough requirements to build an MVP, then iterate.
+
+## Proportional Depth
+
+- For small work, use context plus acceptance criteria.
+- For medium, large, and architectural work, use the full document set.
+- Application developers mostly need the light path plus ADRs for real decisions; solution architects need the layered, multi-repo set; infrastructure engineers need requirements, design, and a runbook.
+
+## Layering
+
+- A large solution may use layered design documents.
+- Layer 1 is the bird's-eye view: major components, modules, and subsystems.
+- Each later layer details one component.
 
 ## Naming
 
@@ -96,12 +125,34 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 - `adr-<nnn>-<short>`: decision, context, consequences. `ADR-NNN` IDs.
 - `delivery-ledger`: one line per item: ID, status, release.
 
+## Session-Start Check
+
+- At the start of each session, check for the mandatory artifacts.
+- For medium or larger work, tell the user when any is missing and ask whether to create it.
+
+## ID Convention
+
+- Give every requirement, component, design item, risk, and decision a unique sequential ID starting at `001`.
+- Never reuse or delete an ID.
+- Mark a cancelled item `[CANCELLED]` and leave the ID in place.
+
 ## Delivery Ledger
 
 - Update the ledger when a design document lands or changes, and only for the documents touched.
 - One ledger per repo, plus a project-root rollup.
 - Create the ledger when the first design document lands.
+- Keep one section per design document and one line per item.
+- Use the status values `Not Started`, `In Progress`, `Done`, and `Cancelled`.
 - The checkpoint never updates the ledger.
+
+## Supplementary Documents
+
+- Create these when the project's complexity warrants them: an API specification, a data model or ERD, a security architecture, a deployment architecture, and a glossary.
+
+## Update Discipline
+
+- Update design documents alongside the code they describe.
+- Treat documentation drift as a defect.
 
 ## Prohibited
 

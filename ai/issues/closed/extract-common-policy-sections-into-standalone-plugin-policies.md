@@ -9,6 +9,8 @@ Summary: Extract always-loaded common-policy sections into standalone plug-in po
 
 Description:
 
+**Status**: all 12 units are complete or resolved on `feature/plugin-extraction`, pending the program merge. The dated entries at the end are authoritative; the evidence and plan sections below record the starting point.
+
 **Problem**: `ai-policy-common.md` is 869 lines and carries both always-on invariants and task-specific rules. Every session loads all of it. The task-specific rules should live in standalone policies, loaded by a trigger or by the procedure that uses them, the way `ai-policy-handoff.md` is loaded by PROCEDURE CREATE-HANDOFF. The extraction is also the moment to rewrite each moved section to the authoring standard in `ai-policy-meta.md` (`## Procedure and Policy Authoring`).
 
 **Design decision to record in the ADR and the plan**:
@@ -245,3 +247,85 @@ Delivery model: one program branch, no trunk merge, no release until the live te
 - After approval, merge the program branch to master, tag and publish the release, and close the parent and the child tickets.
 - This relaxes the one-branch-per-unit and squash-to-trunk rules for this program. The parent ticket is the single work item; the children are steps on the branch. The plan records the deviation and the approvals.
 - The docs include how to test the branch on the work computer and how to switch back.
+
+---
+2026-11-16
+`Auto-load` is dropped from the loading modes. It was never defined, and `boot` and `procedure` cover the real cases. The v1 modes are `boot`, `trigger`, `procedure`, and `expertise`. The policy-loading contract child records the same and owns the grammar.
+
+---
+2026-11-16
+Project-policy loading behavior is dropped from this program. The `## Loading` declaration governs global policies only, where the four paths already exist: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load, and no loader child is added. The boundary child remains the common-policy pointer cleanup. The docs, the spec, and the ADR record this.
+
+---
+2026-11-16
+Boundary child complete on `feature/plugin-extraction`. The common policy is now `# AI Policy: Common Guardrails`, names no policy file outside the canonical header literal, and its References lists only `AGENTS.md` and the procedure layer. The handoff pointer is gone, the validator rejects the legacy title, and `tests/test-common-boundary.sh` pins the rule. The next unit is the outbound content scrub pilot.
+
+---
+2026-11-16
+Pilot complete on `feature/plugin-extraction`. The outbound content scrub rules are in `ai-policy-outbound-content-scrub.md` with the trigger `outbound content scrub` and `Mode: trigger`; the common policy keeps the heading and the generic invariant; MANAGE-ISSUES, IMPLEMENT-PLAN, and CREATE-HANDOFF load the plug-in; the fixture moved its anchors; the policy count and floor are 20; and the loading contract records the explicit-procedure-load clarification. The next unit is the knowledge extraction child.
+
+---
+2026-11-16
+Knowledge child complete on `feature/plugin-extraction`. The protocols and file standards are in `ai-policy-knowledge.md` with the trigger `knowledge file standards` and `Mode: trigger`; the common policy keeps the settings full load, the boot index invariant, and the contract pointer; LOAD-CONTEXT, WRITE-CHECKPOINT, and REPAIR-KNOWLEDGE-FILES load the plug-in; the validator anchors and the fixture moved; the policy count and floor are 21. The next unit is the issue-management child.
+
+---
+2026-11-16
+Issue-management child complete on `feature/plugin-extraction`. The storage, fields, content, plan, and work-item invariants are in `ai-policy-issue-management.md` with the triggers `issue standards` and `ticket standards` and `Mode: trigger`; the common policy keeps a short issue invariant; MANAGE-ISSUES and IMPLEMENT-PLAN load the plug-in; the load-context template creation loads it only when the template is missing; the new fixture pins the unit; the policy count and floor are 22. The next unit is the design-docs child.
+
+---
+2026-11-16
+Design-docs child complete on `feature/plugin-extraction`. The standards merged into `ai-policy-design-docs.md` with `Mode: procedure` and `Load in: update-design-docs`; the policy owns the chain, depth, IDs, ledger status values, supplementary documents, update discipline, and the plan-location rule; the common policy keeps a design invariant; the Pre-Work Gate points at the contract; MANAGE-ISSUES and IMPLEMENT-PLAN load the policy; the new fixture pins the merge; the policy count stays 22. The next unit is the coding-baseline child.
+
+---
+2026-11-16
+Coding-baseline unit deferred for a thorough investigation. The unit says merge the 46 universal engineering and testing standards into the opt-in coding-baseline policy, but that policy's Scope says the common policy owns the engineering principles it applies, and the 46 lines are always-on. A straight merge would make always-on rules opt-in or force the whole coding baseline to load at boot. The investigation ticket `coding-baseline-activation-investigation.md` records the options and questions. The program proceeds with the thinking-modes child. The release gate still requires this unit to be resolved.
+
+---
+2026-11-16
+Thinking-modes child complete on `feature/plugin-extraction`. Grilling and brainstorming are in `ai-policy-thinking-modes.md` with the triggers `grill me` and `brainstorm` and `Mode: trigger`; the common policy keeps the thinking-modes invariant; the Pre-Work Gate points at the contract; MANAGE-ISSUES and IMPLEMENT-PLAN load the policy; the new fixture pins the unit; the policy count and floor are 23. The common phase is complete. The next unit is the Linux legacy child.
+
+---
+2026-11-16
+Linux legacy child complete on `feature/plugin-extraction`. The policy is rewritten to the authoring standard with all 30 rules preserved; it declares `Mode: expertise`; `tests/test-linux-policy.sh` pins the loading and the key anchors; the index reports `mode=expertise`. The next unit is the accounting legacy child.
+
+---
+2026-11-16
+Accounting legacy child complete on `feature/plugin-extraction`. The policy is rewritten to the authoring standard with all 21 rules preserved; it declares `Mode: expertise`; the prompt is a non-normative example; `tests/test-accounting-policy.sh` pins the loading, the anchors, the example, and the index mode. The next unit is the career legacy child.
+
+---
+2026-11-16
+Career legacy child complete on `feature/plugin-extraction`. The policy is rewritten to the authoring standard with all 28 rules preserved; it declares `Mode: expertise`; the sample customization and the prompts are non-normative examples; `tests/test-career-policy.sh` pins the loading, the hybrid role, the anchors, and the index mode. The next unit is the Windows legacy child.
+
+---
+2026-11-16
+Windows legacy child complete on `feature/plugin-extraction`. The policy is rewritten to the authoring standard with all 71 rules preserved; it declares `Mode: expertise`; `tests/test-windows-policy.sh` pins the loading, the framework, PowerShell, identity, hardening, and testing anchors, and the index mode. The next unit is the academic legacy child, the last legacy unit.
+
+---
+2026-11-16
+Academic legacy child complete on `feature/plugin-extraction`. The policy is rewritten to the authoring standard with all 209 rules preserved; it declares `Mode: expertise`; the nine stages are flattened, the disclosure example is non-normative, and the changelog appendix is removed; `tests/test-academic-policy.sh` pins the section map, the stages, the three checkpoints, and the index mode. All five legacy children are complete. The remaining program gate is the coding-baseline investigation and the user's live test.
+
+---
+2026-11-16
+Coding-baseline unit resolved: the universal engineering and testing standards stay in the common policy, and the coding-baseline extraction is removed from the program scope. The investigation is closed. The reasons: most of the 45 lines are delivery and operational rules used by non-code work; the TDD rule is referenced by the api-backend, web-frontend, and mobile-apps policies on paths where the coding baseline is inactive; the Git Configuration template is used by bootstrap; and making the baseline mandatory would add 10.2 KB to every session and end the opt-in model. The ADR records the decision. All program units are now complete or resolved; the remaining gate is the final review and the user's live test.
+
+---
+2026-11-17
+Known debt: common policy prose shape. Accepted for this program release; the fix is a separate unit.
+
+The program touched `ai-policy-common.md` heavily. The structural validator passes, but the prose shape in `ai-policy-meta.md` (`### Policy Structure`, `### Rule Structure`, `### Normative Language`) was never reviewed. Boundary reviews 05 and 06 scoped themselves to the boundary, and review 06 records "Section extraction: out of scope." The parent ticket already says the remaining gap is prose density, which peer review enforces.
+
+Read-only audit findings:
+
+- [PASSED] Guard, READ-ONLY markers, title, purpose sentence, `## Scope`, `## References`, and READ-ONLY END.
+- [FAILED] 90 numbered or bullet rules carry more than one sentence or more than one action outside the canonical header literal: lines 24, 25, 26, 28, 30, 62, 64, 81, 82, 83, 84, 85, 86, 102, 103, 105, 106, 110, 117, 141, 173, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 268, 273, 302, 303, 304, 310, 311, 312, 313, 314, 315, 316, 322, 323, 334, 336, 337, 342, 343, 344, 345, 346, 347, 394, 395, 396, 397, 398, 405, 406, 410, 411, 412, 413, 414, 420, 421, 422, 423, 424, 425, 426, 427, 428, 432, 433, 434, 435, 436, 437, 447, 448, 449, 450, 451, 452, 455.
+- [FAILED] 16 rule bullets carry rationale: lines 117, 342, 343, 344, 345, 346, 347, 420, 421, 422, 423, 424, 425, 426, 427, 428.
+- [FAILED] Banned normative words: `Prefer` at 110 and 115, `should` at 117, `appropriate` at 278, `and similar` at 411, `prefer` at 452. Line 402 `try` is a non-normative word-list example.
+- [FAILED] Eight sections use prose rule content instead of flat rules: Investigation Contract at 32-40; AI-Driven Secure Development Practices at 88-98; Author Identity and Attribution at 123-135; Compliance Intelligence at 137-145; Operational Standards at 264-325; Git Configuration prose at 372-376; Humanized Output at 390-441; Markdown Output at 443-458.
+- [EXEMPT] The canonical state-file header literal at 200-260 is a designated literal artifact.
+- The multi-sentence heuristic counts punctuation, not meaning. The follow-up unit re-audits each line.
+
+Decision: accept the debt for this program release. The follow-up ticket `common-policy-prose-shape-rewrite.md` owns the fix. The release note states the gap and the follow-up.
+
+---
+2026-11-18
+Closed: the live test passed on a customer project, the program released as v6.6.0, and the 12 child tickets close with it. The common-policy prose debt stays with `common-policy-prose-shape-rewrite.md`.

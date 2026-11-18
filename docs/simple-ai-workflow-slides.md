@@ -31,6 +31,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **One-stop checkpoint**: `"checkpoint"` also refreshes Project Knowledge and Global Knowledge and prints a grouped report, so you do not type the knowledge-update commands separately
 - **Universal engineering standards**: SOLID, DRY, YAGNI, Twelve-Factor, trunk-based development, SemVer, Conventional Commits
 - **Coding baseline policy**: opt-in; one language-neutral standard for most code work, applying Clean Code, SOLID, DRY, YAGNI, Twelve-Factor, TDD, and OWASP secure coding, with telemetry on by default for production code and no out-of-scope rewrites
+- **Thinking modes**: `"grill me"` pressure-tests a decision with adversarial questions, and `"brainstorm"` widens the options before you commit
 - **Intellectual rigor**: the Architect persona pressure-tests your ideas with honest critique, no "yes man"
 - **Daily checkpoints**: an append-only diary at `ai/daily-checkpoints/YYYY-MM-DD.md`, written at every checkpoint, each file starting with the canonical diary header, and used as the state-file archive
 - **Peer review mode**: on-demand, full-file-set review (including PRs) with structured, severity-classified reports, plus an agent-facing documentation check
@@ -108,7 +109,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | Project instructions | `AGENTS.md`, works with any tool, any editor |
 | User preferences | `~/.ai/settings/global-user-settings.md` |
 | Per-project customization | `ai-customization.md` |
-| Domain expertise and rules | 18 modular policies in `ai/policies/` |
+| Domain expertise and rules | 23 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge and decisions | `ai/shared/project-knowledge/` |
@@ -274,6 +275,20 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 - The trigger list is rebuilt at load, never written to disk
 - A policy loaded only by a trigger does not survive compaction; say the phrase again
 - `"use policy <name>"` loads a policy by its Active Expertise name
+
+---
+
+# Declared policy loading
+
+- A policy may declare when it loads in an optional `## Loading` section
+- Four modes: `boot`, `trigger`, `procedure`, `expertise`
+- One path per policy; a non-trigger mode forbids triggers
+- No declaration keeps the legacy behavior
+- The validator and the load-path fixture check every declared path
+- Global policies load by these paths; project policies keep the boot load
+- One-way boundary: a plug-in may cite the common policy; the common policy names none
+
+> **A switch-on label the checker can read.**
 
 ---
 

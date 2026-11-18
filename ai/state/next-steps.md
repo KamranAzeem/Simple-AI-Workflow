@@ -13,6 +13,11 @@
 
 ## Pending
 
-- File the TDD policy-configuration child ticket under the TDD parent: the `## Loading` shape, the load-path test, the shape wrapper, and the scenario spec template.
-- Open `feature/plugin-extraction` from trunk before any file edit and push it.
-- Plan the prerequisite and the boundary child on that branch; no trunk merge, tag, or release until the live test passes.
+- Complete the v6.6.0 release: merge, tag, publish, and delete the temporary work branch.
+- Refactor `AGENTS.md`: move the boot scan exclusions and shared index steps to load-context, reduce Single-Writer to a pointer, and split the long bullets.
+- Rewrite the common policy to the authoring prose shape (L; after the program release).
+- Update the tool-selection ticket's scope: drop the shell preference and the shell fixture.
+- Implement the tool-selection unit on a separate branch cut after the program release.
+- Add the #10 documentation section and the short prompt.
+- Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
+- Revisit GitHub #9 after the live test.

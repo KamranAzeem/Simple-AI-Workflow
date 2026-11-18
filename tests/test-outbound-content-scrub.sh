@@ -11,7 +11,7 @@ FAIL=0
 
 present() {
     local file="$1" text="$2" label="$3"
-    if grep -qF "$text" "$file"; then
+    if grep -qF -- "$text" "$file"; then
         echo "PASS: $label"
     else
         echo "FAIL: $label"
@@ -21,7 +21,7 @@ present() {
 
 absent() {
     local file="$1" text="$2" label="$3"
-    if grep -qF "$text" "$file"; then
+    if grep -qF -- "$text" "$file"; then
         echo "FAIL: $label"
         FAIL=1
     else
@@ -63,12 +63,23 @@ present "$DIR/class-b-expected.md" "<redacted-secret>" "Class B expected uses th
 present "$DIR/class-b-expected.md" "<internal-host>" "Class B expected uses the internal-host placeholder"
 
 echo "Policy and procedure anchors."
-present "$ROOT/ai/policies/ai-policy-common.md" "## Outbound Content Scrub" "common policy has the section"
-present "$ROOT/ai/policies/ai-policy-common.md" "Class A, internal or same audience" "common policy defines Class A"
-present "$ROOT/ai/policies/ai-policy-common.md" "Class B, external or different audience" "common policy defines Class B"
-present "$ROOT/ai/policies/ai-policy-common.md" "Remove passwords, tokens" "common policy removes secrets in every class"
+COMMON="$ROOT/ai/policies/ai-policy-common.md"
+SCRUB="$ROOT/ai/policies/ai-policy-outbound-content-scrub.md"
+present "$COMMON" "## Outbound Content Scrub" "common policy has the invariant heading"
+present "$COMMON" "The outbound-content-scrub contract owns" "common policy points to the contract"
+absent "$COMMON" "Class A, internal or same audience" "common policy does not define Class A"
+absent "$COMMON" "Class B, external or different audience" "common policy does not define Class B"
+present "$SCRUB" "## Outbound Content Scrub" "plug-in has the section"
+present "$SCRUB" "Class A, internal or same audience" "plug-in defines Class A"
+present "$SCRUB" "Class B, external or different audience" "plug-in defines Class B"
+present "$SCRUB" "Remove passwords, tokens" "plug-in removes secrets in every class"
+present "$SCRUB" "- outbound content scrub" "plug-in declares the trigger"
+present "$SCRUB" "- Mode: trigger" "plug-in declares the trigger loading mode"
 present "$ROOT/ai/procedures/manage-issues.md" "STEP-SCRUB-OUTBOUND" "manage-issues defines the scrub step"
+present "$ROOT/ai/procedures/manage-issues.md" "ai-policy-outbound-content-scrub.md" "manage-issues loads the plug-in"
 present "$ROOT/ai/procedures/implement-plan.md" "STEP-SCRUB-OUTBOUND" "implement-plan references the scrub step"
+present "$ROOT/ai/procedures/implement-plan.md" "outbound-content-scrub contract" "implement-plan names the contract"
+present "$ROOT/ai/procedures/create-handoff.md" "ai-policy-outbound-content-scrub.md" "create-handoff loads the plug-in"
 
 if [ "$FAIL" -ne 0 ]; then
     echo "FAILED: outbound content scrub fixture."

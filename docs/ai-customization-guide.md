@@ -24,12 +24,23 @@ Use the `## Active Expertise` section to load domain-specific policies from the 
 
 ### On-demand policy triggers
 
-A policy may declare its own trigger phrases in a `## Triggers` section. Say one of its phrases, such as `"cloud standards"`, and the AI loads that policy for the session without an Active Expertise entry. The initial phrases are `cloud standards`, `data standards`, `database standards`, and `backend standards`.
+A policy may declare its own trigger phrases in a `## Triggers` section. Say one of its phrases, such as `"cloud standards"`, and the AI loads that policy for the session without an Active Expertise entry. The policy phrases include `cloud standards`, `data standards`, `database standards`, `backend standards`, `outbound content scrub`, `knowledge file standards`, `issue standards`, `ticket standards`, `grill me`, and `brainstorm`.
 
 - The trigger list is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation; it is never written to disk.
 - A policy loaded only by a trigger is session-scoped. It does not survive a compaction; say the phrase again.
 - `"use policy <name>"` loads any policy by its Active Expertise name, with or without a declared trigger.
 - A duplicate or contained phrase across policies and procedures is rejected by the validator.
+
+### Declared loading
+
+A policy may declare when it loads in an optional `## Loading` section. Use one mode per policy:
+
+- `- Mode: boot` loads it at boot.
+- `- Mode: trigger` loads it by a `## Triggers` phrase, and requires at least one trigger.
+- `- Mode: procedure` loads it when the named procedure runs, with `- Load in: <procedure-file-stem>`.
+- `- Mode: expertise` loads it through `## Active Expertise`.
+
+A policy without `## Loading` keeps today's behavior. A non-trigger mode forbids `## Triggers`, so adding one to a policy that has triggers requires removing them. The declaration describes the global loading paths: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load. Validate a custom policy with `support-files/validate-policy-authoring.sh`; see the [custom policy howto](custom-policy-howto.md).
 
 ---
 

@@ -30,6 +30,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v6.6.0 (2026-11-18)
+
+- Split the common policy into plug-in policies: outbound content scrub, knowledge, issue management, design documents, and thinking modes. The state-file rules and the engineering and testing standards stay as invariants.
+- Add the `## Loading` declaration with `boot`, `trigger`, `procedure`, and `expertise`. A missing declaration keeps the legacy behavior, and project policies keep the boot load.
+- Rewrite the Linux, accounting, career, Windows, and academic policies to the authoring standard with the rule counts preserved.
+- Add the custom-policy howto, a dynamic policy baseline, the load-path, policy-shape, project-scope index, and trigger checks, and the `--triggers` namespace check.
+- The common policy prose shape is known debt with a follow-up unit.
+- Upgrade action: pull, run the sync script, restart the session; no repair is needed.
+- Published 2026-11-18.
+
 ### v6.3.0 (2026-11-09)
 
 - Add the skills layer: the global and project `ai/skills/` roots, package-only `SKILL.md` with `name` and a one-line description, a boot index, explicit and description activation, a project override, and cross-type collision reporting.

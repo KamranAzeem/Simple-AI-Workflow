@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.5.0 (2026-11-13).** Handoff creation: a dedicated handoff policy, a `create handoff` procedure, and a peer-review gate before the final handoff exists. Read the announcement: [docs/announcements/v6.5.0.md](docs/announcements/v6.5.0.md). |
+| **v6.6.0 (2026-11-18).** Plug-in policies: the common policy keeps invariants, and task rules load on a trigger or from the owning procedure. Read the announcement: [docs/announcements/v6.6.0.md](docs/announcements/v6.6.0.md). |
 
 # Simple AI Workflow
 
@@ -115,6 +115,8 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Clean up knowledge files (header, tables, task names, files over 15 KB, 50-file review threshold) | `"repair knowledge files"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
 | Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
+| Pressure-test a decision or plan | `"grill me"` |
+| Widen the options before deciding | `"brainstorm"` |
 | Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
 | Apply the fixes from a review report | `"apply fixes for problems identified in code review report"` |
 | Bring out-of-order or bloated state files back into shape | `"repair state files"` |
@@ -279,7 +281,9 @@ This is the one file you edit to tailor the AI to a project. You can set:
 
 See the [AI Customization Guide](docs/ai-customization-guide.md) for the full list and examples.
 
-Some policies can also load by phrase, without an Active Expertise entry. Say `"cloud standards"`, `"data standards"`, `"database standards"`, or `"backend standards"` and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A project policy with triggers is still loaded at boot and reported as active; its triggers are also indexed.
+Some policies can also load by phrase, without an Active Expertise entry. Say a policy's phrase, such as `"cloud standards"`, `"knowledge file standards"`, or `"grill me"`, and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A legacy project policy with triggers and no `## Loading` is still loaded at boot and reported as active; its triggers are also indexed.
+
+A policy may also declare when it loads in an optional `## Loading` section, with one path per policy: `boot`, `trigger`, `procedure`, or `expertise`. A procedure may still load a policy explicitly. A policy with no declaration keeps its current behavior. The authoring validator and `tests/test-policy-load-paths.sh` check that every declared path is real. The declaration describes the global loading paths that already exist: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load. See [the custom policy howto](docs/custom-policy-howto.md) to write one.
 
 ## Keeping this workflow up to date
 
@@ -409,7 +413,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **Policies**: 13 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching, and Handoffs), plus 6 cross-cutting policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs). Load the ones that apply to your project.
+- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 11 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, handoff, issue-management, knowledge, outbound-content-scrub, thinking-modes). Load the ones that apply to your project.
 - **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
 - **Procedure modules and a thin `AGENTS.md`**: the 14 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
@@ -427,6 +431,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Issue management and delivery**: `MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request; `IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. Merge mode comes from `## Merge Policy`, and no CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands. External ticket writes and PR/MR or release text pass the outbound content scrub before they leave the project.
 - **Outbound content scrub**: before an external issue, PR/MR, comment, or release note leaves the project, the AI removes secrets and audience-inappropriate identifying data. Class A, internal or same audience, keeps customer names and infrastructure detail; Class B, external or different audience, removes them. Secrets are never overridable.
 - **Handoff creation**: `CREATE-HANDOFF` drafts a handoff under `ai/artifacts/handoffs/<handoff-slug>/`, runs a peer review, and writes the final file only after APPROVED. `ai-policy-handoff.md` owns the template, the lifecycle, and the conditional autonomy.
+- **Thinking modes**: `"grill me"` pressure-tests a decision with adversarial questions, and `"brainstorm"` widens the option space before you commit. Both load `ai-policy-thinking-modes.md` for the session.
 - **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.

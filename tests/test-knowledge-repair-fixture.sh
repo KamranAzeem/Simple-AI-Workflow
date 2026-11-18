@@ -209,14 +209,21 @@ verify() {
     [ -f "$gback/postgresql-restore-and-pitr.md" ] || fail "global backup missing"
     ! find "$art" -name '*candidate*' | grep -q . || fail "candidate left behind"
 
-    grep -q '### Knowledge Lookup' "$REPO/ai/policies/ai-policy-common.md" || fail "Knowledge Lookup missing"
-    grep -q '### Knowledge Retirement' "$REPO/ai/policies/ai-policy-common.md" || fail "Knowledge Retirement missing"
-    grep -q 'six or fewer hyphen-separated segments' "$REPO/ai/policies/ai-policy-common.md" || fail "naming rule missing"
-    grep -q '50 knowledge files per store' "$REPO/ai/policies/ai-policy-common.md" || fail "review threshold missing"
-    grep -q '3,000 bytes' "$REPO/ai/policies/ai-policy-common.md" || fail "merge floor missing"
+    grep -q '### Knowledge Lookup' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "Knowledge Lookup missing"
+    grep -q '### Knowledge Retirement' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "Knowledge Retirement missing"
+    grep -q 'six or fewer hyphen-separated segments' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "naming rule missing"
+    grep -q '50 knowledge files per store' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "review threshold missing"
+    grep -q '3,000 bytes' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "merge floor missing"
+    grep -q '## Knowledge Invariant' "$REPO/ai/policies/ai-policy-common.md" || fail "common knowledge invariant missing"
+    grep -q 'Global AI Settings Directory' "$REPO/ai/policies/ai-policy-common.md" || fail "common settings invariant missing"
+    grep -q -- '- knowledge file standards' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "knowledge trigger missing"
+    grep -q -- '- Mode: trigger' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "knowledge loading mode missing"
+    grep -q 'ai-policy-knowledge.md' "$REPO/ai/procedures/load-context.md" || fail "load-context does not load the knowledge plug-in"
+    grep -q 'ai-policy-knowledge.md' "$REPO/ai/procedures/write-checkpoint.md" || fail "write-checkpoint does not load the knowledge plug-in"
+    grep -q 'ai-policy-knowledge.md' "$REPO/ai/procedures/repair-knowledge-files.md" || fail "repair does not load the knowledge plug-in"
     grep -q 'split only by task topic' "$REPO/ai/procedures/repair-knowledge-files.md" || fail "procedure topic split missing"
     if grep -nE 'never split a file|never split it|file count (cannot|can.t|must not) increase' \
-        "$REPO/ai/policies/ai-policy-common.md" "$REPO/ai/procedures/repair-knowledge-files.md"; then
+        "$REPO/ai/policies/ai-policy-knowledge.md" "$REPO/ai/procedures/repair-knowledge-files.md"; then
         fail "legacy no-split wording remains"
     fi
 

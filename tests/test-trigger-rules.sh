@@ -252,8 +252,8 @@ make_procedure "$WORK/ai/procedures/fixture-proc.md" "FIXTURE-PROC" "- fixture p
 index_out="$(cd "$WORK" && bash "$VALIDATOR" --index ai/policies/ai-policy-fixture-one.md ai/procedures/fixture-proc.md 2>&1)"
 index_rc=$?
 cases=$((cases + 1))
-expected_index='policy|global|fixture-one|ai/policies/ai-policy-fixture-one.md|triggers=fixture one|headings=# DO NOT MODIFY THIS FILE;# AI Policy: Fixture One;## Triggers;## Scope;## Rules;## References|effective=yes|conflict=none
-procedure|global|FIXTURE-PROC|ai/procedures/fixture-proc.md|triggers=fixture proc|headings=# PROCEDURE FIXTURE-PROC: Fixture procedure;## Triggers|effective=yes|conflict=none
+expected_index='policy|project|fixture-one|ai/policies/ai-policy-fixture-one.md|mode=legacy|triggers=fixture one|headings=# DO NOT MODIFY THIS FILE;# AI Policy: Fixture One;## Triggers;## Scope;## Rules;## References|effective=yes|conflict=none
+procedure|project|FIXTURE-PROC|ai/procedures/fixture-proc.md|mode=legacy|triggers=fixture proc|headings=# PROCEDURE FIXTURE-PROC: Fixture procedure;## Triggers|effective=yes|conflict=none
 summary|modules=2|policies=1|procedures=1|triggers=2|conflicts=0|errors=0|error_classes=none'
 if [ "$index_rc" -ne 0 ] || [ "$index_out" != "$expected_index" ]; then
     printf 'FAIL: index golden (exit %s)\n--- expected ---\n%s\n--- actual ---\n%s\n' "$index_rc" "$expected_index" "$index_out"

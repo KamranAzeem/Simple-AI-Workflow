@@ -96,6 +96,7 @@ This section defines how to write and edit `AGENTS.md`, policy files, and proced
 - Include `## Rules` or domain-named sections.
 - Include a `## References` section.
 - Include an optional `## Triggers` section immediately after the purpose sentence and before `## Scope`.
+- Include an optional `## Loading` section after `## Triggers` and before `## Scope`, or after the purpose sentence when the policy has no `## Triggers`.
 - List one literal trigger phrase per bullet in `## Triggers`, with no other content.
 - Place the READ-ONLY END marker at the end.
 - Do not use a `## Purpose` heading.
@@ -134,6 +135,23 @@ This section defines how to write and edit `AGENTS.md`, policy files, and proced
 - Allow close variants within one module and deduplicate them.
 - Treat the `## Triggers` bullet list as data, not rules.
 - Name a policy file `ai-policy-<name>.md`.
+
+### Loading Declarations
+
+- Allow an optional `## Loading` section in a policy.
+- Place `## Loading` after `## Triggers`, or after the purpose sentence when the policy has no `## Triggers`.
+- Place `## Loading` before `## Scope`.
+- Declare exactly one load path per policy.
+- Allow a procedure to load a policy explicitly; the declaration states the self-declared path, not an exclusive one.
+- Write one line `- Mode: <mode>` in `## Loading`.
+- Allow only the modes `boot`, `trigger`, `procedure`, and `expertise`.
+- Require at least one `## Triggers` bullet when the mode is `trigger`.
+- Forbid `## Triggers` for every other mode.
+- Write `- Load in: <procedure-file-stem>` when the mode is `procedure`.
+- Forbid `Load in:` for every other mode.
+- Use the lowercase kebab file stem of the procedure module as the `Load in:` value.
+- Omit `## Loading` to keep the legacy loading behavior.
+- Treat the `## Loading` bullet list as a normative literal artifact.
 
 ### Procedure Headers
 

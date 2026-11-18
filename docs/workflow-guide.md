@@ -188,6 +188,8 @@ The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Uni
 
 These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
 
+The common policy also owns the **Universal Testing Standards**: preserve the project's existing test framework and patterns, keep tests deterministic, mock external dependencies, test failure modes, and follow TDD when the project uses it. Those standards load with the common policy as well.
+
 ## 11. AI Customization & Curated Traits
 
 The `ai-customization.md` file at the project root is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
@@ -197,6 +199,8 @@ The `ai-customization.md` file at the project root is the **"Single Dial"** for 
 - **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge: no on-disk compliance files needed.
 
 Policies may also declare their own trigger phrases. Say `"cloud standards"` and the cloud policy loads for the session without an Active Expertise entry. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a compaction; say the phrase again. `"use policy <name>"` loads a policy by its Active Expertise name. The same Directive versus Inquiry rule decides whether a phrase runs.
+
+A policy may also declare when it loads in an optional `## Loading` section, with one path per policy: `boot`, `trigger`, `procedure`, or `expertise`. A policy without the section keeps its current behavior. The authoring validator and `tests/test-policy-load-paths.sh` check every declared path. The declaration describes the existing global paths; a project policy keeps the legacy boot load. See [`custom-policy-howto.md`](custom-policy-howto.md).
 
 See the [AI Customization Guide](ai-customization-guide.md) for the full catalog and multi-role examples.
 
@@ -249,7 +253,7 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
-The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The validator's `--index` mode is a developer tool; the AI builds the index inline, so it adapts to Windows and macOS without a runtime validator.
+The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The validator's `--index` mode is a developer tool; it prints the declared loading mode and the module scope, and the AI builds the index inline, so it adapts to Windows and macOS without a runtime validator.
 
 A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
@@ -375,7 +379,7 @@ A local ticket closes in the branch commit. An external ticket closes when the m
 
 ### Outbound content scrub
 
-Before an external issue, PR/MR, comment, or release note leaves the project, the AI applies the `## Outbound Content Scrub` contract in `ai/policies/ai-policy-common.md`. It states the destination class before drafting. Class A covers an internal or same-audience artifact and keeps customer names and infrastructure detail. Class B covers an external or different-audience artifact and removes names, internal hosts, URLs, identifiers, ticket keys, and named file paths. Secrets are removed in every class and cannot be overridden.
+Before an external issue, PR/MR, comment, or release note leaves the project, the AI loads `ai-policy-outbound-content-scrub.md` and applies its `## Outbound Content Scrub` rules. The common policy keeps the invariant. The AI states the destination class before drafting. Class A covers an internal or same-audience artifact and keeps customer names and infrastructure detail. Class B covers an external or different-audience artifact and removes names, internal hosts, URLs, identifiers, ticket keys, and named file paths. Secrets are removed in every class and cannot be overridden.
 
 The AI shows the scrubbed text and a category report, then waits for approval. A public destination defaults to redaction and needs explicit approval. The report lists categories and counts only and stays in chat. Private IP addresses stay; public addresses become documentation addresses. Images, screenshots, rendered exports, and document metadata get a visual review and a metadata strip.
 

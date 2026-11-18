@@ -1005,3 +1005,107 @@ The fence-aware validator fix is a prerequisite: the authoring validator now ign
 Context: issue #6 recorded a real handoff that had to be invented, and the existing rules covered only a Verification section. A path-based or a common-policy-only design was rejected to thin the always-on common policy. The split keeps the always-on refusal pointer in the common policy while moving the rarely used template and lifecycle to a domain policy.
 
 Consequences: `ai-policy-handoff.md` is the 19th policy; `CREATE-HANDOFF` is the 14th procedure; the common policy shrinks; `RUN-PEER-REVIEW` gains a handoff scope; `WRITE-CHECKPOINT` deletes a consumed handoff; the collaboration docs and the runbook use the procedure; the validator anchors and the handoff fixture pin the contract; the docs and the knowledge counts update; the release is v6.5.0.
+
+## 2026-11-16: Policy loading is a declared, checked contract
+
+A policy may declare one load path in an optional `## Loading` section. The four modes are `boot`, `trigger`, `procedure`, and `expertise`. A trigger-mode policy carries at least one `## Triggers` bullet; every other mode forbids triggers. A procedure-mode policy names the procedure file stem in `Load in:`; no other mode carries it. `## Loading` sits after `## Triggers`, or after the purpose when there is no Triggers section, and before `## Scope`. An absent section keeps the legacy load, so no existing policy is converted. `Auto-load` is dropped because it had no defined runtime behavior; boot and procedure cover the real cases. The handoff policy's prose `## Loading` heading is renamed `## Load Behavior` to free the reserved name.
+
+Context: the plugin extraction moves task rules out of the always-loaded common policy. Loading was prose, so a moved rule could silently lose its load path. This contract is the prerequisite for that program, and it needed a grammar the validator and a test can check.
+
+Consequences: `ai-policy-meta.md` gains `### Loading Declarations`; `validate-policy-authoring.sh` enforces the section and excludes it from the domain-section count; `--index` prints the mode and the project-or-global scope; `validate-protocol.sh` scans the policy directory with a floor of 19; `tests/test-policy-load-paths.sh`, `tests/test-policy-shape.sh`, and `tests/run-all.sh` pin the contract; specs under `design-docs/specs/` are exempt from the design-document rules; the docs, slides, custom-policy howto, and verification toolchain note the contract. The declaration governs the global loading paths that already exist, so the extraction program adds no loader unit; a project policy keeps the legacy boot load.
+
+## 2026-11-16: The common policy never names a policy file
+
+The common policy is the invariant layer. Outside the canonical state-file header literal, it names no policy file, in a path or a bare name, and its `## References` lists only `AGENTS.md` and the procedure layer. A plug-in may reference the common policy; the reverse is forbidden. The handoff refusal stays generic in the common policy, and the handoff contract owns the definition and the authorization. The title is `# AI Policy: Common Guardrails`, and the validator no longer accepts the legacy `# AI Assistant Policy:` title.
+
+Context: the plugin extraction moves task rules into policy files that load on their own path. A per-policy reference in the always-loaded common policy would keep every plug-in name in the boot payload and couple the invariant layer to every extraction.
+
+Consequences: the common policy drops six references and gains the new title; the handoff policy drops the common-pointer line; `tests/test-common-boundary.sh` pins the title, the Reference whitelist, and the no-policy-name rule; the validator drops the legacy title exemption; the validation-system doc, the verification toolchain, the howto, and the slides note the one-way boundary.
+
+## 2026-11-16: The outbound content scrub is the first extracted plug-in
+
+The outbound content scrub rules move from the common policy to `ai-policy-outbound-content-scrub.md`, the pilot of the plugin-extraction program. The common policy keeps the `## Outbound Content Scrub` heading and one generic invariant, so the protocol anchor and the three procedure pointers stay valid. The plug-in owns the destination classes, the always-remove and keep lists, detection, placeholders, approval, override, non-text artifacts, and procedure use. It declares `Mode: trigger` with the trigger `outbound content scrub`, and MANAGE-ISSUES, IMPLEMENT-PLAN, and CREATE-HANDOFF load it explicitly. A declaration states the self-declared path, not an exclusive one; a procedure may load a policy explicitly.
+
+Context: the pilot proves the extraction pattern on a 64-line section with three procedure consumers. Keeping the heading in common avoids a validator change while the rules move, and the trigger gives the policy a self-declared path for manual use.
+
+Consequences: the common policy shrinks by about 60 lines; `ai-policy-outbound-content-scrub.md` is the 20th policy and the validator floor rises to 20; the scrub fixture moves its rule anchors to the plug-in and adds the trigger, loading, invariant, and procedure-load checks; the procedures load the plug-in; the meta policy, the loading spec, and the howto record the procedure-load clarification; the docs update; the program release still waits for all units.
+
+## 2026-11-16: The knowledge protocols and file standards are a trigger-loaded plug-in
+
+The global and project knowledge protocols, the ticket file scope, the file standards, the lookup, the retirement, the header literal, and the repair conservation contract move to `ai-policy-knowledge.md`. The common policy keeps a `## Knowledge Invariant`: read the Global AI Settings Directory in full at boot, index both knowledge stores at boot, read a file in full on demand, and treat the knowledge contract as the owner of the standards. The plug-in declares `Mode: trigger` with `knowledge file standards`, and LOAD-CONTEXT, WRITE-CHECKPOINT, and REPAIR-KNOWLEDGE-FILES load it explicitly.
+
+Context: the settings full-load rule has to be available before the knowledge index step, so it stays in the common invariant. The index step runs at every boot and loads the plug-in, so this unit improves modularity and the one-way boundary rather than shrinking the boot payload.
+
+Consequences: `ai-policy-knowledge.md` is the 21st policy and the validator floor rises to 21; the validator anchors and the legacy-phrase guard move to the new policy; the knowledge fixture moves its anchors and checks the common invariant, the trigger, the loading mode, and the three procedure loads; the validation doc and the verification-toolchain note update.
+
+## 2026-11-16: The issue management protocol is a trigger-loaded plug-in
+
+The ticket storage, fields, content, plan, and work-item invariants move to `ai-policy-issue-management.md`. The common policy keeps `## Issue Invariant`: one unit of work is one ticket, and the issue contract owns the rules. The plug-in declares `Mode: trigger` with `issue standards` and `ticket standards`, and MANAGE-ISSUES and IMPLEMENT-PLAN load it. The load-context template creation loads the plug-in only when the template is missing.
+
+Context: the issue rules are used by two procedures and by the boot-time template check, so the template path loads the plug-in conditionally rather than at every boot.
+
+Consequences: `ai-policy-issue-management.md` is the 22nd policy and the validator floor rises to 22; the common policy shrinks by about 84 lines; `tests/test-issue-policy.sh` pins the invariant, both triggers, the mode, the template instruction, and the two procedure loads; the validation doc and the verification-toolchain note update.
+
+## 2026-11-16: The design documentation standards merge into the design-docs policy
+
+The common policy's design documentation standards merge into the existing `ai-policy-design-docs.md`. The policy already owns document types, per-type skeletons, naming, location and migration, extraction, conciseness, the ledger update rule, and the prohibited list; the merge adds the document chain, requirement gathering, proportional depth, layering, the session-start artifact check, the unique-ID rule, the ledger status values and format, the supplementary documents, the update discipline, and the plans-live-under-`ai/` rule. The policy gains a purpose sentence and `Mode: procedure` with `Load in: update-design-docs`. The common policy keeps a `## Design Invariant`, and the Pre-Work Gate points at the contract without naming a policy file.
+
+Context: the design policy was written from the common standards, so this is a dedup merge, not a move. The Pre-Work Gate lives in the common policy, which may not name a policy file; the MANAGE-ISSUES and IMPLEMENT-PLAN procedures load the policy for planning and pre-work.
+
+Consequences: the common policy shrinks by about 114 lines; the policy count stays 22; `tests/test-design-docs-policy.sh` pins the invariant, the loading, the merged rules, and the loads; the validation doc and the verification-toolchain note update.
+
+## 2026-11-16: The thinking modes are a trigger-loaded plug-in
+
+The grilling and brainstorming modes move to `ai-policy-thinking-modes.md`. The common policy keeps `## Thinking Modes`: reach shared understanding before implementation, and use the thinking-modes contract for convergent grilling and divergent brainstorming. The plug-in declares `Mode: trigger` with `grill me` and `brainstorm`, and MANAGE-ISSUES planning and IMPLEMENT-PLAN preflight load it.
+
+Context: the user triggers the modes by phrase, but the Pre-Work Gate also runs the convergence method without a user trigger, so the two procedures load the policy. The common policy may not name a policy file, so the gate points at the contract.
+
+Consequences: `ai-policy-thinking-modes.md` is the 23rd policy and the validator floor rises to 23; the common policy shrinks by about 20 lines; `tests/test-thinking-modes-policy.sh` pins the invariant, both triggers, the mode, the moved sections, the gate pointer, and the two procedure loads; the validation doc and the verification-toolchain note update.
+
+## 2026-11-16: The Linux legacy policy is rewritten and declares its expertise loading
+
+`ai-policy-linux-system-admin.md` is rewritten to the authoring standard without changing its rules, and it gains `Mode: expertise`, which matches its Active Expertise and by-name loading. The rule-coverage matrix maps all 30 rules. `tests/test-linux-policy.sh` pins the loading and the key anchors; the prose and coverage are peer-reviewed.
+
+Context: the five legacy domain policies are structurally valid but not prose-rewritten. The program's legacy phase rewrites one policy per child, starting with Linux. The rewrite is editorial; the loading declaration makes the existing path explicit.
+
+Consequences: the policy is shorter and uniform; the index reports `mode=expertise`; the fixture is in the suite; the policy count and triggers do not change; the remaining four legacy children follow the same pattern.
+
+## 2026-11-16: The accounting legacy policy is rewritten and declares its expertise loading
+
+`ai-policy-accounting.md` is rewritten to the authoring standard without changing its rules, and it gains `Mode: expertise`, which matches its Active Expertise and by-name loading. The suggested assistant prompt becomes a non-normative fenced example under `## Examples`, the authoring standard's shape for an example. The rule-coverage matrix maps all 21 rules. `tests/test-accounting-policy.sh` pins the loading, the key anchors, the example rule, and the index mode; the prose and coverage are peer-reviewed.
+
+Context: the legacy phase rewrites the five legacy domain policies one per child. Accounting is the second, after Linux.
+
+Consequences: the policy is shorter and uniform; the index reports `mode=expertise`; the fixture is in the suite; the policy count and triggers do not change; career, Windows, and academic follow the same pattern.
+
+## 2026-11-16: The career coaching legacy policy is rewritten and declares its expertise loading
+
+`ai-policy-career-coaching.md` is rewritten to the authoring standard without changing its rules, and it gains `Mode: expertise`, which matches its Active Expertise and by-name loading. The sample customization and the three suggested prompts merge into one non-normative `## Examples` section with the text preserved verbatim, the authoring standard's shape for examples. The rule-coverage matrix maps all 28 rules. `tests/test-career-policy.sh` pins the loading, the hybrid role, the key anchors, and the example rule; the prose and coverage are peer-reviewed.
+
+Context: the legacy phase rewrites the five legacy domain policies one per child. Career coaching is the third, after Linux and accounting, and keeps the single `career-coaching` expertise token recorded on 2026-07-25.
+
+Consequences: the policy is shorter and uniform; the index reports `mode=expertise`; the fixture is in the suite; the policy count and triggers do not change; Windows and academic follow the same pattern.
+
+## 2026-11-16: The Windows system administration legacy policy is rewritten and declares its expertise loading
+
+`ai-policy-windows-system-admin.md` is rewritten to the authoring standard without changing its rules, and it gains `Mode: expertise`, which matches its Active Expertise and by-name loading. The rule-coverage matrix maps all 71 rules. `tests/test-windows-policy.sh` pins the loading, the framework anchors, the PowerShell safety and testing anchors, the identity and hardening anchors, and the index mode; the prose and coverage are peer-reviewed.
+
+Context: the legacy phase rewrites the five legacy domain policies one per child. Windows is the fourth, after Linux, accounting, and career; it is the largest legacy policy.
+
+Consequences: the policy is shorter and uniform; the index reports `mode=expertise`; the fixture is in the suite; the policy count and triggers do not change; academic is the last legacy child.
+
+## 2026-11-16: The academic research legacy policy is rewritten and declares its expertise loading
+
+`ai-policy-academic-researcher.md` is rewritten to the authoring standard without changing its rules, and it gains `Mode: expertise`, which matches its Active Expertise and by-name loading. The nine research-process stages flatten from nested bullets into one heading per stage with flat bullets, the AI-disclosure example becomes a non-normative fenced block, and the changelog appendix is removed because it carries no directive. The rule-coverage matrix maps all 209 rules. `tests/test-academic-policy.sh` pins the loading, the section map, the framework and integrity anchors, the nine stages, the three supervision checkpoints, and the index mode; the prose and coverage are peer-reviewed.
+
+Context: the legacy phase rewrites the five legacy domain policies one per child. Academic research is the fifth and last, after Linux, accounting, career, and Windows.
+
+Consequences: the policy is shorter and uniform; the index reports `mode=expertise`; the fixture is in the suite; the policy count and triggers do not change; the five legacy children are complete, and the program release still waits for the coding-baseline unit and the live test.
+
+## 2026-11-16: The universal engineering and testing standards stay in the common policy
+
+The common policy keeps its `## Universal Testing Standards`, `## Universal Engineering Standards`, and `### Git Configuration` sections, and the coding-baseline extraction unit is dropped from the plugin-extraction program. The coding baseline remains opt-in through `## Active Expertise` or by name.
+
+Context: the program's unit assumed the 45 lines were movable code rules. Most of them are delivery and operational rules, including Trunk-Based Development, SemVer, Conventional Commits, Git conventions, and the Git Configuration template, and they apply to all work, including documentation and releases; the protocol repository relies on them with the coding baseline inactive. The TDD rule is referenced by the api-backend, web-frontend, and mobile-apps policies as common-owned, and those policies load on paths where the coding baseline is not active. The Git Configuration template is used by the bootstrap offer. Making the coding baseline mandatory would add its 10.2 KB to every session and end the opt-in model.
+
+Consequences: the common policy keeps about 45 lines and 4.3 KB, of which about 15 lines are pure code rules. The program ships without this unit, the investigation ticket closes, and the opt-in model stands. The decision would be revisited only if code sessions dominate the workload, the boot budget tolerates the full code policy, the team wants enforced code standards, and the domain policy references are rewired.

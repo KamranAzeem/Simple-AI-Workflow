@@ -23,6 +23,9 @@
    4. On-Demand Triggers (The "Reach for It" Phase):
       A policy can declare its own trigger phrases. Say `"cloud standards"` and the AI loads the cloud policy for the session without adding it to Active Expertise. The trigger list is rebuilt at load context and never written to disk. A policy loaded only by a trigger does not survive compaction; say the phrase again. `"use policy <name>"` loads a policy by its Active Expertise name.
 
+   5. Declared Loading (The "Switch-On Label" Phase):
+      A policy can declare when it loads in an optional `## Loading` section: at boot, by a trigger phrase, by a named procedure, or through Active Expertise. A policy without the section keeps its current behavior. The authoring validator and the load-path fixture check that a declared path is real, so a procedure that names a missing policy fails the test suite.
+
   ---
 
   Example: Implementing a Cloud Storage Bucket

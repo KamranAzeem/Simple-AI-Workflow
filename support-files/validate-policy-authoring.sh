@@ -182,6 +182,125 @@ check_trigger_block() {
     return 0
 }
 
+check_loading_block() {
+    local file="$1" purpose_line="$2"
+    local count loading_line scope_line prev_heading prev_text anchor intervening
+    local ln line key value mode load_in bullets trig_count
+
+    count="$(count_headings_outside_fences "$file" '^## Loading[[:space:]]*$')"
+    [ "$count" -eq 0 ] && return 0
+    if [ "$count" -gt 1 ]; then
+        fail_msg "$file" "0" "invalid loading block: duplicate loading section"
+        return 0
+    fi
+
+    loading_line="$(first_heading_line_outside_fences "$file" '^## Loading[[:space:]]*$')"
+    scope_line="$(first_heading_line_outside_fences "$file" '^## Scope[[:space:]]*$')"
+    if [ -n "$scope_line" ] && [ "$loading_line" -gt "$scope_line" ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: placement"
+        return 0
+    fi
+    if [ -n "$purpose_line" ] && [ "$loading_line" -lt "$purpose_line" ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: placement"
+        return 0
+    fi
+
+    prev_heading="$(awk -v end="$loading_line" '
+        FNR == 1 { fence = 0 }
+        /^```/ { fence = !fence; next }
+        fence { next }
+        NR < end && /^## / { last = NR }
+        END { if (last) print last }
+    ' "$file")"
+    if [ -n "$prev_heading" ]; then
+        prev_text="$(sed -n "${prev_heading}p" "$file")"
+        if [ "$prev_text" != "## Triggers" ]; then
+            fail_msg "$file" "$loading_line" "invalid loading block: placement"
+            return 0
+        fi
+        anchor=""
+    else
+        anchor="$purpose_line"
+    fi
+    if [ -n "$anchor" ]; then
+        intervening="$(awk -v start="$anchor" -v end="$loading_line" 'NR > start && NR < end && !/^[[:space:]]*$/ { print NR; exit }' "$file")"
+        if [ -n "$intervening" ]; then
+            fail_msg "$file" "$intervening" "invalid loading block: placement"
+            return 0
+        fi
+    fi
+
+    mode=""
+    load_in=""
+    bullets=0
+    ln=$loading_line
+    while IFS= read -r line; do
+        ln=$((ln + 1))
+        if printf '%s\n' "$line" | grep -qE '^## '; then
+            break
+        fi
+        [ -z "$line" ] && continue
+        if ! printf '%s\n' "$line" | grep -qE '^- [A-Za-z]+( [A-Za-z]+)?: .+$'; then
+            fail_msg "$file" "$ln" "invalid loading block: unknown key"
+            continue
+        fi
+        key="$(printf '%s' "$line" | sed -E 's/^- ([A-Za-z]+( [A-Za-z]+)?): .*$/\1/')"
+        value="$(printf '%s' "$line" | sed -E 's/^- [A-Za-z]+( [A-Za-z]+)?: (.*)$/\2/')"
+        case "$key" in
+            Mode)
+                if [ -n "$mode" ]; then
+                    fail_msg "$file" "$ln" "invalid loading block: duplicate Mode"
+                    continue
+                fi
+                mode="$value"
+                case "$mode" in
+                    boot|trigger|procedure|expertise) ;;
+                    *) fail_msg "$file" "$ln" "invalid loading block: unknown mode" ;;
+                esac
+                ;;
+            "Load in")
+                if [ -n "$load_in" ]; then
+                    fail_msg "$file" "$ln" "invalid loading block: duplicate Load in"
+                    continue
+                fi
+                load_in="$value"
+                if ! printf '%s' "$load_in" | grep -qE '^[a-z0-9][a-z0-9-]*$'; then
+                    fail_msg "$file" "$ln" "invalid loading block: invalid Load in value"
+                fi
+                ;;
+            *)
+                fail_msg "$file" "$ln" "invalid loading block: unknown key"
+                ;;
+        esac
+        bullets=$((bullets + 1))
+    done < <(sed -n "$((loading_line + 1)),\$p" "$file")
+
+    if [ "$bullets" -eq 0 ] || [ -z "$mode" ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: missing Mode"
+        return 0
+    fi
+
+    case "$mode" in
+        boot|trigger|procedure|expertise) ;;
+        *) return 0 ;;
+    esac
+
+    if [ "$mode" = procedure ] && [ -z "$load_in" ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: procedure mode needs Load in"
+    fi
+    if [ "$mode" != procedure ] && [ -n "$load_in" ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: Load in without procedure mode"
+    fi
+
+    trig_count="$(count_headings_outside_fences "$file" '^## Triggers[[:space:]]*$')"
+    if [ "$mode" = trigger ] && [ "$trig_count" -eq 0 ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: trigger mode needs a trigger"
+    fi
+    if [ "$mode" != trigger ] && [ "$trig_count" -gt 0 ]; then
+        fail_msg "$file" "$loading_line" "invalid loading block: triggers not allowed for this mode"
+    fi
+}
+
 check_policy_file() {
     local file="$1" base title_line purpose_line purpose_text domain_sections readonly_start_line readonly_end_line
 
@@ -189,13 +308,6 @@ check_policy_file() {
     check_policy_name "$file"
 
     title_line="$(first_heading_line_outside_fences "$file" '^# AI Policy: .+')"
-    case "$file" in
-        ai/policies/ai-policy-common.md|*/ai/policies/ai-policy-common.md)
-            if [ -z "$title_line" ]; then
-                title_line="$(first_heading_line_outside_fences "$file" '^# AI Assistant Policy: .+')"
-            fi
-            ;;
-    esac
     if [ -z "$title_line" ]; then
         fail_msg "$file" "0" "invalid policy shape: missing policy title '# AI Policy: <Domain>'"
     fi
@@ -247,7 +359,7 @@ check_policy_file() {
         fail_msg "$file" "0" "invalid policy shape: missing '## References' heading"
     fi
 
-    domain_sections="$(heading_lines_outside_fences "$file" '^## ' | sed 's/^## //; s/[[:space:]]*$//' | grep -vE '^(Scope|References|Purpose|Notes|Triggers)$')"
+    domain_sections="$(heading_lines_outside_fences "$file" '^## ' | sed 's/^## //; s/[[:space:]]*$//' | grep -vE '^(Scope|References|Purpose|Notes|Triggers|Loading)$')"
     if [ -z "$domain_sections" ]; then
         fail_msg "$file" "0" "invalid policy shape: missing '## Rules' or a domain-named section"
     fi
@@ -261,6 +373,7 @@ check_policy_file() {
     fi
 
     check_trigger_block "$file" "$title_line" "$purpose_line"
+    check_loading_block "$file" "$purpose_line"
 }
 
 check_thin_agents() {
@@ -419,8 +532,9 @@ collect_raw_triggers() {
 index_mode() {
     local fatal=0 modules=0 policies=0 procedures=0 triggers_total=0 errors_total=0 conflicts=0
     local file base type name source trigs headings shape_out shape_count error_classes
-    local idxdir
+    local idxdir scope mode canon script_root
     idxdir="$(mktemp -d)"
+    script_root="$(cd -P "$(dirname "$0")/.." && pwd)"
     : > "$idxdir/trig"
     : > "$idxdir/errors"
 
@@ -446,14 +560,25 @@ index_mode() {
                 ;;
         esac
         source="$file"
+        canon="$(cd -P "$(dirname "$file")" 2>/dev/null && pwd)/$(basename "$file")"
+        case "$canon" in
+            "$script_root"/ai/policies/*|"$script_root"/ai/procedures/*) scope=global ;;
+            *) scope=project ;;
+        esac
+        mode="$(awk '
+            /^## Loading[[:space:]]*$/ { in_load = 1; next }
+            in_load && /^##[[:space:]]/ { in_load = 0 }
+            in_load && /^- Mode: / { sub(/^- Mode: /, ""); print; exit }
+        ' "$file")"
+        [ -n "$mode" ] || mode=legacy
         trigs="$(awk '
             /^## Triggers[[:space:]]*$/ { in_trig = 1; next }
             in_trig && /^##[[:space:]]/ { in_trig = 0 }
             in_trig && /^- / { t = $0; sub(/^- /, "", t); printf "%s%s", sep, t; sep = ";" }
         ' "$file")"
         headings="$(heading_lines_outside_fences "$file" '^#{1,6} ' | sed 's/|/ /g' | awk '{ printf "%s%s", sep, $0; sep = ";" }')"
-        printf '%s|global|%s|%s|triggers=%s|headings=%s|effective=yes|conflict=none\n' \
-            "$type" "$name" "$source" "${trigs:-none}" "${headings:-none}"
+        printf '%s|%s|%s|%s|mode=%s|triggers=%s|headings=%s|effective=yes|conflict=none\n' \
+            "$type" "$scope" "$name" "$source" "$mode" "${trigs:-none}" "${headings:-none}"
 
         while IFS='|' read -r _ f ln raw pattern; do
             [ -z "$raw" ] && continue
@@ -466,10 +591,10 @@ index_mode() {
         shape_out="$(bash "$0" "$file" 2>&1 || true)"
         shape_count="$(printf '%s\n' "$shape_out" | grep -c '^\[FAILED\]' || true)"
         errors_total=$((errors_total + shape_count))
-        if printf '%s\n' "$shape_out" | grep -qE 'invalid trigger block|empty trigger block|missing triggers|name mismatch|unreadable module'; then
+        if printf '%s\n' "$shape_out" | grep -qE 'invalid trigger block|invalid loading block|empty trigger block|missing triggers|name mismatch|unreadable module'; then
             fatal=1
         fi
-        printf '%s\n' "$shape_out" | grep -oE 'invalid policy shape|invalid trigger block|empty trigger block|missing triggers|name mismatch|unreadable module' >> "$idxdir/errors" || true
+        printf '%s\n' "$shape_out" | grep -oE 'invalid policy shape|invalid trigger block|invalid loading block|empty trigger block|missing triggers|name mismatch|unreadable module' >> "$idxdir/errors" || true
         modules=$((modules + 1))
     done
 
