@@ -13,8 +13,6 @@
 
 ## Pending
 
-- Update the tool-selection ticket's scope: drop the shell preference and the shell fixture.
-- Implement the tool-selection unit on a separate branch.
 - Add the #10 documentation section and the short prompt.
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Revisit GitHub #9 after the live test.

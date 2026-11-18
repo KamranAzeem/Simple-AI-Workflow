@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.6.4 (2026-11-18).** I rewrote the common policy as one sentence per rule and moved the reasons out. Same rules, same behavior, and a new shape test. Read the announcement: [docs/announcements/v6.6.4.md](docs/announcements/v6.6.4.md). |
+| **v6.7.0 (2026-11-19).** A tool ladder: purpose-built tool first, shell second, runtime third, and protocol files are readable even when git ignores them. Read the announcement: [docs/announcements/v6.7.0.md](docs/announcements/v6.7.0.md). |
 
 # Simple AI Workflow
 

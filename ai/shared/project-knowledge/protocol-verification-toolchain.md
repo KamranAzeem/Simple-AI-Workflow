@@ -56,7 +56,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 23 policies (12 domain and 11 protocol), 14 procedures, 21 test scripts, 47 triggers, and the floor of 23.
+- Confirm the user docs counts: 23 policies (12 domain and 11 protocol), 14 procedures, 22 test scripts, 47 triggers, and the floor of 23.
 
 ## Caveats
 

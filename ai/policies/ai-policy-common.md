@@ -147,9 +147,6 @@ This file contains the universal operating rules for all AI assistants in this r
 - Treat a technology vendor or product name as content.
 - **Protected Branches**: obtain explicit human approval before any state-changing Git operation on `master` or `main`.
 - **No watch loops**: do not run autonomous monitoring; generate scripts for the user to run instead.
-- **Built-in Tools First (File Edits)**: use the AI assistant's built-in file-edit tools (for example string-replace and file-write) for all file modifications.
-- Never use CLI commands (`printf`, `echo >`, `tee`, `python`, or `sed -i`) to write or overwrite file content.
-- Allow CLI only when a built-in tool explicitly fails and the failure has been reported to the user.
 - **Verbose File Naming (AI-Generated Files)**: give every AI-created file a verbose, descriptive, kebab-case name that lets its purpose be inferred without opening it.
 - Use only lowercase letters, digits, hyphens, underscores, and dots in the name.
 - Separate words with hyphens.
@@ -169,6 +166,18 @@ This file contains the universal operating rules for all AI assistants in this r
 - **Intent over metrics**: describe a code quality issue by intent, never by a bare metric.
 - Say what single job a function has, or why a parameter list implies a missing abstraction.
 - Never hand the model a bare score such as "complexity 11, threshold 5".
+
+## Tool Selection
+
+- Use the tools the harness exposes, and never assume a tool that is not listed.
+- Treat a harness tool for one operation as a purpose-built tool: read, search, edit, diagnostics, tests, version control, web access, or an external integration.
+- Use a purpose-built tool first when it directly performs the operation.
+- Use the shell second for a command or file operation that no purpose-built tool covers, including git, validators, directory creation, archives, permissions, and paths outside the tool's reach.
+- Use Python or another runtime third only when neither can perform the operation, and report why.
+- Report every fallback and name the tool used.
+- Never use a lower rung to bypass an approval, a protocol rule, or a safety check.
+- Never use the shell, Python, or another runtime to write or edit file content when a purpose-built edit tool exists.
+- Use shell search when the purpose-built search cannot reach the path.
 
 ## Outbound Content Scrub
 

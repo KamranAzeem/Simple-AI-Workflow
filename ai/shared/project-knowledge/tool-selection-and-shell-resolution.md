@@ -8,6 +8,7 @@
 - The always-on bootstrap router tells the assistant to use shell tools to read protocol files that git ignores.
 - The always-loaded common policy has no general rule for choosing a purpose-built tool, the shell, or Python.
 - The shell preference in the user settings is read after the first boot commands, so a Windows session can run every command in the wrong shell.
+- This unit implements the tool ladder and the git-ignore rewrite. The shell preference is deferred to GitHub #9 and the `Default Shell Interpreter` config work.
 - The change is a new unit of work, so the one-unit-per-branch rule applies.
 
 ## Built-in Capability Inventory
@@ -77,8 +78,9 @@
 - Do not add a session-start tool inventory.
 - One ladder bullet covers the intent: use the tools the harness exposes, and never assume a tool that is not listed.
 
-### Shell preference
+### Shell preference (deferred)
 
+- Deferred to GitHub #9 and the `Default Shell Interpreter` config work; this unit does not implement it.
 - Add `## Runtime Configuration` to the project customization file with `Shell` and `Shell Fallback`.
 - Widen the load-context customization step to read the section before the first command.
 - Resolve the project value first, then the global settings value, then the default. A project value overrides a global value.
@@ -108,9 +110,9 @@
 - Run the bootstrap-file sync script with a dry run.
 - Run peer review and require APPROVED.
 - Record the change in the decision store.
-- When the shell preference is included, add a fixture for the early read and the fallback.
+- The shell early-read fixture belongs with GitHub #9; this unit adds no shell fixture.
 
 ## Caveats
 
-- The shell preference scope is open: this unit or a separate unit.
-- The branch is open: the current program branch or a new branch cut from it.
+- The shell preference is deferred to GitHub #9 and the config work; this unit is M.
+- The branch is new, cut from master.

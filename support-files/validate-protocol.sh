@@ -70,6 +70,22 @@ require_in "ai/policies/ai-policy-handoff.md" '^## Valid Handoff$' "Valid Handof
 require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
 require_in "AGENTS.md" "Single-Writer" "State File Single-Writer rule missing from TIER READ-FIRST-RULES in AGENTS.md."
 require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
+require_in "AGENTS.md" "Git-Ignored Protocol Files Are Readable" "Git-ignored readability rule missing from AGENTS.md."
+require_in "AGENTS.md" "built-in file-read tool first" "the built-in-first read rule is missing from AGENTS.md."
+require_in "AGENTS.md" "use a shell tool" "the shell read fallback is missing from AGENTS.md."
+require_in "AGENTS.md" "report the fallback" "the fallback report is missing from AGENTS.md."
+require_in "ai/policies/ai-policy-common.md" '^## Tool Selection$' "Tool Selection section missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" "Use a purpose-built tool first" "the first rung is missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" "Never use a lower rung to bypass" "the no-bypass rule is missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" "Use shell search when the purpose-built search cannot reach the path" "the shell-search exception is missing from ai-policy-common.md."
+if grep -qF "You MUST use shell tools" AGENTS.md; then
+    echo "Error: the mandatory shell-read rule returned to AGENTS.md."
+    exit 1
+fi
+if grep -qF "Built-in Tools First (File Edits)" ai/policies/ai-policy-common.md; then
+    echo "Error: the old file-edit rule returned to ai-policy-common.md."
+    exit 1
+fi
 
 if grep -qE "\bPROCEDURE [A-I]\b|\bProcedure [A-I]\b|\bprocedure [A-I]\b" AGENTS.md ai/procedures/*.md; then
     echo "Error: letter-based procedure reference found; use PROCEDURE <NAME> instead."
