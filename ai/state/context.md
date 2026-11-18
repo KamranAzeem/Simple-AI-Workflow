@@ -14,24 +14,26 @@
 
 ## Current Status
 
-- **Milestone**: v6.6.0 is prepared for release; the live test passed; the program and its 12 children are closed.
-- **Validator**: 8/8; authoring PASSED; all 19 test scripts pass; `--index` 37/23/14, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
+- **Milestone**: v6.6.1 is prepared for release; `AGENTS.md` is 135 lines and 1,607 words; the audit and refactor tickets are closed.
+- **Validator**: 8/8; authoring PASSED; all 20 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
 - **Policy count**: 23 modular policies and 14 procedure modules.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release record gained v6.6.0; ADR store `design-docs/protocol-decisions.md`.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 26 open, 0 in-progress, 84 closed; the tool-selection, common-policy prose-shape, and AGENTS.md audit tickets are open; the young-learner ticket is open XL.
-- **Skills**: 0 project and 0 global packages; no new package.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release record gained v6.6.1; the toolchain record says 20 test scripts.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 27 open, 0 in-progress, 86 closed; the policy-loading and release-voice tickets are open.
+- **Skills**: 0 project and 0 global packages.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; the v6.6.0 release is in flight.
-- **Release**: the plug-in extraction is complete, reviewed, and live-tested; merge, tag, publish, and branch deletion remain.
-- **Common policy prose shape (open, L)**: the read-only audit found 90 multi-sentence rules, 16 rationale bullets, 6 banned words, and 8 prose sections; the debt is recorded; the rewrite is a separate unit after the program release.
-- **AGENTS.md thinness (open)**: the peer review verdict is CHANGES REQUESTED; the report is `2026-11-17_22-19_review-01.md`; the router is at 157/160 lines and 2,399/2,400 words; the refactor order is AGENTS.md first, then the common policy, then the other flagged policies.
-- **Tool selection (open)**: the common-policy ladder and the git-ignore rewrite are a separate unit; the shell preference stays with GitHub #9; no shell fixture; the ticket and design record are in Project Knowledge.
-- **GitHub tracker**: #10 has the design rewrite and the refined user-facing section; #9 is parked; #8 is open.
-- **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15; ticket filed; no branch or policy change.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; the v6.6.1 release is in flight.
+- **Release**: the AGENTS.md refactor is reviewed and green; merge, tag, publish, and branch deletion remain.
+- **AGENTS.md (done)**: 135 lines and 1,607 words; procedure detail lives in `load-context` and `bootstrap-project`; the shape fixture is `tests/test-agents-md-shape.sh`.
+- **Common policy prose shape (open, L)**: 90 multi-sentence rules, 16 rationale bullets, 6 banned words, and 8 prose sections; the rewrite is the next big unit.
+- **Tool selection (open)**: the common-policy ladder and the git-ignore rewrite; the shell preference stays with GitHub #9; no shell fixture.
+- **Policy loading declarations (open, S)**: 13 policies have no `## Loading` mode; no rule change.
+- **Release docs voice (open, S)**: rewrite the v6.6.0 announcement and banner in the user's voice, and record the rule.
+- **GitHub tracker**: #10 has the design rewrite and the short prompt; #9 is parked; #8 is open.
+- **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
 - **Test location**: `tests/` holds the dev-time scripts; `support-files/` holds the sync scripts and validators.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.5.0 are published; v6.6.0 is next.
+- **Release history**: v5.8.0 through v6.6.0 are published; v6.6.1 is next.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

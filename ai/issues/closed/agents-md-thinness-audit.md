@@ -33,3 +33,7 @@ Description:
 ---
 2026-11-17
 Peer review complete. Report: `ai/code-review-reports/2026-11-17_22-19_review-01.md`. Verdict: CHANGES REQUESTED. Top findings: `AGENTS.md` is at 157/160 lines and 2,399/2,400 words; nine bullets exceed 350 characters; the Single-Writer bullet duplicates the common policy; the boot scan exclusions and the shared index steps are procedural detail in the router; 13 of 23 policies lack an explicit `## Loading` Mode. No protocol file changed.
+
+---
+2026-11-18
+Closed: the refactor applied the report as v6.6.1. `AGENTS.md` is 135 lines and 1,607 words; the shape fixture is `tests/test-agents-md-shape.sh`. The policy-loading wiring finding is split to `policy-loading-declarations.md`.

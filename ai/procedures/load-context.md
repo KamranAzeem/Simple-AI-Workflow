@@ -33,7 +33,19 @@
     - Take the skip path on any of these conditions: no `git`; not a git work tree; the path is not the repository top level; a shallow clone; no `origin`; an empty remote head; a failed or timed-out call; required authentication; an unreadable revision.
     - Report `version check skipped: <reason>` with exactly one of these reason strings: `git unavailable`, `path is not a git work tree`, `path is not the repository root`, `clone is shallow`, `no origin remote`, `remote HEAD is empty`, `remote unreachable or timed out`, `authentication required`, `revision unreadable`.
     - Record the outcome for STEP-PROOF-OF-LOAD.
-2. **Index**: Rebuild the module index with `STEP-PROTOCOL-INDEX`. Build it inline with standard tools and the same line format as the developer `--index` oracle; do not run the validator at load context.
+2. **STEP-PROTOCOL-INDEX**: Rebuild the module index from the live files and record it in working context. Build it inline with standard tools and the same line format as the developer `--index` oracle; do not run the validator at load context.
+    - Index the **Global AI Policies Directory** and the **Project AI Policies Directory**, recursively and including `compliance/`, plus the procedure source.
+    - In Protocol Developer Mode, index the distribution tree metadata as usual; the mode limits body loading, not indexing.
+    - The procedure source is every module file under `(Global AI Workflow Directory)/ai/procedures/`.
+    - Resolve both policy paths first; when they are the same path, index it once as global; otherwise mark the project entries as project.
+    - A project policy with the same name as a global policy replaces it; mark the global entry shadowed and keep its triggers reserved.
+    - Skip hidden entries, `tmp`, archives, and symlinks that escape the directory.
+    - Record type, scope, name, source relative to its anchor, literal and normalized triggers, headings with levels, effective, and conflict; never a policy rule or a procedure step.
+    - Normalize a phrase to lowercase, replace every character outside `[a-z0-9]` with a space, collapse spaces, and trim; the only placeholder is a trailing `#N` in a procedure trigger, which matches an optional `#` and one or more digits.
+    - A policy without triggers has an empty trigger set. The index creates no directory.
+    - Report counts by type and scope, the trigger count, the conflict count, and errors by class. The proof-of-load reports them; recovery and checkpoint re-affirmation rebuild silently.
+    - Permit only read operations; write no file and create no cache. Rebuild before dispatch when a module file changed in the session.
+    - Use the fixed error vocabulary: `invalid trigger block`, `empty trigger block`, `duplicate trigger`, `trigger overlap`, `missing triggers`, `name mismatch`, `invalid policy shape`, `unreadable module`, `trigger collision`, and `unknown policy`.
 3. **STEP-WORKFLOW-ACCESS**: Read `ai-policy-common.md` from the **Global AI Policies Directory**.
 4. **STEP-STRUCTURAL-AUDIT (Existence-First)**: Silently verify the existence of the mandatory directories:
     - **Project Artifacts Directory**, **Project Code Review Reports Directory**, **Project Compliance Policies Directory**, **Project Daily Checkpoints Directory**, **Project Handoffs Directory**, **Project Issues Directory**, **Project AI Knowledge Directory**
@@ -47,7 +59,16 @@
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 5. **STEP-DISCOVERY**: Produce a bounded, sorted index of the boot roots, at or under 16 KB.
     - Roots: the project root (`ai-customization.md`), the **Project AI State Files**, the **Project Coordination File**, the **Project AI Knowledge Directory**, the **Project Handoffs Directory**, the `open/` and `in-progress/` directories under the **Project Issues Directory**, the **Project Daily Checkpoints Directory**, the **Project AI Policies Directory**, the **Project AI Skills Directory**, the **Global AI Skills Directory**, every `design-docs/` directory under the project root, the **Global AI Settings Directory**, the **Global AI Knowledge Directory**, the **Global AI Policies Directory**, and the procedure store under the **Global AI Workflow Directory**.
-    - Apply the **Boot Scan Exclusions** rule from TIER READ-FIRST-RULES in listing and reading.
+    - Apply the Boot Scan Exclusions to every listing and read:
+        - Exclude the **Project Secrets Directory**.
+        - Exclude the **Project Artifacts Directory**.
+        - Exclude the **Project Code Review Reports Directory**.
+        - Exclude the **Project Notes Directory**.
+        - Exclude the **Project Pending Directory**.
+        - Exclude the **Project Plans Directory**.
+        - Exclude `ai/issues/closed/`.
+        - Exclude every `.git/` directory.
+        - Treat an excluded path as out of bounds.
     - State the outcome, constraints, and expected output before choosing a command form. The reference form is standard Linux Bash (`find`, `sort`, `wc`, `grep`; no optional tools). The POSIX/BSD `find` equivalent and the `pwsh` 7+ form are examples. Any OS, shell, or default terminal uses equivalent standard tools, reports the command used and any deviation, and stops and reports when no compliant tool exists. Never install tools.
     - Use one command block. Sort with `LC_ALL=C`. Display forward slashes. Emit UTF-8 without a BOM. Run no per-file subprocess.
     - When the output would exceed 16 KB, print the per-root counts and query the remainder on demand.
@@ -59,7 +80,9 @@
     - **Global Knowledge** (from **Global AI Knowledge Directory**) and **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories) are both subject to **Token Rationing**. Index both in this one step: run a shell command (`find` or `ls -R`) over both directories, and record paths, filenames, and apparent technical domains as a reference index. Record each file's age from metadata only: the last-commit date for tracked files, or the modified time otherwise. **DO NOT** load the full text of any Global Knowledge or Project Knowledge file at boot time; load a file in full on demand when an active task requires it. The filename is the lookup key, so a vague or bundled name is invisible to the index. Bound the combined index output at 16 KB; when over, print the per-root counts and query the remainder on demand. Use one command block; run no per-file subprocess.
     - **Project Issues** (from **Project Issues Directory**): Index `open/` and `in-progress/` by filename + line count only. Files under `closed/` are not indexed at boot.
     - **Design Docs** (every `design-docs/` directory under the project root): Index by filename and a short domain, read-only and never loaded in full. Scan at most 5 levels deep, prune `.git`, `node_modules`, `vendor`, and `target`, and skip archives. Scanning `design-docs` by name is permitted.
-    - **Skills**: Run `STEP-SKILLS-INDEX` over the two skills roots; the step is defined once in `AGENTS.md`; index no body.
+    - **STEP-SKILLS-INDEX**: Build an ephemeral name, description, path, and scope index from both skill roots; read no body and write no file.
+        - One level: a `SKILL.md` package; `name` and a one-line `description` of at most 200 characters; lowercase-kebab directory matches `name`; skip and report a hidden entry, symlink, invalid package, or empty root.
+        - A project skill replaces a global skill; report the override and a cross-type name collision; keep the index within 16 KB.
     If a directory is completely empty, explicitly note it in your state tracking.
 8. **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.

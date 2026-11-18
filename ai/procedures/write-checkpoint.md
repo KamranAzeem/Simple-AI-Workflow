@@ -60,7 +60,7 @@
     - Announce: **[Re-affirming key files into context after checkpoint...]**
     - Load the FULL TEXT of `ai-policy-common.md`, every policy file referenced in the **Project Customization File**, and all custom policies discovered in **Project AI Policies Directory**.
       **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the custom-policy scan. Load ONLY `ai-policy-common.md` and the policies explicitly listed under `## Active Expertise` in the **Project Customization File**.
-    - Index the **Global AI Knowledge Directory**, the **Project AI Knowledge Directory**, and every `design-docs/` directory under the project root, up to five levels deep (JIT, no full read, the same way STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory). Run `STEP-SKILLS-INDEX` over the two skills roots.
-    - Rebuild the module index with `STEP-PROTOCOL-INDEX`.
+    - Index the **Global AI Knowledge Directory**, the **Project AI Knowledge Directory**, and every `design-docs/` directory under the project root, up to five levels deep (JIT, no full read, the same way STEP-KNOWLEDGE-INDEXING of PROCEDURE LOAD-CONTEXT does): run a shell `find` or `ls -R` and record the filename index from live discovery (not from memory). Run the skills step defined in PROCEDURE LOAD-CONTEXT (`STEP-SKILLS-INDEX`) over the two skills roots; load that module if it is not in context.
+    - Rebuild the module index with the step defined in PROCEDURE LOAD-CONTEXT (`STEP-PROTOCOL-INDEX`); load that module if it is not in context.
     - Announce on completion: **[Context re-affirmation complete.]**
     If context is still healthy and the operational files are already loaded, skip the reload and state explicitly that it was not needed.

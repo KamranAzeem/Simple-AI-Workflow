@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.6.0 (2026-11-18).** Plug-in policies: the common policy keeps invariants, and task rules load on a trigger or from the owning procedure. Read the announcement: [docs/announcements/v6.6.0.md](docs/announcements/v6.6.0.md). |
+| **v6.6.1 (2026-11-18).** A thinner AGENTS.md: the detail moved to the procedures that own it, the behavior stayed the same, and a new shape check keeps it thin. Read the announcement: [docs/announcements/v6.6.1.md](docs/announcements/v6.6.1.md). |
 
 # Simple AI Workflow
 

@@ -1,4 +1,3 @@
-<!-- START_IMMUTABLE_PROTOCOL -->
 <!-- 
   ========================================================================
   ⚠️ STOP: READ-ONLY PROTOCOL - DO NOT MODIFY OR REGENERATE THIS FILE ⚠️
@@ -66,63 +65,42 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### 🛑 PROHIBITED ACTIONS
 
-- **Self-Modification**: **STRICTLY PROHIBITED** in ordinary projects. Do not rewrite, regenerate, or edit this file. **Exception**: in **Protocol Developer Mode** (see MANDATORY ACTIONS), when the current working directory is the **Global AI Workflow Directory**, the AI is the protocol maintainer and may edit `AGENTS.md` and other protocol files, but only after fully loading `protocol-decisions.md` and with explicit human approval before committing.
+- **Self-Modification**: **STRICTLY PROHIBITED** in ordinary projects. Do not rewrite, regenerate, or edit this file. The maintainer exception is in **Protocol Developer Mode** below.
 - **Unprompted Exploration**: **STRICTLY PROHIBITED** from scanning or ingesting directories outside the `ai/` folder (e.g., `src/`, `logs/`, `tmp/`) unless explicitly directed by a specific task. Indexing directories named `design-docs` by name is the one standing exception.
 - **Local State Creation**: **STRICTLY PROHIBITED** from creating tool-specific dot-directories (e.g., `.cursor/`, `.copilot`, `.gemini/`, `.claude/`, etc.). All AI state must live in `ai/`.
-- **PWD-Only Scope**: Strictly load `AGENTS.md` and scan the `ai/` directory from the **current working directory (PWD) only**. Honor `AGENTS.md` and `ai-customization.md` only from the project root: do not scan subdirectories for additional `AGENTS.md` files, and do not read or load any `AGENTS.md` or `ai-customization.md` file from any other location in the directory tree. If `AGENTS.md` is not found in PWD, report it missing and stop. Do not read another assistant's files such as `CLAUDE.md`.
+- **PWD-Only Scope**: Load `AGENTS.md` and scan `ai/` from the current working directory only. Honor `AGENTS.md` and `ai-customization.md` only from the project root; do not scan subdirectories for more.
+- **Foreign Assistant Files**: Do not read another assistant's files such as `CLAUDE.md`.
+- **Missing Protocol File**: If `AGENTS.md` is not in PWD, report it missing and stop.
 
 ### ✅ MANDATORY ACTIONS
 
-- **OS-Sensitive Execution**: Identify the active OS, shell, and default terminal. State the outcome, constraints, and expected output before choosing a command form. Use the reference form or an equivalent standard tool, report the command used and any deviation, and stop and report when no compliant tool exists. Never install tools to satisfy a boot step.
+- **OS-Sensitive Execution**: Identify the active OS, shell, and terminal. State the outcome, constraints, and expected output before choosing a command form. Use the reference form or an equivalent standard tool, and report the command used and any deviation.
+- **No Tool Installation**: Stop and report when no compliant tool exists. Never install tools to satisfy a boot step.
 - **Surgical Git-Ignore Exception**: `AGENTS.md` and the entire `ai/` directory (including ALL subdirectories and every file within them) are git-ignored by design. **Git-ignored does NOT mean forbidden.** You MUST use shell tools (`cat`, `ls -la`, `find`) to read and list their contents, and add their contents to active context where permitted. Never refuse to read a file or directory solely because it is git-ignored.
-- **Full File Reads (No Partial Reads)**: Read every file you reason about in full, line 1 to EOF, re-reading from disk when a task needs it again. This holds at boot, at load context, at Post-Compaction Recovery, and mid-work. The only exception is log-like bulk data you are searching rather than comprehending (logs, dumps, large JSON or CSV), which you may slice by filter. Never truncate investigation command output with `head`, `tail`, or `-N` limits, since truncated output is fabricated evidence. When a read drives a decision or change, state the file and its line count so the read is auditable. (Evidence-Based Investigation)
+- **Full File Reads**: Read every file you reason about in full, line 1 to EOF. Re-read from disk when a task needs it again. This holds at boot, at load context, at recovery, and mid-work.
+- **No Sliced Evidence**: The only exception is log-like bulk data you search rather than read: logs, dumps, large JSON, or CSV. Never truncate investigation output with `head`, `tail`, or `-N`; truncated output is fabricated evidence.
+- **Auditable Reads**: When a read drives a decision or change, state the file and its line count.
 - **Evidence-Based Investigation**: Investigate before you assert. No claim without a source; no assumptions or guesses. If you cannot verify, write "not verified" and ask. Wide-scope the subject read-only over its cone of influence. See the Investigation Contract in `ai-policy-common.md`.
 - **Context Protection**: Treat **Project AI State Files** as read-only during bootstrap and context loading. During **PROCEDURE POST-COMPACTION-RECOVERY**, these files must not be read at all.
-- **State File Single-Writer Ownership**: **Project AI State Files** are the canonical project narrative and are written by the **project-root orchestrator only**: the single AI session that owns this project root. **Ownership is by session/process identity, not by role**: if that one owning session changes hats mid-session (e.g. manager → developer → document-controller), it is still the orchestrator and still writes the state files normally: switching roles does not create a second writer. The prohibition targets **separate** agents that run as their own session/process: sub-agents and role-based team members (developer, security, document-controller, etc.) that are **not** the owning session, whether long-running or spawned per handoff, **MUST NOT write Project AI State Files**. They obtain awareness by **reading** the coordination board, and they report their own work by updating the **Project Coordination File**, their handoff file, and role-scoped **Project Knowledge** files (single-writer per role). The orchestrator folds those reports into the state files at checkpoint (PROCEDURE WRITE-CHECKPOINT). This keeps the canonical narrative single-writer and free of multi-agent write contention. Awareness = read the board; canonical narrative = orchestrator writes.
+- **State File Single-Writer**: The project-root orchestrator is the only writer of the state files. The common policy owns the mechanics.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
-- **Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory** (TIER CONFIGURATION), you are operating as a protocol developer on this repository itself. This is the sanctioned exception to the Self-Modification prohibition in PROHIBITED ACTIONS: here you maintain these files, not merely read them. Before making any change to any protocol file (`AGENTS.md`, policy files, `validate-protocol.sh`, or any file under `ai/`), you MUST fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`: it records authoritative past decisions and must not be treated as JIT-optional. All paths and file references written into policy files must be authored from the **end-user's project root perspective** (the directory where the user has their own project), not from this repository's internal directory structure. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md` for the full rule. **Policy loading**: during context loading and post-compaction recovery, load ONLY `ai-policy-common.md` plus the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. Do NOT scan and load all files from the **Project AI Policies Directory**: that directory is the protocol's full distribution tree, not your working policy set.
-- **Session Resume (Compacted Context)**: When a session begins from a compacted conversation summary, or the conversation is compacted mid-session, AI MUST run **PROCEDURE POST-COMPACTION-RECOVERY** before responding to the user's first request. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary the AI did not write.
-- **Git Workspace Detection**: Before offering git operations on the project root, scan for `.git` subdirectories within the project tree (excluding `ai/`). If any `.git` directory is found, the root is part of a larger git workspace, do not treat it as a git repo itself. Do not offer `git init`, run `git log` on the project root, or propose git operations that assume the project root is independently tracked. Users may also define explicit workspace rules in the **Project Customization File**.
+- **Protocol Developer Mode**: When PWD matches the **Global AI Workflow Directory**, you are the protocol maintainer. This is the sanctioned exception to Self-Modification: you maintain these files, not merely read them. Before changing a protocol file (`AGENTS.md`, a policy, a procedure, or a validator script), fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`, and get explicit human approval before committing.
+- **End-User Perspective**: Write every path and file reference in a policy file from the end-user's project root, not from this repository's internal tree. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md`.
+- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`. Do not scan the **Project AI Policies Directory**; it is the distribution tree, not your working set.
+- **Session Resume (Compacted Context)**: When a session starts from a compacted summary or is compacted mid-session, run **PROCEDURE POST-COMPACTION-RECOVERY** before answering. Signals: "Compacted conversation", a `<conversation-summary>` block, or a machine-generated multi-section summary you did not write.
 - **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
 - **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
 
 ### Boot Scan Exclusions
 
-- **Boot Scan Exclusions**: Exclude these paths from every boot scan, index, and proof, in listing and reading.
-- Exclude the **Project Secrets Directory**.
-- Exclude the **Project Artifacts Directory**.
-- Exclude the **Project Code Review Reports Directory**.
-- Exclude the **Project Notes Directory**.
-- Exclude the **Project Pending Directory**.
-- Exclude the **Project Plans Directory**.
-- Exclude `ai/issues/closed/`.
-- Exclude every `.git/` directory.
-- Exclude archives.
-- Exclude the **Global AI Backups Directory**.
-- Never list the **Project Secrets Directory** or the **Global AI Backups Directory**.
-- Treat an excluded path as out of bounds.
+- **Boot Scan Exclusions**: Apply the exclusions in STEP-DISCOVERY of PROCEDURE LOAD-CONTEXT to every boot scan, index, and proof.
 
 ---
 
 ## Shared Protocol Steps
 
-- **STEP-PROTOCOL-INDEX**: Rebuild the module index from the live files and record it in working context.
-  - Index the **Global AI Policies Directory** and the **Project AI Policies Directory**, recursively and including `compliance/`, plus the procedure source.
-  - In Protocol Developer Mode, index the distribution tree metadata as usual; the mode limits body loading, not indexing.
-  - The procedure source is every module file under `(Global AI Workflow Directory)/ai/procedures/`.
-  - Resolve both policy paths first; when they are the same path, index it once as global; otherwise mark the project entries as project.
-  - A project policy with the same name as a global policy replaces it; mark the global entry shadowed and keep its triggers reserved.
-  - Skip hidden entries, `tmp`, archives, and symlinks that escape the directory.
-  - Record type, scope, name, source relative to its anchor, literal and normalized triggers, headings with levels, effective, and conflict; never a policy rule or a procedure step.
-  - Normalize a phrase to lowercase, replace every character outside `[a-z0-9]` with a space, collapse spaces, and trim; the only placeholder is a trailing `#N` in a procedure trigger, which matches an optional `#` and one or more digits.
-  - A policy without triggers has an empty trigger set. The index creates no directory.
-  - Report counts by type and scope, the trigger count, the conflict count, and errors by class. The proof-of-load reports them; recovery and checkpoint re-affirmation rebuild silently.
-  - Permit only read operations; write no file and create no cache. Rebuild before dispatch when a module file changed in the session.
-  - Use the fixed error vocabulary: `invalid trigger block`, `empty trigger block`, `duplicate trigger`, `trigger overlap`, `missing triggers`, `name mismatch`, `invalid policy shape`, `unreadable module`, `trigger collision`, and `unknown policy`.
-
-- **STEP-SKILLS-INDEX**: Build an ephemeral name, description, path, and scope index from both skill roots; read no body and write no file.
-  - One level: a `SKILL.md` package; `name` and a one-line `description` of at most 200 characters; lowercase-kebab directory matches `name`; skip and report a hidden entry, symlink, invalid package, or empty root.
-  - A project skill replaces a global skill; report the override and a cross-type name collision; keep the index within 16 KB.
+- STEP-PROTOCOL-INDEX: Rebuild the module index from the live files and record it in working context. Defined in PROCEDURE LOAD-CONTEXT.
+- STEP-SKILLS-INDEX: Build the ephemeral skills index from both skill roots; read no body and write no file. Defined in PROCEDURE LOAD-CONTEXT.
 
 ## Protocol Dispatch
 

@@ -13,11 +13,12 @@
 
 ## Pending
 
-- Complete the v6.6.0 release: merge, tag, publish, and delete the temporary work branch.
-- Refactor `AGENTS.md`: move the boot scan exclusions and shared index steps to load-context, reduce Single-Writer to a pointer, and split the long bullets.
-- Rewrite the common policy to the authoring prose shape (L; after the program release).
+- Complete the v6.6.1 release: merge, tag, publish, and delete the temporary work branch.
+- Rewrite the common policy to the authoring prose shape (L).
 - Update the tool-selection ticket's scope: drop the shell preference and the shell fixture.
-- Implement the tool-selection unit on a separate branch cut after the program release.
+- Implement the tool-selection unit on a separate branch.
 - Add the #10 documentation section and the short prompt.
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Revisit GitHub #9 after the live test.
+- Declare the missing policy loading modes.
+- Rewrite the release docs in the user's voice, starting with v6.6.0.

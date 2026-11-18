@@ -105,7 +105,7 @@ require_in "AGENTS.md" "STEP-SKILLS-INDEX" "AGENTS.md does not define STEP-SKILL
 require_in "AGENTS.md" "Global AI Skills Directory" "AGENTS.md does not name the global skills directory."
 require_in "AGENTS.md" "Project AI Skills Directory" "AGENTS.md does not name the project skills directory."
 require_in "AGENTS.md" "use skill <name>" "AGENTS.md does not dispatch use skill."
-require_in "AGENTS.md" "200 characters" "AGENTS.md does not cap the description."
+require_in "ai/procedures/load-context.md" "200 characters" "load-context does not cap the skill description."
 require_in "AGENTS.md" "a helper needs explicit approval" "AGENTS.md does not gate a skill helper."
 require_in "ai/procedures/load-context.md" "ITEM SKILLS-INDEX" "load-context does not report ITEM SKILLS-INDEX."
 require_in "ai/policies/ai-policy-common.md" "^## Skills$" "the common policy has no Skills section."
@@ -113,9 +113,6 @@ require_in "ai/policies/ai-policy-common.md" "200 characters" "the common policy
 require_in "ai/policies/ai-policy-common.md" "the user is responsible" "the common policy does not state the user responsibility."
 require_in "ai/procedures/write-checkpoint.md" "package names" "the checkpoint does not record package names."
 require_in "ai/procedures/repair-knowledge-files.md" "never edits a skill package" "the repair boundary does not exclude skills."
-if [ "$(wc -l < "$ROOT/AGENTS.md")" -gt 160 ] || [ "$(wc -c < "$ROOT/AGENTS.md")" -gt 24900 ]; then
-    echo "FAIL: AGENTS.md exceeds the thin targets."; fail=1
-fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: skills index fixture."

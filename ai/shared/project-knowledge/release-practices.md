@@ -30,6 +30,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v6.6.1 (2026-11-18)
+
+- Move the boot scan exclusions and the two index step bodies into `load-context`; move git workspace detection into `bootstrap-project`.
+- Reduce Single-Writer to one sentence and a pointer; split the long router bullets.
+- Add `tests/test-agents-md-shape.sh`: line, word, byte, and bullet caps, plus a check that the single-writer mechanics stay in the common policy.
+- `AGENTS.md`: from 157 lines and 2,399 words to 135 lines and about 1,600 words.
+- Upgrade action: pull, run the sync script, restart the session.
+- Published 2026-11-18.
+
 ### v6.6.0 (2026-11-18)
 
 - Split the common policy into plug-in policies: outbound content scrub, knowledge, issue management, design documents, and thinking modes. The state-file rules and the engineering and testing standards stay as invariants.
