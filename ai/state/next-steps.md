@@ -13,7 +13,6 @@
 
 ## Pending
 
-- Rewrite the common policy to the authoring prose shape (L).
 - Update the tool-selection ticket's scope: drop the shell preference and the shell fixture.
 - Implement the tool-selection unit on a separate branch.
 - Add the #10 documentation section and the short prompt.

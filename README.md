@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.6.3 (2026-11-18).** Three small fixes from the AGENTS.md refactor: a stale pointer, a restored maintainer scope, and a loading sentence that contradicted the index. No behavior change. Read the announcement: [docs/announcements/v6.6.3.md](docs/announcements/v6.6.3.md). |
+| **v6.6.4 (2026-11-18).** I rewrote the common policy as one sentence per rule and moved the reasons out. Same rules, same behavior, and a new shape test. Read the announcement: [docs/announcements/v6.6.4.md](docs/announcements/v6.6.4.md). |
 
 # Simple AI Workflow
 

@@ -14,23 +14,22 @@
 
 ## Current Status
 
-- **Milestone**: v6.6.3 is prepared; the AGENTS.md refactor follow-ups are fixed; `AGENTS.md` is 135 lines and 1,617 words.
-- **Validator**: 8/8; authoring PASSED; all 20 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
+- **Milestone**: v6.6.4 is prepared; the common policy rewrite is complete; the file is 682 lines, 6,934 words, and 44,857 bytes.
+- **Validator**: 8/8; authoring PASSED; all 21 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
 - **Policy count**: 23 modular policies and 14 procedure modules.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading decision.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 25 open, 0 in-progress, 89 closed.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading decision and the prose-rewrite rationale; the toolchain record says 21 test scripts.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 90 closed.
 - **Skills**: 0 project and 0 global packages.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; the next unit is the common-policy prose rewrite at v6.6.4.
-- **Release**: v6.6.2 is released and published; the v6.6.3 follow-up fixes are prepared; the common-policy rewrite follows at v6.6.4.
-- **Common policy prose shape (open, L)**: 90 multi-sentence rules, 16 rationale bullets, 6 banned words, and 8 prose sections; the rewrite is the next big unit.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; the next unit is the tool-selection scope update, then the tool-selection unit.
+- **Release**: v6.6.4 is prepared; the common policy rewrite is complete and guarded by `tests/test-common-prose-shape.sh`.
 - **Tool selection (open)**: the common-policy ladder and the git-ignore rewrite; the shell preference stays with GitHub #9; no shell fixture.
 - **GitHub tracker**: #10 has the design rewrite and the short prompt; #9 is parked; #8 is open.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
 - **Test location**: `tests/` holds the dev-time scripts; `support-files/` holds the sync scripts and validators.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.6.2 are published; v6.6.3 is next.
+- **Release history**: v5.8.0 through v6.6.3 are published; v6.6.4 is next.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

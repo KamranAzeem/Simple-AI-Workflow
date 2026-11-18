@@ -30,3 +30,5 @@
 [2026-11-18] Added the loading declarations to 12 policies, recorded the common-policy exemption in the ADR, moved the legacy test case, and prepared the v6.6.2 release note from the user's approved text; no rule changed.
 [2026-11-18] Released v6.6.2 and published its GitHub release: the 12 load paths are declared, the common policy is exempt, the load-path test pins all four modes, and the note uses the approved plain text.
 [2026-11-18] Fixed the AGENTS.md refactor follow-ups: restored the maintainer scope, corrected the write-checkpoint pointer, fixed the loading sentence, updated the validator message, and added the quoted-label test; prepared the v6.6.3 release.
+[2026-11-18] Released v6.6.3 and published its GitHub release: the refactor follow-ups are fixed, the quoted-label test is live, and the note uses the approved text.
+[2026-11-18] Rewrote the common policy to the authoring prose shape: 90 multi-sentence rules split, 16 rationale bullets moved to the ADR, 6 banned words removed, 8 prose sections flattened; the shape fixture passes new and fails old with 132 findings; prepared the v6.6.4 release.

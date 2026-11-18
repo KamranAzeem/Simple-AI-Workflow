@@ -1117,3 +1117,26 @@ Consequences: the common policy keeps about 45 lines and 4.3 KB, of which about 
 Context: the AGENTS.md audit found 13 of 23 policies without a declaration, and the index reported `legacy` for each, which hid the real path. The loading contract already supports the four modes, and the validator and load-path fixture already check them.
 
 Consequences: the index reports the real mode for 22 of 23 policies; the common policy keeps a recorded exemption; the policy count and the trigger count do not change; `tests/test-policy-load-paths.sh` moves the legacy case to the common policy and pins trigger, procedure, and expertise modes on `cloud`, `code-review`, and `web-frontend`; the release is v6.6.2.
+
+## 2026-11-18: The common policy becomes rules-only and keeps its rationale in the ADR ledger
+
+The common policy is rewritten to the authoring prose shape: one sentence per bullet, one action per sentence, no rationale in a rule, and no prose rule sections. The canonical state-file headers stay byte-identical, and no rule changes. The reasons that left the policy are retained here.
+
+Context:
+
+- The file carried 90 multi-sentence rules, 16 rationale bullets, 6 banned modal words, and 8 prose sections after the plugin split.
+- The Non-Negotiables are the most costly rules to break and are active at boot, load, recovery, and mid-work.
+- Goodhart's Law: a bare metric becomes a target, and stronger models game it more.
+- SOLID is non-negotiable for maintainable, testable systems.
+- YAGNI: speculative generality adds complexity without proven value.
+- Trunk-based development enables continuous integration and reduces merge conflicts.
+- Conventional Commits enables changelogs and semantic version bumps.
+- Verbose names aid the JIT lookup, while code is navigated by structure and imports, so verbose names break imports and routing.
+- AI text is too perfect, polite, and generic, so the Humanized Output rules make the output sound human.
+- Em dashes are an AI tell; negative parallelisms sound like disproving a misconception; the rule of three adds noise; promotional language, hedging, vague attributions, faux analysis, list-bombing, and exhaustive caveats weaken the text.
+- A human git name is acceptable and a tool name is not.
+- A plausible-sounding flag is worse than no command, and flags differ across tools and versions.
+- A low-risk change needs a light pass, and a high-risk or destructive change needs the full treatment.
+- Generated-file validation catches syntax, formatting, and common bugs before human review.
+
+Consequences: the policy is 682 lines, 6,934 words, and 44,857 bytes, down 2,335 bytes; every rule is one sentence; the four header hashes match; `tests/test-common-prose-shape.sh` guards the shape and fails on the old file with 132 findings; the release is v6.6.4.
