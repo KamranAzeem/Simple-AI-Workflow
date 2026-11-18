@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.6.1 (2026-11-18).** A thinner AGENTS.md: the detail moved to the procedures that own it, the behavior stayed the same, and a new shape check keeps it thin. Read the announcement: [docs/announcements/v6.6.1.md](docs/announcements/v6.6.1.md). |
+| **v6.6.1 (2026-11-18).** I moved the detail out of AGENTS.md and into the procedures that own it. The file every session loads is 135 lines instead of 157. Read the announcement: [docs/announcements/v6.6.1.md](docs/announcements/v6.6.1.md). |
 
 # Simple AI Workflow
 
