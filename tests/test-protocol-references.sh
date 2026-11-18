@@ -127,6 +127,16 @@ for f in docs/ai-customization.md support-files/sync-agents-md.sh support-files/
     fi
 done
 
+# --- quoted TIER READ-FIRST-RULES label conformance ---
+while IFS=: read -r file _ match; do
+    label="$(printf '%s\n' "$match" | sed -n 's/.*TIER READ-FIRST-RULES "\([^"]*\)".*/\1/p')"
+    [ -n "$label" ] || continue
+    if ! grep -qF "**$label**" AGENTS.md; then
+        echo "FAIL: $file quotes TIER READ-FIRST-RULES \"$label\", but AGENTS.md has no **$label** bullet."
+        fail=1
+    fi
+done < <(grep -rnoE 'TIER READ-FIRST-RULES "[^"]+"' AGENTS.md ai/procedures ai/policies ai/shared docs README.md 2>/dev/null)
+
 if [ "$fail" -eq 0 ]; then
     echo "PASS: all references resolve; no letter, numeric, hardcoded path, or order drift remains."
     exit 0

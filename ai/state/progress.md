@@ -28,3 +28,5 @@
 [2026-11-18] Released v6.6.1 and published its GitHub release: the thinner AGENTS.md is live, the shape fixture guards it, and the release notes are in the user's voice.
 [2026-11-18] Rewrote the v6.6.0 and v6.6.1 release notes in the user's voice from his approved drafts, updated the banner, and recorded the voice, draft-first, and no-invented-events rules; no version bump.
 [2026-11-18] Added the loading declarations to 12 policies, recorded the common-policy exemption in the ADR, moved the legacy test case, and prepared the v6.6.2 release note from the user's approved text; no rule changed.
+[2026-11-18] Released v6.6.2 and published its GitHub release: the 12 load paths are declared, the common policy is exempt, the load-path test pins all four modes, and the note uses the approved plain text.
+[2026-11-18] Fixed the AGENTS.md refactor follow-ups: restored the maintainer scope, corrected the write-checkpoint pointer, fixed the loading sentence, updated the validator message, and added the quoted-label test; prepared the v6.6.3 release.

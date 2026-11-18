@@ -68,7 +68,7 @@ require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missi
 require_in "ai/policies/ai-policy-common.md" '^## Outbound Content Scrub$' "Outbound Content Scrub section missing from ai-policy-common.md."
 require_in "ai/policies/ai-policy-handoff.md" '^## Valid Handoff$' "Valid Handoff section missing from ai-policy-handoff.md."
 require_in "AGENTS.md" "^## Protocol Dispatch$" "Protocol Dispatch section missing from AGENTS.md."
-require_in "AGENTS.md" "Single-Writer" "State File Single-Writer Ownership rule missing from TIER READ-FIRST-RULES in AGENTS.md."
+require_in "AGENTS.md" "Single-Writer" "State File Single-Writer rule missing from TIER READ-FIRST-RULES in AGENTS.md."
 require_in "AGENTS.md" "Full File Reads" "Full File Reads mandate missing from TIER READ-FIRST-RULES in AGENTS.md."
 
 if grep -qE "\bPROCEDURE [A-I]\b|\bProcedure [A-I]\b|\bprocedure [A-I]\b" AGENTS.md ai/procedures/*.md; then
