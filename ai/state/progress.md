@@ -38,3 +38,5 @@
 [2026-11-19] Fixed GitHub #11: the boot builds its index with the built-in reader, glob, and search; the optional helper is off the boot path; the proof reports `index-source=builtin`; review-57 APPROVED.
 [2026-11-19] Updated the index contract, support README, common policy, project knowledge, validator anchors, four docs, README banner, v6.10.2 announcement, and the ADR supersession; fixed the helper's empty-glob and shadowed-trigger cases.
 [2026-11-19] Verified the fix: suite 25/25, protocol 8/8, authoring and triggers PASSED, markdownlint 0, shellcheck 0; counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors.
+[2026-11-19] Merged GitHub #11 to master as `2f3a081`, tagged `v6.10.2`, published the GitHub Release, deleted the fix branch, and closed the issue.
+[2026-11-19] Post-merge verification on master: suite 25/25, protocol 8/8, counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; the plan entry is on the issue and the plan file is removed.
