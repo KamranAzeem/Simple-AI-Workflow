@@ -15,3 +15,7 @@ Acceptance criteria:
 - A realistic data workflow walked end to end.
 - Shows documentation and knowledge capture alongside the code.
 - Links from the README examples section.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The existing learning runbook, the full-stack example, and the multi-agent runbook cover the process; a domain-specific data-engineering tutorial is out of scope.

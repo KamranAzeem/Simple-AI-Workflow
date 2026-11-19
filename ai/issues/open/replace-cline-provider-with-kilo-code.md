@@ -19,3 +19,9 @@ Replace the Cline provider guidance with Kilo Code guidance. This includes `docs
 - Any provider-specific screenshots, steps, or config that do not carry over to Kilo Code.
 
 Filed for later; not started.
+
+## Merged scope (2026-11-19)
+
+Absorbed `kilo-code-documentation.md`. Add the Kilo Code facts to `docs/post-compaction-reload-trigger-setup.md` and `ai/shared/project-knowledge/compaction-trigger-problem.md`: AGENTS.md is always-on in Kilo, the compaction summary is visible in chat, the human backstop is sufficient, and no slash command or new files are needed. The KiloCode row exists at `docs/post-compaction-reload-trigger-setup.md:72` but lacks those facts.
+
+Additional live Cline references: `README.md:473`, `docs/example-learning-session-runbook.md:15-18`, and `docs/ai-provider-selection-guide.md:3,118`.

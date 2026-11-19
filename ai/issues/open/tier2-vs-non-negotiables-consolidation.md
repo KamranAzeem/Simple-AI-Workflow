@@ -19,7 +19,6 @@ Decide and execute one canonical home:
 Constraints:
 
 - Apply the 2026-08-31 routing principle (AGENTS.md is a router, not a catalog).
-- This affects the policies-to-skills rename ticket, so sequence the two together.
 - Historical records stay byte-identical.
 
 Acceptance criteria:
@@ -29,3 +28,8 @@ Acceptance criteria:
 - Validator anchors updated as needed and green.
 
 Background: `ai/shared/project-knowledge/protocol-routing-principle.md`.
+
+---
+
+2026-11-19
+The `policies-to-skills` rename is closed; no sequencing dependency remains.

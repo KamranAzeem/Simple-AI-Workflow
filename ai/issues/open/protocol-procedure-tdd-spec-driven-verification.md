@@ -18,7 +18,7 @@ Proposed direction (to mature):
 - Treat a procedure's observable contract as its spec: trigger and inputs, preconditions, side effects, postconditions, invariants, and failure modes.
 - Test behavior with scenario fixtures. Run a procedure against a throwaway fixture project with a workflow clone, then assert on artifacts, not prose. Assert canonical headers, ordering, sizes, required sections, ticket moves, dispatch decisions, and refusal paths.
 - Keep the runtime script-free. Dev-time tests live at the project-root `/tests/`. The `support-files/` directory stays thin: validators, sync scripts, and other dev tooling only, with no tests. Moving the current test scripts out of `support-files/` is part of this work.
-- Extend the existing fixture pattern; `support-files/test-trigger-rules.sh` is the precedent.
+- Extend the existing fixture pattern; `tests/test-trigger-rules.sh` is the precedent.
 - Pilot three procedures with observable artifacts: WRITE-CHECKPOINT, POST-COMPACTION-RECOVERY, and MANAGE-ISSUES. Expand only after the pattern proves itself.
 
 Scope expansion (2026-11-13, human decision):
@@ -49,7 +49,7 @@ Open questions to resolve before planning:
 
 Scope: this ticket covers the design and a pilot, not a rewrite of all procedures. The full-protocol program is phased and delivered through child tickets.
 
-Related: `ai/issues/open/protected-specification-paths-and-spec-change-approval.md`, `ai/issues/open/protocol-design-docs.md`, `design-docs/protocol-decisions.md`, `ai/shared/project-knowledge/protocol-verification-toolchain.md`, `support-files/test-trigger-rules.sh`.
+Related: `ai/issues/open/protected-specification-paths-and-spec-change-approval.md`, `ai/issues/open/protocol-design-docs.md`, `design-docs/protocol-decisions.md`, `ai/shared/project-knowledge/protocol-verification-toolchain.md`, `tests/test-trigger-rules.sh`.
 
 ---
 2026-11-13
@@ -58,3 +58,8 @@ The `/tests/` structural move is delivered as step 0 of `ai/plans/outbound-conte
 ---
 2026-11-13
 The handoff validity fixture is delivered as part of the handoff work at `tests/test-create-handoff.sh`, which covers a phase 2 item. The phases below start with the handoff fixture in place.
+
+---
+
+2026-11-19
+Backlog sweep: the `/tests/` move and the handoff fixture are delivered. The precedent is `tests/test-trigger-rules.sh`. This ticket now owns the test strategy, the protected-spec mechanism, and the phased coverage.

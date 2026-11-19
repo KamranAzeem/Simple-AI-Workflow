@@ -23,3 +23,7 @@ Key facts to document:
 - No workflow slash command and no new files.
 
 Origin: `ai/notes/kilo-code-documentation.md` (removed, captured here).
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. Merged into `replace-cline-provider-with-kilo-code.md`; the three Kilo facts and the post-compaction guide updates are part of that ticket.

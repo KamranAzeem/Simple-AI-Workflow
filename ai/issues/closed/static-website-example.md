@@ -20,3 +20,7 @@ Acceptance criteria:
 - Two runnable walkthroughs exist for the same small static site.
 - Variant B shows the design chain in order, and how the AI checks for missing docs.
 - Both link from the README and use real commands.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. `docs/multi-agent-runbook.md` is already a static-site walkthrough; the with-design-docs variant is not worth a separate example.

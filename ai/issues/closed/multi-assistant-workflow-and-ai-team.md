@@ -30,3 +30,7 @@ Acceptance criteria (refine after reconciliation):
 - A single coordination contract that does not duplicate the current single-writer and board model.
 - Dry-run for multi-target actions; human approval before any push or merge.
 - No external-tool dependency.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The draft predates the state model; the current contract is `docs/multi-agent-runbook.md` plus the single-writer and board rules (`ai-policy-common.md:257-267`). The runtime is a separate project.

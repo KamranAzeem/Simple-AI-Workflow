@@ -28,3 +28,7 @@ Deliverable: a comparison in the setup guide or a knowledge file, with a recomme
 - Does the tooling expose a SessionResume event?
 
 Background: `ai/shared/project-knowledge/compaction-trigger-problem.md`.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. `ai/shared/project-knowledge/compaction-trigger-problem.md:48-51` records the PreCompact, PostCompact, and SessionResume facts, and `docs/post-compaction-reload-trigger-setup.md:68-78` holds the per-assistant table. There is no PostCompact hook to add.

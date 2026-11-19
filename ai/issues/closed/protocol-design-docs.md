@@ -29,3 +29,7 @@ Acceptance criteria:
 - A Delivery Ledger exists and is updated at each checkpoint once implementation begins against it.
 - Vision, PRD, and lean HLD exist with numbered items.
 - No duplication of existing ADR or README content.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The ADR store and `design-docs/specs/` are the design record, and the protocol's own vision/PRD/ledger are explicitly deferred (`design-docs/protocol-decisions.md:329`, `:1182`). Reopen only if that chain is prioritized.

@@ -15,3 +15,7 @@ The candidate design: one status file per agent or task under `ai/shared/coordin
 Adopt only when real parallelism is introduced.
 
 Background: `ai/policies/ai-policy-common.md` (`## State File Ownership Protocol`); the full design note is in the local repair artifact.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. `ai/shared/coordination.md:37` already records the per-agent status-file pattern for real parallelism; adopt it only when that concurrency arrives.

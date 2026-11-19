@@ -21,3 +21,7 @@ Acceptance criteria:
 - A file-manager path is documented for the first-time copy of `AGENTS.md` and `ai-customization.md`.
 - The steps name the exact source and destination.
 - The command-line path remains available.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. `README.md:24-25` names the exact source and destination and allows the file-manager path, and `docs/setup.md` covers the manual setup.

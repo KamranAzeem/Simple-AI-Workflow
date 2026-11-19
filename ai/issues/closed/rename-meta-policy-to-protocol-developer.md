@@ -36,3 +36,7 @@ The meta policy name does not say what it governs. The name `meta` is also the A
 
 - Deferred from the authoring-standard grilling on 2026-10-18.
 - The validator hardcoded baseline is intentional. This ticket updates it and records the coupling.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep as won't fix. The change is cosmetic, the `policies-to-skills` dependency is closed, and `meta` is the established Active Expertise keyword and validator baseline.

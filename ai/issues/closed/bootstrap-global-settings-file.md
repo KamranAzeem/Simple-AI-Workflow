@@ -26,3 +26,7 @@ Acceptance criteria:
 - The seeded content reflects the chosen expertise and traits and the detected OS.
 - Missing tools appear disabled with an install offer, and admin-only tools are left to the user.
 - The file includes a writing style and words to avoid.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The bootstrap creates the global directories (`bootstrap-project.md:8`), and the quick start plus `docs/setup.md:13` cover the settings file from `docs/global-user-settings.md`. Seeding tools and install offers conflicts with the no-install rule.

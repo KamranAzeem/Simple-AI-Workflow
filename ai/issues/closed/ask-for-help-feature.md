@@ -89,3 +89,7 @@ Given how painful screen sharing has been, the response should let the friend's 
 - Validator stays green; docs updated.
 
 Notes: this ticket covers three separable pieces (the report generator with redaction, the friend-intake mode, and the portable two-sided templates). It can be split during design if that helps.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The redaction part is the outbound scrub policy, `ai/artifacts/` is git-ignored (`.gitignore:9`), and the remaining report and intake workflow is a separate user feature, not a protocol need. Reopen a smaller report-template ticket only if it is prioritized.

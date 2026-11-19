@@ -19,3 +19,7 @@ Acceptance criteria:
 - A design that defines precedence between the summary and the state files.
 - State files are never read during recovery before that precedence rule is satisfied.
 - Validator anchors updated and green.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep as won't fix. The recovery refusal to read the state files is a deliberate safety rule; revisit only if the state model changes.

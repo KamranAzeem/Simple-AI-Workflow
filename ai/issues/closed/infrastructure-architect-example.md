@@ -25,3 +25,7 @@ Acceptance criteria:
 - The example is broken into repositories with a short map.
 - Each stage shows the prompts and the artifacts produced.
 - The documentation produced is included, not just described.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The XL tutorial is out of scope; the existing runbooks and examples cover the workflow.

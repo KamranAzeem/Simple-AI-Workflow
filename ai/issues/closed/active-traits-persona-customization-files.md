@@ -25,3 +25,7 @@ Acceptance criteria:
 - A set of trait examples exists for the personas above.
 - The customization guide explains how to use them.
 - No always-loaded bloat: traits load only when listed in the customization file.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. Merged into `customization-presets-per-role.md`; the missing personas are now part of that ticket. The premise that only one trait exists is stale: the guide already lists seven.

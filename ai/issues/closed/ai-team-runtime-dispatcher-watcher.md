@@ -24,3 +24,7 @@ Acceptance criteria (refine after reconciliation):
 - A dispatcher that spawns roles from handoffs without double dispatch.
 - Roles report to the board and their handoff; they never write the three state files.
 - Runs as a standalone project on top of the protocol.
+
+## Closure
+
+Closed on 2026-11-19 by the backlog evaluation sweep. The runtime is a separate project and is out of scope for this repository; the coordination contract is in `docs/multi-agent-runbook.md` and the common policy's single-writer and board rules.

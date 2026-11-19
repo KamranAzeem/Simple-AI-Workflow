@@ -25,3 +25,9 @@ Acceptance criteria:
 - One preset per role under `docs/examples/` or a presets directory.
 - The customization guide explains how to pick and adapt a preset.
 - Cross-referenced with the Active Traits persona ticket.
+
+## Merged scope (2026-11-19)
+
+Absorbed `active-traits-persona-customization-files.md`. The presets also cover the personas the trait catalog does not: system administrator, cloud administrator, infrastructure engineer, and software developer. The existing seven traits already cover System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer (`docs/ai-customization-guide.md:64-73`).
+
+The role list and each preset's contents still need the user decision noted above.
