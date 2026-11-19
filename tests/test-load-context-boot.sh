@@ -15,7 +15,8 @@ export HOME
 
 mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"
 mkdir -p "$PROJECT/ai"/{state,shared/project-knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies,skills}
-mkdir -p "$PROJECT/design-docs/.git" "$PROJECT/ai/policies/.canaryhidden" "$PROJECT/ai/policies/tmp"
+mkdir -p "$PROJECT/design-docs/.git" "$PROJECT/ai/policies/.canaryhidden" "$PROJECT/ai/policies/tmp" "$PROJECT/ai/skills/example"
+printf -- '---\nname: example\ndescription: Example skill.\n---\n' > "$PROJECT/ai/skills/example/SKILL.md"
 
 for d in secrets artifacts code-review-reports notes pending plans; do
     printf 'canary-boot\n' > "$PROJECT/ai/$d/canary-$d.txt"
@@ -57,7 +58,7 @@ absent() {
 }
 
 P="$ROOT/ai/procedures/load-context.md"
-for anchor in "index-protocol.sh" "index-source=helper" "index-source=fallback" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "STEP-POLICY-LOADING"; do
+for anchor in "index-protocol.sh" "index-source=helper" "index-source=fallback" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "Global AI Skills Directory" "STEP-POLICY-LOADING"; do
     present "$P" "$anchor" "procedure anchor: $anchor"
 done
 # shellcheck disable=SC2016

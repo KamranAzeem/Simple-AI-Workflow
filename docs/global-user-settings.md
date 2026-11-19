@@ -1,4 +1,4 @@
-<!-- Save this file as <Global User AI Directory>/settings/global-user-settings.md (default $HOME/.ai/settings/global-user-settings.md), then replace the placeholders with your own details. The AI loads the whole settings directory before the first shell command. Run `repair global settings` to consolidate it, normalize the keys, and verify the tools. The repair redacts secrets and never copies the sensitive names. -->
+<!-- Save this file as <Global User AI Directory>/settings/global-user-settings.md (default $HOME/.ai/settings/global-user-settings.md), then replace the placeholders with your own details. The AI loads the whole settings directory before the first named command. Run `repair global settings` to consolidate it, normalize the keys, and verify the tools. The repair redacts secrets and never copies the sensitive names. -->
 
 # Global User Settings
 

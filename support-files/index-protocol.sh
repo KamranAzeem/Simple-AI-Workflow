@@ -29,7 +29,7 @@ add_files() {
         [ -n "${seen[$canon]:-}" ] && continue
         seen[$canon]=1
         files+=("$f")
-    done < <(find "$root" \( -name '.*' -o -name tmp -o -name '*.tar*' -o -name '*.zip' \) -prune -o -type f -name '*.md' -print0 2>/dev/null)
+    done < <(find "$root" \( -name '.*' -o -name tmp -o -name '*.tar' -o -name '*.tar.gz' -o -name '*.tgz' -o -name '*.tar.bz2' -o -name '*.tar.xz' -o -name '*.zip' \) -prune -o -type f -name '*.md' -print0 2>/dev/null)
 }
 
 add_files "$WORKFLOW_DIR/ai/policies"

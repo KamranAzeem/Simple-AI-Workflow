@@ -29,4 +29,5 @@
 [2026-11-19] Applied the round-10 fixes; round 11 is not run; the plan is not APPROVED; no branch and no implementation.
 [2026-11-19] Cut the built-in-first scope after round 11; fixed the helper's effective/conflict post-process and the six Minors; review-49 APPROVED.
 [2026-11-19] Implemented the built-in-first rewrite on `feature/built-in-first-execution`: the AGENTS.md precedence section, the nine-bullet ladder, the load-context rewrite, the read-only helper and contract, the docs, tests, ADR, and v6.10.0 announcement; review-50 APPROVED; suite 25/25, both validators, markdownlint 108 files, shellcheck green.
-[2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file; the release is next.
+[2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file.
+[2026-11-19] Released v6.10.0 and published its GitHub release: the built-in-first boot, the read-only index helper, and the ADR entry are live; master `64b0c61`; the feature branch is deleted.

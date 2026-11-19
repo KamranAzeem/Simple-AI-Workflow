@@ -61,6 +61,8 @@ run_helper() {
 PROJECT="$WORK/normal"
 mkdir -p "$PROJECT/ai/policies"
 write_policy "$PROJECT/ai/policies/ai-policy-sample.md" "Sample"
+write_policy "$PROJECT/ai/policies/ai-policy-target.md" "Target"
+printf 'archive\n' > "$PROJECT/ai/policies/canary.tar.gz"
 out="$(run_helper "$PROJECT")"
 rc=$?
 if [ "$rc" -eq 0 ]; then pass "the helper exits 0 on a valid project"; else fail_case "the helper exited $rc"; fi
@@ -68,6 +70,9 @@ assert_contains "$out" 'summary|modules=' "the helper prints a summary"
 line="$(module_line "$out" policy project sample)"
 if [ -n "$line" ]; then pass "the helper indexes the project policy"; else fail_case "the helper missed the project policy"; fi
 if [ "$(field "$line" 8)" = "effective=yes" ]; then pass "the project line is effective"; else fail_case "the project effective field is wrong"; fi
+t="$(module_line "$out" policy project target)"
+if [ -n "$t" ]; then pass "the helper indexes a name containing tar"; else fail_case "the helper excluded a target name"; fi
+if printf '%s\n' "$out" | grep -q 'canary.tar'; then fail_case "the helper indexed an archive"; else pass "the helper skips the archive"; fi
 dev="$(cd "$PROJECT" && bash "$VALIDATOR" --index "$PROJECT/ai/policies/ai-policy-sample.md" 2>&1)"
 assert_contains "$dev" 'effective=yes|conflict=none' "the dev index output still has the fixed fields"
 assert_contains "$dev" 'summary|modules=1' "the dev index summary is unchanged"
@@ -115,6 +120,13 @@ if printf '%s\n' "$out" | grep -q 'canarylink'; then fail_case "the helper index
 # Encoding: no BOM and no CR.
 if [ "$(printf '%s' "$out" | head -c 3 | od -An -tx1 | tr -d ' ')" = "efbbbf" ]; then fail_case "the helper emitted a BOM"; else pass "the helper has no BOM"; fi
 if printf '%s' "$out" | grep -q $'\r'; then fail_case "the helper emitted CR"; else pass "the helper is LF"; fi
+
+# A helper copy without the validator triggers the fallback path.
+STUB="$WORK/stub"
+mkdir -p "$STUB/support-files"
+cp "$HELPER" "$STUB/support-files/index-protocol.sh"
+out="$(cd "$PROJECT" && bash "$STUB/support-files/index-protocol.sh" 2>&1)"; rc=$?
+if [ "$rc" -eq 2 ]; then pass "the missing validator triggers the fallback"; else fail_case "the missing validator did not exit 2"; fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: protocol index fixture."
