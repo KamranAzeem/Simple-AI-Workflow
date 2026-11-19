@@ -38,3 +38,5 @@
 [2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.
 [2026-11-19] Merged and closed GitHub #12 after the earlier checkpoint; the report-anomalies docs are live; no release.
 [2026-11-19] Implemented GitHub #8: the out-of-band backup scripts, the 17-case test, the support README restructure, the ADR scope entry, and the v6.11.0 announcement; review-63 APPROVED; suite 26/26, protocol 8/8, shellcheck 0, markdownlint 0; merge and release pending approval.
+[2026-11-19] Merged GitHub #8, tagged `v6.11.0`, published the release, and closed the issue; the backup scripts are live.
+[2026-11-19] Fixed the global-settings fixture to derive the test count from `tests/test-*.sh`; the post-merge suite is green at 26/26.
