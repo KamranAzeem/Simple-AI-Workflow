@@ -514,6 +514,8 @@ The update procedure writes in the location the project currently uses and never
 
 The Delivery Ledger is updated when a design document lands or changes, by this procedure, never at checkpoint. This resolves the earlier contradiction with the checkpoint rule that design documents stay pure. Post-compaction recovery and the checkpoint re-affirmation now index the global knowledge directory, the project knowledge directory, and every `design-docs/` directory up to five levels, closing the gap where recovery did not index design documents.
 
+Note (2026-11-19): The `update design documents` trigger is the user's entry point for design-document updates, so design content is not mixed into knowledge updates. In Protocol Developer Mode, the ADR entry for a protocol change is part of that change, confirmed by the plan and implement approval, and does not require the trigger.
+
 ## 2026-10-18: Procedure and policy authoring standard
 
 `ai-policy-meta.md` gains a `## Procedure and Policy Authoring` section as the single normative standard for `AGENTS.md` and policy files. A policy places the DO NOT MODIFY guard on the first line, then the READ-ONLY START marker, then the title `# AI Policy: <Domain>`, and includes one purpose sentence, `## Scope`, `## Rules` or domain-named sections, and `## References`. Rules use one sentence per bullet in the imperative mood, with no rationale, history, narrative, or nested bullets, and no `## Purpose` or `## Notes` headings. Examples are allowed only as non-normative fenced blocks. Normative text uses `must`, `do`, `do not`, `never`, and `always`; `should`, `prefer`, `consider`, and `try` are banned; `may` is allowed only with a defined condition and default; vague qualifiers and undefined terms are banned; and every judgment rule names its criteria and default. The common policy remains authoritative for markdown mechanics, writing style, filenames, and side effects, and the new section points to it instead of repeating it. Procedures keep the `### PROCEDURE <NAME>` header and `**Aliases**` line, have no `**Loads**` line, load a dedicated policy in their first step, and use at most three aliases for a new or touched procedure. New and touched files follow the standard; untouched files are not rewritten.
@@ -1140,3 +1142,11 @@ Context:
 - Generated-file validation catches syntax, formatting, and common bugs before human review.
 
 Consequences: the policy is 682 lines, 6,934 words, and 44,857 bytes, down 2,335 bytes; every rule is one sentence; the four header hashes match; `tests/test-common-prose-shape.sh` guards the shape and fails on the old file with 132 findings; the release is v6.6.4.
+
+## 2026-11-19: The checkpoint records a discussed idea in next-steps
+
+The checkpoint adds one next-steps line for each potential problem or solution raised in the discussion, even when its scope is not agreed. The checkpoint remains the only state writer, so no mid-session next-steps write is allowed. The line is an open item; the daily checkpoint records a dropped item, and the 5 KB target and delete-on-done keep the backlog bounded.
+
+Context: ideas raised without an agreed scope were lost between conversations, and an earlier proposal to add a policy section was rejected as duplicate and too heavy for a trigger-loaded policy.
+
+Consequences: the checkpoint step gains one sentence; the design-docs policy gains the developer-mode ADR rule; the release is a patch. A session that ends before a checkpoint can still lose an idea, which is the accepted trade-off for the safe state write.

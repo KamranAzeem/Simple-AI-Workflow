@@ -13,6 +13,6 @@
 
 ## Pending
 
-- Add the #10 documentation section and the short prompt.
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Revisit GitHub #9 after the live test.
+- Plan the config ticket (XL; HLD/LLD).

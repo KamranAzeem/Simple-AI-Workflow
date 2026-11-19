@@ -108,6 +108,8 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 - Show a per-document diff. Approve per document or as a batch.
 - A dry run writes nothing.
 - Refuse when the scope is ambiguous, when a design statement lacks evidence, or when content conflicts.
+- In Protocol Developer Mode, write the ADR entry for a protocol change as part of that change, confirmed by the plan and implement approval.
+- In Protocol Developer Mode, the `update design documents` trigger is not required for that ADR entry.
 
 ## Conciseness
 

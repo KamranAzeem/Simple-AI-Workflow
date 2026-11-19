@@ -30,3 +30,7 @@
 [2026-11-18] Rewrote the common policy to the authoring prose shape: 90 multi-sentence rules split, 16 rationale bullets moved to the ADR, 6 banned words removed, 8 prose sections flattened; the shape fixture passes new and fails old with 132 findings; prepared the v6.6.4 release.
 [2026-11-18] Released v6.6.4 and published its GitHub release: the common policy is rules-only, the rationale is in the ADR, and the shape guard is live.
 [2026-11-19] Added the tool-selection ladder, made git-ignored protocol files readable, removed the old file-edit rules, and added the tool-selection fixture; prepared the v6.7.0 release.
+[2026-11-19] Released v6.7.0 and published its GitHub release: the tool-selection ladder is live, the readable git-ignore rule is in place, and the 22nd test guards both.
+[2026-11-19] Filed the config ticket for the configurable global directory, early settings load, and shell configuration; linked GitHub #9 and the bootstrap ticket; P2/XL, AI estimate.
+[2026-11-19] Reviewed the idea-tracking options and chose the safe path: a discussed problem or solution becomes one next-steps line at the checkpoint; no mid-session next-steps writes.
+[2026-11-19] Added the checkpoint discussed-idea rule and corrected the design-docs trigger scope; released v6.7.1.

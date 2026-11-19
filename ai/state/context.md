@@ -14,21 +14,24 @@
 
 ## Current Status
 
-- **Milestone**: v6.7.0 is prepared; the tool-selection unit is complete; `AGENTS.md` is 135 lines and 1,625 words; the common policy is 691 lines and 45,438 bytes.
+- **Milestone**: v6.7.1 is released and published; the checkpoint discussed-idea rule is live; the design-docs trigger scope is corrected; `AGENTS.md` is 135 lines and 1,625 words; the common policy is 691 lines and 45,438 bytes.
 - **Validator**: 8/8; authoring PASSED; all 22 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
 - **Policy count**: 23 modular policies and 14 procedure modules.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading and prose-rewrite decisions; the tool-selection rationale is in its design record; the toolchain record says 22 test scripts.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 91 closed.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, and design-docs trigger decisions; the toolchain record says 22 test scripts.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 92 closed.
 - **Skills**: 0 project and 0 global packages.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; the next unit is the #10 documentation section and the short prompt.
-- **Release**: v6.6.4 is released and published; the tool-selection ladder and the readable git-ignore rule are prepared for v6.7.0.
-- **GitHub tracker**: #10 is next with the design rewrite and the short prompt; #9 is parked; #8 is open.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the config ticket (XL) and the codebase examination over `docs/`, `tests/`, and `support-files/`.
+- **Release**: v6.7.1 is released and published; no release is pending.
+- **GitHub tracker**: #10 is postponed; #9 is parked; #8 is open.
+- **Config ticket (open, XL)**: configurable `Global User AI Directory`, early settings load, `Default Shell Interpreter`, path quoting, and the hardcoded `$HOME/.ai` fixes; links GitHub #9 and `bootstrap-global-settings-file.md`.
+- **Idea tracking**: the checkpoint adds one next-steps line for each discussed problem or solution; no mid-session next-steps writes.
+- **Design docs**: `design-docs/` holds the ADRs; the `update design documents` trigger is user-side; the developer-mode ADR entry is part of the change.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
 - **Test location**: `tests/` holds the dev-time scripts; `support-files/` holds the sync scripts and validators.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.6.4 are published; v6.7.0 is next.
+- **Release history**: v5.8.0 through v6.7.1 are published.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

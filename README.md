@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.7.0 (2026-11-19).** A tool ladder: purpose-built tool first, shell second, runtime third, and protocol files are readable even when git ignores them. Read the announcement: [docs/announcements/v6.7.0.md](docs/announcements/v6.7.0.md). |
+| **v6.7.1 (2026-11-19).** The checkpoint now records a discussed problem or solution in `next-steps.md`, even before its scope is agreed. Read the announcement: [docs/announcements/v6.7.1.md](docs/announcements/v6.7.1.md). |
 
 # Simple AI Workflow
 
