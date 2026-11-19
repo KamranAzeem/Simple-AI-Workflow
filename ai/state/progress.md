@@ -40,4 +40,4 @@
 [2026-11-19] Fixed the global-settings fixture to derive the test count from `tests/test-*.sh`; the post-merge suite is green at 26/26.
 [2026-11-19] Dropped the user-global skills root: the third root adds a second meaning of global; the ticket is closed with the plan attached, the plan file is removed, and the two-root model stays.
 [2026-11-19] Pruned the open issue backlog: 13 closed, 2 merged, 8 kept; the open tracker is 8.
-[2026-11-19] Fixed the sync-agents-md.ps1 -WhatIf migration bug; added tests/verify-powershell-scripts.ps1; the VM run passed every check; the host suite 26/26, the protocol validator, and markdownlint green; the issue is closed with the plan attached.
+[2026-11-19] Fixed the sync-agents-md.ps1 -WhatIf migration bug; added `tests/verify-powershell-scripts.ps1`; the VM run passed every check; the host suite 26/26, the protocol validator, and markdownlint green; the issue is closed with the plan attached.
