@@ -32,3 +32,4 @@
 [2026-11-19] Added the checkpoint discussed-idea rule and corrected the design-docs trigger scope; released v6.7.1.
 [2026-11-19] Agreed the config design: `Default Shell` in the customization, `Default Shell Path` in the settings, the whole settings directory read early, the sync keeps Merge Policy, the bootstrap owned, the skills root separate.
 [2026-11-19] Finished the configurable global user directory and default shell unit: the customization keys, the early whole-settings read, the shell path and name resolution, the validator and sync updates, the bootstrap, the quoted backup, the live docs, the ADR, and the strengthened test; review-30 APPROVED; suite 23/23, protocol 8/8, authoring, markdownlint, and shellcheck green.
+[2026-11-19] Released v6.8.0 and published its GitHub release: the configurable global user directory, early whole-settings read, and default shell are live; GitHub #9 is closed as absorbed.

@@ -14,5 +14,4 @@
 ## Pending
 
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
-- Publish the v6.8.0 release after the release-note approval.
 - Plan the user-global skills root ticket (L).

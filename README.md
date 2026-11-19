@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.7.1 (2026-11-19).** The checkpoint now records a discussed problem or solution in `next-steps.md`, even before its scope is agreed. Read the announcement: [docs/announcements/v6.7.1.md](docs/announcements/v6.7.1.md). |
+| **v6.8.0 (2026-11-19).** The global user directory and the default shell are now configurable. Read the announcement: [docs/announcements/v6.8.0.md](docs/announcements/v6.8.0.md). |
 
 # Simple AI Workflow
 
