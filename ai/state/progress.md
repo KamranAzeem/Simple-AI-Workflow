@@ -36,3 +36,5 @@
 [2026-11-19] Post-merge verification on master: suite 25/25, protocol 8/8, counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; the plan entry is on the issue and the plan file is removed.
 [2026-11-19] Documented the opt-in report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; corrected the rule wording, numbering, and checkpoint placement; review-61 APPROVED; suite 25/25, reference test PASS, markdownlint 0.
 [2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.
+[2026-11-19] Merged and closed GitHub #12 after the earlier checkpoint; the report-anomalies docs are live; no release.
+[2026-11-19] Implemented GitHub #8: the out-of-band backup scripts, the 17-case test, the support README restructure, the ADR scope entry, and the v6.11.0 announcement; review-63 APPROVED; suite 26/26, protocol 8/8, shellcheck 0, markdownlint 0; merge and release pending approval.

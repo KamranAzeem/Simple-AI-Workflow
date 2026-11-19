@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.10.2 (2026-11-19).** The boot now builds its protocol index with built-in tools; the optional index helper is no longer on the boot path. Read the announcement: [docs/announcements/v6.10.2.md](docs/announcements/v6.10.2.md). |
+| **v6.11.0 (2026-11-19).** Out-of-band backup scripts back up every project's AI state without an assistant. Read the announcement: [docs/announcements/v6.11.0.md](docs/announcements/v6.11.0.md). |
 
 # Simple AI Workflow
 

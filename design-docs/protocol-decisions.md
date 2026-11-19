@@ -1192,3 +1192,11 @@ INV-006 and INV-009 are unchanged. INV-006 still permits one read-only helper; i
 Context: the helper started a nested shell and many subshells per module across 39 modules, and process creation on Windows Git Bash made the boot take 5 to 8 minutes. The helper had no time limit, so the boot looked hung. The built-in recipe already existed and had been the runtime rule before the helper became primary.
 
 Consequences: the boot has no script failure point and no bash dependency. The AI spends tokens reading module metadata each boot. Exact conflict detection is checked once at release time against `--index` over the same recursive file list. The optional helper documents a `timeout 20` manual limit, and its conflict pass exempts the same-name shadow pair while keeping the shadowed global's reserved triggers visible to a different-name module.
+
+## 2026-11-19: Out-of-band backup scripts complement the native backup
+
+The interactive `backup ai` command remains the native one-liner in PROCEDURE CREATE-BACKUP. It backs up the current project and needs a working AI assistant. `support-files/backup-ai.sh` and `support-files/backup-ai.ps1` are a separate, unattended path: they walk a search path, find every project, and write one archive per project without an assistant.
+
+The 2026-05-21 entry "Backup is a native command, not a script" applies to the interactive path. Its "embedded in the checkpoint procedure" sentence is corrected: the one-liner lives in PROCEDURE CREATE-BACKUP, not the checkpoint procedure. The standalone single-project script removed then is not restored.
+
+A project is marked by `ai-customization.md`, or by `ai/state/` and `ai/shared/`. Archives include `ai/secrets/` by default and are owner-only; `--exclude-secrets` opts out. The default backup directory is `$HOME/.ai/backups/`; `--backup-dir` overrides it. Archives hold `ai/...` and `ai-customization.md` relative to the project root.

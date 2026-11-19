@@ -13,5 +13,5 @@
 
 ## Pending
 
-- Implement the user-global skills root plan and release v6.11.0.
-- Merge the #12 report-anomalies docs change and close the issue after approval.
+- Implement the user-global skills root plan and release v6.12.0.
+- Merge the #8 backup scripts, tag v6.11.0, publish the release, and close the issue after approval.
