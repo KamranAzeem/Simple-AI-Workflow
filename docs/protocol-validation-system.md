@@ -8,7 +8,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 1. **Bootstrap & Compliance Verification**:
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
-   - Verify the 14 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
+   - Verify the 15 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
    - Verify readability and format of tracking files (`ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`).
@@ -25,7 +25,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 The validation script [`support-files/validate-protocol.sh`](../support-files/validate-protocol.sh) implements:
 
-- A directory scan of `ai/policies/ai-policy-*.md` with a floor of 23; every file must carry the guard markers.
+- A directory scan of `ai/policies/ai-policy-*.md` with a floor of 24; every file must carry the guard markers.
 - Integration of `markdownlint` checks for policies.
 - Temporary checkpoint cycle (create/verify/delete).
 - Anchor checks for the shared index step, the dispatch section, the procedure modules, and the protocol index report item.
@@ -33,8 +33,8 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - Trigger declaration checks in `support-files/validate-policy-authoring.sh`: shape, placement, ASCII phrases, cross-module duplicates and containment, policy names, procedure-module names, the `#N` procedure trigger, and the thin-`AGENTS.md` shape.
 - Loading declaration checks in the same validator: one optional `## Loading` section, its placement, the four modes, the trigger and `Load in` relations, and named errors for every invalid form.
 - A `--triggers` mode that runs the namespace check over the full policy and procedure set, plus a fixture test at `tests/test-trigger-rules.sh`. The fixture includes a fence-aware regression that a fenced example heading is not indexed as a policy heading.
-- A developer `--index` oracle: `support-files/validate-policy-authoring.sh --index` prints one read-only module line per policy and procedure, including the declared loading mode (`mode=legacy` when absent) and the scope (`global` or `project`), then a summary with module counts, trigger count, conflict count, error count, and error classes. It exits 0 when the index is produced, even with existing shape gaps; it exits non-zero when a fatal class exists: `invalid trigger block`, `invalid loading block`, `empty trigger block`, `missing triggers`, `name mismatch`, or `unreadable module`. It is a Protocol Developer Mode tool; the boot uses the read-only `support-files/index-protocol.sh` helper, which calls `--index` and sets the effective and conflict fields, and the fallback uses built-in tools and reports `index-source=fallback`. On the current distribution, `--index` reports 0 errors and exits 0.
-- A boot-discovery fixture at `tests/test-load-context-boot.sh`: canaries in every excluded path, 1,000 artifact and knowledge files, a project and global skill package, the 16 KB bound, the single checkpoint read, and the index oracle.
+- A developer `--index` oracle: `support-files/validate-policy-authoring.sh --index` prints one read-only module line per policy and procedure, including the declared loading mode (`mode=legacy` when absent) and the scope (`global` or `project`), then a summary with module counts, trigger count, conflict count, error count, and error classes. It exits 0 when the index is produced, even with existing shape gaps; it exits non-zero when a fatal class exists: `invalid trigger block`, `invalid loading block`, `empty trigger block`, `missing triggers`, `name mismatch`, or `unreadable module`. It is a Protocol Developer Mode tool and the release oracle; the boot builds the index with built-in tools and reports `index-source=builtin`, and `support-files/index-protocol.sh` is an optional maintainer helper. On the current distribution, `--index` reports 0 errors and exits 0.
+- A boot-discovery fixture at `tests/test-load-context-boot.sh`: canaries in every excluded path, a project and global skill package, the 16 KB bound, the single checkpoint read, and the built-in index anchors.
 - A skills fixture at `tests/test-skills-index.sh`: the two roots, the package shape and frontmatter, the one-level rule, hidden and symlink skip, the project override, the cross-type collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Knowledge-rule anchors and a legacy-phrase guard across the knowledge policy, the repair module, the workflow guide, the README, and the slides, plus a rebuilt knowledge-repair fixture at `tests/test-knowledge-repair-fixture.sh`: the topic split, the 3,000-byte merge, the 49/50/51-file reviews, the template and ticket exclusions, evidence deletion, deduplication, the pointer report, and retirement.
 - The reference test at `tests/test-protocol-references.sh` reads `ai/procedures/*.md` for procedure and step definitions and the order-conformance check.
@@ -45,8 +45,8 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - A shape wrapper at `tests/test-policy-shape.sh` runs the authoring validator over every policy, procedure, and `AGENTS.md`, and proves a broken fixture fails. `tests/run-all.sh` runs every test script.
 - A router-shape fixture at `tests/test-agents-md-shape.sh` pins the `AGENTS.md` line, word, and byte caps, a 600-character bullet cap, the required sections, and the single-writer mechanics staying in the common policy. It fails on the old router shape.
 - A common-policy prose fixture at `tests/test-common-prose-shape.sh` pins one sentence per list item, the banned normative words, no prose outside a rule, and the compatibility anchors. It fails on the old policy with 132 findings.
-- A tool-selection fixture at `tests/test-tool-selection.sh` pins the precedence section, the nine-bullet ladder, the readable git-ignored rule, the helper path, the removed old rules, and the validator anchors.
-- A protocol-index fixture at `tests/test-protocol-index.sh` covers the helper, the dev output, the same-name shadowing pair, the trigger conflict, the first boot, and the canaries.
+- A tool-selection fixture at `tests/test-tool-selection.sh` pins the precedence section, the nine-bullet ladder, the readable git-ignored rule, the built-in index-source anchor, the removed old rules, and the validator anchors.
+- A protocol-index fixture at `tests/test-protocol-index.sh` covers the optional helper, the dev output, the same-name shadowing pair, the reserved-trigger conflict, the empty-glob message, the first boot, and the canaries.
 - A boundary fixture at `tests/test-common-boundary.sh` pins the common title, the two-bullet Reference whitelist, the no-policy-name rule outside the canonical header blocks, the handoff pointer removal, and the old-title rejection.
 - An issue-policy fixture at `tests/test-issue-policy.sh` pins the common issue invariant, both triggers, the trigger mode, the template rule and its conditional load, and the two procedure loads.
 - A design-docs fixture at `tests/test-design-docs-policy.sh` pins the common design invariant, the procedure loading, the merged chain and depth rules, the ID and ledger rules, the plan-location rule, and the planning and pre-work loads.

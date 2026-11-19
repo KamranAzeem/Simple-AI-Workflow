@@ -1,5 +1,6 @@
 #!/bin/bash
-# Dev-time fixture for the read-only protocol index helper.
+# Dev-time fixture for the optional protocol index helper.
+# The boot builds its index with built-in tools; this helper is a maintainer tool.
 # Usage: ./tests/test-protocol-index.sh
 # Exit 0 when every assertion passes, 1 otherwise.
 
@@ -98,6 +99,40 @@ if [ "$(field "$s" 9)" = "conflict=duplicate:cloud" ]; then pass "the project sa
 if [ "$(field "$c" 9)" = "conflict=duplicate:sample" ]; then pass "the global cloud reports the duplicate"; else fail_case "the global cloud conflict is wrong"; fi
 assert_contains "$out" 'conflicts=1' "the dev conflict count is preserved"
 
+# Same-name shadowing with a redeclared trigger: not a duplicate.
+SAMENAME="$WORK/samename"
+mkdir -p "$SAMENAME/ai/policies"
+write_policy "$SAMENAME/ai/policies/ai-policy-cloud.md" "Cloud Fixture" "cloud standards"
+out="$(run_helper "$SAMENAME")"
+g="$(module_line "$out" policy global cloud)"
+p="$(module_line "$out" policy project cloud)"
+if [ "$(field "$g" 8)" = "effective=shadowed:cloud" ]; then pass "the same-name global is shadowed"; else fail_case "the same-name global is not shadowed"; fi
+if [ "$(field "$p" 9)" = "conflict=none" ]; then pass "the same-name replacement has no conflict"; else fail_case "the same-name replacement conflict is wrong"; fi
+if [ "$(field "$g" 9)" = "conflict=none" ]; then pass "the same-name shadow has no conflict"; else fail_case "the same-name shadow conflict is wrong"; fi
+assert_contains "$out" 'conflicts=0' "the same-name fixture has zero conflicts"
+
+# A different-name policy that uses a shadowed global's reserved trigger is a duplicate.
+RESERVED="$WORK/reserved"
+mkdir -p "$RESERVED/ai/policies"
+write_policy "$RESERVED/ai/policies/ai-policy-cloud.md" "Cloud Shadow"
+write_policy "$RESERVED/ai/policies/ai-policy-sample.md" "Sample" "cloud standards"
+out="$(run_helper "$RESERVED")"
+s="$(module_line "$out" policy project sample)"
+c="$(module_line "$out" policy global cloud)"
+sc="$(module_line "$out" policy project cloud)"
+if [ "$(field "$s" 9)" = "conflict=duplicate:cloud" ]; then pass "the reserved-trigger user names the shadowed global"; else fail_case "the reserved-trigger user conflict is wrong"; fi
+if [ "$(field "$c" 9)" = "conflict=duplicate:sample" ]; then pass "the shadowed global names the reserved-trigger user"; else fail_case "the shadowed global conflict is wrong"; fi
+if [ "$(field "$sc" 9)" = "conflict=none" ]; then pass "the same-name replacement stays clean"; else fail_case "the same-name replacement conflict is wrong"; fi
+assert_contains "$out" 'conflicts=1' "the reserved-trigger fixture has one conflict"
+
+# Empty default globs print one clear message.
+EMPTY="$WORK/empty"
+mkdir -p "$EMPTY"
+out="$(cd "$EMPTY" && bash "$VALIDATOR" --index 2>&1)"; rc=$?
+if [ "$rc" -eq 2 ]; then pass "the empty index exits 2"; else fail_case "the empty index exited $rc"; fi
+assert_contains "$out" 'no top-level modules match the default globs' "the empty index prints one clear message"
+if printf '%s\n' "$out" | grep -q 'unreadable module'; then fail_case "the empty index reports unreadable modules"; else pass "the empty index has no unreadable-module lines"; fi
+
 # First boot: no project ai/ directory.
 FIRST="$WORK/first"
 mkdir -p "$FIRST"
@@ -121,12 +156,12 @@ if printf '%s\n' "$out" | grep -q 'canarylink'; then fail_case "the helper index
 if [ "$(printf '%s' "$out" | head -c 3 | od -An -tx1 | tr -d ' ')" = "efbbbf" ]; then fail_case "the helper emitted a BOM"; else pass "the helper has no BOM"; fi
 if printf '%s' "$out" | grep -q $'\r'; then fail_case "the helper emitted CR"; else pass "the helper is LF"; fi
 
-# A helper copy without the validator triggers the fallback path.
+# A helper copy without the validator reports the missing tool.
 STUB="$WORK/stub"
 mkdir -p "$STUB/support-files"
 cp "$HELPER" "$STUB/support-files/index-protocol.sh"
 out="$(cd "$PROJECT" && bash "$STUB/support-files/index-protocol.sh" 2>&1)"; rc=$?
-if [ "$rc" -eq 2 ]; then pass "the missing validator triggers the fallback"; else fail_case "the missing validator did not exit 2"; fi
+if [ "$rc" -eq 2 ]; then pass "the optional helper reports the missing validator"; else fail_case "the missing validator did not exit 2"; fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: protocol index fixture."

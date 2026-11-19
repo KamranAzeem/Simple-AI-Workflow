@@ -81,8 +81,7 @@ require_in "ai/policies/ai-policy-common.md" "Use shell search only when the bui
 require_in "AGENTS.md" "^## Precedence$" "Precedence section missing from AGENTS.md."
 require_in "AGENTS.md" "Level 0:" "the Level 0 safety tier is missing from AGENTS.md."
 require_in "AGENTS.md" "Level 5:" "the Level 5 procedure tier is missing from AGENTS.md."
-require_in "ai/procedures/load-context.md" "index-protocol.sh" "the index helper path is missing from ai/procedures/load-context.md."
-require_in "ai/procedures/load-context.md" "index-source=helper|fallback" "the index source proof field is missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "index-source=builtin" "the built-in index source proof field is missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "age-source=commit|mtime" "the age source proof field is missing from ai/procedures/load-context.md."
 if grep -qF "You MUST use shell tools" AGENTS.md; then
     echo "Error: the mandatory shell-read rule returned to AGENTS.md."

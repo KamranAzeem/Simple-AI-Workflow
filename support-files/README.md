@@ -7,11 +7,12 @@ Optional helper scripts that propagate the canonical `AGENTS.md` into your proje
 
 These scripts are optional. You can copy `AGENTS.md` and `ai-customization.md` yourself with CLI commands or a GUI file manager. However, a manual copy updates only the `AGENTS.md` half: the scripts also check or create `ai-customization.md` and migrate state files, so use the scripts for updates.
 
-## Protocol index helper
+## Optional protocol index tool
 
-- `index-protocol.sh` is the read-only boot helper. It calls `validate-policy-authoring.sh --index`, sets `effective` and `conflict`, and writes no file. The sync scripts do not copy it; the helper ships with the workflow clone.
-- `index-protocol-contract.md` records the line format and the best-effort fallback.
-- On a host without bash, the boot uses the built-in fallback in `ai/procedures/load-context.md` and reports `index-source=fallback`.
+- The boot builds the index with the assistant's built-in reader, glob, and search. It does not run a script and reports `index-source=builtin`.
+- `index-protocol.sh` is an optional maintainer tool for exact duplicate and overlap checks and release verification. It calls `validate-policy-authoring.sh --index`, sets `effective` and `conflict`, and writes no file. The sync scripts do not copy it; it ships with the workflow clone.
+- Process creation is slow on Windows Git Bash, which is why the boot does not call the helper. A manual run uses `timeout 20 bash support-files/index-protocol.sh`.
+- `index-protocol-contract.md` records the line format and the optional-helper behavior.
 
 ## Usage
 

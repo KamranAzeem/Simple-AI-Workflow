@@ -253,7 +253,7 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
-The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot uses the read-only `support-files/index-protocol.sh` helper, which calls the developer `--index` mode and sets the effective and conflict fields; the fallback uses built-in tools and reports `index-source=fallback`.
+The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot builds the index with built-in tools and reports `index-source=builtin`; the optional `support-files/index-protocol.sh` helper is for maintainer and release checks.
 
 A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
@@ -371,7 +371,7 @@ Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's dire
 
 The plan carries an `## Evidence` section and a close block. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. Plan review runs automatically, and a plan is ready only after `APPROVED`.
 
-The implementation request is the approval for the full delivery: the branch, the commit, the merge, the push, and the release the plan names. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
+The implementation request is the approval for the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
 
 For `direct`, the AI squash-merges the branch to the trunk, deletes the branch, and pushes. For `pr`, it pushes the branch, opens the pull request or gives you the URL, waits for the team to merge, then pulls the trunk. The release tag follows the merge.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Read-only protocol index helper.
-# Usage: bash support-files/index-protocol.sh
+# Optional maintainer protocol index tool. Not used at boot.
+# Usage: timeout 20 bash support-files/index-protocol.sh
 # The helper calls the dev index, then sets effective and conflict on the module lines.
 
 set -u
@@ -120,6 +120,9 @@ END {
     }
     for (i = 1; i <= n; i++) {
         for (j = i + 1; j <= n; j++) {
+            if (type[i] == "policy" && type[j] == "policy" && name[i] == name[j] &&
+                ((scope[i] == "global" && eff[i] == "shadowed:" name[j]) ||
+                 (scope[j] == "global" && eff[j] == "shadowed:" name[i]))) continue
             for (x = 1; x <= tc[i]; x++) {
                 for (y = 1; y <= tc[j]; y++) {
                     a = tn[i, x]

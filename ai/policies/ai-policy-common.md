@@ -172,7 +172,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - Use the tools the harness exposes, never a tool it does not list.
 - Use a purpose-built harness tool for one operation (read, search, glob, edit, diagnostics, tests, version control, web access, external integration) before any other rung.
 - Use the shell second only for a system operation on the host: git, a helper or validator, directory creation, archives, permissions, metadata reads, and a global listing or search the built-in tools cannot reach.
-- Never use the shell to read, search, list, or edit a file a built-in tool can reach, except the helper launch, the global listing and search, the backup archive, the reported Git-Ignored Protocol Files Are Readable fallback, and the metadata step's byte and age reads.
+- Never use the shell to read, search, list, or edit a file a built-in tool can reach, except the global listing and search, the backup archive, the reported Git-Ignored Protocol Files Are Readable fallback, and the metadata step's byte and age reads.
 - Never use Python or another runtime to read, search, create, append to, or edit a file; use the built-in tool.
 - Use a runtime for computation only when neither a built-in tool nor the shell performs it.
 - Run one job per shell call and report each fallback at that call, naming the tool and the reason.

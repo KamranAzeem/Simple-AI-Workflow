@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.10.0 (2026-11-19).** The boot now uses built-in tools and a read-only index helper; the fallback is best-effort. Read the announcement: [docs/announcements/v6.10.0.md](docs/announcements/v6.10.0.md). |
+| **v6.10.2 (2026-11-19).** The boot now builds its protocol index with built-in tools; the optional index helper is no longer on the boot path. Read the announcement: [docs/announcements/v6.10.2.md](docs/announcements/v6.10.2.md). |
 
 # Simple AI Workflow
 
@@ -123,7 +123,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Write or update your design documents | `"update design documents"` |
 | Move design docs beside your code into `design-docs/` | `"migrate design docs"` |
 
-A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request covers the merge, the push, and the release the plan names.
+A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval.
 
 > **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
 

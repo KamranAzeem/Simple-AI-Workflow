@@ -31,3 +31,10 @@
 [2026-11-19] Implemented the built-in-first rewrite on `feature/built-in-first-execution`: the AGENTS.md precedence section, the nine-bullet ladder, the load-context rewrite, the read-only helper and contract, the docs, tests, ADR, and v6.10.0 announcement; review-50 APPROVED; suite 25/25, both validators, markdownlint 108 files, shellcheck green.
 [2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file.
 [2026-11-19] Released v6.10.0 and published its GitHub release: the built-in-first boot, the read-only index helper, and the ADR entry are live; master `64b0c61`; the feature branch is deleted.
+[2026-11-19] Ran the full codebase examination over `docs/`, `tests/`, and `support-files/`; the ticket `ai/issues/closed/codebase-examination-docs-tests-support.md`; F1-F7, with F5 withdrawn.
+[2026-11-19] Fixed the examination findings and released v6.10.1: the settings template, the support README, the fallback/archive/skills tests, the helper archive pattern, and the ADR symlink note; master `df54e07`; the fix branch is deleted.
+[2026-11-19] Planned the user-global skills root: `ai/plans/user-global-skills-root.md`; review-51 CHANGES REQUESTED, review-52 APPROVED; the implementation is next.
+[2026-11-19] Set `Default Shell Path: /usr/bin/bash` and made the Kilo bash permissions `*python3 *`, `*python *`, and `*` all ask.
+[2026-11-19] Fixed GitHub #11: the boot builds its index with the built-in reader, glob, and search; the optional helper is off the boot path; the proof reports `index-source=builtin`; review-57 APPROVED.
+[2026-11-19] Updated the index contract, support README, common policy, project knowledge, validator anchors, four docs, README banner, v6.10.2 announcement, and the ADR supersession; fixed the helper's empty-glob and shadowed-trigger cases.
+[2026-11-19] Verified the fix: suite 25/25, protocol 8/8, authoring and triggers PASSED, markdownlint 0, shellcheck 0; counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors.

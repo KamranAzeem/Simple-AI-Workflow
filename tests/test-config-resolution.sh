@@ -45,7 +45,7 @@ present "$ROOT/ai/procedures/load-context.md" "git-bash" "load-context resolves 
 # shellcheck disable=SC2016
 present "$ROOT/ai/procedures/load-context.md" 'An absent `Default Shell` key keeps the current or default shell' "load-context treats the shell key as optional"
 present "$ROOT/ai/procedures/load-context.md" "reported, and the boot continues with built-ins" "load-context reports and continues"
-present "$ROOT/ai/procedures/load-context.md" "The helper uses its bash shebang" "load-context keeps the helper independent"
+present "$ROOT/ai/procedures/load-context.md" "The optional index helper uses its bash shebang" "load-context keeps the optional helper independent"
 absent "$ROOT/ai/procedures/load-context.md" "not one of" "the old unknown-shell stop is gone"
 present "$ROOT/support-files/validate-protocol.sh" "Global User AI Directory" "validator reads the user directory key"
 # shellcheck disable=SC2016

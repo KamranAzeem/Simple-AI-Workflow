@@ -1,5 +1,5 @@
 #!/bin/bash
-# Dev-time fixture for the load-context boot contract and the read-only index helper.
+# Dev-time fixture for the load-context boot contract and the built-in index recipe.
 # Usage: ./tests/test-load-context-boot.sh
 # Exit 0 when every assertion passes, 1 otherwise.
 
@@ -58,40 +58,18 @@ absent() {
 }
 
 P="$ROOT/ai/procedures/load-context.md"
-for anchor in "index-protocol.sh" "index-source=helper" "index-source=fallback" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "Global AI Skills Directory" "STEP-POLICY-LOADING"; do
+for anchor in "index-source=builtin" "[PENDING]" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "Global AI Skills Directory" "STEP-POLICY-LOADING"; do
     present "$P" "$anchor" "procedure anchor: $anchor"
+done
+for old in "index-source=helper" "index-source=fallback" 'bash "<Global AI Workflow Directory>/support-files/index-protocol.sh"'; do
+    absent "$P" "$old" "old helper boot anchor: $old"
 done
 # shellcheck disable=SC2016
 for old in "Use one command block" "do not run the validator at load context" '`cat`' '`sed`' '`awk`' '`sort`' '`uniq`' '`comm`'; do
     absent "$P" "$old" "old shell instruction: $old"
 done
 
-out="$(cd "$PROJECT" && bash "$ROOT/support-files/index-protocol.sh" 2>&1)"
-rc=$?
-if [ "$rc" -eq 0 ]; then
-    printf 'PASS %s\n' "the index helper exits 0"
-else
-    printf 'FAIL the index helper exited %s\n' "$rc"
-    fail=1
-fi
-if printf '%s\n' "$out" | grep -q 'summary|modules='; then
-    printf 'PASS %s\n' "the index helper prints a summary"
-else
-    printf 'FAIL the index helper summary is missing\n'
-    fail=1
-fi
-if printf '%s\n' "$out" | grep -q '^policy|project|fixture|'; then
-    printf 'PASS %s\n' "the index helper indexes the project policy"
-else
-    printf 'FAIL the index helper missed the project policy\n'
-    fail=1
-fi
-if printf '%s\n' "$out" | grep -qi 'canary'; then
-    printf 'FAIL a canary leaked into the index\n'
-    fail=1
-else
-    printf 'PASS %s\n' "the index helper excludes the canaries"
-fi
+# The optional helper is covered by tests/test-protocol-index.sh; the boot contract must not call it.
 
 dev="$(cd "$PROJECT" && bash "$ROOT/support-files/validate-policy-authoring.sh" --index ai/policies/ai-policy-fixture.md 2>&1)"
 dev_rc=$?
@@ -106,5 +84,5 @@ if [ "$fail" -ne 0 ]; then
     echo "FAILED: boot contract fixture."
     exit 1
 fi
-echo "PASSED: boot contract fixture (procedure anchors, helper, canaries, dev index)."
+echo "PASSED: boot contract fixture (procedure anchors, built-in index, canaries, dev index)."
 exit 0

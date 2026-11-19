@@ -19,6 +19,14 @@ fi
 
 if [ "$MODE" = index ] && [ "$#" -eq 0 ]; then
     set -- ai/policies/*.md ai/procedures/*.md
+    matched=0
+    for f in "$@"; do
+        [ -e "$f" ] && matched=1
+    done
+    if [ "$matched" -eq 0 ]; then
+        echo "no top-level modules match the default globs, pass files or use index-protocol.sh" >&2
+        exit 2
+    fi
 fi
 
 if [ "$#" -eq 0 ]; then
