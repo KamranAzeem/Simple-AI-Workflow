@@ -10,12 +10,6 @@
 
 <!-- STATE-FILE-HEADER: progress.md END -->
 
-[2026-11-19] Added the tool-selection ladder, made git-ignored protocol files readable, removed the old file-edit rules, and added the tool-selection fixture; prepared the v6.7.0 release.
-[2026-11-19] Released v6.7.0 and published its GitHub release: the tool-selection ladder is live, the readable git-ignore rule is in place, and the 22nd test guards both.
-[2026-11-19] Filed the config ticket for the configurable global directory, early settings load, and shell configuration; linked GitHub #9 and the bootstrap ticket; P2/XL, AI estimate.
-[2026-11-19] Reviewed the idea-tracking options and chose the safe path: a discussed problem or solution becomes one next-steps line at the checkpoint; no mid-session next-steps writes.
-[2026-11-19] Added the checkpoint discussed-idea rule and corrected the design-docs trigger scope; released v6.7.1.
-[2026-11-19] Agreed the config design: `Default Shell` in the customization, `Default Shell Path` in the settings, the whole settings directory read early, the sync keeps Merge Policy, the bootstrap owned, the skills root separate.
 [2026-11-19] Finished the configurable global user directory and default shell unit: the customization keys, the early whole-settings read, the shell path and name resolution, the validator and sync updates, the bootstrap, the quoted backup, the live docs, the ADR, and the strengthened test; review-30 APPROVED; suite 23/23, protocol 8/8, authoring, markdownlint, and shellcheck green.
 [2026-11-19] Released v6.8.0 and published its GitHub release: the configurable global user directory, early whole-settings read, and default shell are live; GitHub #9 is closed as absorbed.
 [2026-11-19] Added the repair global settings procedure and policy: canonical keys, the Identity and Profile split, verified tools, redaction, the manifest, the backup, the dry run, and the review gate; the suite is 24 scripts; review-34 APPROVED; v6.9.0 is prepared.
@@ -40,3 +34,5 @@
 [2026-11-19] Verified the fix: suite 25/25, protocol 8/8, authoring and triggers PASSED, markdownlint 0, shellcheck 0; counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors.
 [2026-11-19] Merged GitHub #11 to master as `2f3a081`, tagged `v6.10.2`, published the GitHub Release, deleted the fix branch, and closed the issue.
 [2026-11-19] Post-merge verification on master: suite 25/25, protocol 8/8, counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; the plan entry is on the issue and the plan file is removed.
+[2026-11-19] Documented the opt-in report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; corrected the rule wording, numbering, and checkpoint placement; review-61 APPROVED; suite 25/25, reference test PASS, markdownlint 0.
+[2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.

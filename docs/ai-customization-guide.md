@@ -210,6 +210,44 @@ Use the optional `## Sensitive Names` section to list the people, companies, cli
 
 ---
 
+## 10. Report Anomalies
+
+Most sessions fail quietly. A tool call is denied, a file is missing, or the AI corrects a wrong statement, and the user never sees it. The opt-in "Report anomalies" rule makes the AI report each anomaly in the turn it notices it, so you can watch the work and file a precise issue when something breaks.
+
+The rule is an instruction, not enforcement. An AI can still miss an anomaly. Treat the log as a best-effort record, not a guarantee. It is useful in two settings: a project where you want to watch the AI closely, and the protocol repository itself, where an entry often becomes a protocol fix.
+
+### How to add it
+
+Copy the rule into `ai-customization.md`. The `### Rule:` block needs a top-level `##` parent:
+
+- Use `## Development Workflow` when the file already keeps workflow rules.
+- Use `## Report Anomalies` when it does not.
+
+```markdown
+### Rule: Report anomalies
+
+- Report every anomaly in the same turn you notice it. Never fail silently.
+- An anomaly is a denied or failed tool call, an unreadable or missing file, a failed or no-op edit, a state-file problem, a deviation from the rules or the protocol, a wrong statement you later correct, or tool friction (a hang, a slow command, a missing tool).
+- Tag each one A (AI deviation), W (wrong statement) or F (tool friction). Number each tag per day from 1: A1, A2, W1, F1. The day is the current calendar date, matching the daily checkpoint file.
+- In chat, say what happened, what was done, and what changed.
+- In the checkpoint log, record each entry without names, internal paths, or secrets. Keep the full detail in chat.
+- At each checkpoint, add the new A, W and F entries as an `### Anomalies` subsection inside that checkpoint's section in the daily checkpoint file. Never edit an earlier entry.
+- When there are no new entries at a checkpoint, omit the `### Anomalies` subsection.
+```
+
+### What the AI reports
+
+- **Tags**: A is an AI deviation, W is a wrong statement the AI later corrects, and F is tool friction. Numbers reset each day per tag, so `A1`, `A2`, `W1`, and `F1` are separate.
+- **Chat**: the AI says what happened, what it did, and what changed, in the same turn it notices the anomaly.
+- **Checkpoint**: the AI adds the new entries as an `### Anomalies` subsection inside that checkpoint's section in the daily checkpoint file. An earlier entry is never edited, and the subsection is omitted when there is nothing new.
+- **Privacy**: the checkpoint can be committed with the repository, so entries stay terse. No names, internal paths, or secrets; the full detail stays in chat.
+
+### Turning an entry into an issue
+
+Include the tag, the step or file involved, and what the AI did. A short line such as "F2: the index helper hung for five minutes in step 2" gives enough to start. Scrub names, internal paths, and secrets before you post.
+
+---
+
 ## Best Practices
 
 1. **Start Small**: Don't load every policy at once. Only activate what you need for the current focus.

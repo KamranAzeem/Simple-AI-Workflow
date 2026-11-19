@@ -276,7 +276,7 @@ This is the one file you edit to tailor the AI to a project. You can set:
 1. **Expertise**: load a policy (for example `coding-baseline`, `cloud`, `api-backend`, `windows-system-admin`).
 2. **Traits**: pick a persona (for example Senior DBA, Security Specialist, Mentor).
 3. **Compliance**: turn on regulatory standards (for example `gdpr`, `soc2`, `hipaa`).
-4. **Developer Workflow**: set project-specific working rules, for example a proactive peer review after every change set.
+4. **Development Workflow**: set project-specific working rules, for example a proactive peer review after every change set.
 5. **Merge policy**: set `## Merge Policy` `**Merge Mode**: direct`, `pr`, or `auto`. `auto` behaves as direct and falls back to a pull request when a direct push is rejected.
 
 See the [AI Customization Guide](docs/ai-customization-guide.md) for the full list and examples.
@@ -284,6 +284,16 @@ See the [AI Customization Guide](docs/ai-customization-guide.md) for the full li
 Some policies can also load by phrase, without an Active Expertise entry. Say a policy's phrase, such as `"cloud standards"`, `"knowledge file standards"`, or `"grill me"`, and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A legacy project policy with triggers and no `## Loading` is still loaded at boot and reported as active; its triggers are also indexed.
 
 A policy may also declare when it loads in an optional `## Loading` section, with one path per policy: `boot`, `trigger`, `procedure`, or `expertise`. A procedure may still load a policy explicitly. A policy with no declaration keeps its current behavior. The authoring validator and `tests/test-policy-load-paths.sh` check that every declared path is real. The declaration describes the global loading paths that already exist: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load. See [the custom policy howto](docs/custom-policy-howto.md) to write one.
+
+## Watch the AI Work: Report Anomalies
+
+An AI session can fail quietly. A tool call is denied, a file is missing, or the AI corrects itself, and you never see it. This opt-in rule makes the AI report each anomaly in the turn it notices it, so you can watch the work and file a precise issue when something breaks.
+
+The rule is opt-in because it adds noise to every session. Turn it on when you want to watch the AI closely, or when you are testing the workflow and want to report precise problems.
+
+Copy the rule into `ai-customization.md` under `## Development Workflow`, or under `## Report Anomalies` when the file has no workflow section. The AI reports the anomaly in chat and logs it in the day's checkpoint. The copy-paste rule is in [the customization guide](docs/ai-customization-guide.md#10-report-anomalies).
+
+When you file an issue here from an entry, include the tag, the step or file involved, and what the AI did. Scrub names, internal paths, and secrets before you post.
 
 ## Keeping this workflow up to date
 
