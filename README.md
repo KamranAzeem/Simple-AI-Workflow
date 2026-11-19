@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.8.0 (2026-11-19).** The global user directory and the default shell are now configurable. Read the announcement: [docs/announcements/v6.8.0.md](docs/announcements/v6.8.0.md). |
+| **v6.9.0 (2026-11-19).** A new `repair global settings` procedure consolidates the global settings files, normalizes the keys, and verifies the tools. Read the announcement: [docs/announcements/v6.9.0.md](docs/announcements/v6.9.0.md). |
 
 # Simple AI Workflow
 
@@ -415,7 +415,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 - **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 11 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, handoff, issue-management, knowledge, outbound-content-scrub, thinking-modes). Load the ones that apply to your project.
 - **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
-- **Procedure modules and a thin `AGENTS.md`**: the 14 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
+- **Procedure modules and a thin `AGENTS.md`**: the 15 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.

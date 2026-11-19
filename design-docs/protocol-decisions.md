@@ -1158,3 +1158,11 @@ Consequences: the checkpoint step gains one sentence; the design-docs policy gai
 Context: the global directory was fixed at `~/.ai/`, and the shell preference was read after the first shell commands. The sync keeps `## Merge Policy`, adds no new keys, and verifies the user directory when present. The bootstrap creates the configured directory. The defaults and the absent keys keep the current behavior.
 
 Consequences: the boot reads the customization and the settings earlier; a shell path that does not match the name, or a missing shell, stops and reports; the validator defaults to `[HOME]/.ai/` and reads the key; the backup quotes every path; GitHub #9 is absorbed; the user-global skills root is a separate ticket.
+
+## 2026-11-19: The global settings get a repair procedure
+
+`repair global settings` consolidates every file in the **Global AI Settings Directory**: canonical keys, `Identity` (`Name`, `Email`) split from `Profile` (`Role`, `Base`, `Certs`), a compact tools list verified on the host, and redacted secrets. It mirrors `repair knowledge files` with a manifest, a dry run, a backup, a candidate, an independent review, and a preserve-rather-than-corrupt rule. The new policy `ai-policy-global-settings.md` owns the keys and the repair rules.
+
+Context: the settings carried six voice subsections, a provenance line, a generic git pointer, and a tools list with prose. The author-identity resolver reads `## Identity` fields `Name` and `Email`, so those names are pinned. `Default Shell Path` keeps its name, and only its section moves to the top level. The sensitive names are never copied into the manifest or the report.
+
+Consequences: the policy count is 24, the procedure count is 15, the trigger count is 50, the test count is 24, and the floor is 24. The repair runs only on the trigger and never at boot or the checkpoint. The release is v6.9.0.

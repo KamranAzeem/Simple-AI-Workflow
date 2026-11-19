@@ -14,24 +14,25 @@
 
 ## Current Status
 
-- **Milestone**: v6.8.0 is released and published; the configurable global user directory, early whole-settings read, and `Default Shell` are implemented and reviewed; `AGENTS.md` carries the configurable user-directory anchor.
-- **Validator**: 8/8; authoring PASSED; all 23 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
-- **Policy count**: 23 modular policies and 14 procedure modules.
+- **Milestone**: v6.9.0 is released and published; the `repair global settings` procedure and policy are live, with canonical keys, the Identity and Profile split, verified tools, redaction, and a review gate.
+- **Validator**: 8/8; authoring PASSED; all 24 test scripts pass; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
+- **Policy count**: 24 modular policies and 15 procedure modules; the policy floor is 24.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, and config decisions; the toolchain record says 22 test scripts.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 93 closed.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, and config decisions; the toolchain record says 24 test scripts.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 94 closed.
 - **Skills**: 0 project and 0 global packages; the user-global skills root ticket is open.
 
 ## Active Working Context
 
 - **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the codebase examination over `docs/`, `tests/`, and `support-files/` and the skills-root plan.
-- **Release**: v6.8.0 is released and published; no release is pending.
+- **Release**: v6.9.0 is released and published; no release is pending.
 - **GitHub tracker**: #10 is postponed; #9 is closed as absorbed; #8 is open.
 - **Config unit (closed)**: `ai/issues/closed/configurable-global-user-ai-directory-early-settings-and-shell.md`; the plan is attached; the design is in the ADR.
+- **Settings repair (closed)**: `ai/issues/closed/repair-global-settings-procedure-consolidation-key-names-and-tool-verification.md`; the plan is attached; the design is in the ADR; the note is pending.
 - **Idea tracking**: the checkpoint adds one next-steps line for each discussed problem or solution; no mid-session next-steps writes.
 - **Design docs**: `design-docs/` holds the ADRs; the `update design documents` trigger is user-side; the developer-mode ADR entry is part of the change.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
 - **Test location**: `tests/` holds 23 dev-time scripts; `support-files/` holds the sync scripts and validators.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.8.0 are published.
+- **Release history**: v5.8.0 through v6.9.0 are published.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

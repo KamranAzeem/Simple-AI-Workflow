@@ -47,7 +47,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - Confirm `Protocol Validation v6.3 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 14 procedures, 108 steps, 4 tiers, and 12 items.
+- Confirm the reference test prints `PASS` with 15 procedures, 121 steps, 4 tiers, and 12 items.
 - Confirm the knowledge-repair fixture prints `PASS`.
 - Confirm the outbound content scrub fixture prints `PASSED`.
 - Confirm the handoff fixture prints `PASSED`.
@@ -56,7 +56,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 23 policies (12 domain and 11 protocol), 14 procedures, 22 test scripts, 47 triggers, and the floor of 23.
+- Confirm the user docs counts: 24 policies (12 domain and 12 protocol), 15 procedures, 24 test scripts, 50 triggers, and the floor of 24.
 
 ## Caveats
 
