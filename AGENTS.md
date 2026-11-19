@@ -27,7 +27,7 @@ This is the single startup entry point for all AI assistants in this repository.
 <!-- Human user must not touch/modify the lines below -->
 
 **Global AI Workflow Directory**: resolved from **Project Customization File** at boot
-**Global User AI Directory**: `[HOME]/.ai/`
+**Global User AI Directory**: resolved from **Project Customization File** at boot; default `[HOME]/.ai/`
 **Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
 **Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
 **Global AI Backups Directory**: (Global User AI Directory)/backups/

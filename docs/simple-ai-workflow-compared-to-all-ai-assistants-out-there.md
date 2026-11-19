@@ -78,14 +78,14 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | What you need | Copilot | Claude | ChatGPT | Cursor | Simple AI Workflow |
 |---|---|---|---|---|---|
 | Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
-| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `~/.ai/settings/global-user-settings.md` |
+| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `<Global User AI Directory>/settings/global-user-settings.md` (default `~/.ai/`) |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
 | Domain expertise / rules | `.github/skills/<name>/SKILL.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (23 policies) |
 | Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
 | Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
 | Current state / context dashboard | None | None | None | None | `ai/state/context.md` |
 | Project knowledge / decisions | None | Uploaded project files | Uploaded project files | None | `ai/shared/project-knowledge/` |
-| Lessons learned across projects | None | `~/.claude/CLAUDE.md` (manual) | Memory (automatic, opaque) | None | `~/.ai/global-knowledge/` (explicit, structured) |
+| Lessons learned across projects | None | `~/.claude/CLAUDE.md` (manual) | Memory (automatic, opaque) | None | `<Global User AI Directory>/global-knowledge/` (default `~/.ai/`), explicit and structured |
 | Multi-assistant handoffs | None | None | None | None | `ai/shared/handoffs/` |
 | Post-summary recovery | `PreCompact` hook | None | None | None | Post-Compaction Recovery procedure |
 | Compliance enforcement | None | None | None | None | built-in AI knowledge (applied by the AI, not stored as files) |
@@ -113,7 +113,7 @@ ai/
 │   └── handoffs/            ← task transfers between sessions
 └── daily-checkpoints/   ← timestamped save points
 
-~/.ai/
+<Global User AI Directory>/   (default ~/.ai/)
 ├── settings/            ← your personal preferences and tools
 └── global-knowledge/    ← lessons that apply across all projects
 ```
@@ -138,7 +138,7 @@ Simple AI Workflow does, because it is just files.
 
 One note on the `ai/` directory: by default it is git-ignored, so it does not get committed with your project code. That is by design, it is your personal AI workspace, not part of the codebase. You have a few options for keeping it safe across machines:
 
-- **Backup procedure**: say `"backup ai"` and the protocol archives the entire `ai/` directory to `~/.ai/backups/` automatically.
+- **Backup procedure**: say `"backup ai"` and the protocol archives the entire `ai/` directory to `<Global User AI Directory>/backups/` (default `~/.ai/backups/`) automatically.
 - **Include it in the repo**: you can remove `ai/` from `.gitignore` if you want to commit it. Some individuals do this for their own solo projects, it does not work in a team setting where multiple people would be writing to the same AI state files.
 - **Own private repo**: if you are working at a project root that contains multiple git repos underneath it (a common pattern for architects and platform engineers), the `ai/` directory sits alongside them as a sibling. You can initialise it as its own private git repo on GitHub or GitLab. Then moving to a new machine is literally one `git clone`, and you are straight back to work.
 

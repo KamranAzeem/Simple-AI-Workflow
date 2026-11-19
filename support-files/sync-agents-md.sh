@@ -275,6 +275,18 @@ ensure_customization_file() {
         prepend_config_section "$customization_file" || return 1
       fi
     fi
+    # Verify the optional Global User AI Directory when present. Never add or change it.
+    if grep -q '^\*\*Global User AI Directory\*\*:' "$customization_file"; then
+      local user_dir
+      user_dir=$(grep '^\*\*Global User AI Directory\*\*:' "$customization_file" | head -1 | sed -E 's/^\*\*Global User AI Directory\*\*:[[:space:]]*//') || return 1
+      user_dir="${user_dir//\[HOME\]/$HOME}"
+      if [ "${user_dir:0:1}" = "~" ]; then user_dir="$HOME${user_dir:1}"; fi
+      if [ -d "$user_dir" ]; then
+        echo "  ai-customization.md: Global User AI Directory exists ($user_dir)"
+      else
+        echo "  ai-customization.md: WARNING: Global User AI Directory does not exist ($user_dir)"
+      fi
+    fi
     ensure_merge_policy_section "$customization_file" || return 1
     return 0
   fi

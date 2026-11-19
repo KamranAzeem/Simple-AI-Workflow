@@ -14,24 +14,24 @@
 
 ## Current Status
 
-- **Milestone**: v6.7.1 is released and published; the checkpoint discussed-idea rule is live; the design-docs trigger scope is corrected; `AGENTS.md` is 135 lines and 1,625 words; the common policy is 691 lines and 45,438 bytes.
-- **Validator**: 8/8; authoring PASSED; all 22 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0.
+- **Milestone**: v6.8.0 is prepared; the configurable global user directory, early whole-settings read, and `Default Shell` are implemented and reviewed; `AGENTS.md` carries the configurable user-directory anchor.
+- **Validator**: 8/8; authoring PASSED; all 23 test scripts pass; 23 policies, 14 procedures, 47 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
 - **Policy count**: 23 modular policies and 14 procedure modules.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, and design-docs trigger decisions; the toolchain record says 22 test scripts.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 23 open, 0 in-progress, 92 closed.
-- **Skills**: 0 project and 0 global packages.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, and config decisions; the toolchain record says 22 test scripts.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 93 closed.
+- **Skills**: 0 project and 0 global packages; the user-global skills root ticket is open.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the config ticket (XL) and the codebase examination over `docs/`, `tests/`, and `support-files/`.
-- **Release**: v6.7.1 is released and published; no release is pending.
-- **GitHub tracker**: #10 is postponed; #9 is parked; #8 is open.
-- **Config ticket (open, XL)**: configurable `Global User AI Directory`, early settings load, `Default Shell Interpreter`, path quoting, and the hardcoded `$HOME/.ai` fixes; links GitHub #9 and `bootstrap-global-settings-file.md`.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the codebase examination over `docs/`, `tests/`, and `support-files/` and the skills-root plan.
+- **Release**: v6.8.0 is prepared and reviewed; publication waits for the release-note approval.
+- **GitHub tracker**: #10 is postponed; #9 is absorbed by the config unit and closes on delivery; #8 is open.
+- **Config unit (closed)**: `ai/issues/closed/configurable-global-user-ai-directory-early-settings-and-shell.md`; the plan is attached; the design is in the ADR.
 - **Idea tracking**: the checkpoint adds one next-steps line for each discussed problem or solution; no mid-session next-steps writes.
 - **Design docs**: `design-docs/` holds the ADRs; the `update design documents` trigger is user-side; the developer-mode ADR entry is part of the change.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
-- **Test location**: `tests/` holds the dev-time scripts; `support-files/` holds the sync scripts and validators.
+- **Test location**: `tests/` holds 23 dev-time scripts; `support-files/` holds the sync scripts and validators.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.7.1 are published.
+- **Release history**: v5.8.0 through v6.7.1 are published; v6.8.0 is prepared.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

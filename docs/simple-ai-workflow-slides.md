@@ -21,7 +21,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Handoff protocol**: switch between IDE, CLI, and web chat
 - **Notes (`ai/notes/`)**: rough thoughts, meeting notes, random ideas
 - **Artifacts (`ai/artifacts/`)**: draft outputs you review before promoting to docs or code
-- **Global settings** (`~/.ai/settings/global-user-settings.md`): the AI learns your skills, tool preferences, and cross-project context
+- **Global settings** (`<Global User AI Directory>/settings/global-user-settings.md`, default `~/.ai/`): the AI learns your skills, tool preferences, and cross-project context
 - **Modular persona**: shift the AI's focus (System Architect, Teacher/Trainer) without losing the guardrails
 - **Project customization**: `ai-customization.md` at the project root, with a curated traits catalog
 - **Compliance intelligence**: built-in AI knowledge, no on-disk compliance files
@@ -107,13 +107,13 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | What you need | Simple AI Workflow |
 |---|---|
 | Project instructions | `AGENTS.md`, works with any tool, any editor |
-| User preferences | `~/.ai/settings/global-user-settings.md` |
+| User preferences | `<Global User AI Directory>/settings/global-user-settings.md` (default `~/.ai/`) |
 | Per-project customization | `ai-customization.md` |
 | Domain expertise and rules | 23 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge and decisions | `ai/shared/project-knowledge/` |
-| Cross-project lessons | `~/.ai/global-knowledge/`, explicit and structured |
+| Cross-project lessons | `<Global User AI Directory>/global-knowledge/` (default `~/.ai/`), explicit and structured |
 | Post-summary recovery | Post-Compaction Recovery, automatic |
 | Multi-tool handoffs | `ai/shared/handoffs/` |
 | Compliance enforcement | Built-in AI knowledge (no on-disk files required) |
@@ -143,7 +143,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ## Moving to a new machine
 
-- Run `"backup ai"` and it archives the whole `ai/` directory to `~/.ai/backups/`
+- Run `"backup ai"` and it archives the whole `ai/` directory to `<Global User AI Directory>/backups/` (default `~/.ai/backups/`)
 - Or set `ai/` up as its own private git repo (handy if you manage many projects)
 - `git clone` and you are straight back to work
 
@@ -212,7 +212,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 - **Native one-liners**: Bash (`tar`) and PowerShell (`Compress-Archive`)
 - **On-demand trigger**: say "backup ai" or "backup ai state" to run one. It is not automatic at checkpoints
-- **Global storage**: saved to `~/.ai/backups/` for easy recovery
+- **Global storage**: saved to `<Global User AI Directory>/backups/` (default `~/.ai/backups/`) for easy recovery
 - **Unique naming**: `{parent}_{project}_{timestamp}`
 
 > **Reliable, with zero scripts.** Your project history is always protected.
@@ -259,9 +259,9 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 ## The solution: scoped token rationing
 
-- **Global Knowledge indexed at boot**: the `~/.ai/global-knowledge/` files are indexed and loaded on demand, like Project Knowledge, so a growing set does not bloat every boot
+- **Global Knowledge indexed at boot**: the `<Global User AI Directory>/global-knowledge/` files (default `~/.ai/global-knowledge/`) are indexed and loaded on demand, like Project Knowledge, so a growing set does not bloat every boot
 - **Active policies loaded in full at boot**: every policy named in `ai-customization.md`, because the AI cannot follow a rule it hasn't read
-- **Global and Project Knowledge indexed at boot**: the `~/.ai/global-knowledge/` and `ai/shared/project-knowledge/` files are index-only, and load on demand
+- **Global and Project Knowledge indexed at boot**: the `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) and `ai/shared/project-knowledge/` files are index-only, and load on demand
 - **Depth on demand**: Knowledge loads when a task needs it, not just in case
 
 > **Lean context. Fast boot. Full depth when it matters.**

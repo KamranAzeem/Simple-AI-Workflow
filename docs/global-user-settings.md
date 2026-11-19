@@ -1,4 +1,4 @@
-<!-- Save this file as $HOME/.ai/settings/global-user-settings.md, then replace the placeholders with your own details. The AI loads this file at the start of every session, so keep it short and current. -->
+<!-- Save this file as <Global User AI Directory>/settings/global-user-settings.md (default $HOME/.ai/settings/global-user-settings.md), then replace the placeholders with your own details. The AI loads the whole settings directory before the first shell command, so keep it short and current. -->
 
 # Global User Settings
 
@@ -41,6 +41,7 @@ The universal writing rules live in the common policy (`Humanized Output`, `Mark
 ### Preferred shell and tools
 
 - `<your terminal, shell, and preferred CLI tools>`
+- **Default Shell Path**: `<the native OS path to the shell named by Default Shell in ai-customization.md, for example /bin/bash or C:\Program Files\Git\bin\bash.exe>`
 
 ## Words and Phrases to Avoid
 

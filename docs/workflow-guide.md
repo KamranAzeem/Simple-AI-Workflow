@@ -17,7 +17,7 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
 
-- **Location**: `~/.ai/global-knowledge/` (Global in user's home directory)
+- **Location**: `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`; the global user directory is configurable in `ai-customization.md`)
 - **Status**: Personal persistent memory that follows you into every project.
 - **Usage**: Indexed at initialization (index-at-boot, load-on-demand) under the same Token Rationing model as **Project Knowledge**; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
 - **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify; the filename is also the lookup key for index-only Global and Project Knowledge. See **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
@@ -162,7 +162,7 @@ recovery?" before trusting the next answer.
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
 
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in the `create-backup` procedure module in the clone's `ai/procedures/`.
-- **Global Storage**: Archives are stored in `~/.ai/backups/` and are uniquely identified by their project name and timestamp.
+- **Global Storage**: Archives are stored in `<Global User AI Directory>/backups/` (default `~/.ai/backups/`) and are uniquely identified by their project name and timestamp.
 - **Not automatic**: Backups are **not** part of the checkpoint procedure (the `write-checkpoint` module). They are a separate procedure (the `create-backup` module) invoked only by explicit user request.
 
 ### Benefits
@@ -261,7 +261,7 @@ Note: always use the full phrase `"load context using AGENTS.md protocol"`. A ba
 
 ### How it works
 
-1. **Global Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `~/.ai/global-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
+1. **Global Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
 2. **Active Policies: full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
 3. **Project Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
@@ -428,7 +428,7 @@ To write or update a document, say `"update design documents"`, optionally with 
 
 ## 23. Knowledge File Standards and Repair
 
-Every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` starts with this header, as the first thing in the file:
+Every file in `ai/shared/project-knowledge/` and `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) starts with this header, as the first thing in the file:
 
 > **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 

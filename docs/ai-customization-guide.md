@@ -2,6 +2,17 @@
 
 The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI assistant to a specific project, directory, or group of projects. It uses a flexible "soft composition" model for project customization.
 
+## Workflow configuration
+
+The `## AI Workflow Configuration` section holds the paths and the shell. It is read before the first shell command.
+
+- **`Global AI Workflow Directory`**: your clone of Simple-AI-Workflow. This entry is mandatory.
+- **`Global User AI Directory`**: where the global settings, global knowledge, and backups live. The default is `[HOME]/.ai/`. Use `[HOME]` on Linux and macOS, or `%USERPROFILE%` on Windows, and resolve it to an absolute path.
+- **`Default Shell`**: optional. Use `bash`, `zsh`, `pwsh`, or `git-bash`. Leave it out to keep your current shell behavior.
+- **`Default Shell Path`**: set in the global settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell stops the boot with a report.
+
+The boot reads the customization first, then the whole settings directory, then runs the first shell command. Absent keys keep the default directory and the current shell.
+
 ## Why Customization?
 
 Different projects require different expertise (Cloud vs. Frontend), different behaviors (Mentor vs. Reviewer), and different regulatory standards (GDPR vs. SOC2). Instead of having one massive policy, we "compose" the AI's persona in the project directory using this file.

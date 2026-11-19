@@ -10,10 +10,6 @@
 
 <!-- STATE-FILE-HEADER: progress.md END -->
 
-[2026-11-16] Rewrote the Windows system administration legacy policy on `feature/plugin-extraction`: one sentence per bullet, all 71 rules preserved, `Mode: expertise` declared, the new anchor fixture added, the docs and ADR updated. Suite green; review APPROVED. No trunk merge.
-[2026-11-16] Rewrote the academic research legacy policy on `feature/plugin-extraction`: one sentence per bullet, all 209 rules preserved, the stages flattened, the example non-normative, the changelog appendix removed, `Mode: expertise` declared, the new anchor fixture added, the docs and ADR updated. Suite green; review APPROVED. No trunk merge.
-[2026-11-16] Resolved the coding-baseline unit: the universal engineering and testing standards stay in the common policy, the extraction is removed from the program scope, and the investigation ticket is closed. The ADR and the parent ticket record the decision; no policy change.
-[2026-11-16] Reviewed and fixed the user documentation on `feature/plugin-extraction`: review-27 found three count drifts and five coverage gaps; fixed the counts to 23, the floor, the trigger lists, the thinking modes, the testing standards, the compared doc, and the program-ticket status; review-28 APPROVED. Suite green; docs committed on the branch. No trunk merge.
 [2026-11-17] Loaded context and reviewed the tracker: GitHub #10 received the design rewrite and the refined user-facing section; #9 is parked and #8 stays open. No protocol change.
 [2026-11-17] Recorded the tool-selection and shell design in Project Knowledge and filed the local ticket: the tool ladder and the git-ignore rewrite are a separate unit; the shell preference stays with GitHub #9; no shell fixture.
 [2026-11-17] Audited the common-policy prose shape read-only: 90 multi-sentence rules, 16 rationale bullets, 6 banned words, and 8 prose sections; recorded the debt in the program ticket and filed the L rewrite ticket. No protocol change.
@@ -34,3 +30,5 @@
 [2026-11-19] Filed the config ticket for the configurable global directory, early settings load, and shell configuration; linked GitHub #9 and the bootstrap ticket; P2/XL, AI estimate.
 [2026-11-19] Reviewed the idea-tracking options and chose the safe path: a discussed problem or solution becomes one next-steps line at the checkpoint; no mid-session next-steps writes.
 [2026-11-19] Added the checkpoint discussed-idea rule and corrected the design-docs trigger scope; released v6.7.1.
+[2026-11-19] Agreed the config design: `Default Shell` in the customization, `Default Shell Path` in the settings, the whole settings directory read early, the sync keeps Merge Policy, the bootstrap owned, the skills root separate.
+[2026-11-19] Finished the configurable global user directory and default shell unit: the customization keys, the early whole-settings read, the shell path and name resolution, the validator and sync updates, the bootstrap, the quoted backup, the live docs, the ADR, and the strengthened test; review-30 APPROVED; suite 23/23, protocol 8/8, authoring, markdownlint, and shellcheck green.

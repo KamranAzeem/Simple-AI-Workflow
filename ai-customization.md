@@ -8,6 +8,10 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 
 **Global AI Workflow Directory**: /home/kamran/Projects/Personal/Simple-AI-Workflow/
 
+**Global User AI Directory**: /home/kamran/.ai/
+
+**Default Shell**: bash
+
 ## Active Expertise
 
 - meta

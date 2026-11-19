@@ -142,7 +142,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Require no human approval beyond the trigger; the `repair knowledge files` trigger is the approval.
 - Replace a file only after verification and an `APPROVED` review.
 - Delete the temporary candidate after replacement or abort.
-- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old global file to `~/.ai/knowledge-repair-backups/<date>/global/` before the first change.
+- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old global file to `<Global User AI Directory>/knowledge-repair-backups/<date>/global/` before the first change.
 - Write the manifest to `ai/artifacts/knowledge-repair-<date>/manifest.md` only for a non-dry run.
 - Stop a dry run after the manifest report; write and replace nothing.
 - Restore the backup on failure.

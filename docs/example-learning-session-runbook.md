@@ -38,7 +38,7 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
   - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
   - Ensure the path reflects your actual global repository location.
 - Verify the policy files exist under that path (check that `ai/policies/ai-policy-meta.md` and `ai/policies/ai-policy-common.md` are accessible).
-- Optional: create `global-user-settings.md` in `~/.ai/settings/` to give the AI persistent context about your skills, preferences, and tooling. Use `docs/global-user-settings.md` from this repository as a starting template.
+- Optional: create `global-user-settings.md` in `<Global User AI Directory>/settings/` (default `~/.ai/settings/`) to give the AI persistent context about your skills, preferences, and tooling. Use `docs/global-user-settings.md` from this repository as a starting template.
 
 ### 4. Verification Checklist
 

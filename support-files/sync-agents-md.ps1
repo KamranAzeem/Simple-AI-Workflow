@@ -229,6 +229,17 @@ function Ensure-CustomizationFile {
         }
       }
     }
+    if ($content -match '(?m)^\*\*Global User AI Directory\*\*:') {
+      $userDirLine = ($content -split "`n" | Where-Object { $_ -match '^\*\*Global User AI Directory\*\*:' } | Select-Object -First 1)
+      $userDir = ($userDirLine -replace '^\*\*Global User AI Directory\*\*:\s*', '').Trim()
+      $userDir = $userDir -replace '\[HOME\]', $env:USERPROFILE
+      $userDir = $userDir -replace '^~', $env:USERPROFILE
+      if (Test-Path -Path $userDir -PathType Container) {
+        Write-Host "  ai-customization.md: Global User AI Directory exists ($userDir)"
+      } else {
+        Write-Host "  ai-customization.md: WARNING: Global User AI Directory does not exist ($userDir)"
+      }
+    }
     Add-MergePolicySection -CustomizationFile $customizationFile
     return
   }

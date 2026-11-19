@@ -146,7 +146,11 @@ echo "Configuration mapping verified."
 
 # 3. Global Structure
 echo "[3/8] Verifying global directory structure..."
-GLOBAL_DIR="$HOME/.ai"
+GLOBAL_DIR="$(sed -n 's/^\*\*Global User AI Directory\*\*:[[:space:]]*//p' ai-customization.md 2>/dev/null | head -1 | tr -d '`' | sed 's/[[:space:]]*$//')"
+GLOBAL_DIR="${GLOBAL_DIR/#\~/$HOME}"
+GLOBAL_DIR="${GLOBAL_DIR//\[HOME\]/$HOME}"
+GLOBAL_DIR="${GLOBAL_DIR//%USERPROFILE%/$HOME}"
+[ -n "$GLOBAL_DIR" ] || GLOBAL_DIR="$HOME/.ai"
 
 GLOBAL_SUBS=("settings" "global-knowledge" "backups")
 for sub in "${GLOBAL_SUBS[@]}"; do

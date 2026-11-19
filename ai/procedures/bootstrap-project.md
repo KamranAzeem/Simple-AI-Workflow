@@ -5,7 +5,7 @@
 - bootstrap
 - bootstrap using agents.md protocol
 
-1. **STEP-ENSURE-DIRECTORIES**: Run PROCEDURE LOAD-CONTEXT, STEP-STRUCTURAL-AUDIT. It audits and idempotently creates the mandatory directories and the issue template.
+1. **STEP-ENSURE-DIRECTORIES**: Run PROCEDURE LOAD-CONTEXT, STEP-STRUCTURAL-AUDIT. It audits and idempotently creates the mandatory directories and the issue template. Then read the **Global User AI Directory** from the customization or use the default `[HOME]/.ai/`, and create its `settings/`, `global-knowledge/`, and `backups/` subdirectories.
 2. **STEP-CREATE-MISSING-FILES**: Create the **Project Coordination File** if it is missing.
 3. **STEP-INITIALIZE-CUSTOMIZATION**: Create `ai-customization.md` at the project root with a `## AI Workflow Configuration` section containing a `**Global AI Workflow Directory**` entry pointing to the workflow repository. See `(Global AI Workflow Directory)/docs/ai-customization.md` for the template.
 4. **STEP-INITIALIZE-STATE-FILES**: Create `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md` in the v2 shape (the canonical block for each file copied verbatim from `ai-policy-common.md` (`### Canonical State-File Headers`); progress and next-steps chronological; context a dashboard plus an `## Active Working Context` section), and an initial daily checkpoint with the canonical daily-checkpoint block and the `# Daily Checkpoint YYYY-MM-DD` heading.

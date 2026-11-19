@@ -1150,3 +1150,11 @@ The checkpoint adds one next-steps line for each potential problem or solution r
 Context: ideas raised without an agreed scope were lost between conversations, and an earlier proposal to add a policy section was rejected as duplicate and too heavy for a trigger-loaded policy.
 
 Consequences: the checkpoint step gains one sentence; the design-docs policy gains the developer-mode ADR rule; the release is a patch. A session that ends before a checkpoint can still lose an idea, which is the accepted trade-off for the safe state write.
+
+## 2026-11-19: The global user directory and the default shell are configurable
+
+`ai-customization.md` gains `Global User AI Directory` (default `[HOME]/.ai/`) and `Default Shell` (`bash`, `zsh`, `pwsh`, `git-bash`). The global settings directory gains the optional `Default Shell Path`, the native OS path for the named shell. Load context reads the customization first, then the whole settings directory, then runs the first shell command.
+
+Context: the global directory was fixed at `~/.ai/`, and the shell preference was read after the first shell commands. The sync keeps `## Merge Policy`, adds no new keys, and verifies the user directory when present. The bootstrap creates the configured directory. The defaults and the absent keys keep the current behavior.
+
+Consequences: the boot reads the customization and the settings earlier; a shell path that does not match the name, or a missing shell, stops and reports; the validator defaults to `[HOME]/.ai/` and reads the key; the backup quotes every path; GitHub #9 is absorbed; the user-global skills root is a separate ticket.

@@ -18,8 +18,8 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 ## Quick start
 
 1. Clone this repo somewhere on your machine (for example `~/Projects/Simple-AI-Workflow`).
-2. Create your global AI directory structure: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"`.
-3. Optional: copy `docs/global-user-settings.md` to `$HOME/.ai/settings/global-user-settings.md` and fill in your own details.
+2. Create your global AI directory structure: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"`. The location is configurable with `Global User AI Directory` in `ai-customization.md`; `$HOME/.ai/` is the default.
+3. Optional: copy `docs/global-user-settings.md` to `<Global User AI Directory>/settings/global-user-settings.md` (default `$HOME/.ai/settings/global-user-settings.md`) and fill in your own details.
 4. Set your git identity so commits use your name and email (`git config --global user.name` and `user.email`). At bootstrap the AI also offers to create or fix `.gitconfig`.
 5. Copy `AGENTS.md` to your project root with the CLI or a file manager.
 6. Copy `docs/ai-customization.md` to `ai-customization.md` at your project root, then set `Global AI Workflow Directory` inside it to where you cloned this repo.
@@ -265,7 +265,7 @@ See [the skills examples](docs/examples/skills/) for a minimal package.
 
 Two files shape how the AI behaves. One is global, one is per project.
 
-**Global: `$HOME/.ai/settings/global-user-settings.md`**
+**Global: `<Global User AI Directory>/settings/global-user-settings.md` (default `$HOME/.ai/settings/global-user-settings.md`)**
 
 Your own profile: name, role, skills, preferences, writing style, words you don't want the AI to use, and the CLI tools it can call. The AI loads it at the start of every session. Start from `docs/global-user-settings.md`.
 
@@ -357,7 +357,7 @@ Working examples you can copy:
 
 ## File naming for knowledge and notes
 
-When you or the AI create files under `ai/shared/project-knowledge/`, `~/.ai/global-knowledge/`, `ai/notes/`, or `docs/`, give them descriptive names.
+When you or the AI create files under `ai/shared/project-knowledge/`, `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`), `ai/notes/`, or `docs/`, give them descriptive names.
 
 Good: `azure-postgresql-migration-decisions.md`  
 Bad: `decisions.md`, `notes.md`, `architecture.md`
@@ -375,7 +375,7 @@ This rule covers AI-generated files too, and the common policy enforces it. Sour
 
 ### Knowledge file standards
 
-Every file in `ai/shared/project-knowledge/` and `~/.ai/global-knowledge/` starts with this header, as the first thing in the file:
+Every file in `ai/shared/project-knowledge/` and `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) starts with this header, as the first thing in the file:
 
 > **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 

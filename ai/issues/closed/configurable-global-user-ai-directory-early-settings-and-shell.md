@@ -38,8 +38,10 @@ Description:
 - Changing `Global User AI Directory` moves every global path with no other edits.
 - The protocol validator, the authoring validator, the test suite, markdownlint, and shellcheck pass.
 
-**Open questions for the plan**:
+**Open questions for the plan**: resolved in `ai/plans/configurable-global-user-ai-directory-early-settings-and-shell.md`.
 
-- Where does `Default Shell Interpreter` live: global settings, `ai-customization.md`, or both with precedence?
-- Does `Global User AI Directory` also move the skills root, or only settings, knowledge, and backups?
-- Which path does the backup command use when the global directory has spaces?
+---
+2026-11-19
+Plan: `ai/plans/configurable-global-user-ai-directory-early-settings-and-shell.md`. Review-28 APPROVED.
+
+Close note: the user renamed `Default Shell Interpreter` to `Default Shell` and moved the native path to `Default Shell Path` in the global settings. The plan records the settled design.

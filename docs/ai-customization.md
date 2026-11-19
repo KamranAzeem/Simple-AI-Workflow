@@ -8,6 +8,12 @@
 
 **Global AI Workflow Directory**: /path/to/Simple-AI-Workflow
 
+**Global User AI Directory**: [HOME]/.ai/
+
+**Default Shell**: bash
+
+<!-- Global User AI Directory defaults to [HOME]/.ai/. Default Shell is optional; use bash, zsh, pwsh, or git-bash. The matching native path goes in the global settings file as Default Shell Path. -->
+
 See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md> for help.
 
 ---
