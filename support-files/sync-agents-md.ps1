@@ -112,6 +112,13 @@ function Get-MergePolicySection {
 
 function Add-MergePolicySection {
   param([string]$CustomizationFile)
+  if (-not (Test-Path -Path $CustomizationFile -PathType Leaf)) {
+    if ($WhatIf) {
+      Write-Host "  ai-customization.md: would add Merge Policy"
+      return
+    }
+    throw "Customization file not found: $CustomizationFile"
+  }
   $content = Get-Content -Raw -Path $CustomizationFile -ErrorAction Stop
   if ($content -match '(?m)^## Merge Policy') {
     return

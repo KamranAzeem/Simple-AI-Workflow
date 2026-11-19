@@ -10,8 +10,6 @@
 
 <!-- STATE-FILE-HEADER: progress.md END -->
 
-[2026-11-19] Finished the configurable global user directory and default shell unit: the customization keys, the early whole-settings read, the shell path and name resolution, the validator and sync updates, the bootstrap, the quoted backup, the live docs, the ADR, and the strengthened test; review-30 APPROVED; suite 23/23, protocol 8/8, authoring, markdownlint, and shellcheck green.
-[2026-11-19] Released v6.8.0 and published its GitHub release: the configurable global user directory, early whole-settings read, and default shell are live; GitHub #9 is closed as absorbed.
 [2026-11-19] Added the repair global settings procedure and policy: canonical keys, the Identity and Profile split, verified tools, redaction, the manifest, the backup, the dry run, and the review gate; the suite is 24 scripts; review-34 APPROVED; v6.9.0 is prepared.
 [2026-11-19] Released v6.9.0 and published its GitHub release: the repair global settings procedure and policy are live.
 [2026-11-19] Ran `repair global settings` on the user's settings: consolidated 6,703 to 5,257 bytes, verified 22 tools, kept 6 sensitive names by count only, and removed Style Sources, the git pointer, and the prose; review-35 APPROVED; the manifest and backup are recorded.
@@ -40,3 +38,6 @@
 [2026-11-19] Implemented GitHub #8: the out-of-band backup scripts, the 17-case test, the support README restructure, the ADR scope entry, and the v6.11.0 announcement; review-63 APPROVED; suite 26/26, protocol 8/8, shellcheck 0, markdownlint 0; merge and release pending approval.
 [2026-11-19] Merged GitHub #8, tagged `v6.11.0`, published the release, and closed the issue; the backup scripts are live.
 [2026-11-19] Fixed the global-settings fixture to derive the test count from `tests/test-*.sh`; the post-merge suite is green at 26/26.
+[2026-11-19] Dropped the user-global skills root: the third root adds a second meaning of global; the ticket is closed with the plan attached, the plan file is removed, and the two-root model stays.
+[2026-11-19] Pruned the open issue backlog: 13 closed, 2 merged, 8 kept; the open tracker is 8.
+[2026-11-19] Fixed the sync-agents-md.ps1 -WhatIf migration bug; added tests/verify-powershell-scripts.ps1; the VM run passed every check; the host suite 26/26, the protocol validator, and markdownlint green; the issue is closed with the plan attached.

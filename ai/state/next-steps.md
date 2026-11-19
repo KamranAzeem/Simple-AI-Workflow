@@ -13,4 +13,4 @@
 
 ## Pending
 
-- Implement the user-global skills root plan and release v6.12.0.
+- Merge the PowerShell scripts fix after approval.
