@@ -34,7 +34,7 @@ Govern the knowledge stores and the knowledge file standards.
 ## Project Knowledge Protocol
 
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the load-context procedure module. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
-- **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the last-commit date for tracked files, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
+- **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the commit date for tracked files when `git` is available, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
 - **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in the write-checkpoint procedure module) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
 - **Store size, lookup, and retirement**: apply the 50-file review threshold, the task-to-filename lookup, and the retirement rules in `## Knowledge File Standards`.
@@ -100,7 +100,7 @@ All such content belongs in named project knowledge files. When creating or upda
 
 - At task start, match the task's tool and domain to the indexed filenames of both stores.
 - Read every matching file in full before acting.
-- Search the global store with shell `find` and `grep` and absolute paths; the workspace search tools cannot reach it.
+- Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, `tmp`, and archive entries.
 
 ### Knowledge Retirement
 

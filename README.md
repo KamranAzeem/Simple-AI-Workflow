@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.9.1 (2026-11-19).** The tool rule now forbids Python or another runtime for file operations. Read the announcement: [docs/announcements/v6.9.1.md](docs/announcements/v6.9.1.md). |
+| **v6.10.0 (2026-11-19).** The boot now uses built-in tools and a read-only index helper; the fallback is best-effort. Read the announcement: [docs/announcements/v6.10.0.md](docs/announcements/v6.10.0.md). |
 
 # Simple AI Workflow
 
@@ -30,7 +30,7 @@ I built this for myself, to get my AI assistant to remember my projects, follow 
 >
 > **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
 
-For Windows path formats, the manual setup, and the bootstrap wedge, see [docs/setup.md](docs/setup.md).
+For Windows path formats and the manual setup, see [docs/setup.md](docs/setup.md).
 
 When you finish a session, type `"checkpoint"`. One checkpoint refreshes the state files, the diary, Project Knowledge, and Global Knowledge, and prints a grouped summary, so you do not run the knowledge updates as separate commands. To pick up later, type `"load context using AGENTS.md protocol"`. Checkpoint often. Think of a checkpoint as "ctrl + s".
 
@@ -395,7 +395,7 @@ One lesson lives in one place: the global store for a cross-project lesson, the 
 
 Use 50 files per store as a review threshold. The checkpoint reports the count; at 50 or more, run a repair. The repair merges, deduplicates, deletes evidence, and retires, and it reports any remaining overage. A new topic is never blocked.
 
-At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with shell find and grep and absolute paths.
+At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, tmp, and archive entries.
 
 The checkpoint checks the header before it writes. It also flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence, but it never edits anything. Say `"repair knowledge files"` when you want the AI to audit and fix the project store. Add `global` for the global store. The trigger is the approval: the repair asks no further questions. It backs up the old files, preserves anything ambiguous, and reports what it merged, split, trimmed, or left alone.
 

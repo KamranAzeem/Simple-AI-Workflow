@@ -4,14 +4,14 @@ The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI as
 
 ## Workflow configuration
 
-The `## AI Workflow Configuration` section holds the paths and the shell. It is read before the first shell command.
+The `## AI Workflow Configuration` section holds the paths and the shell. It is read before the first named command.
 
 - **`Global AI Workflow Directory`**: your clone of Simple-AI-Workflow. This entry is mandatory.
 - **`Global User AI Directory`**: where the global settings, global knowledge, and backups live. The default is `[HOME]/.ai/`. Use `[HOME]` on Linux and macOS, or `%USERPROFILE%` on Windows, and resolve it to an absolute path.
-- **`Default Shell`**: optional. Use `bash`, `zsh`, `pwsh`, or `git-bash`. Leave it out to keep your current shell behavior.
-- **`Default Shell Path`**: set in the global settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell stops the boot with a report.
+- **`Default Shell`**: optional. Use `bash`, `zsh`, `pwsh`, or `git-bash`. Leave it out to keep your current shell behavior. The key names the interpreter for named commands; the read-only index helper runs with `bash`.
+- **`Default Shell Path`**: set in the global settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins.
 
-The boot reads the customization first, then the whole settings directory, then runs the first shell command. Absent keys keep the default directory and the current shell.
+The boot reads the customization first, then the whole settings directory, then runs the first named command. Absent keys keep the default directory and the current shell.
 
 ## Why Customization?
 

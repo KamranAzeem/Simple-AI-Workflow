@@ -42,7 +42,11 @@ present "$ROOT/ai/procedures/load-context.md" "Then read every settings file" "l
 present "$ROOT/ai/procedures/load-context.md" "Global User AI Directory" "load-context resolves the user directory"
 present "$ROOT/ai/procedures/load-context.md" "Default Shell Path" "load-context resolves the shell path"
 present "$ROOT/ai/procedures/load-context.md" "git-bash" "load-context resolves git-bash"
-present "$ROOT/ai/procedures/load-context.md" "not one of" "load-context stops on an unknown shell"
+# shellcheck disable=SC2016
+present "$ROOT/ai/procedures/load-context.md" 'An absent `Default Shell` key keeps the current or default shell' "load-context treats the shell key as optional"
+present "$ROOT/ai/procedures/load-context.md" "reported, and the boot continues with built-ins" "load-context reports and continues"
+present "$ROOT/ai/procedures/load-context.md" "The helper uses its bash shebang" "load-context keeps the helper independent"
+absent "$ROOT/ai/procedures/load-context.md" "not one of" "the old unknown-shell stop is gone"
 present "$ROOT/support-files/validate-protocol.sh" "Global User AI Directory" "validator reads the user directory key"
 # shellcheck disable=SC2016
 present "$ROOT/support-files/validate-protocol.sh" 'GLOBAL_DIR="$HOME/.ai"' "validator keeps the default directory"

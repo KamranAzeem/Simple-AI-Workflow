@@ -10,12 +10,45 @@
 ---
 
 
-Shortlist
+"permission": {
+  "bash": {
+    "*python3 *": "ask",
+    "*python *": "ask",
+    "*": "ask"
+  }
+}
 
-Rename to "Default Shell".
-1. A: ai-customization.md, ## AI Workflow Configuration, next to the two directory keys. Read early, per project, no early global-settings load.
-2. A for this ticket. C (C: add a third root for the user's own cross-project skills.) for later issue. 
-3. A plus C. The create-backup procedure carries quoted native commands; add a spaced-path test.
-4. B. Absorb #9 into the config ticket.
-5. D. The bootstrap uses the same "Global User AI Directory" key.
-Update the live references plus the sync scripts and template; keep the historical announcements untouched.
+
+---
+
+## Planning status
+
+The plan exists at `ai/plans/built-in-first-execution-rewrite.md` (489 lines) and the ticket is still open at 131 lines. Markdownlint is clean. No branch exists and no implementation has started.
+
+## Review history
+
+I ran ten independent peer reviews, all recorded in `ai/code-review-reports/` from `review-37` to `review-46`. Every round returned `CHANGES REQUESTED`. The findings were real, not cosmetic: the boot sub-rules, the runtime contract, the proof labels, the docs, and the tests each had gaps.
+
+The plan is **not APPROVED**. The round 10 verdict still lists five Majors:
+
+- The ladder's read ban contradicts the metadata `wc`/`stat`/`find` exception.
+- The Level 1 user instruction conflicts with the `"use policy <name>"` always-on exception.
+- The proof step is counts-only while the plan adds emitter, reason, and age fields.
+- `Default Shell Path` is optional, but the plan reports it as missing on the normal path.
+- The Step 6 rewrite omits the author identity, design-docs migration, trigger-only design rule, and the "Global Knowledge is not loaded here" statement.
+
+I have applied fixes for all five and for the round 10 Minors. Round 11 has not run, so those fixes are unverified.
+
+## The decision point
+
+The loop is not converging fast enough for the scope. The plan covers the boot rewrite, a new runtime contract, a helper, a fallback, proof changes, docs, tests, and an ADR amendment. Each review round surfaced another edge case in that surface.
+
+Three honest options:
+
+1. Run round 11. If it approves, implementation can start. If it requests changes again, stop the loop and cut the scope.
+2. Cut the scope now. Keep the ladder and precedence rewrite, the built-in boot reads, and the thin helper. Drop the runtime v1 parity and make the fallback a documented best-effort path. That removes most of the remaining review surface.
+3. Accept the plan with the five Majors recorded and proceed at your direction. The procedure requires `APPROVED`, so this is your override as the human authority, not a protocol pass.
+
+My recommendation is option 1 first, then option 2 if round 11 fails. The plan is strongest on the boot rewrite and weakest on byte-level parity between the helper and the fallback. That parity is where most of the last six rounds went.
+
+Nothing is committed. The plan, the ticket, and all ten review reports are on disk.

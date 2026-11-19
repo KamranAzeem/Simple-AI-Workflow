@@ -169,15 +169,15 @@ This file contains the universal operating rules for all AI assistants in this r
 
 ## Tool Selection
 
-- Use the tools the harness exposes, and never assume a tool that is not listed.
-- Treat a harness tool for one operation as a purpose-built tool: read, search, edit, diagnostics, tests, version control, web access, or an external integration.
-- Use a purpose-built tool first when it directly performs the operation.
-- Use the shell second for a command or file operation that no purpose-built tool covers, including git, validators, directory creation, archives, permissions, and paths outside the tool's reach.
-- Use Python or another runtime third only when neither can perform the operation, and report why.
-- Report every fallback and name the tool used.
-- Never use a lower rung to bypass an approval, a protocol rule, or a safety check.
-- Never use Python or another runtime to search, create, append to, or edit a file; use the built-in tool.
-- Use shell search when the purpose-built search cannot reach the path.
+- Use the tools the harness exposes, never a tool it does not list.
+- Use a purpose-built harness tool for one operation (read, search, glob, edit, diagnostics, tests, version control, web access, external integration) before any other rung.
+- Use the shell second only for a system operation on the host: git, a helper or validator, directory creation, archives, permissions, metadata reads, and a global listing or search the built-in tools cannot reach.
+- Never use the shell to read, search, list, or edit a file a built-in tool can reach, except the helper launch, the global listing and search, the backup archive, the reported Git-Ignored Protocol Files Are Readable fallback, and the metadata step's byte and age reads.
+- Never use Python or another runtime to read, search, create, append to, or edit a file; use the built-in tool.
+- Use a runtime for computation only when neither a built-in tool nor the shell performs it.
+- Run one job per shell call and report each fallback at that call, naming the tool and the reason.
+- Never use a lower rung to bypass an approval, a rule, or a safety check.
+- Use shell search only when the built-in search cannot reach the path.
 
 ## Outbound Content Scrub
 

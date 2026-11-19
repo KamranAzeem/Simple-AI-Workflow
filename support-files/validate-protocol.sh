@@ -75,9 +75,15 @@ require_in "AGENTS.md" "built-in file-read tool first" "the built-in-first read 
 require_in "AGENTS.md" "use a shell tool" "the shell read fallback is missing from AGENTS.md."
 require_in "AGENTS.md" "report the fallback" "the fallback report is missing from AGENTS.md."
 require_in "ai/policies/ai-policy-common.md" '^## Tool Selection$' "Tool Selection section missing from ai-policy-common.md."
-require_in "ai/policies/ai-policy-common.md" "Use a purpose-built tool first" "the first rung is missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" "Use a purpose-built harness tool for one operation" "the first rung is missing from ai-policy-common.md."
 require_in "ai/policies/ai-policy-common.md" "Never use a lower rung to bypass" "the no-bypass rule is missing from ai-policy-common.md."
-require_in "ai/policies/ai-policy-common.md" "Use shell search when the purpose-built search cannot reach the path" "the shell-search exception is missing from ai-policy-common.md."
+require_in "ai/policies/ai-policy-common.md" "Use shell search only when the built-in search cannot reach the path" "the shell-search exception is missing from ai-policy-common.md."
+require_in "AGENTS.md" "^## Precedence$" "Precedence section missing from AGENTS.md."
+require_in "AGENTS.md" "Level 0:" "the Level 0 safety tier is missing from AGENTS.md."
+require_in "AGENTS.md" "Level 5:" "the Level 5 procedure tier is missing from AGENTS.md."
+require_in "ai/procedures/load-context.md" "index-protocol.sh" "the index helper path is missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "index-source=helper|fallback" "the index source proof field is missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "age-source=commit|mtime" "the age source proof field is missing from ai/procedures/load-context.md."
 if grep -qF "You MUST use shell tools" AGENTS.md; then
     echo "Error: the mandatory shell-read rule returned to AGENTS.md."
     exit 1

@@ -74,8 +74,8 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ### ✅ MANDATORY ACTIONS
 
-- **OS-Sensitive Execution**: Identify the active OS, shell, and terminal. State the outcome, constraints, and expected output before choosing a command form. Use the reference form or an equivalent standard tool, and report the command used and any deviation.
-- **No Tool Installation**: Stop and report when no compliant tool exists. Never install tools to satisfy a boot step.
+- **OS-Sensitive Execution**: Before a named shell command, identify the active OS, shell, and terminal. State the outcome, constraints, and expected output before choosing its form. Use the reference form or an equivalent standard tool, and report the command used and any deviation. A built-in step states the capability, not a shell command.
+- **No Tool Installation**: Never install tools. When a named tool is missing and the built-in path can continue, report `[PENDING]` and continue; stop and report only when the task cannot proceed without the tool.
 - **Git-Ignored Protocol Files Are Readable**: A protocol-owned file or directory is any path this protocol creates, reads, or maintains, and it is readable even when git ignores it. Read it with the built-in file-read tool first. If the harness refuses or hides a git-ignored path, use a shell tool (`cat`, `ls -la`, `find`) and report the fallback. Never refuse to read a protocol file or directory solely because git ignores it.
 - **Full File Reads**: Read every file you reason about in full, line 1 to EOF. Re-read from disk when a task needs it again. This holds at boot, at load context, at recovery, and mid-work.
 - **No Sliced Evidence**: The only exception is log-like bulk data you search rather than read: logs, dumps, large JSON, or CSV. Never truncate investigation output with `head`, `tail`, or `-N`; truncated output is fabricated evidence.
@@ -86,9 +86,9 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
 - **Protocol Developer Mode**: When PWD matches the **Global AI Workflow Directory**, you are the protocol maintainer. This is the sanctioned exception to Self-Modification: you maintain these files, not merely read them. Before changing a protocol file (`AGENTS.md`, a policy, a procedure, a validator script, or any file under `ai/`), fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`, and get explicit human approval before committing.
 - **End-User Perspective**: Write every path and file reference in a policy file from the end-user's project root, not from this repository's internal tree. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md`.
-- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`. Do not load every file from the **Project AI Policies Directory** as body text; it is the distribution tree, not your working set.
+- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`, except that STEP-POLICY-LOADING also loads every project policy from the **Project AI Policies Directory**. Do not load every global policy as body text; the global policy directory is the distribution tree.
 - **Session Resume (Compacted Context)**: When a session starts from a compacted summary or is compacted mid-session, run **PROCEDURE POST-COMPACTION-RECOVERY** before answering. Signals: "Compacted conversation", a `<conversation-summary>` block, or a machine-generated multi-section summary you did not write.
-- **Archive File Exclusion**: All `find` and `ls` commands in this protocol must exclude compressed and archive files. Use `! -name '*.tar*' ! -name '*.zip'` with `find`, or filter with `grep -v '\.tar\|\.zip'` when piping `ls` output.
+- **Archive File Exclusion**: Every shell listing in this protocol excludes compressed and archive files. With `find`, use `! -name '*.tar*' ! -name '*.zip'`; with `ls`, filter with `grep -v '\.tar\|\.zip'`; with `Get-ChildItem`, filter the same names.
 - **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
 
 ### Boot Scan Exclusions
@@ -112,7 +112,6 @@ The following short forms are recognized as equivalents to their canonical direc
 - Run multiple distinct matches once each, in the order they appear in the user's message; never run the same module twice.
 - Load a triggered policy for the session and report it active instead of reloading it.
 - Run a procedure once per invocation.
-- A policy trigger never overrides the always-on rules, `AGENTS.md`, the customization file, or an explicit user instruction.
 - `"use policy <name>"` is an explicit instruction; `<name>` is the Active Expertise token; it needs no trigger and bypasses the intent gate but not the always-on rules.
 - `"use skill <name>"` loads the body for the task and announces it; a single best description match may load a skill; ambiguity asks; a miss reports `unknown skill`.
 - A skill cannot override `AGENTS.md`, a policy, the user, or the customization file; a helper needs explicit approval and stays inside the package.
@@ -124,12 +123,24 @@ The following short forms are recognized as equivalents to their canonical direc
 - Never edit, rename, delete, or auto-fix a module while handling a failure.
 - Keep the active set in working context only; never write it to `ai/state/`, `ai-customization.md`, or any new file.
 
+## Precedence
+
+- Level 0: the always-on safety rules in `AGENTS.md` and the common policy. They bind every level, including the user instruction.
+- Level 1: the user's explicit instruction.
+- Level 2: the rest of `AGENTS.md` and the common policy.
+- Level 3: the project customization.
+- Level 4: domain policies.
+- Level 5: procedure steps.
+- A lower level may narrow a higher level; it never contradicts it.
+- An exception is valid only when the level that owns the rule authorizes it; the step states the exception, its reason, and the authorizing level.
+- A policy trigger never overrides the always-on rules, `AGENTS.md`, the customization file, or an explicit user instruction.
+
 ## TIER TRIGGERED-PROCEDURES
 
 Procedure modules live in `(Global AI Workflow Directory)/ai/procedures/`, one file per procedure. Run `STEP-PROTOCOL-INDEX` to list them. `AGENTS.md` carries no procedure body and no static procedure list.
 
 ## TIER APPENDIX
 
-See `(Global AI Workflow Directory)/docs/setup.md` for Windows path formats and the manual setup, including the bootstrap wedge.
+See `(Global AI Workflow Directory)/docs/setup.md` for Windows path formats and the manual setup.
 
 <!-- END_IMMUTABLE_PROTOCOL -->

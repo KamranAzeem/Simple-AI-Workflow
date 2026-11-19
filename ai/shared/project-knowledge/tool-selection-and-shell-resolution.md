@@ -4,12 +4,11 @@
 
 ## Context
 
-- The change is proposed. No protocol file has changed yet.
-- The always-on bootstrap router tells the assistant to use shell tools to read protocol files that git ignores.
-- The always-loaded common policy has no general rule for choosing a purpose-built tool, the shell, or Python.
-- The shell preference in the user settings is read after the first boot commands, so a Windows session can run every command in the wrong shell.
-- This unit implements the tool ladder and the git-ignore rewrite. The shell preference is deferred to GitHub #9 and the `Default Shell Interpreter` config work.
-- The change is a new unit of work, so the one-unit-per-branch rule applies.
+- The tool ladder and the git-ignore readability rule landed in v6.7.0.
+- The shell preference and the configurable global user directory landed in v6.8.0; GitHub #9 is closed as absorbed.
+- The runtime file-operation rule became unconditional in v6.9.1: Python or another runtime never searches, creates, appends to, or edits a file; the built-in tool is required.
+- v6.10.0 removed the load-context shell mandates: every read, search, and listing uses a built-in tool; one read-only helper and a best-effort fallback remain.
+- A policy rule alone did not stop a runtime file write; the harness permission is the hard stop.
 
 ## Built-in Capability Inventory
 
@@ -48,23 +47,21 @@
 - Git-ignore rule: keep the shell mandate, add an exception clause, or rewrite with a role-based heading. Chosen: rewrite, with no path list.
 - Shell preference: customization only, global settings only, or both with a project override. Chosen: customization first, global settings fallback, project override.
 - Session inventory: keep or drop. Chosen: drop, because the harness already lists the tools.
-- The built-in-first rule and the procedure shell commands are not a conflict. They cover different operations: file content edits versus commands.
+- The built-in-first rule and the boot shell mandates conflicted; v6.10.0 removed the mandates, kept one read-only helper, and made the fallback best-effort.
 
 ## Rule or Fix
 
 ### Tool ladder
 
-- Add `## Tool Selection` to the always-loaded common policy, after `## Universal Operational Guardrails`.
-- Remove the `Built-in Tools First (File Edits)` bullet. Keep its file-content guard as one ladder bullet.
-- Use the tools the harness exposes, and never assume a tool that is not listed.
-- Define a purpose-built tool as a harness tool for one operation: read, search, edit, diagnostics, tests, version control, web access, or an external integration.
-- Use a purpose-built tool first when it directly performs the operation.
-- Use the shell second for a command or a file operation that no purpose-built tool covers, including git, validators, directory creation, archives, permissions, and paths outside the tool's reach.
-- Use Python or another runtime third, only when neither can perform the operation, and report why.
-- Report every fallback and name the tool used.
-- Never use a lower rung to bypass an approval, a protocol rule, or a safety check.
-- Never use the shell, Python, or another runtime to write or edit file content when a purpose-built edit tool exists.
-- Use shell search when the purpose-built search cannot reach the path.
+- Use the tools the harness exposes, never a tool it does not list.
+- Use a purpose-built harness tool for one operation (read, search, glob, edit, diagnostics, tests, version control, web access, external integration) before any other rung.
+- Use the shell second only for a system operation on the host: git, a helper or validator, directory creation, archives, permissions, metadata reads, and a global listing or search the built-in tools cannot reach.
+- Never use the shell to read, search, list, or edit a file a built-in tool can reach, except the helper launch, the global listing and search, the backup archive, the reported Git-Ignored Protocol Files Are Readable fallback, and the metadata step's byte and age reads.
+- Never use Python or another runtime to read, search, create, append to, or edit a file; use the built-in tool.
+- Use a runtime for computation only when neither a built-in tool nor the shell performs it.
+- Run one job per shell call and report each fallback at that call, naming the tool and the reason.
+- Never use a lower rung to bypass an approval, a rule, or a safety check.
+- Use shell search only when the built-in search cannot reach the path.
 
 ### Git-ignored protocol files
 
@@ -78,41 +75,39 @@
 - Do not add a session-start tool inventory.
 - One ladder bullet covers the intent: use the tools the harness exposes, and never assume a tool that is not listed.
 
-### Shell preference (deferred)
+### Shell preference
 
-- Deferred to GitHub #9 and the `Default Shell Interpreter` config work; this unit does not implement it.
-- Add `## Runtime Configuration` to the project customization file with `Shell` and `Shell Fallback`.
-- Widen the load-context customization step to read the section before the first command.
-- Resolve the project value first, then the global settings value, then the default. A project value overrides a global value.
-- Use the preferred shell for every command. If the harness started in another shell, invoke the preferred shell explicitly.
-- If the preferred shell is unavailable, use the declared fallback and report it. If neither is available, stop and ask before the first command.
-- Keep the shell value out of the ladder. The ladder says when to use a tool; the preference says which shell.
+- `Default Shell` in the customization names the shell; `Default Shell Path` in the global settings carries the native path.
+- The boot reads the customization first, then the whole settings directory, then the first named command.
+- The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins. Absent keys keep the current behavior.
+- The read-only index helper runs with `bash` regardless of `Default Shell`.
+- GitHub #9 is closed as absorbed.
 
 ## Why
 
-- The git-ignore rule is the only true conflict. It mandates shell reads and blocks a built-in-first rule.
-- The file-edit rule is not a conflict. It covers content edits, while procedures call commands.
-- The global knowledge lookup is not a conflict. It uses shell search because the built-in search cannot reach the path.
+- The old boot's shell mandates were the conflict; v6.10.0 replaced them with built-in reads and the helper.
+- The file-edit rule covers content edits; the helper and the named commands are the named exceptions.
+- The global knowledge lookup uses the built-in search when it can reach the path; the runner form is the ladder bullet 9 exception.
 - A purpose-built tool handles quoting, encoding, diffs, and approvals better than a shell command.
 - The shell is a user preference, not a project rule. It must be read before the first command.
 - A session inventory would add output and no guarantee. The harness already lists its tools.
+- A policy rule is not enforcement. The harness permission prompt is the hard stop; the policy states the rule.
 
 ## Verify
 
-- Add `tests/test-tool-selection.sh`; `tests/run-all.sh` discovers it.
-- Assert the bootstrap file contains the new heading, "built-in file-read tool first", "use a shell tool", and "report the fallback".
-- Assert the bootstrap file does not contain the old mandatory-shell sentence and does not enumerate the state directory as an exception path.
-- Assert the common policy contains `## Tool Selection` and each ladder bullet's anchor.
-- Assert the old `Built-in Tools First (File Edits)` bullet is absent.
-- Add positive anchors to `support-files/validate-protocol.sh` for the new heading, the first-rung rule, the no-bypass rule, and the shell-search exception.
-- Add negative checks to the validator so the old mandatory-shell sentence and the old file-edit bullet fail validation if they return.
-- Run markdownlint, shellcheck, both validators, and the full test suite.
-- Run the bootstrap-file sync script with a dry run.
-- Run peer review and require APPROVED.
-- Record the change in the decision store.
-- The shell early-read fixture belongs with GitHub #9; this unit adds no shell fixture.
+- `tests/test-tool-selection.sh` pins the precedence section, the nine-bullet ladder, the helper path, the removed old rules, and the validator anchors.
+- `tests/test-protocol-index.sh` pins the helper, the dev output, the same-name shadowing pair, the trigger conflict, the first boot, and the canaries.
+- `tests/test-load-context-boot.sh` pins the procedure contract, the helper, the canaries, and the dev index.
+- `tests/test-config-resolution.sh` pins the optional shell and the report-and-continue path.
+- Run markdownlint, shellcheck, both validators, and the full suite.
 
 ## Caveats
 
-- The shell preference is deferred to GitHub #9 and the config work; this unit is M.
-- The branch is new, cut from master.
+- The policy states the rule; the harness permission enforces it. The permission config is user-controlled.
+
+## Resolution (v6.10.0)
+
+- The boot uses built-in tools for every read, search, and listing; the only commands are the version check, directory creation, the read-only index helper, the POSIX metadata step, the global listing and search, the backup archive, and the git-ignore fallback.
+- The helper calls the read-only `--index` mode and sets `effective` and `conflict`; the fallback is best-effort and reports `index-source=fallback`.
+- Precedence is the always-on safety rules, then the user, then `AGENTS.md` and the common policy, then the customization, then domain policies, then procedure steps.
+- The `Default Shell` key is optional; a missing shell or path is reported, and the boot continues with built-ins.

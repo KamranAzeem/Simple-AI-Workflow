@@ -105,7 +105,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
 - **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only: prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
-- **Recursive Discovery**: AI is commanded to run `ls -R` on the **Global User AI Directory** to proactively find all settings and knowledge subdirectories.
+- **Recursive Discovery**: AI uses the built-in glob and listing on the **Global User AI Directory** to find all settings and knowledge subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
 - **Update Check**: The AI compares your workflow clone with its remote at load time and tells you when a pull is available. It never pulls for you.
 
@@ -253,7 +253,7 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
-The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The validator's `--index` mode is a developer tool; it prints the declared loading mode and the module scope, and the AI builds the index inline, so it adapts to Windows and macOS without a runtime validator.
+The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot uses the read-only `support-files/index-protocol.sh` helper, which calls the developer `--index` mode and sets the effective and conflict fields; the fallback uses built-in tools and reports `index-source=fallback`.
 
 A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
@@ -261,9 +261,9 @@ Note: always use the full phrase `"load context using AGENTS.md protocol"`. A ba
 
 ### How it works
 
-1. **Global Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
+1. **Global Knowledge: index only (Token Rationing)**: The AI uses the built-in glob and listing under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
 2. **Active Policies: full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
-3. **Project Knowledge: index only (Token Rationing)**: The AI runs a shell `find`/`ls -R` under `ai/shared/project-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
+3. **Project Knowledge: index only (Token Rationing)**: The AI uses the built-in glob and listing under `ai/shared/project-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
 
@@ -444,7 +444,7 @@ Every file stands on its own. Keep the facts, rules, reasons, and checks it need
 
 A project knowledge file may keep identifying names. A global knowledge file removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content and stays.
 
-At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with shell find and grep and absolute paths.
+At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, tmp, and archive entries.
 
 The checkpoint checks the header before it writes. It also flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence, but it never edits anything. The repair deletes; the checkpoint reports. `issue-template.md` and design docs in the old fallback location are exempt.
 

@@ -916,10 +916,10 @@ Invariants
 - INV-003: case-insensitive, whitespace, hyphen, and punctuation-insensitive whole-word phrase matching; ASCII-only phrases.
 - INV-004: policy triggers optional; procedure modules require at least one; empty sections invalid.
 - INV-005: one shared index step, defined once in `AGENTS.md`, referenced by load, recovery, and checkpoint; no restated scan logic.
-- INV-006: the index is ephemeral; no file, cache, or runtime script; validators remain dev-time tests.
+- INV-006: the index is ephemeral; no file or cache; one read-only helper may produce it; the helper is not a cache or a state file; the full authoring validator remains dev-time.
 - INV-007: dispatch is deterministic candidate detection plus the Directive versus Inquiry gate; ambiguity asks; multiple distinct triggers run in order; no module twice.
 - INV-008: static violations fail validation; runtime violations are reported and skipped; one fixed error vocabulary.
-- INV-009: the index holds type, scope, name, source, literal and normalized triggers, headings, effective, and conflict; no body text.
+- INV-009: the index holds type, scope, name, source, literal and normalized triggers, headings, effective, and conflict, and the summary carries the index source; no body text.
 - INV-010: procedure bodies live only in `(Global AI Workflow Directory)/ai/procedures/`; policies never hold procedures; no project procedure directory.
 - INV-011: global and project policies with same-path deduplication; recursive policies, flat procedures; hidden, archive, and escaping-symlink entries skipped; the index creates no directory.
 - INV-012: a same-name project module replaces the global one and its triggers; replaced global triggers stay reserved; a different-name trigger collision is invalid.
@@ -1174,3 +1174,9 @@ Consequences: the policy count is 24, the procedure count is 15, the trigger cou
 Context: the AI wrote the checkpoint with `python3` while the `edit` and `write` tools were available, and the conditional wording made the prohibition look optional.
 
 Consequences: the rule is unconditional for a runtime file operation; `tests/test-tool-selection.sh` pins the exact text; the release is v6.9.1.
+
+## 2026-11-19: One read-only index helper and a built-in-first boot
+
+The runtime index is produced by `(Global AI Workflow Directory)/support-files/index-protocol.sh` when bash exists, and by the AI with built-in tools otherwise. The helper calls the existing read-only `validate-policy-authoring.sh --index`; the dev output is the index format. The fallback emits a best-effort index in the same line format, reports `index-source=fallback` and its limits, and the boot continues. There is no v1 contract, no `--runtime` flag, and no byte-level parity.
+
+INV-006 becomes: the index is ephemeral; no file or cache; one read-only helper may produce it; the helper is not a cache or a state file; the full authoring validator remains dev-time. INV-009 gains the index source and the summary. The boot reads and listings use built-in tools; the only commands are the version check, directory creation, the helper launch, the metadata step, the global listing and search, the backup archive, and the reported git-ignore fallback. Precedence is the always-on safety rules, then the user instruction, then `AGENTS.md` and the common policy, then the customization, then domain policies, then procedure steps. The ladder keeps nine bullets, names the allowed shell reads, and names the operations Python may not perform. A missing shell, bash, project `ai/`, or fallback contract reports and continues. The knowledge age source is the commit date for tracked files when git is available, and mtime otherwise. This supersedes only the `2026-11-08` clause "never produced by a runtime script"; the replacement sentence is the INV-006 text above, and the ephemeral, rebuild, and no-cache sentences stand. It supersedes the index-is-inline statement in the `2026-11-09` boot-discovery entry, the parity clause in the `2026-11-08` trigger-index entry, the error-count wording in that entry, and the missing-shell stop in the `2026-11-19` shell entry; it amends the pwsh 7+ sentence so it applies to a shell command when one runs, not to the boot. The delivery ledger is deferred because the repo has no ledger; this change follows the existing convention.

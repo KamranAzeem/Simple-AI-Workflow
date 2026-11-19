@@ -57,7 +57,7 @@ A smaller window only means **smaller batches and more passes**, never a hard wa
 1. Generate the Level 0 repo map and persist it with a verbose name, e.g. `codebase-skeleton-map-<project-or-area>.md`.
 2. Generate Level 1 signature maps per module as needed; persist them (or as clearly delimited sections in the skeleton-map file). Signatures only, no bodies.
 3. Record a lightweight **dependency note** in plain text (`module-a -> module-b`): this is what later lets an edit in one file surface its dependents.
-4. Build these maps with the assistant's native file tools (`grep_search`, `read_file`, `file_search`).
+4. Build these maps with the assistant's built-in search and read tools.
 
 ### Phase 2: Plan (decide before touching)
 
@@ -85,7 +85,7 @@ This workflow stays lightweight. It does **not** introduce:
 - External code-graph or indexing tools (LlamaIndex, CodeGraph, Repomix, Aider).
 - A separate "planner model" vs "performer model" orchestration: in a single IDE assistant these are just two phases of one agent.
 
-The assistant already has `grep_search`, `read_file`, and `file_search`, plus the protocol's JIT indexing. That is enough.
+The assistant already has built-in search, read, and glob tools, plus the protocol's JIT indexing. That is enough.
 
 > Note: in this repository, `AGENTS.md` is the protocol entry point: **not** a code skeleton map. Do not confuse the two.
 

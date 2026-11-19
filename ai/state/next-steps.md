@@ -16,3 +16,5 @@
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Plan the user-global skills root ticket (L).
 - Set `Default Shell Path` in the global settings when an explicit shell path is wanted.
+- Add the `*python3 *` ask permission to the Kilo config.
+- Merge and release v6.10.0 after the branch commit.

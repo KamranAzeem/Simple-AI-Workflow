@@ -10,21 +10,6 @@
 
 <!-- STATE-FILE-HEADER: progress.md END -->
 
-[2026-11-17] Loaded context and reviewed the tracker: GitHub #10 received the design rewrite and the refined user-facing section; #9 is parked and #8 stays open. No protocol change.
-[2026-11-17] Recorded the tool-selection and shell design in Project Knowledge and filed the local ticket: the tool ladder and the git-ignore rewrite are a separate unit; the shell preference stays with GitHub #9; no shell fixture.
-[2026-11-17] Audited the common-policy prose shape read-only: 90 multi-sentence rules, 16 rationale bullets, 6 banned words, and 8 prose sections; recorded the debt in the program ticket and filed the L rewrite ticket. No protocol change.
-[2026-11-17] Filed the AGENTS.md thinness audit and ran the peer review: verdict CHANGES REQUESTED; the router is at 157/160 lines and 2,399/2,400 words, with nine long bullets, two procedure blocks, and a Single-Writer duplicate. No protocol change.
-[2026-11-17] Set the refactor order: AGENTS.md structural cleanup first, then the common-policy prose rewrite, then the other flagged policies.
-[2026-11-18] Prepared the v6.6.0 release: the common-policy plug-in split, the loading contract, the custom-policy howto, the five legacy rewrites, and the validator and fixture upgrades; the live test passed, the suite and both validators are green, the release notes are written, and the parent plus 12 child tickets are closed.
-[2026-11-18] Refactored AGENTS.md: the boot scan exclusions and the two index step bodies moved to load-context, git workspace detection moved to bootstrap-project, Single-Writer is a pointer, the long bullets are split, and the router-shape fixture is added; the suite and both validators are green, and the v6.6.1 release is prepared.
-[2026-11-18] Released v6.6.1 and published its GitHub release: the thinner AGENTS.md is live, the shape fixture guards it, and the release notes are in the user's voice.
-[2026-11-18] Rewrote the v6.6.0 and v6.6.1 release notes in the user's voice from his approved drafts, updated the banner, and recorded the voice, draft-first, and no-invented-events rules; no version bump.
-[2026-11-18] Added the loading declarations to 12 policies, recorded the common-policy exemption in the ADR, moved the legacy test case, and prepared the v6.6.2 release note from the user's approved text; no rule changed.
-[2026-11-18] Released v6.6.2 and published its GitHub release: the 12 load paths are declared, the common policy is exempt, the load-path test pins all four modes, and the note uses the approved plain text.
-[2026-11-18] Fixed the AGENTS.md refactor follow-ups: restored the maintainer scope, corrected the write-checkpoint pointer, fixed the loading sentence, updated the validator message, and added the quoted-label test; prepared the v6.6.3 release.
-[2026-11-18] Released v6.6.3 and published its GitHub release: the refactor follow-ups are fixed, the quoted-label test is live, and the note uses the approved text.
-[2026-11-18] Rewrote the common policy to the authoring prose shape: 90 multi-sentence rules split, 16 rationale bullets moved to the ADR, 6 banned words removed, 8 prose sections flattened; the shape fixture passes new and fails old with 132 findings; prepared the v6.6.4 release.
-[2026-11-18] Released v6.6.4 and published its GitHub release: the common policy is rules-only, the rationale is in the ADR, and the shape guard is live.
 [2026-11-19] Added the tool-selection ladder, made git-ignored protocol files readable, removed the old file-edit rules, and added the tool-selection fixture; prepared the v6.7.0 release.
 [2026-11-19] Released v6.7.0 and published its GitHub release: the tool-selection ladder is live, the readable git-ignore rule is in place, and the 22nd test guards both.
 [2026-11-19] Filed the config ticket for the configurable global directory, early settings load, and shell configuration; linked GitHub #9 and the bootstrap ticket; P2/XL, AI estimate.
@@ -38,3 +23,10 @@
 [2026-11-19] Ran `repair global settings` on the user's settings: consolidated 6,703 to 5,257 bytes, verified 22 tools, kept 6 sensitive names by count only, and removed Style Sources, the git pointer, and the prose; review-35 APPROVED; the manifest and backup are recorded.
 [2026-11-19] Strengthened the Tool Selection rule: Python or another runtime never searches, creates, appends to, or edits a file; the conditional wording is gone; the test pins it; v6.9.1 is prepared.
 [2026-11-19] Released v6.9.1 and published its GitHub release: the unconditional file-operation rule is live.
+[2026-11-19] Recorded the enforcement lesson: the tool-selection policy states the rule, and the harness permission is the hard stop; the permission next-step is added.
+[2026-11-19] Filed the built-in-first execution rewrite ticket (P1/XL) from the codebase examination, with the root causes, the user's decisions, and the evidence.
+[2026-11-19] Wrote the plan `ai/plans/built-in-first-execution-rewrite.md`; ten peer-review rounds, review-37 through review-46; round 10 CHANGES REQUESTED.
+[2026-11-19] Applied the round-10 fixes; round 11 is not run; the plan is not APPROVED; no branch and no implementation.
+[2026-11-19] Cut the built-in-first scope after round 11; fixed the helper's effective/conflict post-process and the six Minors; review-49 APPROVED.
+[2026-11-19] Implemented the built-in-first rewrite on `feature/built-in-first-execution`: the AGENTS.md precedence section, the nine-bullet ladder, the load-context rewrite, the read-only helper and contract, the docs, tests, ADR, and v6.10.0 announcement; review-50 APPROVED; suite 25/25, both validators, markdownlint 108 files, shellcheck green.
+[2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file; the release is next.

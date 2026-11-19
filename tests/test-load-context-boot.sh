@@ -1,131 +1,109 @@
 #!/bin/bash
-# Dev-time fixture for the load-context boot discovery contract.
+# Dev-time fixture for the load-context boot contract and the read-only index helper.
 # Usage: ./tests/test-load-context-boot.sh
 # Exit 0 when every assertion passes, 1 otherwise.
 
 set -u
+export LC_ALL=C
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="$(mktemp -d)"
 trap 'rm -rf "$WORK"' EXIT
 HOME="$WORK/home"
 PROJECT="$WORK/project"
-GLOBAL_SKILLS="$WORK/global-skills"
 export HOME
 
 mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"
 mkdir -p "$PROJECT/ai"/{state,shared/project-knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies,skills}
-mkdir -p "$PROJECT/design-docs/.git"
+mkdir -p "$PROJECT/design-docs/.git" "$PROJECT/ai/policies/.canaryhidden" "$PROJECT/ai/policies/tmp"
 
 for d in secrets artifacts code-review-reports notes pending plans; do
-    printf 'canary\n' > "$PROJECT/ai/$d/canary-$d.txt"
+    printf 'canary-boot\n' > "$PROJECT/ai/$d/canary-$d.txt"
 done
-printf 'canary\n' > "$PROJECT/ai/issues/closed/canary-closed.txt"
-printf 'canary\n' > "$PROJECT/design-docs/.git/canary-git.txt"
-printf 'canary\n' > "$PROJECT/ai/shared/archive.tar.gz"
-printf 'canary\n' > "$HOME/.ai/backups/canary-backup.txt"
+printf 'canary-boot\n' > "$PROJECT/ai/issues/closed/canary-closed.txt"
+printf 'canary-boot\n' > "$PROJECT/design-docs/.git/canary-git.txt"
 printf 'settings\n' > "$HOME/.ai/settings/global-user-settings.md"
 printf 'knowledge\n' > "$HOME/.ai/global-knowledge/global-topic.md"
-mkdir -p "$GLOBAL_SKILLS/global-skill" "$PROJECT/ai/skills/example-skill"
-printf -- '---\nname: global-skill\ndescription: A fixture global skill.\n---\n\nGLOBAL-SKILL-BODY-CANARY\n' > "$GLOBAL_SKILLS/global-skill/SKILL.md"
-printf -- '---\nname: example-skill\ndescription: A fixture project skill.\n---\n\nPROJECT-SKILL-BODY-CANARY\n' > "$PROJECT/ai/skills/example-skill/SKILL.md"
-
-printf '# Test customization\n' > "$PROJECT/ai-customization.md"
-for f in context progress next-steps; do printf 'state\n' > "$PROJECT/ai/state/$f.md"; done
+printf 'state\n' > "$PROJECT/ai/state/context.md"
+printf 'state\n' > "$PROJECT/ai/state/progress.md"
+printf 'state\n' > "$PROJECT/ai/state/next-steps.md"
 printf 'coordination\n' > "$PROJECT/ai/shared/coordination.md"
-printf '# Checkpoint\n' > "$PROJECT/ai/daily-checkpoints/2026-11-09.md"
+printf '# Checkpoint\n' > "$PROJECT/ai/daily-checkpoints/2026-11-19.md"
 printf 'open\n' > "$PROJECT/ai/issues/open/open-one.md"
 printf '# design\n' > "$PROJECT/design-docs/design-one.md"
 printf '# DO NOT MODIFY THIS FILE\n\nFixture.\n\n<!-- AI-ASSISTANT: READ-ONLY START -->\n\n# AI Policy: Fixture\n\nGovern the fixture.\n\n## Scope\n\n- Fixture.\n\n## Rules\n\n- Follow the fixture.\n\n## References\n\n- Fixture.\n\n<!-- AI-ASSISTANT: READ-ONLY END -->\n' > "$PROJECT/ai/policies/ai-policy-fixture.md"
-
-for i in $(seq 1 1000); do printf 'k\n' > "$PROJECT/ai/shared/project-knowledge/k$i.md"; done
-for i in $(seq 1 1000); do printf 'a\n' > "$PROJECT/ai/artifacts/a$i.txt"; done
-
-skills_index() {
-    local pair base scope dir name desc
-    for pair in "$GLOBAL_SKILLS:global" "$PROJECT/ai/skills:project"; do
-        base="${pair%:*}"
-        scope="${pair##*:}"
-        find "$base" -mindepth 1 -maxdepth 1 -type d ! -name '.*' 2>/dev/null | LC_ALL=C sort | while IFS= read -r dir; do
-            [ -f "$dir/SKILL.md" ] || continue
-            name="$(awk -v key=name 'NR == 1 && $0 == "---" {f=1; next} f && $0 == "---" {exit} f && index($0, key ": ") == 1 {sub("^" key ": ", ""); print; exit}' "$dir/SKILL.md")"
-            desc="$(awk -v key=description 'NR == 1 && $0 == "---" {f=1; next} f && $0 == "---" {exit} f && index($0, key ": ") == 1 {sub("^" key ": ", ""); print; exit}' "$dir/SKILL.md")"
-            [ -n "$name" ] && [ -n "$desc" ] || continue
-            [ "$(basename "$dir")" = "$name" ] || continue
-            printf '%s|%s|%s|%s\n' "$name" "$desc" "$dir" "$scope"
-        done
-    done
-}
-
-discovery() {
-    cd "$PROJECT" || return 1
-    printf 'customization: %s files\n' "$(find . -maxdepth 1 -type f -name 'ai-customization.md' | wc -l)"
-    printf 'ai/state: %s files\n' "$(find ai/state -type f | wc -l)"
-    printf 'ai/shared: %s files\n' "$(find ai/shared \( -name '*.tar*' -o -name '*.zip' \) -prune -o -type f -print | wc -l)"
-    printf 'project-knowledge: %s files\n' "$(find ai/shared/project-knowledge -type f | wc -l)"
-    printf 'handoffs: %s files\n' "$(find ai/shared/handoffs -type f | wc -l)"
-    printf 'issues/open: %s files\n' "$(find ai/issues/open -type f | wc -l)"
-    printf 'issues/in-progress: %s files\n' "$(find ai/issues/in-progress -type f | wc -l)"
-    printf 'daily-checkpoints: %s files\n' "$(find ai/daily-checkpoints -type f | wc -l)"
-    printf 'policies: %s files\n' "$(find ai/policies -type f | wc -l)"
-    printf 'design-docs: %s files\n' "$(find design-docs -name .git -prune -o -type f -print | wc -l)"
-    printf 'global-settings: %s files\n' "$(find "$HOME/.ai/settings" -type f | wc -l)"
-    printf 'global-knowledge: %s files\n' "$(find "$HOME/.ai/global-knowledge" -type f | wc -l)"
-    printf 'global-policies: %s files\n' "$(find "$ROOT/ai/policies" -type f | wc -l)"
-    printf 'procedures: %s files\n' "$(find "$ROOT/ai/procedures" -type f | wc -l)"
-    printf 'skills: %s files\n' "$(find ai/skills -type f | wc -l)"
-    printf 'skills-index:\n'
-    skills_index
-}
+printf '# DO NOT MODIFY THIS FILE\n\nCanary.\n\n<!-- AI-ASSISTANT: READ-ONLY START -->\n\n# AI Policy: Canary\n\nGovern the canary.\n\n## Scope\n\n- Canary.\n\n## Rules\n\n- Follow the canary.\n\n## References\n\n- Canary.\n\n<!-- AI-ASSISTANT: READ-ONLY END -->\n' > "$PROJECT/ai/policies/.canaryhidden/ai-policy-canaryhidden.md"
+cp "$PROJECT/ai/policies/.canaryhidden/ai-policy-canaryhidden.md" "$PROJECT/ai/policies/tmp/ai-policy-canarytmp.md"
+ln -s ai-policy-fixture.md "$PROJECT/ai/policies/ai-policy-canarylink.md"
 
 fail=0
-out="$(discovery)"
+present() {
+    local file="$1" needle="$2" label="$3"
+    if grep -qF -- "$needle" "$file"; then
+        printf 'PASS %s\n' "$label"
+    else
+        printf 'FAIL %s\n' "$label"
+        fail=1
+    fi
+}
+absent() {
+    local file="$1" needle="$2" label="$3"
+    if grep -qF -- "$needle" "$file"; then
+        printf 'FAIL %s\n' "$label"
+        fail=1
+    else
+        printf 'PASS %s\n' "$label"
+    fi
+}
 
+P="$ROOT/ai/procedures/load-context.md"
+for anchor in "index-protocol.sh" "index-source=helper" "index-source=fallback" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "STEP-POLICY-LOADING"; do
+    present "$P" "$anchor" "procedure anchor: $anchor"
+done
+# shellcheck disable=SC2016
+for old in "Use one command block" "do not run the validator at load context" '`cat`' '`sed`' '`awk`' '`sort`' '`uniq`' '`comm`'; do
+    absent "$P" "$old" "old shell instruction: $old"
+done
+
+out="$(cd "$PROJECT" && bash "$ROOT/support-files/index-protocol.sh" 2>&1)"
+rc=$?
+if [ "$rc" -eq 0 ]; then
+    printf 'PASS %s\n' "the index helper exits 0"
+else
+    printf 'FAIL the index helper exited %s\n' "$rc"
+    fail=1
+fi
+if printf '%s\n' "$out" | grep -q 'summary|modules='; then
+    printf 'PASS %s\n' "the index helper prints a summary"
+else
+    printf 'FAIL the index helper summary is missing\n'
+    fail=1
+fi
+if printf '%s\n' "$out" | grep -q '^policy|project|fixture|'; then
+    printf 'PASS %s\n' "the index helper indexes the project policy"
+else
+    printf 'FAIL the index helper missed the project policy\n'
+    fail=1
+fi
 if printf '%s\n' "$out" | grep -qi 'canary'; then
-    echo "FAIL: an excluded canary leaked into the discovery output."
+    printf 'FAIL a canary leaked into the index\n'
     fail=1
-fi
-bytes=$(printf '%s' "$out" | wc -c)
-if [ "$bytes" -gt 16384 ]; then
-    echo "FAIL: discovery output is $bytes bytes, over the 16 KB bound."
-    fail=1
-fi
-if ! printf '%s\n' "$out" | grep -q 'project-knowledge: 1000 files'; then
-    echo "FAIL: project-knowledge count is not 1000."
-    fail=1
-fi
-if ! printf '%s\n' "$out" | grep -q 'skills: 1 files'; then
-    echo "FAIL: project skills count is not 1."
-    fail=1
-fi
-if ! printf '%s\n' "$out" | grep -q 'example-skill|A fixture project skill.|.*|project'; then
-    echo "FAIL: the project skill index line is missing."
-    fail=1
-fi
-if ! printf '%s\n' "$out" | grep -q 'global-skill|A fixture global skill.|.*|global'; then
-    echo "FAIL: the global skill index line is missing."
-    fail=1
-fi
-if printf '%s\n' "$out" | grep -q 'ai/artifacts'; then
-    echo "FAIL: the artifacts directory was scanned."
-    fail=1
-fi
-if ! grep -q 'Read the latest checkpoint once' "$ROOT/ai/procedures/load-context.md"; then
-    echo "FAIL: the single checkpoint read is not stated in the procedure."
-    fail=1
+else
+    printf 'PASS %s\n' "the index helper excludes the canaries"
 fi
 
-index_out="$(cd "$PROJECT" && bash "$ROOT/support-files/validate-policy-authoring.sh" --index ai/policies/ai-policy-fixture.md 2>&1)"
-index_rc=$?
-if [ "$index_rc" -ne 0 ] || ! printf '%s\n' "$index_out" | grep -q 'summary|modules=1'; then
-    echo "FAIL: the developer index oracle failed on the fixture policy."
-    printf '%s\n' "$index_out"
+dev="$(cd "$PROJECT" && bash "$ROOT/support-files/validate-policy-authoring.sh" --index ai/policies/ai-policy-fixture.md 2>&1)"
+dev_rc=$?
+if [ "$dev_rc" -eq 0 ] && printf '%s\n' "$dev" | grep -q 'summary|modules=1'; then
+    printf 'PASS %s\n' "the dev index oracle still works on the fixture"
+else
+    printf 'FAIL the dev index oracle failed on the fixture\n'
     fail=1
 fi
 
 if [ "$fail" -ne 0 ]; then
-    echo "FAILED: boot discovery fixture."
+    echo "FAILED: boot contract fixture."
     exit 1
 fi
-echo "PASSED: boot discovery fixture (canaries, 1000 files, 16 KB, single checkpoint read, index oracle)."
+echo "PASSED: boot contract fixture (procedure anchors, helper, canaries, dev index)."
 exit 0

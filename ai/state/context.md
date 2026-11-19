@@ -14,18 +14,18 @@
 
 ## Current Status
 
-- **Milestone**: v6.9.1 is released and published; the `repair global settings` procedure and policy are live, with canonical keys, the Identity and Profile split, verified tools, redaction, and a review gate.
-- **Validator**: 8/8; authoring PASSED; all 24 test scripts pass; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
+- **Milestone**: v6.10.0 is prepared on `feature/built-in-first-execution`; the plan and the implementation are APPROVED, the ticket is closed with the plan attached, and the release follows the merge.
+- **Validator**: 8/8; authoring PASSED; all 25 test scripts pass; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
 - **Policy count**: 24 modular policies and 15 procedure modules; the policy floor is 24.
 - **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, and config decisions; the toolchain record says 24 test scripts.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 95 closed.
+- **Project knowledge**: 10 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, and config decisions; the toolchain record says 25 test scripts; the tool-selection file records the v6.10.0 resolution.
+- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 24 open, 0 in-progress, 96 closed.
 - **Skills**: 0 project and 0 global packages; the user-global skills root ticket is open.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the codebase examination over `docs/`, `tests/`, and `support-files/` and the skills-root plan.
-- **Release**: v6.9.1 is released and published; no release is pending.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; open units include the codebase examination over `docs/`, `tests/`, and `support-files/`, the skills-root plan, and the v6.10.0 merge and release.
+- **Release**: v6.10.0 is prepared on the branch; the plan and implementation are APPROVED; the tag and GitHub Release follow the merge.
 - **GitHub tracker**: #10 is postponed; #9 is closed as absorbed; #8 is open.
 - **Config unit (closed)**: `ai/issues/closed/configurable-global-user-ai-directory-early-settings-and-shell.md`; the plan is attached; the design is in the ADR.
 - **Settings repair (closed)**: `ai/issues/closed/repair-global-settings-procedure-consolidation-key-names-and-tool-verification.md`; the plan is attached; the design is in the ADR; v6.9.0 is released.
@@ -33,8 +33,9 @@
 - **Idea tracking**: the checkpoint adds one next-steps line for each discussed problem or solution; no mid-session next-steps writes.
 - **Design docs**: `design-docs/` holds the ADRs; the `update design documents` trigger is user-side; the developer-mode ADR entry is part of the change.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
-- **Test location**: `tests/` holds 23 dev-time scripts; `support-files/` holds the sync scripts and validators.
+- **Built-in-first rewrite (closed, P1/XL)**: `ai/issues/closed/built-in-first-execution-rewrite.md`; the plan is attached; review-49 approved the plan and review-50 approved the implementation; v6.10.0 follows the merge.
+- **Test location**: `tests/` holds 25 dev-time scripts; `support-files/` holds the sync scripts and validators, the read-only index helper, and its contract.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.9.1 are published.
-- **Tool selection**: the runtime file-operation rule is unconditional; Python and other runtimes never search, create, append to, or edit a file.
+- **Release history**: v5.8.0 through v6.9.1 are published; v6.10.0 is prepared.
+- **Tool selection**: the v6.10.0 built-in-first boot is on the branch; the runtime file-operation rule is unconditional, the helper exception is named, and the harness permission is the hard stop.
 - **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.

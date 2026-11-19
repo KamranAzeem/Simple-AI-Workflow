@@ -63,4 +63,4 @@ Place one `## Loading` section after `## Triggers`, or after the purpose when th
 - Trigger collisions: `bash support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies ai/procedures -name '*.md' -print)`.
 - Module index: `bash support-files/validate-policy-authoring.sh --index <file>` prints the declared mode and the scope.
 
-These are developer tools. The end-user AI builds the index inline and does not run them.
+These are developer tools. The boot uses the read-only `support-files/index-protocol.sh` helper, which calls the `--index` mode; the fallback uses built-in tools and reports `index-source=fallback`.
