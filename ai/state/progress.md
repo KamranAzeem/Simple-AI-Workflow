@@ -35,3 +35,6 @@
 [2026-11-19] Released v6.8.0 and published its GitHub release: the configurable global user directory, early whole-settings read, and default shell are live; GitHub #9 is closed as absorbed.
 [2026-11-19] Added the repair global settings procedure and policy: canonical keys, the Identity and Profile split, verified tools, redaction, the manifest, the backup, the dry run, and the review gate; the suite is 24 scripts; review-34 APPROVED; v6.9.0 is prepared.
 [2026-11-19] Released v6.9.0 and published its GitHub release: the repair global settings procedure and policy are live.
+[2026-11-19] Ran `repair global settings` on the user's settings: consolidated 6,703 to 5,257 bytes, verified 22 tools, kept 6 sensitive names by count only, and removed Style Sources, the git pointer, and the prose; review-35 APPROVED; the manifest and backup are recorded.
+[2026-11-19] Strengthened the Tool Selection rule: Python or another runtime never searches, creates, appends to, or edits a file; the conditional wording is gone; the test pins it; v6.9.1 is prepared.
+[2026-11-19] Released v6.9.1 and published its GitHub release: the unconditional file-operation rule is live.

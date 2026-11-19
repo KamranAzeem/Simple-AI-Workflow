@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.9.0 (2026-11-19).** A new `repair global settings` procedure consolidates the global settings files, normalizes the keys, and verifies the tools. Read the announcement: [docs/announcements/v6.9.0.md](docs/announcements/v6.9.0.md). |
+| **v6.9.1 (2026-11-19).** The tool rule now forbids Python or another runtime for file operations. Read the announcement: [docs/announcements/v6.9.1.md](docs/announcements/v6.9.1.md). |
 
 # Simple AI Workflow
 

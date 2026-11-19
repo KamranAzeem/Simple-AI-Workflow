@@ -1166,3 +1166,11 @@ Consequences: the boot reads the customization and the settings earlier; a shell
 Context: the settings carried six voice subsections, a provenance line, a generic git pointer, and a tools list with prose. The author-identity resolver reads `## Identity` fields `Name` and `Email`, so those names are pinned. `Default Shell Path` keeps its name, and only its section moves to the top level. The sensitive names are never copied into the manifest or the report.
 
 Consequences: the policy count is 24, the procedure count is 15, the trigger count is 50, the test count is 24, and the floor is 24. The repair runs only on the trigger and never at boot or the checkpoint. The release is v6.9.0.
+
+## 2026-11-19: The tool ladder forbids a runtime for file operations
+
+`ai-policy-common.md` `## Tool Selection` forbids Python or another runtime to search, create, append to, or edit a file, and requires the built-in tool. This replaces the conditional bullet that allowed a runtime when a purpose-built edit tool existed.
+
+Context: the AI wrote the checkpoint with `python3` while the `edit` and `write` tools were available, and the conditional wording made the prohibition look optional.
+
+Consequences: the rule is unconditional for a runtime file operation; `tests/test-tool-selection.sh` pins the exact text; the release is v6.9.1.

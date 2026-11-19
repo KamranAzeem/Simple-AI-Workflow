@@ -176,7 +176,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - Use Python or another runtime third only when neither can perform the operation, and report why.
 - Report every fallback and name the tool used.
 - Never use a lower rung to bypass an approval, a protocol rule, or a safety check.
-- Never use the shell, Python, or another runtime to write or edit file content when a purpose-built edit tool exists.
+- Never use Python or another runtime to search, create, append to, or edit a file; use the built-in tool.
 - Use shell search when the purpose-built search cannot reach the path.
 
 ## Outbound Content Scrub

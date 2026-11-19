@@ -15,3 +15,4 @@
 
 - Run the full codebase examination over `docs/`, `tests/`, and `support-files/`.
 - Plan the user-global skills root ticket (L).
+- Set `Default Shell Path` in the global settings when an explicit shell path is wanted.
