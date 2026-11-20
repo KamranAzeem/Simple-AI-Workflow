@@ -4,7 +4,7 @@
 - **Write only:** the present, in `## Current Status` and `## Active Working Context`, edited in place.
 - **Never write:** history, completed work, plans, runbooks, ledgers, commands, implementation steps, investigation notes, transcripts, or git metadata. Completed work goes to `progress.md`, pending work to `next-steps.md`, and durable detail to Project Knowledge.
 - **Brevity:** at most three short bullets per item, with a pointer to Project Knowledge for detail.
-- **Size:** 8 KB soft target. Move resolved items to the diary first; if live items still exceed the target, keep them and report the overage.
+- **Size:** counted in the shared state-file budget in `ai-policy-common.md`. Move resolved items to the diary first; if the shared budget is still exceeded, keep live items and report the overage.
 - **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
 - **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
 
@@ -14,34 +14,24 @@
 
 ## Current Status
 
-- **Milestone**: v6.11.0 is released and published; GitHub #8 and #12 are closed; the user-global skills root was dropped and the two-root skills model stays.
-- **Validator**: 8/8; authoring PASSED; all 26 test scripts pass; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
+- **Milestone**: v7.0.0 is implemented on `feature/state-file-total-budget`; the merge, tag, release, and GitHub #13 close follow the approved plan.
+- **Validator**: 8/8; authoring PASSED; 27 test scripts; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0 over 261 files; shellcheck 0.
 - **Policy count**: 24 modular policies and 15 procedure modules; the policy floor is 24.
-- **State files**: canonical headers in place; daily checkpoints are the only archive; today's file exists; the three files are under the 20 KB target.
-- **Project knowledge**: 11 lesson files plus the template; global knowledge 27 files; the release practices carry the voice, draft-first, plain-words, and no-invented-events rules; the vocabulary lesson records the global-owner split; the ADR records the loading, prose-rewrite, tool-selection, design-docs trigger, config, v6.10.2 index, and backup-script scope decisions; the toolchain record says 26 test scripts; the tool-selection file records the v6.10.2 resolution.
-- **Project issues**: `ai/issues/{open,in-progress,closed}/`; 8 open, 0 in-progress, 114 closed.
-- **Skills**: 0 project and 0 global packages; the user-global root was dropped; the two-root model stays.
+- **State files**: the three files share a 30,720-byte budget; headers are number-free; today's file exists; sizes are under budget.
+- **Project knowledge**: 11 lessons plus the template; global knowledge 29 files; the toolchain note records 27 tests and the floor of 24.
+- **Project issues**: 8 open, 0 in-progress; GitHub #13 stays open until the release.
+- **Skills**: 0 project and 0 global packages; the two-root model stays.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; 8 open tickets remain, none approved for work, and the young-learner policy is the largest; GitHub #11, #12, #10, and #8 are closed.
-- **Release**: v6.11.0 is released and published; no release is pending.
-- **GitHub tracker**: #8 is closed and released in v6.11.0; #12 is merged and closed; #10 is closed as not planned; #11 is closed and released; #9 is closed as absorbed.
-- **Config unit (closed)**: `ai/issues/closed/configurable-global-user-ai-directory-early-settings-and-shell.md`; the plan is attached; the design is in the ADR.
-- **Settings repair (closed)**: `ai/issues/closed/repair-global-settings-procedure-consolidation-key-names-and-tool-verification.md`; the plan is attached; the design is in the ADR; v6.9.0 is released.
-- **Settings repair run (2026-11-19)**: the user's global settings consolidated to 5,257 bytes; 22 tools verified; the sensitive names are counted only; the paths are in the daily checkpoint; `Default Shell Path` is now `/usr/bin/bash`.
-- **Idea tracking**: the checkpoint adds one next-steps line for each discussed problem or solution; no mid-session next-steps writes.
-- **Design docs**: `design-docs/` holds the ADRs; the `update design documents` trigger is user-side; the developer-mode ADR entry is part of the change.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; 8 open tickets, none approved for work.
+- **Release**: v7.0.0 is the active release; the announcement and the README banner are in the branch.
+- **State-file budget**: the shared 30,720-byte gate, the 300-character guard, the condense pipeline, and the repair fallback are live on the branch.
+- **Migration**: one `repair state files` run per existing project refreshes the header block.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
-- **Built-in-first rewrite (closed, P1/XL)**: `ai/issues/closed/built-in-first-execution-rewrite.md`; the plan is attached; review-49 approved the plan and review-50 approved the implementation; v6.10.0 is released.
-- **Codebase examination (closed, P3)**: `ai/issues/closed/codebase-examination-docs-tests-support.md`; six findings fixed, F5 withdrawn; v6.10.1 is released.
-- **User-global skills root (closed, P3/L)**: the root is dropped; the ticket is closed with the plan attached; the lesson is in `global-vocabulary-and-storage-roots.md`.
-- **Report anomalies docs (closed, P3/S)**: GitHub #12 is merged and closed; docs only, no release.
-- **Out-of-band backup scripts (closed, P2/L)**: GitHub #8 is released in v6.11.0; review-63 APPROVED.
-- **Test location**: `tests/` holds 27 files: 26 bash tests in the suite plus the Windows `verify-powershell-scripts.ps1`; `support-files/` holds the sync and backup scripts, the validators, the optional index helper, and its contract.
-- **PowerShell scripts (closed, P3/S)**: `ai/issues/closed/powershell-scripts-verification-and-fixes.md`; the sync `-WhatIf` fix; the VM verification; the plan attached.
-- **Post-release fix**: the global-settings fixture derives the test count from `tests/test-*.sh`; the suite is 26/26.
+- **GitHub tracker**: #8, #9, #10, #11, and #12 are closed; #13 closes with v7.0.0.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.11.0 are published.
-- **Tool selection**: the v6.10.2 built-in index boot is live; the runtime file-operation rule is unconditional, the index helper is optional, and the harness permission is the hard stop.
-- **Lint**: clean on the changed set; `ai/secrets/`, `ai/code-review-reports/`, `ai/artifacts/`, `ai/daily-checkpoints/`, and `ai/notes/` are exempt.
+- **Release history**: v5.8.0 through v6.11.0 are published; v7.0.0 is pending.
+- **Tool selection**: the built-in index boot is live; the runtime file-operation rule is unconditional.
+- **Lint**: clean; markdownlint 0 over 261 files; the local-only directories and the daily checkpoints are exempt.
+- **Stash guard**: a stash round-trip can delete empty mandatory directories; the validator catches the gap.

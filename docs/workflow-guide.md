@@ -284,10 +284,10 @@ The checkpoint also does a quick, report-only check for a missing header, a tabl
 Each state file has a distinct role and lifecycle:
 
 - **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items are appended at the bottom; each item is deleted the moment it is done, never left with a tick or strikethrough. No history builds up here.
-- **`ai/state/progress.md` (past)**: recent completed work, newest at the bottom. Use about 14 days and a 7 KB soft target; older completed entries move into the daily checkpoint archive.
+- **`ai/state/progress.md` (past)**: recent completed work, newest at the bottom. Completed entries older than 14 days move into the daily checkpoint archive.
 - **`ai/state/context.md` (present)**: a `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. It holds the present, not a history log.
 
-Every item is at most three short bullets. The three files share a 20 KB soft target. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
+Every item is at most three short bullets, and every item line is at most 300 characters. The three files share a 30 KB (30,720 bytes) advisory budget. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
 
 Each state file starts with the canonical header block from the common policy. The block carries the file's rules, and load context compares it exactly.
 
@@ -325,9 +325,10 @@ The checkpoint checks the knowledge header before it writes, and it never edits 
 
 To prevent the state files from growing unbounded and consuming context window space:
 
-- **Soft targets**: the three state files share a 20 KB soft target: `context.md` 8 KB, `progress.md` 7 KB, `next-steps.md` 5 KB.
-- **Trim at checkpoint**: when `progress.md` is over 7 KB, or holds completed entries older than 14 days, the oldest completed entries move into the daily checkpoint archive. Resolved `context.md` items leave only after their record is in the diary.
-- **Never lose work**: an unfinished `next-steps.md` item is never dropped.
+- **Shared budget**: the three state files share a 30 KB (30,720 bytes) advisory budget. Per-file targets are gone, so the files trade space.
+- **Condense at checkpoint**: when the total is over budget, or any item line is over 300 characters, the full item moves to the diary and a short stub with every findability identifier stays behind.
+- **Trim at checkpoint**: completed `progress.md` entries older than 14 days move into the daily checkpoint archive. Resolved `context.md` items leave only after their record is in the diary.
+- **Never lose work**: an unfinished `next-steps.md` item is never dropped, and a stub that cannot meet the line cap and the identifier check stays as it is and is reported.
 
 ## 15. Design Documentation Flow
 
@@ -387,7 +388,7 @@ The first release covers external ticket creation, plan-entry comments, close or
 
 ## 17. State-File Health and Repair
 
-Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the soft target, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries over the soft target or older than 14 days into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
+Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the shared budget, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries when the set is over the shared budget or, for progress, older than 14 days, into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
 
 All AI state lives under the project root `ai/`, whether or not it is a git repository. In a multi-repo project, the project root repo owns the state, and a checkpoint never goes into a secondary repo.
 

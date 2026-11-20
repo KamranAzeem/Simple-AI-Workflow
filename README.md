@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v6.11.0 (2026-11-19).** Out-of-band backup scripts back up every project's AI state without an assistant. Read the announcement: [docs/announcements/v6.11.0.md](docs/announcements/v6.11.0.md). |
+| **v7.0.0 (2026-11-20).** The state files share one 30 KB budget, long items are condensed into the diary, and the header blocks stop naming per-file sizes. Run `repair state files` once after upgrading. Read the announcement: [docs/announcements/v7.0.0.md](docs/announcements/v7.0.0.md). |
 
 # Simple AI Workflow
 

@@ -277,20 +277,19 @@ This file contains the universal operating rules for all AI assistants in this r
 - Delete each item when it is done, and never leave a ticked, checked, or struck-through entry.
 - Work oldest-first by default, and delete a finished item wherever it sits.
 - Keep no history here; it has no archive.
+- **Shared budget**: the three state files share a 30,720-byte advisory budget.
+- Measure the three files together against the budget and report any overage.
+- Never block work on the budget.
 - **progress.md is recent history (the past)**: put completed work newest at the bottom.
-- Use about 14 days and a 7 KB soft target.
-- Move the oldest completed entries to the daily checkpoints in the same checkpoint when the file is over the target or older than 14 days.
-- Let the file exceed the target and report the overage when it is still over after the move.
+- Use about 14 days as the progress archive window.
+- Move the oldest completed entries to the daily checkpoints in the same checkpoint when they are older than 14 days.
 - **next-steps.md is the future**: keep open items only, oldest first, and delete on done.
-- Use 5 KB as a soft target.
-- Keep open items and report the overage when they still exceed the target.
-- Never drop an unfinished item; record any dropped item in the daily checkpoints first.
+- Keep open items and never drop an unfinished item; record any dropped item in the daily checkpoints first.
 - **context.md is the present**: hold a `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place.
 - Keep no chronological history here.
-- Use 8 KB as a soft target.
 - Move resolved items to the diary first.
-- Keep live items and report the overage when they still exceed the target.
-- Keep live items to short one-liners with a pointer to Project Knowledge.
+- Keep live items as short one-liners with a pointer to Project Knowledge.
+- Condense a live item only after its full text is in the daily checkpoint and its identifiers are preserved.
 - **State-File Brevity Rule**: keep every item to at most three short bullets.
 - Avoid prose, command transcripts, decision rationale, and step-by-step detail.
 - Condense any item that grows longer before writing the checkpoint.
@@ -303,6 +302,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - Do not create a separate archive file.
 - **Bloat and Order Check**: report a bloated or out-of-order state file when loading or checking it and propose a fix.
 - Treat a file as bloated when an item is longer than three bullets or contains runbook, ledger, duplicate, or stale content.
+- Treat an item line over 300 characters as bloated.
 - Repair the file only through the user-triggered `repair state files` procedure.
 - Never write from the load-context check.
 
@@ -323,7 +323,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - **Write only:** the present, in `## Current Status` and `## Active Working Context`, edited in place.
 - **Never write:** history, completed work, plans, runbooks, ledgers, commands, implementation steps, investigation notes, transcripts, or git metadata. Completed work goes to `progress.md`, pending work to `next-steps.md`, and durable detail to Project Knowledge.
 - **Brevity:** at most three short bullets per item, with a pointer to Project Knowledge for detail.
-- **Size:** 8 KB soft target. Move resolved items to the diary first; if live items still exceed the target, keep them and report the overage.
+- **Size:** counted in the shared state-file budget in `ai-policy-common.md`. Move resolved items to the diary first; if the shared budget is still exceeded, keep live items and report the overage.
 - **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
 - **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
 
@@ -339,7 +339,8 @@ This file contains the universal operating rules for all AI assistants in this r
 - **Write only:** completed work, one entry per line, newest at the bottom.
 - **Never write:** transcripts, rationale, plans, commands, implementation steps, investigation notes, or git metadata. Detail goes to the daily checkpoints or Project Knowledge.
 - **Brevity:** at most three short bullets per item.
-- **Size and archive:** 7 KB soft target; move the oldest completed entries to the daily checkpoints when the file is over the target or holds entries older than 14 days. If the file is still over target, let it exceed and report the overage.
+- **Size:** counted in the shared state-file budget in `ai-policy-common.md`.
+- **Archive:** move the oldest completed entries to the daily checkpoints when they are older than 14 days; if the shared budget is still exceeded, let it exceed and report the overage.
 - **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
 - **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
 
@@ -356,7 +357,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - **Delete on done:** remove each item when it is finished; never keep completed items or history.
 - **Never drop:** an unfinished item stays until it is done.
 - **Brevity:** at most three short bullets per item.
-- **Size:** 5 KB soft target. Delete completed items; if open items still exceed the target, keep them and report the overage. Never drop an unfinished item.
+- **Size:** counted in the shared state-file budget in `ai-policy-common.md`. Delete completed items; if open items still exceed the budget, keep them and report the overage. Never drop an unfinished item.
 - **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
 - **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
 
@@ -371,7 +372,7 @@ This file contains the universal operating rules for all AI assistants in this r
 
 - **Write only:** one file per calendar day; append a new dated section at the bottom; the H1 date matches the filename.
 - **Never do:** edit, reorder, or delete an earlier section. This file is the only archive.
-- **Move here:** completed `progress.md` entries and resolved `context.md` items when the source file is over its soft target, or for `progress.md`, holds entries older than 14 days.
+- **Move here:** completed `progress.md` entries and resolved `context.md` items when the three files are over the shared budget, or for `progress.md`, holds entries older than 14 days.
 - **Writer:** only the project-root orchestrator writes this file; other agents report on the coordination board.
 - **Repair:** if this block is missing or does not match the policy, run `repair state files`. Never rewrite it by hand.
 

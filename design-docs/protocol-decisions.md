@@ -1200,3 +1200,11 @@ The interactive `backup ai` command remains the native one-liner in PROCEDURE CR
 The 2026-05-21 entry "Backup is a native command, not a script" applies to the interactive path. Its "embedded in the checkpoint procedure" sentence is corrected: the one-liner lives in PROCEDURE CREATE-BACKUP, not the checkpoint procedure. The standalone single-project script removed then is not restored.
 
 A project is marked by `ai-customization.md`, or by `ai/state/` and `ai/shared/`. Archives include `ai/secrets/` by default and are owner-only; `--exclude-secrets` opts out. The default backup directory is `$HOME/.ai/backups/`; `--backup-dir` overrides it. Archives hold `ai/...` and `ai-customization.md` relative to the project root.
+
+## 2026-11-20: State files share one 30 KB budget and live items are condensed
+
+The three state files share a 30,720-byte advisory budget, and any item line over 300 characters is condensed. A condensed item's full text goes to the daily checkpoint. A stub of one fact per line, at most three lines, keeps every findability identifier. An identifier diff keeps the original on a miss, and the checkpoint prints knowledge-promotion candidates. The checkpoint condenses because it still has the session context, and `repair state files` is the fallback. The canonical header blocks stop naming per-file sizes and point at the shared budget.
+
+Context: long-horizon customer work exceeded the 20 KB total, the 8/7/5 split blocked one file while another sat unused, and repair never rewrote a live item, so the over-size report repeated with no remedy. The user fixed the total at 30 KB and chose number-free headers on 2026-11-20.
+
+Consequences: this supersedes the 20 KB total and the 8/7/5 split in the 2026-09-19 entry, and the per-file soft-target numbers in the 2026-10-27 entry. The 2026-11-18 byte-identical header instruction applied to that rewrite; this change supersedes only the size-bullet text. Every existing project runs `repair state files` once, so the release is v7.0.0. Thresholds stay fixed, and a configurable total is a separate later change. The validator keeps one non-fatal total advisory, and a test pins the policy and validator numbers to each other.

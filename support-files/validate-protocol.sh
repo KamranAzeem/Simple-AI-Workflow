@@ -345,8 +345,8 @@ if [ "$HEADER_FAILED" -ne 0 ]; then
     exit 1
 fi
 STATE_BYTES=$(wc -c ai/state/context.md ai/state/progress.md ai/state/next-steps.md | awk 'END {print $1}')
-if [ "$STATE_BYTES" -gt 20480 ]; then
-    echo "Advisory: the three state files total $STATE_BYTES bytes, over the 20 KB soft target (non-fatal)."
+if [ "$STATE_BYTES" -gt 30720 ]; then
+    echo "Advisory: the three state files total $STATE_BYTES bytes, over the 30 KB shared budget (non-fatal)."
 fi
 echo "Project structure verified."
 

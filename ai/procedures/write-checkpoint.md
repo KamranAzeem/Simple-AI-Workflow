@@ -32,10 +32,19 @@
     - **Content**: Record what was done, what is being done, and what needs doing, in short bullets, expanded with whatever detail belongs to the fuller narrative (files touched, validator or review outcomes). Nothing is dropped; the diary is the record.
     - **This is the only archive**: No separate archive file is created. Old `ai/state/progress.md` entries and resolved `ai/state/context.md` items move here.
 3. **STEP-STATE-FILE-TRIMMING**: Keep the three state files small enough to load cheaply. There is no separate archive file; the daily checkpoints are the archive.
-    - **Soft targets**: Total for the three state files is a 20 KB soft target: `ai/state/context.md` 8 KB, `ai/state/progress.md` 7 KB, `ai/state/next-steps.md` 5 KB. Measure bytes; overage is advisory.
-    - **Progress trim**: If `ai/state/progress.md` is over 7 KB, or holds completed entries older than 14 days, move the oldest completed entries to the diary. Move completed entries first. If the file is still over target, let it exceed and report the overage.
-    - **Next-steps trim**: Never drop an unfinished item. Remove only completed, duplicate, or explicitly-dropped items, and record a dropped item in the diary first. If every item is live and the backlog exceeds 5 KB, let the file exceed the soft target and report the overage.
-    - **Context trim**: Remove resolved items from `## Active Working Context` only after their record is in the diary. Keep live items to short one-liners with pointers. If live items keep the file over 8 KB, keep them and report the overage.
+    - **Shared budget**: The three state files share a 30,720-byte advisory budget. Measure bytes; overage is advisory and never blocks.
+    - **Trigger**: Condense when the total exceeds 30,720 bytes, or when any item line exceeds 300 characters. An item line is a non-empty line after the header END marker that is not an ATX heading.
+    - **Progress trim**: If `ai/state/progress.md` holds completed entries older than 14 days, move the oldest completed entries to the diary first. If the shared budget is still exceeded, continue with the condense step.
+    - **Next-steps trim**: Never drop an unfinished item. Remove only completed, duplicate, or explicitly-dropped items, and record a dropped item in the diary first. Condensing an item keeps the item and shortens its text.
+    - **Context trim**: Remove resolved items from `## Active Working Context` only after their record is in the diary. Keep live items to short one-liners with pointers.
+    - **Condense step**: When the trigger fires, condense items longest first, using the pipeline below. Report any remaining overage and the live-item count, then continue.
+        - Append the full original item to today's daily checkpoint. Create the file with the canonical block and H1 when it is absent.
+        - Write a stub of one fact per line, at most three lines, each at most 300 characters, with a long pointer on its own line.
+        - Run the identifier diff: ISO dates, ticket references, code and file paths, URLs, version strings, owners, and named decisions must appear in the stub, unless the stub's pointer names a Project Knowledge file that contains them. Test counts, byte figures, and similar measurements may stay in the diary only.
+        - When a stub cannot meet the 300-character cap and the diff, keep the original, write no stub, and report the item as `not condensable` with the blocking identifier.
+        - Remove the original only after the diary append and the diff succeed. Never remove an unfinished next-steps item.
+        - When the diary append fails, keep the original and report the failure.
+        - Print one promotion-candidate line per condensed item whose original holds reusable knowledge. The knowledge step below classifies and writes it; this step writes no Project Knowledge.
     - **Header preservation**: Preserve each header verbatim. Verify each header before and after trimming.
     - **Ordering rule**: An entry leaves a state file only after its content is in the diary, in the same checkpoint.
     - **No git metadata**: The state files never record a branch, hash, or push status, and the AI does not prompt the user to commit them.

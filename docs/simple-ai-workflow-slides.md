@@ -39,7 +39,7 @@ by Muhammad Kamran Azeem (kamran@wbitt.com)
 - **Session resume (compacted context)**: re-reads the standing rules and active policies, and re-indexes Global Knowledge and the shared directory after a compaction. It adds files, it never wipes your working thread
 - **PWD-only scope**: the AI loads `AGENTS.md` and scans `ai/` from the current directory only
 - **Token rationing shield**: settings and active policies load in full; Global and Project Knowledge files are indexed at boot, loaded on demand, and flagged for verification when old and on-topic (metadata only)
-- **State-file trimming**: the three state files share a 20 KB soft target. Old completed entries move into the daily checkpoint archive, and there are no side archive files
+- **State-file trimming**: the three state files share a 30 KB advisory budget. A line over 300 characters, or a total over budget, is condensed by moving the full item to the diary and keeping a short stub. Old completed entries move into the daily checkpoint archive, and there are no side archive files
 - **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
 - **Knowledge file standards and repair**: every knowledge file starts with a self-contained header and follows one shape. Files use task names of six or fewer hyphenated segments, aim for a 10 KB soft target, and get reviewed at 15 KB. The repair splits only by topic, merges files under 3 KB, and reports the store count against the 50-file review threshold. The checkpoint flags drift, and `"repair knowledge files"` fixes it without questions. It takes a while, but run it once.
 - **Issue management and delivery**: `PROCEDURE MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request. `PROCEDURE IMPLEMENT-PLAN` delivers an approved plan. A ticket request stops at the ticket. The plan carries a close block, and the merge mode (`direct` or `pr`) comes from `## Merge Policy`.
@@ -399,7 +399,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 - **Transaction log**: every checkpoint prints a confirmation block in the chat, showing what was written and what changed
 - **Abort on missing data**: if the data is incomplete, the write aborts and the gap is reported to you
 - **Daily checkpoint file**: the same transaction appends a short-named section to `ai/daily-checkpoints/YYYY-MM-DD.md`, one file per day. The diary is the archive
-- **State-file trimming**: the three state files share a 20 KB soft target; completed `progress.md` entries older than 14 days move into the diary. No separate archive file
+- **State-file trimming**: the three state files share a 30 KB advisory budget; completed `progress.md` entries older than 14 days move into the diary, and long items are condensed into a stub plus a diary copy. No separate archive file
 
 > **Consistent state. Every checkpoint. No silent failures.**
 
@@ -416,7 +416,7 @@ notes → vision → PRD → HLD → LLD → ADRs → delivery ledger
 ## Built-in defences in this workflow
 
 - **Atomic write protocol**: state files sync together or not at all, so no partial writes
-- **State-file trimming**: the three state files share a 20 KB soft target, and completed old entries move into the daily checkpoint archive
+- **State-file trimming**: the three state files share a 30 KB advisory budget, and completed old entries move into the daily checkpoint archive
 - **State-file health and repair**: every load checks the canonical headers, order, size, and structure read-only; `"repair state files"` restores the headers and fixes them on demand
 - **Post-Compaction Recovery**: reloads rules from disk after any compaction. On VS Code and Copilot a `PreCompact` hook re-arms it mechanically; on other tools a one-time memory note does the job (see the reload-trigger setup guide)
 - **Proof-of-Load**: the AI confirms every file it read before it starts work
