@@ -118,11 +118,13 @@ PowerShell:
 ### Behavior
 
 - Finds every project under the search path and writes one archive per project.
-- Skips the workflow clone, does not descend into `.git`, and does not rescan inside a project it already found.
+- Prints progress as it runs: `Scanning`, `Found project`, `Discovery complete`, `Backing up`, `Backed up`, and a final `Summary`. A long scan no longer looks like a hang.
+- Prunes heavy directories before descent: `.git`, `node_modules`, `.venv`, `venv`, `vendor`, `target`, `build`, `dist`, `.next`, `.cache`, `__pycache__`, and `.terraform`. A project placed inside one of those directories is not found.
+- Skips the workflow clone and does not rescan inside a project it already found.
 - Names the archive `<parent>_<project>_<date>_<HH-MM>.tar.gz`. Characters outside letters, digits, dots, hyphens, and underscores become `_`.
 - Never overwrites. An existing name fails that project and the run continues.
 - Creates the default backup directory with a message when it is missing. A dry run does not create it.
-- Processes each project on its own. A failed project is reported, the others still run, and the script exits non-zero.
+- Processes each project on its own. A failed project is reported with the tool's own error, the others still run, and the script exits non-zero.
 - Exit codes: `0` all projects backed up, `1` one or more projects failed, `2` bad arguments, an unreadable search path, or a partial discovery failure.
 
 ### Archive and restore
@@ -137,7 +139,8 @@ tar -xzf /path/to/Projects_app_2026-01-31_09-30.tar.gz
 ### Safety
 
 - Secrets are included by default, because the project needs them to work. Use `--exclude-secrets` or `-ExcludeSecrets` when you do not want them.
-- Archives are created readable by the owner only on POSIX. On Windows the script applies an owner-only ACL when it can.
+- Archives are forced readable by the owner only on POSIX, and the mode is verified. Under Git Bash and MSYS there is no POSIX mode to verify, so the archive is kept and the script reports that ACL verification is unavailable instead of deleting it.
+- On Windows, `backup-ai.ps1` applies an owner-only ACL with `icacls`. If that step fails, the archive is kept, a warning is printed, and the run exits non-zero.
 - The archive directory keeps its own permissions; only the archives are forced to owner-only. Keep the default directory in a private location.
 - A `.tar.gz` is not encrypted. When it holds secrets, copy it only to a location you trust.
 - Run the dry run first.
@@ -146,8 +149,13 @@ tar -xzf /path/to/Projects_app_2026-01-31_09-30.tar.gz
 
 ```text
 $ ./backup-ai.sh --target-path ~/Projects --dry-run
+Scanning /home/me/Projects for workflow projects
+Found project: /home/me/Projects/app
+Found project: /home/me/Projects/site
+Discovery complete: 2 project(s) found
 DRY-RUN: would archive /home/me/Projects/app -> /home/me/.ai/backups/Projects_app_2026-01-31_09-30.tar.gz
 DRY-RUN: would archive /home/me/Projects/site -> /home/me/.ai/backups/Projects_site_2026-01-31_09-30.tar.gz
+Summary: 2 projects would be archived; archives in /home/me/.ai/backups
 ```
 
 ### Notes

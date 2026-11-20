@@ -78,13 +78,26 @@ fi
 
 STAMP=$(date +%Y-%m-%d_%H-%M) || die "Cannot read the current date."
 
+case "${BACKUP_AI_POSIX_MODES:-}" in
+  0) POSIX_MODES_SUPPORTED=0 ;;
+  1) POSIX_MODES_SUPPORTED=1 ;;
+  *)
+    case "$(uname -s 2>/dev/null)" in
+      MINGW*|MSYS*|CYGWIN*) POSIX_MODES_SUPPORTED=0 ;;
+      *) POSIX_MODES_SUPPORTED=1 ;;
+    esac
+    ;;
+esac
+
 is_under_workflow() {
-  local dir="$1"
-  while :; do
-    [ "$dir" -ef "$WORKFLOW_DIR" ] && return 0
-    [ "$dir" = "/" ] && return 1
-    dir=$(dirname "$dir")
-  done
+  case "$1" in
+    "$WORKFLOW_DIR"|"$WORKFLOW_DIR"/*) return 0 ;;
+  esac
+  return 1
+}
+
+posix_modes_supported() {
+  [ "${POSIX_MODES_SUPPORTED:-1}" -eq 1 ]
 }
 
 is_project() {
@@ -117,7 +130,10 @@ archive_project() {
   local stage=""
   local custom_dir=""
   local has_content=0
+  local tar_err=""
   local -a tar_args
+
+  printf 'Backing up: %s\n' "$project"
 
   if [ -e "$project/ai-customization.md" ] || [ -L "$project/ai-customization.md" ]; then
     has_content=1
@@ -126,11 +142,13 @@ archive_project() {
         printf 'FAILED: cannot create a staging directory for %s\n' "$project" >&2
         return 1
       }
-      if ! cp -L "$project/ai-customization.md" "$stage/ai-customization.md" 2>/dev/null; then
+      if ! cp -L "$project/ai-customization.md" "$stage/ai-customization.md" 2>"$stage/cp.err"; then
         printf 'FAILED: cannot read the customization file in %s\n' "$project" >&2
+        [ -s "$stage/cp.err" ] && cat "$stage/cp.err" >&2
         rm -rf "$stage"
         return 1
       fi
+      rm -f "$stage/cp.err"
       custom_dir="$stage"
     else
       custom_dir="$project"
@@ -164,43 +182,47 @@ archive_project() {
     tar_args+=(-C "$custom_dir" ai-customization.md)
   fi
 
-  if ! ( umask 077; tar "${tar_args[@]}" ) 2>/dev/null; then
+  tar_err=$(mktemp) || {
+    printf 'FAILED: cannot create a temporary file for %s\n' "$project" >&2
+    [ -n "$stage" ] && rm -rf "$stage"
+    return 1
+  }
+  if ! ( umask 077; tar "${tar_args[@]}" ) 2>"$tar_err"; then
     printf 'FAILED: tar failed for %s\n' "$project" >&2
+    [ -s "$tar_err" ] && cat "$tar_err" >&2
+    rm -f "$tar_err"
     [ -e "$out" ] && rm -f "$out"
     [ -n "$stage" ] && rm -rf "$stage"
     return 1
   fi
+  rm -f "$tar_err"
   [ -n "$stage" ] && rm -rf "$stage"
 
-  if ! find "$out" -perm 600 -print 2>/dev/null | grep -q .; then
-    printf 'FAILED: archive is not owner-only: %s\n' "$out" >&2
-    rm -f "$out"
-    return 1
+  if posix_modes_supported; then
+    chmod 600 "$out" 2>/dev/null || true
+    if ! find "$out" -perm 600 -print 2>/dev/null | grep -q .; then
+      printf 'FAILED: archive is not owner-only: %s\n' "$out" >&2
+      rm -f "$out"
+      return 1
+    fi
+  else
+    printf 'ACL verification unavailable on this platform; kept %s is protected by the file share ACL\n' "$out"
   fi
 
   printf 'Backed up: %s -> %s\n' "$project" "$out"
   return 0
 }
 
-list_file=$(mktemp) || die "Cannot create a temporary file."
-err_file=$(mktemp) || {
-  rm -f "$list_file"
-  die "Cannot create a temporary file."
-}
-trap 'rm -f "$list_file" "$err_file"' EXIT
+err_file=$(mktemp) || die "Cannot create a temporary file."
+trap 'rm -f "$err_file"' EXIT
 
 discovery_failed=0
-if ! find "$TARGET_ABS" -name .git -prune -o -type d -print0 > "$list_file" 2>"$err_file"; then
-  discovery_failed=1
-fi
-if [ -s "$err_file" ]; then
-  printf 'Warning: some directories under %s could not be read; processing the matches that were found.\n' "$TARGET_ABS" >&2
-  cat "$err_file" >&2 || true
-  discovery_failed=1
-fi
-
+printf 'Scanning %s for workflow projects\n' "$TARGET_ABS"
 projects=()
-while IFS= read -r -d '' dir; do
+exec 3< <(find "$TARGET_ABS" \
+  \( -path "$WORKFLOW_DIR" -o \( ! -path "$TARGET_ABS" -a \( -name .git -o -name node_modules -o -name .venv -o -name venv -o -name vendor -o -name target -o -name build -o -name dist -o -name .next -o -name .cache -o -name __pycache__ -o -name .terraform \) \) \) -prune \
+  -o -type d -print0 2>"$err_file")
+while IFS= read -r -d '' dir <&3; do
   skip=0
   if [ "${#projects[@]}" -gt 0 ]; then
     for p in "${projects[@]}"; do
@@ -218,17 +240,28 @@ while IFS= read -r -d '' dir; do
   is_under_workflow "$dir" && continue
   if is_project "$dir"; then
     projects+=("$dir")
+    printf 'Found project: %s\n' "$dir"
   fi
-done < "$list_file"
+done
+exec 3<&-
+if [ -s "$err_file" ]; then
+  printf 'Warning: some directories under %s could not be read; processing the matches that were found.\n' "$TARGET_ABS" >&2
+  cat "$err_file" >&2 || true
+  discovery_failed=1
+fi
+
+printf 'Discovery complete: %d project(s) found\n' "${#projects[@]}"
 
 if [ "$DRY_RUN" -eq 1 ]; then
   if [ "${#projects[@]}" -eq 0 ]; then
     printf 'No projects found under %s\n' "$TARGET_ABS"
+    printf 'Summary: 0 projects would be archived; archives in %s\n' "$BACKUP_DIR"
     exit 0
   fi
   for p in "${projects[@]}"; do
     printf 'DRY-RUN: would archive %s -> %s\n' "$p" "$(archive_name "$p")"
   done
+  printf 'Summary: %d projects would be archived; archives in %s\n' "${#projects[@]}" "$BACKUP_DIR"
   exit 0
 fi
 
@@ -245,14 +278,20 @@ if [ "${#projects[@]}" -eq 0 ]; then
 fi
 
 failed=0
+archived=0
+warnings=0
 if [ "${#projects[@]}" -gt 0 ]; then
   for p in "${projects[@]}"; do
     out=$(archive_name "$p")
-    if ! archive_project "$p" "$out"; then
+    if archive_project "$p" "$out"; then
+      archived=$((archived + 1))
+    else
       failed=$((failed + 1))
     fi
   done
 fi
+
+printf 'Summary: %d archived, %d failed, %d warnings; archives in %s\n' "$archived" "$failed" "$warnings" "$BACKUP_DIR"
 
 if [ "$discovery_failed" -ne 0 ]; then
   exit 2

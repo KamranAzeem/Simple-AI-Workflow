@@ -1208,3 +1208,11 @@ The three state files share a 30,720-byte advisory budget, and any item line ove
 Context: long-horizon customer work exceeded the 20 KB total, the 8/7/5 split blocked one file while another sat unused, and repair never rewrote a live item, so the over-size report repeated with no remedy. The user fixed the total at 30 KB and chose number-free headers on 2026-11-20.
 
 Consequences: this supersedes the 20 KB total and the 8/7/5 split in the 2026-09-19 entry, and the per-file soft-target numbers in the 2026-10-27 entry. The 2026-11-18 byte-identical header instruction applied to that rewrite; this change supersedes only the size-bullet text. Every existing project runs `repair state files` once, so the release is v7.0.0. Thresholds stay fixed, and a configurable total is a separate later change. The validator keeps one non-fatal total advisory, and a test pins the policy and validator numbers to each other.
+
+## 2026-11-20: Backup scripts stream progress, prune heavy trees, and gate permission checks by platform
+
+The out-of-band backup scripts print progress as they run, prune named dependency and build directories, and never delete a good archive because a POSIX mode check cannot run. The Bash script forces and verifies mode 600 on POSIX and, under MINGW, MSYS, and CYGWIN, keeps the archive and reports that ACL verification is unavailable. The PowerShell script walks with an explicit stack, skips reparse points, keeps the archive when `icacls` fails, warns, and exits non-zero. A tar failure prints tar's own message.
+
+Context: a customer run under Git Bash deleted every good archive because `find -perm 600` found no POSIX mode, and a 92,657-directory tree printed nothing while it scanned, so the run looked hung. The user confirmed the permission check as the Windows cause on 2026-11-20.
+
+Consequences: a project inside a pruned directory is not found, which is acceptable for dependency and build directories. The POSIX mode check is a proxy; the Windows ACL is the real control. Exit codes are unchanged, so existing callers keep working. The upgrade is a patch release because no policy or procedure changes.

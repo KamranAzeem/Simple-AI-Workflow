@@ -67,6 +67,14 @@ if (-not $tar) {
 }
 
 $script:discoveryFailed = $false
+$script:archived = 0
+$script:failed = 0
+$script:warnings = 0
+$script:planned = 0
+$script:pruneNames = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+foreach ($name in @('.git', 'node_modules', '.venv', 'venv', 'vendor', 'target', 'build', 'dist', '.next', '.cache', '__pycache__', '.terraform')) {
+  [void]$script:pruneNames.Add($name)
+}
 
 function Test-IsUnderWorkflow([string]$path) {
   $full = (Get-Item -LiteralPath $path -Force).FullName.TrimEnd($sepChars)
@@ -86,20 +94,27 @@ function Test-IsProject([string]$dir) {
 }
 
 function Get-ProjectDirs([string]$path) {
-  $errs = @()
-  $children = Get-ChildItem -LiteralPath $path -Directory -Force -ErrorAction SilentlyContinue -ErrorVariable +errs
-  if ($errs.Count -gt 0) {
-    Write-Warning "Some directories under $path could not be read; processing the matches that were found."
-    $script:discoveryFailed = $true
-  }
-  foreach ($child in $children) {
-    if ($child.Name -eq '.git') { continue }
-    if (Test-IsUnderWorkflow $child.FullName) { continue }
-    if (Test-IsProject $child.FullName) {
-      Write-Output $child.FullName
-      continue
+  $stack = [System.Collections.Generic.Stack[string]]::new()
+  $stack.Push($path)
+  while ($stack.Count -gt 0) {
+    $dir = $stack.Pop()
+    $errs = @()
+    $children = Get-ChildItem -LiteralPath $dir -Directory -Force -ErrorAction SilentlyContinue -ErrorVariable +errs
+    if ($errs.Count -gt 0) {
+      Write-Warning "Some directories under $dir could not be read; processing the matches that were found."
+      $script:discoveryFailed = $true
     }
-    Get-ProjectDirs $child.FullName
+    foreach ($child in $children) {
+      if ($script:pruneNames.Contains($child.Name)) { continue }
+      if ($child.Attributes -band [System.IO.FileAttributes]::ReparsePoint) { continue }
+      if (Test-IsUnderWorkflow $child.FullName) { continue }
+      if (Test-IsProject $child.FullName) {
+        Write-Host "Found project: $($child.FullName)"
+        Write-Output $child.FullName
+        continue
+      }
+      $stack.Push($child.FullName)
+    }
   }
 }
 
@@ -127,6 +142,8 @@ function Invoke-ArchiveProject([string]$project) {
     Write-Warning "FAILED: archive already exists: $out"
     return $false
   }
+
+  Write-Host "Backing up: $project"
 
   $stage = $null
   $customDir = $null
@@ -176,15 +193,17 @@ function Invoke-ArchiveProject([string]$project) {
   $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
   & icacls.exe $out /inheritance:r /grant:r "${identity}:(F)" | Out-Null
   if ($LASTEXITCODE -ne 0) {
-    Write-Warning "WARNING: archive is not restricted to the owner: $out"
-    return $false
+    Write-Warning "WARNING: archive kept but not restricted to the owner: $out"
+    $script:warnings++
   }
 
   Write-Host "Backed up: $project -> $out"
   return $true
 }
 
+Write-Host "Scanning $targetAbs for workflow projects"
 if (-not (Test-IsUnderWorkflow $targetAbs) -and (Test-IsProject $targetAbs)) {
+  Write-Host "Found project: $targetAbs"
   $projects = @($targetAbs)
 } elseif (Test-IsUnderWorkflow $targetAbs) {
   $projects = @()
@@ -207,13 +226,23 @@ if ($projects.Count -eq 0) {
   Write-Host "No projects found under $targetAbs"
 }
 
-$failed = 0
 foreach ($project in $projects) {
-  if (-not (Invoke-ArchiveProject $project)) {
-    $failed++
+  if ($WhatIfPreference) {
+    [void](Invoke-ArchiveProject $project)
+    $script:planned++
+  } elseif (Invoke-ArchiveProject $project) {
+    $script:archived++
+  } else {
+    $script:failed++
   }
 }
 
+if ($WhatIfPreference) {
+  Write-Host "Summary: $script:planned projects would be archived; archives in $BackupDir"
+} else {
+  Write-Host "Summary: $script:archived archived, $script:failed failed, $script:warnings warnings; archives in $BackupDir"
+}
+
 if ($script:discoveryFailed) { exit 2 }
-if ($failed -gt 0) { exit 1 }
+if ($script:failed -gt 0 -or $script:warnings -gt 0) { exit 1 }
 exit 0

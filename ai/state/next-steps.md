@@ -12,3 +12,6 @@
 <!-- STATE-FILE-HEADER: next-steps.md END -->
 
 ## Pending
+
+- Refresh the state-file headers in each existing project after v7.0.0.
+- Grill the team knowledge store questions.

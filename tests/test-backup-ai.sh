@@ -229,6 +229,45 @@ add_custom "$p17"
 run_ok "$WORK/c17.log" --target-path "$WORK/c17" --backup-dir "$WORK/back up"
 expect "case 17 archived" test -n "$(archive_for "$WORK/back up")"
 
+# --- Case 18: heavy directories are pruned ---
+p18="$WORK/c18/node_modules/fake-project"
+add_state_shared "$p18"
+run_ok "$WORK/c18.log" --target-path "$WORK/c18" --backup-dir "$WORK/b18"
+expect "case 18 pruned project not archived" test -z "$(archive_for "$WORK/b18" 2>/dev/null || true)"
+expect "case 18 reports none" grep -qF "No projects found" "$WORK/c18.log"
+
+# --- Case 19: progress lines ---
+expect "case 19 scanning line" grep -qF "Scanning" "$WORK/c1.log"
+expect "case 19 found line" grep -qF "Found project:" "$WORK/c1.log"
+expect "case 19 discovery complete line" grep -qF "Discovery complete:" "$WORK/c1.log"
+expect "case 19 backing up line" grep -qF "Backing up:" "$WORK/c1.log"
+expect "case 19 summary line" grep -qF "Summary:" "$WORK/c1.log"
+
+# --- Case 20: unavailable POSIX mode check keeps the archive ---
+p20="$WORK/c20/project"
+add_custom "$p20"
+BACKUP_AI_POSIX_MODES=0 bash "$SCRIPT" --target-path "$WORK/c20" --backup-dir "$WORK/b20" > "$WORK/c20.log" 2>&1
+arch20=$(archive_for "$WORK/b20")
+expect "case 20 archive kept" test -n "$arch20"
+expect "case 20 unavailable notice" grep -qF "ACL verification unavailable" "$WORK/c20.log"
+
+# --- Case 21: tar failure prints its cause ---
+mkdir -p "$WORK/binfail"
+printf '%s\n' '#!/bin/sh' 'printf "%s\n" "fake tar exploded" >&2' 'exit 1' > "$WORK/binfail/tar"
+chmod +x "$WORK/binfail/tar"
+p21="$WORK/c21/project"
+add_custom "$p21"
+set +e
+PATH="$WORK/binfail:$PATH" bash "$SCRIPT" --target-path "$WORK/c21" --backup-dir "$WORK/b21" > "$WORK/c21.log" 2>&1
+rc21=$?
+set -e
+expect "case 21 exits 1" test "$rc21" -eq 1
+expect "case 21 tar cause printed" grep -qF "fake tar exploded" "$WORK/c21.log"
+expect "case 21 no archive" test -z "$(archive_for "$WORK/b21" 2>/dev/null || true)"
+
+# --- Case 22: summary counts ---
+expect "case 22 mixed summary" grep -qF "Summary: 1 archived, 1 failed" "$WORK/c11.log"
+
 echo ""
 if [ "$fail" -eq 0 ]; then
   echo "All checks passed."

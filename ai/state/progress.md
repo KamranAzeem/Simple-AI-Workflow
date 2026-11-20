@@ -45,3 +45,9 @@
 [2026-11-20] Added the condense steps to the checkpoint and repair: diary copy, stub, identifier diff, not-condensable stop, and a promotion-candidate list; knowledge writes stay with the checkpoint.
 [2026-11-20] Made the load report bytes, the over-300 count, and five line pointers; raised the validator advisory to 30 KB; added tests/test-state-file-budget.sh.
 [2026-11-20] Migrated this repo's headers and condensed two over-300 items into the 2026-11-20 diary; suite 27/27, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0.
+[2026-11-20] Squash-merged v7.0.0 to master as `beacc3e`, deleted the feature branch, pushed, tagged, and published the release; GitHub #13 is closed.
+[2026-11-20] Post-release verification on master: release URL live, #13 closed, working tree clean at the release; the shared budget, the condense pipeline, and the number-free headers are live.
+[2026-11-20] Filed the backup defect ticket: the Bash script walks 92,657 directories silently, and the Windows owner-only check deletes good archives; the Windows cause is confirmed.
+[2026-11-20] Filed the shared team knowledge store ticket with the full brainstorm: transports, store shape, contribution, consumption, governance, shortlist, and open questions.
+[2026-11-20] Hardened `backup-ai.sh` and `backup-ai.ps1`: streamed discovery and per-project progress, pruned heavy directories, kept archives when the Windows ACL check is unavailable, and printed tar causes; review-74 APPROVED.
+[2026-11-20] Extended `tests/test-backup-ai.sh` to 22 cases and the Windows verification script with progress, summary, and prune checks; the backup test passes 57 checks.

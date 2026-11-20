@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.0.0 (2026-11-20).** The state files share one 30 KB budget, long items are condensed into the diary, and the header blocks stop naming per-file sizes. Run `repair state files` once after upgrading. Read the announcement: [docs/announcements/v7.0.0.md](docs/announcements/v7.0.0.md). |
+| **v7.0.1 (2026-11-20).** The backup scripts stream progress, prune heavy directories, and keep good archives on Git Bash. Read the announcement: [docs/announcements/v7.0.1.md](docs/announcements/v7.0.1.md). |
 
 # Simple AI Workflow
 

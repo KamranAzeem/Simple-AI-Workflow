@@ -14,24 +14,26 @@
 
 ## Current Status
 
-- **Milestone**: v7.0.0 is implemented on `feature/state-file-total-budget`; the merge, tag, release, and GitHub #13 close follow the approved plan.
-- **Validator**: 8/8; authoring PASSED; 27 test scripts; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0 over 261 files; shellcheck 0.
+- **Milestone**: v7.0.1 is implemented on `fix/backup-scripts-hardening`; the merge, tag, release, and ticket close follow.
+- **Validator**: 8/8; authoring PASSED; 27 test scripts; 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; markdownlint 0; shellcheck 0.
 - **Policy count**: 24 modular policies and 15 procedure modules; the policy floor is 24.
 - **State files**: the three files share a 30,720-byte budget; headers are number-free; today's file exists; sizes are under budget.
-- **Project knowledge**: 11 lessons plus the template; global knowledge 29 files; the toolchain note records 27 tests and the floor of 24.
-- **Project issues**: 8 open, 0 in-progress; GitHub #13 stays open until the release.
+- **Project knowledge**: 12 lessons plus the template; global knowledge 29 files; the toolchain note records 27 tests and the floor of 24.
+- **Project issues**: 9 open, 0 in-progress; GitHub #13 is closed.
 - **Skills**: 0 project and 0 global packages; the two-root model stays.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; 8 open tickets, none approved for work.
-- **Release**: v7.0.0 is the active release; the announcement and the README banner are in the branch.
-- **State-file budget**: the shared 30,720-byte gate, the 300-character guard, the condense pipeline, and the repair fallback are live on the branch.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; 9 open tickets, none approved for work.
+- **Backup scripts (implemented)**: both scripts stream progress, prune heavy directories, and keep good archives when the platform permission check cannot run.
+- **Team knowledge store (open, XL)**: the shared-store idea and the full brainstorm are in `ai/issues/open/shared-team-knowledge-store.md`.
+- **Release**: v7.0.1 is implemented; the merge, tag, and release follow.
+- **State-file budget**: the shared 30,720-byte gate, the 300-character guard, the condense pipeline, and the repair fallback are live on master.
 - **Migration**: one `repair state files` run per existing project refreshes the header block.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
-- **GitHub tracker**: #8, #9, #10, #11, and #12 are closed; #13 closes with v7.0.0.
+- **GitHub tracker**: #8 through #13 are closed.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the checkpoint runs before the merge.
-- **Release history**: v5.8.0 through v6.11.0 are published; v7.0.0 is pending.
+- **Release history**: v5.8.0 through v7.0.0 are published; v7.0.1 is pending.
 - **Tool selection**: the built-in index boot is live; the runtime file-operation rule is unconditional.
-- **Lint**: clean; markdownlint 0 over 261 files; the local-only directories and the daily checkpoints are exempt.
+- **Lint**: clean; the local-only directories and the daily checkpoints are exempt.
 - **Stash guard**: a stash round-trip can delete empty mandatory directories; the validator catches the gap.

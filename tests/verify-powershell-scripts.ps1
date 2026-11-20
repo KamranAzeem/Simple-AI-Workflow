@@ -70,6 +70,9 @@ $legacy = @'
 - **Global AI Workflow Directory**: C:\Old\Workflow\
 '@
 Set-Content -Path (Join-Path $old 'ai\ai-customization.md') -Value $legacy
+$pruned = Join-Path $projects 'proj-new\node_modules\fake-project'
+New-Item -ItemType Directory -Force -Path (Join-Path $pruned 'ai\state'), (Join-Path $pruned 'ai\shared') | Out-Null
+Set-Content -Path (Join-Path $pruned 'ai\state\next-steps.md') -Value '- pruned'
 
 Write-Host "=== sync -WhatIf ==="
 $syncOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Source $agents -TargetPath $projects -WhatIf 2>&1
@@ -97,6 +100,9 @@ $backText = Read-Output $backOut
 Write-Host $backText
 Check 'backup -WhatIf exits 0' ($backRc -eq 0)
 Check 'backup -WhatIf finds both projects' (($backText -match 'proj-old') -and ($backText -match 'proj-new'))
+Check 'backup -WhatIf streams discovery' ($backText -match 'Scanning .* for workflow projects')
+Check 'backup -WhatIf streams summary' ($backText -match 'Summary: \d+ projects would be archived')
+Check 'backup -WhatIf prunes node_modules' (-not ($backText -match 'fake-project'))
 Check 'backup -WhatIf writes nothing' (@(Get-ChildItem -Path $backups -Filter *.tar.gz -ErrorAction SilentlyContinue).Count -eq 0)
 
 Write-Host "=== backup real ==="
@@ -104,6 +110,7 @@ $backOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $backup -TargetPath 
 $backRc = $LASTEXITCODE
 Write-Host (Read-Output $backOut)
 Check 'backup real exits 0' ($backRc -eq 0)
+Check 'backup real streams summary' ((Read-Output $backOut) -match 'Summary: 2 archived')
 $archives = @(Get-ChildItem -Path $backups -Filter *.tar.gz -ErrorAction Stop)
 Check 'backup real creates two archives' ($archives.Count -eq 2)
 $oldArchive = $archives | Where-Object { $_.Name -like '*proj-old*' } | Select-Object -First 1
