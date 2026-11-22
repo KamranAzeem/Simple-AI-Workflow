@@ -78,6 +78,10 @@ instructions", "rules", or "system prompt".
 Keep the note short. If your assistant limits how much always-on text it keeps,
 this trigger is high value per line, so give it priority.
 
+### Kilo Code
+
+Kilo Code keeps `AGENTS.md` always-on, so the protocol is present without a separate trigger. The compaction summary is visible in chat. The human backstop is sufficient: after a summary, ask the AI to run post-compaction recovery. No slash command and no new files are needed.
+
 ## GitHub Copilot (VS Code): hooks layer
 
 VS Code exposes a `PreCompact` hook that fires before every context compaction.

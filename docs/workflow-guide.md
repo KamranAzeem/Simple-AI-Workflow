@@ -66,6 +66,18 @@ The AI does not rely on commit history to rebuild project context. If you want a
 
 For a recommended global Git setup (identity, CRLF handling, and a readable `git lg` alias), see the Git Configuration section in the [global user settings template](global-user-settings.md).
 
+### Agent Collaboration
+
+Multiple assistants can work on one project through the shared `ai/` directory.
+
+- Announce the task on the coordination board (`ai/shared/coordination.md`) before starting it.
+- Claim a handoff, validate it against the handoff policy, execute it on a feature branch, verify it, then append a `## Completion` note and clear the claim.
+- Treat every tracking-file update as a fresh read followed by an immediate write.
+- If an agent detects an unauthorized change, pause and ask the human.
+- A receiver merges only when the handoff is valid, the creation review is APPROVED, every verification step passes, and the board is updated. The receiver does not write the three state files; the original orchestrator records the state at the next checkpoint and deletes the handoff.
+- The human can check `ai/state/progress.md`, `ai/state/next-steps.md`, and `ai/shared/coordination.md`.
+- See the [multi-agent runbook](multi-agent-runbook.md) for a three-assistant walkthrough.
+
 ## 5. Expertise & Intent Alignment (Review-First)
 
 To prevent AI assistants from prematurely implementing code changes when you only wanted to ask a question, the workflow enforces a strict intent alignment protocol.

@@ -17,6 +17,7 @@ Simple AI Workflow is a small set of plain files that gives your AI assistant a 
 - [What you get](#what-you-get)
 - [What it is not](#what-it-is-not)
 - [Works with any assistant](#works-with-any-assistant)
+- [Origin](#origin)
 - [Docs and slides](#docs-and-slides)
 
 ## The gap
@@ -144,6 +145,10 @@ Think of a road trip with several drivers. One assistant drives, hits a limit, a
 
 This is a design feature, not the main idea. The main idea is the fixed shape. For the full comparison, see [how the assistants store context and how this workflow fits](docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md).
 
+## Origin
+
+I built this for myself, to stop improvising with AI. The idea started with my friend [Muddassar Muneer](https://github.com/mudassarmuneer), who showed me a workflow he had built for AI assistants. I kept two ideas from it, state management and handoffs, and built the rest as one self-standing protocol.
+
 ## Docs and slides
 
 - [Workflow guide](docs/workflow-guide.md): the reference manual.
@@ -154,6 +159,10 @@ This is a design feature, not the main idea. The main idea is the fixed shape. F
 - [Policy influence on AI work](docs/policy-influence-on-ai-work.md).
 - [Protocol validation](docs/protocol-validation-system.md).
 - [Codebase examination](docs/codebase-examination-guide.md).
+- [AI provider selection](docs/ai-provider-selection-guide.md): choosing a provider and the Kilo Code path.
+- [Multi-agent runbook](docs/multi-agent-runbook.md): a three-assistant walkthrough.
+- [Learning session runbook](docs/example-learning-session-runbook.md): a prompt-first walkthrough.
+- [Personas](docs/personas/): example traits for an architect reviewer, a mentor, and a security specialist.
 - [Skills example](docs/examples/skills/example-skill/SKILL.md).
 - [Examples](docs/examples/): customizations, handoffs, knowledge, and skills.
 - [Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.

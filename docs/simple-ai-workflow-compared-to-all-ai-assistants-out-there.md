@@ -1,14 +1,12 @@
-# AI Assistants and Their Memory Systems: How Simple AI Workflow Fits In
+# How AI Assistants Store Context, and How Simple AI Workflow Fits
 
-If you have ever used more than one AI assistant on a project, you know the pain. You spent weeks building context with Copilot. Then you tried Claude for something. Then you switched back. Now you have no idea where each assistant saved what, whether any of it survived, and whether your new session knows anything about your previous work.
+The problem is not which assistant you use. The problem is that a plain chat has no fixed shape. The assistant decides what to load, what to save, and what to skip, and the result changes with the session. Simple AI Workflow gives the assistant a protocol, so the work is predictable, reproducible, and auditable.
 
-This is not a rare problem. It is the default experience.
-
-This document explains how four widely-used AI tools handle memory and context, how their concepts map to Simple AI Workflow, and why Simple AI Workflow's approach is fundamentally different, and what that difference costs you.
+This document compares how four widely used tools store context, maps their concepts to the workflow, and explains the fixed shape. The comparison is a secondary lens. The single-assistant developer is the main audience: the protocol gives one assistant the same shape every time. Multi-assistant portability is a design feature, not the pitch.
 
 ---
 
-## The Problem: Every Tool Is a Black Box
+## The Problem: the State Belongs to the Tool
 
 Each AI assistant stores context in its own way, in its own location, in its own format.
 
@@ -19,7 +17,12 @@ Each AI assistant stores context in its own way, in its own location, in its own
 
 These are black boxes of different shades. Some are darker than others. But they all share the same core problem: **the state belongs to the tool, not to you.**
 
-Switch tools and you start from scratch. The new assistant has no idea what the previous one knew. Your hard-won context, the architectural decisions, the known issues, the progress you made, is trapped inside the tool you just left.
+The cost shows up in two ways:
+
+- **With one assistant**, the same chat can skip the project tickets, skip a checkpoint write, skip the acceptance tests, or change the output format from one answer to the next. The shape is not fixed.
+- **With two or more assistants**, each one stores its state in its own hidden directory. Switch assistants and you start from scratch, because the new one has no idea what the last one did.
+
+Simple AI Workflow fixes both: the state lives in the project, and the procedures give every session the same shape.
 
 ---
 
@@ -29,14 +32,14 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 Copilot is tightly integrated with VS Code. Its context system revolves around a few key files:
 
-- **`.github/copilot-instructions.md`**, project-level instructions that are automatically injected into every conversation. You write this once and Copilot follows it for that project.
+- **`.github/copilot-instructions.md`**, project-level instructions that are automatically injected into every conversation.
 - **`.instructions.md` files**, more granular rules that apply to specific file types or directories (using `applyTo` patterns).
-- **`.github/skills/<name>/SKILL.md`**: a per-skill file defining one reusable, task-specific skill, loaded on demand. Skills are distinct from custom agents.
+- **`.github/skills/<name>/SKILL.md`**: a per-skill file defining one reusable, task-specific skill, loaded on demand.
 - **`.prompt.md` files**, reusable prompt templates you can invoke by name.
 - **`/memories/`**: persistent notes in the agent framework at user, repository (`/memories/repo/`), and session scope.
-- **`PreCompact` hook**, a script that runs before the session is summarized (compacted), giving you a chance to save state before context is lost.
+- **`PreCompact` hook**, a script that runs before the session is summarized.
 
-Copilot's context system is the most feature-rich of the four. But it is still VS Code-specific. None of it works in a terminal, in a JetBrains IDE, or with a different AI tool.
+Copilot's context system is feature-rich. But it is still VS Code-specific. None of it works in a terminal, in a JetBrains IDE, or with a different AI tool.
 
 ### Claude (Claude Code)
 
@@ -46,7 +49,7 @@ Claude's context system is simpler and more explicit:
 - **`~/.claude/CLAUDE.md`**, global instructions that apply across all projects.
 - **Claude Projects**, a platform feature that lets you upload reference files and keep conversation history scoped to a project.
 
-Claude's approach is clean and readable. But it only works with Claude. And Claude Projects lives on Anthropic's servers, you cannot take it with you or inspect it locally.
+Claude's approach is clean and readable. But it only works with Claude. Claude Projects lives on Anthropic's servers, so you cannot take it with you or inspect it locally.
 
 ### ChatGPT
 
@@ -57,17 +60,17 @@ ChatGPT has the most automatic memory:
 - **Projects**, project-scoped memory and a set of uploaded reference files.
 - **Custom GPTs**, custom system prompts with optional tools and API actions.
 
-ChatGPT's memory is the most hands-off. It just works. But it is also the most opaque. You cannot control the structure, cannot move it to another tool, and cannot inspect what the AI actually remembered versus what it summarized away.
+ChatGPT's memory is the most hands-off. It just works. But it is also the most opaque. You cannot control the structure, move it to another tool, or inspect what the AI actually remembered versus what it summarized away.
 
 ### Cursor
 
-Cursor is an AI-first code editor built on VS Code. It lets you pick your own AI model (OpenAI, Anthropic, Gemini) and has strong multi-file editing capabilities. Its context system is minimal:
+Cursor is an AI-first code editor built on VS Code. It lets you pick your own AI model and has strong multi-file editing capabilities. Its context system is minimal:
 
-- **`.cursor/rules`** (or the older `.cursorrules`), project-level instructions for the AI. Cursor reads this file automatically for every conversation in that project.
-- **User rules**, a global instructions block in Cursor's settings that applies across all projects.
+- **`.cursor/rules`** (or the older `.cursorrules`), project-level instructions for the AI.
+- **User rules**, a global instructions block in Cursor's settings.
 - No persistent cross-session memory. No project knowledge base. No state tracking between sessions.
 
-Cursor's rules file is easy to set up and effective within Cursor. But the moment you open the same project in VS Code, a terminal, or any other tool, those rules do nothing. They are invisible to every AI assistant except Cursor.
+Cursor's rules file is easy to set up and effective within Cursor. Open the same project in VS Code, a terminal, or any other tool, and those rules do nothing.
 
 ---
 
@@ -78,26 +81,34 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | What you need | Copilot | Claude | ChatGPT | Cursor | Simple AI Workflow |
 |---|---|---|---|---|---|
 | Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
-| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules (in Cursor settings) | `<Global User AI Directory>/settings/global-user-settings.md` (default `~/.ai/`) |
+| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules | `<Global User AI Directory>/settings/global-user-settings.md` |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
-| Domain expertise / rules | `.github/skills/<name>/SKILL.md`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (25 policies) |
-| Progress tracking across sessions | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
+| Domain expertise / rules | `.github/skills/`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (25 policies) |
+| Progress tracking | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
 | Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
-| Current state / context dashboard | None | None | None | None | `ai/state/context.md` |
-| Project knowledge / decisions | None | Uploaded project files | Uploaded project files | None | `ai/shared/project-knowledge/` |
-| Lessons learned across projects | None | `~/.claude/CLAUDE.md` (manual) | Memory (automatic, opaque) | None | `<Global User AI Directory>/global-knowledge/` (default `~/.ai/`), explicit and structured |
-| Multi-assistant handoffs | None | None | None | None | `ai/shared/handoffs/` |
+| Current state | None | None | None | None | `ai/state/context.md` |
+| Project knowledge | None | Uploaded files | Uploaded files | None | `ai/shared/project-knowledge/` |
+| Team lessons and skills | None | None | None | None | the optional team knowledge store |
+| Skills on demand | `.github/skills/` | None | Custom GPTs | None | `ai/skills/<name>/SKILL.md` and the team store's `skills/` |
+| Lessons across projects | `~/.claude/CLAUDE.md` (manual) | `~/.claude/CLAUDE.md` | Memory (opaque) | None | `<Global User AI Directory>/global-knowledge/` |
+| Handoffs | None | None | None | None | `ai/shared/handoffs/` |
 | Post-summary recovery | `PreCompact` hook | None | None | None | Post-Compaction Recovery procedure |
-| Compliance enforcement | None | None | None | None | built-in AI knowledge (applied by the AI, not stored as files) |
-| Peer code review mode | None | None | None | None | `"peer review"` procedure + saved reports |
+| Compliance enforcement | None | None | None | None | the compliance policies, applied by the AI |
+| Peer review | None | None | None | None | `"peer review"` and saved reports |
 | Protocol self-validation | None | None | None | None | `validate-protocol.sh` |
-| Sync instructions across projects | None | None | None | None | `sync-agents-md.sh` / `.ps1` |
+| Sync across projects | None | None | None | None | `sync-agents-md.sh` / `.ps1` |
 
 ---
 
-## What Simple AI Workflow Gives You That the Others Do Not
+## What the Fixed Shape Gives You
 
-### Everything is in front of you
+### The same shape every session
+
+Every session runs the same five steps: load the context, plan the work as a ticket, implement the approved plan, review the result, and checkpoint. The AI cannot skip the tickets, the plan, the review gate, or the checkpoint because the procedures say what to do.
+
+The result is predictable, reproducible in the same format, and auditable. You can inspect the state files, the tickets, the design documents, the review reports, and the diary.
+
+### The state is plain files
 
 Open your project and you will find:
 
@@ -107,7 +118,7 @@ ai/
 │   ├── progress.md       ← what was done
 │   ├── next-steps.md     ← what comes next
 │   └── context.md        ← where things stand right now
-├── policies/            ← your own custom policies (optional)
+├── policies/            ← the project policies (optional)
 ├── shared/
 │   ├── project-knowledge/   ← decisions, findings, architecture notes
 │   └── handoffs/            ← task transfers between sessions
@@ -120,47 +131,33 @@ ai/
 
 No hidden directories. No cloud accounts to log into. No mystery format. Every file is plain Markdown. You can read it, edit it, and understand it without documentation.
 
-### Switch tools without losing anything
+### The rules are enforced, not suggested
 
-Say you have been working with Copilot for two weeks. You want to try Claude for a specific task, or maybe Copilot's context limit has been hit. With native tools, that means starting over.
+Native instructions are passive text. Simple AI Workflow's policy files define a role, mandate testing approaches, require security checks, and enforce naming conventions. They are modular: a DevOps project loads `cloud` and `linux-system-admin`; a Windows environment loads `windows-system-admin`; a data team loads `dba` and `data`.
 
-With Simple AI Workflow, you open Claude, type `"load context using AGENTS.md protocol"`, and Claude reads the same files Copilot was using. It knows your progress. It knows what is next. It picks up exactly where Copilot left off.
+The rules travel with the project and apply regardless of the assistant.
 
-Same if you switch back. Or switch to ChatGPT. Or to a CLI agent. **The protocol is the same. The files are the same. The assistant does not matter.**
+### The knowledge is structured
 
-### Change editors, machines, or operating systems, with zero setup
+ChatGPT Memory is automatic. That sounds convenient until you realize you have no control over what it stores or how. It might remember that you prefer tabs over spaces but forget the architectural decision you made last Tuesday.
 
-The files live in your project directory. That directory is yours. Put it on a new machine, open it in a different editor, switch from VS Code to a terminal, the AI workflow comes with it automatically. Switch from Linux to macOS to Windows and back, nothing changes. The same directory structure, the same files, the same commands.
+Simple AI Workflow stores knowledge in named files with descriptive titles. `azure-postgresql-migration-decisions.md` tells you and the AI exactly what is inside before either of you opens it. The AI indexes these files at startup and loads them on demand. You always know what is stored and can inspect, edit, or delete it.
 
-With Copilot, your memory is tied to VS Code. With Claude Projects, your context is on Anthropic's platform. With ChatGPT Memory, your memories are in your OpenAI account. None of them travel with your project.
-
-Simple AI Workflow does, because it is just files.
-
-One note on the `ai/` directory: by default it is git-ignored, so it does not get committed with your project code. That is by design, it is your personal AI workspace, not part of the codebase. You have a few options for keeping it safe across machines:
-
-- **Backup procedure**: say `"backup ai"` and the protocol archives the entire `ai/` directory to `<Global User AI Directory>/backups/` (default `~/.ai/backups/`) automatically.
-- **Include it in the repo**: you can remove `ai/` from `.gitignore` if you want to commit it. Some individuals do this for their own solo projects, it does not work in a team setting where multiple people would be writing to the same AI state files.
-- **Own private repo**: if you are working at a project root that contains multiple git repos underneath it (a common pattern for architects and platform engineers), the `ai/` directory sits alongside them as a sibling. You can initialise it as its own private git repo on GitHub or GitLab. Then moving to a new machine is literally one `git clone`, and you are straight back to work.
-
-### Domain expertise that actually enforces things
-
-Copilot's `.instructions.md` and Claude's `CLAUDE.md` let you write plain text instructions. They help, but they are passive suggestions, the AI does its best to follow them.
-
-Simple AI Workflow's policy files go further. They define the AI's role, mandate specific testing approaches, require security checks before commits, enforce naming conventions, and specify exactly what to do and not do for each domain. And they are modular, you load only the policies that apply to your project. A DevOps project loads `cloud` and `linux-system-admin`. A Windows environment loads `windows-system-admin`. A data engineering team loads `dba` and `data`.
-
-These policies apply regardless of which AI assistant you use. The rules travel with the project.
-
-### A structured knowledge base, not a vague "memory"
-
-ChatGPT Memory is automatic. That sounds convenient, and it is, until you realize you have no control over what it stores or how. It might remember that you prefer tabs over spaces, but forget the critical architectural decision you made last Tuesday.
-
-Simple AI Workflow stores knowledge in named files with descriptive titles. `azure-postgresql-migration-decisions.md` tells you and the AI exactly what is inside before either of you opens it. The AI indexes these files at startup and loads them on demand when a task needs them. You always know what is stored and can inspect, edit, or delete any of it.
+A team can also pool lessons in the optional team knowledge store. It is a shared, reviewed Git repository, and the project still wins when the two disagree.
 
 ### Compliance, security, and peer review, built in
 
-No native AI tool has anything like Simple AI Workflow's compliance layer. You declare which standards apply (`soc2`, `iso-27001`, `gdpr`) in `ai-customization.md`, and the AI applies the relevant controls to everything it produces, code, infrastructure, documentation.
+You declare which standards apply (`soc2`, `iso-27001`, `gdpr`) in `ai-customization.md`, and the AI applies the relevant controls to everything it produces.
 
-Peer review is similarly absent from native tools. Say `"peer review"` and the AI switches to a strict reviewer role. No code writing. Just analysis. The report is saved to `ai/code-review-reports/` with a clear verdict. Every round produces a new numbered report; nothing is overwritten.
+Say `"peer review"` and the AI switches to a strict reviewer role. No code writing, just analysis. The report is saved under `ai/code-review-reports/` with a clear verdict, and every round produces a new numbered report.
+
+### The context travels with the project (the secondary capability)
+
+The same files work with Copilot, Claude, Gemini, DeepSeek, ChatGPT, or a local model. When a quota runs out or you change tools, the next assistant reads the same files and continues. Nothing is lost, because the state is in the project, not in the assistant.
+
+The `ai/` directory is git-ignored by default, so it does not travel with the code. Keep it safe with `"backup ai"`, or put the project root's `ai/` in its own private repository.
+
+This is a real capability, but it is secondary. The main value is the fixed shape for the assistant you already use.
 
 ---
 
@@ -168,20 +165,14 @@ Peer review is similarly absent from native tools. Say `"peer review"` and the A
 
 Simple AI Workflow is not zero-friction. The native tools win on convenience.
 
-ChatGPT Memory stores things without you having to ask. Copilot's `copilot-instructions.md` is injected automatically. Claude reads `CLAUDE.md` without a prompt.
-
-With Simple AI Workflow, you need to type:
+With Simple AI Workflow, you type:
 
 - `"load context using AGENTS.md protocol"` at the start of every session
 - `"checkpoint"` after each task
 - `"update project knowledge"` when you want something remembered
 - `"backup ai"` when you want a backup
 
-That is more deliberate. But deliberate is not the same as bad.
-
-Most developers who use this workflow find that it enforces a discipline that actually improves their work. Typing `"checkpoint"` forces you to pause and review what was done. `"update project knowledge"` makes you ask: *what did we actually decide, and is it written down?* The commands are friction, but they are productive friction.
-
-And unlike native tool automation, you always know what was saved and why.
+That is more deliberate. But deliberate is not the same as bad. Typing `"checkpoint"` forces you to pause and review what was done. `"update project knowledge"` makes you ask what you actually decided and whether it is written down. The commands are productive friction, and you always know what was saved and why.
 
 ---
 
@@ -190,15 +181,22 @@ And unlike native tool automation, you always know what was saved and why.
 | | Native AI tools | Simple AI Workflow |
 |---|---|---|
 | Files | Hidden in tool-specific directories | In your project, plain Markdown |
-| Portability | Tied to one tool or account | Works with any tool, any editor, any OS |
-| Cross-tool continuity | Start over every time | Pick up where you left off, any assistant |
-| Memory control | Automatic, often opaque | Explicit, structured, fully inspectable |
+| Consistency | The assistant decides the shape | The procedures fix the shape |
+| Output format | Can change from answer to answer | Stable |
+| Cross-tool continuity | Start over every time | Pick up where you left off |
+| Memory control | Automatic, often opaque | Explicit, structured, inspectable |
 | Domain expertise | Flat instructions text | 25 modular policies with enforced rules |
 | Compliance | None | SOC2, ISO-27001, GDPR, and more |
 | Peer review | None | On-demand, with saved reports |
-| Setup on a new machine | Re-configure each tool | Zero, files travel with the project |
+| Setup on a new machine | Re-configure each tool | The files travel with the project |
 | Cost | Zero friction | A few deliberate commands per session |
 
-Simple AI Workflow is not trying to replace the convenience of native tools. It is solving a different problem: **what happens when the tool is not enough, or when you want the same discipline across all of them.**
+---
 
-If you use one AI assistant and trust its memory, that is fine. But if you want to stay in control of your context, switch tools freely, enforce real coding standards, and take your work anywhere, Simple AI Workflow is the layer that makes that possible.
+## The Main Idea
+
+The single-assistant developer is the main audience. The protocol gives that assistant the same load, plan, implement, review, and checkpoint every session, so the output is predictable, reproducible, and auditable. No more guessing what the assistant decided to remember or which format it will use today.
+
+VS Code is the recommended home. The protocol is editor-agnostic, and multi-assistant continuity is a capability you get for free. It is not the pitch.
+
+For the workflow itself, see the [README](../README.md) and the [workflow guide](workflow-guide.md).

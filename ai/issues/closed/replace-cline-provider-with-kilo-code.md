@@ -25,3 +25,9 @@ Filed for later; not started.
 Absorbed `kilo-code-documentation.md`. Add the Kilo Code facts to `docs/post-compaction-reload-trigger-setup.md` and `ai/shared/project-knowledge/compaction-trigger-problem.md`: AGENTS.md is always-on in Kilo, the compaction summary is visible in chat, the human backstop is sufficient, and no slash command or new files are needed. The KiloCode row exists at `docs/post-compaction-reload-trigger-setup.md:72` but lacks those facts.
 
 Additional live Cline references: `README.md:473`, `docs/example-learning-session-runbook.md:15-18`, and `docs/ai-provider-selection-guide.md:3,118`.
+
+---
+
+2026-11-22
+
+Closed as folded into the docs guide audit. The Cline beginner guide is retired; the provider guide and the setup cover Kilo Code; the post-compaction guide and the project knowledge note carry the four Kilo facts.

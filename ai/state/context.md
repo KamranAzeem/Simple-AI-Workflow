@@ -14,21 +14,21 @@
 
 ## Current Status
 
-- **Milestone**: v7.2.0 is live; the README restructure is done; the docs guide audit is next.
+- **Milestone**: v7.2.0 is live; the README restructure and the docs guide audit are live; the slide deck is next.
 - **Team knowledge**: the policy, publish procedure, boot index step, and 53 triggers are live; review-79 APPROVED.
-- **Validator**: the last run passed 8/8; authoring PASSED; 29 test scripts; 25 policies, 16 procedures, 53 triggers, 0 conflicts, 0 errors.
+- **Validator**: the last run passed 8/8; authoring PASSED; 30 test scripts; 25 policies, 16 procedures, 53 triggers, 0 conflicts, 0 errors.
 - **Policy count**: 25 modular policies and 16 procedure modules; the policy floor is 25.
 - **State files**: the three files share a 30,720-byte budget; headers are number-free; today's file 2026-11-22 exists; sizes are under budget.
 - **Project knowledge**: 13 lessons plus the template; global knowledge 29 files; the release practices and toolchain notes are current.
-- **Project issues**: 10 open, 0 in-progress; GitHub #8 through #13 are closed.
+- **Project issues**: 8 open, 0 in-progress; GitHub #8 through #13 are closed.
 - **Skills**: 0 project and 0 global packages; a team root is indexed only when configured.
 
 ## Active Working Context
 
-- **Objective**: maintain the protocol; the backlog is the issue tracker; 10 open tickets; the docs guide audit is next.
+- **Objective**: maintain the protocol; the backlog is the issue tracker; 8 open tickets; the slide deck is next.
 - **Team knowledge store (live)**: policy and publish procedure; the boot indexes the store only when configured; v7.1.0 is published.
 - **Team skills (released)**: v7.2.0 is live; review-81 APPROVED; the ticket is closed.
-- **Documentation refresh (open)**: the README is done; the docs guide audit and the slide deck remain; the source-of-truth decision is pending.
+- **Documentation refresh (open)**: the README and the docs guide audit are live; the slide deck remains; the source-of-truth decision is pending.
 - **Backup scripts (live)**: both scripts stream progress, prune heavy directories, and keep good archives when the platform permission check cannot run.
 - **Release**: v7.2.0 is live at the GitHub Release; no release is pending.
 - **State-file budget**: the shared 30,720-byte gate, the 300-character guard, the condense pipeline, and the repair fallback are live.
@@ -40,5 +40,5 @@
 - **Tool selection**: the built-in index boot is live; the runtime file-operation rule is unconditional.
 - **Lint**: clean; the local-only directories and the daily checkpoints are exempt.
 - **Stash guard**: a stash round-trip can delete empty mandatory directories; the validator catches the gap.
-- **Peer review**: review-75 through review-83 are local reports; review-83 APPROVED.
+- **Peer review**: review-75 through review-85 are local reports; review-85 APPROVED.
 - **Team store validation**: no production store is configured; `/tmp/wbitt-team` remains a test fixture; the local test pointer was removed before release.

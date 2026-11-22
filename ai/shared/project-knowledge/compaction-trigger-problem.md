@@ -29,6 +29,12 @@ Long AI sessions fill the context window. Most assistants then compact the conve
 }
 ```
 
+### Kilo Code
+
+- Kilo Code keeps `AGENTS.md` always-on.
+- The compaction summary is visible in chat.
+- The human backstop is sufficient; no slash command or new files are needed.
+
 ## Why
 
 - Detection is ambiguous because a summary looks like ordinary resume context.
