@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Quality is a loop, not a hope</title>
+  <desc id="desc">Acceptance criteria, test first, implementation, peer review, and design documents form a loop.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The quality chain</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Every step leaves an artifact.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="560" y="190" width="480" height="92" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="800" y="230" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Acceptance criteria</text>
+  <text x="800" y="260" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">How done is proven.</text>
+
+  <rect x="1080" y="330" width="400" height="120" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="1280" y="374" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Test first</text>
+  <text x="1280" y="406" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">TDD. The test fails, then passes.</text>
+
+  <rect x="1080" y="540" width="400" height="120" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="1280" y="584" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Peer review</text>
+  <text x="1280" y="616" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">Full file set. Severity. Verdict.</text>
+
+  <rect x="560" y="560" width="400" height="120" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="760" y="604" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Implement</text>
+  <text x="760" y="636" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">Small, reviewed, and checkpointed.</text>
+
+  <rect x="120" y="330" width="400" height="120" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="320" y="374" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Design docs</text>
+  <text x="320" y="406" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">Notes to vision to PRD to HLD to LLD.</text>
+
+  <path d="M 700 282 C 980 290 1080 300 1140 326" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 1260 454 C 1260 500 1260 510 1260 534" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 1070 610 C 990 620 930 640 900 650" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 560 630 C 500 620 470 620 440 620" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 320 330 C 380 300 480 286 548 282" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="560" y="380" width="300" height="110" rx="55" fill="#E6F5FA" stroke="#0090C1" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="710" y="424" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#007AA3">Ship</text>
+  <text x="710" y="456" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">with evidence.</text>
+
+  <rect x="60" y="752" width="1480" height="92" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="788" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The test proves the behavior. The review proves the change.</text>
+  <text x="92" y="820" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">The design docs prove the intent. The checkpoint proves what was saved.</text>
+</svg>

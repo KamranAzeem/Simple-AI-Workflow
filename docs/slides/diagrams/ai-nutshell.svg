@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 54px; }
+    text[font-size="30"] { font-size: 38px; }
+    text[font-size="28"] { font-size: 36px; }
+    text[font-size="25"] { font-size: 33px; }
+    text[font-size="24"] { font-size: 32px; }
+    text[font-size="23"] { font-size: 31px; }
+    text[font-size="21"] { font-size: 29px; }
+    text[font-size="20"] { font-size: 28px; }
+    text[font-size="19"] { font-size: 27px; }
+    text[font-size="18"] { font-size: 26px; }
+    text[font-size="17"] { font-size: 25px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 23px; }
+    text[font-size="14"] { font-size: 22px; }
+  </style>
+  <title id="title">Three parts of an AI assistant</title>
+  <desc id="desc">The model as the brain, the context and saved files as the memory, and the operating system tools as the hands.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Three parts, one assistant</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">The model thinks. The context holds. The tools act.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="210" width="480" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="96" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">BRAIN</text>
+  <text x="96" y="304" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The model</text>
+  <circle cx="300" cy="410" r="66" fill="#E6F5FA" stroke="#0090C1" stroke-width="3"/>
+  <g stroke="#0090C1" stroke-width="2" opacity="0.65">
+    <line x1="270" y1="390" x2="300" y2="370"/>
+    <line x1="300" y1="370" x2="330" y2="390"/>
+    <line x1="270" y1="390" x2="300" y2="410"/>
+    <line x1="300" y1="410" x2="330" y2="390"/>
+    <line x1="300" y1="410" x2="300" y2="450"/>
+    <line x1="300" y1="450" x2="330" y2="430"/>
+    <line x1="300" y1="450" x2="270" y2="430"/>
+  </g>
+  <g fill="#0090C1">
+    <circle cx="270" cy="390" r="6"/><circle cx="300" cy="370" r="6"/><circle cx="330" cy="390" r="6"/>
+    <circle cx="300" cy="410" r="7"/><circle cx="300" cy="450" r="6"/><circle cx="270" cy="430" r="5"/><circle cx="330" cy="430" r="5"/>
+  </g>
+  <g font-family="Lato, Arial, sans-serif" font-size="19" fill="#505962">
+    <text x="96" y="530">The LLM reasons over</text>
+    <text x="96" y="558">what it is given.</text>
+    <text x="96" y="596">Rented. Swappable.</text>
+    <text x="96" y="624">One model among many.</text>
+  </g>
+  <text x="96" y="686" font-family="Lato, Arial, sans-serif" font-size="17" font-weight="700" fill="#007AA3">Not the workflow.</text>
+
+  <rect x="560" y="210" width="480" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="560" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="596" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">MEMORY</text>
+  <text x="596" y="304" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The context</text>
+  <rect x="700" y="350" width="200" height="120" rx="10" fill="#FFFFFF" stroke="#0090C1" stroke-width="3"/>
+  <line x1="700" y1="378" x2="900" y2="378" stroke="#0090C1" stroke-width="3"/>
+  <circle cx="716" cy="364" r="4" fill="#0090C1"/><circle cx="732" cy="364" r="4" fill="#0090C1"/><circle cx="748" cy="364" r="4" fill="#0090C1"/>
+  <g fill="#DCE8EC">
+    <rect x="722" y="396" width="120" height="8" rx="4"/>
+    <rect x="722" y="414" width="150" height="8" rx="4"/>
+    <rect x="722" y="432" width="92" height="8" rx="4"/>
+  </g>
+  <rect x="735" y="476" width="180" height="40" rx="10" fill="#E6F5FA" stroke="#0090C1"/>
+  <text x="825" y="503" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#007AA3">ai/ on disk</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="19" fill="#505962">
+    <text x="596" y="550">Short-term: the prompt</text>
+    <text x="596" y="578">and the files in view.</text>
+    <text x="596" y="616">Long-term: the state</text>
+    <text x="596" y="644">saved in ai/.</text>
+  </g>
+  <text x="596" y="686" font-family="Lato, Arial, sans-serif" font-size="17" font-weight="700" fill="#007AA3">Forgets without it.</text>
+
+  <rect x="1060" y="210" width="480" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="1060" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="1096" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">TOOLS</text>
+  <text x="1096" y="304" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Your machine</text>
+  <rect x="1180" y="350" width="240" height="140" rx="12" fill="#22313A"/>
+  <text x="1200" y="386" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#7FD4EC">$</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" fill="#D9F1FA">
+    <text x="1218" y="386">read src/</text>
+    <text x="1200" y="414">$ grep -r TODO</text>
+    <text x="1200" y="442">$ git status</text>
+    <text x="1200" y="470">$ run tests</text>
+  </g>
+  <g font-family="Lato, Arial, sans-serif" font-size="19" fill="#505962">
+    <text x="1096" y="550">Files, search, shell,</text>
+    <text x="1096" y="578">git, and the network.</text>
+    <text x="1096" y="616">It can only act</text>
+    <text x="1096" y="644">through your tools.</text>
+  </g>
+  <text x="1096" y="686" font-family="Lato, Arial, sans-serif" font-size="17" font-weight="700" fill="#007AA3">Permission is yours.</text>
+
+  <rect x="60" y="770" width="1480" height="76" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="803" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">The model is rented. The memory and the tools are yours.</text>
+  <text x="92" y="829" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Same assistant. Better memory. Better work.</text>
+</svg>

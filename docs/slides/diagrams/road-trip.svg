@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 48px; }
+    text[font-size="30"] { font-size: 34px; }
+    text[font-size="28"] { font-size: 32px; }
+    text[font-size="26"] { font-size: 30px; }
+    text[font-size="25"] { font-size: 29px; }
+    text[font-size="24"] { font-size: 28px; }
+    text[font-size="23"] { font-size: 27px; }
+    text[font-size="22"] { font-size: 26px; }
+    text[font-size="21"] { font-size: 25px; }
+    text[font-size="20"] { font-size: 24px; }
+    text[font-size="19"] { font-size: 23px; }
+    text[font-size="18"] { font-size: 22px; }
+    text[font-size="17"] { font-size: 21px; }
+    text[font-size="16"] { font-size: 20px; }
+    text[font-size="15"] { font-size: 19px; }
+    text[font-size="14"] { font-size: 18px; }
+  </style>
+  <title id="title">Several drivers, one project</title>
+  <desc id="desc">A road trip where one assistant checkpoints and the next reads the same state.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Several drivers, one project</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Turn by turn, or on a handoff.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <path d="M -80 610 C 330 520 700 690 1110 600 C 1320 552 1510 570 1660 548" fill="none" stroke="#8C9BA3" stroke-width="112" stroke-linecap="round"/>
+  <path d="M -80 610 C 330 520 700 690 1110 600 C 1320 552 1510 570 1660 548" fill="none" stroke="#F7FAFB" stroke-width="6" stroke-dasharray="24 20"/>
+
+  <g transform="translate(230 492)">
+    <path d="M 30 36 L 48 4 L 108 4 L 126 36 Z" fill="#0090C1"/>
+    <rect x="0" y="34" width="150" height="62" rx="18" fill="#0090C1"/>
+    <rect x="52" y="12" width="52" height="24" rx="6" fill="#E6F5FA"/>
+    <circle cx="34" cy="98" r="17" fill="#2B3A42"/><circle cx="34" cy="98" r="7" fill="#C9D3D8"/>
+    <circle cx="116" cy="98" r="17" fill="#2B3A42"/><circle cx="116" cy="98" r="7" fill="#C9D3D8"/>
+  </g>
+
+  <g font-family="Lato, Arial, sans-serif">
+    <circle cx="520" cy="560" r="30" fill="#505962"/><text x="520" y="569" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">A</text>
+    <circle cx="880" cy="600" r="30" fill="#505962"/><text x="880" y="609" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">B</text>
+    <circle cx="1230" cy="560" r="30" fill="#505962"/><text x="1230" y="569" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">C</text>
+  </g>
+
+  <g>
+    <rect x="770" y="360" width="12" height="190" fill="#505962"/>
+    <rect x="690" y="300" width="180" height="66" rx="14" fill="#0090C1" filter="url(#shadow)"/>
+    <text x="780" y="342" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#FFFFFF">checkpoint</text>
+  </g>
+
+  <rect x="1280" y="250" width="260" height="180" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="1306" y="292" font-family="monospace" font-size="21" font-weight="700" fill="#0090C1">ai/state/</text>
+  <g font-family="monospace" font-size="18" fill="#505962">
+    <text x="1306" y="330">context.md</text>
+    <text x="1306" y="360">next-steps.md</text>
+    <text x="1306" y="390">progress.md</text>
+  </g>
+  <text x="1306" y="414" font-family="Lato, Arial, sans-serif" font-size="15" fill="#6B7A82">State travels with you.</text>
+
+  <rect x="80" y="742" width="640" height="64" rx="18" fill="#E6F5FA"/>
+  <text x="104" y="781" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">One assistant stops. The next reads the state and continues.</text>
+  <text x="80" y="845" font-family="Lato, Arial, sans-serif" font-size="19" fill="#6B7A82">The handoff policy makes the independence explicit.</text>
+</svg>

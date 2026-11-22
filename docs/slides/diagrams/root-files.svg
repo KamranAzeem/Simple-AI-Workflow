@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Two small files start the whole thing</title>
+  <desc id="desc">AGENTS.md is a thin pointer to the workflow clone. ai-customization.md is the project dial.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The pointer and the dial</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The rulebook stays in the clone.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="200" width="720" height="550" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="200" width="720" height="8" rx="4" fill="#0090C1"/>
+  <text x="96" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#007AA3">AGENTS.md</text>
+  <text x="96" y="300" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Thin. Read-only. A pointer.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">
+    <text x="96" y="356">The boot entry point.</text>
+    <text x="96" y="396">Points at the Global AI Workflow Directory.</text>
+    <text x="96" y="436">Asks the assistant to read the policy.</text>
+    <text x="96" y="476">Does not store project context.</text>
+  </g>
+  <rect x="96" y="530" width="560" height="150" rx="14" fill="#22313A"/>
+  <text x="120" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#7FD4EC">$ wc -l AGENTS.md</text>
+  <text x="120" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#D9F1FA">~150 lines</text>
+  <text x="120" y="646" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#D9F1FA">No policy dump. No project state.</text>
+
+  <rect x="820" y="200" width="720" height="550" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="820" y="200" width="720" height="8" rx="4" fill="#0090C1"/>
+  <text x="856" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="#007AA3">ai-customization.md</text>
+  <text x="856" y="300" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">The project dial.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">
+    <text x="856" y="356">Active Expertise: cloud, api-backend.</text>
+    <text x="856" y="396">Active Traits: system architect.</text>
+    <text x="856" y="436">Required Compliance: soc2, iso-27001.</text>
+    <text x="856" y="476">Design docs and merge policy.</text>
+    <text x="856" y="516">Team keys: optional.</text>
+  </g>
+  <rect x="856" y="548" width="648" height="132" rx="14" fill="#E6F5FA"/>
+  <text x="880" y="588" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Local. Git-ignored.</text>
+  <text x="880" y="622" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">The clone holds the policy. The project holds the dials.</text>
+  <text x="880" y="652" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Change the dials without touching the rulebook.</text>
+
+  <rect x="60" y="790" width="1480" height="64" rx="16" fill="#E6F5FA"/>
+  <text x="92" y="830" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">Load context reads both.</text>
+  <text x="400" y="830" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">The pointer finds the rules. The dial shapes this project.</text>
+</svg>

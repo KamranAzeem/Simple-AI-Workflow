@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">This is not about going faster</title>
+  <desc id="desc">An ad-hoc zigzag with rework against a straight protocol path with checkpoints.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Straight or zigzag</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The shape of the path.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="200" width="720" height="480" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="96" y="252" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Ad-hoc</text>
+  <text x="96" y="286" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">The path is invented each time.</text>
+  <path d="M 120 560 L 200 380 L 300 600 L 400 340 L 500 600 L 600 380 L 700 560" fill="none" stroke="#9BAAB2" stroke-width="6" stroke-linejoin="round"/>
+  <g fill="#9BAAB2">
+    <circle cx="120" cy="560" r="9"/><circle cx="200" cy="380" r="9"/><circle cx="300" cy="600" r="9"/><circle cx="400" cy="340" r="9"/><circle cx="500" cy="600" r="9"/><circle cx="600" cy="380" r="9"/><circle cx="700" cy="560" r="9"/>
+  </g>
+  <text x="96" y="646" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#6B7A82">Rework, re-brief, re-decide.</text>
+
+  <rect x="820" y="200" width="720" height="480" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="856" y="252" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Protocol</text>
+  <text x="856" y="286" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">The shape is the same every time.</text>
+  <line x1="880" y1="500" x2="1480" y2="500" stroke="#0090C1" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#0090C1">
+    <circle cx="920" cy="500" r="11"/><circle cx="1060" cy="500" r="11"/><circle cx="1200" cy="500" r="11"/><circle cx="1340" cy="500" r="11"/><circle cx="1460" cy="500" r="11"/>
+  </g>
+  <g font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962" text-anchor="middle">
+    <text x="920" y="540">load</text>
+    <text x="1060" y="540">plan</text>
+    <text x="1200" y="540">implement</text>
+    <text x="1340" y="540">review</text>
+    <text x="1460" y="540">checkpoint</text>
+  </g>
+  <text x="856" y="646" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">Straight, visible, resumable.</text>
+
+  <rect x="60" y="720" width="1480" height="100" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="758" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">The point is a straight line, not a sprint.</text>
+  <text x="92" y="792" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">Efficiency comes from fewer wrong turns, not from typing faster.</text>
+</svg>

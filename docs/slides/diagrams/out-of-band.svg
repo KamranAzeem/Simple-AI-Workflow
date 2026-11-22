@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 54px; }
+    text[font-size="30"] { font-size: 38px; }
+    text[font-size="28"] { font-size: 36px; }
+    text[font-size="26"] { font-size: 34px; }
+    text[font-size="25"] { font-size: 33px; }
+    text[font-size="24"] { font-size: 32px; }
+    text[font-size="23"] { font-size: 31px; }
+    text[font-size="22"] { font-size: 30px; }
+    text[font-size="21"] { font-size: 29px; }
+    text[font-size="20"] { font-size: 28px; }
+    text[font-size="19"] { font-size: 27px; }
+    text[font-size="18"] { font-size: 26px; }
+    text[font-size="17"] { font-size: 25px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 23px; }
+    text[font-size="14"] { font-size: 22px; }
+  </style>
+  <title id="title">Outside any repository, beside the work</title>
+  <desc id="desc">A single project whose root is a Git repository, and a solution root whose repositories are below it. In both, ai is out of band.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Outside any repository, beside the work</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">ai/ is the assistant's memory. It is not application code.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="50" y="180" width="880" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="86" y="222" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">TWO CASES, ONE RULE</text>
+
+  <rect x="80" y="248" width="820" height="240" rx="16" fill="#FBFCFC" stroke="#DCE8EC"/>
+  <text x="104" y="282" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SINGLE PROJECT</text>
+  <text x="104" y="310" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">The root is a Git repository.</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#505962">
+    <text x="104" y="350">my-webapp/</text>
+    <text x="104" y="380">├── src/</text>
+    <text x="104" y="410">├── design-docs/</text>
+    <text x="104" y="440">└── ai/</text>
+  </g>
+  <text x="470" y="350" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#6B7A82">.git/</text>
+  <text x="470" y="440" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">git-ignored</text>
+  <text x="104" y="472" font-family="Lato, Arial, sans-serif" font-size="16" fill="#6B7A82">The AI layer is ignored, like .git.</text>
+
+  <rect x="80" y="512" width="820" height="236" rx="16" fill="#FBFCFC" stroke="#DCE8EC"/>
+  <text x="104" y="546" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SOLUTION ROOT</text>
+  <text x="104" y="574" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">The root is not a Git repository.</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#505962">
+    <text x="104" y="614">solution/</text>
+    <text x="104" y="644">├── ai/</text>
+    <text x="104" y="674">├── web-api/</text>
+    <text x="104" y="704">├── infrastructure/</text>
+    <text x="104" y="734">└── static-website/</text>
+  </g>
+  <text x="470" y="614" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">no .git here</text>
+  <text x="470" y="644" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">out of band</text>
+  <text x="470" y="674" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">.git + code</text>
+  <text x="470" y="704" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">.git + code</text>
+  <text x="470" y="734" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">.git + code</text>
+
+  <rect x="970" y="180" width="570" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="1002" y="230" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Why out of band</text>
+
+  <circle cx="1016" cy="284" r="7" fill="#0090C1"/>
+  <text x="1040" y="291" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">No AI clutter in the product tree.</text>
+  <circle cx="1016" cy="340" r="7" fill="#0090C1"/>
+  <text x="1040" y="347" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">No AI noise in the product history.</text>
+  <circle cx="1016" cy="396" r="7" fill="#0090C1"/>
+  <text x="1040" y="403" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Local and personal by default.</text>
+  <circle cx="1016" cy="452" r="7" fill="#0090C1"/>
+  <text x="1040" y="459" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Works without a Git repository.</text>
+  <circle cx="1016" cy="508" r="7" fill="#0090C1"/>
+  <text x="1040" y="515" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Backed up on its own schedule.</text>
+
+  <rect x="1000" y="560" width="510" height="150" rx="16" fill="#F2F6F7" stroke="#DCE8EC"/>
+  <text x="1024" y="596" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#2B3A42">Not a vault.</text>
+  <text x="1024" y="626" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Keep long-lived secrets elsewhere.</text>
+  <text x="1024" y="654" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">ai/ is local memory, not a password store.</text>
+  <text x="1024" y="682" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Back it up with "backup ai".</text>
+
+  <rect x="60" y="800" width="1480" height="60" rx="16" fill="#E6F5FA"/>
+  <text x="92" y="827" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">The project root is not always a Git repository. ai/ stays out of band either way.</text>
+  <text x="92" y="850" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Bootstrap makes ai/** git-ignored when the root is a repo. The code is the product.</text>
+</svg>

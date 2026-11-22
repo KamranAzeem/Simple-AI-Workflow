@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 54px; }
+    text[font-size="30"] { font-size: 38px; }
+    text[font-size="28"] { font-size: 36px; }
+    text[font-size="26"] { font-size: 34px; }
+    text[font-size="25"] { font-size: 33px; }
+    text[font-size="24"] { font-size: 32px; }
+    text[font-size="23"] { font-size: 31px; }
+    text[font-size="22"] { font-size: 30px; }
+    text[font-size="21"] { font-size: 29px; }
+    text[font-size="20"] { font-size: 28px; }
+    text[font-size="19"] { font-size: 27px; }
+    text[font-size="18"] { font-size: 26px; }
+    text[font-size="17"] { font-size: 25px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 23px; }
+    text[font-size="14"] { font-size: 22px; }
+  </style>
+  <title id="title">The Architect layout</title>
+  <desc id="desc">One AGENTS.md and one ai directory at a solution root above several repositories.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">The Architect layout</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">One memory above many repositories.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="50" y="180" width="880" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="86" y="224" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SOLUTION ROOT</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#505962">
+    <text x="86" y="276">solution/</text>
+    <text x="86" y="312">├── AGENTS.md</text>
+    <text x="86" y="348">├── ai-customization.md</text>
+    <text x="86" y="384" fill="#007AA3" font-weight="700">├── ai/</text>
+    <text x="86" y="420">│   └── state, knowledge, plans, diary</text>
+    <text x="86" y="456">├── web-api/</text>
+    <text x="86" y="492">│   └── .git + code</text>
+    <text x="86" y="528">├── infrastructure/</text>
+    <text x="86" y="564">│   └── .git + code</text>
+    <text x="86" y="600">└── static-website/</text>
+    <text x="86" y="636">    └── .git + code</text>
+  </g>
+  <rect x="86" y="680" width="250" height="44" rx="10" fill="#E6F5FA"/>
+  <text x="211" y="708" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" font-weight="700" fill="#007AA3">one protocol</text>
+  <rect x="356" y="680" width="250" height="44" rx="10" fill="#E6F5FA"/>
+  <text x="481" y="708" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" font-weight="700" fill="#007AA3">one memory</text>
+
+  <rect x="970" y="180" width="570" height="126" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="970" y="180" width="8" height="126" rx="4" fill="#0090C1"/>
+  <text x="1002" y="220" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">ONE BRAIN</text>
+  <text x="1002" y="254" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">The assistant sees every project</text>
+  <text x="1002" y="282" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">under the root.</text>
+
+  <rect x="970" y="326" width="570" height="126" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="970" y="326" width="8" height="126" rx="4" fill="#0090C1"/>
+  <text x="1002" y="366" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">ONE MEMORY</text>
+  <text x="1002" y="400" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Decisions and lessons span</text>
+  <text x="1002" y="428" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">the solution.</text>
+
+  <rect x="970" y="472" width="570" height="126" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="970" y="472" width="8" height="126" rx="4" fill="#0090C1"/>
+  <text x="1002" y="512" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">MANY HISTORIES</text>
+  <text x="1002" y="546" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Each project keeps its own</text>
+  <text x="1002" y="574" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Git repository.</text>
+
+  <rect x="970" y="618" width="570" height="126" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="970" y="618" width="8" height="126" rx="4" fill="#0090C1"/>
+  <text x="1002" y="658" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">STILL SCOPED</text>
+  <text x="1002" y="692" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">The assistant works from the</text>
+  <text x="1002" y="720" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">directory you open.</text>
+
+  <rect x="50" y="796" width="1490" height="92" rx="18" fill="#E6F5FA"/>
+  <text x="82" y="832" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#007AA3" style="font-size:24px">Start with one project. Add the solution root when the work spans repositories.</text>
+  <text x="82" y="866" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962" style="font-size:20px">One protocol. One memory. Many repositories.</text>
+</svg>

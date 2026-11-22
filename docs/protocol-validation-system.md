@@ -8,7 +8,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 1. **Bootstrap & Compliance Verification**:
    - Verify the existence and readability of all core and common policy files (`ai/policies/`).
-   - Verify the 15 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
+   - Verify the 16 procedure modules in `ai/procedures/`, the thin `AGENTS.md`, and the boot-payload size targets.
    - Confirm directory structure adherence.
 2. **Context & State Integrity**:
    - Verify readability and format of tracking files (`ai/state/next-steps.md`, `ai/state/progress.md`, `ai/state/context.md`).
@@ -38,6 +38,7 @@ The validation script [`support-files/validate-protocol.sh`](../support-files/va
 - A skills fixture at `tests/test-skills-index.sh`: the three roots, the package shape and frontmatter, the one-level rule, hidden and symlink skip, the project-over-team and team-over-global overrides, the cross-type collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - A README shape fixture at `tests/test-readme-shape.sh`: the promise, the three failures, the six job groups plus Team, the team features, the three boundaries, the counts, and the local links.
 - A docs audit fixture at `tests/test-docs-audit.sh`: the retired docs are gone, the survivors are present, the provider path is Kilo Code, the compared doc tells the fixed-shape story, the collaboration section is in the guide, and the docs index links resolve.
+- A slides fixture at `tests/test-slides.sh`: the Architect story, the six groups, the three roots, the two dials, the knowledge and skills map, the team gate, the axe and SVG assets, the derived counts, and the local preview and renderer.
 - Knowledge-rule anchors and a legacy-phrase guard across the knowledge policy, the repair module, the workflow guide, the README, and the slides, plus a rebuilt knowledge-repair fixture at `tests/test-knowledge-repair-fixture.sh`: the topic split, the 3,000-byte merge, the 49/50/51-file reviews, the template and ticket exclusions, evidence deletion, deduplication, the pointer report, and retirement.
 - The reference test at `tests/test-protocol-references.sh` reads `ai/procedures/*.md` for procedure and step definitions and the order-conformance check.
 - A sync-script fixture at `tests/test-sync-agents-md.sh` covers the customization, exclusion, and failure paths.

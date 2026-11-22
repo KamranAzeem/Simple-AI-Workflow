@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Team features are not for everyone</title>
+  <desc id="desc">A gate between the complete solo story and the optional team layer.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="56" font-weight="700" fill="#2B3A42">Solo or team</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="32" fill="#6B7A82">The gate is explicit.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="230" width="580" height="460" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="96" y="290" font-family="Lato, Arial, sans-serif" font-size="40" font-weight="700" fill="#2B3A42">Solo</text>
+  <text x="96" y="332" font-family="Lato, Arial, sans-serif" font-size="30" fill="#505962">The story is complete.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="32" fill="#505962">
+    <text x="96" y="400">One project.</text>
+    <text x="96" y="460">One peer.</text>
+    <text x="96" y="520">One memory.</text>
+    <text x="96" y="580">No team store.</text>
+  </g>
+  <text x="96" y="640" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#007AA3">You can stop here.</text>
+
+  <path d="M 660 460 L 760 460" fill="none" stroke="#0090C1" stroke-width="5" marker-end="url(#arrow)"/>
+  <rect x="770" y="390" width="60" height="140" rx="14" fill="#22313A"/>
+  <text x="800" y="470" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" transform="rotate(-90 800 470)">GATE</text>
+
+  <rect x="960" y="230" width="580" height="460" rx="24" fill="#FFFFFF" stroke="#0090C1" stroke-width="2" stroke-dasharray="10 8" filter="url(#shadow)"/>
+  <text x="996" y="290" font-family="Lato, Arial, sans-serif" font-size="40" font-weight="700" fill="#007AA3">Team</text>
+  <text x="996" y="332" font-family="Lato, Arial, sans-serif" font-size="30" fill="#505962">Optional shared memory.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="32" fill="#505962">
+    <text x="996" y="400">Shared lessons.</text>
+    <text x="996" y="460">Shared skills.</text>
+    <text x="996" y="520">One reviewer merges.</text>
+    <text x="996" y="580">The same fixed shape.</text>
+  </g>
+  <text x="996" y="640" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#007AA3">Add it when you need it.</text>
+
+  <rect x="60" y="750" width="1480" height="86" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="790" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#007AA3">The team layer is additive.</text>
+  <text x="92" y="822" font-family="Lato, Arial, sans-serif" font-size="26" fill="#505962">It never changes the daily loop. It adds shared lessons, shared skills, and a one-reviewer gate.</text>
+</svg>

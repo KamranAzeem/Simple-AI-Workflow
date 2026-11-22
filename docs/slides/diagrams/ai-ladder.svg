@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">The AI ladder</title>
+  <desc id="desc">Seven levels of AI use, with the daily loop highlighted at level three and multiple assistants at level six.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Seven rungs</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Where the daily work sits.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <g font-family="Lato, Arial, sans-serif">
+    <rect x="80" y="190" width="1440" height="66" rx="16" fill="#FFFFFF" stroke="#DCE8EC"/>
+    <circle cx="126" cy="223" r="20" fill="#EEF3F5"/><text x="126" y="232" text-anchor="middle" font-size="24" font-weight="700" fill="#505962">0</text>
+    <text x="170" y="233" font-size="28" font-weight="700" fill="#2B3A42">Not using AI</text>
+    <text x="620" y="233" font-size="26" fill="#6B7A82">No assistant in the loop.</text>
+
+    <rect x="80" y="266" width="1440" height="66" rx="16" fill="#FFFFFF" stroke="#DCE8EC"/>
+    <circle cx="126" cy="299" r="20" fill="#EEF3F5"/><text x="126" y="308" text-anchor="middle" font-size="24" font-weight="700" fill="#505962">1</text>
+    <text x="170" y="309" font-size="28" font-weight="700" fill="#2B3A42">Browser chat</text>
+    <text x="620" y="309" font-size="26" fill="#6B7A82">Copy, paste, and start over.</text>
+
+    <rect x="80" y="342" width="1440" height="66" rx="16" fill="#FFFFFF" stroke="#DCE8EC"/>
+    <circle cx="126" cy="375" r="20" fill="#EEF3F5"/><text x="126" y="384" text-anchor="middle" font-size="24" font-weight="700" fill="#505962">2</text>
+    <text x="170" y="385" font-size="28" font-weight="700" fill="#2B3A42">Editor chat</text>
+    <text x="620" y="385" font-size="26" fill="#6B7A82">Local files, one editor, no shared state.</text>
+
+    <rect x="80" y="418" width="1440" height="66" rx="16" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+    <circle cx="126" cy="451" r="20" fill="#0090C1"/><text x="126" y="460" text-anchor="middle" font-size="24" font-weight="700" fill="#FFFFFF">3</text>
+    <text x="170" y="461" font-size="28" font-weight="700" fill="#2B3A42">Project assistant</text>
+    <text x="620" y="461" font-size="26" fill="#505962">Scripts, logs, and the daily loop.</text>
+    <rect x="1260" y="434" width="220" height="36" rx="18" fill="#0090C1"/>
+    <text x="1370" y="459" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">THE WORKFLOW</text>
+
+    <rect x="80" y="494" width="1440" height="66" rx="16" fill="#FFFFFF" stroke="#DCE8EC"/>
+    <circle cx="126" cy="527" r="20" fill="#EEF3F5"/><text x="126" y="536" text-anchor="middle" font-size="24" font-weight="700" fill="#505962">4</text>
+    <text x="170" y="537" font-size="28" font-weight="700" fill="#2B3A42">MCPs and skills</text>
+    <text x="620" y="537" font-size="26" fill="#6B7A82">Task packages and tool bridges.</text>
+
+    <rect x="80" y="570" width="1440" height="66" rx="16" fill="#FFFFFF" stroke="#DCE8EC"/>
+    <circle cx="126" cy="603" r="20" fill="#EEF3F5"/><text x="126" y="612" text-anchor="middle" font-size="24" font-weight="700" fill="#505962">5</text>
+    <text x="170" y="613" font-size="28" font-weight="700" fill="#2B3A42">Agents</text>
+    <text x="620" y="613" font-size="26" fill="#6B7A82">The assistant runs tasks on your behalf.</text>
+
+    <rect x="80" y="646" width="1440" height="66" rx="16" fill="#22313A"/>
+    <circle cx="126" cy="679" r="20" fill="#0090C1"/><text x="126" y="688" text-anchor="middle" font-size="24" font-weight="700" fill="#FFFFFF">6</text>
+    <text x="170" y="689" font-size="28" font-weight="700" fill="#FFFFFF">Multiple assistants</text>
+    <text x="620" y="689" font-size="26" fill="#D9F1FA">One project, one memory, turn by turn.</text>
+  </g>
+
+  <rect x="80" y="748" width="1440" height="98" rx="18" fill="#E6F5FA"/>
+  <text x="112" y="786" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#007AA3">The protocol moves the daily work to level 3.</text>
+  <text x="112" y="820" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">It makes level 6 safe, because the state lives in the project, not in the assistant.</text>
+</svg>

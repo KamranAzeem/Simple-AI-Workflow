@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simple AI Workflow: Slide Preview</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/simple.css" id="theme">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+  :root {
+    --teal: #0090C1;
+    --teal-dark: #007AA3;
+    --teal-light: #E6F5FA;
+    --slate: #505962;
+    --ink: #2B3A42;
+    --muted: #6B7A82;
+    --line: #DCE8EC;
+  }
+
+  body, .reveal { font-family: 'Lato', Arial, sans-serif; background: #F7FAFB; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides section { padding: 0 64px; }
+  .reveal h1, .reveal h2, .reveal h3 { color: var(--ink); font-weight: 700; text-transform: none; letter-spacing: -0.01em; }
+  .reveal h1 { font-size: 3.6rem; line-height: 1.05; margin-bottom: 0.35em; }
+  .reveal h2 { font-size: 2.9rem; line-height: 1.12; margin-bottom: 0.45em; }
+  .reveal h3 { font-size: 1.8rem; }
+  .reveal p, .reveal li { color: var(--slate); font-size: 1.6rem; line-height: 1.35; }
+  .reveal strong { color: var(--ink); }
+  .reveal a { color: var(--teal-dark); }
+  .reveal ul, .reveal ol { margin-left: 1.1em; }
+  .reveal li { margin-bottom: 0.24em; }
+  .reveal img { display: block; max-width: 100%; max-height: 46vh; margin: 0.6em auto 0; object-fit: contain; }
+  .reveal .diagram-slide img { max-height: 78vh; margin-top: 0.15em; }
+  .reveal .diagram-only img { max-height: 88vh; }
+  .reveal .road-trip-slide img { max-height: 55vh; }
+  .reveal .axe-slide img { max-height: 60vh; }
+  .reveal blockquote { border-left: 6px solid var(--teal); background: var(--teal-light); color: var(--ink); padding: 0.6em 1em; width: auto; box-shadow: none; font-style: normal; }
+  .reveal pre { box-shadow: none; background: #F2F6F7; border: 1px solid var(--line); width: 100%; font-size: 0.7em; }
+  .reveal pre code { color: var(--slate); padding: 0.8em 1em; max-height: 55vh; }
+  .reveal .slide-number { color: var(--muted); }
+  .reveal aside.notes { display: none; }
+
+  .reveal .title-slide {
+    background: linear-gradient(90deg, rgba(24, 38, 46, 0.96) 0%, rgba(24, 38, 46, 0.9) 38%, rgba(24, 38, 46, 0.45) 62%, rgba(24, 38, 46, 0.2) 100%), url('../docs/slides/assets/axe.jpg') right center / contain no-repeat, #18262e;
+    color: #FFFFFF;
+  }
+  .reveal .title-slide h1, .reveal .title-slide h2, .reveal .title-slide p, .reveal .title-slide a, .reveal .title-slide strong { color: #FFFFFF; }
+  .reveal .title-slide h1 { font-size: 3.2rem; text-shadow: 0 2px 18px rgba(0,0,0,0.35); }
+  .reveal .title-slide h2 { font-size: 1.8rem; font-weight: 400; color: #D9F1FA; }
+  .reveal .title-slide p { font-size: 1.35rem; max-width: 38em; }
+  .reveal .title-slide img { display: none; }
+  .reveal .close-slide img { max-height: 26vh; }
+
+  .reveal .section-slide {
+    background: linear-gradient(135deg, #007AA3 0%, #0090C1 100%);
+  }
+  .reveal .section-slide h2 { color: #FFFFFF; font-size: 3.2rem; margin-bottom: 0.35em; }
+  .reveal .section-slide p { color: #D9F1FA; font-size: 1.6rem; max-width: 34em; }
+  .reveal .section-slide li { color: #E6F5FA; font-size: 1.45rem; }
+  .reveal .section-slide strong { color: #FFFFFF; }
+  .reveal .section-slide .slide-number { color: #D9F1FA; }
+  .reveal .section-slide .controls { color: #D9F1FA; }
+
+  .reveal .appendix h2 { font-size: 2.6rem; }
+  .reveal .appendix p { font-size: 1.6rem; line-height: 1.35; }
+  .reveal .appendix li { font-size: 1.6rem; line-height: 1.4; margin-bottom: 0.45em; }
+  .reveal .appendix ul { width: 100%; margin-left: 0; padding-left: 1.1em; box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides" id="slides"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script>
+(async function () {
+  const response = await fetch('../docs/simple-ai-workflow-slides.md');
+  if (!response.ok) {
+    document.getElementById('slides').innerHTML = '<section><h2>Cannot load the deck</h2><p>Start a local server from the repo root: python3 -m http.server 8000</p></section>';
+    Reveal.initialize();
+    return;
+  }
+  const source = await response.text();
+  const parts = source.split(/^---$/m);
+  const slides = document.getElementById('slides');
+
+  parts.forEach((part, index) => {
+    const section = document.createElement('section');
+    section.innerHTML = marked.parse(part);
+    if (index === 0) section.classList.add('title-slide');
+    if (/^##\s+Appendix/m.test(part)) section.classList.add('appendix');
+    if (/^##\s+Part \d/m.test(part)) section.classList.add('section-slide');
+    if (/^##\s+The trail is the same/m.test(part)) section.classList.add('close-slide');
+    if (/^##\s+Multiple assistants/m.test(part)) section.classList.add('road-trip-slide');
+    if (/^##\s+Sharpening the axe/m.test(part)) section.classList.add('axe-slide');
+    if (section.querySelector('img[src$=".svg"]') && !section.querySelector('ul, ol')) {
+      section.classList.add('diagram-slide');
+      if (!section.querySelector('p')) section.classList.add('diagram-only');
+    }
+    section.querySelectorAll('img').forEach((img) => {
+      const src = img.getAttribute('src') || '';
+      if (!/^(https?:|data:|\/)/.test(src)) img.setAttribute('src', '../docs/' + src);
+    });
+    slides.appendChild(section);
+  });
+
+  Reveal.initialize({
+    width: 1600,
+    height: 900,
+    margin: 0.05,
+    hash: true,
+    slideNumber: true,
+    controls: true,
+    progress: true,
+    transition: 'fade',
+    backgroundTransition: 'none',
+    center: true
+  });
+})();
+</script>
+</body>
+</html>

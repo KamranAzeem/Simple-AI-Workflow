@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 54px; }
+    text[font-size="30"] { font-size: 38px; }
+    text[font-size="28"] { font-size: 36px; }
+    text[font-size="26"] { font-size: 34px; }
+    text[font-size="25"] { font-size: 33px; }
+    text[font-size="24"] { font-size: 32px; }
+    text[font-size="23"] { font-size: 31px; }
+    text[font-size="22"] { font-size: 30px; }
+    text[font-size="21"] { font-size: 29px; }
+    text[font-size="20"] { font-size: 28px; }
+    text[font-size="19"] { font-size: 27px; }
+    text[font-size="18"] { font-size: 26px; }
+    text[font-size="17"] { font-size: 25px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 23px; }
+    text[font-size="14"] { font-size: 22px; }
+  </style>
+  <title id="title">A protocol, not a platform</title>
+  <desc id="desc">Two columns: what the workflow is and what it is not.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">A protocol, not a platform</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">The boundary keeps the promise honest.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="196" width="720" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="196" width="720" height="8" rx="4" fill="#0090C1"/>
+  <text x="96" y="252" font-family="Lato, Arial, sans-serif" font-size="15" font-weight="700" fill="#007AA3" letter-spacing="2">IT IS</text>
+
+  <circle cx="112" cy="312" r="12" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <path d="M 106 312 L 110 317 L 119 306" fill="none" stroke="#007AA3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="142" y="310" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">A protocol</text>
+  <text x="142" y="338" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Plain files and a fixed order.</text>
+
+  <circle cx="112" cy="396" r="12" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <path d="M 106 396 L 110 401 L 119 390" fill="none" stroke="#007AA3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="142" y="394" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">One peer</text>
+  <text x="142" y="422" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Your judgment stays in charge.</text>
+
+  <circle cx="112" cy="480" r="12" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <path d="M 106 480 L 110 485 L 119 474" fill="none" stroke="#007AA3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="142" y="478" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Local</text>
+  <text x="142" y="506" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Your machine, your rules, your memory.</text>
+
+  <circle cx="112" cy="564" r="12" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <path d="M 106 564 L 110 569 L 119 558" fill="none" stroke="#007AA3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="142" y="562" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Portable</text>
+  <text x="142" y="590" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">Any assistant that can read files.</text>
+
+  <text x="96" y="664" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">A shape around the assistant, not another assistant.</text>
+
+  <rect x="820" y="196" width="720" height="520" rx="24" fill="#FBFCFC" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="856" y="252" font-family="Lato, Arial, sans-serif" font-size="15" font-weight="700" fill="#6B7A82" letter-spacing="2">IT IS NOT</text>
+
+  <circle cx="872" cy="306" r="4" fill="#9BAAB2"/>
+  <text x="902" y="312" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">A model, a provider, or a local AI server.</text>
+  <circle cx="872" cy="364" r="4" fill="#9BAAB2"/>
+  <text x="902" y="370" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">An agent swarm or an autonomous robot.</text>
+  <circle cx="872" cy="422" r="4" fill="#9BAAB2"/>
+  <text x="902" y="428" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">A team coordination platform.</text>
+  <circle cx="872" cy="480" r="4" fill="#9BAAB2"/>
+  <text x="902" y="486" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">A replacement for CI/CD, tests, or code review.</text>
+  <circle cx="872" cy="538" r="4" fill="#9BAAB2"/>
+  <text x="902" y="544" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">A secrets vault.</text>
+
+  <text x="856" y="626" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">Human in the loop. The AI executes, remembers, and reports.</text>
+  <text x="856" y="658" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">It does not replace your tools. It gives them a shape.</text>
+
+  <rect x="60" y="770" width="1480" height="76" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="803" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">Human in the loop. The AI executes, remembers, and reports.</text>
+  <text x="92" y="829" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">No autonomy. No lock-in. No hidden platform.</text>
+</svg>

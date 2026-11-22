@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 48px; }
+    text[font-size="30"] { font-size: 34px; }
+    text[font-size="28"] { font-size: 32px; }
+    text[font-size="26"] { font-size: 30px; }
+    text[font-size="25"] { font-size: 29px; }
+    text[font-size="24"] { font-size: 28px; }
+    text[font-size="23"] { font-size: 27px; }
+    text[font-size="22"] { font-size: 26px; }
+    text[font-size="21"] { font-size: 25px; }
+    text[font-size="20"] { font-size: 24px; }
+    text[font-size="19"] { font-size: 23px; }
+    text[font-size="18"] { font-size: 22px; }
+    text[font-size="17"] { font-size: 21px; }
+    text[font-size="16"] { font-size: 20px; }
+    text[font-size="15"] { font-size: 19px; }
+    text[font-size="14"] { font-size: 18px; }
+  </style>
+  <title id="title">Two roles, one loop</title>
+  <desc id="desc">The architect decides, the AI peer executes and remembers, and this is not an agent swarm.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Two roles, one loop</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Pair programming, not an agent swarm.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="170" width="600" height="550" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="170" width="600" height="8" rx="4" fill="#0090C1"/>
+  <text x="100" y="230" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">You, the architect</text>
+  <text x="100" y="262" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">The vision and the decisions are yours.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+    <circle cx="110" cy="310" r="7" fill="#0090C1"/><text x="132" y="318">Set the vision</text>
+    <circle cx="110" cy="362" r="7" fill="#0090C1"/><text x="132" y="370">Make the decisions</text>
+    <circle cx="110" cy="414" r="7" fill="#0090C1"/><text x="132" y="422">Define done</text>
+    <circle cx="110" cy="466" r="7" fill="#0090C1"/><text x="132" y="474">Approve the plan</text>
+    <circle cx="110" cy="518" r="7" fill="#0090C1"/><text x="132" y="526">Merge the work</text>
+  </g>
+  <g transform="translate(520 585)">
+    <circle r="58" fill="#E6F5FA"/>
+    <circle r="42" fill="none" stroke="#0090C1" stroke-width="4"/>
+    <path d="M -14 18 L 0 -22 L 14 18 L 0 9 Z" fill="#0090C1"/>
+    <circle r="5" fill="#FFFFFF"/>
+  </g>
+
+  <rect x="940" y="170" width="600" height="550" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="940" y="170" width="600" height="8" rx="4" fill="#505962"/>
+  <text x="980" y="230" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The AI peer</text>
+  <text x="980" y="262" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">Reliable execution, in the same shape.</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">
+    <circle cx="990" cy="318" r="7" fill="#505962"/><text x="1012" y="326">Loads the context</text>
+    <circle cx="990" cy="374" r="7" fill="#505962"/><text x="1012" y="382">Plans the issue</text>
+    <circle cx="990" cy="430" r="7" fill="#505962"/><text x="1012" y="438">Implements the plan</text>
+    <circle cx="990" cy="486" r="7" fill="#505962"/><text x="1012" y="494">Reviews the work</text>
+    <circle cx="990" cy="542" r="7" fill="#505962"/><text x="1012" y="550">Checkpoints the state</text>
+  </g>
+  <g transform="translate(1400 600)">
+    <rect x="-54" y="-54" width="108" height="108" rx="24" fill="#EEF3F5"/>
+    <path d="M -26 0 L -6 22 L 30 -20" fill="none" stroke="#0090C1" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <path d="M 674 430 L 926 430" fill="none" stroke="#0090C1" stroke-width="4" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <rect x="694" y="356" width="212" height="46" rx="23" fill="#E6F5FA"/>
+  <text x="800" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">pair programming</text>
+  <text x="800" y="488" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="19" fill="#6B7A82">one architect + one peer</text>
+
+  <rect x="590" y="760" width="420" height="96" rx="18" fill="#FFFFFF" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="614" y="800" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#505962">Not a swarm of parallel agents</text>
+  <text x="614" y="828" font-family="Lato, Arial, sans-serif" font-size="16" fill="#6B7A82">One person, one peer, one predictable flow.</text>
+  <text x="80" y="884" font-family="Lato, Arial, sans-serif" font-size="19" fill="#6B7A82">This is not about running many agents. It is about one person and one reliable peer.</text>
+</svg>

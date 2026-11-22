@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 48px; }
+    text[font-size="30"] { font-size: 34px; }
+    text[font-size="28"] { font-size: 32px; }
+    text[font-size="26"] { font-size: 30px; }
+    text[font-size="25"] { font-size: 29px; }
+    text[font-size="24"] { font-size: 28px; }
+    text[font-size="23"] { font-size: 27px; }
+    text[font-size="22"] { font-size: 26px; }
+    text[font-size="21"] { font-size: 25px; }
+    text[font-size="20"] { font-size: 24px; }
+    text[font-size="19"] { font-size: 23px; }
+    text[font-size="18"] { font-size: 22px; }
+    text[font-size="17"] { font-size: 21px; }
+    text[font-size="16"] { font-size: 20px; }
+    text[font-size="15"] { font-size: 19px; }
+    text[font-size="14"] { font-size: 18px; }
+  </style>
+  <title id="title">What lives in the ai directory</title>
+  <desc id="desc">An annotated project ai tree: state, diary, knowledge, work, and inbox.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">What lives in ai/</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Five jobs for the project's memory.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="50" y="180" width="720" height="620" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="86" y="224" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">PROJECT ROOT / ai/</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="18" fill="#505962">
+    <text x="86" y="268">ai/</text>
+    <text x="86" y="298">├── state/</text>
+    <text x="86" y="328">│   ├── context.md</text>
+    <text x="86" y="358">│   ├── next-steps.md</text>
+    <text x="86" y="388">│   └── progress.md</text>
+    <text x="86" y="418">├── daily-checkpoints/</text>
+    <text x="86" y="448">├── shared/</text>
+    <text x="86" y="478">│   ├── project-knowledge/</text>
+    <text x="86" y="508">│   └── handoffs/</text>
+    <text x="86" y="538">├── issues/</text>
+    <text x="86" y="568">├── plans/</text>
+    <text x="86" y="598">├── code-review-reports/</text>
+    <text x="86" y="628">├── notes/</text>
+    <text x="86" y="658">├── artifacts/</text>
+    <text x="86" y="688">├── secrets/</text>
+    <text x="86" y="718">└── pending/</text>
+  </g>
+  <text x="86" y="766" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Secrets stay local. This is not a vault.</text>
+
+  <rect x="810" y="180" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="810" y="180" width="8" height="104" rx="4" fill="#0090C1"/>
+  <text x="842" y="220" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">STATE</text>
+  <text x="842" y="254" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Where we are now.</text>
+  <text x="1180" y="254" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">context, next steps, progress</text>
+
+  <rect x="810" y="300" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="810" y="300" width="8" height="104" rx="4" fill="#0090C1"/>
+  <text x="842" y="340" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">DIARY</text>
+  <text x="842" y="374" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">What happened.</text>
+  <text x="1180" y="374" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">daily-checkpoints/</text>
+
+  <rect x="810" y="420" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="810" y="420" width="8" height="104" rx="4" fill="#0090C1"/>
+  <text x="842" y="460" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">KNOWLEDGE</text>
+  <text x="842" y="494" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">What we learned.</text>
+  <text x="1180" y="494" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">shared/project-knowledge/</text>
+
+  <rect x="810" y="540" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="810" y="540" width="8" height="104" rx="4" fill="#0090C1"/>
+  <text x="842" y="580" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">WORK</text>
+  <text x="842" y="614" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Tickets and plans.</text>
+  <text x="1180" y="614" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">issues/, plans/, reports/</text>
+
+  <rect x="810" y="660" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="810" y="660" width="8" height="104" rx="4" fill="#0090C1"/>
+  <text x="842" y="700" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">INBOX</text>
+  <text x="842" y="734" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Notes and artifacts.</text>
+  <text x="1180" y="734" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">notes/, artifacts/, pending/</text>
+
+  <rect x="50" y="796" width="1500" height="94" rx="16" fill="#E6F5FA"/>
+  <text x="82" y="830" font-family="Lato, Arial, sans-serif" font-size="23" font-weight="700" fill="#007AA3">Load context reads the index. It opens a file only when the task needs it.</text>
+  <text x="82" y="862" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">Plain text you can inspect, diff, and delete.</text>
+</svg>

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Load the index, not the world</title>
+  <desc id="desc">A context budget with rules and state loaded, a small index, and on-demand knowledge. Compact and scoped reads keep it lean.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The session budget</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Rules and state load. The rest is indexed.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <text x="80" y="210" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#6B7A82" letter-spacing="2">THE SESSION BUDGET</text>
+  <rect x="80" y="228" width="1440" height="96" rx="18" fill="#FFFFFF" stroke="#DCE8EC"/>
+  <rect x="80" y="228" width="300" height="96" rx="18" fill="#0090C1"/>
+  <text x="230" y="270" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF">Rules</text>
+  <text x="230" y="300" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#D9F1FA">always loaded</text>
+  <rect x="380" y="228" width="280" height="96" fill="#55B8D8"/>
+  <text x="520" y="270" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#FFFFFF">State</text>
+  <text x="520" y="300" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#E6F5FA">always loaded</text>
+  <rect x="660" y="228" width="220" height="96" fill="#9FD8EA"/>
+  <text x="770" y="270" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Index</text>
+  <text x="770" y="300" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">names only</text>
+  <rect x="880" y="228" width="640" height="96" rx="0" fill="#E6F5FA"/>
+  <text x="1200" y="270" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#007AA3">On demand</text>
+  <text x="1200" y="300" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">open a file when the task needs it</text>
+
+  <rect x="60" y="380" width="460" height="260" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="92" y="430" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Index at boot</text>
+  <text x="92" y="472" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Knowledge and skills:</text>
+  <text x="92" y="506" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">name, description, path.</text>
+  <text x="92" y="558" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">No bodies at boot.</text>
+  <text x="92" y="606" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">The index is ephemeral.</text>
+
+  <rect x="570" y="380" width="460" height="260" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="602" y="430" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Scoped reads</text>
+  <text x="602" y="472" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Read the files the task</text>
+  <text x="602" y="506" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">actually needs.</text>
+  <text x="602" y="558" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Skip secrets, archives,</text>
+  <text x="602" y="592" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">and the whole repo.</text>
+
+  <rect x="1080" y="380" width="460" height="260" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="1112" y="430" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Compact and recover</text>
+  <text x="1112" y="472" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Summarize a long session.</text>
+  <text x="1112" y="506" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Reload the rules, not</text>
+  <text x="1112" y="540" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">the whole transcript.</text>
+  <text x="1112" y="592" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">The protocol re-arms itself.</text>
+
+  <rect x="60" y="700" width="1480" height="100" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="738" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">Cheap models for cheap tasks. The protocol is the lever.</text>
+  <text x="92" y="772" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">A fresh command starts at zero tokens. A focused read beats a full folder dump.</text>
+</svg>

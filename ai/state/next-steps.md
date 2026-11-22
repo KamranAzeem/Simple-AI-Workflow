@@ -15,6 +15,5 @@
 
 - Refresh the state-file headers in each existing project after v7.0.0.
 - Verify the team knowledge publish path against a live store when one is configured.
-- Decide the slide-deck source of truth: Markdown-first or Google Slides-first.
-- Refresh the slide deck after the README.
+- File the Google Slides update and physical Gate 2 as a separate issue.
 - File the sync-script --init idea from `ai/notes/notes.md` as an issue.

@@ -85,3 +85,13 @@
 [2026-11-22] Implemented the docs guide audit: retired the migration map, Cline guide, and collaboration notes; rewrote the compared and provider docs; added the Kilo Code setup and facts; merged the collaboration guidance into the guide; updated the README docs index; added the docs audit fixture.
 [2026-11-22] Review-85 APPROVED; suite 30/30, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 18 docs; the replace-Cline ticket closed; no release.
 [2026-11-22] Closed the docs audit ticket with the plan attached; removed the plan file; the slide deck is next.
+[2026-11-22] Merged the docs audit and the README origin to master, deleted the branch, and pushed; no release; 18 docs; 30/30; 8 open, 0 in-progress.
+[2026-11-22] Captured the slide deck requirements: the Architect narrative, the full feature coverage plus a list slide, the team/no-team split, the knowledge and skills diagram, the pair-programming objective, local Markdown first, and the manual preview before closing.
+[2026-11-22] Opened feature/slide-deck-refresh, moved the slide deck ticket to in-progress, and wrote the plan with the 22-slide storyboard, the 8 assets, the preview, the renderer, the 31st test, and the docs count updates.
+[2026-11-22] Plan reviews 86-89 APPROVED; the first joint review found the axe crop, small type, the "every session" overclaim, the tree layout, the proof heading, and the multi-assistant wording; the fixes are applied.
+[2026-11-22] Implemented the 28-slide deck and assets: the axe photo, the 7 diagrams, the reveal.js preview, the headless-Chrome renderer, the slides fixture, and the 31-test docs updates; suite 31/31, markdownlint 0, shellcheck 0; the SVG font/spacing pass and the first-slide axe remain.
+[2026-11-22] Expanded the slide deck to 37 main slides plus a 15-slide full policy and procedure catalog; added the AI ladder, the two root files, compliance, quality, token discipline, Git safety, 25 SVGs, 1.6rem type, and 78/88vh diagrams.
+[2026-11-22] Peer reviews 90-93: 90 CHANGES REQUESTED, 91-93 APPROVED; fixed the team and close wording, the out-of-band cases, tree continuation lines, dense-diagram type, and the knowledge and team gate diagrams.
+[2026-11-22] Final deck validation: suite 31/31, protocol 8/8, markdownlint 0, shellcheck 0, 25 SVGs valid, 52 slides rendered; Gate 1 review, the Google Slides update, and Gate 2 remain.
+[2026-11-22] Wrote the project knowledge lesson on the slide deck visual system; the project store is 14 lessons plus the template.
+[2026-11-23] Closed the slide deck ticket on the Markdown scope: 52 slides, review-93 APPROVED, suite 31/31; the plan is attached, Google Slides and Gate 2 are deferred to a separate issue.

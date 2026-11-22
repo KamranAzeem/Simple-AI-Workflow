@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 50px; }
+    text[font-size="30"] { font-size: 36px; }
+    text[font-size="28"] { font-size: 34px; }
+    text[font-size="26"] { font-size: 32px; }
+    text[font-size="25"] { font-size: 31px; }
+    text[font-size="24"] { font-size: 30px; }
+    text[font-size="23"] { font-size: 29px; }
+    text[font-size="22"] { font-size: 28px; }
+    text[font-size="21"] { font-size: 27px; }
+    text[font-size="20"] { font-size: 26px; }
+    text[font-size="19"] { font-size: 25px; }
+    text[font-size="18"] { font-size: 24px; }
+    text[font-size="17"] { font-size: 23px; }
+    text[font-size="16"] { font-size: 22px; }
+    text[font-size="15"] { font-size: 21px; }
+    text[font-size="14"] { font-size: 20px; }
+  </style>
+  <title id="title">Two kinds of memory</title>
+  <desc id="desc">A matrix of project, global, and optional team knowledge and skills.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Two kinds of memory</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Project, global, and optional team knowledge and skills.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <text x="70" y="208" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">SCOPE</text>
+  <text x="360" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Project</text>
+  <text x="780" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Global</text>
+  <text x="1200" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Team</text>
+  <line x1="1200" y1="220" x2="1560" y2="220" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <rect x="70" y="240" width="200" height="390" rx="18" fill="#FFFFFF" stroke="#E3EDF0"/>
+  <text x="170" y="380" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Knowledge</text>
+  <text x="170" y="410" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Lessons</text>
+  <text x="170" y="580" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Skills</text>
+  <text x="170" y="610" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Skill packages</text>
+
+  <rect x="340" y="240" width="380" height="160" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="366" y="286" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700" style="font-size:20px">ai/shared/project-knowledge/</text>
+  <text x="366" y="330" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">The project's lessons</text>
+  <text x="366" y="362" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Decisions, fixes, and findings.</text>
+
+  <rect x="760" y="240" width="380" height="160" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="786" y="286" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">~/.ai/global-knowledge/</text>
+  <text x="786" y="330" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Cross-project lessons</text>
+  <text x="786" y="362" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">What you learned everywhere.</text>
+
+  <rect x="1180" y="240" width="380" height="160" rx="18" fill="#FBFCFC" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="1206" y="286" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">lessons/</text>
+  <text x="1206" y="330" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">The team's lessons</text>
+  <text x="1206" y="362" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Shared, reviewed, optional.</text>
+  <rect x="1450" y="254" width="94" height="28" rx="14" fill="#E6F5FA"/>
+  <text x="1497" y="273" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="12" font-weight="700" fill="#007AA3">OPTIONAL</text>
+
+  <rect x="340" y="470" width="380" height="160" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="366" y="516" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">ai/skills/</text>
+  <text x="366" y="560" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Project skills</text>
+  <text x="366" y="592" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Task packages for this project.</text>
+
+  <rect x="760" y="470" width="380" height="160" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="786" y="516" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">(clone)/ai/skills/</text>
+  <text x="786" y="560" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Global skills</text>
+  <text x="786" y="592" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Shared task packages.</text>
+
+  <rect x="1180" y="470" width="380" height="160" rx="18" fill="#FBFCFC" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="1206" y="516" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">(team)/skills/</text>
+  <text x="1206" y="560" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Team skills</text>
+  <text x="1206" y="592" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Team task packages, optional.</text>
+  <rect x="1450" y="484" width="94" height="28" rx="14" fill="#E6F5FA"/>
+  <text x="1497" y="503" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="12" font-weight="700" fill="#007AA3">OPTIONAL</text>
+
+  <rect x="70" y="690" width="1490" height="64" rx="18" fill="#E6F5FA"/>
+  <text x="100" y="729" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">Precedence: project, then team, then global.</text>
+  <text x="650" y="729" font-family="Lato, Arial, sans-serif" font-size="19" fill="#505962">Indexed at boot by name only. A body is read only when a task needs it.</text>
+
+  <text x="80" y="796" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">The team column is optional. A solo project stops at the first two.</text>
+  <text x="80" y="830" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">Keys: Team AI Knowledge Directory and Team AI Knowledge Repository.</text>
+  <text x="80" y="862" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">Trust: one reviewer and repository access.</text>
+</svg>

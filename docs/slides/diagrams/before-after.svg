@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 48px; }
+    text[font-size="30"] { font-size: 34px; }
+    text[font-size="28"] { font-size: 32px; }
+    text[font-size="26"] { font-size: 30px; }
+    text[font-size="25"] { font-size: 29px; }
+    text[font-size="24"] { font-size: 28px; }
+    text[font-size="23"] { font-size: 27px; }
+    text[font-size="22"] { font-size: 26px; }
+    text[font-size="21"] { font-size: 25px; }
+    text[font-size="20"] { font-size: 24px; }
+    text[font-size="19"] { font-size: 23px; }
+    text[font-size="18"] { font-size: 22px; }
+    text[font-size="17"] { font-size: 21px; }
+    text[font-size="16"] { font-size: 20px; }
+    text[font-size="15"] { font-size: 19px; }
+    text[font-size="14"] { font-size: 18px; }
+  </style>
+  <title id="title">Before and after</title>
+  <desc id="desc">An improvised chat with no state, against the fixed loop with state, plan, review, and record.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Before and after</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">One improvised chat, one fixed loop.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="170" width="680" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="100" y="205" width="118" height="34" rx="17" fill="#E7EAEB"/>
+  <text x="159" y="227" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#6B7A82">BEFORE</text>
+  <text x="100" y="278" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Ad-hoc chat</text>
+
+  <g font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">
+    <rect x="100" y="322" width="390" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
+    <text x="124" y="360">What did we decide?</text>
+    <rect x="180" y="406" width="430" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
+    <text x="204" y="444">Where is the plan?</text>
+    <rect x="100" y="490" width="440" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
+    <text x="124" y="528">Did we review this?</text>
+    <rect x="200" y="574" width="380" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
+    <text x="224" y="612">What changed?</text>
+  </g>
+  <line x1="100" y1="680" x2="700" y2="680" stroke="#E3EDF0" stroke-width="2"/>
+  <text x="100" y="720" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#6B7A82">No state. No plan. No review. No record.</text>
+
+  <rect x="860" y="170" width="680" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="900" y="205" width="118" height="34" rx="17" fill="#E6F5FA"/>
+  <text x="959" y="227" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3">AFTER</text>
+  <text x="900" y="278" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The fixed loop</text>
+
+  <g font-family="Lato, Arial, sans-serif" font-size="21" fill="#2B3A42">
+    <rect x="900" y="322" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="356">Load context</text>
+    <rect x="900" y="388" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="422">Plan the issue</text>
+    <rect x="900" y="454" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="488">Implement the plan</text>
+    <rect x="900" y="520" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="554">Review</text>
+    <rect x="900" y="586" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="620">Checkpoint</text>
+  </g>
+  <g fill="#0090C1">
+    <circle cx="1340" cy="348" r="10"/><circle cx="1340" cy="414" r="10"/><circle cx="1340" cy="480" r="10"/><circle cx="1340" cy="546" r="10"/><circle cx="1340" cy="612" r="10"/>
+  </g>
+  <line x1="900" y1="680" x2="1500" y2="680" stroke="#E3EDF0" stroke-width="2"/>
+  <text x="900" y="720" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#007AA3">State. Plan. Review. Record.</text>
+
+  <path d="M 748 470 L 852 470" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="800" y="440" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="16" font-weight="700" fill="#6B7A82">same task</text>
+
+  <text x="80" y="838" font-family="Lato, Arial, sans-serif" font-size="19" fill="#6B7A82">The difference is the shape, not the model.</text>
+</svg>

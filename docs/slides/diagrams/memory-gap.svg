@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 54px; }
+    text[font-size="30"] { font-size: 38px; }
+    text[font-size="28"] { font-size: 36px; }
+    text[font-size="26"] { font-size: 34px; }
+    text[font-size="25"] { font-size: 33px; }
+    text[font-size="24"] { font-size: 32px; }
+    text[font-size="23"] { font-size: 31px; }
+    text[font-size="22"] { font-size: 30px; }
+    text[font-size="21"] { font-size: 29px; }
+    text[font-size="20"] { font-size: 28px; }
+    text[font-size="19"] { font-size: 27px; }
+    text[font-size="18"] { font-size: 26px; }
+    text[font-size="17"] { font-size: 25px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 23px; }
+    text[font-size="14"] { font-size: 22px; }
+  </style>
+  <title id="title">The memory gap leaks in three places</title>
+  <desc id="desc">Three cards: the prompt tax, context loss, and scattered state.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">The memory gap leaks in three places</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">The model is fine. The shape around it is missing.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="210" width="480" height="500" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="96" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">PROMPT TAX</text>
+  <rect x="120" y="300" width="300" height="120" rx="14" fill="#E6F5FA" stroke="#0090C1"/>
+  <g fill="#0090C1" opacity="0.55">
+    <rect x="144" y="326" width="220" height="8" rx="4"/>
+    <rect x="144" y="348" width="190" height="8" rx="4"/>
+    <rect x="144" y="370" width="240" height="8" rx="4"/>
+  </g>
+  <circle cx="400" cy="390" r="22" fill="#FFFFFF" stroke="#0090C1" stroke-width="2"/>
+  <path d="M 400 376 L 400 390 L 410 398" fill="none" stroke="#0090C1" stroke-width="2.5" stroke-linecap="round"/>
+  <g font-family="Lato, Arial, sans-serif" fill="#505962">
+    <text x="96" y="478" font-size="21">You re-explain the stack,</text>
+    <text x="96" y="508" font-size="21">the rules, and the goal.</text>
+    <text x="96" y="556" font-size="19">Every time.</text>
+  </g>
+  <text x="96" y="646" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">The same briefing, again.</text>
+
+  <rect x="560" y="210" width="480" height="500" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="560" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="596" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">CONTEXT LOSS</text>
+  <rect x="650" y="300" width="300" height="130" rx="10" fill="#FFFFFF" stroke="#0090C1" stroke-width="2"/>
+  <line x1="650" y1="330" x2="950" y2="330" stroke="#0090C1" stroke-width="2"/>
+  <g fill="#DCE8EC">
+    <rect x="676" y="352" width="200" height="8" rx="4"/>
+    <rect x="676" y="374" width="240" height="8" rx="4"/>
+    <rect x="676" y="396" width="150" height="8" rx="4"/>
+  </g>
+  <line x1="900" y1="300" x2="980" y2="270" stroke="#9BAAB2" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <g font-family="Lato, Arial, sans-serif" fill="#505962">
+    <text x="596" y="488" font-size="21">The next steps live in</text>
+    <text x="596" y="518" font-size="21">the chat, not on disk.</text>
+    <text x="596" y="566" font-size="19">Close the tab.</text>
+  </g>
+  <text x="596" y="646" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">Gone with the session.</text>
+
+  <rect x="1060" y="210" width="480" height="500" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="1060" y="210" width="480" height="8" rx="4" fill="#0090C1"/>
+  <text x="1096" y="262" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SCATTERED STATE</text>
+  <g>
+    <rect x="1170" y="320" width="200" height="100" rx="10" fill="#FFFFFF" stroke="#9BAAB2" stroke-width="2"/>
+    <rect x="1200" y="300" width="200" height="100" rx="10" fill="#F7FAFB" stroke="#9BAAB2" stroke-width="2"/>
+    <rect x="1230" y="340" width="200" height="100" rx="10" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  </g>
+  <g fill="#0090C1" opacity="0.55">
+    <rect x="1254" y="368" width="130" height="8" rx="4"/>
+    <rect x="1254" y="390" width="100" height="8" rx="4"/>
+    <rect x="1254" y="412" width="150" height="8" rx="4"/>
+  </g>
+  <g font-family="Lato, Arial, sans-serif" fill="#505962">
+    <text x="1096" y="488" font-size="21">Each assistant keeps</text>
+    <text x="1096" y="518" font-size="21">its own logs.</text>
+    <text x="1096" y="566" font-size="19">Two tools, two truths.</text>
+  </g>
+  <text x="1096" y="646" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#007AA3">Whose context is current?</text>
+
+  <rect x="60" y="760" width="1480" height="86" rx="18" fill="#E6F5FA"/>
+  <text x="92" y="796" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">Same prompt tomorrow. A different process. A different answer.</text>
+  <text x="92" y="824" font-family="Lato, Arial, sans-serif" font-size="18" fill="#505962">The fix is not a better prompt. It is a place for the state to live.</text>
+</svg>

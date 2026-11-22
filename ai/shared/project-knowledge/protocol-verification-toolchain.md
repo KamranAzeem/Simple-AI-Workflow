@@ -15,6 +15,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the skills fixture with `bash tests/test-skills-index.sh`.
 - Run the README shape fixture with `bash tests/test-readme-shape.sh`.
 - Run the docs audit fixture with `bash tests/test-docs-audit.sh`.
+- Run the slides fixture with `bash tests/test-slides.sh`.
 - Run the trigger fixture with `bash tests/test-trigger-rules.sh`.
 - Run the boot fixture with `bash tests/test-load-context-boot.sh`.
 - Run the sync fixture with `bash tests/test-sync-agents-md.sh`.
@@ -45,6 +46,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - The skills fixture checks the three roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project-over-team and team-over-global overrides, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Markdownlint catches structural defects before review.
 - The user docs drift when a unit adds a policy, procedure, fixture, or trigger; the README, the slides, the validation doc, and the compared doc are the drift points.
+- The slides fixture checks the Architect story, the six groups, the three roots, the two dials, the knowledge and skills map, the team gate, the axe and SVG assets, the derived counts, and the local preview and renderer.
 
 ## Verify
 
@@ -57,11 +59,12 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the skills fixture prints `PASSED`.
 - Confirm the README shape fixture prints `PASSED`.
 - Confirm the docs audit fixture prints `PASSED`.
+- Confirm the slides fixture prints `PASSED`.
 - Confirm the boot fixture prints `PASSED`.
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 30 test scripts, 53 triggers, and the floor of 25.
+- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 31 test scripts, 53 triggers, and the floor of 25.
 
 ## Caveats
 

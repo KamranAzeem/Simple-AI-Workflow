@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Compliance is a dial, not a badge</title>
+  <desc id="desc">A project lists standards in ai-customization.md. The AI applies the controls from its own knowledge and leaves evidence in plans and reviews.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The project compliance dial</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Standards in. Controls out.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="200" width="720" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="96" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="700" fill="#007AA3">## Required Compliance</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700">
+    <rect x="96" y="286" width="160" height="48" rx="24" fill="#E6F5FA"/><text x="176" y="317" text-anchor="middle" fill="#007AA3">SOC 2</text>
+    <rect x="276" y="286" width="190" height="48" rx="24" fill="#E6F5FA"/><text x="371" y="317" text-anchor="middle" fill="#007AA3">ISO-27001</text>
+    <rect x="486" y="286" width="140" height="48" rx="24" fill="#E6F5FA"/><text x="556" y="317" text-anchor="middle" fill="#007AA3">GDPR</text>
+    <rect x="646" y="286" width="110" height="48" rx="24" fill="#E6F5FA"/><text x="701" y="317" text-anchor="middle" fill="#007AA3">HIPAA</text>
+    <rect x="96" y="352" width="170" height="48" rx="24" fill="#E6F5FA"/><text x="181" y="383" text-anchor="middle" fill="#007AA3">PCI-DSS</text>
+    <rect x="286" y="352" width="140" height="48" rx="24" fill="#E6F5FA"/><text x="356" y="383" text-anchor="middle" fill="#007AA3">CCPA</text>
+  </g>
+  <g font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">
+    <text x="96" y="460">No files to download.</text>
+    <text x="96" y="500">No compliance directory to scan.</text>
+    <text x="96" y="540">The AI uses its own knowledge.</text>
+    <text x="96" y="580">Unrecognized names are rejected.</text>
+  </g>
+  <rect x="96" y="612" width="648" height="76" rx="14" fill="#F2F6F7" stroke="#DCE8EC"/>
+  <text x="120" y="646" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#2B3A42">Validation guard.</text>
+  <text x="120" y="674" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">dora is a metrics framework, not a compliance standard.</text>
+
+  <rect x="820" y="200" width="720" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <text x="856" y="252" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">What the AI applies</text>
+  <g font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">
+    <circle cx="870" cy="306" r="7" fill="#0090C1"/><text x="894" y="314">Data handling and retention.</text>
+    <circle cx="870" cy="362" r="7" fill="#0090C1"/><text x="894" y="370">Authentication and access control.</text>
+    <circle cx="870" cy="418" r="7" fill="#0090C1"/><text x="894" y="426">Logging and audit trails.</text>
+    <circle cx="870" cy="474" r="7" fill="#0090C1"/><text x="894" y="482">Encryption and secret handling.</text>
+    <circle cx="870" cy="530" r="7" fill="#0090C1"/><text x="894" y="538">Evidence in plans and reviews.</text>
+  </g>
+  <rect x="856" y="586" width="648" height="106" rx="14" fill="#E6F5FA"/>
+  <text x="880" y="624" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Not a certification.</text>
+  <text x="880" y="656" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">The workflow helps you apply the standard.</text>
+  <text x="880" y="682" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Your auditor still audits. Your evidence is ready.</text>
+
+  <rect x="60" y="780" width="1480" height="76" rx="16" fill="#E6F5FA"/>
+  <text x="92" y="814" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The dial lives in ai-customization.md.</text>
+  <text x="92" y="842" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Change the list, reload context, and the controls follow the project.</text>
+</svg>

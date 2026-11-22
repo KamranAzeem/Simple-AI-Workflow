@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <style>
+    text[font-size="42"] { font-size: 48px; }
+    text[font-size="30"] { font-size: 34px; }
+    text[font-size="28"] { font-size: 32px; }
+    text[font-size="26"] { font-size: 30px; }
+    text[font-size="25"] { font-size: 29px; }
+    text[font-size="24"] { font-size: 28px; }
+    text[font-size="23"] { font-size: 27px; }
+    text[font-size="22"] { font-size: 26px; }
+    text[font-size="21"] { font-size: 25px; }
+    text[font-size="20"] { font-size: 24px; }
+    text[font-size="19"] { font-size: 23px; }
+    text[font-size="18"] { font-size: 22px; }
+    text[font-size="17"] { font-size: 21px; }
+    text[font-size="16"] { font-size: 20px; }
+    text[font-size="15"] { font-size: 19px; }
+    text[font-size="14"] { font-size: 18px; }
+  </style>
+  <title id="title">Two dials, one assistant</title>
+  <desc id="desc">Global settings and the project ai-customization file meet at load context.</desc>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Two dials, one assistant</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Global settings shape you. ai-customization.md shapes this project.</text>
+  <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="60" y="170" width="610" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <circle cx="102" cy="213" r="8" fill="#505962"/>
+  <text x="122" y="222" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Global settings</text>
+  <rect x="500" y="192" width="140" height="34" rx="17" fill="#E6F5FA"/>
+  <text x="570" y="214" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="13" font-weight="700" fill="#007AA3">ALL PROJECTS</text>
+  <text x="100" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6B7A82">~/.ai/settings/global-user-settings.md</text>
+
+  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+    <circle cx="108" cy="330" r="5" fill="#0090C1"/><text x="128" y="337">Identity and profile</text>
+    <circle cx="108" cy="386" r="5" fill="#0090C1"/><text x="128" y="393">Tools and shell</text>
+    <circle cx="108" cy="442" r="5" fill="#0090C1"/><text x="128" y="449">Communication style</text>
+    <circle cx="108" cy="498" r="5" fill="#0090C1"/><text x="128" y="505">Cross-project lessons</text>
+    <circle cx="108" cy="554" r="5" fill="#0090C1"/><text x="128" y="561">Sensitive names</text>
+  </g>
+  <line x1="100" y1="612" x2="630" y2="612" stroke="#E3EDF0" stroke-width="2"/>
+  <text x="100" y="656" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">The whole settings directory loads at boot.</text>
+  <text x="100" y="690" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">It follows you into every project.</text>
+
+  <rect x="930" y="170" width="610" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <circle cx="972" cy="213" r="8" fill="#0090C1"/>
+  <text x="992" y="222" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">ai-customization.md</text>
+  <rect x="1360" y="192" width="150" height="34" rx="17" fill="#E6F5FA"/>
+  <text x="1435" y="214" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="13" font-weight="700" fill="#007AA3">THIS PROJECT</text>
+  <text x="970" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6B7A82">project root / ai-customization.md</text>
+
+  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+    <circle cx="978" cy="322" r="5" fill="#0090C1"/><text x="998" y="329">Workflow directory</text>
+    <circle cx="978" cy="370" r="5" fill="#0090C1"/><text x="998" y="377">Active expertise</text>
+    <circle cx="978" cy="418" r="5" fill="#0090C1"/><text x="998" y="425">Traits and engagement</text>
+    <circle cx="978" cy="466" r="5" fill="#0090C1"/><text x="998" y="473">Compliance</text>
+    <circle cx="978" cy="514" r="5" fill="#0090C1"/><text x="998" y="521">Design docs and merge policy</text>
+  </g>
+  <rect x="970" y="548" width="290" height="44" rx="12" fill="#F7FAFB" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="990" y="576" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">Team keys: optional</text>
+  <line x1="970" y1="622" x2="1500" y2="622" stroke="#E3EDF0" stroke-width="2"/>
+  <text x="970" y="666" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">The project file selects the work.</text>
+  <text x="970" y="700" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">It never leaves this project.</text>
+
+  <rect x="716" y="250" width="168" height="62" rx="18" fill="#0090C1" filter="url(#shadow)"/>
+  <text x="800" y="288" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#FFFFFF">load context</text>
+  <path d="M 670 330 C 690 320 700 300 712 288" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 930 330 C 910 320 900 300 888 288" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <text x="800" y="350" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="16" fill="#6B7A82">reads both</text>
+
+  <rect x="700" y="390" width="200" height="120" rx="18" fill="#FFFFFF" stroke="#0090C1" stroke-width="2" filter="url(#shadow)"/>
+  <text x="800" y="432" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="18" font-weight="700" fill="#2B3A42">active policies</text>
+  <text x="800" y="458" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">+ knowledge and</text>
+  <text x="800" y="482" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">skills index</text>
+  <path d="M 800 312 L 800 382" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+  <path d="M 800 510 L 800 570" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
+
+  <rect x="700" y="580" width="200" height="62" rx="18" fill="#505962" filter="url(#shadow)"/>
+  <text x="800" y="618" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">the AI's behavior</text>
+
+  <text x="80" y="845" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">One assistant. Two scopes. One fixed shape.</text>
+</svg>
