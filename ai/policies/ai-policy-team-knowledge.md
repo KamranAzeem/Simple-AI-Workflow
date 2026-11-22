@@ -46,6 +46,7 @@ Govern the optional shared team knowledge store and its publish path.
 - Use lowercase kebab case with six or fewer hyphen-separated segments.
 - Keep a retired lesson in `lessons/` with `status: retired` and `superseded_by: <filename>`.
 - Do not scaffold the store; the team creates the repository, its `README.md`, and its `CONTRIBUTING.md`.
+- Allow a `skills/` directory for team skill packages; the common Skills section owns the package rules.
 - Reject a rename that breaks a reference.
 
 ## Frontmatter

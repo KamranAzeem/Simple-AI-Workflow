@@ -36,6 +36,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.2.0 (2026-11-22)
+
+- Add the optional team skills root at `<team>/skills/` with the same package shape, a conditional third boot root, and project, team, global precedence.
+- Keep one combined 16 KB skills index; report `[PENDING]` for an unreadable configured store and the team count in `ITEM SKILLS-INDEX`.
+- Document the team repository's review gate as the trust boundary and the manual copy-plus-PR contribution path.
+- Update the workflow guide, customization guide, README, slides, the vocabulary note, and the toolchain note.
+- No new policy, procedure, or trigger; counts stay 25/16/53; suite 28/28.
+- Upgrade action: pull, run the sync script, restart the session; configure the team directory to enable the root.
+
 ### v7.1.0 (2026-11-22)
 
 - Add the optional team knowledge store: the two configuration keys, the third scope, the precedence project, team, global, and the Class A rule.

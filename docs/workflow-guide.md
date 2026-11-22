@@ -465,11 +465,12 @@ Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Ver
 
 A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules; procedures are triggered workflows; knowledge is durable findings; a skill is a small instruction package for one task.
 
-### The two directories
+### The roots
 
 - **Global**: `ai/skills/` in the workflow clone. These skills travel with the workflow.
 - **Project**: `ai/skills/` at your project root. These are local to the project.
-- A project skill with the same name replaces a global skill, and the AI reports the override.
+- **Team**: `<Team AI Knowledge Directory>/skills/` when the team store is configured. These skills are shared and reviewed by the team.
+- A project skill replaces a team skill, a team skill replaces a global skill, and the AI reports the override.
 
 ### The package shape
 
@@ -502,6 +503,10 @@ A skill name that matches a policy or procedure name is reported as a cross-type
 A skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`. The AI never runs a skill helper without your explicit approval, and a helper path stays inside the package.
 
 The protocol does not scan a skill for trust. You are responsible for the source of every skill you drop in.
+
+### Team skills
+
+The team skills root is optional. Set `Team AI Knowledge Directory` in `ai-customization.md`; the AI indexes `skills/` with the same package shape and one shared 16 KB index. The team repository's one-reviewer PR gate and access control are the trust boundary; the protocol does not verify review at boot. Precedence is project, then team, then global. A description match loads the body only; a helper still needs explicit approval. To contribute, copy the package into `skills/` and open a PR; one reviewer merges. To retire, remove it in a reviewed PR; Git history is the record.
 
 ### Maintenance
 

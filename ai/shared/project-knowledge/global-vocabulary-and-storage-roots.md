@@ -2,13 +2,14 @@
 
 # Global Vocabulary and Storage Roots
 
-The protocol uses "global" for two different owners. This file records the split and the decision not to add a third global root.
+The protocol uses "global" for two different owners. This file records the split, the team scope, and the decision not to add a third global root.
 
-## The three owners
+## The owners
 
 - Workflow-owned: the clone. `Global AI Workflow Directory`, `Global AI Policies Directory`, `Global AI Skills Directory`, and the procedure store. These travel with `git pull`.
 - User-owned: `(Global User AI Directory)`, default `~/.ai`. Settings, global knowledge, and backups. These are the user's own and are not in the clone.
 - Project-owned: the project root and its `ai/` tree. The customization file, project policies and skills, knowledge, state, and checkpoints.
+- Team-owned: the configured **Team AI Knowledge Directory**. Team lessons and team skills, shared with the team and reviewed through the team repository.
 
 ## The trap
 
@@ -16,11 +17,12 @@ The protocol uses "global" for two different owners. This file records the split
 
 ## The decision
 
-- Do not add `(Global User AI Directory)/skills/` as "user-global skills". The skills model stays at two roots: the clone's global skills and the project's skills.
-- If personal cross-project skills are needed later, name them "user skills" at `~/.ai/skills/`, with the precedence project, then user, then workflow.
+- Do not add `(Global User AI Directory)/skills/` as "user-global skills". The skills model has three roots when the team store is configured: project, team, and global; the team root is a shared store, not a personal root.
+- If personal cross-project skills are needed later, name them "user skills" at `~/.ai/skills/` and decide their precedence separately; the current order is project, team, global.
 - A broad rename to workflow/user/project is a separate unit. Do not bundle it into a feature.
 
 ## Checks
 
 - When a feature uses "global", name the owner and the root.
+- When a skill root is outside the clone and the project, name the team scope.
 - A name that needs "user-global" is a sign that the vocabulary is being stretched.

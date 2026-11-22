@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.1.0 (2026-11-22).** The optional team knowledge store is here: a shared Git repository of lessons, indexed by filename at boot and published through a pull request. Read the announcement: [docs/announcements/v7.1.0.md](docs/announcements/v7.1.0.md). |
+| **v7.2.0 (2026-11-22).** Team skills are here: an optional third skills root in the configured team store, with the same package shape, project/team/global precedence, and a shared 16 KB index. Read the announcement: [docs/announcements/v7.2.0.md](docs/announcements/v7.2.0.md). |
 
 # Simple AI Workflow
 
@@ -251,7 +251,7 @@ Migration is optional. Once your documents live in `design-docs/`, they sit besi
 
 A skill is a small, task-specific package that loads on demand, separate from policies and knowledge. It works well for a procedure you want to share with other harnesses, or a task you do not want active all the time.
 
-- **Two homes**: global skills live in the clone's `ai/skills/`; project skills live in your project root's `ai/skills/`. A project skill with the same name overrides a global one, and the AI tells you.
+- **The roots**: global skills live in the clone's `ai/skills/`; project skills live in your project root's `ai/skills/`; team skills live in `<Team AI Knowledge Directory>/skills/` when the team store is configured. A project skill replaces a team skill, a team skill replaces a global one, and the AI tells you.
 - **Package shape**: `ai/skills/<name>/SKILL.md` with `name` and a one-line `description` of at most 200 characters. The directory name matches `name`. Extra files and helper scripts are allowed.
 - **Indexed, not loaded**: at boot the AI indexes the name, description, path, and scope. It reads no skill body until the skill is activated.
 - **Activation**: say `"use skill <name>"`, or let a single best description match load it for the task. An ambiguous match asks; an unknown name reports `unknown skill`. The body is for that task only.
@@ -425,7 +425,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 ## What's included
 
 - **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 13 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, global-settings, handoff, issue-management, knowledge, outbound-content-scrub, team-knowledge, thinking-modes). Load the ones that apply to your project.
-- **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
+- **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone, the project root, and the configured team store's `skills/`, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-team-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
 - **Procedure modules and a thin `AGENTS.md`**: the 16 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
