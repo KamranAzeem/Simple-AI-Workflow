@@ -25,7 +25,7 @@ This document describes the permanent testing and maintenance system for the [`A
 
 The validation script [`support-files/validate-protocol.sh`](../support-files/validate-protocol.sh) implements:
 
-- A directory scan of `ai/policies/ai-policy-*.md` with a floor of 24; every file must carry the guard markers.
+- A directory scan of `ai/policies/ai-policy-*.md` with a floor of 25; every file must carry the guard markers.
 - Integration of `markdownlint` checks for policies.
 - Temporary checkpoint cycle (create/verify/delete).
 - Anchor checks for the shared index step, the dispatch section, the procedure modules, and the protocol index report item.

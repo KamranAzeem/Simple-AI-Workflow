@@ -221,6 +221,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - Index every file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** at boot.
 - Record filenames, paths, and apparent technical domains in the index.
 - Read a file in full only when a task needs it.
+- Index the configured **Team AI Knowledge Directory** at boot and read a lesson in full only when a task needs it.
 - Treat the knowledge contract as the owner of the store thresholds, the lookup, the retirement, the header, and the repair conservation rules.
 
 ## Skills

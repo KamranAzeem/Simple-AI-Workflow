@@ -212,6 +212,13 @@ assert_mode ai-policy-common.md legacy
 assert_mode ai-policy-cloud.md trigger
 assert_mode ai-policy-code-review.md procedure
 assert_mode ai-policy-web-frontend.md expertise
+assert_mode ai-policy-team-knowledge.md procedure
+
+if grep -qx -- '- Load in: knowledge-publish' "$ROOT/ai/policies/ai-policy-team-knowledge.md"; then
+    pass 'team policy names the knowledge-publish procedure'
+else
+    fail_case 'team policy names the knowledge-publish procedure'
+fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: policy loading fixture."

@@ -109,7 +109,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 | Project instructions | `AGENTS.md`, works with any tool, any editor |
 | User preferences | `<Global User AI Directory>/settings/global-user-settings.md` (default `~/.ai/`) |
 | Per-project customization | `ai-customization.md` |
-| Domain expertise and rules | 24 modular policies in `ai/policies/` |
+| Domain expertise and rules | 25 modular policies in `ai/policies/` |
 | Progress tracking | `ai/state/progress.md` |
 | Pending tasks | `ai/state/next-steps.md` |
 | Project knowledge and decisions | `ai/shared/project-knowledge/` |
@@ -294,7 +294,7 @@ Switch tools and you start from scratch. The new assistant has no idea what the 
 
 # A thin AGENTS.md and a procedure store
 
-- The 15 procedures live in `ai/procedures/` in the clone, one self-standing module each
+- The 16 procedures live in `ai/procedures/` in the clone, one self-standing module each
 - `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch
 - The boot payload drops by roughly three quarters
 - A new procedure is a new module; no `AGENTS.md` edit

@@ -28,7 +28,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 ## Why
 
-- The protocol validator checks the hardening anchors, configuration, directory structure, board, a policy directory scan with a floor of 24, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
+- The protocol validator checks the hardening anchors, configuration, directory structure, board, a policy directory scan with a floor of 25, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
 - The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, `## Triggers` shape, and the optional `## Loading` contract; it permits only the two shared steps in the thin `AGENTS.md`. It ignores heading-like lines inside fenced code blocks when it builds the index and checks the policy and procedure shape.
 - The loading contract has four modes: `boot`, `trigger`, `procedure`, and `expertise`. One path per policy; a non-trigger mode forbids triggers; `Load in:` takes the lowercase procedure file stem. An absent `## Loading` keeps the legacy load. The declaration governs global policies; a project policy keeps the legacy boot load. The validator checks syntax and placement; the fixture resolves every declared path.
 - The index oracle prints the declared loading mode and the scope (`global` or `project`).
@@ -48,7 +48,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - Confirm `Protocol Validation v6.3 Completed Successfully` and 8/8.
 - Confirm the authoring validator prints `PASSED`.
-- Confirm the reference test prints `PASS` with 15 procedures, 121 steps, 4 tiers, and 12 items.
+- Confirm the reference test prints `PASS` with 16 procedures, 129 steps, 4 tiers, and 13 items.
 - Confirm the knowledge-repair fixture prints `PASS`.
 - Confirm the outbound content scrub fixture prints `PASSED`.
 - Confirm the handoff fixture prints `PASSED`.
@@ -57,7 +57,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 24 policies (12 domain and 12 protocol), 15 procedures, 27 test scripts, 50 triggers, and the floor of 24.
+- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 28 test scripts, 53 triggers, and the floor of 25.
 
 ## Caveats
 

@@ -455,6 +455,12 @@ Heads up: the repair takes a while on a real knowledge base. Let it finish. It's
 
 Run it once after you upgrade. Add `global` if you keep global knowledge. The checkpoint flags the problems in the meantime, but it doesn't edit your files.
 
+### Team knowledge
+
+The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone and `Team AI Knowledge Repository` to the publish remote. The boot indexes `lessons/` by filename only and reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
+
+Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Verify body, not the local knowledge header. They are Class A: names and infrastructure detail stay; secrets never do. The local sensitive-names list is not applied to team lessons. Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson; the AI removes secrets, dedupes by hash and title, writes the lesson on a branch, and opens a pull request. It never merges.
+
 ## 24. Skills
 
 A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules; procedures are triggered workflows; knowledge is durable findings; a skill is a small instruction package for one task.

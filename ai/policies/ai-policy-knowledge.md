@@ -19,6 +19,7 @@ Govern the knowledge stores and the knowledge file standards.
 ## Scope
 
 - Apply this policy to the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory**, and to every knowledge file in either store.
+- Treat the configured team store as a third scope owned by `ai-policy-team-knowledge.md`.
 - This policy owns the global and project protocols, the ticket file scope, the file standards, the lookup, the retirement, the header literal, and the repair conservation contract.
 - The common policy keeps the settings full load and the boot index invariant.
 
@@ -163,6 +164,7 @@ All such content belongs in named project knowledge files. When creating or upda
 ## References
 
 - `ai-policy-common.md` (`## Knowledge Invariant`).
+- `ai-policy-team-knowledge.md` (third scope).
 - `PROCEDURE LOAD-CONTEXT`, `PROCEDURE WRITE-CHECKPOINT`, and `PROCEDURE REPAIR-KNOWLEDGE-FILES`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

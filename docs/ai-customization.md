@@ -12,6 +12,12 @@
 
 **Default Shell**: bash
 
+<!-- Optional team knowledge store. The directory is a read-only local clone or mount; the repository is the publish remote. -->
+<!--
+**Team AI Knowledge Directory**: /path/to/team-knowledge
+**Team AI Knowledge Repository**: git@example.com:team/knowledge.git
+-->
+
 <!-- Global User AI Directory defaults to [HOME]/.ai/. Default Shell is optional; use bash, zsh, pwsh, or git-bash. The matching native path goes in the global settings file as Default Shell Path. -->
 
 See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md> for help.

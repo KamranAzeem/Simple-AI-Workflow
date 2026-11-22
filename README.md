@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.0.1 (2026-11-20).** The backup scripts stream progress, prune heavy directories, and keep good archives on Git Bash. Read the announcement: [docs/announcements/v7.0.1.md](docs/announcements/v7.0.1.md). |
+| **v7.1.0 (2026-11-22).** The optional team knowledge store is here: a shared Git repository of lessons, indexed by filename at boot and published through a pull request. Read the announcement: [docs/announcements/v7.1.0.md](docs/announcements/v7.1.0.md). |
 
 # Simple AI Workflow
 
@@ -111,6 +111,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
 | Something applies beyond this project | `"update global knowledge"` |
+| Contribute a lesson to the team knowledge store | `"update team knowledge"` |
 | Load a skill for one task | `"use skill <name>"` |
 | Clean up knowledge files (header, tables, task names, files over 15 KB, 50-file review threshold) | `"repair knowledge files"` |
 | After the conversation was compacted | `"run post-compaction recovery procedure"` |
@@ -423,9 +424,9 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 
 ## What's included
 
-- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 11 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, handoff, issue-management, knowledge, outbound-content-scrub, thinking-modes). Load the ones that apply to your project.
+- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 13 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, global-settings, handoff, issue-management, knowledge, outbound-content-scrub, team-knowledge, thinking-modes). Load the ones that apply to your project.
 - **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone and the project root, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
-- **Procedure modules and a thin `AGENTS.md`**: the 15 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
+- **Procedure modules and a thin `AGENTS.md`**: the 16 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
 - **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
 - **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
 - **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
@@ -446,6 +447,7 @@ For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, C
 - **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
 - **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.
 - **Knowledge file standards and repair**: every knowledge file follows one shape and starts with a self-contained header. Files use task names of six or fewer hyphenated segments, aim for a 10 KB soft target, and get reviewed at 15 KB. The repair splits only by topic, merges files under 3 KB, deletes incident evidence, and retires closed ticket files, executed plans, and finished artifacts. Each store has a 50-file review threshold: the checkpoint reports the count and recommends a repair at 50 or more. Say `"repair knowledge files"` to clean up the project store; add `global` for the global store. The repair asks no questions. It takes a while, but it's worth running once.
+- **Optional team knowledge store**: a shared Git repository of lessons, configured per project. The boot indexes filenames only, publish opens a pull request, and team lessons are Class A: names stay, secrets never. The order is project, team, then personal global.
 - **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
 - **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
 - **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.

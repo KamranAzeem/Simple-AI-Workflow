@@ -51,3 +51,18 @@
 [2026-11-20] Filed the shared team knowledge store ticket with the full brainstorm: transports, store shape, contribution, consumption, governance, shortlist, and open questions.
 [2026-11-20] Hardened `backup-ai.sh` and `backup-ai.ps1`: streamed discovery and per-project progress, pruned heavy directories, kept archives when the Windows ACL check is unavailable, and printed tar causes; review-74 APPROVED.
 [2026-11-20] Extended `tests/test-backup-ai.sh` to 22 cases and the Windows verification script with progress, summary, and prune checks; the backup test passes 57 checks.
+[2026-11-20] Squash-merged v7.0.1 to master as `ec0d31c`, deleted the branch, pushed, tagged, and published the release; the backup ticket is closed with the plan attached.
+[2026-11-20] Post-release verification: release URL live, tree clean, and the backup hardening is live on master.
+[2026-11-22] Loaded context via AGENTS.md: version up to date at `ec0d31c`, state headers healthy, today's checkpoint absent; ran `repair state files` with no changes needed.
+[2026-11-22] Grilled the shared team knowledge store over three rounds: Git plus publish PR, flat lessons, Class A names, filename-only boot index, precedence project/team/global, 100-file threshold.
+[2026-11-22] Wrote `ai/plans/team-knowledge-store.md` (XL): Evidence, HLD, LLD with 15 acceptance criteria, 9 ADRs, risks, test plan, close sequence; appended the plan entry to the ticket.
+[2026-11-22] Peer review: review-75 CHANGES REQUESTED (6 Majors, 5 Minors), all fixed; review-76 APPROVED with one optional validator-anchor suggestion; implementation not started.
+[2026-11-22] Filed `ai/issues/open/team-skills-scope.md` (P3, L), blocked by the team knowledge store; lint clean; open issues 10.
+[2026-11-22] Reviewed the slide deck, README, workflow guide, and comparison doc for the documentation discussion.
+[2026-11-22] Found the deck stale: 495 lines, `ls -R` discovery, the old contact email, and a portability opening; the README has no TOC and a 23-versus-24 policy count.
+[2026-11-22] Filed `slide-deck-refresh.md` (P2, L), `readme-restructure.md` (P2, L), and `docs-guide-audit.md` (P3, M); open issues 13.
+[2026-11-22] Implemented the optional team knowledge store on `feature/team-knowledge-store`: policy, publish procedure, boot step, validator floor 25, tests, docs, announcement, release practices, and nine ADRs.
+[2026-11-22] Peer review: review-77 CHANGES REQUESTED (2 Majors, 3 Minors), all fixed; review-78 APPROVED; review-79 APPROVED after the trigger rename.
+[2026-11-22] Renamed the publish triggers to `update team knowledge`, `publish team knowledge`, and `publish to team knowledge`; the index reports 25 policies, 16 procedures, 53 triggers, 0 conflicts, 0 errors.
+[2026-11-22] Validation: suite 28/28, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0.
+[2026-11-22] Closed the team knowledge ticket with the plan attached; removed the plan file; released v7.1.0 and published the GitHub Release.

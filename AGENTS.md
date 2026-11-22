@@ -33,6 +33,8 @@ This is the single startup entry point for all AI assistants in this repository.
 **Global AI Backups Directory**: (Global User AI Directory)/backups/
 **Global AI Settings Directory**: (Global User AI Directory)/settings/
 **Global AI Skills Directory**: (Global AI Workflow Directory)/ai/skills/
+**Team AI Knowledge Directory**: resolved from **Project Customization File** at boot when present
+**Team AI Knowledge Repository**: resolved from **Project Customization File** at boot when present
 **Project AI Skills Directory**: `ai/skills/`
 
 **Project Artifacts Directory**: `ai/artifacts/`
@@ -58,6 +60,7 @@ The following short forms are recognized as equivalents to their canonical direc
 
 - "Global Knowledge" ↔ **Global AI Knowledge Directory**
 - "Project Knowledge" ↔ **Project AI Knowledge Directory**
+- "Team Knowledge" ↔ **Team AI Knowledge Directory**
 
 ---
 
@@ -86,7 +89,7 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
 - **Protocol Developer Mode**: When PWD matches the **Global AI Workflow Directory**, you are the protocol maintainer. This is the sanctioned exception to Self-Modification: you maintain these files, not merely read them. Before changing a protocol file (`AGENTS.md`, a policy, a procedure, a validator script, or any file under `ai/`), fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`, and get explicit human approval before committing.
 - **End-User Perspective**: Write every path and file reference in a policy file from the end-user's project root, not from this repository's internal tree. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md`.
-- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`, except that STEP-POLICY-LOADING also loads every project policy from the **Project AI Policies Directory**. Do not load every global policy as body text; the global policy directory is the distribution tree.
+- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`, except that STEP-POLICY-LOADING also loads every project policy from the **Project AI Policies Directory**. STEP-TEAM-KNOWLEDGE-INDEX loads `ai-policy-team-knowledge.md` only when the **Team AI Knowledge Directory** is configured and readable. Do not load every global policy as body text; the global policy directory is the distribution tree.
 - **Session Resume (Compacted Context)**: When a session starts from a compacted summary or is compacted mid-session, run **PROCEDURE POST-COMPACTION-RECOVERY** before answering. Signals: "Compacted conversation", a `<conversation-summary>` block, or a machine-generated multi-section summary you did not write.
 - **Archive File Exclusion**: Every shell listing in this protocol excludes compressed and archive files. With `find`, use `! -name '*.tar*' ! -name '*.zip'`; with `ls`, filter with `grep -v '\.tar\|\.zip'`; with `Get-ChildItem`, filter the same names.
 - **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.

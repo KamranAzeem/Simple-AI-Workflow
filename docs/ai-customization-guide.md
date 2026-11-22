@@ -10,6 +10,8 @@ The `## AI Workflow Configuration` section holds the paths and the shell. It is 
 - **`Global User AI Directory`**: where the global settings, global knowledge, and backups live. The default is `[HOME]/.ai/`. Use `[HOME]` on Linux and macOS, or `%USERPROFILE%` on Windows, and resolve it to an absolute path.
 - **`Default Shell`**: optional. Use `bash`, `zsh`, `pwsh`, or `git-bash`. Leave it out to keep your current shell behavior. The key names the interpreter for named commands; the optional index helper runs with `bash` when a maintainer invokes it.
 - **`Default Shell Path`**: set in the global settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins.
+- **`Team AI Knowledge Directory`**: optional. The local clone or mount of the shared team knowledge store. The boot indexes it read-only; an absent key behaves exactly as today.
+- **`Team AI Knowledge Repository`**: optional. The publish remote for team lessons. An absent key falls back to the clone's `origin`.
 
 The boot reads the customization first, then the whole settings directory, then runs the first named command. Absent keys keep the default directory and the current shell.
 
@@ -52,6 +54,17 @@ A policy may declare when it loads in an optional `## Loading` section. Use one 
 - `- Mode: expertise` loads it through `## Active Expertise`.
 
 A policy without `## Loading` keeps today's behavior. A non-trigger mode forbids `## Triggers`, so adding one to a policy that has triggers requires removing them. The declaration describes the global loading paths: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load. Validate a custom policy with `support-files/validate-policy-authoring.sh`; see the [custom policy howto](custom-policy-howto.md).
+
+### Team knowledge
+
+The team knowledge store is optional. It is a Git repository or a read-only mount that a team shares.
+
+- Set `Team AI Knowledge Directory` to the local clone or mount.
+- Set `Team AI Knowledge Repository` to the publish remote when it differs from the clone's `origin`.
+- Keep lessons in `lessons/<lesson-name>.md`. The filename is the id.
+- Precedence is project knowledge, then team knowledge, then personal global knowledge.
+- Team lessons are Class A: names and infrastructure detail stay, and secrets never do. The local sensitive-names list is not applied to team lessons; repository access is the privacy control.
+- Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, checks for duplicates, writes the lesson on a branch, and opens a pull request. It never merges.
 
 ---
 

@@ -1216,3 +1216,75 @@ The out-of-band backup scripts print progress as they run, prune named dependenc
 Context: a customer run under Git Bash deleted every good archive because `find -perm 600` found no POSIX mode, and a 92,657-directory tree printed nothing while it scanned, so the run looked hung. The user confirmed the permission check as the Windows cause on 2026-11-20.
 
 Consequences: a project inside a pruned directory is not found, which is acceptable for dependency and build directories. The POSIX mode check is a proxy; the Windows ACL is the real control. Exit codes are unchanged, so existing callers keep working. The upgrade is a patch release because no policy or procedure changes.
+
+## 2026-11-22: Team Knowledge is the third knowledge scope
+
+The optional shared store is named Team Knowledge, with the **Team AI Knowledge Directory** and **Team AI Knowledge Repository** anchors. "Global" already carries two owners, so a third global meaning would repeat the earlier vocabulary trap. The canonical short form is "Team Knowledge", no new global root appears, and the policy, procedure, boot step, and docs use one scope name.
+
+Context: the brainstorm proposed a shared store, and "global" would have meant the workflow clone, the user directory, and now a team repository.
+
+Consequences: the third scope stays distinct from Global Knowledge and Project Knowledge.
+
+## 2026-11-22: The team store is a Git repository with a publish PR
+
+The team store is a Git repository, and publish opens a pull request that one reviewer merges. The team already uses Git, and shared lessons need review, history, and provenance. Review and conflict handling come from Git; a non-Git team needs the deferred share variant.
+
+Context: the brainstorm compared a network share, a synced folder, object storage, and a wiki, and Git gave review and history with no new service.
+
+Consequences: the publish procedure never merges, and repository permissions are the access control.
+
+## 2026-11-22: Team lessons are flat files named by their id
+
+One lesson per file sits under `lessons/`, flat, and the filename is the id. The filename is the only boot index key, and the knowledge standard already uses flat task-named files. Lookup is simple; a rename changes the id and needs review because it can break references.
+
+Context: the store shape options were a mirrored tree, domain folders, an inbox plus curated area, and flat lesson files.
+
+Consequences: the store shape, the frontmatter, and the boot index stay simple, and the reviewer rejects a rename that breaks a reference.
+
+## 2026-11-22: Team lessons are Class A and never keep secrets
+
+Team lessons are Class A, so names and infrastructure detail stay and secrets are removed in every class. The local sensitive-names list is not applied, because it is personal configuration and the team shares access, NDA, and company. Repository access is the privacy control, and the publish procedure states the audience before drafting.
+
+Context: the scrub contract defines Class A as internal or same-audience, and the knowledge contract treats person, client, employer, and customer names as identifying.
+
+Consequences: a mixed-audience store needs a policy change, and a secret is never overridable.
+
+## 2026-11-22: The team index is filename-only and degrades
+
+The boot indexes filenames, paths, and apparent domains only, and it never reads lesson content. A missing or unreadable store reports `[PENDING]` with the reason and the load continues. The boot stays offline, bounded, and non-blocking, and a stale clone is reported by age, not refreshed.
+
+Context: the boot must not clone, pull, write, or authenticate, and a team store can be large.
+
+Consequences: lesson lookup is filename-based, and a stale clone needs a manual pull.
+
+## 2026-11-22: Precedence is project, team, then personal global
+
+Project knowledge wins, then team knowledge, then personal global knowledge. Project facts are authoritative for the project, the team store is curated and shared, and personal global is the fallback. A task reads every matching file at task start, and a conflict is reported rather than resolved silently.
+
+Context: the brainstorm left the read precedence open.
+
+Consequences: a team lesson overrides a personal global lesson, and a conflict with a project lesson is visible.
+
+## 2026-11-22: The team policy is procedure-loaded with one boot exception
+
+`ai-policy-team-knowledge.md` declares `Mode: procedure` with `Load in: knowledge-publish`. The configured boot index step also loads it explicitly, and the Policy Loading Set in `AGENTS.md` permits that one load. Most projects will not configure a team store, so an always-on policy would cost context for nothing; the Level 0 loading set would otherwise block the boot load.
+
+Context: policy loading is a declared, checked contract, and the boot loads only the common policy, Active Expertise, and project policies.
+
+Consequences: the publish procedure and the configured boot step load the policy; no other boot load is allowed.
+
+## 2026-11-22: Team skills are deferred
+
+The change adds no team skills root. A team skill is a third skills scope with its own trust and collision rules, and bundling it would break the one-unit rule. A separate ticket covers it, and the team repository can host `skills/` later.
+
+Context: the team store and team skills arrived in the same discussion, and the skills model already has two roots with an override rule.
+
+Consequences: the team store ships alone, and the team skills ticket is blocked until it lands.
+
+## 2026-11-22: The common Knowledge Invariant names the configured team store
+
+The common policy gains one clause that a configured **Team AI Knowledge Directory** is indexed at boot. The invariant is the always-on authority for the boot index, and a third store outside it would be invisible to a fresh reader. The common policy names the anchor, not a policy file, and the team policy keeps the store detail.
+
+Context: the common policy never names a policy file, and the knowledge contract already points at the team scope.
+
+Consequences: the one-way boundary holds, and a fresh reader sees the third store at boot.

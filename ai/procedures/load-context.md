@@ -8,7 +8,7 @@
 **Safety Barrier**: This procedure is read-only with one narrow, deterministic exception. AI must not modify the content of any existing file during this phase. The only permitted writes are the idempotent creation of missing mandatory directories and the missing issue template described in STEP-STRUCTURAL-AUDIT. Every other action is read-only.
 
 0. **STEP-CUSTOMIZATION-DISCOVERY**: Check for **Project Customization File** at project root (`ai-customization.md`):
-    - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory**`, `**Global User AI Directory**` (default `[HOME]/.ai/`), and `**Default Shell**`. If the section is missing, inform the user and stop.
+    - If found → load the `## AI Workflow Configuration` section and extract `**Global AI Workflow Directory**`, `**Global User AI Directory**` (default `[HOME]/.ai/`), `**Default Shell**`, and, when present, `**Team AI Knowledge Directory**` and `**Team AI Knowledge Repository**`. If the section is missing, inform the user and stop.
     - Then read every settings file in the **Global AI Settings Directory** with the built-in reader (from the resolved Global User AI Directory). Resolve the **Default Shell Path** from the settings. An absent `Default Shell` key keeps the current or default shell and does not suppress the helper. A named shell that is not found, or a configured `Default Shell Path` that does not exist, is reported, and the boot continues with built-ins. An absent path resolves the named shell from `PATH`; for `git-bash`, resolve a Git for Windows `bash.exe` or `bash`. The optional index helper uses its bash shebang regardless of `Default Shell`. The first named command runs after this step.
     - If the old `ai/ai-customization.md` exists instead → inform the user: "Your customization file is in the old `ai/` directory. Add a `## AI Workflow Configuration` section with a `**Global AI Workflow Directory**` entry, then move it to the project root as `ai-customization.md`." Then **stop**, do not proceed with context loading.
     - If neither exists → inform the user that the customization file is missing, show a template, explain what to configure, and optionally suggest cloning the Simple-AI-Workflow repo to `[HOME]/Projects/Simple-AI-Workflow` or another location the user chooses, from its GitHub URL. Then **stop**, do not proceed with context loading.
@@ -55,7 +55,7 @@
     Then ensure `ai/shared/project-knowledge/issue-template.md` exists. If and only if it is missing, load `ai-policy-issue-management.md` and create it from its `### Ticket Fields`. Never overwrite it.
     Then check `.gitignore` for `ai-customization.md`. If absent, inform the user: "ai-customization.md is not in .gitignore. Add it to prevent accidental commits of your local configuration."
 5. **STEP-DISCOVERY**: Produce a bounded, sorted index of the boot roots, at or under 16 KB, with the built-in glob and directory listing.
-    - Roots: the project root (`ai-customization.md`), the **Project AI State Files**, the **Project Coordination File**, the **Project AI Knowledge Directory**, the **Project Handoffs Directory**, the `open/` and `in-progress/` directories under the **Project Issues Directory**, the **Project Daily Checkpoints Directory**, the **Project AI Policies Directory**, the **Project AI Skills Directory**, the **Global AI Skills Directory**, every `design-docs/` directory under the project root, the **Global AI Settings Directory**, the **Global AI Knowledge Directory**, the **Global AI Policies Directory**, and the procedure store under the **Global AI Workflow Directory**.
+    - Roots: the project root (`ai-customization.md`), the **Project AI State Files**, the **Project Coordination File**, the **Project AI Knowledge Directory**, the **Project Handoffs Directory**, the `open/` and `in-progress/` directories under the **Project Issues Directory**, the **Project Daily Checkpoints Directory**, the **Project AI Policies Directory**, the **Project AI Skills Directory**, the **Global AI Skills Directory**, every `design-docs/` directory under the project root, the **Global AI Settings Directory**, the **Global AI Knowledge Directory**, the **Global AI Policies Directory**, the procedure store under the **Global AI Workflow Directory**, and the configured **Team AI Knowledge Directory** when the key is present and readable.
     - Apply the Boot Scan Exclusions to every listing and read:
         - Exclude the **Project Secrets Directory**.
         - Exclude the **Project Artifacts Directory**.
@@ -81,7 +81,13 @@
         - A project skill replaces a global skill; report the override and a cross-type name collision; keep the index within 16 KB.
     If a directory is completely empty, explicitly note it in your state tracking.
     - The global store search uses the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, `tmp`, and archive entries. If neither form exists, ITEM KNOWLEDGE-INDEX reports the global store as `[PENDING]`.
-8. **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.
+8. **STEP-TEAM-KNOWLEDGE-INDEX**: This is a dedicated required step; do NOT merge it with the knowledge index.
+    - Read **Team AI Knowledge Directory** from the **Project Customization File** and expand `~` and `[HOME]`.
+    - When the key is absent, report `[PASSED] none` and skip the policy load.
+    - When the key is present and readable, load `ai-policy-team-knowledge.md` in full from the **Global AI Policies Directory**, report it active, and index `lessons/` filenames, paths, and apparent domains only.
+    - When the key is present and missing or unreadable, report `[PENDING]` with the reason and continue; do not load the policy.
+    - Never read lesson content at boot. Bound the index at 16 KB; when over, print the counts and query the remainder on demand.
+9. **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.
     - For each listed expertise name, try `ai-policy-<name>.md` first, then `<name>.md` as fallback.
     - Locate matching files in the **Global AI Policies Directory** with the built-in glob.
     - Load the FULL TEXT of every matched file with the built-in reader, reusing the STEP-WORKFLOW-ACCESS common read.
@@ -89,12 +95,13 @@
     **Exception: Protocol Developer Mode**: If the current working directory matches the **Global AI Workflow Directory**, skip the project-policy scan. Load ONLY `ai-policy-common.md` and the policy files explicitly listed under `## Active Expertise` in the **Project Customization File**. The **Project AI Policies Directory** is the protocol's full distribution tree: all domain policies live there, but most do not apply to protocol development work. Otherwise, use the built-in glob on the **Project AI Policies Directory** to discover all `.md` files the user placed there. Load the FULL TEXT of every discovered file. These are user-created custom policies that must be loaded at boot even though they are not listed in the Project Customization File.
 
     > **Design note (deliberate exception to Token Rationing)**: Loading referenced policy files in full at boot is an intentional exception to the Token-Rationing principle. The cost of a few hundred lines of policy text is far lower than the cost of the AI applying wrong or missing rules because it guessed at policy content. Token Rationing still applies to large Project Knowledge files (repo-scan snapshots, historical archives), never to the operational policy files that govern AI behaviour.
-9. **STEP-PROOF-OF-LOAD**: Submit a compact Markdown summary, one line per item, counts only. Expand an item only when it is `[FAILED]` or `[PENDING]`, except that ITEM PROTOCOL-INDEX prints `index-source`, and ITEM STALE-KNOWLEDGE prints `age-source`; those expansion lines print for a `[PASSED]` item when the fields are present.
+10. **STEP-PROOF-OF-LOAD**: Submit a compact Markdown summary, one line per item, counts only. Expand an item only when it is `[FAILED]` or `[PENDING]`, except that ITEM PROTOCOL-INDEX prints `index-source`, and ITEM STALE-KNOWLEDGE prints `age-source`; those expansion lines print for a `[PASSED]` item when the fields are present.
     - **ITEM CUSTOMIZATION-SECTIONS**: `[PASSED]` with the section count and the file line count.
     - **ITEM SETTINGS-AND-POLICIES**: `[PASSED]` with the settings file count and the fully loaded policy file count.
     - **ITEM HANDOFFS**: `[PASSED]` with the pending handoff count, or `[PASSED] none`.
     - **ITEM STATE-FILE-HEALTH**: `[PASSED]` with the three state-file byte sizes, the shared budget, and the over-300 line count.
     - **ITEM KNOWLEDGE-INDEX**: `[PASSED]` with the Global and Project Knowledge file counts.
+    - **ITEM TEAM-KNOWLEDGE-INDEX**: `[PASSED] none` when unconfigured; `[PASSED]` with the lesson count when indexed; `[PENDING]` with the reason when the store is missing or unreadable.
     - **ITEM SKILLS-INDEX**: `[PASSED]` with the skills count and any override or collision.
     - **ITEM DESIGN-DOCS-INDEX**: `[PASSED]` with the design-document count, or `none`.
     - **ITEM STATE-FILE-COUNTS**: `[PASSED]` with the three line counts and the newest progress date.

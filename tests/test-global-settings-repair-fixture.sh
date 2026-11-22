@@ -67,12 +67,12 @@ present "$TPL" '**Email**' "template identity email label"
 absent "$TPL" "Style Sources" "template drops Style Sources"
 absent "$TPL" "Universal git conventions live" "template drops the git pointer"
 
-present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=24" "validator floor is 24"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "24 policies (12 domain and 12 protocol)" "toolchain note policy count"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "15 procedures, 121 steps" "toolchain note procedure count"
+present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=25" "validator floor is 25"
+present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "25 policies (12 domain and 13 protocol)" "toolchain note policy count"
+present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "16 procedures, 129 steps" "toolchain note procedure count"
 test_count=$(find "$ROOT/tests" -maxdepth 1 -name 'test-*.sh' -print | wc -l | tr -d ' ')
 present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "$test_count test scripts" "toolchain note test count"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "50 triggers" "toolchain note trigger count"
+present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "53 triggers" "toolchain note trigger count"
 
 # Simulated consolidation over a bloated fixture.
 WORK="$(mktemp -d)"

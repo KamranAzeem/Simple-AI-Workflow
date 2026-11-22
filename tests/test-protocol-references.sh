@@ -137,6 +137,22 @@ while IFS=: read -r file _ match; do
     fi
 done < <(grep -rnoE 'TIER READ-FIRST-RULES "[^"]+"' AGENTS.md ai/procedures ai/policies ai/shared docs README.md 2>/dev/null)
 
+# --- team knowledge cross-link ---
+for f in ai/policies/ai-policy-team-knowledge.md ai/procedures/knowledge-publish.md; do
+    if [ ! -f "$f" ]; then
+        echo "FAIL: team knowledge module missing: $f"
+        fail=1
+    fi
+done
+if ! grep -qF 'ai-policy-team-knowledge.md' ai/procedures/knowledge-publish.md 2>/dev/null; then
+    echo "FAIL: the publish procedure does not name the team knowledge policy."
+    fail=1
+fi
+if ! grep -qF 'PROCEDURE KNOWLEDGE-PUBLISH' ai/policies/ai-policy-team-knowledge.md 2>/dev/null; then
+    echo "FAIL: the team knowledge policy does not name the publish procedure."
+    fail=1
+fi
+
 if [ "$fail" -eq 0 ]; then
     echo "PASS: all references resolve; no letter, numeric, hardcoded path, or order drift remains."
     exit 0

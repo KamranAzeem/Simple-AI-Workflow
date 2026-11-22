@@ -36,6 +36,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.1.0 (2026-11-22)
+
+- Add the optional team knowledge store: the two configuration keys, the third scope, the precedence project, team, global, and the Class A rule.
+- Add `ai-policy-team-knowledge.md` and the `knowledge-publish` procedure; the policy is procedure-loaded and the boot loads it only when the store is configured.
+- Index `lessons/` by filename at boot and degrade to `[PENDING]` when the path is missing; add `ITEM TEAM-KNOWLEDGE-INDEX`.
+- Extend the load-context anchors, the common knowledge invariant, the knowledge pointer, the validator keys and floor, the docs, the fixture, and the ADR entries.
+- Policy floor 25, procedure count 16, trigger count 53.
+- Upgrade action: pull, run the sync script, restart the session; add the team keys when the team store exists.
+- Published 2026-11-22.
+
 ### v6.6.1 (2026-11-18)
 
 - Move the boot scan exclusions and the two index step bodies into `load-context`; move git workspace detection into `bootstrap-project`.

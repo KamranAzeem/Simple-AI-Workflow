@@ -54,6 +54,9 @@ require_in "ai/procedures/load-context.md" "Global AI Knowledge Directory" "Glob
 require_in "ai/procedures/load-context.md" "ITEM PROTOCOL-INDEX" "ITEM PROTOCOL-INDEX missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "Boot Scan Exclusions" "Boot Scan Exclusions reference missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-STATE-FILE-PROOF-OF-READ" "STEP-STATE-FILE-PROOF-OF-READ missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "STEP-TEAM-KNOWLEDGE-INDEX" "STEP-TEAM-KNOWLEDGE-INDEX missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "ITEM TEAM-KNOWLEDGE-INDEX" "ITEM TEAM-KNOWLEDGE-INDEX missing from ai/procedures/load-context.md."
+require_in "AGENTS.md" "STEP-TEAM-KNOWLEDGE-INDEX loads" "the team knowledge policy loading exception is missing from AGENTS.md."
 require_in "ai/procedures/write-checkpoint.md" "STEP-FRESH-READ-BEFORE-WRITE" "STEP-FRESH-READ-BEFORE-WRITE missing from ai/procedures/write-checkpoint.md."
 require_in "ai/procedures/write-checkpoint.md" "Before writing, verify each state-file header." "State-file header pre-write check missing from ai/procedures/write-checkpoint.md."
 require_in "ai/procedures/write-checkpoint.md" "Before appending, verify today's header." "Checkpoint header pre-append check missing from ai/procedures/write-checkpoint.md."
@@ -114,6 +117,8 @@ CONFIG_KEYS=(
     "Global AI Policies Directory"
     "Global AI Knowledge Directory"
     "Global AI Skills Directory"
+    "Team AI Knowledge Directory"
+    "Team AI Knowledge Repository"
     "Global AI Backups Directory"
     "Global AI Settings Directory"
     "Project Artifacts Directory"
@@ -359,7 +364,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-POLICY_FLOOR=24
+POLICY_FLOOR=25
 POLICY_COUNT="$(find ai/policies -maxdepth 1 -type f -name 'ai-policy-*.md' | wc -l | tr -d ' ')"
 echo "[6/8] Verifying policy baseline ($POLICY_COUNT modular policies, floor $POLICY_FLOOR)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.
@@ -393,6 +398,7 @@ for anchor in "### Knowledge Lookup" "### Knowledge Retirement" "six or fewer hy
     require_in "ai/policies/ai-policy-knowledge.md" "$anchor" "Knowledge rule missing: $anchor"
 done
 require_in "ai/procedures/repair-knowledge-files.md" "split only by task topic" "Knowledge repair topic-split rule missing."
+require_in "ai/policies/ai-policy-team-knowledge.md" '^## Team Knowledge Protocol$' "Team knowledge protocol section missing from ai-policy-team-knowledge.md."
 if grep -nE 'never split a file|never split it|no split|file count (cannot|can.t|must not) increase' ai/policies/ai-policy-knowledge.md ai/procedures/repair-knowledge-files.md docs/workflow-guide.md README.md docs/simple-ai-workflow-slides.md; then
     echo "Error: legacy no-split wording remains in the current knowledge rules."
     exit 1

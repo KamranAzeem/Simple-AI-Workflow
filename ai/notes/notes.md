@@ -52,3 +52,6 @@ Three honest options:
 My recommendation is option 1 first, then option 2 if round 11 fails. The plan is strongest on the boot rewrite and weakest on byte-level parity between the helper and the fallback. That parity is where most of the last six rounds went.
 
 Nothing is committed. The plan, the ticket, and all ten review reports are on disk.
+
+---
+
