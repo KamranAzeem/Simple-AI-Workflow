@@ -386,6 +386,15 @@ The AI shows the scrubbed text and a category report, then waits for approval. A
 
 The first release covers external ticket creation, plan-entry comments, close or reopen comments, PR/MR titles and bodies, release notes, and a handoff that leaves the project. Report sharing and presentation decks get their own steps later, and they reference the same contract.
 
+### Review and Maintenance Phrases
+
+- `"perform a codebase examination of <directory | git repo>"`
+- `"process my notes directory and remove the notes that are already implemented; for the ones that remain, add a short clarifying comment or a suggestion."`
+- `"process my plans directory and find all plans that are fully implemented. If there are any, extract the useful knowledge and save it under ai/shared/project-knowledge/."`
+- `"find any stale files under plans, artifacts, or notes and tell me about them without deleting anything."`
+- `"process the artifacts directory and remove any stale files."`
+- `"process my project knowledge and find any stale files, then update or remove them; where it helps, rename them with better, verbose kebab-cased names for easier indexing."`
+
 ## 17. State-File Health and Repair
 
 Every `"load context"` checks the three state files read-only for the canonical header, chronological order, duplicates, the shared budget, and the daily-checkpoint mirror. If something is wrong, say `"repair state files"`. The repair reorders entries, moves entries when the set is over the shared budget or, for progress, older than 14 days, into the daily checkpoint diary, restores a missing or mismatched canonical header, and never drops an unfinished next-step. There is no separate archive file; the daily checkpoints are the archive.
@@ -393,6 +402,21 @@ Every `"load context"` checks the three state files read-only for the canonical 
 All AI state lives under the project root `ai/`, whether or not it is a git repository. In a multi-repo project, the project root repo owns the state, and a checkpoint never goes into a secondary repo.
 
 Knowledge files have their own repair. Say `"repair knowledge files"` to audit and fix the project store; add `global` for global knowledge. It keeps files at a 10 KB soft target, reviews anything over 15 KB, splits only by task topic, merges files under 3 KB, and reports the store count against the 50-file review threshold; it asks no questions. See section 23.
+
+### Keeping Context Healthy
+
+Over a long session, the working memory drifts. The state files fill with stale notes, the context window crowds, and the rules at the start get pushed out. The protocol pushes back:
+
+| Problem | Protection |
+|---|---|
+| Stale state files | All three state files are written together at checkpoint, or not at all |
+| Progress log growing | Old entries move to the daily checkpoint archive |
+| Rules lost after auto-summary | Post-compaction recovery reloads them from disk |
+| AI forgetting what it loaded | Proof-of-load runs on every load context |
+| Clone falling behind | Load context compares the clone with its remote |
+| Knowledge going stale | Every checkpoint includes a knowledge review |
+
+Checkpoint after each feature, fix, or review cycle. Keep sessions short; if the AI repeats itself or forgets a constraint, checkpoint, compact the conversation, and run post-compaction recovery. Always use the full load phrase.
 
 ## 18. Evidence and the Investigation Contract
 
@@ -515,3 +539,34 @@ The team skills root is optional. Set `Team AI Knowledge Directory` in `ai-custo
 - Markdown lint covers `SKILL.md`.
 - The sync script does not copy skills. Global skills come from the clone; project skills stay in the project.
 - Hash-based change detection is not part of this version.
+
+## 25. Common Instructions
+
+These are the phrases you type in your AI chat to drive the workflow.
+
+| When | What to type |
+|---|---|
+| Very first time in a project | `"bootstrap using AGENTS.md protocol"` |
+| Start of every session | `"load context using AGENTS.md protocol"` |
+| End of a task, to save progress | `"checkpoint"` |
+| Create a ticket for a task or bug | `"file an issue: <summary>"` |
+| Analyze and plan a ticket | `"plan the issue <ticket file or #N>"` |
+| Implement an approved plan | `"implement the plan"` |
+| Close or list tickets | `"close issue <ticket file or #N>"`, `"list issues"` |
+| Back up the `ai/` directory | `"backup ai"` |
+| Update project knowledge with recent findings | `"update project knowledge"` |
+| Something applies beyond this project | `"update global knowledge"` |
+| Contribute a lesson to the team knowledge store | `"update team knowledge"` |
+| Load a skill for one task | `"use skill <name>"` |
+| Clean up knowledge files | `"repair knowledge files"` |
+| After the conversation was compacted | `"run post-compaction recovery procedure"` |
+| Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
+| Pressure-test a decision or plan | `"grill me"` |
+| Widen the options before deciding | `"brainstorm"` |
+| Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
+| Apply the fixes from a review report | `"apply fixes for problems identified in code review report"` |
+| Bring out-of-order or bloated state files back into shape | `"repair state files"` |
+| Write or update your design documents | `"update design documents"` |
+| Move design docs beside your code into `design-docs/` | `"migrate design docs"` |
+
+A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval.

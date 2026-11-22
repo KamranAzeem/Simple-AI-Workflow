@@ -85,3 +85,12 @@ Acceptance criteria.
 2026-11-22
 
 Filed from the documentation discussion. No source-of-truth decision yet. The README restructure and the guide audit reference this ticket's narrative brief.
+
+---
+
+2026-11-22 (protocol update)
+
+- The README restructure is the first issue and leads the narrative; this deck follows the README.
+- Thesis: predictability, reproducibility, auditability, and a fixed shape. The multi-assistant/changing-drivers story is a secondary capability, not the opening.
+- Add the v7.1.0 team knowledge store and v7.2.0 team skills: the two keys, team lessons, the team skills root, project/team/global precedence, the trust boundary, and the manual contribution. Counts are 25 policies, 16 procedures, 53 triggers, and 28 tests; the README is 476 lines and the deck is 495.
+- The source-of-truth question stays open; the README first, the deck after. Keep the tool comparison as an appendix at most.

@@ -77,3 +77,6 @@
 [2026-11-22] Pointed the local `Team AI Knowledge Directory` and `Team AI Knowledge Repository` at `/tmp/wbitt-team`; the store is a test fixture and the config change is uncommitted.
 [2026-11-22] Removed the `/tmp/wbitt-team` test pointer from the local customization before release; the test repo remains a fixture outside the protocol.
 [2026-11-22] Released v7.2.0 and published the GitHub Release: the optional team skills root is live; the team skills ticket is closed; 25 policies, 16 procedures, 53 triggers.
+[2026-11-22] Implemented the README restructure: the 163-line landing page, the guide Section 25 and the context-health and review phrases, the setup tree and update flow, and the new README shape test.
+[2026-11-22] Review-83 APPROVED; suite 29/29, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 25 policies, 16 procedures, 53 triggers.
+[2026-11-22] Closed the README ticket with the plan attached; removed the plan file; the docs guide audit is next; the slide deck follows; no release.
