@@ -80,3 +80,8 @@
 [2026-11-22] Implemented the README restructure: the 163-line landing page, the guide Section 25 and the context-health and review phrases, the setup tree and update flow, and the new README shape test.
 [2026-11-22] Review-83 APPROVED; suite 29/29, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 25 policies, 16 procedures, 53 triggers.
 [2026-11-22] Closed the README ticket with the plan attached; removed the plan file; the docs guide audit is next; the slide deck follows; no release.
+[2026-11-22] Merged the README restructure to master, deleted the branch, and pushed; no release; the README is live; 10 open, 0 in-progress.
+[2026-11-22] Post-merge verification: master matches origin; the README ticket is closed; the docs guide audit is next; the slide deck follows.
+[2026-11-22] Implemented the docs guide audit: retired the migration map, Cline guide, and collaboration notes; rewrote the compared and provider docs; added the Kilo Code setup and facts; merged the collaboration guidance into the guide; updated the README docs index; added the docs audit fixture.
+[2026-11-22] Review-85 APPROVED; suite 30/30, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 18 docs; the replace-Cline ticket closed; no release.
+[2026-11-22] Closed the docs audit ticket with the plan attached; removed the plan file; the slide deck is next.

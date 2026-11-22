@@ -14,6 +14,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the knowledge-repair fixture with `bash tests/test-knowledge-repair-fixture.sh --all`.
 - Run the skills fixture with `bash tests/test-skills-index.sh`.
 - Run the README shape fixture with `bash tests/test-readme-shape.sh`.
+- Run the docs audit fixture with `bash tests/test-docs-audit.sh`.
 - Run the trigger fixture with `bash tests/test-trigger-rules.sh`.
 - Run the boot fixture with `bash tests/test-load-context-boot.sh`.
 - Run the sync fixture with `bash tests/test-sync-agents-md.sh`.
@@ -55,11 +56,12 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the handoff fixture prints `PASSED`.
 - Confirm the skills fixture prints `PASSED`.
 - Confirm the README shape fixture prints `PASSED`.
+- Confirm the docs audit fixture prints `PASSED`.
 - Confirm the boot fixture prints `PASSED`.
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 29 test scripts, 53 triggers, and the floor of 25.
+- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 30 test scripts, 53 triggers, and the floor of 25.
 
 ## Caveats
 

@@ -13,6 +13,16 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 - Create a personal settings file (e.g., `global-user-settings.md`) in the **Global AI Settings Directory**. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
 - **Reading the protocol**: Open `AGENTS.md` with the assistant's built-in file-read tool. If a client hides a git-ignored path, use the reported fallback in `AGENTS.md`; never treat the file as unreadable.
 
+## Kilo Code Setup
+
+Kilo Code is the recommended VS Code extension for this workflow.
+
+1. Install VS Code, then install the Kilo Code extension from the Marketplace.
+2. Open Kilo Code and choose a provider. See the [provider guide](ai-provider-selection-guide.md) if you are unsure.
+3. Paste the provider API key and choose a model.
+4. Open the project root with `AGENTS.md` and `ai-customization.md`, then run `"bootstrap using AGENTS.md protocol"`.
+5. Start each session with `"load context using AGENTS.md protocol"`.
+
 ## How It Works
 
 ```text

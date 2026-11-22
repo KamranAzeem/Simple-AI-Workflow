@@ -12,10 +12,10 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
   - **VS Code** (recommended) or equivalent (JetBrains IDEs, etc.)
 - Install an AI chat extension matching your chosen AI provider:
   - **GitHub Copilot**: Install official GitHub Copilot Chat extension in VS Code
-  - **DeepSeek**: Install Cline extension and configure for DeepSeek API
-  - **ChatGPT/OpenAI**: Install relevant extension (e.g., ChatGPT extension or Cline)
-  - **Claude/Anthropic**: Install Cline extension and configure for Claude API
-  - **Google Gemini**: Install Cline extension and configure for Gemini
+  - **DeepSeek**: Install the Kilo Code extension and configure it for the DeepSeek API
+  - **ChatGPT/OpenAI**: Install the relevant extension, for example Kilo Code
+  - **Claude/Anthropic**: Install the Kilo Code extension and configure it for the Claude API
+  - **Google Gemini**: Install the Kilo Code extension and configure it for the Gemini API
 - Authenticate with your chosen AI provider:
   - Generate API key/token from your AI provider's dashboard (if needed).
   - Configure the extension with valid credentials (API key, auth token, etc.).

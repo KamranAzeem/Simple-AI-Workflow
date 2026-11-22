@@ -154,6 +154,10 @@ This is a design feature, not the main idea. The main idea is the fixed shape. F
 - [Policy influence on AI work](docs/policy-influence-on-ai-work.md).
 - [Protocol validation](docs/protocol-validation-system.md).
 - [Codebase examination](docs/codebase-examination-guide.md).
+- [AI provider selection](docs/ai-provider-selection-guide.md): choosing a provider and the Kilo Code path.
+- [Multi-agent runbook](docs/multi-agent-runbook.md): a three-assistant walkthrough.
+- [Learning session runbook](docs/example-learning-session-runbook.md): a prompt-first walkthrough.
+- [Personas](docs/personas/): example traits for an architect reviewer, a mentor, and a security specialist.
 - [Skills example](docs/examples/skills/example-skill/SKILL.md).
 - [Examples](docs/examples/): customizations, handoffs, knowledge, and skills.
 - [Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.
