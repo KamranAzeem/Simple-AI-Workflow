@@ -50,3 +50,19 @@ Acceptance criteria.
 2026-11-22
 
 Filed from the documentation discussion. Independent of the deck and README work, but its findings feed both.
+
+---
+
+2026-11-22 (protocol update)
+
+- The docs now include the v7.1.0 and v7.2.0 team features: the workflow guide team knowledge and team skills sections, the customization guide team keys and skills root, the README team bullets, the two announcements, and the team store test fixture. Inventory them and name one canonical home; the announcements are historical.
+- The README restructure is the first issue; its narrative is the fixed-shape predictability, reproducibility, and auditability story. Keep the workflow guide as the reference manual. The provider guides coordinate with `replace-cline-provider-with-kilo-code.md`; the compared-to-all-assistants doc is secondary.
+- Counts: README 476 lines, workflow guide 517, slides 495, docs more than 20; 25 policies, 16 procedures, 53 triggers, 28 tests.
+
+---
+
+2026-11-22 (sequence)
+
+- This is the next unit after the README restructure. It owns the stale and deletable docs: the protocol-name migration map, the Cline provider guide (coordinated with `replace-cline-provider-with-kilo-code.md`), the provider selection guide, the compared-to-all-assistants document, the multi-agent runbook, and any overlapping guide.
+- The README unit updates only the README, its docs index, and its links. This audit performs the keep, merge, retire, or rewrite decisions and the deletions, then updates the README index.
+- The slide deck follows the README in its own ticket.

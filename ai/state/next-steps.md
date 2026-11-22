@@ -15,5 +15,6 @@
 
 - Refresh the state-file headers in each existing project after v7.0.0.
 - Verify the team knowledge publish path against a live store when one is configured.
+- Implement the docs guide audit next.
 - Decide the slide-deck source of truth: Markdown-first or Google Slides-first.
-- Plan the README restructure and the guide audit after the slide narrative is agreed.
+- Refresh the slide deck after the README.

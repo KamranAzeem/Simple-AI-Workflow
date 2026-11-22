@@ -4,473 +4,160 @@
 
 # Simple AI Workflow
 
-**The idea: stop *chatting* with AI, and start *working* with it.**
+**Stop improvising with AI. Work the same predictable way every time.**
 
-I built this for myself, to get my AI assistant to remember my projects, follow my rules, and maintain state. It is a handful of plain files. Nothing to install.
+Simple AI Workflow is a small set of plain files that gives your AI assistant a protocol: the policies to load, the procedures to follow, the state to keep, and the review gates to pass. It is not a platform or a service. It is a repeatable way to work.
 
-## Setup
+## Contents
 
-- **Time**: under 5 minutes.
-- **Difficulty**: very low. You should be comfortable with basic computer tasks, like copying files and running a command.
-- **What you need**: any AI assistant. It works best with one built into VS Code, like Copilot, Claude, Gemini, DeepSeek, or ChatGPT. You may want to add an official extension for your AI assistant first. If you are new to AI, do not start from an exotic (complicated) setup: have one approved AI extension installed in VS Code before you start.
-- **Install**: one `git clone` and a couple of file copies. No install scripts, no admin rights, no package managers.
+- [The gap](#the-gap)
+- [The fix](#the-fix)
+- [The 60-second flow](#the-60-second-flow)
+- [Quick start](#quick-start)
+- [What you get](#what-you-get)
+- [What it is not](#what-it-is-not)
+- [Works with any assistant](#works-with-any-assistant)
+- [Docs and slides](#docs-and-slides)
+
+## The gap
+
+A plain chat has no fixed shape. The AI decides what to load, what to save, and what to skip. The result depends on its mood and the session.
+
+- **Load context** may decide the project tickets are not important and skip them.
+- **Checkpoint** may write the diary and update project knowledge one time, and skip them the next.
+- **Design and delivery** may skip the HLD, the LLD, the acceptance tests, or verification during app work.
+- **Output** may flip between bullets and tables from one answer to the next.
+
+A long initialization prompt can describe your project, but it is a request, not a procedure. The AI can change its approach, and you have no fixed shape to audit.
+
+## The fix
+
+Simple AI Workflow gives the AI procedures it must follow and policies it must load. Bootstrap loads the background policies and procedures, so the assistant is ready without a long setup prompt.
+
+Every session runs the same shape:
+
+1. Load the context and the rules.
+2. Plan the work as a ticket.
+3. Implement the approved plan.
+4. Review the result.
+5. Checkpoint the state, the diary, and the knowledge.
+
+The result is **predictable**, **reproducible in the same format**, and **auditable**. The state files, the ticket, the design gate, the review gate, and the checkpoint are fixed points you can inspect. There are no surprises.
+
+> The point is not which assistant you use. The point is that the assistant works the same way every time.
+
+## The 60-second flow
+
+```text
+You: "load context using AGENTS.md protocol"
+AI:  proof-of-load, active policies, and the pending tickets.
+
+You: "plan the issue ai/issues/open/example.md"
+AI:  evidence, sharp questions, a plan, and a close sequence.
+
+You: "implement the plan"
+AI:  a branch, a failing test first, the code, a review, a checkpoint,
+     and a commit.
+
+You: "checkpoint"
+AI:  the three state files, the diary, the knowledge review, and a
+     grouped summary.
+```
+
+The full command list is in the [workflow guide](docs/workflow-guide.md#25-common-instructions).
 
 ## Quick start
 
-1. Clone this repo somewhere on your machine (for example `~/Projects/Simple-AI-Workflow`).
-2. Create your global AI directory structure: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"`. The location is configurable with `Global User AI Directory` in `ai-customization.md`; `$HOME/.ai/` is the default.
-3. Optional: copy `docs/global-user-settings.md` to `<Global User AI Directory>/settings/global-user-settings.md` (default `$HOME/.ai/settings/global-user-settings.md`) and fill in your own details.
-4. Set your git identity so commits use your name and email (`git config --global user.name` and `user.email`). At bootstrap the AI also offers to create or fix `.gitconfig`.
-5. Copy `AGENTS.md` to your project root with the CLI or a file manager.
-6. Copy `docs/ai-customization.md` to `ai-customization.md` at your project root, then set `Global AI Workflow Directory` inside it to where you cloned this repo.
-7. Add expertise, traits, or compliance settings if you want them (see the [customization guide](docs/ai-customization-guide.md)).
-8. Open your project in VS Code and type this in the AI chat: `"bootstrap using AGENTS.md protocol"`.
+1. Clone this repo, for example to `~/Projects/Simple-AI-Workflow`.
+2. Create the global directories: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"`.
+3. Copy `AGENTS.md` and `docs/ai-customization.md` to your project root. Set `Global AI Workflow Directory` in `ai-customization.md` to the clone.
+4. Open the project in VS Code and type `"bootstrap using AGENTS.md protocol"`.
+5. Start each session with `"load context using AGENTS.md protocol"`.
 
-> **Note:** The sync script updates projects that already have `AGENTS.md` and checks or creates `ai-customization.md` with defaults. It does not create `AGENTS.md` for a new project; use steps 5 and 6 for the first copy. After that, the sync script is the recommended update path.
->
-> **Note:** don't use `/init`. It behaves differently across AI tools/harnesses. Use the text prompt above instead.
+That is the whole install: no install scripts, no admin rights, no package manager. VS Code is the recommended home; any assistant works. See [setup](docs/setup.md) for the Windows paths, the manual steps, and the update flow.
 
-For Windows path formats and the manual setup, see [docs/setup.md](docs/setup.md).
+The full phrase matters. A plain `"load context"` reads the assistant's own memory, not this protocol. Naming `AGENTS.md` tells the assistant to read the protocol first, so it knows where the state and knowledge live.
 
-When you finish a session, type `"checkpoint"`. One checkpoint refreshes the state files, the diary, Project Knowledge, and Global Knowledge, and prints a grouped summary, so you do not run the knowledge updates as separate commands. To pick up later, type `"load context using AGENTS.md protocol"`. Checkpoint often. Think of a checkpoint as "ctrl + s".
+A cycle: file the issue, plan it, implement the approved plan, then checkpoint. Filing a ticket does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own approval.
 
-## How it works
+## What you get
 
-```text
-   Simple-AI-Workflow/              Your Project/
-   |-- AGENTS.md            -->     |-- AGENTS.md
-   |-- ai-customization.md  -->     |-- ai-customization.md
-   |-- ai/policies/                 |-- ai/ (state, notes, issues, skills)
-   |-- ai/procedures/               |-- src/
-   |-- ai/skills/                   |
-   |-- docs/                        |-- ...
-   |-- support-files/
-```
+### Setup
 
-The repo holds the workflow, its policy files, its procedure modules, and the global skill root. You copy `AGENTS.md` and `ai-customization.md` into a new project, or use the sync script to update existing projects and their customization files. The procedure modules stay in the clone and load from `(Global AI Workflow Directory)/ai/procedures/`; a project does not copy them. A manual copy does only the `AGENTS.md` half; the sync script also checks the customization file, adds `## Merge Policy` when it is missing, and migrates state files.
+- Bootstrap, the sync script, the customization file, and the git identity. Why: the assistant knows the project and the rules from the first turn.
+- Command: `"bootstrap using AGENTS.md protocol"`.
+- See the [customization guide](docs/ai-customization-guide.md) and [setup](docs/setup.md).
 
-`AGENTS.md` follows progressive disclosure: the always-on rules, the shared index step, and the dispatch stay inline; the procedure bodies and the detail sit behind the module store and a context pointer that the AI opens only when a task needs it.
+### Daily loop
 
-## What it is, and what it isn't
+- Load context, plan the issue, implement the plan, and checkpoint. Why: the same shape every session, with the state and the review gate in place.
+- Commands: `"load context using AGENTS.md protocol"`, `"plan the issue <file or #N>"`, `"implement the plan"`, `"checkpoint"`.
+- Checkpoint often. It is the save button for the state, the diary, and the knowledge.
 
-### What it is
+### Memory
 
-A personal starter kit for one developer. You.
+- Three state files, project and global knowledge, handoffs, and the daily diary. Why: the next session starts where this one stopped.
+- The state files are written together at checkpoint, or not at all. Old progress moves to the daily checkpoint archive.
+- Knowledge files follow one shape and a task-based name. See the [workflow guide](docs/workflow-guide.md#23-knowledge-file-standards-and-repair).
 
-It helps you:
+### Quality
 
-- Get better answers from your AI assistant, because it now knows your project's rules and your own preferences.
-- Use the same setup across all your projects and across different AI tools.
-- Stay organized. Progress, notes, and decisions are saved, so you can pick up where you left off.
-- Keep AI notes out of your git history.
+- Peer review, codebase examination, design documents, shared understanding, thinking modes, and the coding baseline. Why: the work is reviewed and the design is agreed before the code.
+- Skills on demand: drop-in `SKILL.md` packages, indexed at boot and loaded by `"use skill <name>"` or one clear description match. See the [workflow guide](docs/workflow-guide.md#24-skills).
+- Commands: `"peer review"`, `"codebase examination"`, `"update design documents"`, `"grill me"`.
 
-Think of it as turning your AI from a chat buddy into a teammate that actually remembers things.
+### Delivery
 
-### What it isn't
+- Issue management, the PR/MR path, the merge policy, and the outbound content scrub. Why: the work is tracked, and it leaves the project only after a scrub.
+- Commands: `"file an issue: <summary>"`, `"list issues"`, `"close issue <file or #N>"`.
+- Merge mode lives in `## Merge Policy`. A local ticket closes in the branch commit; an external ticket closes when the merge lands.
+- See the [workflow guide](docs/workflow-guide.md).
 
-- Not an agent router. You still pick which AI to use.
-- Not autonomous. The AI doesn't run in loops or decide things without you.
-- Not a team management platform. It is built for one developer, with a PR/MR path for team repositories.
-- Not a replacement for your CI/CD, tests, or security scanners.
-- Not a training system. It doesn't fine-tune models.
+### Maintenance
 
-### Why I built it
+- Repair state files, repair knowledge files, back up `ai/`, recover after compaction, run the validator, and lint. Why: the workspace stays healthy over months.
+- Commands: `"repair state files"`, `"repair knowledge files"`, `"backup ai"`, `"run post-compaction recovery procedure"`.
+- The opt-in anomaly report logs a denied tool call, a missing file, or a self-correction in the day's checkpoint. See the [customization guide](docs/ai-customization-guide.md#10-report-anomalies).
 
-The idea started in a conversation with my friend [Muddassar Muneer](https://github.com/mudassarmuneer). Earlier this year, he showed me a workflow he had built for working with AI assistants. It worked well, but it had too many moving parts and a pile of task-specific scripts. I wanted something simpler and self-standing, with no dependency on external scripts or services. I built this workflow from scratch and borrowed two ideas from his approach: state management and hand-offs. The user-facing setup script is the sync tool that copies the latest protocol into your projects; the protocol validators check the workflow itself.
+### Team
 
-If you only ever use one AI assistant, you probably don't need this. Your assistant keeps its own context, and that mostly works fine.
+- Optional team knowledge store: a shared Git repository of lessons, with the two configuration keys.
+- Optional team skills: a third skills root at `<Team AI Knowledge Directory>/skills/`, with project, team, global precedence.
+- The key names are **Team AI Knowledge Directory** and **Team AI Knowledge Repository**. Set them in `ai-customization.md` when the team has a store.
+- The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Team lessons are Class A: names stay, secrets never.
+- Contribute a lesson with `"update team knowledge"`; contribute a skill by copying the package into `skills/` and opening a PR.
+- See the [workflow guide](docs/workflow-guide.md#24-skills), the [customization guide](docs/ai-customization-guide.md), and the [v7.1.0](docs/announcements/v7.1.0.md) and [v7.2.0](docs/announcements/v7.2.0.md) announcements.
 
-But do you know where its knowledge, state, and rules actually live? What happens when you move the project to another directory, or to another computer? How do you back up the AI state, your project knowledge, and the rules?
+The full command list, the design flow, the knowledge standards, and the policy loading rules are in the [workflow guide](docs/workflow-guide.md).
 
-The trouble grows when you use two or more assistants on the same project. Without a shared system, each one stores its state in its own hidden directory. Switch assistants and you start from scratch, because the new one has no idea what the last one did.
+## What it is not
 
-Think of it like a road trip with several drivers:
+- **Not a platform or a driver lock-in.** It is plain files. Any assistant can read them. VS Code is the recommended home; multi-assistant is a capability, not the pitch.
+- **Not a replacement for your judgment or autonomy.** The AI follows the procedures; you decide, approve, and merge. It does not run in loops or choose goals.
+- **Not a heavy install.** No service, no package manager, no admin rights. A clone, two files, and a command.
 
-1. Gemini is driving. It works on the task and builds up context.
-2. Gemini's free-tier quota runs out. Before it stops, it saves a checkpoint, writing the current state to `ai/state/next-steps.md`, `ai/state/progress.md`, and `ai/state/context.md`.
-3. DeepSeek takes the wheel. It reads those same files and carries on exactly where Gemini stopped.
-4. When you switch back, DeepSeek saves a checkpoint. Gemini takes over again.
+## Works with any assistant
 
-It doesn't matter which assistant you use (ChatGPT, Claude, Gemini, DeepSeek, Copilot). They all share the same files, so the state stays consistent.
+The protocol is editor- and model-agnostic. The same files work with Copilot, Claude, Gemini, DeepSeek, ChatGPT, or a local model. That matters when a quota runs out, a project moves to another machine, or you change tools.
 
-> **One protocol. One shared context. Any assistant picks up where the last one left off.**
+Think of a road trip with several drivers. One assistant drives, hits a limit, and checkpoints. The next reads the same state files and continues. Nothing is lost, because the state lives in the project, not in the assistant.
 
-## Common instructions
-
-These are the phrases you type in your AI chat to drive the workflow.
-
-| When | What to type |
-|---|---|
-| Very first time in a project | `"bootstrap using AGENTS.md protocol"` |
-| Start of every session | `"load context using AGENTS.md protocol"` |
-| End of a task, to save progress | `"checkpoint"` |
-| Create a ticket for a task or bug | `"file an issue: <summary>"` |
-| Analyze and plan a ticket | `"plan the issue <ticket file or #N>"` |
-| Implement an approved plan | `"implement the plan"` |
-| Close or list tickets | `"close issue <ticket file or #N>"`, `"list issues"` |
-| Back up the `ai/` directory | `"backup ai"` |
-| Update project knowledge with recent findings | `"update project knowledge"` |
-| Something applies beyond this project | `"update global knowledge"` |
-| Contribute a lesson to the team knowledge store | `"update team knowledge"` |
-| Load a skill for one task | `"use skill <name>"` |
-| Clean up knowledge files (header, tables, task names, files over 15 KB, 50-file review threshold) | `"repair knowledge files"` |
-| After the conversation was compacted | `"run post-compaction recovery procedure"` |
-| Research or investigate a topic | `"perform evidence based investigation on <topic or task> as mandated by the protocol"` |
-| Pressure-test a decision or plan | `"grill me"` |
-| Widen the options before deciding | `"brainstorm"` |
-| Review a file, directory, repo, or PR | `"perform a code review on <topic>"` |
-| Apply the fixes from a review report | `"apply fixes for problems identified in code review report"` |
-| Bring out-of-order or bloated state files back into shape | `"repair state files"` |
-| Write or update your design documents | `"update design documents"` |
-| Move design docs beside your code into `design-docs/` | `"migrate design docs"` |
-
-A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval.
-
-> **Note:** running bootstrap again in a project that is already set up is safe. It checks what exists and skips anything already there.
-
-Once context is loaded, you can also ask:
-
-- *"Show me the progress so far"*
-- *"What are the pending tasks?"*
-- *"Where are we in this project?"*
-
-### Why "... using AGENTS.md protocol"?
-
-You may wonder why `"load context"` on its own is not enough.
-
-Your AI assistant already keeps context in its own way. It decides what to remember, and where to keep it. That memory is hidden from you. When you type a plain `"load context"`, the assistant loads from that built-in memory. It has no reason to look for `AGENTS.md`, so it does not read it. You get whatever the assistant decides is relevant, not the project state and knowledge this workflow maintains.
-
-`AGENTS.md` is not a store of context. It is a protocol file: instructions that tell the assistant where your context lives (the `ai/` directory), what your rules are, and how to work. The assistant follows it only after you point to it by name.
-
-This is the job of the full phrase. It tells the assistant to read the protocol first. Once the protocol is loaded, the assistant knows where to find your state and knowledge.
-
-A shorter command cannot do this on its own. A shortcut would have to live inside the protocol for the assistant to know about it, but the assistant cannot learn anything from the protocol until it has read the protocol. That is the chicken and egg. Naming `AGENTS.md` breaks the loop.
-
-The same applies when you first set up a project. Use `"bootstrap using AGENTS.md protocol"`, for the same reason.
-
-### Review and maintenance phrases
-
-Ask the AI to review something or tidy up the workspace:
-
-- *"perform a codebase examination of <directory | git repo>"*
-- *"process my notes directory and remove the notes that are already implemented; for the ones that remain, add a short clarifying comment or a suggestion."*
-- *"process my plans directory and find all plans that are fully implemented. If there are any, extract the useful knowledge and save it under `ai/shared/project-knowledge/`."*
-- *"find any stale files under plans, artifacts, or notes and tell me about them without deleting anything."*
-- *"process the artifacts directory and remove any stale files."*
-- *"process my project knowledge and find any stale files, then update or remove them; where it helps, rename them with better, verbose kebab-cased names for easier indexing."*
-
-### Post-compaction recovery
-
-When a session gets auto-summarized, the AI should reload its rules from disk. This is not 100% guaranteed, so it helps to know how it works and what to do:
-
-1. **Ideally, it should fire on its own.** When the AI spots a compaction summary in the conversation, it should run the `post-compaction recovery procedure` automatically and reload its loaded rules. The AI often misses it.
-2. **If it doesn't fire, run it at your next prompt.** You'll notice the compaction appearing in the middle of some work or chat session. If the recovery didn't run, ask for it as soon as it's available: `"run post-compaction recovery procedure"`.
-3. **Why it matters.** Without the reload, the AI loses its loaded rules and guidelines and starts deviating, making mistakes, or working off assumptions.
-4. **Best approach: do it yourself.** To avoid the uncertainty entirely, compact the conversation yourself using a built-in tool (e.g. `/compact`), and then run the `post-compaction recovery procedure` yourself.
-
-## Keeping context healthy
-
-Over a long session, the AI's working memory drifts. State files fill up with stale notes. The context window gets crowded. Rules that were clear at the start get pushed out of view. This is called **context rot**.
-
-The workflow pushes back with a few built-in defences:
-
-| Problem | What protects you |
-|---|---|
-| Stale state files | All 3 state files are written together at checkpoint, or none at all |
-| Progress log growing forever | Old entries move into the daily checkpoint archive when the list gets too long |
-| Rules lost after auto-summary | Post-Compaction Recovery reloads rules from disk; you can also trigger it manually |
-| AI forgetting what it loaded | Proof-of-Load runs at every "load context" |
-| Workflow clone falling behind | Load context compares the clone with its remote and tells you when to pull |
-| Knowledge base going stale | Every checkpoint includes a mandatory knowledge review |
-| Knowledge files drifting from the standard | The checkpoint flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence; `"repair knowledge files"` fixes them without questions. It takes a while on a real knowledge base, so let it finish. |
-
-A few habits help a lot:
-
-- **Checkpoint often.** After each feature, fix, or review cycle, not just at the end of the day. This keeps the active state files small and efficient, and all the information keeps getting recorded in the state log and diary under daily-checkpoints. This is *extremely* helpful to find out what you did three months ago, for example. The AI will go through all the daily checkpoints and find the information you were looking for.
-- **Keep sessions shorter.** If the AI starts repeating itself or forgetting earlier constraints, that is your signal. Checkpoint, compact the conversation manually using `/compact` or `/compress`, run the post-compaction recovery procedure, and continue working.
-- **Always type the full `"load context using AGENTS.md protocol"`** at the start of a session. The short `"load context"` is discouraged, because it is unreliable with fresh or weaker models. The reason is explained under Common instructions.
-
-## Coding baseline policy
-
-Until now, the AI had no general coding standard. It followed the domain policy for the task, and for a script, a CLI, or a mixed repository there was no standard at all.
-
-`coding-baseline` fills that gap. Add it to your Active Expertise and the AI follows one language-neutral standard for most code work. It applies industry-recognized practices:
-
-- Clean Code: meaningful names, one job per function, comments that explain why, and explicit error handling.
-- SOLID, DRY, YAGNI, and Twelve-Factor.
-- TDD.
-- OWASP secure coding.
-- Resilience patterns: timeouts, bounded retries, and idempotency.
-- Telemetry.
-
-For production code, telemetry is on by default. The AI classifies the work, tells you what it recommends, and proceeds unless you decline. Tests, examples, exercises, and one-off scripts stay telemetry-free by default.
-
-It also sets the no-disturbance rule: new code follows the policy, and existing code changes only inside the requested scope. It is opt-in and additive. Nothing changes until you enable it.
-
-```markdown
-## Active Expertise
-
-- coding-baseline
-```
-
-## Design documents
-
-When a project grows past a quick script, its design deserves a home of its own. The workflow keeps design documents next to the code, in a `design-docs/` directory that sits beside your source folder and your `docs/` folder.
-
-The stack is short, and each document feeds the next:
-
-- **Vision**: what you want to build and why. Plain language, one to two pages.
-- **PRD**: the requirements, each with a `REQ-NNN` ID.
-- **HLD**: the architecture and components, each with an `HLD-NNN` ID.
-- **LLD (with acceptance criteria)**: the detail per component, each with an `LLD-NNN` ID.
-- **Risk and gap analysis**: open risks, each with an `RSK-NNN` ID.
-- **ADRs**: the real design decisions, each with an `ADR-NNN` ID.
-- **Delivery Ledger**: which items are done, in progress, or not started.
-
-These documents stay clean. They hold design, nothing else: no commit hashes, no session notes, no work logs. Your checkpoint never touches them.
-
-To write or update them, say what you worked on:
-
-```text
-update design documents related to the payment gateway app
-```
-
-The AI finds the right documents, proposes the changes, challenges the decisions with a few sharp questions, and shows you a diff before it writes anything. It updates the Delivery Ledger when a document changes.
-
-If you have not moved to `design-docs/` yet, the documents live under `ai/shared/project-knowledge/` with a project token in the name, for example `payment-gateway-app-prd.md`. The AI keeps working there, and it offers to migrate when it helps. When you are ready, say:
-
-```text
-migrate design docs
-```
-
-Migration is optional. Once your documents live in `design-docs/`, they sit beside the code, so they are version-controlled and travel with it. Six months later, when memory has faded, the design is still there.
-
-> **A plan is not a design document.** Plans live under `ai/plans/`. Design documents live beside your code.
-
-## Skills
-
-A skill is a small, task-specific package that loads on demand, separate from policies and knowledge. It works well for a procedure you want to share with other harnesses, or a task you do not want active all the time.
-
-- **The roots**: global skills live in the clone's `ai/skills/`; project skills live in your project root's `ai/skills/`; team skills live in `<Team AI Knowledge Directory>/skills/` when the team store is configured. A project skill replaces a team skill, a team skill replaces a global one, and the AI tells you.
-- **Package shape**: `ai/skills/<name>/SKILL.md` with `name` and a one-line `description` of at most 200 characters. The directory name matches `name`. Extra files and helper scripts are allowed.
-- **Indexed, not loaded**: at boot the AI indexes the name, description, path, and scope. It reads no skill body until the skill is activated.
-- **Activation**: say `"use skill <name>"`, or let a single best description match load it for the task. An ambiguous match asks; an unknown name reports `unknown skill`. The body is for that task only.
-- **Hierarchy**: a skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`.
-- **Helpers**: the AI never runs a skill helper without your explicit approval, and the path stays inside the package.
-- **No scan**: the protocol does not scan a skill. You are responsible for the source of a skill you drop in.
-- **Not synced**: the sync script updates `AGENTS.md` and the customization file only; it does not copy skills. Global skills come from the clone; project skills stay local.
-
-See [the skills examples](docs/examples/skills/) for a minimal package.
-
-## Customizing the AI
-
-Two files shape how the AI behaves. One is global, one is per project.
-
-**Global: `<Global User AI Directory>/settings/global-user-settings.md` (default `$HOME/.ai/settings/global-user-settings.md`)**
-
-Your own profile: name, role, skills, preferences, writing style, words you don't want the AI to use, and the CLI tools it can call. The AI loads it at the start of every session. Start from `docs/global-user-settings.md`.
-
-**Per project: `ai-customization.md`**
-
-This is the one file you edit to tailor the AI to a project. You can set:
-
-1. **Expertise**: load a policy (for example `coding-baseline`, `cloud`, `api-backend`, `windows-system-admin`).
-2. **Traits**: pick a persona (for example Senior DBA, Security Specialist, Mentor).
-3. **Compliance**: turn on regulatory standards (for example `gdpr`, `soc2`, `hipaa`).
-4. **Development Workflow**: set project-specific working rules, for example a proactive peer review after every change set.
-5. **Merge policy**: set `## Merge Policy` `**Merge Mode**: direct`, `pr`, or `auto`. `auto` behaves as direct and falls back to a pull request when a direct push is rejected.
-
-See the [AI Customization Guide](docs/ai-customization-guide.md) for the full list and examples.
-
-Some policies can also load by phrase, without an Active Expertise entry. Say a policy's phrase, such as `"cloud standards"`, `"knowledge file standards"`, or `"grill me"`, and the AI loads that policy for the session. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a context compaction; say the phrase again. `"use policy <name>"` loads any policy by its Active Expertise name. A legacy project policy with triggers and no `## Loading` is still loaded at boot and reported as active; its triggers are also indexed.
-
-A policy may also declare when it loads in an optional `## Loading` section, with one path per policy: `boot`, `trigger`, `procedure`, or `expertise`. A procedure may still load a policy explicitly. A policy with no declaration keeps its current behavior. The authoring validator and `tests/test-policy-load-paths.sh` check that every declared path is real. The declaration describes the global loading paths that already exist: Active Expertise, a trigger phrase, boot, or an explicit procedure load. A project policy keeps the legacy boot load. See [the custom policy howto](docs/custom-policy-howto.md) to write one.
-
-## Watch the AI Work: Report Anomalies
-
-An AI session can fail quietly. A tool call is denied, a file is missing, or the AI corrects itself, and you never see it. This opt-in rule makes the AI report each anomaly in the turn it notices it, so you can watch the work and file a precise issue when something breaks.
-
-The rule is opt-in because it adds noise to every session. Turn it on when you want to watch the AI closely, or when you are testing the workflow and want to report precise problems.
-
-Copy the rule into `ai-customization.md` under `## Development Workflow`, or under `## Report Anomalies` when the file has no workflow section. The AI reports the anomaly in chat and logs it in the day's checkpoint. The copy-paste rule is in [the customization guide](docs/ai-customization-guide.md#10-report-anomalies).
-
-When you file an issue here from an entry, include the tag, the step or file involved, and what the AI did. Scrub names, internal paths, and secrets before you post.
-
-## Keeping this workflow up to date
-
-> Run the sync script (`support-files/sync-agents-md.sh` or `sync-agents-md.ps1`) and it updates existing `AGENTS.md` files, checks the customization file, adds `## Merge Policy` when missing, and migrates the old layout for you. This is the recommended update path; the [manual steps](docs/ai-customization-guide.md) are for a new project's first copy.
-
-When I push updates in this repo, you would want to have those updates on your local computer too, so your projects can benefit from new features and bug-fixes.
-
-v6.0.0 changes `AGENTS.md` and moves the procedures into the clone's `ai/procedures/`. After pulling, run the sync script and restart the session so the thin router reaches your projects. Your project keeps its own `AGENTS.md` and `ai-customization.md`; the procedures load from the clone.
-
-v6.1.0 changes load context only. After pulling, run the sync script if `AGENTS.md` changed and restart the session. The procedure modules update from the clone.
-
-v6.2.0 changes the knowledge rules only. After pulling, run the sync script if `AGENTS.md` changed and restart the session, then run `"repair knowledge files"` once (add `global` for the global store) to adopt task names, topic splits, and the 50-file review threshold.
-
-v6.3.0 adds the skills layer. After pulling, run the sync script and restart the session. Put global skills in the clone's `ai/skills/`, project skills in your project's `ai/skills/`; no repair is needed.
-
-Load context now tells you when your clone is behind. It compares the clone with its remote and prints a pull command; it never pulls for you.
-
-So, the process is as follows:
-
-1. Run a checkpoint in your current project first, and ideally close the IDE / AI assistant.
-2. Go to the directory where you cloned this repo (for example `~/Projects/Simple-AI-Workflow`). Pull and sync from there, not from your project:
-
-   ```bash
-   cd ~/Projects/Simple-AI-Workflow
-
-   git pull
-   ```
-
-3. Run the sync script from the same clone directory to update all your projects:
-
-   **Linux/Git Bash:**
-
-   ```bash
-   cd ~/Projects/Simple-AI-Workflow
-
-   ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
-
-   ./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects
-   ```
-
-   **Windows PowerShell:**
-
-   ```powershell
-   cd C:\Users\<you>\Projects\Simple-AI-Workflow
-
-   git pull
-
-   powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' -WhatIf }"
-
-   powershell -NoProfile -ExecutionPolicy Bypass -Command "& { .\support-files\sync-agents-md.ps1 -Source '.\AGENTS.md' -TargetPath 'C:\Users\<you>\Projects' }"
-   ```
-
-**Note:** You *can* copy the `AGENTS.md` file from the Simple-AI-Workflow directory (where you pulled latest changes) and paste or overwrite it in the projects you are interested in. That gives you the latest protocol file, but it is only half the work. The sync script also checks or creates `ai-customization.md` with the correct `Global AI Workflow Directory`, adds `## Merge Policy` when it is missing, and migrates state files to `ai/state/`. If you copy manually, you must do those maintenance steps yourself. Using the sync script is highly recommended.
-
-After the sync:
-
-1. Go to the project directory you started from, start the IDE again (for example VS Code), and when it loads, type `"load context using AGENTS.md protocol"` to pick up the new updates.
-
-2. Run `"repair knowledge files"` once in each project. It takes a while on a real knowledge base, so let it finish. It adds the header, removes tables, gives task names, splits only by topic, merges files under 3 KB, deletes incident evidence, and reports the store count against the 50-file review threshold; it asks no questions and reports what it did. If you keep global knowledge, run `"repair knowledge files global"` too. The checkpoint only flags problems; it never edits your knowledge files.
-
-## Examples
-
-Working examples you can copy:
-
-- [Full-stack web and mobile customization](docs/examples/full-stack-web-mobile-ai-customization.md): a filled-in `ai-customization.md` for a mixed web and mobile project.
-- [Handoff examples](docs/examples/handoffs/): what a handoff between sessions looks like.
-- [Knowledge base examples](docs/examples/knowledge-base/): how project knowledge is organized.
-- [Skills examples](docs/examples/skills/): a minimal `SKILL.md` package.
-- [Personas](docs/personas/): example traits for an architect reviewer, a mentor, and a security specialist.
-- [Example learning session](docs/example-learning-session-runbook.md): a full walkthrough of a session from setup to checkpoint.
-
-## File naming for knowledge and notes
-
-When you or the AI create files under `ai/shared/project-knowledge/`, `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`), `ai/notes/`, or `docs/`, give them descriptive names.
-
-Good: `azure-postgresql-migration-decisions.md`  
-Bad: `decisions.md`, `notes.md`, `architecture.md`
-
-The AI doesn't load knowledge files at startup. It builds a name-based index and only opens a file when a task needs it. A vague name is invisible in that index, so the AI can't match it to a task without opening it first, which defeats the point.
-
-This rule covers AI-generated files too, and the common policy enforces it. Source code is exempt, so use whatever your language and framework expect.
-
-**Name knowledge files for the task.** The filename is the lookup key. Use a tool or domain, then the task, with six or fewer hyphenated segments: no ticket IDs, dates, or incident names.
-
-- Good: `postgresql-grs-and-restore.md`, `postgresql-migration-service-replication.md`, `azure-cli-subscription-context.md`
-- Bad: `general-notes.md`, `PROJ-812-postgres-incident-2026-10-29.md`, `notes-and-lessons.md`
-
-**Split by topic.** A knowledge file that grows into a mix of topics splits by task topic, never by ticket, incident, date, phase, or environment. A file under 3 KB merges into its nearest topic. The AI then reads the matching files by name before acting.
-
-### Knowledge file standards
-
-Every file in `ai/shared/project-knowledge/` and `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) starts with this header, as the first thing in the file:
-
-> **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
-
-Then the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there's a catch. A checklist uses the same shape, with the checklist under Rule or Fix.
-
-Name the file for the task it answers: a tool or domain, then the task, with six or fewer hyphenated segments. Use 10 KB as a soft target; never let it override completeness. A file that passes 15 KB gets an automatic cleanup during repair. There's no line target. Use flat bullets, not tables. Don't put commit hashes, branch names, checkpoint or diary references, or state-file paths in a knowledge file. That's bookkeeping, not knowledge.
-
-Completeness means every reusable rule, fix, reason, check, identifier, and example, not every observation. Delete incident narrative, rehearsal logs, timelines, and per-ticket evidence once the reusable rule is written.
-
-Split a file only by task topic; do not split by ticket, incident, date, phase, or environment. Merge a file under 3 KB into its nearest topic file. A checklist stays one file, and a file over 15 KB after cleanup splits by topic or, if it cannot, stays one file and is reported.
-
-Each file stands on its own. Keep the facts, rules, reasons, and checks it needs, and don't point at another knowledge file, code file, doc, policy, artifact, backup, or state file. A domain command, a system path, or a path a checklist step writes or edits is content, not a pointer.
-
-A project knowledge file may keep identifying names. A global knowledge file removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content and stays.
-
-One lesson lives in one place: the global store for a cross-project lesson, the project store for its application, no duplicate. A per-PR or per-ticket review finding goes into one topic rules file. A generated inventory or deliverable is not a knowledge file.
-
-Use 50 files per store as a review threshold. The checkpoint reports the count; at 50 or more, run a repair. The repair merges, deduplicates, deletes evidence, and retires, and it reports any remaining overage. A new topic is never blocked.
-
-At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, tmp, and archive entries.
-
-The checkpoint checks the header before it writes. It also flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence, but it never edits anything. Say `"repair knowledge files"` when you want the AI to audit and fix the project store. Add `global` for the global store. The trigger is the approval: the repair asks no further questions. It backs up the old files, preserves anything ambiguous, and reports what it merged, split, trimmed, or left alone.
-
-Heads up: the repair takes a while on a real knowledge base. Let it finish. It's how your files get fixed. `issue-template.md` and design docs in the old fallback location are exempt.
-
-## How does this compare to Copilot, Claude, or ChatGPT?
-
-Each AI assistant stores context its own way, in its own hidden directories, its own memory format, its own rules. They are all black boxes of different shades. Switch from one to another and you start from scratch, because the new assistant has no idea what the old one knew.
-
-Simple AI Workflow fixes that. Everything lives in plain files inside your project. Any assistant reads the same files. Switch tools, change editors, move to a new machine, and your context comes with you. No setup needed.
-
-For a full breakdown of how the concepts map between Copilot, Claude, ChatGPT, Cursor, and this workflow, with a side-by-side table, see:
-
-**[AI assistants and their memory systems: how Simple AI Workflow fits in](docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md)**
-
-## What's included
-
-- **Policies**: 12 domain policies (Cloud, API Backend, Web Frontend, Data, DBA, Observability, Linux SysAdmin, Windows SysAdmin, Mobile, Accounting, Academic Research, Career Coaching) and 13 protocol policies (common, meta, coding-baseline, code-review, codebase-examination, design-docs, global-settings, handoff, issue-management, knowledge, outbound-content-scrub, team-knowledge, thinking-modes). Load the ones that apply to your project.
-- **Skills on demand**: drop-in `ai/skills/<name>/SKILL.md` packages in the clone, the project root, and the configured team store's `skills/`, indexed at boot, loaded by `"use skill <name>"` or a description match, with project-over-team-over-global override and cross-type collision reporting. A skill cannot override the protocol; a helper needs approval; the user is responsible for the source.
-- **Procedure modules and a thin `AGENTS.md`**: the 16 procedures live in `ai/procedures/` in the clone, one self-standing module each with its own triggers. `AGENTS.md` keeps the always-on rules, the shared index step, and the dispatch, so the boot payload is much smaller.
-- **On-demand policy triggers**: a policy can declare its own phrases, so `"cloud standards"` loads the cloud policy for the session without editing `ai-customization.md`. The trigger index is rebuilt at load and never stored.
-- **Peer review mode**: say `"peer review"` or `"code review"` and the AI switches to reviewer mode, then saves a report to `ai/code-review-reports/`. When the reviewed file is read by an AI (`AGENTS.md`, policy files), it also checks its readability for agents.
-- **Intent-based quality findings**: the AI describes code smells by intent, not bare linter scores, so fixes are genuine rather than gamed by the model.
-- **Codebase examination mode**: say `"codebase examination"` to work through a large codebase without blowing up the context window.
-- **Multi-agent coordination**: handoffs, a coordination board, and single-writer state ownership, so several AI sessions don't step on each other.
-- **Auto-sync script**: update existing `AGENTS.md` files in all your projects in one command; it also checks the customization file, adds `## Merge Policy` when missing, and migrates the old layout. It does not create a new project's `AGENTS.md`.
-- **Protocol validator**: `support-files/validate-protocol.sh` checks that everything is wired up correctly.
-- **Post-compaction recovery**: when a session gets auto-summarized, the AI reloads its rules from disk on its own, without losing your working context.
-- **Design documentation flow**: a structured stack of Notes, Vision, PRD, HLD, LLD, ADRs, and a Delivery Ledger, with ID-based tracking (`REQ-NNN`, `HLD-NNN`, `LLD-NNN`). The AI checks for missing docs at session start, updates the ledger when a design document changes, and reviews each doc before writing the next.
-- **Shared understanding before building**: for feature work, the AI interviews you to reach a shared design concept before it creates files or writes code.
-- **Atomic checkpoint protocol**: all three state files are always written together. Partial writes don't happen.
-- **Context shielding**: global and project knowledge files are indexed at startup and loaded on demand; old on-topic ones are flagged for a freshness check. Settings and active policies load in full.
-- **Issue management and delivery**: `MANAGE-ISSUES` files, lists, closes, or reopens a ticket, and plans on request; `IMPLEMENT-PLAN` delivers an approved plan. A ticket-only request does not cascade into planning. Merge mode comes from `## Merge Policy`, and no CLI is required. A local ticket closes in the branch commit; an external ticket closes when the merge lands. External ticket writes and PR/MR or release text pass the outbound content scrub before they leave the project.
-- **Outbound content scrub**: before an external issue, PR/MR, comment, or release note leaves the project, the AI removes secrets and audience-inappropriate identifying data. Class A, internal or same audience, keeps customer names and infrastructure detail; Class B, external or different audience, removes them. Secrets are never overridable.
-- **Handoff creation**: `CREATE-HANDOFF` drafts a handoff under `ai/artifacts/handoffs/<handoff-slug>/`, runs a peer review, and writes the final file only after APPROVED. `ai-policy-handoff.md` owns the template, the lifecycle, and the conditional autonomy.
-- **Thinking modes**: `"grill me"` pressure-tests a decision with adversarial questions, and `"brainstorm"` widens the option space before you commit. Both load `ai-policy-thinking-modes.md` for the session.
-- **Author identity and git config**: the AI never signs as an AI or model, or uses a generated email. It uses your identity, resolved from git config, then your global settings, and it offers to create or fix `.gitconfig` at bootstrap and load-context.
-- **Markdown output**: one policy for headings, lists, code, links, and tables (no tables in protocol files; fine in slides and user-facing docs when they aid clarity). `.markdownlint-cli2.jsonc` holds the reference settings.
-- **State-file health and repair**: every `"load context"` checks the canonical headers, order, size, and structure read-only; say `"repair state files"` to restore the headers and bring the files back into shape on demand.
-- **Knowledge file standards and repair**: every knowledge file follows one shape and starts with a self-contained header. Files use task names of six or fewer hyphenated segments, aim for a 10 KB soft target, and get reviewed at 15 KB. The repair splits only by topic, merges files under 3 KB, deletes incident evidence, and retires closed ticket files, executed plans, and finished artifacts. Each store has a 50-file review threshold: the checkpoint reports the count and recommends a repair at 50 or more. Say `"repair knowledge files"` to clean up the project store; add `global` for the global store. The repair asks no questions. It takes a while, but it's worth running once.
-- **Optional team knowledge store**: a shared Git repository of lessons, configured per project. The boot indexes filenames only, publish opens a pull request, and team lessons are Class A: names stay, secrets never. The order is project, team, then personal global.
-- **Daily checkpoints are the archive**: the diary under `ai/daily-checkpoints/` is the single, chronological, unbounded archive. There are no separate archive files.
-- **Local-first research**: the AI searches your local sources first (project files, knowledge base, live environment) before the web or its own recall.
-- **Evidence-based investigation by default**: the AI investigates, cites its sources, and checks new claims against what it has already read, without being asked.
+This is a design feature, not the main idea. The main idea is the fixed shape. For the full comparison, see [how the assistants store context and how this workflow fits](docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md).
 
 ## Docs and slides
 
-[Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.
+- [Workflow guide](docs/workflow-guide.md): the reference manual.
+- [AI Customization Guide](docs/ai-customization-guide.md): expertise, traits, compliance, merge policy.
+- [Setup](docs/setup.md): Windows paths, the manual steps, and updates.
+- [Compliance guide](docs/compliance-guide.md).
+- [How policies work](docs/how-policies-work-in-this-workflow.md).
+- [Policy influence on AI work](docs/policy-influence-on-ai-work.md).
+- [Protocol validation](docs/protocol-validation-system.md).
+- [Codebase examination](docs/codebase-examination-guide.md).
+- [Skills example](docs/examples/skills/example-skill/SKILL.md).
+- [Examples](docs/examples/): customizations, handoffs, knowledge, and skills.
+- [Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.
+- [Markdown slides](docs/simple-ai-workflow-slides.md).
+- [Release announcements](docs/announcements/).
 
-[Markdown version of the slides](docs/simple-ai-workflow-slides.md)
-
-Other docs:
-
-- [Workflow guide](docs/workflow-guide.md): handoffs, knowledge base, issue management, delivery, state files, skills
-- [Skills example](docs/examples/skills/example-skill/SKILL.md): a minimal package
-- [AI Customization Guide](docs/ai-customization-guide.md)
-- [Compliance guide](docs/compliance-guide.md)
-- [How policies work in this workflow](docs/how-policies-work-in-this-workflow.md)
-- [Policy influence on AI quality](docs/policy-influence-on-ai-work.md)
-- [Post-compaction reload trigger setup](docs/post-compaction-reload-trigger-setup.md)
-- [Protocol Validation System](docs/protocol-validation-system.md)
-- [Codebase examination guide](docs/codebase-examination-guide.md)
-- [Multi-agent runbook](docs/multi-agent-runbook.md)
-- [Mobile app policy guide](docs/ai-policy-mobile-apps-guide.md)
-- [Provider selection guide](docs/ai-provider-selection-guide.md)
-- [Beginner setup guide](docs/vscode-cline-provider-setup-for-beginners.md)
-- [Agent collaboration notes](docs/ai-agent-collaboration.md)
+The 25 policies and 16 procedures are the fixed background. The 53 triggers are the phrases that load a policy or procedure on demand.
