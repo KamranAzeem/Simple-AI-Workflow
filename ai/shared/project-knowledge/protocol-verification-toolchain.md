@@ -40,7 +40,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - The thinking modes are `ai-policy-thinking-modes.md`, triggers `grill me` and `brainstorm`, `Mode: trigger`, loaded explicitly by MANAGE-ISSUES planning and IMPLEMENT-PLAN preflight. The common policy keeps the thinking-modes invariant and the Pre-Work Gate points at the contract.
 - The legacy rewrites declare `Mode: expertise` and add an anchor fixture; Linux, accounting, career, Windows, and academic are done, and `tests/test-linux-policy.sh`, `tests/test-accounting-policy.sh`, `tests/test-career-policy.sh`, `tests/test-windows-policy.sh`, and `tests/test-academic-policy.sh` pin their loading and key rules. The five legacy children are complete; the coding-baseline standards stay in the common policy, and that unit is resolved.
 - The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
-- The skills fixture checks the two roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project override, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
+- The skills fixture checks the three roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project-over-team and team-over-global overrides, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Markdownlint catches structural defects before review.
 - The user docs drift when a unit adds a policy, procedure, fixture, or trigger; the README, the slides, the validation doc, and the compared doc are the drift points.
 

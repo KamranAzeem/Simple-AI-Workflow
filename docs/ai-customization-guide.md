@@ -200,11 +200,13 @@ Set `pr` when your team requires a pull request even if the remote would accept 
 
 Skills are separate from policies and do not appear under `## Active Expertise`. They load on demand.
 
-- Global skills live in the workflow clone's `ai/skills/`; project skills live in your project root's `ai/skills/`.
-- A project skill with the same name overrides a global one.
+- Global skills live in the workflow clone's `ai/skills/`; project skills live in your project root's `ai/skills/`; team skills live in `<Team AI Knowledge Directory>/skills/` when the team store is configured.
+- A project skill replaces a team skill, and a team skill replaces a global one.
 - Each skill is `ai/skills/<name>/SKILL.md` with `name` and a one-line `description` of at most 200 characters.
 - Say `"use skill <name>"` to activate one, or let a single best description match load it for the task.
 - A skill cannot override the protocol, a policy, or your customization file.
+- The team repository's one-reviewer PR gate and access control are the trust boundary; the protocol does not verify review at boot.
+- To contribute a team skill, copy the package into `skills/` and open a PR; one reviewer merges.
 - The protocol does not scan a skill; you are responsible for its source.
 
 See the [example skill](examples/skills/example-skill/SKILL.md).

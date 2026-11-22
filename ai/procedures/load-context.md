@@ -76,9 +76,10 @@
     - **Global Knowledge** (from **Global AI Knowledge Directory**) and **Project Knowledge** (from **Project AI Knowledge Directory**, including any subdirectories) are both subject to **Token Rationing**. Index both in this one step with the built-in glob and directory listing, and record paths, filenames, and apparent technical domains as a reference index. Record each file's age from metadata only: the commit date for tracked files when `git` is available, or the modified time otherwise, and report `age-source=commit|mtime`. **DO NOT** load the full text of any Global Knowledge or Project Knowledge file at boot time; load a file in full on demand when an active task requires it. The filename is the lookup key, so a vague or bundled name is invisible to the index. Bound the combined index output at 16 KB; when over, print the per-root counts and query the remainder on demand.
     - **Project Issues** (from **Project Issues Directory**): Index `open/` and `in-progress/` by filename + line count only. Files under `closed/` are not indexed at boot.
     - **Design Docs** (every `design-docs/` directory under the project root): Index by filename and a short domain, read-only and never loaded in full. Scan at most 5 levels deep, prune `.git`, `node_modules`, `vendor`, and `target`, and skip archives. Scanning `design-docs` by name is permitted.
-    - **STEP-SKILLS-INDEX**: Build an ephemeral name, description, path, and scope index from both skill roots; read no body and write no file.
+    - **STEP-SKILLS-INDEX**: Build an ephemeral name, description, path, and scope index from both local skill roots and the configured team skills root; read no body and write no file.
         - One level: a `SKILL.md` package; `name` and a one-line `description` of at most 200 characters; lowercase-kebab directory matches `name`; skip and report a hidden entry, symlink, invalid package, or empty root.
-        - A project skill replaces a global skill; report the override and a cross-type name collision; keep the index within 16 KB.
+        - A project skill replaces a team skill, and a team skill replaces a global skill; report the override and a cross-type name collision; keep the combined index within 16 KB.
+        - Read **Team AI Knowledge Directory** from the **Project Customization File**; skip the team root when the key is absent; report `[PENDING]` with the reason when the configured store is missing or unreadable.
     If a directory is completely empty, explicitly note it in your state tracking.
     - The global store search uses the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, `tmp`, and archive entries. If neither form exists, ITEM KNOWLEDGE-INDEX reports the global store as `[PENDING]`.
 8. **STEP-TEAM-KNOWLEDGE-INDEX**: This is a dedicated required step; do NOT merge it with the knowledge index.
@@ -102,7 +103,7 @@
     - **ITEM STATE-FILE-HEALTH**: `[PASSED]` with the three state-file byte sizes, the shared budget, and the over-300 line count.
     - **ITEM KNOWLEDGE-INDEX**: `[PASSED]` with the Global and Project Knowledge file counts.
     - **ITEM TEAM-KNOWLEDGE-INDEX**: `[PASSED] none` when unconfigured; `[PASSED]` with the lesson count when indexed; `[PENDING]` with the reason when the store is missing or unreadable.
-    - **ITEM SKILLS-INDEX**: `[PASSED]` with the skills count and any override or collision.
+    - **ITEM SKILLS-INDEX**: `[PASSED]` with the project, team, and global skill counts and any override or collision; `[PENDING]` with the reason for an unreadable configured team root.
     - **ITEM DESIGN-DOCS-INDEX**: `[PASSED]` with the design-document count, or `none`.
     - **ITEM STATE-FILE-COUNTS**: `[PASSED]` with the three line counts and the newest progress date.
     - **ITEM ISSUES-INDEX**: `[PASSED]` with the open and in-progress counts.

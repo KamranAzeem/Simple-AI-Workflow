@@ -103,7 +103,7 @@ The following short forms are recognized as equivalents to their canonical direc
 ## Shared Protocol Steps
 
 - STEP-PROTOCOL-INDEX: Rebuild the module index from the live files and record it in working context. Defined in PROCEDURE LOAD-CONTEXT.
-- STEP-SKILLS-INDEX: Build the ephemeral skills index from both skill roots; read no body and write no file. Defined in PROCEDURE LOAD-CONTEXT.
+- STEP-SKILLS-INDEX: Build the ephemeral skills index from both local skill roots and the configured team root; read no body and write no file. Defined in PROCEDURE LOAD-CONTEXT.
 
 ## Protocol Dispatch
 

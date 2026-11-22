@@ -66,3 +66,14 @@
 [2026-11-22] Renamed the publish triggers to `update team knowledge`, `publish team knowledge`, and `publish to team knowledge`; the index reports 25 policies, 16 procedures, 53 triggers, 0 conflicts, 0 errors.
 [2026-11-22] Validation: suite 28/28, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0.
 [2026-11-22] Closed the team knowledge ticket with the plan attached; removed the plan file; released v7.1.0 and published the GitHub Release.
+[2026-11-22] Post-release verification: v7.1.0 is live at the GitHub Release; the release is public, not draft, not prerelease; the tag matches master and the feature branch is deleted.
+[2026-11-22] Grilled the team skills scope over two rounds: read-only third root at `<team>/skills/`, common Skills clause, one-reviewer PR with gated helpers, precedence project/team/global.
+[2026-11-22] Team skills decisions: same auto-match, one combined 16 KB bound, removal retirement, consumption-only contribution, deferred personal root, minor v7.2.0; no new policy, procedure, or trigger.
+[2026-11-22] Wrote the team skills plan at `ai/plans/team-skills-scope.md`; review-80 APPROVED with two suggestions; the ticket links the plan; no branch and no implementation.
+[2026-11-22] Implemented the team skills plan: common Skills clause, team policy pointer, three-root skills step, docs sweep, tests, validator anchors, v7.2.0 artifacts, and ten ADRs.
+[2026-11-22] Review-81 APPROVED; suite 28/28, protocol 8/8, authoring PASSED, 53 triggers, 0 conflicts, 0 errors.
+[2026-11-22] Closed the team skills ticket with the plan attached; removed the plan file; merge and release await approval.
+[2026-11-22] Created `/tmp/wbitt-team` as a test team repo with the Wayfinder skill at `skills/wayfinder/SKILL.md`; it indexes as 1 team skill with 0 lessons and no body read.
+[2026-11-22] Pointed the local `Team AI Knowledge Directory` and `Team AI Knowledge Repository` at `/tmp/wbitt-team`; the store is a test fixture and the config change is uncommitted.
+[2026-11-22] Removed the `/tmp/wbitt-team` test pointer from the local customization before release; the test repo remains a fixture outside the protocol.
+[2026-11-22] Released v7.2.0 and published the GitHub Release: the optional team skills root is live; the team skills ticket is closed; 25 policies, 16 procedures, 53 triggers.

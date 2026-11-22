@@ -227,8 +227,8 @@ This file contains the universal operating rules for all AI assistants in this r
 ## Skills
 
 - Treat a skill as a narrow, on-demand task package, separate from a policy, a procedure, and a knowledge file.
-- Resolve a skill from the **Global AI Skills Directory** or the **Project AI Skills Directory**.
-- Replace a global skill with a project skill of the same name.
+- Resolve a skill from the **Global AI Skills Directory**, the **Project AI Skills Directory**, or the configured **Team AI Knowledge Directory** `skills/` root.
+- Apply the precedence project, then team, then global.
 - Report the override.
 - Skip an absent or empty skills root.
 - Require one package per skill: `ai/skills/<name>/SKILL.md`, a `name`, a one-line `description` of at most 200 characters, and a lowercase-kebab directory name that matches `name`.

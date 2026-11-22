@@ -1288,3 +1288,83 @@ The common policy gains one clause that a configured **Team AI Knowledge Directo
 Context: the common policy never names a policy file, and the knowledge contract already points at the team scope.
 
 Consequences: the one-way boundary holds, and a fresh reader sees the third store at boot.
+
+## 2026-11-22: The team skills root reuses the team store
+
+Team skills are served from `<Team AI Knowledge Directory>/skills/` through the existing **Team AI Knowledge Directory** and **Team AI Knowledge Repository** keys. The team store already provides a reviewed, access-gated Git repository, and a separate skills transport would add a second source of truth. The consequence is no new key, anchor, or transport, and the team repository can host `skills/` as the earlier ADR reserved.
+
+Context: the team store and team skills arrived in the same discussion, and the team store shipped first.
+
+Consequences: one configuration surface for team lessons and team skills.
+
+## 2026-11-22: The common Skills section owns the team skills rules
+
+The common policy `## Skills` gains the conditional team root and the three-level precedence; the team knowledge policy gains only a `skills/` pointer. The skills model is an always-on invariant, and the team policy loads only when the store is configured or publish runs. The common policy names the anchor, not a policy file, and the team policy keeps the store shape.
+
+Context: a new team skills policy would need another Policy Loading Set exception for a small rule set.
+
+Consequences: no new policy or loading exception, and the team skills rule is present at every boot.
+
+## 2026-11-22: Team skills are consumption only
+
+The protocol indexes and activates team skills; contribution is a manual copy into `skills/` plus a review PR. The team repository already has review and history, and a publish trigger would duplicate the knowledge publish path for a different artifact. A publish path can be a later ticket.
+
+Context: the team knowledge publish procedure is about lessons, and the grilling kept the scope small.
+
+Consequences: no new trigger or procedure, and the team repository's `CONTRIBUTING.md` owns the contribution flow.
+
+## 2026-11-22: The team repository is the team skills trust boundary
+
+A team skill's one-reviewer PR gate and the repository access control are the trust boundary, documented as an assumption and not verified at boot. The boot is offline and cannot read PR review state without network and authentication. The local clone is the user's trusted working copy; the review gate governs what enters the shared remote.
+
+Context: a skill body is instructions, and a helper is executable, so the review and access control carry the trust.
+
+Consequences: the user remains responsible for the source, and a helper still needs explicit approval.
+
+## 2026-11-22: Skill precedence is project, team, global
+
+A project skill replaces a team skill, and a team skill replaces a global skill; the override is reported. The order mirrors the knowledge precedence, and the project remains authoritative for the project.
+
+Context: the skills model already had project over global, and the team store is a curated shared scope.
+
+Consequences: a team skill overrides a global skill of the same name, and a project skill overrides both.
+
+## 2026-11-22: The team skills index lives in the skills step
+
+`STEP-SKILLS-INDEX` indexes both local roots and the configured team root. The combined three-root index keeps the 16 KB bound; an unreadable configured team store reports `[PENDING]` and the load continues. `ITEM SKILLS-INDEX` reports the project, team, and global counts and any override or collision.
+
+Context: the skills contract owns the package shape, and one index keeps the boot cost predictable.
+
+Consequences: the team knowledge item stays lessons-only, and the team skills status is visible in the skills item.
+
+## 2026-11-22: Team skills keep the same auto-match and gate helpers
+
+A team skill activates with `use skill <name>` or a single best description match, and the team source is announced. A match loads the body only, and every helper still needs explicit approval. Review is at contribution time, and a body is instructions, not execution.
+
+Context: the team repository is access-gated and reviewed, and the helper rule already exists.
+
+Consequences: no new activation path, and a description match never runs a helper.
+
+## 2026-11-22: Removal is team skill retirement
+
+A team skill is retired by removing its package in a reviewed PR; the boot index drops it, and Git history records the removal. The index is rebuilt from live files, so a tombstone would add a field and a skip rule for no lookup benefit.
+
+Context: the team skill frontmatter requires only `name` and `description`.
+
+Consequences: no tombstone or new frontmatter field, and the team repository's PR is the retirement record.
+
+## 2026-11-22: A personal skills root stays deferred
+
+No personal skills root is reserved. The earlier user-global skills root was dropped because "global" already had multiple owners, and the team root is a separate scope. The current order is project, team, global, and a future ticket decides a personal root.
+
+Context: the grilling asked where a personal root would sit and accepted a deferral.
+
+Consequences: the three-root model is the complete model for this change.
+
+## 2026-11-22: Team skills ship in v7.2.0
+
+The team skills scope ships as a minor release with an announcement, a README banner, a docs sweep, and a release-practices entry. The change adds behavior and docs but no new policy, procedure, or trigger.
+
+Context: the team knowledge store shipped in v7.1.0, and the team skills root is the next feature.
+
+Consequences: the policy count stays 25, the procedure count stays 16, and the trigger count stays 53.

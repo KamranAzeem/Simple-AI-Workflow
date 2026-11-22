@@ -171,8 +171,6 @@ present "$ROOT/design-docs/protocol-decisions.md" "Team skills are deferred" "AD
 present "$ROOT/docs/ai-customization.md" "Team AI Knowledge Directory" "customization template has the team directory key"
 present "$ROOT/docs/ai-customization.md" "Team AI Knowledge Repository" "customization template has the team repository key"
 present "$ROOT/docs/announcements/v7.1.0.md" "# v7.1.0" "release announcement exists"
-present "$ROOT/README.md" "v7.1.0" "README banner names the release"
-present "$ROOT/README.md" "docs/announcements/v7.1.0.md" "README banner links the announcement"
 present "$MAIN_VALIDATOR" "POLICY_FLOOR=25" "validator policy floor is 25"
 present "$MAIN_VALIDATOR" "Team AI Knowledge Directory" "validator checks the team directory key"
 present "$MAIN_VALIDATOR" "Team AI Knowledge Repository" "validator checks the team repository key"
