@@ -44,13 +44,3 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 ### Rule: Proactive Peer Review
 
 - After completing each module or change set, run PROCEDURE RUN-PEER-REVIEW (the "peer review", "code review", or "PR review" trigger) proactively, without being asked.
-
-### Rule: Report anomalies
-
-- Report every anomaly in the same turn you notice it. Never fail silently.
-- An anomaly is a denied or failed tool call, an unreadable or missing file, a failed or no-op edit, a state-file problem, a deviation from the rules or the protocol, a wrong statement you later correct, or tool friction (a hang, a slow command, a missing tool).
-- Tag each one A (AI deviation), W (wrong statement) or F (tool friction). Number each tag per day from 1: A1, A2, W1, F1. The day is the current calendar date, matching the daily checkpoint file.
-- In chat, say what happened, what was done, and what changed.
-- In the checkpoint log, record each entry without names, internal paths, or secrets. Keep the full detail in chat.
-- At each checkpoint, add the new A, W and F entries as an `### Anomalies` subsection inside that checkpoint's section in the daily checkpoint file. Never edit an earlier entry.
-- When there are no new entries at a checkpoint, omit the `### Anomalies` subsection.
