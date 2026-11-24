@@ -128,3 +128,20 @@
 [2026-11-24] Refined the daily-loop and quality-loop arrows: 3px strokes, 5-unit markers, edge-connected endpoints, smooth curves; rebuilt; audit 0; suite 31/31.
 [2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
 [2026-11-24] Prepared v7.3.1 with the announcement, README banner, and release-practices entry; the user approved the draft; closed the deck review ticket with the plan attached and removed the plan file.
+[2026-11-24] Delivered v7.3.1: squash-merged 5f860b3, deleted the review and token branches, pushed, tagged, and published the GitHub Release; validator 8/8.
+[2026-11-24] Merged the customization-tracking fix 868c816: tracked customization, loader acceptance, guide and ADR; review-116 APPROVED.
+[2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
+[2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
+[2026-11-24] Investigated `slide-deck-review-speed`: the audit covers HTML overflow in 2.97s, the SVGs meet the 24-unit floor, and review-115 used changed-only inspection; trimmed the ticket to S and dropped Playwright and the browser-in-suite check.
+[2026-11-24] Recommended the presentation split: policy for the standard, procedure for create and review, skill only for the toolchain; the open `presentation-policy` ticket covers the policy.
+[2026-11-24] Deferred the presentation policy and slide review speed tickets at the user's request; recorded the layout and type-control reasons and the `build-slides-html.sh` question; no plan, branch, or source change.
+[2026-11-24] Attached the executed config plan to its closed ticket under `## Implementation Plan`, verified the copy, and deleted the loose plan file; `ai/plans/` now holds only `.gitkeep`.
+[2026-11-24] Filed the team-knowledge directory and repository naming ticket (P3/M) with the rename scope, the live file list, and the migration questions.
+[2026-11-24] Grilled the ticket to seven decisions: team-named repository, sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, and minor release; recorded the decisions and the local fixture.
+[2026-11-24] Fixed the external team fixture lesson with the team frontmatter and body; uncommitted there; the skills root was left empty.
+[2026-11-24] Wrote `ai/plans/team-knowledge-directory-and-repo-naming.md` (220 lines): helper, policy, boot, publish, tests, docs, deck, validator, ADR, release, and close sequence.
+[2026-11-24] Ran 13 plan reviews, `review-117` to `review-129`; the design stabilized early, but later rounds churned on close-sequence mechanics; the latest is CHANGES REQUESTED with 3 Major findings.
+[2026-11-24] The plan is not approved; no branch or commit; the ticket records the plan and review status; the 96-minute block was dominated by the review loop.
+[2026-11-25] Renamed the team store to team-knowledge/ across the policy, publish procedure, boot index, docs, deck note, diagram, fixture, guard, validator, and ADR; split the naming convention and the report-only check to team-repository-naming-convention.md.
+[2026-11-25] Cut the team-knowledge plan from 220 lines to an S note; review-130 APPROVED; implemented with review-131 APPROVED; suite 31/31, validator 8/8, markdownlint 0 on 14 files, shellcheck 0, audit 59/59; slide 40 PNG checked.
+[2026-11-25] Prepared v7.4.0 on feature/team-knowledge-directory-rename; the release text is approved; the checkpoint records the gate and the stash restore; no merge or tag yet.

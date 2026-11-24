@@ -1408,3 +1408,7 @@ The structural audit accepts an `ai-customization.md` that is tracked. It warns 
 Context: the workflow repository tracked `ai-customization.md` while `.gitignore` ignored it, and the load-context check expected the ignore entry. The user chose to keep the customization in Git and asked for the checks and docs to agree.
 
 Consequences: the `.gitignore` entry is removed from the workflow repository; load context accepts a tracked file and warns only for an untracked, unignored file; the customization guide states both states. The bootstrap's default and the deck notes that describe the bootstrap are unchanged.
+
+## 2026-11-24: The team store directory is team-knowledge
+
+The team store keeps one flat lesson per file under `team-knowledge/`, matching `global-knowledge/` and `project-knowledge/`. The filename stays the id. This supersedes only the `lessons/` location clause of the 2026-11-22 flat-lessons decision; the flat-file and filename-id rules stand. The repository naming convention and the report-only check are a separate decision.

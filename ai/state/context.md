@@ -14,31 +14,25 @@
 
 ## Current Status
 
-- **Milestone**: v7.3.0 is live; the full deck review is approved (review-115); v7.3.1 is prepared on the review branch and awaits delivery.
-- **Team knowledge**: the policy, publish procedure, boot index step, and 54 triggers are live.
-- **Validator**: 8/8; the authoring check passes; suite 31/31; the slide audit reports 0 overflow; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
-- **Policy count**: 25 modular policies and 16 procedure modules; the floor is 25.
-- **State files**: shared budget 30,720 bytes; number-free headers; today's file 2026-11-24 exists; sizes under budget.
+- **Milestone**: v7.4.0 is prepared on `feature/team-knowledge-directory-rename`; the team store is renamed to `team-knowledge/`; the release awaits the terminal gate and publication.
+- **Team knowledge**: the policy, publish procedure, boot index, docs, deck, fixture, guard, validator anchors, and ADR are updated; the repository naming convention and the report-only check are a separate open ticket.
+- **Validator**: 8/8; authoring passes; suite 31/31; slide audit 0 overflow; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
+- **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; sizes under budget.
 - **Project knowledge**: 14 lessons plus the template; global knowledge 29 files.
-- **Project issues**: 11 open, 0 in-progress; the token ticket is closed as superseded; the full deck review ticket is closed with the plan; the slide-deck review speed issue is open.
+- **Project issues**: 13 open after the parked tickets restore; 0 in-progress; the rename ticket closes in the branch; the naming-convention and review-budget tickets are open.
 - **Skills**: 1 global package (`kanban-board`); 0 project packages; a team root is indexed only when configured.
 
 ## Active Working Context
 
-- **Objective**: deliver v7.3.1: merge the review branch, tag, publish, and delete the branches; the backlog is 11 open, 0 in-progress.
-- **Documentation and slides batch (live)**: the seven notes items are in the guide and the deck; review-97 APPROVED.
-- **Full deck review (approved)**: the token work is on the held base; 2.4rem body with 84/98vh diagrams; the fixture is green; the notes and arrow fixes are in; review-115 APPROVED; the ticket is closed; v7.3.1 is prepared.
-- **Notes 93+ (live)**: the ladder has six levels with level 2 marked and 3-5 unlabelled; the multi-repo root is `customer-joe/`; the Idea bullet is gone; the quality loop runs test first, implement, peer review; the model card is centered.
-- **Post-compaction recovery (manual)**: the procedure, `AGENTS.md`, the guide, the slides, the setup guide, the comparison table, the README, and the knowledge note state the manual run.
-- **Release**: v7.3.0 is live; v7.3.1 is prepared and confirmed; delivery is pending.
-- **State-file budget**: the shared 30,720-byte gate, the 300-character guard, and the condense pipeline are live.
-- **Team store**: optional; indexed only when configured; no production store is configured.
+- **Objective**: deliver v7.4.0: commit the checkpoint, pass the terminal gate, merge, tag, and publish; restore the pre-work stash afterward.
+- **Release**: v7.4.0 prepared; the announcement, banner, release-practices entry, and GitHub body are approved; publication follows the gate.
+- **Pre-work stash**: `pre-rename park 2026-11-24`; restore it in the working tree after delivery; the deleted config plan stays deleted; recreate `ai/pending/` if the round-trip removes it.
+- **Terminal gate**: base `306c3eb`; branch `feature/team-knowledge-directory-rename`; direct squash merge.
+- **Team store**: optional; no production store is configured; the local fixture is `~/Projects/infrastructure-team-alpha/`.
 - **Team skills**: the optional third root is live since v7.2.0.
-- **Backup scripts**: both stream progress, prune heavy directories, and keep good archives when the permission check cannot run.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
-- **Kanban skill (live)**: the read-only board at `ai/skills/kanban-board/` is indexed as 1 global package.
-- **Idea intake and close-sequence clarity (live)**: the `Idea` type, the `file an idea` trigger, the dated `Won't fix` close, and the two-step wording are live; the plan is attached to the idea ticket.
-- **Customization tracking (committed)**: the fix is committed on its own change and awaits review and merge; the tracked customization, the loader acceptance, and the ADR are recorded.
 - **Work-item lifecycle**: MANAGE-ISSUES files and plans; IMPLEMENT-PLAN delivers; the implementation request approves the plan's close sequence.
 - **Stash guard**: a stash round-trip can delete empty mandatory directories; the validator catches the gap.
-- **Lint**: clean; the local-only directories and the daily checkpoints are exempt.
+- **Lint**: `markdownlint-cli2` printed `Linting: 11 files` and `0 issues in 0 files`; the exit code and the linting count are the signal.
+- **Slide tickets (deferred)**: the presentation policy needs layout and type-control design first; the review-speed ticket keeps its trimmed S scope.
+- **Slide audit limit**: `audit-slides.sh` checks HTML overflow only; SVG-internal defects need the PNG pass.

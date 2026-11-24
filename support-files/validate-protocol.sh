@@ -71,6 +71,8 @@ require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missi
 require_in "ai/policies/ai-policy-common.md" "or the configured" "the common Skills section does not name the team root."
 require_in "ai/policies/ai-policy-common.md" "Apply the precedence project, then team, then global" "the common Skills section lacks the team precedence."
 require_in "ai/policies/ai-policy-team-knowledge.md" "skills/" "the team policy lacks the skills pointer."
+require_in "ai/policies/ai-policy-team-knowledge.md" "team-knowledge/" "the team policy lacks the team-knowledge path."
+require_in "ai/procedures/load-context.md" "team-knowledge/" "the boot step lacks the team-knowledge path."
 require_in "ai/procedures/load-context.md" "configured team skills root" "load-context lacks the configured team skills root."
 require_in "AGENTS.md" "configured team root" "AGENTS.md lacks the configured team skills root."
 require_in "ai/policies/ai-policy-common.md" '^## Outbound Content Scrub$' "Outbound Content Scrub section missing from ai-policy-common.md."

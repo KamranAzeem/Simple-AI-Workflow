@@ -85,7 +85,7 @@
 8. **STEP-TEAM-KNOWLEDGE-INDEX**: This is a dedicated required step; do NOT merge it with the knowledge index.
     - Read **Team AI Knowledge Directory** from the **Project Customization File** and expand `~` and `[HOME]`.
     - When the key is absent, report `[PASSED] none` and skip the policy load.
-    - When the key is present and readable, load `ai-policy-team-knowledge.md` in full from the **Global AI Policies Directory**, report it active, and index `lessons/` filenames, paths, and apparent domains only.
+    - When the key is present and readable, load `ai-policy-team-knowledge.md` in full from the **Global AI Policies Directory**, report it active, and index `team-knowledge/` filenames, paths, and apparent domains only.
     - When the key is present and missing or unreadable, report `[PENDING]` with the reason and continue; do not load the policy.
     - Never read lesson content at boot. Bound the index at 16 KB; when over, print the counts and query the remainder on demand.
 9. **STEP-POLICY-LOADING**: Scan the **Project Customization File** for the `## Active Expertise` section.

@@ -156,6 +156,10 @@ for phrase in \
     present "$DECK" "$phrase" "deck names: $phrase"
 done
 
+present "$DECK" "Team knowledge lives in team-knowledge/ and is indexed by filename." "deck note uses the team-knowledge path"
+absent "$DECK" "Team knowledge lives in lessons/ and is indexed by filename." "deck drops the lessons path"
+present "$ROOT/docs/slides/diagrams/knowledge-skills.svg" "team-knowledge/" "the knowledge and skills diagram uses the team-knowledge path"
+
 if awk '/^---$/{exit} {print}' "$DECK" | grep -qF "Think like a wave surfer"; then
     pass "first slide sets the training framing"
 else

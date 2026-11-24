@@ -36,6 +36,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.4.0 (2026-11-25)
+
+- Rename the team store directory from `lessons/` to `team-knowledge/`, so all three knowledge scopes share one pattern: `global-knowledge/`, `project-knowledge/`, and `team-knowledge/`.
+- Update the team policy, the publish procedure, the boot index, the docs, the diagram, and the deck note; the store keeps one flat lesson per file and the filename stays the id.
+- Change the fixture root to `tests/team-alpha/` and add a guard that fails on the old path.
+- Split the team repository naming convention and the optional report-only check into a separate ticket; no helper ships in this release.
+- Counts stay 25 policies, 16 procedures, 54 triggers; suite 31/31, validator 8/8.
+- Upgrade action: pull, run the sync script, restart the session; if you keep a team store, rename its `lessons/` directory to `team-knowledge/` and update its links.
+- Release prepared on 2026-11-25; publication follows the approval.
+
 ### v7.3.1 (2026-11-24)
 
 - Rebuild the deck as a reproducible HTML deck from the Markdown, with a per-slide 1600x900 renderer for review.
@@ -43,7 +53,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Rewrite the speaker notes and the cited guide sections in the user's voice; fix the six-level AI ladder, the customer-root layout, the Idea removal, the quality loop, and the loop arrows.
 - Add the token discipline slide and the MoE routing diagram.
 - Keep the protocol counts at 25 policies, 16 procedures, 54 triggers; suite 31/31, validator 8/8.
-- Release prepared on 2026-11-24; publication follows the merge approval.
+- Published 2026-11-24.
 
 ### v7.3.0 (2026-11-24)
 

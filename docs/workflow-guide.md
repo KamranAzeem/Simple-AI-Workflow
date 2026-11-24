@@ -523,7 +523,7 @@ Run it once after you upgrade. Add `global` if you keep global knowledge. The ch
 
 ### Team knowledge
 
-The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone, and `Team AI Knowledge Repository` to the publish remote. The boot indexes `lessons/` by filename only. It reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
+The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone, and `Team AI Knowledge Repository` to the publish remote. The boot indexes `team-knowledge/` by filename only. It reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
 
 Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Verify body, not the local knowledge header. They are Class A: names and infrastructure detail stay; secrets never do. The local sensitive-names list is not applied to team lessons. Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, dedupes by hash and title, writes the lesson on a branch, and opens a pull request. It never merges.
 

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.3.1 (2026-11-24).** The deck is now a reproducible HTML deck with a 59-slide visual review, and the diagrams and speaker notes are corrected. Read the announcement: [docs/announcements/v7.3.1.md](docs/announcements/v7.3.1.md). |
+| **v7.4.0 (2026-11-25).** The team knowledge store now keeps its lessons under `team-knowledge/`, matching the other two knowledge scopes. Read the announcement: [docs/announcements/v7.4.0.md](docs/announcements/v7.4.0.md). |
 
 # Simple AI Workflow
 
@@ -124,7 +124,7 @@ This page describes the protocol. The protocol modules (`AGENTS.md`, the policie
 
 ### Team
 
-- Optional team knowledge store: a shared Git repository of lessons, with the two configuration keys.
+- Optional team knowledge store: a shared Git repository of lessons under `team-knowledge/`, with the two configuration keys.
 - Optional team skills: a third skills root at `<Team AI Knowledge Directory>/skills/`, with project, team, global precedence.
 - The key names are **Team AI Knowledge Directory** and **Team AI Knowledge Repository**. Set them in `ai-customization.md` when the team has a store.
 - The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Team lessons are Class A: names stay, secrets never.

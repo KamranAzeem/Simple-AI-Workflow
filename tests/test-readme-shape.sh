@@ -68,7 +68,7 @@ for heading in "### Setup" "### Daily loop" "### Memory" "### Quality" "### Deli
     present "$README" "$heading" "README group: $heading"
 done
 
-for phrase in "Team AI Knowledge Directory" "Team AI Knowledge Repository" "skills/" "trust boundary"; do
+for phrase in "Team AI Knowledge Directory" "Team AI Knowledge Repository" "team-knowledge/" "skills/" "trust boundary"; do
     present "$README" "$phrase" "README team feature: $phrase"
 done
 

@@ -63,7 +63,7 @@ The team knowledge store is optional. It is a Git repository or a read-only moun
 
 - Set `Team AI Knowledge Directory` to the local clone or mount.
 - Set `Team AI Knowledge Repository` to the publish remote when it differs from the clone's `origin`.
-- Keep lessons in `lessons/<lesson-name>.md`. The filename is the id.
+- Keep lessons in `team-knowledge/<lesson-name>.md`. The filename is the id.
 - Precedence is project knowledge, then team knowledge, then personal global knowledge.
 - Team lessons are Class A: names and infrastructure detail stay, and secrets never do. The local sensitive-names list is not applied to team lessons; repository access is the privacy control.
 - Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, checks for duplicates, writes the lesson on a branch, and opens a pull request. It never merges.
