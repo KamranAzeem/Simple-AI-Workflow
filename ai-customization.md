@@ -40,7 +40,3 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 ### Rule: Procedure and policy authoring
 
 - Follow `ai-policy-meta.md` (`## Procedure and Policy Authoring`) when writing or editing `AGENTS.md` or any policy file.
-
-### Rule: Proactive Peer Review
-
-- After completing each module or change set, run PROCEDURE RUN-PEER-REVIEW (the "peer review", "code review", or "PR review" trigger) proactively, without being asked.
