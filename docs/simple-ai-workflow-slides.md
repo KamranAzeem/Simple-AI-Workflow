@@ -316,7 +316,7 @@ The boot reads the rules and the state. Knowledge and skills are indexed by name
 
 ![The context budget](slides/diagrams/token-budget.svg)
 
-<!-- Speaker notes: This is the old deck's cost slide, made structural. Rules and state load in full. Knowledge and skills are indexed by name, description, and path, and the body is read only when the task needs it. Scoped reads skip secrets, archives, notes, and the whole repository. A long session gets compacted, and post-compaction recovery reloads the rules without the transcript. Use a cheap model for a cheap task. The protocol is the lever that keeps the expensive model focused. -->
+<!-- Speaker notes: This is the old deck's cost slide, made structural. Rules and state load in full. Knowledge and skills are indexed by name, description, and path, and the body is read only when the task needs it. Scoped reads skip secrets, archives, notes, and the whole repository. A long session gets compacted, and you run post-compaction recovery to reload the rules without the transcript. Use a cheap model for a cheap task. The protocol is the lever that keeps the expensive model focused. -->
 
 ---
 
@@ -491,12 +491,12 @@ Design, recovery, and repair.
 - **Design-docs policy** — notes → vision → PRD → HLD → LLD → ADRs → delivery ledger.
 - **update-design-docs** — writes or updates a document, shows a diff, challenges the design, and updates the ledger.
 - **migrate-design-docs** — moves old design docs from knowledge into `design-docs/`.
-- **post-compaction-recovery** — reloads the rules after a summary without reading the state files.
+- **post-compaction-recovery**: reloads the rules when you run it after a summary; no harness hook currently fires it.
 - **repair-knowledge-files** — audits and repairs the stores with a conservation manifest.
 - **repair-state-files** — reorders, trims, restores headers, and never drops an unfinished next step.
 - **Knowledge standards** — one lesson in one place; a project or global store; no pointers.
 
-<!-- Speaker notes: The design chain is the intent layer. The repair procedures are the maintenance layer. Post-compaction recovery reloads the rules without the stale state. Knowledge standards keep one lesson in one place. -->
+<!-- Speaker notes: The design chain is the intent layer. The repair procedures are the maintenance layer. Run post-compaction recovery after a summary; it reloads the rules without the stale state. Knowledge standards keep one lesson in one place. -->
 
 ---
 
@@ -586,14 +586,14 @@ State, knowledge, and settings.
 Backup, recovery, token, and meta.
 
 - **create-backup** — `"backup ai"` writes a timestamped archive to `~/.ai/backups/`.
-- **post-compaction-recovery** — the automatic reload after a summary.
+- **post-compaction-recovery**: the manual reload you run after a summary; no harness hook currently fires it.
 - **validate-protocol** — the 8-step validator for the protocol tree.
 - **Lint** — markdownlint and shellcheck on the changed files.
 - **Token discipline** — index at boot, load on demand, compact, and use scoped reads.
 - **Meta policy** — protocol developer mode, validation, and release discipline.
 - **Sync** — the clone is the rulebook; the project is the copy.
 
-<!-- Speaker notes: Backup is on demand, not part of checkpoint. Recovery is automatic. The validator and lint are the release checks. Token discipline is the budget. The meta policy is the maintainer mode. -->
+<!-- Speaker notes: Backup is on demand, not part of checkpoint. Recovery is manual: you run the phrase after a summary, because no harness provides a working post-compaction hook. The validator and lint are the release checks. Token discipline is the budget. The meta policy is the maintainer mode. -->
 
 ---
 

@@ -129,43 +129,37 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 
 ## 7. Session Resume (Compacted Context)
 
-When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the AI runs the **Post-Compaction Recovery** procedure before responding to your next request.
+When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the standing rules can drop out of context. The **Post-Compaction Recovery** procedure reloads them.
+
+**It is not automatic.** No harness currently provides a reliable hook that fires after compaction and re-injects the protocol, so you run the procedure yourself. After you see the summary, type:
+
+> *"run post-compaction recovery procedure"*
 
 ### How it works
 
-1. The AI notices the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary it did not write.
-2. It re-reads the thin `AGENTS.md`, every procedure module in the clone's `ai/procedures/`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
-3. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
-4. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
+1. You notice the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary you did not write.
+2. You type the phrase.
+3. The AI re-reads the thin `AGENTS.md`, every procedure module in the clone's `ai/procedures/`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
+4. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
+5. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
 
 ### Key rules
 
-- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run any time: automatically or when you ask for it.
+- **Manual, because no working hook exists today**: no harness hook currently fires the procedure. A pre-compaction hook only warns you before the summary and cannot inject context into the next turn, so the protocol cannot arm itself.
+- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run at any time, including when you are not sure a compaction happened.
 - **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
 - **Trigger index**: The AI rebuilds the trigger index from the live policy files and procedure modules. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction; say the phrase again.
 
 ### Benefits
 
-- **Zero-touch resume**: No need to say "load context" after a compaction.
+- **Recovery without reloading state**: The reload restores your standing rules from disk while the live summary stays the source of truth for progress.
 - **Context integrity**: The reload restores your standing rules without disturbing the live thread.
 
-### Why it still needs a small external trigger (a necessary evil)
+### What to expect
 
-`AGENTS.md` is one of the things a compaction can drop, so it cannot reliably
-tell the assistant to reload itself. The re-arming instruction has to live in a
-layer the assistant re-reads every turn: its own persistent memory or always-on
-custom instructions. That layer differs per assistant and lives outside every
-repository, in your personal settings. Keeping one short note there is a
-deliberate trade-off, kept out of the tool-agnostic protocol on purpose.
+The procedure announces itself as the first line of the first reply after you run it. If you see a compaction summary and that line is missing, the procedure did not run: type the phrase again. There is no hidden automatic step to wait for.
 
-Set this up once for your assistant of choice using the per-assistant guide,
-`post-compaction-reload-trigger-setup.md`.
-
-The honest target is high reliability with a loud, visible signal, not a hard
-guarantee. The reload announces itself as the first line of the first reply
-after a compaction; if you do not see that line, the reload was skipped. The
-final backstop is you: after any summary, ask "did you run the post-compaction
-recovery?" before trusting the next answer.
+The setup guide, `post-compaction-reload-trigger-setup.md`, lists optional per-assistant reminders. A reminder only prompts you to run the phrase; it does not make the recovery automatic.
 
 ## 8. Native AI State Backups
 
@@ -423,12 +417,12 @@ Over a long session, the working memory drifts. The state files fill with stale 
 |---|---|
 | Stale state files | All three state files are written together at checkpoint, or not at all |
 | Progress log growing | Old entries move to the daily checkpoint archive |
-| Rules lost after auto-summary | Post-compaction recovery reloads them from disk |
+| Rules lost after auto-summary | Post-compaction recovery reloads them; run it manually after each summary |
 | AI forgetting what it loaded | Proof-of-load runs on every load context |
 | Clone falling behind | Load context compares the clone with its remote |
 | Knowledge going stale | Every checkpoint includes a knowledge review |
 
-Checkpoint after each feature, fix, or review cycle. Keep sessions short; if the AI repeats itself or forgets a constraint, checkpoint, compact the conversation, and run post-compaction recovery. Always use the full load phrase.
+Checkpoint after each feature, fix, or review cycle. Keep sessions short; if the AI repeats itself or forgets a constraint, checkpoint, compact the conversation, then run post-compaction recovery yourself. Always use the full load phrase.
 
 ## 18. Evidence and the Investigation Contract
 
@@ -459,7 +453,7 @@ One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs ever
 
 ## 22. Design Documents
 
-Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again after compaction.
+Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again when you run post-compaction recovery.
 
 To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.
 

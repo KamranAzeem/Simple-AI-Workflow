@@ -1,13 +1,13 @@
-# PROCEDURE POST-COMPACTION-RECOVERY: Automatic after conversation compaction
+# PROCEDURE POST-COMPACTION-RECOVERY: Manual after conversation compaction
 
 ## Triggers
 
 - post-compaction recovery
 - run post-compaction recovery procedure
 
-**Stable identifier**: The title "Post-Compaction Recovery" is the maintained contract referenced by the `validate-protocol.sh` anchor, the setup guide, and any hook configurations. Never rename this procedure without updating those in lockstep.
+**Stable identifier**: The title "Post-Compaction Recovery" is the maintained contract referenced by the `validate-protocol.sh` anchor, the setup guide, and any reminder configurations. Never rename this procedure without updating those in lockstep.
 
-**Trigger**: Run this whenever the conversation is compacted, that is, whenever the harness replaces the live history with a summary. Concrete signals: the literal text "Compacted conversation" in the transcript; a `<conversation-summary>` XML block in the active context; or the session opening with a machine-generated multi-section summary you did not write. It is also safe to run on explicit user request. This procedure only re-reads standing rule and config files and re-indexes the knowledge bases; it never deletes or overwrites the working context, so running it when in doubt is safe.
+**Manual trigger**: No harness hook currently fires this procedure. The user runs it after the conversation is compacted, that is, after the harness replaces the live history with a summary. The user's signals are the literal text "Compacted conversation" in the transcript, a `<conversation-summary>` XML block in the active context, or a session that opens with a machine-generated multi-section summary they did not write. Treat the user's request as the trigger. Do not claim the reload ran automatically. This procedure only re-reads standing rule and config files and re-indexes the knowledge bases; it never deletes or overwrites the working context, so running it when in doubt is safe.
 
 **The one hard rule**: Do NOT read the three **Project AI State Files** (`ai/state/progress.md`, `ai/state/context.md`, `ai/state/next-steps.md`) or any daily checkpoint during this procedure. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older than the summary and would inject stale state. This procedure reloads rules, not state. It therefore never runs the state-file health check and never runs `repair state files`.
 

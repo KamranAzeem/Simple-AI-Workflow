@@ -198,11 +198,15 @@ The descriptive title is the stable external identifier and a maintained contrac
 
 A fixed announcement line is the mandatory literal first line of the first reply after compaction, and its absence is the visible signal that the procedure was skipped. The procedure is a self-executed rule with an honest ceiling: high reliability through the sentinel, a per-tool external trigger, and a human spot check, explicitly not a structural guarantee.
 
+Note: the automatic-firing half is superseded on 2026-11-24; the sentinel rule remains, and no harness hook fires the procedure.
+
 ## 2026-07-28: The reload trigger lives outside the repository
 
 The re-arming instruction lives in a per-assistant layer that is re-read every turn, such as persistent memory or always-on instructions, because `AGENTS.md` itself is dropped by compaction. It is deliberately not part of the tool-agnostic protocol. A setup guide documents per-assistant placement, and asking "did you run the post-compaction reload?" after a summary is the human backstop.
 
 Note: for GitHub Copilot the memory trigger was later replaced by a PreCompact hook, and the memory file was deleted on 2026-07-31.
+
+Note: the automatic-firing half is superseded on 2026-11-24; a reminder can only prompt the user, and no harness hook fires the reload.
 
 ## 2026-07-31: The recovery procedure is renamed Post-Compaction Recovery
 
@@ -212,6 +216,8 @@ The procedure title is "Post-Compaction Recovery", matching the harness term "Co
 
 The procedure loads only static rule and config files and never reads the state files. Because it only adds files and never wipes the working thread, it is safe to run automatically or on request, with no "only after compaction" guard. The one hard rule is never to read the three state files or a daily checkpoint during it. It reads the coordination file in full and indexes the rest of the shared directory.
 
+Note: the automatic-run half is superseded on 2026-11-24; the procedure is manual, and the additive, safe-any-time reload remains.
+
 ## 2026-07-31: Compaction signals are syntactic
 
 The trigger lists three concrete signals: the literal text "Compacted conversation", a conversation-summary block, and a session that opens with a machine-generated multi-section summary the AI did not write. Syntactic matching is more reliable than provenance inference.
@@ -219,6 +225,8 @@ The trigger lists three concrete signals: the literal text "Compacted conversati
 ## 2026-07-31: A PreCompact hook re-arms the procedure
 
 A user-level PreCompact hook shows a warning message before each mid-session compaction, which needs no text-instruction compliance from the AI. There is no PostCompact hook, so the PreCompact warning plus the human backstop covers the gap. The earlier memory trigger file was deleted after it failed to fire on two documented occasions.
+
+Note: the re-arm claim is superseded on 2026-11-24; a PreCompact hook only warns the user and cannot run the recovery.
 
 ## 2026-07-31: The load report covers all customization sections
 
@@ -1368,3 +1376,11 @@ The team skills scope ships as a minor release with an announcement, a README ba
 Context: the team knowledge store shipped in v7.1.0, and the team skills root is the next feature.
 
 Consequences: the policy count stays 25, the procedure count stays 16, and the trigger count stays 53.
+
+## 2026-11-24: Post-compaction recovery is manual, not automatic
+
+The recovery procedure is user-invoked. No harness currently exposes a reliable hook that fires after a conversation is compacted and re-injects the protocol, and a pre-compaction hook fires before the summary and cannot inject context into the next turn. The protocol therefore cannot arm itself after compaction. The user runs `run post-compaction recovery procedure` after noticing a compaction.
+
+Context: the docs described a reload that fires automatically, but it never did. The automatic expectation came from an earlier design that assumed a usable post-compaction hook. Running the procedure remains safe at any time because it only adds rule and config files.
+
+Consequences: the procedure title says "Manual after conversation compaction"; `AGENTS.md` says the user invokes it; `docs/workflow-guide.md` drops the zero-touch claim; `docs/post-compaction-reload-trigger-setup.md` reframes the per-assistant note as a reminder that asks the user to run the phrase; `docs/simple-ai-workflow-slides.md`, the comparison doc, `README.md`, and the project knowledge note say "manual"; the tests reject the automatic claim. No reload step changes, and the no-state-file rule stands. This supersedes the automatic-firing expectation in the 2026-07-28 and 2026-07-31 entries.

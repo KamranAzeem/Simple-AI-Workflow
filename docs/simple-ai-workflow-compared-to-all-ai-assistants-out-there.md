@@ -92,7 +92,7 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | Skills on demand | `.github/skills/` | None | Custom GPTs | None | `ai/skills/<name>/SKILL.md` and the team store's `skills/` |
 | Lessons across projects | `~/.claude/CLAUDE.md` (manual) | `~/.claude/CLAUDE.md` | Memory (opaque) | None | `<Global User AI Directory>/global-knowledge/` |
 | Handoffs | None | None | None | None | `ai/shared/handoffs/` |
-| Post-summary recovery | `PreCompact` hook | None | None | None | Post-Compaction Recovery procedure |
+| Post-summary recovery | `PreCompact` warning only | None | None | None | Post-Compaction Recovery procedure (manual; no harness hook currently fires it) |
 | Compliance enforcement | None | None | None | None | the compliance policies, applied by the AI |
 | Peer review | None | None | None | None | `"peer review"` and saved reports |
 | Protocol self-validation | None | None | None | None | `validate-protocol.sh` |

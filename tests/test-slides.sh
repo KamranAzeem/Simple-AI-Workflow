@@ -113,6 +113,8 @@ for phrase in \
     "Load the index, not the world" \
     "Git is your safety net" \
     "TDD" \
+    "manual reload" \
+    "no harness hook currently fires it" \
     "Academic research" \
     "bootstrap-project" \
     "load-context" \
@@ -163,7 +165,9 @@ for stale in \
     "28 tests" \
     "476 lines" \
     "128 KB" \
-    "GPT-5.4"; do
+    "GPT-5.4" \
+    "the automatic reload after a summary" \
+    "Recovery is automatic"; do
     absent "$DECK" "$stale" "deck drops: $stale"
 done
 

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.2.0 (2026-11-22).** Team skills are here: an optional third skills root in the configured team store, with the same package shape, project/team/global precedence, and a shared 16 KB index. Read the announcement: [docs/announcements/v7.2.0.md](docs/announcements/v7.2.0.md). |
+| **v7.2.1 (2026-11-24).** Post-compaction recovery is manual: no harness hook currently fires it. After a compaction, run `"run post-compaction recovery procedure"`. Read the announcement: [docs/announcements/v7.2.1.md](docs/announcements/v7.2.1.md). |
 
 # Simple AI Workflow
 
@@ -116,7 +116,7 @@ A cycle: file the issue, plan it, implement the approved plan, then checkpoint. 
 
 ### Maintenance
 
-- Repair state files, repair knowledge files, back up `ai/`, recover after compaction, run the validator, and lint. Why: the workspace stays healthy over months.
+- Repair state files, repair knowledge files, back up `ai/`, recover manually after compaction, run the validator, and lint. Why: the workspace stays healthy over months.
 - Commands: `"repair state files"`, `"repair knowledge files"`, `"backup ai"`, `"run post-compaction recovery procedure"`.
 - The opt-in anomaly report logs a denied tool call, a missing file, or a self-correction in the day's checkpoint. See the [customization guide](docs/ai-customization-guide.md#10-report-anomalies).
 

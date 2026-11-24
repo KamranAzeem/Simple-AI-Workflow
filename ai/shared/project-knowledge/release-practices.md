@@ -36,6 +36,16 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.2.1 (2026-11-24)
+
+- Correct the post-compaction recovery claim: the procedure is manual, not automatic.
+- State why: no harness provides a reliable post-compaction hook; a pre-compaction hook cannot inject the next turn.
+- Update the procedure title, the always-on rule, the workflow guide, the slides, the setup guide, the comparison table, the README, and the project knowledge note.
+- Add the decision entry and the tests that reject the automatic claim.
+- No reload step changes; the no-state-file rule stands.
+- Upgrade action: pull, run the sync script, and restart the session; type `"run post-compaction recovery procedure"` after each compaction.
+- Release prepared on 2026-11-24; publication follows the merge approval.
+
 ### v7.2.0 (2026-11-22)
 
 - Add the optional team skills root at `<team>/skills/` with the same package shape, a conditional third boot root, and project, team, global precedence.
