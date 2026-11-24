@@ -14,8 +14,8 @@
     text[font-size="18"] { font-size: 26px; }
     text[font-size="17"] { font-size: 25px; }
     text[font-size="16"] { font-size: 24px; }
-    text[font-size="15"] { font-size: 23px; }
-    text[font-size="14"] { font-size: 22px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Outside any repository, beside the work</title>
   <desc id="desc">A single project whose root is a Git repository, and a solution root whose repositories are below it. In both, ai is out of band.</desc>
@@ -36,7 +36,7 @@
   <rect x="80" y="248" width="820" height="240" rx="16" fill="#FBFCFC" stroke="#DCE8EC"/>
   <text x="104" y="282" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SINGLE PROJECT</text>
   <text x="104" y="310" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">The root is a Git repository.</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#505962">
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#505962">
     <text x="104" y="350">my-webapp/</text>
     <text x="104" y="380">├── src/</text>
     <text x="104" y="410">├── design-docs/</text>
@@ -49,7 +49,7 @@
   <rect x="80" y="512" width="820" height="236" rx="16" fill="#FBFCFC" stroke="#DCE8EC"/>
   <text x="104" y="546" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SOLUTION ROOT</text>
   <text x="104" y="574" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">The root is not a Git repository.</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#505962">
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#505962">
     <text x="104" y="614">solution/</text>
     <text x="104" y="644">├── ai/</text>
     <text x="104" y="674">├── web-api/</text>
@@ -74,7 +74,7 @@
   <circle cx="1016" cy="452" r="7" fill="#0090C1"/>
   <text x="1040" y="459" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Works without a Git repository.</text>
   <circle cx="1016" cy="508" r="7" fill="#0090C1"/>
-  <text x="1040" y="515" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Backed up on its own schedule.</text>
+  <text x="1040" y="515" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Backed up with "backup ai".</text>
 
   <rect x="1000" y="560" width="510" height="150" rx="16" fill="#F2F6F7" stroke="#DCE8EC"/>
   <text x="1024" y="596" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#2B3A42">Not a vault.</text>

@@ -12,28 +12,28 @@
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
   <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">One contribution, one reviewer</text>
-  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The team store is Git, not a service.</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">One contribution flows through three gates.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="60" y="230" width="280" height="200" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="200" y="292" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Lesson or skill</text>
-  <text x="200" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">One reusable unit.</text>
-  <text x="200" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">Secrets removed.</text>
+  <text x="200" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">One reusable unit.</text>
+  <text x="200" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Secrets removed.</text>
 
   <rect x="390" y="230" width="280" height="200" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="530" y="292" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Branch</text>
-  <text x="530" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">A small commit.</text>
-  <text x="530" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">A clear title.</text>
+  <text x="530" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">A small commit.</text>
+  <text x="530" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">A clear title.</text>
 
   <rect x="720" y="230" width="280" height="200" rx="20" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="860" y="292" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">Pull request</text>
-  <text x="860" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">The team reviews it.</text>
-  <text x="860" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">The AI never merges.</text>
+  <text x="860" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">The team reviews it.</text>
+  <text x="860" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The AI never merges.</text>
 
   <rect x="1050" y="230" width="280" height="200" rx="20" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
   <text x="1190" y="292" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#007AA3">One reviewer</text>
-  <text x="1190" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">The trust boundary.</text>
-  <text x="1190" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="21" fill="#505962">Then merge.</text>
+  <text x="1190" y="334" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The trust boundary.</text>
+  <text x="1190" y="386" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Then merge.</text>
 
   <path d="M 340 330 L 384 330" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
   <path d="M 670 330 L 714 330" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
@@ -41,16 +41,16 @@
 
   <rect x="60" y="500" width="1480" height="260" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="96" y="552" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">What the AI does, and what it never does</text>
-  <g font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">
     <text x="96" y="602">Writes the lesson on a branch.</text>
     <text x="96" y="638">Removes secrets and dedupes by title and hash.</text>
     <text x="96" y="674">Opens the pull request and describes it.</text>
     <text x="96" y="710">Never merges. One reviewer does.</text>
   </g>
-  <text x="850" y="602" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">A skill is a package under skills/.</text>
-  <text x="850" y="638" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">Copy it, open a PR, and let one reviewer merge.</text>
-  <text x="850" y="674" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">Repository access is the privacy control.</text>
-  <text x="850" y="710" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">The protocol does not verify review at boot.</text>
+  <text x="850" y="602" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">A skill is a package under skills/.</text>
+  <text x="850" y="638" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Copy it, open a PR, and let one reviewer merge.</text>
+  <text x="850" y="674" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Repository access is the privacy control.</text>
+  <text x="850" y="710" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The protocol does not verify review at boot.</text>
 
   <rect x="60" y="800" width="1480" height="64" rx="16" fill="#E6F5FA"/>
   <text x="92" y="840" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">One contribution, one reviewer, one shared memory.</text>

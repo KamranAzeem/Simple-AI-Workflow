@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
-  <title id="title">Five minutes to the first loop</title>
+  <title id="title">Five steps, no installs</title>
   <desc id="desc">Clone, create the global directories, copy two files, set the keys, bootstrap, and load context.</desc>
   <defs>
     <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
@@ -11,45 +11,45 @@
   </defs>
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
-  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The first loop</text>
-  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Clone, create, copy, set, bootstrap.</text>
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Five steps, no installs</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Clone, create, copy, set, bootstrap, load.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="60" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="110" cy="270" r="22" fill="#0090C1"/><text x="110" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">1</text>
+  <circle cx="110" cy="270" r="22" fill="#0090C1"/><text x="110" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">1</text>
   <text x="150" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Clone</text>
-  <text x="96" y="340" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Clone</text>
-  <text x="96" y="374" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Simple-AI-Workflow</text>
-  <text x="96" y="408" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">to a central</text>
-  <text x="96" y="442" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">location.</text>
+  <text x="96" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Clone</text>
+  <text x="96" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Simple-AI-Workflow</text>
+  <text x="96" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">to a central</text>
+  <text x="96" y="442" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">location.</text>
 
   <rect x="360" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="410" cy="270" r="22" fill="#0090C1"/><text x="410" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">2</text>
+  <circle cx="410" cy="270" r="22" fill="#0090C1"/><text x="410" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">2</text>
   <text x="450" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Create ~/.ai</text>
-  <text x="396" y="340" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">settings,</text>
-  <text x="396" y="374" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">global-knowledge,</text>
-  <text x="396" y="408" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">backups.</text>
+  <text x="396" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">settings,</text>
+  <text x="396" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">global-knowledge,</text>
+  <text x="396" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">backups.</text>
 
   <rect x="660" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="710" cy="270" r="22" fill="#0090C1"/><text x="710" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">3</text>
+  <circle cx="710" cy="270" r="22" fill="#0090C1"/><text x="710" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">3</text>
   <text x="750" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Copy two</text>
-  <text x="696" y="340" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">AGENTS.md</text>
-  <text x="696" y="374" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">ai-customization.md</text>
-  <text x="696" y="408" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">to the project root.</text>
+  <text x="696" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">AGENTS.md</text>
+  <text x="696" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">ai-customization.md</text>
+  <text x="696" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">to the project root.</text>
 
   <rect x="960" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="1010" cy="270" r="22" fill="#0090C1"/><text x="1010" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">4</text>
+  <circle cx="1010" cy="270" r="22" fill="#0090C1"/><text x="1010" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">4</text>
   <text x="1050" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Set keys</text>
-  <text x="996" y="340" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Global AI</text>
-  <text x="996" y="374" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Workflow Directory</text>
-  <text x="996" y="408" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">and User Directory.</text>
+  <text x="996" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Global AI</text>
+  <text x="996" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Workflow Directory</text>
+  <text x="996" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">and User Directory.</text>
 
   <rect x="1260" y="220" width="280" height="360" rx="22" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
-  <circle cx="1310" cy="270" r="22" fill="#0090C1"/><text x="1310" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">5</text>
+  <circle cx="1310" cy="270" r="22" fill="#0090C1"/><text x="1310" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">5</text>
   <text x="1350" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#007AA3">Bootstrap</text>
-  <text x="1296" y="340" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">"bootstrap using</text>
-  <text x="1296" y="374" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">AGENTS.md protocol"</text>
-  <text x="1296" y="408" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">then "load context".</text>
+  <text x="1296" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">"bootstrap using</text>
+  <text x="1296" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">AGENTS.md protocol"</text>
+  <text x="1296" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">then "load context".</text>
 
   <path d="M 340 400 L 354 400" fill="none" stroke="#0090C1" stroke-width="4"/>
   <path d="M 640 400 L 654 400" fill="none" stroke="#0090C1" stroke-width="4"/>
@@ -58,6 +58,6 @@
 
   <rect x="60" y="660" width="1480" height="120" rx="18" fill="#E6F5FA"/>
   <text x="92" y="700" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">No install scripts. No admin. No pip or npm.</text>
-  <text x="92" y="736" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">The clone is the rulebook. The project gets two files. The state is created on boot.</text>
-  <text x="92" y="766" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">Then start every session with "load context using AGENTS.md protocol".</text>
+  <text x="92" y="736" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The clone is the rulebook. The project gets two files. The state is created on boot.</text>
+  <text x="92" y="766" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">Then start every session with "load context using AGENTS.md protocol".</text>
 </svg>

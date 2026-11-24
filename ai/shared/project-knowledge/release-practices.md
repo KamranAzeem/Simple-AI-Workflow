@@ -36,6 +36,15 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.3.1 (2026-11-24)
+
+- Rebuild the deck as a reproducible HTML deck from the Markdown, with a per-slide 1600x900 renderer for review.
+- Review all 59 slides: 2.4rem story body, 1.9rem appendix, 84vh titled and 98vh image-only diagrams, and every label at 24 units or a recorded exception.
+- Rewrite the speaker notes and the cited guide sections in the user's voice; fix the six-level AI ladder, the customer-root layout, the Idea removal, the quality loop, and the loop arrows.
+- Add the token discipline slide and the MoE routing diagram.
+- Keep the protocol counts at 25 policies, 16 procedures, 54 triggers; suite 31/31, validator 8/8.
+- Release prepared on 2026-11-24; publication follows the merge approval.
+
 ### v7.3.0 (2026-11-24)
 
 - Add the idea intake: `IssueType: Idea`, one `file an idea` trigger, one issue-policy bullet, and the dated `Won't fix` close.

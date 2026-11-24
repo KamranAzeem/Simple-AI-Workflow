@@ -9,7 +9,7 @@
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
   <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">The lifecycle of a change</text>
-  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Six jobs, one protocol.</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The whole lifecycle, in six boxes.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="60" y="200" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
@@ -18,7 +18,7 @@
   <text x="96" y="296" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">bootstrap</text>
   <text x="96" y="332" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">sync</text>
   <text x="96" y="368" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">customize</text>
-  <text x="96" y="414" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">Get the rulebook in place.</text>
+  <text x="96" y="414" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Get the rulebook in place.</text>
 
   <rect x="570" y="200" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="570" y="200" width="8" height="250" rx="4" fill="#0090C1"/>
@@ -26,7 +26,7 @@
   <text x="606" y="296" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">load, plan, implement</text>
   <text x="606" y="332" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">review, checkpoint</text>
   <text x="606" y="368" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">brainstorm, grill, examine</text>
-  <text x="606" y="414" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">The fixed shape.</text>
+  <text x="606" y="414" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The fixed shape.</text>
 
   <rect x="1080" y="200" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="1080" y="200" width="8" height="250" rx="4" fill="#0090C1"/>
@@ -34,7 +34,7 @@
   <text x="1116" y="296" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">state and diary</text>
   <text x="1116" y="332" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">project and global knowledge</text>
   <text x="1116" y="368" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">handoffs and skills</text>
-  <text x="1116" y="414" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">The project's brain.</text>
+  <text x="1116" y="414" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The project's brain.</text>
 
   <rect x="60" y="480" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="60" y="480" width="8" height="250" rx="4" fill="#0090C1"/>
@@ -42,7 +42,7 @@
   <text x="96" y="576" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">design docs and ADRs</text>
   <text x="96" y="612" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">TDD and tests</text>
   <text x="96" y="648" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">peer review</text>
-  <text x="96" y="694" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">Evidence, not hope.</text>
+  <text x="96" y="694" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Evidence, not hope.</text>
 
   <rect x="570" y="480" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="570" y="480" width="8" height="250" rx="4" fill="#0090C1"/>
@@ -50,7 +50,7 @@
   <text x="606" y="576" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">tickets and plans</text>
   <text x="606" y="612" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">merge and release</text>
   <text x="606" y="648" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">outbound scrub</text>
-  <text x="606" y="694" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">From issue to merge.</text>
+  <text x="606" y="694" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">From issue to merge.</text>
 
   <rect x="1080" y="480" width="460" height="250" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="1080" y="480" width="8" height="250" rx="4" fill="#0090C1"/>
@@ -58,9 +58,9 @@
   <text x="1116" y="576" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">repair state and knowledge</text>
   <text x="1116" y="612" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">backup and recovery</text>
   <text x="1116" y="648" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">token discipline</text>
-  <text x="1116" y="694" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#007AA3">Keep the edge.</text>
+  <text x="1116" y="694" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Keep the edge.</text>
 
   <rect x="60" y="780" width="1480" height="64" rx="16" fill="#E6F5FA"/>
   <text x="92" y="820" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The team layer is optional and separate.</text>
-  <text x="600" y="820" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Six jobs cover the whole lifecycle. The appendix lists every policy and procedure under them.</text>
+  <text x="600" y="820" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The daily loop is the default; the other jobs support it.</text>
 </svg>

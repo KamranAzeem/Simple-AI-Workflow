@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.3.0 (2026-11-24).** Ideas are first-class tickets with `IssueType: Idea`, and the delivery approval is clarified: the implementation request approves the plan's close sequence. The docs now say the protocol modules are authoritative. Read the announcement: [docs/announcements/v7.3.0.md](docs/announcements/v7.3.0.md). |
+| **v7.3.1 (2026-11-24).** The deck is now a reproducible HTML deck with a 59-slide visual review, and the diagrams and speaker notes are corrected. Read the announcement: [docs/announcements/v7.3.1.md](docs/announcements/v7.3.1.md). |
 
 # Simple AI Workflow
 
@@ -169,6 +169,7 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [Examples](docs/examples/): customizations, handoffs, knowledge, and skills.
 - [Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.
 - [Markdown slides](docs/simple-ai-workflow-slides.md).
+- [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
 The 25 policies and 16 procedures are the fixed background. The 54 triggers are the phrases that load a policy or procedure on demand.

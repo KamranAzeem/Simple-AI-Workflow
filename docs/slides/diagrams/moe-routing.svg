@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">MoE-inspired context routing</title>
+  <desc id="desc">A Mixture-of-Experts router sends each token to a few experts and saves compute per token. The protocol routes a task to the relevant policy or skill and saves context tokens. Sparse activation is not sparse context.</desc>
+  <style>
+    text { font-family: 'Lato', Arial, sans-serif; }
+    .kicker { font-size: 30px; font-weight: 700; fill: #007AA3; letter-spacing: 0.02em; }
+    .h { font-size: 30px; font-weight: 700; fill: #2B3A42; }
+    .sub { font-size: 24px; fill: #6B7A82; }
+    .lbl { font-size: 24px; fill: #505962; }
+    .lbl-strong { font-size: 24px; font-weight: 700; fill: #007AA3; }
+    .card-title { font-size: 26px; font-weight: 700; fill: #2B3A42; }
+    .chip { font-size: 24px; fill: #505962; }
+    .cap { font-size: 30px; font-weight: 700; fill: #2B3A42; }
+    .muted { fill: #6B7A82; }
+  </style>
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#0090C1"/>
+    </marker>
+    <marker id="arrow-muted" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#B8C8CE"/>
+    </marker>
+  </defs>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="70" class="kicker">MoE-inspired conditional loading</text>
+
+  <!-- Left panel: the model -->
+  <rect x="60" y="110" width="720" height="650" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="60" y="110" width="8" height="650" rx="4" fill="#0090C1"/>
+  <text x="96" y="162" class="h">The model: Mixture of Experts</text>
+  <text x="96" y="196" class="sub">a learned gate sends each token to a few experts</text>
+
+  <rect x="300" y="228" width="240" height="56" rx="28" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <text x="420" y="263" text-anchor="middle" class="card-title" fill="#007AA3">token router</text>
+
+  <line x1="420" y1="284" x2="196" y2="330" stroke="#B8C8CE" stroke-width="3" marker-end="url(#arrow-muted)"/>
+  <line x1="420" y1="284" x2="416" y2="330" stroke="#0090C1" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="420" y1="284" x2="636" y2="330" stroke="#0090C1" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="96" y="338" width="200" height="84" rx="14" fill="#FFFFFF" stroke="#B8C8CE" stroke-width="2"/>
+  <text x="196" y="388" text-anchor="middle" class="card-title muted">Medicine</text>
+  <rect x="316" y="338" width="200" height="84" rx="14" fill="#E6F5FA" stroke="#0090C1" stroke-width="3"/>
+  <text x="416" y="388" text-anchor="middle" class="card-title" fill="#007AA3">Cloud</text>
+  <rect x="536" y="338" width="200" height="84" rx="14" fill="#E6F5FA" stroke="#0090C1" stroke-width="3"/>
+  <text x="636" y="388" text-anchor="middle" class="card-title" fill="#007AA3">Programming</text>
+
+  <rect x="96" y="438" width="200" height="84" rx="14" fill="#FFFFFF" stroke="#B8C8CE" stroke-width="2"/>
+  <text x="196" y="488" text-anchor="middle" class="card-title muted">Automobiles</text>
+  <rect x="316" y="438" width="200" height="84" rx="14" fill="#FFFFFF" stroke="#B8C8CE" stroke-width="2"/>
+  <text x="416" y="488" text-anchor="middle" class="card-title muted">Finance</text>
+  <rect x="536" y="438" width="200" height="84" rx="14" fill="#FFFFFF" stroke="#B8C8CE" stroke-width="2"/>
+  <text x="636" y="488" text-anchor="middle" class="card-title muted">Law</text>
+
+  <text x="96" y="572" class="lbl">all 6 experts stay resident</text>
+  <text x="96" y="606" class="lbl">2 active per token</text>
+  <text x="96" y="640" class="lbl-strong">saves compute per token</text>
+  <text x="96" y="674" class="lbl">not fewer prompt tokens</text>
+  <text x="96" y="708" class="lbl">routing has a cost</text>
+
+  <!-- Right panel: the protocol -->
+  <rect x="820" y="110" width="720" height="650" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
+  <rect x="820" y="110" width="8" height="650" rx="4" fill="#0090C1"/>
+  <text x="856" y="162" class="h">This protocol: conditional loading</text>
+  <text x="856" y="196" class="sub">the router is you, a trigger, or the Active Expertise</text>
+
+  <rect x="1060" y="228" width="240" height="56" rx="28" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <text x="1180" y="263" text-anchor="middle" class="card-title" fill="#007AA3">expertise / trigger</text>
+
+  <line x1="1180" y1="284" x2="1180" y2="312" stroke="#0090C1" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="850" y="320" width="660" height="64" rx="14" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <text x="870" y="358" class="card-title" fill="#007AA3">common policy + state</text>
+  <text x="1490" y="358" text-anchor="end" class="chip" fill="#007AA3">boot set + active expertise</text>
+
+  <rect x="850" y="400" width="660" height="64" rx="14" fill="#FFFFFF" stroke="#DCE8EC" stroke-width="2"/>
+  <text x="870" y="438" class="card-title">knowledge / skills index</text>
+  <text x="1490" y="438" text-anchor="end" class="chip">knowledge index · skill index</text>
+
+  <rect x="850" y="480" width="660" height="64" rx="14" fill="#F7FAFB" stroke="#B8C8CE" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="870" y="518" class="card-title muted">other policies: not loaded</text>
+  <text x="1490" y="518" text-anchor="end" class="chip muted">not loaded</text>
+
+  <rect x="850" y="560" width="660" height="64" rx="14" fill="#FFFFFF" stroke="#0090C1" stroke-width="2"/>
+  <text x="870" y="598" class="card-title">cloud policy: active</text>
+  <text x="1490" y="598" text-anchor="end" class="chip">scoped reads · ephemeral triggers</text>
+
+  <text x="850" y="664" class="chip">release-time checks</text>
+  <text x="850" y="704" class="lbl-strong">the common policy is the floor</text>
+
+  <text x="80" y="852" class="cap">Sparse activation is not sparse context.</text>
+</svg>

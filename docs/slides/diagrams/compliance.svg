@@ -29,8 +29,8 @@
     <text x="96" y="580">Unrecognized names are rejected.</text>
   </g>
   <rect x="96" y="612" width="648" height="76" rx="14" fill="#F2F6F7" stroke="#DCE8EC"/>
-  <text x="120" y="646" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#2B3A42">Validation guard.</text>
-  <text x="120" y="674" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">dora is a metrics framework, not a compliance standard.</text>
+  <text x="120" y="646" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Validation guard.</text>
+  <text x="120" y="674" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">dora is a metrics framework, not a compliance standard.</text>
 
   <rect x="820" y="200" width="720" height="520" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="856" y="252" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">What the AI applies</text>
@@ -43,10 +43,10 @@
   </g>
   <rect x="856" y="586" width="648" height="106" rx="14" fill="#E6F5FA"/>
   <text x="880" y="624" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Not a certification.</text>
-  <text x="880" y="656" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">The workflow helps you apply the standard.</text>
-  <text x="880" y="682" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Your auditor still audits. Your evidence is ready.</text>
+  <text x="880" y="656" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The workflow helps you apply the standard.</text>
+  <text x="880" y="682" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Your auditor still audits. Your evidence is ready.</text>
 
   <rect x="60" y="780" width="1480" height="76" rx="16" fill="#E6F5FA"/>
   <text x="92" y="814" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The dial lives in ai-customization.md.</text>
-  <text x="92" y="842" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Change the list, reload context, and the controls follow the project.</text>
+  <text x="92" y="842" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Change the list, reload context, and the controls follow the project.</text>
 </svg>

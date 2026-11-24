@@ -32,7 +32,7 @@ trap 'kill "$server" 2>/dev/null || true; rm -rf "$profile"' EXIT
 
 ready=0
 for _ in $(seq 1 30); do
-    if curl -fsS "http://127.0.0.1:$PORT/support-files/preview-slides.html" >/dev/null 2>&1; then
+    if curl -fsS "http://127.0.0.1:$PORT/docs/slides/simple-ai-workflow-slides.html" >/dev/null 2>&1; then
         ready=1
         break
     fi
@@ -51,7 +51,7 @@ for i in $(seq 1 "$slides"); do
         --user-data-dir="$profile" \
         --window-size=1600,900 --virtual-time-budget=6000 \
         --screenshot="$output" \
-        "http://127.0.0.1:$PORT/support-files/preview-slides.html#/$((i - 1))" >/dev/null 2>&1; then
+        "http://127.0.0.1:$PORT/docs/slides/simple-ai-workflow-slides.html#/$((i - 1))" >/dev/null 2>&1; then
         printf 'Rendered slide %s\n' "$i"
     else
         printf 'FAILED slide %s\n' "$i"

@@ -28,7 +28,7 @@
 
   <path d="M 660 460 L 760 460" fill="none" stroke="#0090C1" stroke-width="5" marker-end="url(#arrow)"/>
   <rect x="770" y="390" width="60" height="140" rx="14" fill="#22313A"/>
-  <text x="800" y="470" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF" transform="rotate(-90 800 470)">GATE</text>
+  <text x="800" y="470" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF" transform="rotate(-90 800 470)">GATE</text>
 
   <rect x="960" y="230" width="580" height="460" rx="24" fill="#FFFFFF" stroke="#0090C1" stroke-width="2" stroke-dasharray="10 8" filter="url(#shadow)"/>
   <text x="996" y="290" font-family="Lato, Arial, sans-serif" font-size="40" font-weight="700" fill="#007AA3">Team</text>

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
   <title id="title">Compaction replaces the history with a summary</title>
-  <desc id="desc">The context window fills, the harness replaces the history with a summary, the standing rules drop, and the user runs the manual recovery.</desc>
+  <desc id="desc">The context window fills, the harness replaces the history with a summary, the standing rules drop, and you run the manual recovery.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#0090C1"/>
@@ -12,7 +12,7 @@
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
   <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Compaction replaces the history with a summary</text>
-  <text x="80" y="120" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The task survives. The standing rules can drop.</text>
+  <text x="80" y="120" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Compaction keeps the task, not the rules.</text>
   <rect x="80" y="140" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="70" y="250" width="320" height="320" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
@@ -21,30 +21,30 @@
   <rect x="110" y="388" width="240" height="40" rx="8" fill="#E6F5FA"/>
   <rect x="110" y="440" width="240" height="40" rx="8" fill="#E6F5FA"/>
   <rect x="110" y="492" width="240" height="40" rx="8" fill="#0090C1"/>
-  <text x="230" y="556" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">Rules, state, work, code.</text>
+  <text x="230" y="556" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">Rules, state, work, code.</text>
 
   <rect x="450" y="250" width="320" height="320" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="610" y="302" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">2. Summary</text>
   <rect x="540" y="346" width="140" height="170" rx="10" fill="#EEF2F4" stroke="#9BAAB2"/>
-  <text x="610" y="390" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">history</text>
-  <text x="610" y="420" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">becomes</text>
-  <text x="610" y="450" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">a summary</text>
-  <text x="610" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">The task is kept.</text>
+  <text x="610" y="390" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">history</text>
+  <text x="610" y="420" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">becomes</text>
+  <text x="610" y="450" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">a summary</text>
+  <text x="610" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">The task is kept.</text>
 
   <rect x="830" y="250" width="320" height="320" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="990" y="302" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">3. Rules drop</text>
   <rect x="870" y="346" width="240" height="34" rx="8" fill="#EEF2F4"/>
   <rect x="870" y="392" width="240" height="34" rx="8" fill="#EEF2F4"/>
   <rect x="870" y="438" width="240" height="34" rx="8" fill="#EEF2F4"/>
-  <text x="990" y="500" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">faded: rules and policies</text>
-  <text x="990" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">The assistant keeps working.</text>
+  <text x="990" y="500" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">faded: rules and policies</text>
+  <text x="990" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">The assistant keeps working.</text>
 
   <rect x="1210" y="250" width="320" height="320" rx="22" fill="#E6F5FA" stroke="#0090C1" stroke-width="2" filter="url(#shadow)"/>
   <text x="1370" y="302" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#007AA3">4. Manual recovery</text>
-  <text x="1370" y="360" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#2B3A42">"run post-compaction</text>
-  <text x="1370" y="390" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#2B3A42">recovery procedure"</text>
-  <text x="1370" y="450" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">Reloads the rules from disk.</text>
-  <text x="1370" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">The user runs it.</text>
+  <text x="1370" y="360" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#2B3A42">"run post-compaction</text>
+  <text x="1370" y="390" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#2B3A42">recovery procedure"</text>
+  <text x="1370" y="450" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Reloads the rules from disk.</text>
+  <text x="1370" y="540" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">You run it.</text>
 
   <path d="M 400 410 L 438 410" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
   <path d="M 780 410 L 818 410" fill="none" stroke="#0090C1" stroke-width="4" marker-end="url(#arrow)"/>
@@ -52,6 +52,6 @@
 
   <rect x="60" y="680" width="1480" height="130" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="92" y="726" font-family="Lato, Arial, sans-serif" font-size="26" font-weight="700" fill="#2B3A42">No harness hook currently fires the recovery.</text>
-  <text x="92" y="764" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">A pre-compaction hook warns before the summary. It cannot inject the rules into the next turn.</text>
-  <text x="92" y="794" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">So the user runs the phrase, and the first reply starts with the reload line.</text>
+  <text x="92" y="764" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">A pre-compaction hook warns before the summary. It cannot inject the rules into the next turn.</text>
+  <text x="92" y="794" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">So you run the phrase, and the first reply starts with the reload line.</text>
 </svg>

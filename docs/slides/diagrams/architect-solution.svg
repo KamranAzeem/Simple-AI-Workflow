@@ -14,11 +14,11 @@
     text[font-size="18"] { font-size: 26px; }
     text[font-size="17"] { font-size: 25px; }
     text[font-size="16"] { font-size: 24px; }
-    text[font-size="15"] { font-size: 23px; }
-    text[font-size="14"] { font-size: 22px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">The Architect layout</title>
-  <desc id="desc">One AGENTS.md and one ai directory at a solution root above several repositories.</desc>
+  <desc id="desc">One AGENTS.md and one ai directory at a customer root above several repositories.</desc>
   <defs>
     <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
       <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
@@ -31,9 +31,9 @@
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="50" y="180" width="880" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <text x="86" y="224" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">SOLUTION ROOT</text>
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="20" fill="#505962">
-    <text x="86" y="276">solution/</text>
+  <text x="86" y="224" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">CUSTOMER ROOT</text>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#505962">
+    <text x="86" y="276">customer-joe/</text>
     <text x="86" y="312">├── AGENTS.md</text>
     <text x="86" y="348">├── ai-customization.md</text>
     <text x="86" y="384" fill="#007AA3" font-weight="700">├── ai/</text>
@@ -60,7 +60,7 @@
   <rect x="970" y="326" width="8" height="126" rx="4" fill="#0090C1"/>
   <text x="1002" y="366" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">ONE MEMORY</text>
   <text x="1002" y="400" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Decisions and lessons span</text>
-  <text x="1002" y="428" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">the solution.</text>
+  <text x="1002" y="428" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">the customer.</text>
 
   <rect x="970" y="472" width="570" height="126" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="970" y="472" width="8" height="126" rx="4" fill="#0090C1"/>
@@ -75,6 +75,6 @@
   <text x="1002" y="720" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">directory you open.</text>
 
   <rect x="50" y="796" width="1490" height="92" rx="18" fill="#E6F5FA"/>
-  <text x="82" y="832" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#007AA3" style="font-size:24px">Start with one project. Add the solution root when the work spans repositories.</text>
-  <text x="82" y="866" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962" style="font-size:20px">One protocol. One memory. Many repositories.</text>
+  <text x="82" y="832" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#007AA3" style="font-size:24px">Start with one project. Add the customer root when the work spans repositories.</text>
+  <text x="82" y="866" font-family="Lato, Arial, sans-serif" font-size="17" fill="#505962">One protocol. One memory. Many repositories.</text>
 </svg>

@@ -17,5 +17,7 @@
 - Verify the team knowledge publish path against a live store when one is configured.
 - File the Google Slides update and physical Gate 2 as a separate issue.
 - Confirm whether any harness now offers a reliable post-compaction hook; update the manual-recovery docs if one appears.
-- Sync the updated AGENTS.md into downstream projects after the v7.2.1 release.
-- Refresh the v7.2.1 release-practices line from "prepared" at the next release-doc touch.
+- Sync the updated AGENTS.md into downstream projects after the v7.3.1 release.
+- Refresh the v7.2.1, v7.3.0, and v7.3.1 release-practices lines from "prepared" at the next release-doc touch.
+- Review and merge the customization-tracking fix.
+- Deliver v7.3.1: merge the review branch, tag, publish the GitHub Release, and delete the review and token branches.

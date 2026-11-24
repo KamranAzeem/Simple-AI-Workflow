@@ -135,43 +135,43 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 
 ## 7. Session Resume (Compacted Context)
 
-When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the standing rules can drop out of context. The **Post-Compaction Recovery** procedure reloads them.
+When the conversation is compacted, the harness replaces the live history with a summary. You see the "Compacted conversation" label. The standing rules can drop out of context. The **Post-Compaction Recovery** procedure reloads them.
 
 ### The compaction phenomenon
 
-The summary keeps the task, but the standing rules, policies, and loaded knowledge can drop out. The assistant keeps working with a thinner context and can quietly break your conventions.
+The summary keeps the task. The standing rules, policies, and loaded knowledge can drop out. The assistant keeps working with a thinner context. It can quietly break your conventions.
 
 ![Compaction and recovery](slides/diagrams/compaction.svg)
 
-**It is not automatic.** No harness currently provides a reliable hook that fires after compaction and re-injects the protocol, so you run the procedure yourself. After you see the summary, type:
+**It is not automatic.** No harness currently provides a reliable hook that fires after compaction and re-injects the protocol. You run the procedure yourself. After you see the summary, type:
 
 > *"run post-compaction recovery procedure"*
 
 ### How it works
 
-1. You notice the compaction: the "Compacted conversation" label, or a session that opens with a machine-generated summary you did not write.
+1. You notice the compaction. Look for the "Compacted conversation" label, or a session that opens with a machine-generated summary you did not write.
 2. You type the phrase.
-3. The AI re-reads the thin `AGENTS.md`, every procedure module in the clone's `ai/procedures/`, the **Project Customization File**, all Global Settings files, and the policy files (the common policy plus the ones your customization file names), and indexes Global and Project Knowledge.
-4. It reads the coordination board in full, and builds a filename-only index of the rest of the shared directory (project knowledge, handoffs), with full text loaded later, on demand.
-5. It announces `[Reloading key files into context...]` as the first line and confirms in a line or two what was loaded.
+3. The AI re-reads the thin `AGENTS.md`. It reads every procedure module in the clone's `ai/procedures/`. It reads the **Project Customization File** and all Global Settings files. It also reads the policy files (the common policy plus the ones your customization file names). Finally, it indexes Global and Project Knowledge.
+4. It reads the coordination board in full. It builds a filename-only index of the rest of the shared directory (project knowledge, handoffs). Full text loads later, on demand.
+5. It announces `[Reloading key files into context...]` as the first line. It confirms in a line or two what it loaded.
 
 ### Key rules
 
-- **Manual, because no working hook exists today**: no harness hook currently fires the procedure. A pre-compaction hook only warns you before the summary and cannot inject context into the next turn, so the protocol cannot arm itself.
-- **Additive, not destructive**: The procedure only re-loads rule and config files. It does not wipe the working conversation, so it is safe to run at any time, including when you are not sure a compaction happened.
-- **No state files**: The AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state; the on-disk state files may be older and would inject stale state.
-- **Trigger index**: The AI rebuilds the trigger index from the live policy files and procedure modules. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction; say the phrase again.
+- **Manual, because no working hook exists today**: no harness hook currently fires the procedure. A pre-compaction hook only warns you before the summary. It cannot inject context into the next turn, so the protocol cannot arm itself.
+- **Additive, not destructive**: the procedure only re-loads rule and config files. It does not wipe the working conversation. It is safe to run at any time, including when you are not sure a compaction happened.
+- **No state files**: the AI does not read `ai/state/context.md`, `ai/state/progress.md`, `ai/state/next-steps.md`, or checkpoints. The compaction summary already in context is the source of truth for task state. The on-disk state files may be older and would inject stale state.
+- **Trigger index**: the AI rebuilds the trigger index from the live policy files and procedure modules. A policy loaded only by a trigger is not in Active Expertise, so it does not survive compaction. Say the phrase again.
 
 ### Benefits
 
-- **Recovery without reloading state**: The reload restores your standing rules from disk while the live summary stays the source of truth for progress.
-- **Context integrity**: The reload restores your standing rules without disturbing the live thread.
+- **Recovery without reloading state**: the reload restores your standing rules from disk. The live summary stays the source of truth for progress.
+- **Context integrity**: the reload restores your standing rules without disturbing the live thread.
 
 ### What to expect
 
-The procedure announces itself as the first line of the first reply after you run it. If you see a compaction summary and that line is missing, the procedure did not run: type the phrase again. There is no hidden automatic step to wait for.
+The procedure announces itself as the first line of the first reply after you run it. If you see a compaction summary and that line is missing, the procedure did not run. Type the phrase again. There is no hidden automatic step to wait for.
 
-The setup guide, `post-compaction-reload-trigger-setup.md`, lists optional per-assistant reminders. A reminder only prompts you to run the phrase; it does not make the recovery automatic.
+The setup guide, `post-compaction-reload-trigger-setup.md`, lists optional per-assistant reminders. A reminder only prompts you to run the phrase. It does not make the recovery automatic.
 
 ## 8. Native AI State Backups
 
@@ -275,29 +275,33 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets: **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets. **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
-The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list: secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, and backups are never listed or read. The output is bounded at 16 KB; when a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot builds the index with built-in tools and reports `index-source=builtin`; the optional `support-files/index-protocol.sh` helper is for maintainer and release checks.
+The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list. It never lists or reads secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, or backups. The output is bounded at 16 KB. When a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot builds the index with built-in tools and reports `index-source=builtin`. The optional `support-files/index-protocol.sh` helper is for maintainer and release checks.
 
-A global policy that declares triggers is indexed by filename, trigger line, and headings; its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral and is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
+A global policy that declares triggers is indexed by filename, trigger line, and headings. Its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral. It is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
 Note: always use the full phrase `"load context using AGENTS.md protocol"`. A bare `"load context"` loads the assistant's own hidden memory, not your `AGENTS.md`. Naming `AGENTS.md` is what makes the assistant read your protocol and your files. The README explains this under "Common instructions".
 
 ### How it works
 
-1. **Global Knowledge: index only (Token Rationing)**: The AI uses the built-in glob and listing under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) and records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name; the filename is the lookup key.
-2. **Active Policies: full load**: The AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour; the AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
-3. **Project Knowledge: index only (Token Rationing)**: The AI uses the built-in glob and listing under `ai/shared/project-knowledge/` and records a reference index: paths, filenames, and apparent technical domains. These files can be large (e.g. historical repo-scan snapshots), so their full text is read only when a task requires it.
+1. **Global Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`). It records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name. The filename is the lookup key.
+2. **Active Policies: full load**: the AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour. The AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
+3. **Project Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `ai/shared/project-knowledge/`. It records a reference index: paths, filenames, and apparent technical domains. These files can be large (for example historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
 
-- **Robustness first**: Operational rules (policies) are always in context; the AI never acts on a rule it has not read. Lessons in the knowledge bases are indexed and read on demand.
-- **Token Efficiency where it counts**: Knowledge files (Global and Project) are not loaded speculatively, keeping the boot context lean.
-- **On-Demand Depth**: When a task needs a specific Global or Project Knowledge file, it is loaded in full at that point.
+- **Robustness first**: operational rules (policies) are always in context. The AI never acts on a rule it has not read. Lessons in the knowledge bases are indexed and read on demand.
+- **Token Efficiency where it counts**: knowledge files (Global and Project) are not loaded speculatively. The boot context stays lean.
+- **On-Demand Depth**: when a task needs a specific Global or Project Knowledge file, it loads in full at that point.
+
+### The MoE analogy
+
+A Mixture-of-Experts model routes each token to a few experts. Total parameters stay resident. Active parameters per token stay low. It saves compute per token, not prompt tokens, and it costs memory and routing. The protocol uses the same routing idea for context. The boot set is the common policy plus the Active Expertise, while knowledge and skills are indexed and opened on demand. A trigger loads a global policy's body. Then a skill description match loads a skill body. The protocol's routing saves context tokens, not per-token compute. The router here is you, a trigger, or the Active Expertise, not a learned gate. A wrong route can miss a rule, so the common policy stays always on.
 
 ### Boot-time staleness check
 
-A metadata-only check flags Global and Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content: tracked files use their last-commit date, untracked files their modified time. Flagged files appear in the load report, and the AI verifies one against current state when a task loads it.
+A metadata-only check flags Global and Project Knowledge files whose domain matches your active expertise and whose age exceeds 90 days. It reads no file content. Tracked files use their last-commit date; untracked files use their modified time. Flagged files appear in the load report. The AI verifies one against current state when a task loads it.
 
 The checkpoint also does a quick, report-only check for a missing header, a table, or a file over 15 KB. It doesn't read the whole file. The full cleanup is `"repair knowledge files"`; see section 23.
 
@@ -305,32 +309,32 @@ The checkpoint also does a quick, report-only check for a missing header, a tabl
 
 ### The Three State Files
 
-Each state file has a distinct role and lifecycle:
+Each state file has its own role and lifecycle:
 
-- **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items are appended at the bottom; each item is deleted the moment it is done, never left with a tick or strikethrough. No history builds up here.
+- **`ai/state/next-steps.md` (future)**: a forward-only backlog. New items go at the bottom. Delete each item the moment it is done, never leave a tick or strikethrough. No history builds up here.
 - **`ai/state/progress.md` (past)**: recent completed work, newest at the bottom. Completed entries older than 14 days move into the daily checkpoint archive.
 - **`ai/state/context.md` (present)**: a `## Current Status` dashboard plus an `## Active Working Context` section, both edited in place. It holds the present, not a history log.
 
-Every item is at most three short bullets, and every item line is at most 300 characters. The three files share a 30 KB (30,720 bytes) advisory budget. State files are summaries, not runbooks, plans, or ledgers; durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
+Every item is at most three short bullets, and every item line is at most 300 characters. The three files share a 30 KB (30,720 bytes) advisory budget. State files are summaries, not runbooks, plans, or ledgers. Durable detail belongs in project knowledge. They never record a branch, commit hash, or push status.
 
-Each state file starts with the canonical header block from the common policy. The block carries the file's rules, and load context compares it exactly.
+Each state file starts with the canonical header block from the common policy. The block carries the file's rules. Load context compares it exactly.
 
 ### Atomic Write Protocol
 
-The checkpoint procedure uses an atomic write sequence to prevent partial or inconsistent state.
+The checkpoint procedure uses an atomic write sequence. This prevents partial or inconsistent state.
 
-1. **Sequential Writes**: State is written in strict order: `ai/state/progress.md` (past) → `ai/state/next-steps.md` (future) → `ai/state/context.md` (present). Never in a different order.
-2. **Transaction Log**: Every checkpoint outputs a standardized confirmation block in the chat window: showing exactly what was written to each file and what values changed.
-3. **Abort on Missing Data**: If the AI lacks the information needed to correctly update all three files, the write transaction is aborted entirely and the gap is reported to the user.
+1. **Sequential Writes**: state is written in strict order: `ai/state/progress.md` (past), then `ai/state/next-steps.md` (future), then `ai/state/context.md` (present). Never in a different order.
+2. **Transaction Log**: every checkpoint outputs a standardized confirmation block in the chat window. It shows exactly what was written to each file and what values changed.
+3. **Abort on Missing Data**: if the AI lacks the information needed to update all three files correctly, the write transaction aborts entirely. The gap is reported to you.
 
 ### Daily Checkpoint File
 
 In the same transaction as the state files, every checkpoint also appends an entry to `ai/daily-checkpoints/`.
 
 - **One file per day**: `YYYY-MM-DD.md`, created on the first checkpoint of that day.
-- **One section per checkpoint**: a new `## <short title>` section is appended for each checkpoint that day; earlier sections are never edited or removed.
-- **Fuller narrative than the state files**: this is where the detail lives (files touched, validator or review outcomes), since the state files stay lean.
-- **The archive**: the diary is the only archive. Old `progress.md` entries and resolved `context.md` items move here; there are no separate archive files.
+- **One section per checkpoint**: a new `## <short title>` section is appended for each checkpoint that day. Earlier sections are never edited or removed.
+- **Fuller narrative than the state files**: this is where the detail lives (files touched, validator or review outcomes). The state files stay lean.
+- **The archive**: the diary is the only archive. Old `progress.md` entries and resolved `context.md` items move here. There are no separate archive files.
 
 ### What a Checkpoint Covers
 
@@ -338,21 +342,21 @@ One `"checkpoint"` runs every upkeep step, so you do not run them separately:
 
 - The three state files (one atomic write) and the daily diary.
 - One capture pass, then Project Knowledge, then Global Knowledge.
-- A report-only pass that flags stale items: an `in-progress/` ticket with no live branch, a `tickets/` file whose live tracker state is Done, an executed plan left in `ai/plans/`, finished investigation evidence in the artifacts area, the per-store knowledge count at 50 or more, knowledge files older than 90 days whose domain matches an active expertise, and a knowledge file with a missing header, a table, or more than 15 KB. The repair deletes; the checkpoint only reports.
+- A report-only pass that flags stale items. It flags an `in-progress/` ticket with no live branch, and a `tickets/` file whose live tracker state is Done. It flags an executed plan left in `ai/plans/` and finished investigation evidence in the artifacts area. It also flags the per-store knowledge count at 50 or more. It flags knowledge files older than 90 days whose domain matches an active expertise. It flags a knowledge file with a missing header, a table, or more than 15 KB. The repair deletes. The checkpoint only reports.
 - A grouped summary in chat, one line per step.
 
-Two single-step triggers remain: `"update project knowledge"` runs the capture and the project store; `"update global knowledge"` runs the capture, the project store, and the global promotion. A checkpoint never runs git and never touches design documents; design docs are handled only by a separate, confirmation-gated procedure.
+Two single-step triggers remain. `"update project knowledge"` runs the capture and the project store. `"update global knowledge"` runs the capture, the project store, and the global promotion. A checkpoint never runs git and never touches design documents. Design docs are handled only by a separate, confirmation-gated procedure.
 
-The checkpoint checks the knowledge header before it writes, and it never edits a knowledge file. If you upgraded, run `"repair knowledge files"` once; see section 23.
+The checkpoint checks the knowledge header before it writes. It never edits a knowledge file. If you upgraded, run `"repair knowledge files"` once; see section 23.
 
 ### State-File Trimming
 
-To prevent the state files from growing unbounded and consuming context window space:
+The goal is to stop the state files from growing without bound and eating the context window:
 
 - **Shared budget**: the three state files share a 30 KB (30,720 bytes) advisory budget. Per-file targets are gone, so the files trade space.
-- **Condense at checkpoint**: when the total is over budget, or any item line is over 300 characters, the full item moves to the diary and a short stub with every findability identifier stays behind.
+- **Condense at checkpoint**: when the total is over budget, the full item moves to the diary. The same happens when any item line is over 300 characters. A short stub with every findability identifier stays behind.
 - **Trim at checkpoint**: completed `progress.md` entries older than 14 days move into the daily checkpoint archive. Resolved `context.md` items leave only after their record is in the diary.
-- **Never lose work**: an unfinished `next-steps.md` item is never dropped, and a stub that cannot meet the line cap and the identifier check stays as it is and is reported.
+- **Never lose work**: an unfinished `next-steps.md` item is never dropped. A stub that cannot meet the line cap and the identifier check stays as it is and is reported.
 
 ## 15. Design Documentation Flow
 
@@ -495,37 +499,37 @@ Every file in `ai/shared/project-knowledge/` and `<Global User AI Directory>/glo
 
 > **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
-After that, the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there's a catch. A checklist uses the same shape, with the checklist under Rule or Fix.
+After that, the file follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if there is a catch. A checklist uses the same shape, with the checklist under Rule or Fix.
 
-Name the file for the task it answers: a tool or domain, then the task, with six or fewer hyphenated segments. For example, `postgresql-grs-and-restore` names the PostgreSQL GRS and restore task. Keep out ticket IDs, dates, and incident names. Use 10 KB as a soft target; never let it override completeness. A file that passes 15 KB gets an automatic cleanup during repair. Completeness means every reusable rule, fix, reason, check, identifier, and example, not every observation. Delete incident narrative, rehearsal logs, timelines, and per-ticket evidence once the reusable rule is written. Use flat bullets, not tables. Leave out commit hashes, branch names, checkpoint and diary references, and state-file paths. That's bookkeeping, not knowledge.
+Name the file for the task it answers: a tool or domain, then the task, with six or fewer hyphenated segments. For example, `postgresql-grs-and-restore` names the PostgreSQL GRS and restore task. Keep out ticket IDs, dates, and incident names. Use 10 KB as a soft target; never let it override completeness. A file that passes 15 KB gets an automatic cleanup during repair. Completeness means every reusable rule, fix, reason, check, identifier, and example, not every observation. Delete incident narrative, rehearsal logs, timelines, and per-ticket evidence once the reusable rule is written. Use flat bullets, not tables. Leave out commit hashes, branch names, checkpoint and diary references, and state-file paths. That is bookkeeping, not knowledge.
 
-Split a file only by task topic; do not split by ticket, incident, date, phase, or environment. Merge a file under 3 KB into its nearest topic file. A checklist stays one file, and a file that is still over 15 KB after cleanup splits by topic or, if it cannot, stays one file and is reported. One lesson lives in one place: the global store for a cross-project lesson, the project store for its application, no duplicate. A per-PR or per-ticket review finding goes into one topic rules file. A generated inventory or deliverable is not a knowledge file.
+Split a file only by task topic. Do not split by ticket, incident, date, phase, or environment. Merge a file under 3 KB into its nearest topic file. A checklist stays one file. A file that is still over 15 KB after cleanup splits by topic or, if it cannot, stays one file and is reported. One lesson lives in one place: the global store for a cross-project lesson, the project store for its application, no duplicate. A per-PR or per-ticket review finding goes into one topic rules file. A generated inventory or deliverable is not a knowledge file.
 
-Use 50 files per store as a review threshold. The checkpoint reports the count; at 50 or more, run a repair. The repair merges, deduplicates, deletes evidence, and retires, and it reports any remaining overage. A new topic is never blocked.
+Use 50 files per store as a review threshold. The checkpoint reports the count. At 50 or more, run a repair. The repair merges, deduplicates, deletes evidence, and retires, and it reports any remaining overage. A new topic is never blocked.
 
-Every file stands on its own. Keep the facts, rules, reasons, and checks it needs, and don't point at another knowledge file, code file, doc, policy, artifact, backup, or state file. A domain command, a system path, or a path a checklist step writes or edits is content, not a pointer.
+Every file stands on its own. Keep the facts, rules, reasons, and checks it needs. Do not point at another knowledge file, code file, doc, policy, artifact, backup, or state file. A domain command, a system path, or a path a checklist step writes or edits is content, not a pointer.
 
-A project knowledge file may keep identifying names. A global knowledge file removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer; a technology vendor or product name is content and stays.
+A project knowledge file may keep identifying names. A global knowledge file removes them. Raw secrets are banned in both. An identifying name means a person, client, employer, or customer. A technology vendor or product name is content and stays.
 
-At task start, match the task to the indexed filenames of both stores and read every matching file in full before acting. Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, tmp, and archive entries.
+At task start, match the task to the indexed filenames of both stores. Read every matching file in full before you act. Search the global store with the built-in search when it can reach the path. Otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, tmp, and archive entries.
 
-The checkpoint checks the header before it writes. It also flags a missing header, a table, a file over 15 KB, the per-store count, a closed ticket file, an executed plan, and finished artifact evidence, but it never edits anything. The repair deletes; the checkpoint reports. `issue-template.md` and design docs in the old fallback location are exempt.
+The checkpoint checks the header before it writes. It also flags a missing header, a table, and a file over 15 KB. It flags the per-store count, a closed ticket file, an executed plan, and finished artifact evidence. It never edits anything. The repair deletes; the checkpoint reports. `issue-template.md` and design docs in the old fallback location are exempt.
 
-Say `"repair knowledge files"` when you want the AI to fix the project store. Add `global` for global knowledge, `both` for both, or `dry run` to see the plan first. The trigger is the approval: the repair asks no further questions. It backs up the old files, writes a candidate, checks that every item is accounted for, runs an independent review, preserves anything ambiguous and reports it, and restores the backup if something fails. The 10 KB target never beats keeping the content.
+Say `"repair knowledge files"` when you want the AI to fix the project store. Add `global` for global knowledge, `both` for both, or `dry run` to see the plan first. The trigger is the approval, so the repair asks no further questions. It backs up the old files and writes a candidate. It checks that every item is accounted for and runs an independent review. It preserves anything ambiguous and reports it, and it restores the backup if something fails. The 10 KB target never beats keeping the content.
 
-Heads up: the repair takes a while on a real knowledge base. Let it finish. It's important; it's how your files get fixed.
+Heads up: the repair takes a while on a real knowledge base. Let it finish. It matters. It is how your files get fixed.
 
-Run it once after you upgrade. Add `global` if you keep global knowledge. The checkpoint flags the problems in the meantime, but it doesn't edit your files.
+Run it once after you upgrade. Add `global` if you keep global knowledge. The checkpoint flags the problems in the meantime, but it does not edit your files.
 
 ### Team knowledge
 
-The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone and `Team AI Knowledge Repository` to the publish remote. The boot indexes `lessons/` by filename only and reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
+The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone, and `Team AI Knowledge Repository` to the publish remote. The boot indexes `lessons/` by filename only. It reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
 
-Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Verify body, not the local knowledge header. They are Class A: names and infrastructure detail stay; secrets never do. The local sensitive-names list is not applied to team lessons. Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson; the AI removes secrets, dedupes by hash and title, writes the lesson on a branch, and opens a pull request. It never merges.
+Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Verify body, not the local knowledge header. They are Class A: names and infrastructure detail stay; secrets never do. The local sensitive-names list is not applied to team lessons. Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, dedupes by hash and title, writes the lesson on a branch, and opens a pull request. It never merges.
 
 ## 24. Skills
 
-A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules; procedures are triggered workflows; knowledge is durable findings; a skill is a small instruction package for one task.
+A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules. Procedures are triggered workflows. Knowledge is durable findings. A skill is a small instruction package for one task.
 
 ### Skills are not the workflow
 
@@ -538,7 +542,7 @@ Skills can be part of any workflow, but they are not the workflow. A project tha
 - **Global**: `ai/skills/` in the workflow clone. These skills travel with the workflow.
 - **Project**: `ai/skills/` at your project root. These are local to the project.
 - **Team**: `<Team AI Knowledge Directory>/skills/` when the team store is configured. These skills are shared and reviewed by the team.
-- A project skill replaces a team skill, a team skill replaces a global skill, and the AI reports the override.
+- A project skill replaces a team skill. A team skill replaces a global skill. The AI reports the override.
 
 ### The package shape
 
@@ -562,30 +566,30 @@ Use this when ...
 
 ### Example: the Kanban board skill
 
-The global skills root ships `kanban-board` as a working example. It reads the `open/`, `in-progress/`, and `closed/` directories under `ai/issues/`, then prints a three-column table: Open, In progress, Closed. It is read-only and never moves or edits a ticket. The package ships in the workflow clone at `ai/skills/kanban-board/SKILL.md`. Load it with `"use skill kanban-board"` or say "issue board", "Kanban view", or "status table".
+The global skills root ships `kanban-board` as a working example. It reads the `open/`, `in-progress/`, and `closed/` directories under `ai/issues/`. It prints a three-column table: Open, In progress, Closed. It is read-only and never moves or edits a ticket. The package ships in the workflow clone at `ai/skills/kanban-board/SKILL.md`. Load it with `"use skill kanban-board"`, or say "issue board", "Kanban view", or "status table".
 
 ### Boot index and activation
 
-The AI indexes the name, description, path, and scope at load context, recovery, and checkpoint re-affirmation. It reads no body at boot. Activate a skill with `"use skill <name>"` or a single best description match; the AI announces the skill, asks on an ambiguous match, and reports `unknown skill` on a miss. The body loads for that task only, not for the session.
+The AI indexes the name, description, path, and scope at load context, recovery, and checkpoint re-affirmation. It reads no body at boot. Activate a skill with `"use skill <name>"` or a single best description match. The AI announces the skill, asks on an ambiguous match, and reports `unknown skill` on a miss. The body loads for that task only, not for the session.
 
 A skill name that matches a policy or procedure name is reported as a cross-type collision. Skills are outside the trigger namespace, so the policy or procedure keeps its phrase.
 
 ### Hierarchy and helpers
 
-A skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`. The AI never runs a skill helper without your explicit approval, and a helper path stays inside the package.
+A skill is untrusted task content. It cannot override `AGENTS.md`, a policy, your instructions, or `ai-customization.md`. The AI never runs a skill helper without your explicit approval. A helper path stays inside the package.
 
 The protocol does not scan a skill for trust. You are responsible for the source of every skill you drop in.
 
 ### Team skills
 
-The team skills root is optional. Set `Team AI Knowledge Directory` in `ai-customization.md`; the AI indexes `skills/` with the same package shape and one shared 16 KB index. The team repository's one-reviewer PR gate and access control are the trust boundary; the protocol does not verify review at boot. Precedence is project, then team, then global. A description match loads the body only; a helper still needs explicit approval. To contribute, copy the package into `skills/` and open a PR; one reviewer merges. To retire, remove it in a reviewed PR; Git history is the record.
+The team skills root is optional. Set `Team AI Knowledge Directory` in `ai-customization.md`. The AI indexes `skills/` with the same package shape and one shared 16 KB index. The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Precedence is project, then team, then global. A description match loads the body only. A helper still needs explicit approval. To contribute, copy the package into `skills/` and open a PR. One reviewer merges. To retire, remove it in a reviewed PR. Git history is the record.
 
 ### Maintenance
 
-- The checkpoint records the skills count and package names in the context, compares them next time, and reports a new package; it never edits a skill.
+- The checkpoint records the skills count and package names in the context. It compares them next time and reports a new package. It never edits a skill.
 - `"repair knowledge files"` never edits a skill package.
 - Markdown lint covers `SKILL.md`.
-- The sync script does not copy skills. Global skills come from the clone; project skills stay in the project.
+- The sync script does not copy skills. Global skills come from the clone. Project skills stay in the project.
 - Hash-based change detection is not part of this version.
 
 ## 25. Common Instructions

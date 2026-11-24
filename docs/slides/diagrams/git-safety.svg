@@ -9,44 +9,44 @@
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
   <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Four safety steps</text>
-  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">The AI drives. You approve.</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">Automate the steps; keep the approval.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="60" y="220" width="340" height="430" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="110" cy="270" r="22" fill="#0090C1"/><text x="110" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">1</text>
+  <circle cx="110" cy="270" r="22" fill="#0090C1"/><text x="110" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">1</text>
   <text x="150" y="280" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Branch</text>
   <text x="96" y="336" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">Open the branch</text>
   <text x="96" y="372" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">before the first</text>
   <text x="96" y="408" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">commit.</text>
-  <text x="96" y="480" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">Main stays clean.</text>
-  <text x="96" y="574" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">No work on main.</text>
+  <text x="96" y="480" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Main stays clean.</text>
+  <text x="96" y="574" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">No work on main.</text>
 
   <rect x="430" y="220" width="340" height="430" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="480" cy="270" r="22" fill="#0090C1"/><text x="480" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">2</text>
+  <circle cx="480" cy="270" r="22" fill="#0090C1"/><text x="480" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">2</text>
   <text x="520" y="280" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Commit</text>
   <text x="466" y="336" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">Small commits.</text>
   <text x="466" y="372" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">Conventional</text>
   <text x="466" y="408" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">messages.</text>
-  <text x="466" y="480" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">Each one a fallback.</text>
-  <text x="466" y="574" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">A place to return to.</text>
+  <text x="466" y="480" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Each one a fallback.</text>
+  <text x="466" y="574" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">A place to return to.</text>
 
   <rect x="800" y="220" width="340" height="430" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="850" cy="270" r="22" fill="#0090C1"/><text x="850" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">3</text>
+  <circle cx="850" cy="270" r="22" fill="#0090C1"/><text x="850" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">3</text>
   <text x="890" y="280" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Review</text>
   <text x="836" y="336" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">Peer review the</text>
   <text x="836" y="372" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">full change,</text>
   <text x="836" y="408" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">not the diff.</text>
-  <text x="836" y="480" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">APPROVED or not.</text>
-  <text x="836" y="574" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">One verdict, not a comment.</text>
+  <text x="836" y="480" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">APPROVED or not.</text>
+  <text x="836" y="574" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">One verdict, not a comment.</text>
 
   <rect x="1170" y="220" width="370" height="430" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
-  <circle cx="1220" cy="270" r="22" fill="#0090C1"/><text x="1220" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">4</text>
+  <circle cx="1220" cy="270" r="22" fill="#0090C1"/><text x="1220" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">4</text>
   <text x="1260" y="280" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Squash merge</text>
   <text x="1206" y="336" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">One feature,</text>
   <text x="1206" y="372" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">one commit.</text>
   <text x="1206" y="408" font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">Delete the branch.</text>
-  <text x="1206" y="480" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">A clean history.</text>
-  <text x="1206" y="574" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">One feature, one commit.</text>
+  <text x="1206" y="480" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">A clean history.</text>
+  <text x="1206" y="574" font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">One feature, one commit.</text>
 
   <path d="M 400 435 L 416 435" fill="none" stroke="#0090C1" stroke-width="4"/>
   <path d="M 770 435 L 786 435" fill="none" stroke="#0090C1" stroke-width="4"/>
@@ -54,5 +54,5 @@
 
   <rect x="60" y="700" width="1480" height="100" rx="18" fill="#E6F5FA"/>
   <text x="92" y="738" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">No placeholder commits. No start-work commit.</text>
-  <text x="92" y="772" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">A merge, a tag, a release, or a push to a shared branch needs explicit approval.</text>
+  <text x="92" y="772" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">A merge, a tag, a release, or a push to a shared branch needs explicit approval.</text>
 </svg>

@@ -10,12 +10,12 @@
     text[font-size="22"] { font-size: 26px; }
     text[font-size="21"] { font-size: 25px; }
     text[font-size="20"] { font-size: 24px; }
-    text[font-size="19"] { font-size: 23px; }
-    text[font-size="18"] { font-size: 22px; }
-    text[font-size="17"] { font-size: 21px; }
-    text[font-size="16"] { font-size: 20px; }
-    text[font-size="15"] { font-size: 19px; }
-    text[font-size="14"] { font-size: 18px; }
+    text[font-size="19"] { font-size: 24px; }
+    text[font-size="18"] { font-size: 24px; }
+    text[font-size="17"] { font-size: 24px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Where everything lives</title>
   <desc id="desc">The global store and the workflow clone on the left, the project root tree on the right.</desc>
@@ -41,7 +41,7 @@
     <text x="100" y="370">├── global-knowledge/</text>
     <text x="100" y="396">└── backups/</text>
   </g>
-  <text x="100" y="440" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Identity, tools, shell, cross-project lessons.</text>
+  <text x="100" y="440" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Identity, tools, shell, and lessons.</text>
 
   <rect x="60" y="500" width="460" height="290" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="102" cy="543" r="8" fill="#505962"/>
@@ -64,7 +64,7 @@
   <text x="632" y="222" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Project root</text>
   <text x="632" y="252" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">This project only</text>
   <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="19" fill="#505962">
-    <text x="600" y="288">.</text>
+    <text x="600" y="288">my-webapp/</text>
     <text x="600" y="312">├── AGENTS.md</text>
     <text x="600" y="336">├── ai-customization.md</text>
     <text x="600" y="360" fill="#0090C1" font-weight="700">├── ai/</text>
@@ -85,7 +85,7 @@
     <text x="600" y="720">├── design-docs/</text>
     <text x="600" y="744">└── src/</text>
   </g>
-  <text x="600" y="772" font-family="Lato, Arial, sans-serif" font-size="16" fill="#6B7A82">State, knowledge, the diary, and the work items.</text>
+
 
   <rect x="60" y="800" width="1480" height="64" rx="18" fill="#E6F5FA"/>
   <text x="92" y="830" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">Load context reads all three.</text>

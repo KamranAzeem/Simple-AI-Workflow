@@ -15,7 +15,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DECK="$ROOT/docs/simple-ai-workflow-slides.md"
 GUIDE="$ROOT/docs/workflow-guide.md"
 README="$ROOT/README.md"
-PREVIEW="$ROOT/support-files/preview-slides.html"
+PREVIEW="$ROOT/docs/slides/simple-ai-workflow-slides.html"
 RENDER="$ROOT/support-files/render-slides-preview.sh"
 
 fail=0
@@ -57,10 +57,10 @@ if [ ! -f "$DECK" ]; then
 fi
 
 separators="$(grep -c '^---$' "$DECK" || true)"
-if [ "$separators" -ge 30 ]; then
-    pass "deck has at least 30 slide separators"
+if [ "$separators" -eq 58 ]; then
+    pass "deck has 59 slides (58 separators)"
 else
-    fail_case "deck has $separators separators; the story needs at least 30"
+    fail_case "deck has $((separators + 1)) slides; expected 59"
 fi
 
 for phrase in \
@@ -70,7 +70,7 @@ for phrase in \
     "The workflow is a protocol, not a platform" \
     "definition of done" \
     "fixed few steps" \
-    "not always a Git repository" \
+    "not always a repository" \
     "You are the architect. The AI is your peer." \
     "one person, one project, one peer" \
     "Load context" \
@@ -92,8 +92,8 @@ for phrase in \
     "Publish a lesson" \
     "Multiple assistants, turn by turn" \
     "Five minutes to the first loop" \
-    "Global AI Workflow Directory" \
-    "Global User AI Directory" \
+    "workflow clone" \
+    "global settings" \
     "ai-customization.md" \
     "Part 1: Concepts" \
     "An AI assistant is a brain, a memory, and your tools" \
@@ -103,7 +103,7 @@ for phrase in \
     "not application code" \
     "The ai/ directory is the project's brain" \
     "What this is, and what it is not" \
-    "The same protocol scales to a solution root" \
+    "The same protocol scales to a customer root" \
     "Part 2: The Workflow" \
     "Part 3: Proof" \
     "not a secrets vault" \
@@ -111,11 +111,25 @@ for phrase in \
     "Two small files start the whole thing" \
     "Compliance is a dial, not a badge" \
     "Quality is a loop, not a hope" \
-    "Load the index, not the world" \
+    "JIT indexing" \
+    "Triggers and procedures on demand" \
+    "A thin \`AGENTS.md\`" \
+    "Route the context, do not load it all" \
+    "MoE-inspired conditional loading" \
+    "Sparse activation is not sparse context" \
+    "the 16 KB cap" \
+    "saves context tokens" \
+    "paths, filenames, and domains" \
+    "three short bullets per item" \
+    "300-character lines, a 30,720-byte shared budget" \
+    "14-day progress window" \
+    "the daily checkpoints are the archive" \
+    "rebuilt at load context, recovery, and checkpoint" \
+    "Team knowledge joins the index" \
+    "post-compaction recovery does not read the state files" \
     "Git is your safety net" \
     "TDD" \
     "kanban-board" \
-    "**Idea**: an unvetted proposal." \
     "The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's \`## Close Sequence\`" \
     "the implementation request approves the plan's close sequence" \
     "The guide and README describe the protocol; the protocol modules are authoritative." \
@@ -154,7 +168,25 @@ else
     pass "wave-surfer framing stays on the first slide"
 fi
 present "$DECK" "The recovery is manual" "compaction slide note says manual"
-present "$DECK" "  - **Idea**" "deck indents the idea under Issue"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "MoE-inspired conditional loading" "the MoE diagram names conditional loading"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "Sparse activation is not sparse context" "the MoE diagram carries the caption"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "boot set + active expertise" "the MoE diagram names the boot set"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "knowledge index" "the MoE diagram names the knowledge index"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "skill index" "the MoE diagram names the skill index"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "scoped reads" "the MoE diagram names scoped reads"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "ephemeral triggers" "the MoE diagram names the ephemeral triggers"
+present "$ROOT/docs/slides/diagrams/moe-routing.svg" "release-time checks" "the MoE diagram names the release-time checks"
+if grep -oE 'font-size: [0-9]+px' "$ROOT/docs/slides/diagrams/moe-routing.svg" | awk '{v=$2; gsub(/[^0-9]/,"",v); if (v+0 < 24) bad=1} END{exit bad?0:1}'; then
+    fail_case "the MoE diagram uses a font size below 24"
+else
+    pass "the MoE diagram keeps every font size at 24 or above"
+fi
+present "$GUIDE" "The MoE analogy" "the guide carries the MoE note"
+present "$GUIDE" "saves context tokens" "the guide states the context saving"
+present "$GUIDE" "A trigger loads a global policy's body" "the guide names the trigger route"
+present "$GUIDE" "a skill description match loads a skill body" "the guide names the skill route"
+present "$ROOT/support-files/build-slides-html.sh" "docs/slides/simple-ai-workflow-slides.html" "the build script targets docs/slides/simple-ai-workflow-slides.html"
+present "$RENDER" "PORT=\"\${PORT:-8765}\"" "the renderer defaults to the confirmed port"
 present "$ROOT/docs/slides/diagrams/compaction.svg" "Manual recovery" "compaction diagram names manual recovery"
 
 for group in "Setup" "Daily loop" "Memory" "Quality" "Delivery" "Maintenance" "Team" "Compliance" "Domain expertise" "Traits and skills" "Commands"; do
@@ -180,7 +212,7 @@ for procedure in \
     present "$DECK" "$procedure" "catalog procedure: $procedure"
 done
 
-for term in "project" "global" "team" "knowledge" "skill" "road trip" "drivers" "brain" "tools" "context window" "out-of-band" "local"; do
+for term in "project" "global" "team" "knowledge" "skill" "road trip" "turn by turn" "brain" "tools" "context window" "out-of-band" "local"; do
     present_ci "$DECK" "$term" "deck names: $term"
 done
 
@@ -196,6 +228,13 @@ for stale in \
     "the automatic reload after a summary" \
     "Recovery is automatic"; do
     absent "$DECK" "$stale" "deck drops: $stale"
+done
+
+absent "$DECK" "—" "deck has no em dashes"
+absent "$GUIDE" "—" "guide has no em dashes"
+for word in delve pivotal underscore testament tapestry showcase vibrant boasts meticulous intricate landscape foster garner interplay bolster; do
+    absent "$DECK" "$word" "deck drops the AI-tell word: $word"
+    absent "$GUIDE" "$word" "guide drops the AI-tell word: $word"
 done
 
 policies="$(find "$ROOT/ai/policies" -maxdepth 1 -name '*.md' | wc -l)"
@@ -233,7 +272,7 @@ for asset in \
     slides/diagrams/compliance.svg \
     slides/diagrams/quality-loop.svg \
     slides/diagrams/git-safety.svg \
-    slides/diagrams/token-budget.svg \
+    slides/diagrams/moe-routing.svg \
     slides/diagrams/six-jobs.svg \
     slides/diagrams/straight-vs-zigzag.svg \
     slides/diagrams/team-gate.svg \
@@ -250,12 +289,28 @@ for asset in \
     present "$DECK" "$asset" "deck references: $asset"
 done
 
-present "$PREVIEW" "../docs/simple-ai-workflow-slides.md" "preview reads the Markdown deck"
-present "$PREVIEW" "section-slide" "preview styles the section dividers"
-present "$PREVIEW" "diagram-only" "preview sizes the full-slide diagrams"
+present "$ROOT/support-files/slides-html.template.html" "2.4rem" "the template keeps the 2.4rem story body"
+present "$ROOT/support-files/slides-html.template.html" "1.9rem" "the template keeps the 1.9rem appendix"
+present "$ROOT/support-files/slides-html.template.html" "1.5rem" "the template keeps the title size"
+present "$ROOT/support-files/slides-html.template.html" "1.65rem" "the template keeps the divider size"
+present "$ROOT/support-files/slides-html.template.html" "1.8rem" "the template keeps the section prompt size"
+present "$ROOT/support-files/slides-html.template.html" "3.3rem" "the template keeps the diagram title size"
+present "$ROOT/support-files/slides-html.template.html" "84vh" "the template keeps the titled diagram height"
+present "$ROOT/support-files/slides-html.template.html" "98vh" "the template keeps the image-only height"
+present "$PREVIEW" "deck-source" "the HTML embeds the Markdown deck"
+present "$PREVIEW" "section-slide" "the HTML styles the section dividers"
+present "$PREVIEW" "diagram-only" "the HTML sizes the full-slide diagrams"
 present "$RENDER" "google-chrome" "renderer uses Google Chrome"
-present "$RENDER" "preview-slides.html" "renderer uses the preview"
+present "$RENDER" "docs/slides/simple-ai-workflow-slides.html" "renderer uses the HTML deck"
+build_tmp="$(mktemp)"
+if bash "$ROOT/support-files/build-slides-html.sh" "$build_tmp" >/dev/null 2>&1 && cmp -s "$build_tmp" "$PREVIEW"; then
+    pass "the HTML deck matches a fresh build"
+else
+    fail_case "the HTML deck does not match a fresh build"
+fi
+rm -f "$build_tmp"
 present "$README" "docs/simple-ai-workflow-slides.md" "README links the Markdown deck"
+present "$README" "docs/slides/simple-ai-workflow-slides.html" "README links the HTML deck"
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: slide deck fixture."

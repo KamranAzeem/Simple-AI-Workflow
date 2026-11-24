@@ -23,9 +23,9 @@
     <text x="96" y="476">Does not store project context.</text>
   </g>
   <rect x="96" y="530" width="560" height="150" rx="14" fill="#22313A"/>
-  <text x="120" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#7FD4EC">$ wc -l AGENTS.md</text>
-  <text x="120" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#D9F1FA">~150 lines</text>
-  <text x="120" y="646" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#D9F1FA">No policy dump. No project state.</text>
+  <text x="120" y="570" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#7FD4EC">$ wc -l AGENTS.md</text>
+  <text x="120" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#D9F1FA">~150 lines</text>
+  <text x="120" y="646" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#D9F1FA">No policy dump. No project state.</text>
 
   <rect x="820" y="200" width="720" height="550" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="820" y="200" width="720" height="8" rx="4" fill="#0090C1"/>
@@ -36,14 +36,14 @@
     <text x="856" y="396">Active Traits: system architect.</text>
     <text x="856" y="436">Required Compliance: soc2, iso-27001.</text>
     <text x="856" y="476">Design docs and merge policy.</text>
-    <text x="856" y="516">Team keys: optional.</text>
+    <text x="856" y="516">Global User AI Directory: ~/.ai/.</text>
   </g>
   <rect x="856" y="548" width="648" height="132" rx="14" fill="#E6F5FA"/>
   <text x="880" y="588" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Local. Git-ignored.</text>
-  <text x="880" y="622" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">The clone holds the policy. The project holds the dials.</text>
-  <text x="880" y="652" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Change the dials without touching the rulebook.</text>
+  <text x="880" y="622" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The clone holds the policy. The project holds the dials.</text>
+  <text x="880" y="652" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Change the dials without touching the rulebook.</text>
 
   <rect x="60" y="790" width="1480" height="64" rx="16" fill="#E6F5FA"/>
   <text x="92" y="830" font-family="Lato, Arial, sans-serif" font-size="25" font-weight="700" fill="#007AA3">Load context reads both.</text>
-  <text x="400" y="830" font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">The pointer finds the rules. The dial shapes this project.</text>
+  <text x="400" y="830" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">The pointer finds the rules. The dial shapes this project.</text>
 </svg>

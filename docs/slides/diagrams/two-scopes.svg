@@ -10,12 +10,12 @@
     text[font-size="22"] { font-size: 26px; }
     text[font-size="21"] { font-size: 25px; }
     text[font-size="20"] { font-size: 24px; }
-    text[font-size="19"] { font-size: 23px; }
-    text[font-size="18"] { font-size: 22px; }
-    text[font-size="17"] { font-size: 21px; }
-    text[font-size="16"] { font-size: 20px; }
-    text[font-size="15"] { font-size: 19px; }
-    text[font-size="14"] { font-size: 18px; }
+    text[font-size="19"] { font-size: 24px; }
+    text[font-size="18"] { font-size: 24px; }
+    text[font-size="17"] { font-size: 24px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Two dials, one assistant</title>
   <desc id="desc">Global settings and the project ai-customization file meet at load context.</desc>
@@ -29,18 +29,18 @@
   </defs>
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
-  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Two dials, one assistant</text>
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Two inputs meet at load context</text>
   <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Global settings shape you. ai-customization.md shapes this project.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <rect x="60" y="170" width="610" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="102" cy="213" r="8" fill="#505962"/>
   <text x="122" y="222" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Global settings</text>
-  <rect x="500" y="192" width="140" height="34" rx="17" fill="#E6F5FA"/>
-  <text x="570" y="214" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="13" font-weight="700" fill="#007AA3">ALL PROJECTS</text>
+  <rect x="476" y="190" width="178" height="38" rx="19" fill="#E6F5FA"/>
+  <text x="565" y="216" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">ALL PROJECTS</text>
   <text x="100" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6B7A82">~/.ai/settings/global-user-settings.md</text>
 
-  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">
     <circle cx="108" cy="330" r="5" fill="#0090C1"/><text x="128" y="337">Identity and profile</text>
     <circle cx="108" cy="386" r="5" fill="#0090C1"/><text x="128" y="393">Tools and shell</text>
     <circle cx="108" cy="442" r="5" fill="#0090C1"/><text x="128" y="449">Communication style</text>
@@ -54,11 +54,11 @@
   <rect x="930" y="170" width="610" height="600" rx="24" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="972" cy="213" r="8" fill="#0090C1"/>
   <text x="992" y="222" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">ai-customization.md</text>
-  <rect x="1360" y="192" width="150" height="34" rx="17" fill="#E6F5FA"/>
-  <text x="1435" y="214" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="13" font-weight="700" fill="#007AA3">THIS PROJECT</text>
+  <rect x="1330" y="190" width="178" height="38" rx="19" fill="#E6F5FA"/>
+  <text x="1419" y="216" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">THIS PROJECT</text>
   <text x="970" y="268" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#6B7A82">project root / ai-customization.md</text>
 
-  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">
     <circle cx="978" cy="322" r="5" fill="#0090C1"/><text x="998" y="329">Workflow directory</text>
     <circle cx="978" cy="370" r="5" fill="#0090C1"/><text x="998" y="377">Active expertise</text>
     <circle cx="978" cy="418" r="5" fill="#0090C1"/><text x="998" y="425">Traits and engagement</text>

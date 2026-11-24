@@ -10,12 +10,12 @@
     text[font-size="22"] { font-size: 26px; }
     text[font-size="21"] { font-size: 25px; }
     text[font-size="20"] { font-size: 24px; }
-    text[font-size="19"] { font-size: 23px; }
-    text[font-size="18"] { font-size: 22px; }
-    text[font-size="17"] { font-size: 21px; }
-    text[font-size="16"] { font-size: 20px; }
-    text[font-size="15"] { font-size: 19px; }
-    text[font-size="14"] { font-size: 18px; }
+    text[font-size="19"] { font-size: 24px; }
+    text[font-size="18"] { font-size: 24px; }
+    text[font-size="17"] { font-size: 24px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Before and after</title>
   <desc id="desc">An improvised chat with no state, against the fixed loop with state, plan, review, and record.</desc>
@@ -38,7 +38,7 @@
   <text x="159" y="227" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#6B7A82">BEFORE</text>
   <text x="100" y="278" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Ad-hoc chat</text>
 
-  <g font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#6B7A82">
     <rect x="100" y="322" width="390" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
     <text x="124" y="360">What did we decide?</text>
     <rect x="180" y="406" width="430" height="64" rx="18" fill="#EEF2F3" stroke="#D5DEE2"/>
@@ -56,7 +56,7 @@
   <text x="959" y="227" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3">AFTER</text>
   <text x="900" y="278" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The fixed loop</text>
 
-  <g font-family="Lato, Arial, sans-serif" font-size="21" fill="#2B3A42">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#2B3A42">
     <rect x="900" y="322" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="356">Load context</text>
     <rect x="900" y="388" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="422">Plan the issue</text>
     <rect x="900" y="454" width="470" height="52" rx="14" fill="#F2FAFC" stroke="#C9E6F1"/><text x="926" y="488">Implement the plan</text>

@@ -10,12 +10,12 @@
     text[font-size="22"] { font-size: 26px; }
     text[font-size="21"] { font-size: 25px; }
     text[font-size="20"] { font-size: 24px; }
-    text[font-size="19"] { font-size: 23px; }
-    text[font-size="18"] { font-size: 22px; }
-    text[font-size="17"] { font-size: 21px; }
-    text[font-size="16"] { font-size: 20px; }
-    text[font-size="15"] { font-size: 19px; }
-    text[font-size="14"] { font-size: 18px; }
+    text[font-size="19"] { font-size: 24px; }
+    text[font-size="18"] { font-size: 24px; }
+    text[font-size="17"] { font-size: 24px; }
+    text[font-size="16"] { font-size: 24px; }
+    text[font-size="15"] { font-size: 24px; }
+    text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Two roles, one loop</title>
   <desc id="desc">The architect decides, the AI peer executes and remembers, and this is not an agent swarm.</desc>
@@ -37,7 +37,7 @@
   <rect x="60" y="170" width="600" height="8" rx="4" fill="#0090C1"/>
   <text x="100" y="230" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">You, the architect</text>
   <text x="100" y="262" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">The vision and the decisions are yours.</text>
-  <g font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">
     <circle cx="110" cy="310" r="7" fill="#0090C1"/><text x="132" y="318">Set the vision</text>
     <circle cx="110" cy="362" r="7" fill="#0090C1"/><text x="132" y="370">Make the decisions</text>
     <circle cx="110" cy="414" r="7" fill="#0090C1"/><text x="132" y="422">Define done</text>
@@ -55,7 +55,7 @@
   <rect x="940" y="170" width="600" height="8" rx="4" fill="#505962"/>
   <text x="980" y="230" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">The AI peer</text>
   <text x="980" y="262" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">Reliable execution, in the same shape.</text>
-  <g font-family="Lato, Arial, sans-serif" font-size="23" fill="#505962">
+  <g font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">
     <circle cx="990" cy="318" r="7" fill="#505962"/><text x="1012" y="326">Loads the context</text>
     <circle cx="990" cy="374" r="7" fill="#505962"/><text x="1012" y="382">Plans the issue</text>
     <circle cx="990" cy="430" r="7" fill="#505962"/><text x="1012" y="438">Implements the plan</text>
@@ -75,5 +75,4 @@
   <rect x="590" y="760" width="420" height="96" rx="18" fill="#FFFFFF" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
   <text x="614" y="800" font-family="Lato, Arial, sans-serif" font-size="19" font-weight="700" fill="#505962">Not a swarm of parallel agents</text>
   <text x="614" y="828" font-family="Lato, Arial, sans-serif" font-size="16" fill="#6B7A82">One person, one peer, one predictable flow.</text>
-  <text x="80" y="884" font-family="Lato, Arial, sans-serif" font-size="19" fill="#6B7A82">This is not about running many agents. It is about one person and one reliable peer.</text>
 </svg>

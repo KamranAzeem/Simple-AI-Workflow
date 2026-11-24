@@ -111,3 +111,20 @@
 [2026-11-24] Delivered the idea intake: IssueType: Idea, one file an idea trigger, one policy bullet, and the dated Won't fix close.
 [2026-11-24] Delivered the two-step close-sequence wording and the docs-describe principle across the guide, README, deck, and common policy; two ADRs.
 [2026-11-24] Closed both tickets; review-103 CHANGES REQUESTED, fixes applied; suite 31/31, validator 8/8; the trigger count is 54; v7.3.0 is prepared.
+[2026-11-24] Released v7.3.0 and published the GitHub Release; the idea intake and the two-step wording are live.
+[2026-11-24] Planned the token slide; reviews 105-107; implemented the slide, the MoE SVG, the JIT slide, and the HTML deck; reviews 108-109; the visual and v7.3.1 approvals are pending.
+[2026-11-24] Built docs/slides/simple-ai-workflow-slides.html from the Markdown; removed the old preview; updated the renderer, the test, the README, the visual system, and the plan; the JIT slide 32, 1.9rem type, and 84/92vh diagrams.
+[2026-11-24] Restored the customization-tracking fix from the stash; it is tracked and uncommitted on the token branch.
+[2026-11-24] Split the customization-tracking fix into its own change and committed it separately; it awaits review and merge.
+[2026-11-24] Closed the token slide ticket as superseded by the full slide deck review; the token work is committed on the held branch; the review ticket and plan are in peer review.
+[2026-11-24] The full slide deck review plan is APPROVED (review-112); awaiting the implementation approval.
+[2026-11-24] Checkpoint before the full deck review implementation; the plan is approved and the state is current.
+[2026-11-24] Implemented the full deck review on the review branch: the 59-slide visual pass, the 59-note and guide voice rewrite, the 24-unit label pass, the catalog colon, the SVG title and layout fixes, and the tests.
+[2026-11-24] Applied the user's 2.4rem choice: 2.4rem story, 1.9rem appendix, 84vh titled and 98vh image-only diagrams; the audit leaves slides 15, 27, and 34 to trim.
+[2026-11-24] Updated the visual system and the test sizes; the slide fixture still fails on four phrases the trims removed; filed the slide-deck review speed issue.
+[2026-11-24] Trimmed slides 15, 27, and 34 (12-line tree, axe bullet removed and quote shortened, compaction 77vh); updated the four stale fixture phrases; rebuilt the HTML; audit 0 overflow; suite 31/31.
+[2026-11-24] Processed notes 93+: rebuilt the ladder from the PPTX with level 2 editor chat and no "rung", renamed the root to customer-joe, removed the Idea bullet, reordered the quality loop and reconnected its arrows, and centered the model card; audit 0; suite 31/31; markdownlint 0.
+[2026-11-24] Revised the ladder to six levels with level 2 marked and levels 3-5 unlabelled (multiple assistants, MCPs, agentic/swarm); rebuilt; audit 0 overflow; suite 31/31.
+[2026-11-24] Refined the daily-loop and quality-loop arrows: 3px strokes, 5-unit markers, edge-connected endpoints, smooth curves; rebuilt; audit 0; suite 31/31.
+[2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
+[2026-11-24] Prepared v7.3.1 with the announcement, README banner, and release-practices entry; the user approved the draft; closed the deck review ticket with the plan attached and removed the plan file.
