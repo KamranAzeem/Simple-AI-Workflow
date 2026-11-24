@@ -134,6 +134,7 @@ present "$GUIDE" "slides/diagrams/blackbox-state.svg" "guide links the blackbox 
 present "$GUIDE" "slides/diagrams/compaction.svg" "guide links the compaction diagram"
 present "$GUIDE" "slides/diagrams/skills-layers.svg" "guide links the skills-layers diagram"
 present "$GUIDE" "Skills are not the workflow" "guide says skills are not the workflow"
+present "$GUIDE" "kanban-board" "guide documents the Kanban example skill"
 
 order="$(awk '/\| Ticket \|/{t=NR} /\| Issue \|/{i=NR} /\| Support request \|/{s=NR} END{if (t && i && s && t < i && i < s) print "ok"; else print "bad"}' "$GUIDE")"
 if [ "$order" = "ok" ]; then

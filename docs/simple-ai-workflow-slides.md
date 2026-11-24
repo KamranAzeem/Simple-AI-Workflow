@@ -735,6 +735,7 @@ The behavioral layer and the task layer.
 
 - **Traits** — system architect, system integrator, senior DBA, observability architect, code reviewer, security specialist, teacher.
 - **Skills** — narrow, on-demand task packages; project, global, and team roots.
+- **Example skill**: `kanban-board` renders the three issue directories as a read-only table.
 - **Precedence** — project, then team, then global.
 - **Activation** — `"use skill <name>"` or a single best description match.
 - **Trigger index** — rebuilt at boot; a triggered policy does not survive compaction.

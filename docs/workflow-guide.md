@@ -558,6 +558,10 @@ description: A minimal example skill package.
 Use this when ...
 ```
 
+### Example: the Kanban board skill
+
+The global skills root ships `kanban-board` as a working example. It reads the `open/`, `in-progress/`, and `closed/` directories under `ai/issues/`, then prints a three-column table: Open, In progress, Closed. It is read-only and never moves or edits a ticket. The package ships in the workflow clone at `ai/skills/kanban-board/SKILL.md`. Load it with `"use skill kanban-board"` or say "issue board", "Kanban view", or "status table".
+
 ### Boot index and activation
 
 The AI indexes the name, description, path, and scope at load context, recovery, and checkpoint re-affirmation. It reads no body at boot. Activate a skill with `"use skill <name>"` or a single best description match; the AI announces the skill, asks on an ambiguous match, and reports `unknown skill` on a miss. The body loads for that task only, not for the session.

@@ -114,6 +114,7 @@ for phrase in \
     "Load the index, not the world" \
     "Git is your safety net" \
     "TDD" \
+    "kanban-board" \
     "The state is not a black box" \
     "Ticket, issue, or support request" \
     "Skills are a layer, not the workflow" \

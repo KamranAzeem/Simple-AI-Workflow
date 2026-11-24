@@ -95,3 +95,14 @@
 [2026-11-22] Final deck validation: suite 31/31, protocol 8/8, markdownlint 0, shellcheck 0, 25 SVGs valid, 52 slides rendered; Gate 1 review, the Google Slides update, and Gate 2 remain.
 [2026-11-22] Wrote the project knowledge lesson on the slide deck visual system; the project store is 14 lessons plus the template.
 [2026-11-23] Closed the slide deck ticket on the Markdown scope: 52 slides, review-93 APPROVED, suite 31/31; the plan is attached, Google Slides and Gate 2 are deferred to a separate issue.
+[2026-11-23] Delivered the slide deck refresh: the 52-slide Markdown deck, 25 SVGs, preview, renderer, and slides fixture are live; no release.
+[2026-11-23] Filed three follow-up tickets: presentation policy, sync-script --init scaffolding, and global-to-workflow policy terminology rename.
+[2026-11-24] Delivered the post-compaction manual fix: the procedure, the always-on rule, the workflow guide, the slides, the setup guide, the comparison table, the README, and the knowledge note now state the manual run.
+[2026-11-24] Closed the ticket with the plan attached; review-94 CHANGES REQUESTED, review-95 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
+[2026-11-24] Released v7.2.1 and published the GitHub Release; the announcement and README banner are live.
+[2026-11-24] Restored the empty ai/pending directory after the stash round-trip and re-validated before delivery; the release-practices entry stays at "prepared" because post-merge commits are forbidden.
+[2026-11-24] Delivered the notes documentation and slides batch: the one-shot guidance, the ticket/issue/support request table, the no-vibe framing, the blackbox state section, the wave-surfer first slide, the skills layer, and the compaction phenomenon.
+[2026-11-24] Closed the seven Documentation tickets with the plan attached; review-96 CHANGES REQUESTED, review-97 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
+[2026-11-24] The two Feature tickets, idea intake and the Kanban skill, remain open; no release.
+[2026-11-24] Delivered the read-only Kanban example skill at `ai/skills/kanban-board/`; the guide Section 24 and the deck appendix document it.
+[2026-11-24] Closed the Kanban ticket with the plan attached; review-98 CHANGES REQUESTED, review-99 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.

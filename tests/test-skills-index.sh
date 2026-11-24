@@ -165,6 +165,24 @@ require_in "docs/announcements/v7.2.0.md" "# v7.2.0" "the v7.2.0 announcement is
 require_in "README.md" "v7.2.0" "README banner does not name v7.2.0."
 require_in "README.md" "docs/announcements/v7.2.0.md" "README banner does not link the v7.2.0 announcement."
 
+KANBAN="$ROOT/ai/skills/kanban-board/SKILL.md"
+if [ -f "$KANBAN" ]; then
+    name="$(frontmatter_value "$KANBAN" name)"
+    desc="$(frontmatter_value "$KANBAN" description)"
+    [ "$name" = "kanban-board" ] || { echo "FAIL: the Kanban skill name is not kanban-board."; fail=1; }
+    [ -n "$desc" ] && [ "${#desc}" -le 200 ] || { echo "FAIL: the Kanban skill description is missing or over 200 characters."; fail=1; }
+else
+    echo "FAIL: the Kanban skill package is missing."
+    fail=1
+fi
+require_in "ai/skills/kanban-board/SKILL.md" "Read-only" "the Kanban skill is not read-only."
+require_in "ai/skills/kanban-board/SKILL.md" "Never create, move, rename, edit, or delete a ticket" "the Kanban skill does not prohibit ticket changes."
+require_in "ai/skills/kanban-board/SKILL.md" "Open" "the Kanban skill lacks the Open column."
+require_in "ai/skills/kanban-board/SKILL.md" "In progress" "the Kanban skill lacks the In progress column."
+require_in "ai/skills/kanban-board/SKILL.md" "Closed" "the Kanban skill lacks the Closed column."
+require_in "docs/workflow-guide.md" "kanban-board" "the guide does not document the Kanban skill."
+require_in "docs/simple-ai-workflow-slides.md" "kanban-board" "the deck does not mention the Kanban skill."
+
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: skills index fixture."
     exit 1
