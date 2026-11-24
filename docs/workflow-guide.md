@@ -13,6 +13,12 @@ All persistent AI reasoning, style guides, and project-specific patterns are sto
 - **Checkpoint Sync**: The AI is required to review and update this directory at every checkpoint, capturing any new findings, decisions, or discoveries from the session: even if nothing changed (confirmation is mandatory).
 - **Format**: Each file starts with the self-contained header and follows one shape: Context, Rule or Fix, Why, Verify, and Caveats if needed. Name it for the task it answers, with six or fewer hyphenated segments. Use 10 KB as a soft target; a file over 15 KB gets an automatic cleanup during repair. Split only by task topic, merge a file under 3 KB into its topic, and treat 50 files per store as a review threshold. Keep each file self-standing, with no pointers to other files. Project knowledge may keep identifying names; raw secrets are banned. See Section 23.
 
+### Why the state lives with the project
+
+Without a protocol, each assistant keeps its own state in its own hidden directory. The layout, the format, and the mix of decisions, configuration, and knowledge change with the assistant. The three problems are a mixed state, per-agent layouts, and no audit trail. Switching assistants starts from scratch. The fixed `ai/` layout puts the state in one visible, portable place beside the code, so you can inspect it and take it with you. The long-form comparison is in [how the assistants store context and how this workflow fits](simple-ai-workflow-compared-to-all-ai-assistants-out-there.md).
+
+![The black box and the fixed layout](slides/diagrams/blackbox-state.svg)
+
 ## 2. Global Knowledge (Cross-Project)
 
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
@@ -131,6 +137,12 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 
 When the conversation is compacted (the harness replaces the live history with a summary, shown by the "Compacted conversation" label), the standing rules can drop out of context. The **Post-Compaction Recovery** procedure reloads them.
 
+### The compaction phenomenon
+
+The summary keeps the task, but the standing rules, policies, and loaded knowledge can drop out. The assistant keeps working with a thinner context and can quietly break your conventions.
+
+![Compaction and recovery](slides/diagrams/compaction.svg)
+
 **It is not automatic.** No harness currently provides a reliable hook that fires after compaction and re-injects the protocol, so you run the procedure yourself. After you see the summary, type:
 
 > *"run post-compaction recovery procedure"*
@@ -195,6 +207,12 @@ The common policy (`ai/policies/ai-policy-common.md`) includes a dedicated **Uni
 These standards are loaded automatically as part of the common policy baseline and do not require any additional configuration.
 
 The common policy also owns the **Universal Testing Standards**: preserve the project's existing test framework and patterns, keep tests deterministic, mock external dependencies, test failure modes, and follow TDD when the project uses it. Those standards load with the common policy as well.
+
+### Working style: no one-shot pride, no vibe coding
+
+A one-shot prompt is not the goal. It skips the reviewable steps that make the result repeatable. Work in small steps, checkpoint, and review.
+
+Vibe coding is not acceptable. It accepts code because the code looks plausible, and it leaves a different result each time. Acceptance criteria say how done is proven, and acceptance testing proves it. The plan carries the criteria, and the design chain records them; see [Section 15](#15-design-documentation-flow).
 
 ## 11. AI Customization & Curated Traits
 
@@ -384,6 +402,18 @@ For `direct`, the AI squash-merges the branch to the trunk, deletes the branch, 
 
 A local ticket closes in the branch commit. An external ticket closes when the merge lands. Reopen a local ticket on a new branch and move it to `open/`; reopen an external ticket in its tracker. List open and in-progress tickets with `"list issues"`.
 
+### Ticket, issue, or support request
+
+The tracker uses all three, and they are not interchangeable.
+
+| Term | What it is | Who creates it | Example |
+|---|---|---|---|
+| Ticket | The overarching record or container that tracks a task from start to finish. | Automated system, support agent, or team member. | "Ticket #4092: Investigate and resolve the login outage reported by enterprise clients." |
+| Issue | A specific code problem, bug, or new feature idea. | Developer, QA, or product manager. | "The checkout button throws a 500 error when applying a discount code on mobile." |
+| Support request | A request for help, guidance, or account or service assistance. | End user or customer. | "I forgot my password and the reset email is not arriving. Can you unlock my account?" |
+
+A support request is user-facing help, and it rarely needs a code change. An issue is engineering work in the codebase. A ticket is the container that tracks either one. A support request often enters as a support ticket; if it reveals a bug, it is linked to or converted into an engineering issue.
+
 ### Outbound content scrub
 
 Before an external issue, PR/MR, comment, or release note leaves the project, the AI loads `ai-policy-outbound-content-scrub.md` and applies its `## Outbound Content Scrub` rules. The common policy keeps the invariant. The AI states the destination class before drafting. Class A covers an internal or same-audience artifact and keeps customer names and infrastructure detail. Class B covers an external or different-audience artifact and removes names, internal hosts, URLs, identifiers, ticket keys, and named file paths. Secrets are removed in every class and cannot be overridden.
@@ -494,6 +524,12 @@ Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Ver
 ## 24. Skills
 
 A skill is a narrow, on-demand task package. It sits beside policies, procedures, and knowledge, not inside them. Policies are always-on or domain rules; procedures are triggered workflows; knowledge is durable findings; a skill is a small instruction package for one task.
+
+### Skills are not the workflow
+
+Skills can be part of any workflow, but they are not the workflow. A project that relies on skills alone has no fixed shape, no durable state, and no review gate. Skills do not replace policies and procedures.
+
+![The three layers](slides/diagrams/skills-layers.svg)
 
 ### The roots
 

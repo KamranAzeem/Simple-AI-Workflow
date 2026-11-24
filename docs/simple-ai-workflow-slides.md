@@ -4,13 +4,17 @@
 
 **You are the architect. The AI is your reliable peer. The work leaves a trail you can inspect.**
 
+This session is about the design of the workflow, why to use it, and how to use it.
+
+Think like a wave surfer: read the wave, join it, and ride it. The sooner you catch it, the sooner you move with it.
+
 A predictable, inspectable way to work with AI, not another platform.
 
 ![The axe](slides/assets/axe.jpg)
 
 [GitHub: KamranAzeem/Simple-AI-Workflow](https://github.com/KamranAzeem/Simple-AI-Workflow) | [azeemconsulting.com](https://azeemconsulting.com) | CC BY 4.0
 
-<!-- Speaker notes: Open with the axe. The protocol is the sharpening, not overhead. The promise is the fixed shape: one person, one reliable peer, and a trail that outlives the session. -->
+<!-- Speaker notes: Open with the axe. This is a training session about the design of the workflow: why it exists and how to use it. The goal is to join the wave, not to fight it. Read the wave, join it, and ride it. The promise is the fixed shape: one person, one reliable peer, and a trail that outlives the session. -->
 
 ---
 
@@ -54,6 +58,16 @@ Ad-hoc chat improvises what to load and what to save. The cost is a prompt tax, 
 ![The memory gap](slides/diagrams/memory-gap.svg)
 
 <!-- Speaker notes: The model is fine. The shape around it is missing. The prompt tax is the briefing you repeat every time. Context loss is the next step that lived only in the chat. Scattered state is two assistants with two versions of the truth. The result is that the same prompt tomorrow can produce a different process. This is the problem the workflow solves. -->
+
+---
+
+## The state is not a black box
+
+Without a protocol, each assistant keeps its own state in its own hidden place. The layout, the format, and the mix of decisions change with the assistant.
+
+![The black box and the fixed layout](slides/diagrams/blackbox-state.svg)
+
+<!-- Speaker notes: This is the state problem behind the memory gap. Each assistant has its own hidden directory and its own format. The user cannot audit the state, and a second assistant starts from scratch. The workflow's answer is the fixed ai/ layout: one visible place beside the code, with the same shape in every project. -->
 
 ---
 
@@ -197,6 +211,20 @@ The loop is a fixed few steps, in the same order.
 
 ---
 
+## Ticket, issue, or support request
+
+The tracker uses three records, and they are not the same.
+
+- **Ticket**: the container that tracks a task from start to finish. Example: "Ticket #4092: resolve the login outage."
+- **Issue**: a code problem, bug, or new feature idea. Example: "The checkout button throws a 500 error on mobile."
+- **Support request**: a request for help that rarely needs a code change. Example: "I forgot my password and the reset email is not arriving."
+
+A support request can become an issue when it reveals a bug.
+
+<!-- Speaker notes: The words are not interchangeable. A support request is user-facing help. An issue is engineering work in the codebase. A ticket is the container. A support request often enters as a ticket, and a real bug is linked to or converted into an issue. -->
+
+---
+
 ## A session is not one script
 
 The work can start anywhere. The protocol makes the mode explicit.
@@ -250,6 +278,18 @@ List a standard in `ai-customization.md`. The AI applies the controls from its o
 
 ---
 
+## Skills are a layer, not the workflow
+
+Policies and procedures are the rule layer. Knowledge is the memory. Skills are narrow task packages.
+
+![The three layers](slides/diagrams/skills-layers.svg)
+
+Skills can be part of any workflow. They do not replace policies and procedures.
+
+<!-- Speaker notes: A skill is a task layer. It sits beside the rule layer and the memory, not above them. A project that relies on skills alone has no fixed shape, no durable state, and no review gate. Use skills inside the workflow. -->
+
+---
+
 ## Quality is a loop, not a hope
 
 Acceptance criteria, a test written first, a peer review, and a design chain. Every step leaves an artifact.
@@ -257,6 +297,18 @@ Acceptance criteria, a test written first, a peer review, and a design chain. Ev
 ![The quality loop](slides/diagrams/quality-loop.svg)
 
 <!-- Speaker notes: This is the old deck's TDD slide, plus the review and design chain. Acceptance criteria say how done is proven. Where the project uses TDD, the test is written first and makes the behavior executable; otherwise the project's own test framework is the standard. Peer review checks the full file set, not just the diff. The design chain records the intent. The test proves the behavior, the review proves the change, and the design docs prove the intent. -->
+
+---
+
+## No vibe coding
+
+Vibe coding accepts code because it looks plausible. The result changes with the mood of the session.
+
+- The quality loop defines the proof.
+- Acceptance testing proves it every time.
+- The result is repeatable, run after run.
+
+<!-- Speaker notes: The opposite of the loop is vibe coding: accept what looks right, skip the proof, and hope. It is not acceptable because the next run can produce a different answer. Acceptance criteria, a failing test, peer review, and the design chain make the result repeatable. -->
 
 ---
 
@@ -310,6 +362,20 @@ The friction is the point: you always know what was saved, and why.
 
 ---
 
+## One-shot prompts are not the goal
+
+A one-shot prompt feels efficient. It skips the review, the checkpoint, and the proof.
+
+- Small steps.
+- A visible checkpoint.
+- A review before the merge.
+
+Aim for a result you can trust.
+
+<!-- Speaker notes: One-shot pride is the wrong target. The fast answer that skips the loop is hard to trust and hard to repeat. The protocol asks for small steps, a checkpoint, and a review. The friction is the point. -->
+
+---
+
 ## Load the index, not the world
 
 The boot reads the rules and the state. Knowledge and skills are indexed by name and opened only when the task needs them.
@@ -317,6 +383,18 @@ The boot reads the rules and the state. Knowledge and skills are indexed by name
 ![The context budget](slides/diagrams/token-budget.svg)
 
 <!-- Speaker notes: This is the old deck's cost slide, made structural. Rules and state load in full. Knowledge and skills are indexed by name, description, and path, and the body is read only when the task needs it. Scoped reads skip secrets, archives, notes, and the whole repository. A long session gets compacted, and you run post-compaction recovery to reload the rules without the transcript. Use a cheap model for a cheap task. The protocol is the lever that keeps the expensive model focused. -->
+
+---
+
+## When the context is compacted, the rules can vanish
+
+A long session fills the window. The harness replaces the history with a summary. The task survives; the standing rules can drop.
+
+![Compaction and recovery](slides/diagrams/compaction.svg)
+
+To recover, run `"run post-compaction recovery procedure"`. The first reply starts with the reload line.
+
+<!-- Speaker notes: Compaction is normal in a long session. The summary keeps the task, but the rules, policies, and loaded knowledge can drop. The recovery is manual: no harness hook currently fires it. The user runs the phrase, and the procedure reloads the rules from disk. -->
 
 ---
 

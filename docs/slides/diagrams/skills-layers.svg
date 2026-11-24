@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-labelledby="title desc">
+  <title id="title">Skills are a layer, not the workflow</title>
+  <desc id="desc">Policies and procedures, knowledge, and skills as three layers, in that order.</desc>
+  <rect width="1600" height="900" fill="#F7FAFB"/>
+
+  <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="50" font-weight="700" fill="#2B3A42">Skills are a layer, not the workflow</text>
+  <text x="80" y="120" font-family="Lato, Arial, sans-serif" font-size="28" fill="#6B7A82">A skill can join any workflow. It cannot replace the rule layer or the memory.</text>
+  <rect x="80" y="140" width="86" height="5" rx="2.5" fill="#0090C1"/>
+
+  <rect x="100" y="214" width="980" height="150" rx="20" fill="#0090C1"/>
+  <text x="136" y="274" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#FFFFFF">Policies and procedures</text>
+  <text x="136" y="312" font-family="Lato, Arial, sans-serif" font-size="22" fill="#FFFFFF">Always-on rules and triggered workflows.</text>
+
+  <rect x="100" y="388" width="980" height="150" rx="20" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
+  <text x="136" y="448" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#007AA3">Knowledge</text>
+  <text x="136" y="486" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Durable findings. The project and global memory.</text>
+
+  <rect x="100" y="562" width="980" height="150" rx="20" fill="#FFFFFF" stroke="#0090C1" stroke-width="2" stroke-dasharray="10 7"/>
+  <text x="136" y="622" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Skills</text>
+  <text x="136" y="660" font-family="Lato, Arial, sans-serif" font-size="22" fill="#505962">Narrow task packages, loaded on demand for one task.</text>
+
+  <text x="1140" y="282" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">always on</text>
+  <text x="1140" y="312" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">and triggered</text>
+  <text x="1140" y="456" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">durable</text>
+  <text x="1140" y="486" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">read on demand</text>
+  <text x="1140" y="630" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">on demand</text>
+  <text x="1140" y="660" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">one task only</text>
+
+  <rect x="60" y="768" width="1480" height="86" rx="16" fill="#E6F5FA"/>
+  <text x="92" y="806" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Use skills inside the workflow. Do not use skills as the workflow.</text>
+  <text x="92" y="838" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">A project that relies on skills alone has no fixed shape, no durable state, and no review gate.</text>
+</svg>

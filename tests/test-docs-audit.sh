@@ -123,6 +123,25 @@ absent "$COMPARED" "VS Code versus CLI" "compared doc drops the VS Code versus C
 present "$GUIDE" "### Agent Collaboration" "guide has the agent collaboration section"
 present "$GUIDE" "coordination board" "guide names the coordination board"
 present "$GUIDE" "multi-agent-runbook.md" "guide links the multi-agent runbook"
+present "$GUIDE" "Why the state lives with the project" "guide explains the black box problem"
+present "$GUIDE" "### The compaction phenomenon" "guide explains the compaction phenomenon"
+present "$GUIDE" "Working style: no one-shot pride, no vibe coding" "guide covers one-shot pride and vibe coding"
+present "$GUIDE" "Ticket, issue, or support request" "guide clarifies ticket, issue, and support request"
+present "$GUIDE" "| Ticket |" "guide table starts with ticket"
+present "$GUIDE" "| Issue |" "guide table includes issue"
+present "$GUIDE" "| Support request |" "guide table includes support request"
+present "$GUIDE" "slides/diagrams/blackbox-state.svg" "guide links the blackbox diagram"
+present "$GUIDE" "slides/diagrams/compaction.svg" "guide links the compaction diagram"
+present "$GUIDE" "slides/diagrams/skills-layers.svg" "guide links the skills-layers diagram"
+present "$GUIDE" "Skills are not the workflow" "guide says skills are not the workflow"
+
+order="$(awk '/\| Ticket \|/{t=NR} /\| Issue \|/{i=NR} /\| Support request \|/{s=NR} END{if (t && i && s && t < i && i < s) print "ok"; else print "bad"}' "$GUIDE")"
+if [ "$order" = "ok" ]; then
+    echo "PASS guide keeps the ticket, issue, support request order"
+else
+    echo "FAIL guide keeps the ticket, issue, support request order"
+    fail=1
+fi
 
 present "$README" "docs/ai-provider-selection-guide.md" "README docs index links the provider guide"
 present "$README" "docs/multi-agent-runbook.md" "README docs index links the multi-agent runbook"

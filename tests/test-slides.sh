@@ -13,6 +13,7 @@ export LC_ALL=C
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DECK="$ROOT/docs/simple-ai-workflow-slides.md"
+GUIDE="$ROOT/docs/workflow-guide.md"
 README="$ROOT/README.md"
 PREVIEW="$ROOT/support-files/preview-slides.html"
 RENDER="$ROOT/support-files/render-slides-preview.sh"
@@ -113,6 +114,12 @@ for phrase in \
     "Load the index, not the world" \
     "Git is your safety net" \
     "TDD" \
+    "The state is not a black box" \
+    "Ticket, issue, or support request" \
+    "Skills are a layer, not the workflow" \
+    "No vibe coding" \
+    "One-shot prompts are not the goal" \
+    "When the context is compacted" \
     "manual reload" \
     "no harness hook currently fires it" \
     "Academic research" \
@@ -129,6 +136,20 @@ for phrase in \
     "migrate-design-docs"; do
     present "$DECK" "$phrase" "deck names: $phrase"
 done
+
+if awk '/^---$/{exit} {print}' "$DECK" | grep -qF "Think like a wave surfer"; then
+    pass "first slide sets the training framing"
+else
+    fail_case "first slide missing the training framing"
+fi
+absent "$GUIDE" "wave surfer" "guide does not get the wave-surfer framing"
+if awk 'f{print} /^---$/{f=1}' "$DECK" | grep -qiF "wave surfer"; then
+    fail_case "wave-surfer framing appears after the first slide"
+else
+    pass "wave-surfer framing stays on the first slide"
+fi
+present "$DECK" "The recovery is manual" "compaction slide note says manual"
+present "$ROOT/docs/slides/diagrams/compaction.svg" "Manual recovery" "compaction diagram names manual recovery"
 
 for group in "Setup" "Daily loop" "Memory" "Quality" "Delivery" "Maintenance" "Team" "Compliance" "Domain expertise" "Traits and skills" "Commands"; do
     present "$DECK" "Appendix: $group" "appendix group: $group"
@@ -211,6 +232,9 @@ for asset in \
     slides/diagrams/straight-vs-zigzag.svg \
     slides/diagrams/team-gate.svg \
     slides/diagrams/team-publish.svg \
+    slides/diagrams/blackbox-state.svg \
+    slides/diagrams/skills-layers.svg \
+    slides/diagrams/compaction.svg \
     slides/diagrams/first-loop.svg; do
     if [ -f "$ROOT/docs/$asset" ]; then
         pass "asset exists: $asset"
