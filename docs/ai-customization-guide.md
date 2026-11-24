@@ -15,6 +15,8 @@ The `## AI Workflow Configuration` section holds the paths and the shell. It is 
 
 The boot reads the customization first, then the whole settings directory, then runs the first named command. Absent keys keep the default directory and the current shell.
 
+**Tracking**: the customization is the project's dial. The workflow repository tracks its own copy so a clone boots without a setup step. The bootstrap ignores the file by default in new projects; a project may track it instead, for example when the whole team shares the dial. The loader accepts either state.
+
 ## Why Customization?
 
 Different projects require different expertise (Cloud vs. Frontend), different behaviors (Mentor vs. Reviewer), and different regulatory standards (GDPR vs. SOC2). Instead of having one massive policy, we "compose" the AI's persona in the project directory using this file.

@@ -1400,3 +1400,11 @@ The user-facing docs describe the protocol. The protocol modules, `AGENTS.md`, t
 Context: the AI treated a repeated user-facing sentence in the guide, README, and deck as a rule even though the ADRs and the procedure said otherwise. The docs are not a precedence level.
 
 Consequences: the guide and README state the principle; the deck speaker note repeats it; the tests pin the note. No new policy rule is added, because the precedence already exists.
+
+## 2026-11-24: A tracked customization is valid
+
+The structural audit accepts an `ai-customization.md` that is tracked. It warns only when the file is untracked and absent from `.gitignore` in a Git repository, because an untracked, unignored local configuration can be committed by accident. The workflow repository tracks its own copy so a clone boots without a setup step. The bootstrap keeps its ignore-by-default behavior for new projects; a project may track the file when the whole team shares the dial. This revises the 2026-07-04 "the structural audit checks the customization gitignore entry" decision.
+
+Context: the workflow repository tracked `ai-customization.md` while `.gitignore` ignored it, and the load-context check expected the ignore entry. The user chose to keep the customization in Git and asked for the checks and docs to agree.
+
+Consequences: the `.gitignore` entry is removed from the workflow repository; load context accepts a tracked file and warns only for an untracked, unignored file; the customization guide states both states. The bootstrap's default and the deck notes that describe the bootstrap are unchanged.
