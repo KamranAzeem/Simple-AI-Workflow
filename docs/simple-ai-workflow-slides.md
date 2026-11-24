@@ -217,6 +217,7 @@ The tracker uses three records, and they are not the same.
 
 - **Ticket**: the container that tracks a task from start to finish. Example: "Ticket #4092: resolve the login outage."
 - **Issue**: a code problem, bug, or new feature idea. Example: "The checkout button throws a 500 error on mobile."
+  - **Idea**: an unvetted proposal. File it with `IssueType: Idea`, grill it, then continue or close it with a dated `Won't fix` note.
 - **Support request**: a request for help that rarely needs a code change. Example: "I forgot my password and the reset email is not arriving."
 
 A support request can become an issue when it reveals a bug.
@@ -404,7 +405,7 @@ Branch before the work. Commit often. Review, squash-merge, and push when the ch
 
 ![Git safety](slides/diagrams/git-safety.svg)
 
-<!-- Speaker notes: The old deck's Git slides, condensed. Open the branch before the first commit. Use conventional commits and no placeholder commit. Review the full change. Squash-merge to keep one feature as one commit, delete the branch, and push. The implementation request approves the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own approval. In a team repository, the merge mode is pr and one reviewer merges. -->
+<!-- Speaker notes: The old deck's Git slides, condensed. Open the branch before the first commit. Use conventional commits and no placeholder commit. Review the full change. Squash-merge to keep one feature as one commit, delete the branch, and push. The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request. In a team repository, the merge mode is pr and one reviewer merges. -->
 
 ---
 
@@ -429,7 +430,7 @@ The claims are inspectable.
 
 ## The repository is the proof
 
-- It has 25 policies, 16 procedures, and 53 triggers.
+- It has 25 policies, 16 procedures, and 54 triggers.
 - It has 31 tests, 18 user-facing docs, and hundreds of review reports.
 - It has a public issue tracker, daily checkpoints, and release notes.
 - Every change went through the same plan, review, and checkpoint shape.
@@ -617,13 +618,13 @@ Tickets, plans, and merge.
 - **Issue-management policy** — local and external tickets, plan review, and close semantics.
 - **manage-issues** — file, list, close, reopen, and plan.
 - **implement-plan** — branch, commits, push, and the merge mode.
-- **Merge policy** — direct, PR, or auto; the merge, tag, and release still need approval.
+- **Merge policy** — direct, PR, or auto; the implementation request approves the plan's close sequence.
 - **Branch gating** — explicit approval before state-changing Git operations on main.
 - **Git safety** — conventional commits, no placeholder commits, squash merge, and the PR path.
 - **Author identity** — your Git identity; never an AI signature or a generated email.
 - **Release notes** — the changelog and tag follow the merge.
 
-<!-- Speaker notes: A ticket request ends at the ticket. A plan request ends at the plan. The implementation request is the approval for the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own approval. -->
+<!-- Speaker notes: A ticket request ends at the ticket. A plan request ends at the plan. The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request. The guide and README describe the protocol; the protocol modules are authoritative. -->
 
 ---
 

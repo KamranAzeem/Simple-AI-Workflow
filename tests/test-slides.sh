@@ -115,6 +115,10 @@ for phrase in \
     "Git is your safety net" \
     "TDD" \
     "kanban-board" \
+    "**Idea**: an unvetted proposal." \
+    "The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's \`## Close Sequence\`" \
+    "the implementation request approves the plan's close sequence" \
+    "The guide and README describe the protocol; the protocol modules are authoritative." \
     "The state is not a black box" \
     "Ticket, issue, or support request" \
     "Skills are a layer, not the workflow" \
@@ -150,6 +154,7 @@ else
     pass "wave-surfer framing stays on the first slide"
 fi
 present "$DECK" "The recovery is manual" "compaction slide note says manual"
+present "$DECK" "  - **Idea**" "deck indents the idea under Issue"
 present "$ROOT/docs/slides/diagrams/compaction.svg" "Manual recovery" "compaction diagram names manual recovery"
 
 for group in "Setup" "Daily loop" "Memory" "Quality" "Delivery" "Maintenance" "Team" "Compliance" "Domain expertise" "Traits and skills" "Commands"; do

@@ -36,6 +36,14 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 8. Push the default branch and the tag.
 9. Publish the GitHub Release.
 
+### v7.3.0 (2026-11-24)
+
+- Add the idea intake: `IssueType: Idea`, one `file an idea` trigger, one issue-policy bullet, and the dated `Won't fix` close.
+- Clarify the two-step delivery approval in the guide, README, deck, and common policy; the docs describe the protocol and the modules govern.
+- The trigger count is 54.
+- No new procedure; `manage-issues` gains one trigger and H1 close variants, while `implement-plan` and `write-checkpoint` are unchanged.
+- Release prepared on 2026-11-24; publication follows the merge approval.
+
 ### v7.2.1 (2026-11-24)
 
 - Correct the post-compaction recovery claim: the procedure is manual, not automatic.

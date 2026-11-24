@@ -135,6 +135,11 @@ present "$GUIDE" "slides/diagrams/compaction.svg" "guide links the compaction di
 present "$GUIDE" "slides/diagrams/skills-layers.svg" "guide links the skills-layers diagram"
 present "$GUIDE" "Skills are not the workflow" "guide says skills are not the workflow"
 present "$GUIDE" "kanban-board" "guide documents the Kanban example skill"
+present "$GUIDE" "An idea is a ticket with \`IssueType: Idea\`" "guide states the idea intake"
+present "$GUIDE" "dated \`Won't fix\` note" "guide states the idea close"
+present "$GUIDE" "checkpoint discussed-idea line remains the backstop" "guide keeps the checkpoint backstop"
+present "$GUIDE" "The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's \`## Close Sequence\`" "guide states the two-step approval"
+present "$GUIDE" "This guide describes the protocol. The protocol modules" "guide states the protocol modules are authoritative"
 
 order="$(awk '/\| Ticket \|/{t=NR} /\| Issue \|/{i=NR} /\| Support request \|/{s=NR} END{if (t && i && s && t < i && i < s) print "ok"; else print "bad"}' "$GUIDE")"
 if [ "$order" = "ok" ]; then

@@ -12,6 +12,7 @@ ISSUE="$ROOT/ai/policies/ai-policy-issue-management.md"
 MANAGE="$ROOT/ai/procedures/manage-issues.md"
 IMPLEMENT="$ROOT/ai/procedures/implement-plan.md"
 LOADCTX="$ROOT/ai/procedures/load-context.md"
+TEMPLATE="$ROOT/ai/shared/project-knowledge/issue-template.md"
 fail=0
 
 present() {
@@ -47,6 +48,20 @@ present "$LOADCTX" "ai-policy-issue-management.md" "load-context loads the plug-
 present "$LOADCTX" "### Ticket Fields" "load-context builds the template from the fields"
 present "$MANAGE" "ai-policy-issue-management.md" "manage-issues loads the plug-in"
 present "$IMPLEMENT" "ai-policy-issue-management.md" "implement-plan loads the plug-in"
+present "$ISSUE" "- Set \`IssueType\` to \`Feature\`, \`Defect/Bugfix\`, \`Improvement/Refactor\`, \`Documentation\`, \`Task\`, or \`Idea\`." "plug-in lists the Idea type"
+present "$TEMPLATE" "\`Documentation\`, \`Task\`, \`Idea\`." "template lists the Idea type"
+present "$MANAGE" "- file an idea" "manage-issues declares the idea trigger"
+present "$MANAGE" '# PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "file an idea", "new idea", "I want to work on this idea", "close issue", "list issues", "plan the issue", or "plan issue #N"' "manage-issues H1 names the idea close variants"
+present "$ISSUE" "File an idea with \`IssueType: Idea\`; grill it, then continue the normal steps or close it with a dated \`Won't fix\` note." "plug-in states the idea intake"
+present "$ISSUE" "- Set \`Label\` to empty, \`Insufficient Information\`, or \`Unworkable\`." "plug-in keeps the workability labels"
+present "$COMMON" "the implementation request that triggers PROCEDURE IMPLEMENT-PLAN is that separate approval when the plan's \`## Close Sequence\` names the action, otherwise ask." "common policy states the two-step approval"
+present "$COMMON" "external system write" "common policy keeps the external-system approval gate"
+if awk '/^## Triggers/{on=1;next} /^## /{on=0} on' "$MANAGE" | grep -qE 'new idea|I want to work on this idea'; then
+    printf 'FAIL the idea close variants are in the Triggers block\n'
+    fail=1
+else
+    printf 'PASS the idea close variants stay in the H1\n'
+fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: issue-management plug-in fixture."

@@ -106,3 +106,8 @@
 [2026-11-24] The two Feature tickets, idea intake and the Kanban skill, remain open; no release.
 [2026-11-24] Delivered the read-only Kanban example skill at `ai/skills/kanban-board/`; the guide Section 24 and the deck appendix document it.
 [2026-11-24] Closed the Kanban ticket with the plan attached; review-98 CHANGES REQUESTED, review-99 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
+[2026-11-24] Delivered the read-only Kanban skill; the package is live as 1 global skill; no release.
+[2026-11-24] Filed the implementation-request and close-sequence wording issue with the observed extra-approval evidence and the proposed two-step wording.
+[2026-11-24] Delivered the idea intake: IssueType: Idea, one file an idea trigger, one policy bullet, and the dated Won't fix close.
+[2026-11-24] Delivered the two-step close-sequence wording and the docs-describe principle across the guide, README, deck, and common policy; two ADRs.
+[2026-11-24] Closed both tickets; review-103 CHANGES REQUESTED, fixes applied; suite 31/31, validator 8/8; the trigger count is 54; v7.3.0 is prepared.

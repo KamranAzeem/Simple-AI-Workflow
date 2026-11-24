@@ -1384,3 +1384,19 @@ The recovery procedure is user-invoked. No harness currently exposes a reliable 
 Context: the docs described a reload that fires automatically, but it never did. The automatic expectation came from an earlier design that assumed a usable post-compaction hook. Running the procedure remains safe at any time because it only adds rule and config files.
 
 Consequences: the procedure title says "Manual after conversation compaction"; `AGENTS.md` says the user invokes it; `docs/workflow-guide.md` drops the zero-touch claim; `docs/post-compaction-reload-trigger-setup.md` reframes the per-assistant note as a reminder that asks the user to run the phrase; `docs/simple-ai-workflow-slides.md`, the comparison doc, `README.md`, and the project knowledge note say "manual"; the tests reject the automatic claim. No reload step changes, and the no-state-file rule stands. This supersedes the automatic-firing expectation in the 2026-07-28 and 2026-07-31 entries.
+
+## 2026-11-24: The implementation request approves the plan's close sequence
+
+The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request. This aligns the guide, README, deck notes, and common policy with the terminal-state and feature-branch entries.
+
+Context: the guide, README, deck, and common policy said the implementation request covered only the branch, commits, and push, and that the merge, tag, and release needed a third approval. The AI applied that wording twice on 2026-11-24 and stopped after the branch. The issue management procedures were unchanged; the wording entered on 2026-11-18 and 2026-11-19.
+
+Consequences: the four user-facing places and the common policy carry the two-step wording; the tests pin it; the protected-branch gate remains for a plan that does not name the action, a non-implementation request, and an external ticket that needs its tracker update. The work item still ends with the merge, delete, push, tag, and release.
+
+## 2026-11-24: The docs describe the protocol and the modules govern
+
+The user-facing docs describe the protocol. The protocol modules, `AGENTS.md`, the policies, and the procedures, are authoritative. A conflict between a doc and a module is resolved by the module, and the doc is corrected.
+
+Context: the AI treated a repeated user-facing sentence in the guide, README, and deck as a rule even though the ADRs and the procedure said otherwise. The docs are not a precedence level.
+
+Consequences: the guide and README state the principle; the deck speaker note repeats it; the tests pin the note. No new policy rule is added, because the precedence already exists.

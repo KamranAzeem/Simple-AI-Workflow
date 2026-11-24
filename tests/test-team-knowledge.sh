@@ -120,7 +120,7 @@ index_rc=$?
 summary="$(printf '%s\n' "$index_out" | grep '^summary|' | tail -1)"
 if [ "$index_rc" -eq 0 ] && [ -n "$summary" ]; then
     pass "index oracle accepts the module set"
-    for field in "modules=41" "policies=25" "procedures=16" "triggers=53" "conflicts=0" "errors=0"; do
+    for field in "modules=41" "policies=25" "procedures=16" "triggers=54" "conflicts=0" "errors=0"; do
         if printf '%s\n' "$summary" | grep -qF "$field"; then
             pass "index reports $field"
         else

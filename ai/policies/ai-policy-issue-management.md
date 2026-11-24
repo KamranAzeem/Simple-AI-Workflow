@@ -41,7 +41,7 @@ Apply these rules to every work item.
 ### Ticket Fields
 
 - Include `Reported`, `Reporter`, `IssueType`, `Severity`, `Size`, `URL`, `Summary`, `Label`, and `Description`.
-- Set `IssueType` to `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, or `Task`.
+- Set `IssueType` to `Feature`, `Defect/Bugfix`, `Improvement/Refactor`, `Documentation`, `Task`, or `Idea`.
 - Set `Severity` to `P1`, `P2`, `P3`, or `P4`.
 - Set `Size` to `S`, `M`, `L`, or `XL`.
 - Set `Label` to empty, `Insufficient Information`, or `Unworkable`.
@@ -60,6 +60,7 @@ Apply these rules to every work item.
 - File a ticket immediately when the AI finds work worth tracking.
 - Analyze the ticket for gaps before starting work.
 - Fill every gap through brainstorming or grilling.
+- File an idea with `IssueType: Idea`; grill it, then continue the normal steps or close it with a dated `Won't fix` note.
 - Tell the user whether the ticket is workable when an external tracker has no label mechanism.
 - Set `Label: Insufficient Information` or `Label: Unworkable` when the ticket is not workable.
 - Refuse to work an unworkable ticket.

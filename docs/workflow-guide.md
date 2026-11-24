@@ -394,9 +394,11 @@ Two procedures own the work. The `manage-issues` procedure module in the clone's
 
 Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's directory is its status; an external ticket's state is its status. Create a ticket with `"file an issue"` using `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
 
+An idea is a ticket with `IssueType: Idea`. File it with `"file an idea"`, grill it, then continue the normal steps or close it with a dated `Won't fix` note. The checkpoint discussed-idea line remains the backstop for an idea that is not yet filed.
+
 The plan carries an `## Evidence` section and a close block. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. Plan review runs automatically, and a plan is ready only after `APPROVED`.
 
-The implementation request is the approval for the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
+The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
 
 For `direct`, the AI squash-merges the branch to the trunk, deletes the branch, and pushes. For `pr`, it pushes the branch, opens the pull request or gives you the URL, waits for the team to merge, then pulls the trunk. The release tag follows the merge.
 
@@ -615,4 +617,6 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Write or update your design documents | `"update design documents"` |
 | Move design docs beside your code into `design-docs/` | `"migrate design docs"` |
 
-A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own explicit approval.
+A typical cycle: file the issue, plan it when you are ready, then implement the approved plan. Each request stops when its action is done, so filing a ticket alone does not start planning. The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request.
+
+This guide describes the protocol. The protocol modules (`AGENTS.md`, the policies, and the procedures) are authoritative.

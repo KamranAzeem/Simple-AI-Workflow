@@ -68,7 +68,7 @@ This file contains the universal operating rules for all AI assistants in this r
 3. **Integration**: merge only after human approval.
 
 - Treat approval of the feature branch as authorization for local commits and pushes on that branch.
-- Get separate approval for a trunk merge, a tag, a release, and an external system write.
+- Get separate approval for a trunk merge, a tag, a release, and an external system write; the implementation request that triggers PROCEDURE IMPLEMENT-PLAN is that separate approval when the plan's `## Close Sequence` names the action, otherwise ask.
 - Allow a valid handoff to carry its own trunk-merge authorization under the handoff contract.
 - **No pre-work commits**: make every commit carry the work itself.
 - Never open a work item with a "start work" or placeholder commit.

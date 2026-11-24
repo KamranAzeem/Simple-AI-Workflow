@@ -72,7 +72,7 @@ present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "
 present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "16 procedures, 129 steps" "toolchain note procedure count"
 test_count=$(find "$ROOT/tests" -maxdepth 1 -name 'test-*.sh' -print | wc -l | tr -d ' ')
 present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "$test_count test scripts" "toolchain note test count"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "53 triggers" "toolchain note trigger count"
+present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "54 triggers" "toolchain note trigger count"
 
 # Simulated consolidation over a bloated fixture.
 WORK="$(mktemp -d)"

@@ -1,9 +1,10 @@
-# PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "close issue", "list issues", "plan the issue", or "plan issue #N"
+# PROCEDURE MANAGE-ISSUES: When the user says "manage issues", "file an issue", "file an idea", "new idea", "I want to work on this idea", "close issue", "list issues", "plan the issue", or "plan issue #N"
 
 ## Triggers
 
 - manage issues
 - file an issue
+- file an idea
 - close issue
 - list issues
 - plan the issue

@@ -34,7 +34,7 @@ Description:
 - `Reported`: always filled, `YYYY-MM-DD`.
 - `Reporter`: the user or AI assistant name that filed it.
 - `IssueType`: one of `Feature`, `Defect/Bugfix`, `Improvement/Refactor`,
-  `Documentation`, `Task`.
+  `Documentation`, `Task`, `Idea`.
 - `Severity`: `P1` (must have), `P2` (should have), `P3` (could have),
   `P4` (will not do, or not an issue), or `Human-to-decide (AI estimate: Pn)`.
 - `Size`: `S` (about 2h), `M` (about 4h), `L` (about 8h), `XL` (too large, needs

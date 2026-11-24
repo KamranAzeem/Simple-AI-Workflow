@@ -19,4 +19,3 @@
 - Confirm whether any harness now offers a reliable post-compaction hook; update the manual-recovery docs if one appears.
 - Sync the updated AGENTS.md into downstream projects after the v7.2.1 release.
 - Refresh the v7.2.1 release-practices line from "prepared" at the next release-doc touch.
-- Deliver the idea-intake flow on its own branch after the trigger and type design.

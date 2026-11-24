@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.2.1 (2026-11-24).** Post-compaction recovery is manual: no harness hook currently fires it. After a compaction, run `"run post-compaction recovery procedure"`. Read the announcement: [docs/announcements/v7.2.1.md](docs/announcements/v7.2.1.md). |
+| **v7.3.0 (2026-11-24).** Ideas are first-class tickets with `IssueType: Idea`, and the delivery approval is clarified: the implementation request approves the plan's close sequence. The docs now say the protocol modules are authoritative. Read the announcement: [docs/announcements/v7.3.0.md](docs/announcements/v7.3.0.md). |
 
 # Simple AI Workflow
 
@@ -79,7 +79,9 @@ That is the whole install: no install scripts, no admin rights, no package manag
 
 The full phrase matters. A plain `"load context"` reads the assistant's own memory, not this protocol. Naming `AGENTS.md` tells the assistant to read the protocol first, so it knows where the state and knowledge live.
 
-A cycle: file the issue, plan it, implement the approved plan, then checkpoint. Filing a ticket does not start planning. The implementation request covers the branch, the commits, and the push. The merge, the tag, the release, and every external write need their own approval.
+A cycle: file the issue, plan it, implement the approved plan, then checkpoint. Filing a ticket does not start planning. The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request.
+
+This page describes the protocol. The protocol modules (`AGENTS.md`, the policies, and the procedures) are authoritative.
 
 ## What you get
 
@@ -169,4 +171,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [Markdown slides](docs/simple-ai-workflow-slides.md).
 - [Release announcements](docs/announcements/).
 
-The 25 policies and 16 procedures are the fixed background. The 53 triggers are the phrases that load a policy or procedure on demand.
+The 25 policies and 16 procedures are the fixed background. The 54 triggers are the phrases that load a policy or procedure on demand.
