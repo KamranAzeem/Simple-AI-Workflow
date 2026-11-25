@@ -21,5 +21,5 @@
 - Resume the presentation policy only on the user's request; design layout and type control first.
 - Resume the trimmed slide review speed scope only on the user's request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
-- Implement the plan-quality follow-up plan; release v7.6.0.
+- Ship v7.6.0: merge, tag, and publish the release.
 - Then plan the scope normalization; settle the release and alias window; presets next; init after.

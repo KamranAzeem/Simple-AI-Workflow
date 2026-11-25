@@ -56,8 +56,8 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 
 ## Proportional Depth
 
-- For small work, use context plus acceptance criteria.
-- For medium, large, and architectural work, use the full document set.
+- For small and medium work, use context plus acceptance criteria.
+- For large and architectural work, use the full document set.
 - Application developers mostly need the light path plus ADRs for real decisions; solution architects need the layered, multi-repo set; infrastructure engineers need requirements, design, and a runbook.
 
 ## Layering
@@ -131,7 +131,7 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 ## Session-Start Check
 
 - At the start of each session, check for the mandatory artifacts.
-- For medium or larger work, tell the user when any is missing and ask whether to create it.
+- For large or architectural work, tell the user when any is missing and ask whether to create it.
 
 ## ID Convention
 

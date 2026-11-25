@@ -29,7 +29,7 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 12 open, 1 in-progress, and 138 closed as of 2026-11-25.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 11 open, 0 in-progress, and 140 closed as of 2026-11-25.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
 - `ai/shared/project-knowledge/`: 14 durable project lessons, the issue template, and this map.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
@@ -60,6 +60,7 @@
 - `design-docs/protocol-decisions.md`: the ADR store for the plan-quality change.
 - `ai/shared/project-knowledge/protocol-verification-toolchain.md`: the quality gate and the verification commands.
 - The code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is live.
+- The plan template, assertion floor, depth, and clean-tree gate are live. The follow-up ticket is closed.
 
 ### Handoff surface
 

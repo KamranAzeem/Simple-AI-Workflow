@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.5.0 (2026-11-25).** Every Critical, Major, and Minor review finding now blocks approval through one gate owned by the code-review policy. Read the announcement: [docs/announcements/v7.5.0.md](docs/announcements/v7.5.0.md). |
+| **v7.6.0 (2026-11-25).** The plan-quality follow-up rules are live: one plan template with the assertion floor, the S/M light path, and the clean-tree baseline gate. Read the announcement: [docs/announcements/v7.6.0.md](docs/announcements/v7.6.0.md). |
 
 # Simple AI Workflow
 

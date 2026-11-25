@@ -14,7 +14,7 @@
 
 ## Current Status
 
-- **Milestone**: v7.5.0 is live; the plan-quality follow-up plan is APPROVED at review-146; implementation is next.
+- **Milestone**: v7.5.0 is live; the plan-quality follow-up is implemented at review-147; v7.6.0 ship is next.
 - **Team knowledge**: the rename to `team-knowledge/` is live; the repository naming convention was dropped as Won't fix; the in-repo layout is currently `team-knowledge/` and its sibling `skills/`.
 - **Validator**: 8/8; authoring passes; suite 31/31; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
 - **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; twenty-five progress items condensed.
@@ -23,12 +23,12 @@
 
 ## Active Working Context
 
-- **Objective**: implement the plan-quality follow-up; then the scope vocabulary, the presets, and the init script.
+- **Objective**: ship v7.6.0; then the scope vocabulary, the presets, and the init script.
 - **Plan-quality (closed, P2/M)**: the uniform gate is live at review-145; the template, assertion floor, depth, and clean-tree rules remain in plan-quality-follow-up-rules.md.
-- **Plan-quality follow-up (open, P2/M)**: plan APPROVED at review-146; implementation next; the plan carries the template, assertion, depth, and clean-tree decisions.
+- **Plan-quality follow-up (closed, P2/M)**: implemented at review-147; the plan is attached; v7.6.0 ship is next.
 - **Review sequencing**: bind the verdict to the artifact hash; approve only with no open findings; run one delta verification after fixes; pointer to protocol-verification-toolchain.md.
 - **Scope vocabulary (open, P2/XL)**: the owner-prefix model, directory layout, no-symlink migration, and sync/init behavior are recorded; release level, alias window, legacy alias, backup target, role switch name, and handoff directory proposal remain open.
-- **Release**: v7.5.0 is live; v7.6.0 is the next release.
+- **Release**: v7.5.0 is live; v7.6.0 is ready to ship.
 - **Team store**: optional; no production store is configured; the local fixture is `~/Projects/infrastructure-team-alpha/`.
 - **Team skills**: the optional third root is live since v7.2.0.
 - **Skills**: 1 global package (`kanban-board`); 0 project packages; a team root is indexed only when configured.

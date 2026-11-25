@@ -72,13 +72,13 @@ Apply these rules to every work item.
 - Name the branch to be created at implementation in the close sequence.
 - Append or post the plan file name to the ticket as a dated entry.
 - Treat the plan as a working artifact, not a design document.
-- Bind every close action to its repo, base ref, branch, merge mode, ticket reference, release, and evidence in a `## Close Sequence` block.
+- Bind every close action to its repo, base ref, branch, merge mode, ticket reference, release, baseline, and evidence in a `## Close Sequence` block.
 - Bind the procedure actions to the plan's repos and branches.
 - Treat a plan whose last action is an approval request as incomplete.
 - Include an `## Evidence` section in every plan.
 - Record sources, commands, results, confirmed facts, and open questions in the evidence section.
-- Use context plus acceptance criteria for an `S` ticket.
-- Use an HLD and an LLD with acceptance criteria for an `M`, `L`, or `XL` ticket.
+- Use context plus acceptance criteria for an `S` or `M` ticket.
+- Use an HLD and an LLD with acceptance criteria for an `L` or `XL` ticket.
 - Keep the HLD, LLD, and ADR content inside the plan file.
 - Record each design decision as an ADR.
 - Keep the plan concise.
@@ -92,6 +92,38 @@ Apply these rules to every work item.
 - Announce the plan ready only after an `APPROVED` verdict.
 - Implement only a plan that passed the blocking review gate.
 - Record each review round and verdict in the plan's Peer Review Log.
+
+### Plan Template
+
+Use this literal template for every plan.
+
+```markdown
+# Plan: <title>
+
+## Goal
+
+## Evidence
+
+## Depth
+
+## Context
+
+## Decisions (ADR)
+
+## Deltas
+
+## Acceptance Criteria
+
+## Verification
+
+## Peer Review Log
+
+## Risks and Rollback
+
+## Close Sequence
+```
+
+Each acceptance criterion has at least one behavioral assertion. More are allowed and the number is not capped. A behavioral assertion is an executable check that fails when the rule is absent or wrong, not a snapshot of AI prose. Static policy text may assert exact clauses; AI-generated plans and reviews assert structure and decisions.
 
 ### Work-Item Invariants
 
@@ -107,6 +139,10 @@ Apply these rules to every work item.
 - Close the ticket with the merged change: move a local ticket to `closed/` in the branch commit, and close an external ticket when the merge lands.
 - Do not make post-merge commits or post-merge repository changes.
 - Do not commit a plan-only, start-work, or placeholder change to trunk.
+- Commit the current planning records, including the plan and ticket, as a baseline chore commit before opening the implementation branch; the plan's Close Sequence names the baseline.
+- Permit only that baseline chore commit as the exception to the no-pre-work rule.
+- Treat the implementation request plus the Close Sequence as the explicit approval for the protected-branch baseline commit; `ai-policy-common.md` `- **Protected Branches**` is the approval gate.
+- Verify a clean tree and the baseline path list before opening the implementation branch.
 - Put release documentation in the branch; tag the release commit after the merge; publish the GitHub Release after the tag.
 - Treat the work item as complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
 - Use the template at `ai/shared/project-knowledge/issue-template.md`; create it when missing and never overwrite it.
@@ -114,6 +150,7 @@ Apply these rules to every work item.
 ## References
 
 - `ai-policy-common.md` (`## Issue Invariant`).
+- `ai-policy-common.md` (`## Universal Operational Guardrails`).
 - `PROCEDURE MANAGE-ISSUES` and `PROCEDURE IMPLEMENT-PLAN`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

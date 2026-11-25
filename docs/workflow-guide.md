@@ -402,7 +402,7 @@ Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's dire
 
 An idea is a ticket with `IssueType: Idea`. File it with `"file an idea"`, grill it, then continue the normal steps or close it with a dated `Won't fix` note. The checkpoint discussed-idea line remains the backstop for an idea that is not yet filed.
 
-The plan carries an `## Evidence` section and a close block. Small tickets need context and acceptance criteria; medium and larger need an HLD, an LLD, acceptance criteria, and ADRs. Plan review runs automatically, and a plan is ready only after `APPROVED`.
+The plan carries an `## Evidence` section and a close block. Small and medium tickets need context and acceptance criteria; large and architectural work needs an HLD, an LLD, acceptance criteria, and ADRs. Use the plan template in the issue policy; each acceptance criterion has at least one behavioral assertion. Plan review runs automatically, and a plan is ready only after `APPROVED`.
 
 The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's `## Close Sequence`, including the trunk merge, tag, release, and external writes. The branch approval alone covers only commits and pushes on the branch. Ask for a separate approval only when the plan does not name the action or the request is not an implementation request. Set `## Merge Policy` `**Merge Mode**: direct` for a solo repository, or `pr` for a team repository that requires a pull request. `auto` behaves as `direct` and falls back to a pull request when a direct push is rejected. No CLI is required: with no `gh` or `glab`, the AI pushes the branch and gives you the create or compare URL.
 
@@ -491,7 +491,7 @@ One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs ever
 
 ## 22. Design Documents
 
-Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small work needs context plus acceptance criteria, while medium, large, and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again when you run post-compaction recovery.
+Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small and medium work needs context plus acceptance criteria, while large and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again when you run post-compaction recovery.
 
 To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.
 

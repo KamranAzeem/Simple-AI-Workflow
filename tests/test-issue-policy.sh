@@ -42,6 +42,16 @@ absent() {
     fi
 }
 
+line() {
+    local file="$1" text="$2" label="$3"
+    if grep -qxF -- "$text" "$file" 2>/dev/null; then
+        printf 'PASS %s\n' "$label"
+    else
+        printf 'FAIL %s\n' "$label"
+        fail=1
+    fi
+}
+
 present "$COMMON" "## Issue Invariant" "common has the issue invariant"
 absent "$COMMON" "### Work-Item Invariants" "common no longer holds the work-item rules"
 present "$ISSUE" "- issue standards" "plug-in declares the issue trigger"
@@ -102,6 +112,41 @@ for f in "$ISSUE" "$MANAGE" "$IMPLEMENT" "$HANDOFF"; do
     absent "$f" "Fix every Critical finding." "$base drops the Critical-only rule"
     absent "$f" "Fix every Major finding." "$base drops the Major-only rule"
 done
+
+line "$ISSUE" "### Plan Template" "issue policy owns the plan template"
+line "$ISSUE" "## Goal" "plan template has the Goal section"
+line "$ISSUE" "## Evidence" "plan template has the Evidence section"
+line "$ISSUE" "## Depth" "plan template has the Depth section"
+line "$ISSUE" "## Context" "plan template has the Context section"
+line "$ISSUE" "## Decisions (ADR)" "plan template has the Decisions section"
+line "$ISSUE" "## Deltas" "plan template has the Deltas section"
+line "$ISSUE" "## Acceptance Criteria" "plan template has the Acceptance Criteria section"
+line "$ISSUE" "## Verification" "plan template has the Verification section"
+line "$ISSUE" "## Peer Review Log" "plan template has the Peer Review Log section"
+line "$ISSUE" "## Risks and Rollback" "plan template has the Risks and Rollback section"
+line "$ISSUE" "## Close Sequence" "plan template has the Close Sequence section"
+present "$ISSUE" "baseline" "close sequence names the baseline"
+present "$ISSUE" "Each acceptance criterion has at least one behavioral assertion." "plan template states the assertion floor"
+present "$ISSUE" "More are allowed and the number is not capped." "plan template keeps the assertion floor uncapped"
+present "$ISSUE" "A behavioral assertion is an executable check that fails when the rule is absent or wrong, not a snapshot of AI prose." "plan template defines the behavioral assertion"
+present "$ISSUE" "Static policy text may assert exact clauses; AI-generated plans and reviews assert structure and decisions." "plan template scopes the assertion kinds"
+present "$ISSUE" "Use context plus acceptance criteria for an \`S\` or \`M\` ticket." "issue policy gives S and M the light path"
+present "$ISSUE" "Use an HLD and an LLD with acceptance criteria for an \`L\` or \`XL\` ticket." "issue policy gives L and XL the full set"
+present "$DESIGN" "For small and medium work, use context plus acceptance criteria." "design policy gives small and medium the light path"
+present "$DESIGN" "For large and architectural work, use the full document set." "design policy gives large and architectural the full set"
+present "$DESIGN" "For large or architectural work" "design policy aligns the session-start check"
+absent "$ISSUE" "for an \`M\`, \`L\`, or \`XL\` ticket" "issue policy drops the M/L/XL HLD/LLD rule"
+absent "$DESIGN" "For medium, large, and architectural work" "design policy drops the old proportional depth"
+absent "$DESIGN" "For medium or larger work" "design policy drops the old session-start check"
+present "$ISSUE" "Commit the current planning records, including the plan and ticket, as a baseline chore commit" "issue policy owns the baseline rule"
+present "$ISSUE" "Permit only that baseline chore commit as the exception to the no-pre-work rule." "issue policy owns the narrow no-pre-work exception"
+present "$ISSUE" "Treat the implementation request plus the Close Sequence as the explicit approval for the protected-branch baseline commit" "issue policy names the protected-branch approval"
+present "$ISSUE" "Verify a clean tree and the baseline path list" "issue policy requires the clean-tree preflight"
+present "$ISSUE" "Protected Branches" "issue policy cites the common protected-branches rule"
+present "$MANAGE" "Plan Template" "manage-issues cites the plan template"
+present "$IMPLEMENT" "Plan Template" "implement-plan checks the plan template"
+present "$IMPLEMENT" "baseline" "implement-plan checks the baseline"
+present "$IMPLEMENT" "Verify the tree is clean" "implement-plan checks the clean tree"
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: issue-management plug-in fixture."

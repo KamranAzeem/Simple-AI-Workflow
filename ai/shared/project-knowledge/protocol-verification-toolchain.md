@@ -40,6 +40,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Fix every finding, then run one delta verification; do not reopen scope.
 - A post-approval edit invalidates the approval; a new hash needs a delta verification.
 - A new post-approval finding becomes a follow-up ticket unless it is a regression.
+- The plan template, S/M light path, and clean-tree baseline are live.
 - A migration needs a dry run, a backup, idempotent moves, a destination check, and restore on failure.
 - Preserve custom paths, stop on ambiguity, and never let boot move or delete a store.
 - Init refuses a partial root and never overwrites an existing root file.

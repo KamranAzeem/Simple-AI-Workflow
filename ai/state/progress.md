@@ -156,3 +156,4 @@
 [2026-11-25] Released v7.5.0 and published the public GitHub Release; the uniform review gate is live.
 [2026-11-25] Enriched plan-quality-follow-up-rules.md with the settled template, assertion, and depth facts; resolved the clean-tree gate with the four decisions.
 [2026-11-25] Wrote and approved plan-quality-follow-up-rules.md at review-146; covers the template, assertion floor, depth, and clean-tree gate; v7.6.0 next.
+[2026-11-25] Implemented the plan-quality follow-up rules; review-147 APPROVED; suite 31/31, validator 8/8, index 25/16/54; v7.6.0 pending.

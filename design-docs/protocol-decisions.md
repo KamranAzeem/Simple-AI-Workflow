@@ -1420,3 +1420,7 @@ The code-review policy owns one blocking gate: every Critical, Major, and Minor 
 ## 2026-11-25: The core gate ships alone
 
 The plan template, the assertion floor, the proportional-depth alignment, and the clean-tree policy are deferred to a separate follow-up ticket; this change carries only the uniform gate. The broad plan ran six review rounds on the deferred rules, so the core gate ships alone.
+
+## 2026-11-25: The deferred plan-quality rules land
+
+The issue policy owns one plan template with the assertion floor: each acceptance criterion has at least one behavioral assertion, more are allowed, and the number is not capped. S and M use the light path; L and XL use the full set. The clean-tree baseline replaces the core plan's "user handles the records" rule: the AI commits the current planning records, including the plan and ticket, after the implementation request; that request plus the plan's Close Sequence is the explicit approval for the protected-branch commit. A narrow no-pre-work exception permits only that baseline commit and lives in the issue policy next to the no-pre-work rule. `PROCEDURE IMPLEMENT-PLAN` checks the baseline path list and a clean tree before opening the branch.
