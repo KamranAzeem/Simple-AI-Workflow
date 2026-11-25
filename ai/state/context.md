@@ -14,20 +14,21 @@
 
 ## Current Status
 
-- **Milestone**: the uniform review gate is implemented and review-145 APPROVED; v7.5.0 merge, tag, and GitHub Release are pending.
+- **Milestone**: v7.5.0 is live; the plan-quality follow-up plan is APPROVED at review-146; implementation is next.
 - **Team knowledge**: the rename to `team-knowledge/` is live; the repository naming convention was dropped as Won't fix; the in-repo layout is currently `team-knowledge/` and its sibling `skills/`.
 - **Validator**: 8/8; authoring passes; suite 31/31; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
-- **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; ten progress items condensed; 107 bytes over.
+- **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; twenty-five progress items condensed.
 - **Project knowledge**: 16 files (14 lessons, the template, the codebase map); global knowledge 28 files; both under the 50-file threshold.
 - **Project issues**: 12 open, 0 in-progress; plan-quality closed with the plan attached; the follow-up ticket is open; scope-naming, presets, and init follow.
 
 ## Active Working Context
 
-- **Objective**: ship v7.5.0; then the scope vocabulary, the customization presets, and the init script.
+- **Objective**: implement the plan-quality follow-up; then the scope vocabulary, the presets, and the init script.
 - **Plan-quality (closed, P2/M)**: the uniform gate is live at review-145; the template, assertion floor, depth, and clean-tree rules remain in plan-quality-follow-up-rules.md.
+- **Plan-quality follow-up (open, P2/M)**: plan APPROVED at review-146; implementation next; the plan carries the template, assertion, depth, and clean-tree decisions.
 - **Review sequencing**: bind the verdict to the artifact hash; approve only with no open findings; run one delta verification after fixes; pointer to protocol-verification-toolchain.md.
 - **Scope vocabulary (open, P2/XL)**: the owner-prefix model, directory layout, no-symlink migration, and sync/init behavior are recorded; release level, alias window, legacy alias, backup target, role switch name, and handoff directory proposal remain open.
-- **Release**: v7.5.0 is ready to ship; the last live release is v7.4.0.
+- **Release**: v7.5.0 is live; v7.6.0 is the next release.
 - **Team store**: optional; no production store is configured; the local fixture is `~/Projects/infrastructure-team-alpha/`.
 - **Team skills**: the optional third root is live since v7.2.0.
 - **Skills**: 1 global package (`kanban-board`); 0 project packages; a team root is indexed only when configured.
