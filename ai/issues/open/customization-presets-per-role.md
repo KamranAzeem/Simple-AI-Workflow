@@ -31,3 +31,8 @@ Acceptance criteria:
 Absorbed `active-traits-persona-customization-files.md`. The presets also cover the personas the trait catalog does not: system administrator, cloud administrator, infrastructure engineer, and software developer. The existing seven traits already cover System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer (`docs/ai-customization-guide.md:64-73`).
 
 The role list and each preset's contents still need the user decision noted above.
+
+## Init consumer (2026-11-25)
+
+- `--init --role <preset>` in `sync-script-init-scaffolding.md` consumes these presets. The preset name is the role switch value.
+- The role list and contents must settle before init is implemented.

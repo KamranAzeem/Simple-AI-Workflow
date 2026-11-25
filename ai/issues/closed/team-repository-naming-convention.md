@@ -42,3 +42,7 @@ Acceptance criteria (draft):
 - The validator, suite, markdownlint, and shellcheck pass.
 
 Source: split from the 2026-11-24 team knowledge directory ticket after the plan review showed the combined scope was too large.
+
+---
+2026-11-25
+Won't fix. A team chooses its own repository name and hosting provider; the protocol must not force either. Only the in-repository layout matters, and it is already specified: `team-knowledge/` and its sibling `skills/` at the repository root. The configuration keys and the boot behavior do not depend on the repository name or provider. The report-only name check is dropped with the convention.

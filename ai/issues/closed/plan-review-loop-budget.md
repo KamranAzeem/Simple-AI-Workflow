@@ -31,3 +31,15 @@ Needs:
 - An ADR entry, tests, docs, and a release.
 
 Source: the user's review of the 2026-11-24 team knowledge rename plan.
+
+---
+
+2026-11-25
+
+Closed as Won't fix. The three-round cap and the demotion of Major findings to notes are rejected.
+
+- Every Critical, Major, and Minor finding must be fixed before approval. The quality gate is not negotiable.
+- The 13-round evidence points to plan size and content, not to the review gate.
+- The useful parts are split into `plan-quality-rules.md`.
+
+Source: the user's decision on 2026-11-25.

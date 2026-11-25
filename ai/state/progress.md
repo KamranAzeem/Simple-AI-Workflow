@@ -133,16 +133,18 @@
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
 [2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
 [2026-11-24] Investigated `slide-deck-review-speed`: the audit covers HTML overflow in 2.97s, the SVGs meet the 24-unit floor, and review-115 used changed-only inspection; trimmed the ticket to S and dropped Playwright and the browser-in-suite check.
-[2026-11-24] Recommended the presentation split: policy for the standard, procedure for create and review, skill only for the toolchain; the open `presentation-policy` ticket covers the policy.
-[2026-11-24] Deferred the presentation policy and slide review speed tickets at the user's request; recorded the layout and type-control reasons and the `build-slides-html.sh` question; no plan, branch, or source change.
+[2026-11-24] Recommended the presentation split (policy, procedure, skill) and deferred presentation-policy and slide-deck-review-speed at the user's request; recorded layout, type-control, and build-slides-html.sh; no plan or branch.
 [2026-11-24] Attached the executed config plan to its closed ticket under `## Implementation Plan`, verified the copy, and deleted the loose plan file; `ai/plans/` now holds only `.gitkeep`.
 [2026-11-24] Filed the team-knowledge directory and repository naming ticket (P3/M) with the rename scope, the live file list, and the migration questions.
 [2026-11-24] Grilled the ticket to seven decisions: team-named repository, sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, and minor release; recorded the decisions and the local fixture.
 [2026-11-24] Fixed the external team fixture lesson with the team frontmatter and body; uncommitted there; the skills root was left empty.
-[2026-11-24] Wrote `ai/plans/team-knowledge-directory-and-repo-naming.md` (220 lines): helper, policy, boot, publish, tests, docs, deck, validator, ADR, release, and close sequence.
-[2026-11-24] Ran 13 plan reviews, `review-117` to `review-129`; the design stabilized early, but later rounds churned on close-sequence mechanics; the latest is CHANGES REQUESTED with 3 Major findings.
-[2026-11-24] The plan is not approved; no branch or commit; the ticket records the plan and review status; the 96-minute block was dominated by the review loop.
+[2026-11-24] Wrote ai/plans/team-knowledge-directory-and-repo-naming.md (220 lines); ran 13 reviews review-117 to review-129; the plan was not approved (CHANGES REQUESTED, 3 Major) after a 96-minute review loop; no branch or commit.
 [2026-11-25] Renamed the team store to team-knowledge/ across the policy, publish procedure, boot index, docs, deck note, diagram, fixture, guard, validator, and ADR; split the naming convention and the report-only check to team-repository-naming-convention.md.
 [2026-11-25] Cut the team-knowledge plan from 220 lines to an S note; review-130 APPROVED; implemented with review-131 APPROVED; suite 31/31, validator 8/8, markdownlint 0 on 14 files, shellcheck 0, audit 59/59; slide 40 PNG checked.
 [2026-11-25] Prepared v7.4.0 on feature/team-knowledge-directory-rename; the release text is approved; the checkpoint records the gate and the stash restore; no merge or tag yet.
 [2026-11-25] Committed the parked backlog and the five follow-up tickets on chore/commit-backlog-and-release-status; marked v7.4.0, v7.3.0, and v7.2.1 published; suite 31/31, validator 8/8, markdownlint 0; no release.
+[2026-11-25] Delivered the backlog and release-status correction; the post-merge validator is 8/8; 13 open, 0 in-progress; no release.
+[2026-11-25] Repaired release-practices (15,650 to 2,948 bytes) and both knowledge stores: project 15 files, global 29 to 27; merged two GitLab pairs, renamed six files, and restructured and redacted the libvirt lesson; review-134 and review-135 APPROVED; suite 31/31.
+[2026-11-25] Dropped team-repository-naming-convention.md as Won't fix: a team chooses its repository name and host; only the in-repo team-knowledge/ and skills/ layout matters and it is already specified; open issues 13 to 12.
+[2026-11-25] Broadened global-to-workflow-policy-terminology.md with the owner-prefix scope model, the ai/knowledge layout, no-symlink migration, and sync/init behavior; updated sync-script-init-scaffolding.md and customization-presets-per-role.md; markdownlint 0.
+[2026-11-25] Closed plan-review-loop-budget.md as Won't fix; opened plan-quality-rules.md with the all-findings gate; no implementation.

@@ -4,11 +4,9 @@
 
 ## Context
 
-- The tool ladder and the git-ignore readability rule landed in v6.7.0.
-- The shell preference and the configurable global user directory landed in v6.8.0; GitHub #9 is closed as absorbed.
-- The runtime file-operation rule became unconditional in v6.9.1: Python or another runtime never searches, creates, appends to, or edits a file; the built-in tool is required.
-- v6.10.0 removed the load-context shell mandates; v6.10.2 makes the boot build its own index with built-in tools and keeps the index helper as an optional maintainer tool.
-- A policy rule alone did not stop a runtime file write; the harness permission is the hard stop.
+- The tool ladder, the git-ignore readability rule, the shell preference, and the configurable global user directory are live.
+- The runtime file-operation rule is unconditional: Python or another runtime never searches, creates, appends to, or edits a file; the built-in tool is required.
+- A policy rule alone does not stop a runtime file write; the harness permission is the hard stop.
 
 ## Built-in Capability Inventory
 
@@ -47,7 +45,7 @@
 - Git-ignore rule: keep the shell mandate, add an exception clause, or rewrite with a role-based heading. Chosen: rewrite, with no path list.
 - Shell preference: customization only, global settings only, or both with a project override. Chosen: customization first, global settings fallback, project override.
 - Session inventory: keep or drop. Chosen: drop, because the harness already lists the tools.
-- The built-in-first rule and the boot shell mandates conflicted; v6.10.0 removed the mandates and kept one read-only helper; v6.10.2 removes the helper from the boot path.
+- The built-in-first rule and the boot shell mandates conflicted; the mandates were removed and the helper left the boot path.
 
 ## Rule or Fix
 
@@ -81,13 +79,12 @@
 - The boot reads the customization first, then the whole settings directory, then the first named command.
 - The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins. Absent keys keep the current behavior.
 - The optional index helper runs with `bash` when a maintainer invokes it, regardless of `Default Shell`.
-- GitHub #9 is closed as absorbed.
 
 ## Why
 
-- v6.10.2 builds the boot index with built-in reads and keeps the helper optional.
+- The boot index is built with built-in reads and the helper is optional.
 - The file-edit rule covers content edits; the named commands are the named exceptions, and the index helper is optional.
-- The global knowledge lookup uses the built-in search when it can reach the path; the runner form is the ladder bullet 9 exception.
+- The global knowledge lookup uses the built-in search when it can reach the path; the runner form is the ladder exception.
 - A purpose-built tool handles quoting, encoding, diffs, and approvals better than a shell command.
 - The shell is a user preference, not a project rule. It must be read before the first command.
 - A session inventory would add output and no guarantee. The harness already lists its tools.
@@ -104,10 +101,3 @@
 ## Caveats
 
 - The policy states the rule; the harness permission enforces it. The permission config is user-controlled.
-
-## Resolution (v6.10.2)
-
-- The boot builds the index with built-in tools and reports `index-source=builtin`.
-- The optional helper calls the read-only `--index` mode and sets `effective` and `conflict`; it is for maintainer and release checks, not the boot.
-- Precedence is the always-on safety rules, then the user, then `AGENTS.md` and the common policy, then the customization, then domain policies, then procedure steps.
-- The `Default Shell` key is optional; a missing shell or path is reported, and the boot continues with built-ins.

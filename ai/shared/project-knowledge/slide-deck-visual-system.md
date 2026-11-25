@@ -4,7 +4,7 @@
 
 ## Context
 
-The slide deck is the canonical Markdown story at `docs/simple-ai-workflow-slides.md`, with its SVGs beside it. The reveal.js HTML at `docs/slides/simple-ai-workflow-slides.html` and the headless renderer turn it into per-slide PNGs for review. The deck teaches the protocol and doubles as a reference.
+The slide deck is the canonical Markdown story, with its SVGs beside it. The HTML deck and the headless renderer turn it into per-slide PNGs for review. The deck teaches the protocol and doubles as a reference.
 
 ## Rule or Fix
 
@@ -46,4 +46,4 @@ The deck teaches and then serves as a reference. A uniform type scale and a comp
 
 - Google Slides may not preserve the SVG's internal type rules; check each inserted diagram at its final size and adjust it there.
 - Dense diagrams may keep a smaller scale only as a recorded exception with the slide and the reason; uniformity is the target, not one identical size for every label.
-- `support-files/audit-slides.sh` measures HTML element boxes only; it sees each SVG as one image. Inspect the rendered PNGs for SVG-internal overlap, clipping, and margins.
+- The slide audit measures HTML element boxes only; it sees each SVG as one image. Inspect the rendered PNGs for SVG-internal overlap, clipping, and margins.

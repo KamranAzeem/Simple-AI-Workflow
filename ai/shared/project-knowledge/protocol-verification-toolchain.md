@@ -29,6 +29,16 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Lint every new markdown file, not only the edited files.
 - Run the protocol validator after any operation that can remove untracked directories, such as a stash round-trip; it asserts the mandatory directory set.
 
+### Quality Gate
+
+- Fix every Critical, Major, and Minor review finding before approval.
+- Do not cap review rounds or demote a finding to a note or checklist.
+- Treat one behavioral assertion per acceptance criterion as a floor, not a cap.
+- Keep a plan delta-only but complete; the owning procedure must cover every close action.
+- A migration needs a dry run, a backup, idempotent moves, a destination check, and restore on failure.
+- Preserve custom paths, stop on ambiguity, and never let boot move or delete a store.
+- Init refuses a partial root and never overwrites an existing root file.
+
 ## Why
 
 - The protocol validator checks the hardening anchors, configuration, directory structure, board, a policy directory scan with a floor of 25, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
@@ -47,6 +57,9 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Markdownlint catches structural defects before review.
 - The user docs drift when a unit adds a policy, procedure, fixture, or trigger; the README, the slides, the validation doc, and the compared doc are the drift points.
 - The slides fixture checks the Architect story, the six groups, the three roots, the two dials, the knowledge and skills map, the team gate, the axe and SVG assets, the derived counts, and the local preview and renderer.
+- End-users rely on the protocol's output quality; a hidden finding becomes their defect.
+- A round cap rewards declaring the design frozen early.
+- A migration that guesses can destroy user data.
 
 ## Verify
 
@@ -65,6 +78,9 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
 - Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 31 test scripts, 54 triggers, and the floor of 25.
+- A review verdict lists no open Critical, Major, or Minor finding.
+- A migration test proves every source file reached the destination and a dry run matches the real run.
+- A partial target is refused, not guessed.
 
 ## Caveats
 
@@ -76,3 +92,4 @@ Run these checks from the project root after a change to the protocol, a policy,
 - `shellcheck` is installed at `/usr/bin/shellcheck`; run it on changed shell scripts.
 - The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.
 - A fixture that asserts a repository count must derive it from the live tree; a hardcoded count goes stale when a new test lands.
+- The all-findings rule is a proposal; the current policy fixes only Critical and Major.

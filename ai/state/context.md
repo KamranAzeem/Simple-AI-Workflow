@@ -14,19 +14,19 @@
 
 ## Current Status
 
-- **Milestone**: v7.4.0 is live; the backlog is committed on `chore/commit-backlog-and-release-status`; `master` is at `7cd5c04`.
-- **Team knowledge**: the rename to `team-knowledge/` is live; the naming convention and the report-only check are an open ticket.
+- **Milestone**: v7.4.0 is live; the backlog, the release-status correction, and the knowledge repairs are delivered; no active implementation.
+- **Team knowledge**: the rename to `team-knowledge/` is live; the repository naming convention was dropped as Won't fix; the in-repo layout is currently `team-knowledge/` and its sibling `skills/`.
 - **Validator**: 8/8; authoring passes; suite 31/31; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
 - **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; sizes under budget.
-- **Project knowledge**: 14 lessons plus the template; global knowledge 29 files.
-- **Project issues**: 13 open, 0 in-progress after this ticket closes; the naming-convention and review-budget tickets are tracked.
+- **Project knowledge**: 14 lessons plus the template; global knowledge 27 files; both under the 50-file threshold; the repair manifest records the under-3KB exception.
+- **Project issues**: 12 open, 0 in-progress; the scope-naming, presets, init, and plan-quality tickets are open.
 - **Skills**: 1 global package (`kanban-board`); 0 project packages; a team root is indexed only when configured.
 
 ## Active Working Context
 
-- **Objective**: commit the backlog, correct the release-status lines, close the chore ticket, merge, and push; no release.
+- **Objective**: no active implementation; the next unit is the scope vocabulary, then the customization presets, then the init script.
+- **Scope vocabulary (open, P2/XL)**: the owner-prefix model, directory layout, no-symlink migration, and sync/init behavior are recorded; release level, alias window, legacy alias, backup target, and role switch name remain open.
 - **Release**: v7.4.0 is live; no next release.
-- **Terminal gate**: base `7cd5c04`; branch `chore/commit-backlog-and-release-status`; direct squash merge.
 - **Team store**: optional; no production store is configured; the local fixture is `~/Projects/infrastructure-team-alpha/`.
 - **Team skills**: the optional third root is live since v7.2.0.
 - **Young-learner policy (open, XL)**: a teacher-only programming policy for ages 10 to 15.
