@@ -29,7 +29,7 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 11 open, 0 in-progress, and 142 closed as of 2026-11-25.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 13 open, 0 in-progress, and 142 closed as of 2026-11-25.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
 - `ai/shared/project-knowledge/`: 14 durable project lessons, the issue template, and this map.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.

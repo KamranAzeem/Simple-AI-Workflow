@@ -30,6 +30,8 @@ Open questions:
 - Is a major or minor release required?
 - How long do the old names remain valid in docs and tests?
 
+These are settled in the Confirmed decisions section below.
+
 Acceptance criteria:
 
 - One canonical term is defined and used consistently.
@@ -94,7 +96,7 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 ### Backups
 
 - `backups/` is the fourth sibling, as decided.
-- Discussion: backing up a network drive onto itself is not a backup. Keep the backup target separate or configurable. This point is not fully settled.
+- Backup of the User AI Directory is the user's responsibility. Keep `backups/` as the fourth sibling and the `User AI Backups Directory` key; the protocol adds no network backup logic, no same-mount check, and no separate backup-target policy.
 
 ### Migration and compatibility
 
@@ -103,7 +105,7 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 - Sync rewrites the old customization keys `Global AI Workflow Directory` and `Global AI User Directory` to `Workflow AI Directory` and `User AI Directory`. It preserves each value, including a network path. It never resets a value to `~/.ai`. When both keys exist, the new key wins with a warning.
 - The migration is automatic when sync detects an old layout. There is no separate `--migrate` flag. Every move is reported, idempotent, and supported by `--dry-run`; back up a store before moving it. A team repository write crosses a repository boundary and needs its own approval or PR.
 - Load context detects an old layout and warns. A read-only fallback to old paths is a compatibility option. It never moves files.
-- Migration chain for the team store: `lessons/` to `team-knowledge/` to `knowledge/`. Decide whether `lessons/` remains a read-only alias. v7.4.0 just shipped.
+- Migration chain for the team store: `lessons/` to `team-knowledge/` to `knowledge/`. `lessons/` is migrated and removed immediately; no alias.
 - Update live references atomically: AGENTS.md, policies, procedures, customization keys, validator anchors, sync scripts and tests, docs, project knowledge cross-references, and release notes.
 - The protocol repository is also a project. Move its own `ai/shared/project-knowledge` in the same atomic change, not through the downstream sync.
 - Do not rewrite historical diary entries, closed tickets, or closed records.
@@ -113,15 +115,15 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 - This issue runs first, then the customization presets, then the init script.
 - A phased delivery is a technical option: A, keys and aliases; B, directory moves and sync migration; C, alias removal in the next major. The user rejects "eroding user trust" as a reason. Phasing is only about atomicity and preventing half-migrated states.
 - Size stays XL. The phases above are the breakdown.
-- The release level and the alias window remain open.
+- Release: minor v7.7.0; one atomic migration; no alias window; old keys and paths are removed by the migration; no symlinks.
 
 ### Answers to the original open questions
 
 - Canonical term: "Workflow AI" for the clone and "User AI" for the user area. "Workflow policy layer" is not used.
 - "Workflow policy" covers the distribution policy tree. Procedures and skills have their own directories under the workflow. The common policy lives in the workflow policies directory.
 - The path keys change, not only the prose.
-- Major or minor release remains open.
-- Old names remain valid only through the migration and any decided alias window.
+- Minor release v7.7.0; no alias window; old keys and paths are removed by the migration.
+- No alias window; old names are valid only until the migration rewrites them.
 
 ### Updated acceptance criteria
 
@@ -134,6 +136,10 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 - Skills precedence and PENDING behavior are specified.
 - The validator, tests, docs, release notes, and the ADR are updated. The suite and validator pass.
 - Behavior changes only where the new paths and keys require it.
+- The release is v7.7.0; no alias window; old keys and paths are removed by the migration; `lessons/` is removed immediately.
+- Backing up the User AI Directory is the user's responsibility; the protocol keeps `backups/` and adds no network backup logic.
+- The `ai/shared/` layout with `coordination.md` and `handoffs/` is unchanged.
+- The role switch name is owned by the customization presets ticket.
 
 ---
 
@@ -157,7 +163,7 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 - Assessment: the direction to remove `ai/shared/` is sound. It removes a label that is not a mechanism and reduces the anchor count.
 - Concern: the coordination board is a permanent awareness channel; handoffs are ephemeral task-transfer artifacts. Putting `coordination.md` inside `ai/handoffs/` conflates them. A handoff cleanup that deletes files must never delete the board.
 - Recommended variant: one `ai/collaboration/` directory with `coordination.md` and handoff files, or two top-level anchors `ai/coordination.md` and `ai/handoffs/`. Do not name the board's home `handoffs/`.
-- This supersedes the current `ai/shared/` decision only if accepted. The current line in "Directory layout" stays until the user chooses.
+- Decision: keep `ai/shared/` with `coordination.md` and `handoffs/`; the proposal to remove it is rejected.
 - The change touches `AGENTS.md`, `ai-policy-handoff.md`, the handoff, load-context, recovery, and checkpoint procedures, the validator, the backup scripts, the tests, the user docs, the examples, and the slide diagrams. It belongs in this ticket's migration plan, not the plan-quality change.
 
 ---
@@ -176,3 +182,30 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 
 - A same-root two-agent read/write fixture: two simulated agents read `ai/knowledge`, each writes a different topic file, and a third read sees both updates. The fixture does not use a worktree or a second machine.
 - The worktree limitation is documented: project knowledge is per worktree; cross-worktree sharing needs the future configurable mount; `ai/state/` stays out of it.
+
+## Cross-ticket
+
+- The role switch name belongs to `ai/issues/open/customization-presets-per-role.md`. This ticket defines the scope vocabulary and layout only.
+
+## Confirmed decisions (2026-11-25)
+
+- Release: minor v7.7.0. One atomic migration. There is no alias window; the old customization keys and paths are removed by the migration. No symlinks.
+- Backup: backing up the User AI Directory is the user's responsibility. Keep `backups/` as the fourth sibling and the `User AI Backups Directory` key; the protocol adds no network backup logic, no same-mount check, and no separate backup-target policy.
+- Coordination and handoffs: keep `ai/shared/` with `coordination.md` and `handoffs/`; the proposal to remove it is rejected.
+- Role switch name: owned by the customization presets ticket, not this ticket.
+- The remaining plan inputs are the XL HLD/LLD, the exact file list, the migration tests, and the close sequence. These decisions are confirmed.
+
+## Plan inputs confirmed (2026-11-25)
+
+- Sync refuses an uninitialized target and points to `"bootstrap using AGENTS.md protocol"`. The `--init` feature is a separate issue and is out of scope.
+- Sync migrates every store: the target project, the User AI Directory, and the configured team repository. No per-store approval. Team working-tree changes are left uncommitted for the team to commit or turn into a PR.
+- When old and new paths coexist, move all files into the new path. Preserve duplicate filenames with a `.migrated-<date>` suffix and report them rather than overwrite.
+- Sync auto-backs up before moving. Project backup: `ai/artifacts/scope-migration-<date>/`. User and team backup: `<User AI Directory>/backups/scope-migration-<date>/`. `--dry-run` prints both.
+- Add `Team AI Directory` as the root customization key; derive `Team AI Knowledge Directory` and `Team AI Skills Directory`; migrate the old `Team AI Knowledge Directory` key.
+- `knowledge-repair-backups/` and `settings-repair-backups/` stay top-level and are documented as exceptions to the four-store rule.
+- Rename files, headings, keys, and paths. Keep the old triggers as aliases for v7.7.x and remove them in v7.8.0.
+- The README and the v7.7.0 announcement must lead with the old/new path table and state which paths the sync migrates automatically, where the backups go, and what remains manual.
+
+## Plan
+
+- 2026-11-25: Plan written at `ai/plans/scope-normalization-and-knowledge-layout.md`; peer review APPROVED at `ai/code-review-reports/2026-11-25_22-33_review-156.md`; plan SHA-256 `4765de72e4bb560f639a755694687e6455edfeb18143f953f93d1503683aa8d3`. Ready for implementation.

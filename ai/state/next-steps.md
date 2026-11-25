@@ -21,5 +21,7 @@
 - Resume the presentation policy only on the user's request; design layout and type control first.
 - Resume the trimmed slide review speed scope only on the user's request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
-- Plan the scope normalization; settle the release and alias window; presets next; init after.
-- Ship v7.6.2: merge, tag, and publish the review-sequencing release.
+- Implement the approved scope-normalization plan (`ai/plans/scope-normalization-and-knowledge-layout.md`; review-156; v7.7.0) on the user's request; presets next; init after.
+- Consume and retire the protocol-verification-toolchain knowledge file.
+- Audit the project-knowledge files the protocol secretly relies on.
+- Fix the checkpoint next-steps reporting and ticket visibility.
