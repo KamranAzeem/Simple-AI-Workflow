@@ -159,3 +159,20 @@ The ticket broadens from policy terminology to the full scope vocabulary and the
 - Recommended variant: one `ai/collaboration/` directory with `coordination.md` and handoff files, or two top-level anchors `ai/coordination.md` and `ai/handoffs/`. Do not name the board's home `handoffs/`.
 - This supersedes the current `ai/shared/` decision only if accepted. The current line in "Directory layout" stays until the user chooses.
 - The change touches `AGENTS.md`, `ai-policy-handoff.md`, the handoff, load-context, recovery, and checkpoint procedures, the validator, the backup scripts, the tests, the user docs, the examples, and the slide diagrams. It belongs in this ticket's migration plan, not the plan-quality change.
+
+---
+
+2026-11-25
+
+## Hypothetical multi-assistant knowledge read/write (future safety)
+
+- Current state: no parallel assistants and no parallel worktrees are running. This is a future-safety scenario, not a current operating mode.
+- Same-root scenario: assistants sharing one project root share `ai/knowledge`; each claims work on `ai/shared/coordination.md`, writes a separate role or topic file, and the single-writer checkpoint or `repair knowledge files` reconciles. The rename does not change the sharing mechanism.
+- Parallel-worktree scenario: separate worktrees do not share `ai/knowledge`. Cross-worktree sharing needs a future configurable `Project AI Knowledge Directory` mount, and that mount must exclude `ai/state/` because the state files are single-writer. This ticket does not claim cross-worktree sharing.
+- Concurrent writes: the path move adds no lock. Two agents editing the same file can lose updates; use claims, separate topic files, and a merge or review step.
+- Migration safety: update every reader and writer; no symlinks; the old-path fallback is read-only. An older assistant writing the old path would split the store.
+
+### Future acceptance criteria
+
+- A same-root two-agent read/write fixture: two simulated agents read `ai/knowledge`, each writes a different topic file, and a third read sees both updates. The fixture does not use a worktree or a second machine.
+- The worktree limitation is documented: project knowledge is per worktree; cross-worktree sharing needs the future configurable mount; `ai/state/` stays out of it.

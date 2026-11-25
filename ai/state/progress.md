@@ -154,6 +154,6 @@
 [2026-11-25] Committed the planning records and bound the plan approval with review-144; moved plan-quality-rules.md to in-progress.
 [2026-11-25] Implemented and reviewed the core uniform review gate; closed plan-quality-rules.md with the plan attached; review-145 APPROVED; suite 31/31, validator 8/8, index 25/16/54; v7.5.0 pending.
 [2026-11-25] Released v7.5.0 and published the public GitHub Release; the uniform review gate is live.
-[2026-11-25] Enriched plan-quality-follow-up-rules.md with the settled template, assertion, and depth facts; resolved the clean-tree gate with the four decisions.
-[2026-11-25] Wrote and approved plan-quality-follow-up-rules.md at review-146; covers the template, assertion floor, depth, and clean-tree gate; v7.6.0 next.
-[2026-11-25] Implemented the plan-quality follow-up rules; review-147 APPROVED; suite 31/31, validator 8/8, index 25/16/54; v7.6.0 pending.
+[2026-11-25] Planned and implemented the plan-quality follow-up (reviews 146/147); the template, assertion floor, depth, and clean-tree gate are live in v7.6.0. Full text in the 2026-11-25 diary.
+[2026-11-25] Released v7.6.0 and published the public GitHub Release; the plan-quality follow-up rules are live.
+[2026-11-25] Recorded the future same-root multi-assistant read/write scenario and the worktree limitation in the scope-normalization ticket; no parallel assistants or worktrees exist.
