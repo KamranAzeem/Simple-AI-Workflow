@@ -1,7 +1,7 @@
 #!/bin/bash
-# Fixture for the repair global settings procedure and policy.
+# Fixture for the repair user settings procedure and policy.
 # shellcheck disable=SC2016
-# Usage: ./tests/test-global-settings-repair-fixture.sh
+# Usage: ./tests/test-user-settings-repair-fixture.sh
 # Exit 0 when every assertion passes, 1 otherwise.
 
 set -u
@@ -30,13 +30,13 @@ absent() {
     fi
 }
 
-POLICY="$ROOT/ai/policies/ai-policy-global-settings.md"
-PROC="$ROOT/ai/procedures/repair-global-settings.md"
-TPL="$ROOT/docs/global-user-settings.md"
+POLICY="$ROOT/ai/policies/ai-policy-user-settings.md"
+PROC="$ROOT/ai/procedures/repair-user-settings.md"
+TPL="$ROOT/docs/user-settings.md"
 
-present "$POLICY" "# AI Policy: Global User Settings" "policy title"
+present "$POLICY" "# AI Policy: User Settings" "policy title"
 present "$POLICY" "- Mode: procedure" "policy loading mode"
-present "$POLICY" "- Load in: repair-global-settings" "policy load path"
+present "$POLICY" "- Load in: repair-user-settings" "policy load path"
 present "$POLICY" '`Name`' "policy names the identity key"
 present "$POLICY" '`Default Shell Path`' "policy names the shell key"
 present "$POLICY" '`Sensitive Names`' "policy names the sensitive list"
@@ -48,10 +48,11 @@ present "$POLICY" "byte-for-byte" "policy leaves a compact file unchanged"
 absent "$POLICY" "### Style Sources" "policy drops the Style Sources section"
 absent "$POLICY" "Universal git conventions live" "policy drops the git pointer"
 
-present "$PROC" "# PROCEDURE REPAIR-GLOBAL-SETTINGS" "procedure title"
-present "$PROC" "- repair global settings" "procedure trigger"
-present "$PROC" "- tidy global settings" "procedure tidy trigger"
-present "$PROC" "- heal global settings" "procedure heal trigger"
+present "$PROC" "# PROCEDURE REPAIR-USER-SETTINGS" "procedure title"
+present "$PROC" "- repair user settings" "procedure trigger"
+present "$PROC" "- tidy user settings" "procedure tidy trigger"
+present "$PROC" "- heal user settings" "procedure heal trigger"
+present "$PROC" "- repair global settings" "procedure legacy alias"
 present "$PROC" "STEP-BACKUP-SETTINGS" "procedure backup step"
 present "$PROC" "STEP-REVIEW-SETTINGS-REPAIR" "procedure review step"
 
@@ -68,11 +69,11 @@ absent "$TPL" "Style Sources" "template drops Style Sources"
 absent "$TPL" "Universal git conventions live" "template drops the git pointer"
 
 present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=25" "validator floor is 25"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "25 policies (12 domain and 13 protocol)" "toolchain note policy count"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "16 procedures, 129 steps" "toolchain note procedure count"
+present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "25 policies (12 domain and 13 protocol)" "toolchain note policy count"
+present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "16 procedures" "toolchain note procedure count"
 test_count=$(find "$ROOT/tests" -maxdepth 1 -name 'test-*.sh' -print | wc -l | tr -d ' ')
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "$test_count test scripts" "toolchain note test count"
-present "$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md" "54 triggers" "toolchain note trigger count"
+present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "$test_count test scripts" "toolchain note test count"
+present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "58 triggers" "toolchain note trigger count"
 
 # Simulated consolidation over a bloated fixture.
 WORK="$(mktemp -d)"
@@ -134,8 +135,8 @@ absent "$WORK/repaired.md" "deadtool" "fixture drops a dead tool"
 absent "$WORK/repaired.md" "Sensitive Names To Never Commit" "fixture drops the old heading"
 
 if [ "$fail" -ne 0 ]; then
-    echo "FAILED: global settings repair fixture."
+    echo "FAILED: user settings repair fixture."
     exit 1
 fi
-echo "PASSED: global settings repair fixture."
+echo "PASSED: user settings repair fixture."
 exit 0

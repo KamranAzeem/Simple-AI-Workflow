@@ -56,13 +56,13 @@ if [ -f "$POLICY" ]; then
     present "$POLICY" "- Mode: procedure" "team policy is procedure-loaded"
     present "$POLICY" "- Load in: knowledge-publish" "team policy names the publish procedure"
     present "$POLICY" "## Team Knowledge Protocol" "team policy protocol section"
-    present "$POLICY" "project knowledge, then team knowledge, then personal global knowledge" "team policy states precedence"
+    present "$POLICY" "project knowledge, then team knowledge, then user knowledge" "team policy states precedence"
     present "$POLICY" "Class A" "team policy states the destination class"
     present "$POLICY" "10 KB" "team policy states the soft target"
     present "$POLICY" "15 KB" "team policy states the split review"
     present "$POLICY" "100-file" "team policy states the store threshold"
     present "$POLICY" "16 KB" "team policy states the boot bound"
-    present "$POLICY" "team-knowledge/" "team policy uses the team-knowledge path"
+    present "$POLICY" "knowledge/" "team policy uses the knowledge path"
 else
     fail_case "team policy exists"
 fi
@@ -83,13 +83,14 @@ if [ -f "$PROC" ]; then
     done
     present "$PROC" "never merge" "publish procedure never merges"
     present "$PROC" "do not apply the local sensitive-names list" "publish procedure keeps the local names list out"
-    present "$PROC" "team-knowledge/" "publish procedure uses the team-knowledge path"
+    present "$PROC" "knowledge/" "publish procedure uses the knowledge path"
 else
     fail_case "publish procedure exists"
 fi
 
 # --- boot wiring ---
-present "$ROOT/AGENTS.md" "Team AI Knowledge Directory" "AGENTS.md has the team directory anchor"
+present "$ROOT/AGENTS.md" "Team AI Directory" "AGENTS.md has the team directory anchor"
+present "$ROOT/AGENTS.md" "Team AI Knowledge Directory" "AGENTS.md has the derived team knowledge anchor"
 present "$ROOT/AGENTS.md" "Team AI Knowledge Repository" "AGENTS.md has the team repository anchor"
 present "$ROOT/AGENTS.md" "STEP-TEAM-KNOWLEDGE-INDEX loads" "AGENTS.md amends the Policy Loading Set"
 present "$ROOT/ai/policies/ai-policy-common.md" "Team AI Knowledge Directory" "common policy names the team store"
@@ -99,7 +100,7 @@ present "$LOAD_CONTEXT" "ITEM TEAM-KNOWLEDGE-INDEX" "load context has the team i
 present "$LOAD_CONTEXT" "filenames" "load context indexes filenames only"
 present "$LOAD_CONTEXT" "missing or unreadable" "load context documents the degradation"
 present "$LOAD_CONTEXT" "Team AI Knowledge Directory" "load context reads the team key"
-present "$LOAD_CONTEXT" "team-knowledge/" "load context indexes the team-knowledge path"
+present "$LOAD_CONTEXT" "active team knowledge root" "load context indexes the active team knowledge root"
 
 if [ -f "$LOAD_CONTEXT" ]; then
     knowledge_line="$(grep -n 'STEP-KNOWLEDGE-INDEXING' "$LOAD_CONTEXT" | head -1 | cut -d: -f1)"
@@ -123,7 +124,7 @@ index_rc=$?
 summary="$(printf '%s\n' "$index_out" | grep '^summary|' | tail -1)"
 if [ "$index_rc" -eq 0 ] && [ -n "$summary" ]; then
     pass "index oracle accepts the module set"
-    for field in "modules=41" "policies=25" "procedures=16" "triggers=54" "conflicts=0" "errors=0"; do
+    for field in "modules=41" "policies=25" "procedures=16" "triggers=58" "conflicts=0" "errors=0"; do
         if printf '%s\n' "$summary" | grep -qF "$field"; then
             pass "index reports $field"
         else
@@ -138,7 +139,7 @@ fi
 
 # --- fixture store ---
 for lesson in postgresql-connection-pool-exhaustion kubernetes-probe-timeout; do
-    file="$FIXTURE/team-knowledge/$lesson.md"
+    file="$FIXTURE/knowledge/$lesson.md"
     if [ -f "$file" ]; then
         pass "fixture lesson $lesson exists"
         present "$file" "title:" "fixture $lesson title"
@@ -170,25 +171,25 @@ else
 fi
 
 # --- docs and validator ---
-present "$ROOT/docs/ai-customization-guide.md" "Team AI Knowledge Directory" "guide documents the team directory key"
+present "$ROOT/docs/ai-customization-guide.md" "Team AI Directory" "guide documents the team directory key"
 present "$ROOT/docs/ai-customization-guide.md" "Team AI Knowledge Repository" "guide documents the team repository key"
-present "$ROOT/docs/ai-customization-guide.md" "team-knowledge/<lesson-name>.md" "guide uses the team-knowledge path"
+present "$ROOT/docs/ai-customization-guide.md" "knowledge/<lesson-name>.md" "guide uses the knowledge path"
 present "$ROOT/docs/ai-customization-guide.md" "Class A" "guide states the destination class"
 present "$ROOT/docs/ai-customization-guide.md" "local sensitive-names list" "guide keeps the local names list out"
-present "$ROOT/docs/workflow-guide.md" "team-knowledge/" "workflow guide uses the team-knowledge path"
-present "$ROOT/docs/simple-ai-workflow-slides.md" "team-knowledge/" "slides note uses the team-knowledge path"
-present "$ROOT/README.md" "team-knowledge/" "README names the team-knowledge path"
+present "$ROOT/docs/workflow-guide.md" "knowledge/" "workflow guide uses the knowledge path"
+present "$ROOT/docs/simple-ai-workflow-slides.md" "knowledge/" "slides note uses the knowledge path"
+present "$ROOT/README.md" "knowledge/" "README names the knowledge path"
 present "$ROOT/docs/ai-customization.md" "team-alpha" "customization template shows a team-named root"
-present "$ROOT/docs/slides/diagrams/knowledge-skills.svg" "team-knowledge/" "the diagram labels the team-knowledge path"
+present "$ROOT/docs/slides/diagrams/knowledge-skills.svg" "team/knowledge/" "the diagram labels the team knowledge path"
 present "$ROOT/design-docs/protocol-decisions.md" "Team lessons are Class A" "ADR records the Class A rule"
 present "$ROOT/design-docs/protocol-decisions.md" "Team skills are deferred" "ADR records the deferred team skills"
-present "$ROOT/docs/ai-customization.md" "Team AI Knowledge Directory" "customization template has the team directory key"
+present "$ROOT/docs/ai-customization.md" "Team AI Directory" "customization template has the team root key"
 present "$ROOT/docs/ai-customization.md" "Team AI Knowledge Repository" "customization template has the team repository key"
 present "$ROOT/docs/announcements/v7.1.0.md" "# v7.1.0" "release announcement exists"
 present "$MAIN_VALIDATOR" "POLICY_FLOOR=25" "validator policy floor is 25"
-present "$MAIN_VALIDATOR" "Team AI Knowledge Directory" "validator checks the team directory key"
+present "$MAIN_VALIDATOR" "Team AI Directory" "validator checks the team root key"
 present "$MAIN_VALIDATOR" "Team AI Knowledge Repository" "validator checks the team repository key"
-present "$MAIN_VALIDATOR" "team-knowledge/" "validator checks the team-knowledge path"
+present "$MAIN_VALIDATOR" '"knowledge"' "validator checks the user knowledge path"
 
 # --- live-path guard ---
 LIVE_FILES=(
@@ -198,7 +199,6 @@ LIVE_FILES=(
     "$ROOT/docs/ai-customization-guide.md"
     "$ROOT/docs/workflow-guide.md"
     "$ROOT/docs/simple-ai-workflow-slides.md"
-    "$ROOT/README.md"
     "$ROOT/docs/ai-customization.md"
     "$ROOT/docs/slides/diagrams/knowledge-skills.svg"
 )
@@ -207,12 +207,12 @@ for live in "${LIVE_FILES[@]}"; do
         fail_case "live file exists: $live"
         continue
     fi
-    hits="$(grep -nF 'lessons/' "$live" || true)"
+    hits="$(grep -nE 'team-knowledge/|lessons/' "$live" | grep -v 'LEGACY-GLOBAL' || true)"
     if [ -n "$hits" ]; then
-        fail_case "live file still names lessons/: $live"
+        fail_case "live file still names a legacy team path: $live"
         printf '%s\n' "$hits"
     else
-        pass "live file uses team-knowledge/: $(basename "$live")"
+        pass "live file uses the knowledge path: $(basename "$live")"
     fi
 done
 

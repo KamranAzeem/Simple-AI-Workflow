@@ -14,7 +14,7 @@ Build a simple 3-page static website (Home, About, Contact) using three differen
 ## Prerequisites
 
 - Simple-AI-Workflow cloned to a central location
-- `AGENTS.md` copied to the project root, and `ai-customization.md` created there from `docs/ai-customization.md` with **Global AI Workflow Directory** set to the clone
+- `AGENTS.md` copied to the project root, and `ai-customization.md` created there from `docs/ai-customization.md` with **Workflow AI Directory** set to the clone
 - All three AI assistants have access to the same project directory
 - The `ai/` directory is git-ignored (shared state, not committed)
 

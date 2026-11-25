@@ -11,7 +11,7 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 PROVIDER="$ROOT/docs/ai-provider-selection-guide.md"
 SETUP="$ROOT/docs/setup.md"
 POST_COMPACT="$ROOT/docs/post-compaction-reload-trigger-setup.md"
-COMPACTION_KNOWLEDGE="$ROOT/ai/shared/project-knowledge/compaction-trigger-problem.md"
+COMPACTION_KNOWLEDGE="$ROOT/ai/knowledge/compaction-trigger-problem.md"
 PROCEDURE="$ROOT/ai/procedures/post-compaction-recovery.md"
 AGENTS="$ROOT/AGENTS.md"
 LEARNING="$ROOT/docs/example-learning-session-runbook.md"
@@ -23,8 +23,9 @@ ANNOUNCE6="$ROOT/docs/announcements/v7.6.0.md"
 ANNOUNCE61="$ROOT/docs/announcements/v7.6.1.md"
 ANNOUNCE62="$ROOT/docs/announcements/v7.6.2.md"
 DECISIONS="$ROOT/design-docs/protocol-decisions.md"
-TOOLCHAIN="$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md"
-MAP="$ROOT/ai/shared/project-knowledge/codebase-skeleton-map-simple-ai-workflow.md"
+TOOLCHAIN="$ROOT/ai/knowledge/protocol-verification-toolchain.md"
+MAP="$ROOT/ai/knowledge/codebase-skeleton-map-simple-ai-workflow.md"
+ANNOUNCE77="$ROOT/docs/announcements/v7.7.0.md"
 
 fail=0
 
@@ -69,12 +70,13 @@ missing() {
 missing "docs/protocol-name-migration-map-2026-10-06.md"
 missing "docs/vscode-cline-provider-setup-for-beginners.md"
 missing "docs/ai-agent-collaboration.md"
+missing "docs/global-user-settings.md"
 
 for doc in \
     docs/workflow-guide.md \
     docs/ai-customization-guide.md \
     docs/ai-customization.md \
-    docs/global-user-settings.md \
+    docs/user-settings.md \
     docs/compliance-guide.md \
     docs/custom-policy-howto.md \
     docs/how-policies-work-in-this-workflow.md \
@@ -153,7 +155,12 @@ present "$GUIDE" "an expectation, not a cap" "guide calls the round range an exp
 absent "$GUIDE" "fix when convenient" "guide drops the old Minor wording"
 exists "docs/announcements/v7.5.0.md"
 present "$ANNOUNCE" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.5.0" "announcement records the release URL"
-present "$README" "docs/announcements/v7.6.2.md" "README points at the release announcement"
+present "$README" "docs/announcements/v7.7.0.md" "README points at the v7.7.0 release announcement"
+present "$README" "## Path migration in v7.7.0" "README has the v7.7.0 migration table"
+present "$ANNOUNCE77" "## Migration map" "v7.7.0 announcement has the migration map"
+present "$ANNOUNCE77" "scope-migration-<date>" "v7.7.0 announcement names the backups"
+present "$ANNOUNCE77" "removed in v7.8.0" "v7.7.0 announcement names the alias window"
+present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
 present "$DECISIONS" "This supersedes the 2026-10-28 rule that fixes only Critical and Major." "ADR store records the supersession"
@@ -190,7 +197,7 @@ absent "$TOOLCHAIN" "protocol-decisions.md" "toolchain does not point at the ADR
 present "$TOOLCHAIN" "# Protocol Verification Toolchain" "toolchain keeps its header"
 present "$TOOLCHAIN" "Run the protocol validator" "toolchain keeps the validator command"
 present "$ANNOUNCE62" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.6.2" "v7.6.2 announcement records the release URL"
-adr="$(awk '/^## 2026-11-25: Review verdicts bind to the artifact hash/{on=1} on' "$DECISIONS")"
+adr="$(awk '/^## 2026-11-25: Review verdicts bind to the artifact hash/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
 if printf '%s\n' "$adr" | grep -qiE 'commit|branch|plan|report'; then
     fail_case "ADR entry has no version-control or plan dependency"
 else
@@ -199,15 +206,13 @@ fi
 present "$TOOLCHAIN" "The plan template, S/M light path, and clean-tree baseline are live." "toolchain note names the follow-up rules"
 present "$MAP" "The plan template, assertion floor, depth, and clean-tree gate are live." "map names the follow-up rules"
 
-if git -C "$ROOT" rev-parse --verify master >/dev/null 2>&1; then
-    if git -C "$ROOT" diff --diff-filter=A --name-only master...HEAD | grep -q '^tests/test-.*\.sh$'; then
-        fail_case "no new test file is added"
+for new_test in tests/test-path-probe.sh tests/test-scope-migration.sh; do
+    if [ -f "$ROOT/$new_test" ]; then
+        pass "v7.7.0 adds $new_test"
     else
-        pass "no new test file is added"
+        fail_case "v7.7.0 test missing: $new_test"
     fi
-else
-    pass "no master ref; added-test check skipped"
-fi
+done
 
 order="$(awk '/\| Ticket \|/{t=NR} /\| Issue \|/{i=NR} /\| Support request \|/{s=NR} END{if (t && i && s && t < i && i < s) print "ok"; else print "bad"}' "$GUIDE")"
 if [ "$order" = "ok" ]; then

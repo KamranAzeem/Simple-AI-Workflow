@@ -1,12 +1,56 @@
 | Announcement |
 | --- |
-| **v7.6.2 (2026-11-25).** The review-sequencing rules now live in the code-review policy and the ADR store; the verification runbook keeps the commands and checks. Read the announcement: [docs/announcements/v7.6.2.md](docs/announcements/v7.6.2.md). |
+| **v7.7.0 (2026-11-25).** The four scopes are Workflow, User, Team, and Project. Knowledge stores move to unprefixed `knowledge/` directories, and one sync run migrates them with a backup. Read the announcement: [docs/announcements/v7.7.0.md](docs/announcements/v7.7.0.md). |
 
 # Simple AI Workflow
 
 **Stop improvising with AI. Work the same predictable way every time.**
 
 Simple AI Workflow is a small set of plain files that gives your AI assistant a protocol: the policies to load, the procedures to follow, the state to keep, and the review gates to pass. It is not a platform or a service. It is a repeatable way to work.
+
+## Path migration in v7.7.0
+
+<!-- LEGACY-GLOBAL-START -->
+
+The old keys and paths below are removed by the sync migration. There is no key alias window. Old trigger phrases stay as aliases for v7.7.x only.
+
+| Old key or path | New key or path | Sync migrates it | Backup location | Manual action |
+| --- | --- | --- | --- | --- |
+| `Global AI Workflow Directory` | `Workflow AI Directory` | Yes, key rewrite | None | Pull the new clone and run sync |
+| `Global User AI Directory` | `User AI Directory` | Yes, key rewrite | None | Keep the same value, including a network path |
+| `Global AI Policies Directory` | `Workflow AI Policies Directory` | Derived | None | None |
+| `Global AI Skills Directory` | `Workflow AI Skills Directory` | Derived | None | None |
+| `Global AI Knowledge Directory` | `User AI Knowledge Directory` | Yes, user store move | `<User AI Directory>/backups/scope-migration-<date>/user/` | None |
+| `Global AI Settings Directory` | `User AI Settings Directory` | Directory unchanged | None | None |
+| `Global AI Backups Directory` | `User AI Backups Directory` | Directory unchanged | None | None |
+| none | `User AI Skills Directory` | Yes, creates `skills/` | None | None |
+| `Team AI Knowledge Directory` (root key) | `Team AI Directory` | Yes, key rewrite | None | None |
+| `Team AI Knowledge Directory` (derived) | `Team AI Knowledge Directory` under `Team AI Directory` | Derived | None | None |
+| none | `Team AI Skills Directory` | `skills/` unchanged | None | None |
+| `ai/shared/project-knowledge/` | `ai/knowledge/` | Yes, project store move | `ai/artifacts/scope-migration-<date>/project-knowledge/` | None |
+| `<User AI Directory>/global-knowledge/` | `<User AI Directory>/knowledge/` | Yes, user store move | `<User AI Directory>/backups/scope-migration-<date>/user/` | None |
+| `<Team AI Directory>/team-knowledge/` and `lessons/` | `<Team AI Directory>/knowledge/` | Yes, team store move | `<User AI Directory>/backups/scope-migration-<date>/team/` | Commit or open a PR in the team repository |
+| `<User AI Directory>/settings/global-user-settings.md` | `<User AI Directory>/settings/user-settings.md` | Yes, file move | `<User AI Directory>/backups/scope-migration-<date>/user/` | None |
+| `ai-policy-global-settings.md` | `ai-policy-user-settings.md` | No, shipped file | None | Pull the new clone |
+| `repair global settings` triggers | `repair user settings` triggers | No, trigger alias | None | The old triggers work through v7.7.x and are removed in v7.8.0 |
+| `update global knowledge` trigger | `update user knowledge` trigger | No, trigger alias | None | The old trigger works through v7.7.x and is removed in v7.8.0 |
+| `knowledge-repair-backups/` and `settings-repair-backups/` | Unchanged, top-level user directories | No, exempt | Already user-owned | None |
+
+Run the sync in preview first:
+
+```bash
+# Linux and Git Bash
+./support-files/sync-agents-md.sh --source ./AGENTS.md --target-path ~/Projects --dry-run
+```
+
+```powershell
+# Windows PowerShell 7+
+./support-files/sync-agents-md.ps1 -Source ./AGENTS.md -TargetPath C:\Projects -WhatIf
+```
+
+Run it without the preview flag to migrate. The sync refuses an uninitialized target and points to `bootstrap using AGENTS.md protocol`. It never creates a symlink, and a failed backup leaves that store unchanged.
+
+<!-- LEGACY-GLOBAL-END -->
 
 ## Contents
 
@@ -70,8 +114,8 @@ The full command list is in the [workflow guide](docs/workflow-guide.md#25-commo
 ## Quick start
 
 1. Clone this repo, for example to `~/Projects/Simple-AI-Workflow`.
-2. Create the global directories: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"`.
-3. Copy `AGENTS.md` and `docs/ai-customization.md` to your project root. Set `Global AI Workflow Directory` in `ai-customization.md` to the clone.
+2. Create the user directories: `mkdir -p "$HOME/.ai/settings" "$HOME/.ai/knowledge" "$HOME/.ai/skills" "$HOME/.ai/backups"`.
+3. Copy `AGENTS.md` and `docs/ai-customization.md` to your project root. Set `Workflow AI Directory` in `ai-customization.md` to the clone.
 4. Open the project in VS Code and type `"bootstrap using AGENTS.md protocol"`.
 5. Start each session with `"load context using AGENTS.md protocol"`.
 
@@ -99,7 +143,7 @@ This page describes the protocol. The protocol modules (`AGENTS.md`, the policie
 
 ### Memory
 
-- Three state files, project and global knowledge, handoffs, and the daily diary. Why: the next session starts where this one stopped.
+- Three state files, project and user knowledge, handoffs, and the daily diary. Why: the next session starts where this one stopped.
 - The state files are written together at checkpoint, or not at all. Old progress moves to the daily checkpoint archive.
 - Knowledge files follow one shape and a task-based name. See the [workflow guide](docs/workflow-guide.md#23-knowledge-file-standards-and-repair).
 
@@ -124,9 +168,9 @@ This page describes the protocol. The protocol modules (`AGENTS.md`, the policie
 
 ### Team
 
-- Optional team knowledge store: a shared Git repository of lessons under `team-knowledge/`, with the two configuration keys.
-- Optional team skills: a third skills root at `<Team AI Knowledge Directory>/skills/`, with project, team, global precedence.
-- The key names are **Team AI Knowledge Directory** and **Team AI Knowledge Repository**. Set them in `ai-customization.md` when the team has a store.
+- Optional team knowledge store: a shared Git repository of lessons under `knowledge/`.
+- Optional team skills: a fourth skills root at `<Team AI Directory>/skills/`, with project, team, user, and workflow precedence.
+- The root key is **Team AI Directory**; the derived keys are **Team AI Knowledge Directory** and **Team AI Skills Directory**. Set the root and **Team AI Knowledge Repository** in `ai-customization.md` when the team has a store.
 - The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Team lessons are Class A: names stay, secrets never.
 - Contribute a lesson with `"update team knowledge"`; contribute a skill by copying the package into `skills/` and opening a PR.
 - See the [workflow guide](docs/workflow-guide.md#24-skills), the [customization guide](docs/ai-customization-guide.md), and the [v7.1.0](docs/announcements/v7.1.0.md) and [v7.2.0](docs/announcements/v7.2.0.md) announcements.
@@ -172,4 +216,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 25 policies and 16 procedures are the fixed background. The 54 triggers are the phrases that load a policy or procedure on demand.
+The 25 policies and 16 procedures are the fixed background. The 58 triggers in v7.7.0 include the temporary old-phrase aliases; the aliases are removed in v7.8.0.

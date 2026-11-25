@@ -17,7 +17,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - Treat this policy as the owner of the universal baseline.
 - Activate every domain policy through the load-context procedure module in the clone's `ai/procedures/` store.
 - Resolve every path with the configuration anchors in `AGENTS.md`.
-- Resolve a policy file named without a directory from the **Global AI Policies Directory**.
+- Resolve a policy file named without a directory from the **Workflow AI Policies Directory**.
 - Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
 
 ## Non-Negotiables (read first, apply always)
@@ -53,7 +53,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - **Self-consistency check**: before finalizing an edit, re-check every new or changed claim against the other sections already read this session and the source it derives from.
 - Resolve or flag every contradiction.
 - **Local-first source precedence**: search local sources of truth before external ones.
-- Order the search: the project's own files and history, Project Knowledge, Global Knowledge, the live environment, and cloned repos before the model's own knowledge, the web, or official documentation.
+- Order the search: the project's own files and history, Project Knowledge, User Knowledge, the live environment, and cloned repos before the model's own knowledge, the web, or official documentation.
 - Bound the probe: index, open the likely candidates, then escalate.
 - Do not turn "local first" into a new token sink.
 
@@ -79,7 +79,7 @@ This file contains the universal operating rules for all AI assistants in this r
 
 1. **Atomic Update Protocol**: use a fresh `read` followed by an immediate `write` for all AI tracking files.
 2. **Operational Synthesis & Proof-of-Load**: complete bootstrap only after you synthesize the requirements and provide a Proof-of-Load summary as defined in the load-context procedure module.
-    - List the active traits, indexed Global Knowledge and Project Knowledge files, and pending tasks in the summary.
+    - List the active traits, indexed User Knowledge and Project Knowledge files, and pending tasks in the summary.
 3. **Task Claiming**: record ownership in the **Project Coordination File** before you start a task.
 4. **Valid Handoff Definition & Refusal Mandate**: follow the handoff contract for a Valid Handoff.
     - Refuse a handoff until the contract is loaded and the definition is met.
@@ -88,8 +88,8 @@ This file contains the universal operating rules for all AI assistants in this r
 
 ### Source-of-Truth Order
 
-- Index Global Knowledge and Project Knowledge during the load-context procedure module.
-- Consult Global Knowledge and Project Knowledge alongside these state files.
+- Index User Knowledge and Project Knowledge during the load-context procedure module.
+- Consult User Knowledge and Project Knowledge alongside these state files.
 - Apply this order specifically to resuming session state: answering "where are we and what's next?"
 - **Exception (Post-Compaction Recovery)**: when Post-Compaction Recovery is active, treat the compaction summary as the sole authoritative source that supersedes all state files below.
 - Do not read the state files during Post-Compaction Recovery.
@@ -137,12 +137,12 @@ This file contains the universal operating rules for all AI assistants in this r
 - **External system mutations require explicit approval**: never post, update, transition, comment on, or otherwise change any external system of record without the user's explicit instruction.
 - Propose the exact text first and wait for approval before sending.
 - **Secrets and identifying names**: check the staged changes for secrets and for names that identify a person, company, or organization before any `git add` or `git commit`.
-- Check the global settings names list first when it exists.
+- Check the user settings names list first when it exists.
 - Neutralize a name with a generic phrase (`a client project`, `an external project`) or stop and ask.
 - Apply `## Outbound Content Scrub` before any artifact leaves the project.
 - Allow a project knowledge file outside git to keep an identifying name.
 - Scan a tracked knowledge file.
-- Never keep an identifying name in a global knowledge file.
+- Never keep an identifying name in a user knowledge file.
 - Treat a person, client, employer, or customer name as identifying.
 - Treat a technology vendor or product name as content.
 - **Protected Branches**: obtain explicit human approval before any state-changing Git operation on `master` or `main`.
@@ -193,9 +193,9 @@ This file contains the universal operating rules for all AI assistants in this r
 - Resolve the identity from the first match in this order:
     1. Project git identity (`git config user.name` / `user.email`).
     2. Global `~/.gitconfig`.
-    3. Global settings file (`## Identity`, fields `Name` and `Email`), for users who do not use git.
+    3. User settings file (`## Identity`, fields `Name` and `Email`), for users who do not use git.
 - Ask the user for name and email when none is found.
-- Record the name and email in the global settings file.
+- Record the name and email in the user settings file.
 - Offer the git config setup.
 - Use the settings fallback when `git` is not installed.
 - This binds sub-agents and non-orchestrator sessions.
@@ -216,9 +216,9 @@ This file contains the universal operating rules for all AI assistants in this r
 
 ## Knowledge Invariant
 
-- Read every file in the **Global AI Settings Directory** in full at boot.
-- Let project configuration override a global setting.
-- Index every file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory** at boot.
+- Read every file in the **User AI Settings Directory** in full at boot.
+- Let project configuration override a user setting.
+- Index every file in the **User AI Knowledge Directory** and the **Project AI Knowledge Directory** at boot.
 - Record filenames, paths, and apparent technical domains in the index.
 - Read a file in full only when a task needs it.
 - Index the configured **Team AI Knowledge Directory** at boot and read a lesson in full only when a task needs it.
@@ -227,8 +227,8 @@ This file contains the universal operating rules for all AI assistants in this r
 ## Skills
 
 - Treat a skill as a narrow, on-demand task package, separate from a policy, a procedure, and a knowledge file.
-- Resolve a skill from the **Global AI Skills Directory**, the **Project AI Skills Directory**, or the configured **Team AI Knowledge Directory** `skills/` root.
-- Apply the precedence project, then team, then global.
+- Resolve a skill from the **Workflow AI Skills Directory**, the **User AI Skills Directory**, the **Project AI Skills Directory**, or the configured **Team AI Skills Directory** root.
+- Apply the precedence project, then team, then user, then workflow.
 - Report the override.
 - Skip an absent or empty skills root.
 - Require one package per skill: `ai/skills/<name>/SKILL.md`, a `name`, a one-line `description` of at most 200 characters, and a lowercase-kebab directory name that matches `name`.
@@ -297,7 +297,7 @@ This file contains the universal operating rules for all AI assistants in this r
 - **State File Scope Rule**: keep state files to summaries of what was done, what is pending, and the current context.
 - Never use a state file as a runbook, plan, or ledger.
 - Do not put implementation steps, CLI commands, investigation notes, or knowledge content in a state file.
-- Put those in the **Project AI Knowledge Directory** or the **Global AI Knowledge Directory**.
+- Put those in the **Project AI Knowledge Directory** or the **User AI Knowledge Directory**.
 - Write durable knowledge to its proper file before recording a summary checkpoint entry.
 - **Daily Checkpoints Are the Only Archive**: treat the diary under **Project Daily Checkpoints Directory** as the single, chronological, unbounded archive.
 - Do not create a separate archive file.
@@ -688,6 +688,6 @@ This file contains the universal operating rules for all AI assistants in this r
 ## References
 
 - `AGENTS.md` for the boot protocol, dispatch, and shared steps.
-- The procedure layer in the **Global AI Workflow Directory** for the task steps.
+- The procedure layer in the **Workflow AI Directory** for the task steps.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

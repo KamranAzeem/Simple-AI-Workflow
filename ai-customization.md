@@ -6,9 +6,9 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 
 <!-- Configuring this directive below is mandatory. Point it to the location where you have cloned "Simple-AI-Workflow". Usually: ~/Projects/Simple-AI-Workflow/ -->
 
-**Global AI Workflow Directory**: /home/kamran/Projects/Personal/Simple-AI-Workflow/
+**Workflow AI Directory**: /home/kamran/Projects/Personal/Simple-AI-Workflow/
 
-**Global User AI Directory**: /home/kamran/.ai/
+**User AI Directory**: /home/kamran/.ai/
 
 ## Active Expertise
 

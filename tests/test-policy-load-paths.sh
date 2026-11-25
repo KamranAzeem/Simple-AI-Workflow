@@ -199,12 +199,12 @@ assert_mode() {
         printf '%s\n' "$out"
         return 1
     fi
-    if ! printf '%s\n' "$out" | grep -q '|global|'; then
-        fail_case "index oracle does not report global scope for $policy"
+    if ! printf '%s\n' "$out" | grep -q '|workflow|'; then
+        fail_case "index oracle does not report workflow scope for $policy"
         printf '%s\n' "$out"
         return 1
     fi
-    pass "index reports mode=$mode and global scope for $policy"
+    pass "index reports mode=$mode and workflow scope for $policy"
 }
 
 # `common` is the recorded exemption: STEP-WORKFLOW-ACCESS loads it before any policy scan.

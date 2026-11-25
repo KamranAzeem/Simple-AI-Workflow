@@ -25,7 +25,7 @@ The AI Assistant acts as a **Senior Software Archaeologist and Refactoring Engin
 
 ## Core Principle: Disk-as-Memory + Tiered JIT Loading
 
-The active context window is a scarce, working surface, not storage. All durable understanding of the codebase lives **on disk** in project-knowledge files and is loaded just-in-time. This mirrors the protocol's existing knowledge-file JIT indexing, applied recursively to source code.
+The active context window is a scarce, working surface, not storage. All durable understanding of the codebase lives **on disk** in Project Knowledge files and is loaded just-in-time. This mirrors the protocol's existing knowledge-file JIT indexing, applied recursively to source code.
 
 ### The Three Loading Tiers
 
@@ -44,7 +44,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 
 ### Phase 1: Map (build durable understanding on disk)
 
-1. Generate the **Level 0 Repo Map** and persist it to a project-knowledge file with a verbose name, e.g. `codebase-skeleton-map-<project-or-area>.md`.
+1. Generate the **Level 0 Repo Map** and persist it to a Project Knowledge file with a verbose name, e.g. `codebase-skeleton-map-<project-or-area>.md`.
 2. Generate **Level 1 signature maps** per module as needed and persist them (or persist them as clearly delimited sections within the skeleton-map file). Do not retain bodies: signatures only.
 3. Record a lightweight **dependency note**: which modules import/call which. This is what later lets an edit in one file surface its dependents. Keep it as plain text relationships (`module-a -> module-b`), not a heavyweight graph database.
 4. Use the assistant's native file search, read, and glob-matching tools to build these maps. **Do not** introduce vector databases, embedding stores, or external indexing tools (Chroma, FAISS, LlamaIndex, Repomix, Aider, etc.): they violate the workflow's lightweight mandate and are unnecessary given JIT loading.
@@ -52,7 +52,7 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 ### Phase 2: Plan (decide before touching)
 
 1. Treat the examination request as an **Inquiry** under the Analyze-Plan-Stop rule of the common policy: read the maps, identify the exact files that an examination or refactor would touch, and present that plan. Do not begin edits without a Directive.
-2. If the goal is refactoring, examination findings and the change plan must be written to disk (project-knowledge or an artifact) before any code changes, so they survive context compaction.
+2. If the goal is refactoring, examination findings and the change plan must be written to disk (Project Knowledge or an artifact) before any code changes, so they survive context compaction.
 
 ### Phase 3: Perform (bounded batches)
 
@@ -84,6 +84,6 @@ The strategy must work on small windows (e.g. 128 K tokens) and large ones (1 M+
 
 - Common policy: `ai-policy-common.md`
 - Code review policy: `ai-policy-code-review.md`
-- Agent document hierarchy: `ai/shared/project-knowledge/agent-facing-document-hierarchy.md`
+- Agent document hierarchy: `ai/knowledge/agent-facing-document-hierarchy.md`
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

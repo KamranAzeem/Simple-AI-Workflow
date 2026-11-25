@@ -29,7 +29,7 @@ So a 150 KB map fits comfortably even in a 128 K window. But for a genuinely lar
 
 ## 2. The Core Idea: Disk-as-Memory + Tiered JIT Loading
 
-The context window is a **working surface**, not storage. Durable understanding lives on disk in project-knowledge files and is loaded just-in-time: the same pattern the protocol already uses for knowledge-file indexing, applied recursively to source code.
+The context window is a **working surface**, not storage. Durable understanding lives on disk in Project Knowledge files and is loaded just-in-time: the same pattern the protocol already uses for knowledge-file indexing, applied recursively to source code.
 
 ### Three loading tiers
 

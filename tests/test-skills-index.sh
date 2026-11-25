@@ -5,10 +5,11 @@ ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 WORK="$(mktemp -d /tmp/kilo/skills-fixture.XXXXXX)"
 trap 'rm -rf "$WORK"' EXIT
 
-GLOBAL="$WORK/global"
+WORKFLOW="$WORK/workflow"
+USER="$WORK/user"
 PROJECT="$WORK/project"
 TEAM="$WORK/team"
-mkdir -p "$GLOBAL" "$PROJECT/ai/skills" "$TEAM/skills"
+mkdir -p "$WORKFLOW" "$USER" "$PROJECT/ai/skills" "$TEAM/skills"
 
 make_skill() {
     local dir="$1" name="$2" desc="$3" body="$4"
@@ -16,7 +17,9 @@ make_skill() {
     printf -- '---\nname: %s\ndescription: %s\n---\n\n%s\n' "$name" "$desc" "$body" > "$dir/SKILL.md"
 }
 
-make_skill "$GLOBAL/alpha" "alpha" "Global alpha skill." "GLOBAL-BODY-CANARY"
+make_skill "$WORKFLOW/alpha" "alpha" "Workflow alpha skill." "WORKFLOW-ALPHA-BODY-CANARY"
+make_skill "$USER/alpha" "alpha" "User alpha skill." "USER-ALPHA-BODY-CANARY"
+make_skill "$TEAM/skills/alpha" "alpha" "Team alpha skill." "TEAM-ALPHA-BODY-CANARY"
 make_skill "$PROJECT/ai/skills/alpha" "alpha" "Project alpha skill." "PROJECT-BODY-CANARY"
 make_skill "$PROJECT/ai/skills/beta" "beta" "Project beta skill." "BETA-BODY-CANARY"
 make_skill "$PROJECT/ai/skills/gamma" "gamma" "" "GAMMA-BODY-CANARY"
@@ -27,15 +30,21 @@ make_skill "$PROJECT/ai/skills/cloud" "cloud" "Cloud skill." "CLOUD-BODY-CANARY"
 make_skill "$PROJECT/ai/skills/long-description" "long-description" "$(printf 'x%.0s' $(seq 1 201))" "LONG-BODY-CANARY"
 ln -s "$PROJECT/ai/skills/beta" "$PROJECT/ai/skills/linked"
 
-make_skill "$GLOBAL/team-global" "team-global" "Global team-global skill." "GLOBAL-TEAM-GLOBAL-BODY-CANARY"
-make_skill "$TEAM/skills/alpha" "alpha" "Team alpha skill." "TEAM-ALPHA-BODY-CANARY"
-make_skill "$TEAM/skills/team-only" "team-only" "Team only skill." "TEAM-ONLY-BODY-CANARY"
+make_skill "$WORKFLOW/team-global" "team-global" "Workflow team-global skill." "WORKFLOW-TEAM-GLOBAL-BODY-CANARY"
+make_skill "$USER/team-global" "team-global" "User team-global skill." "USER-TEAM-GLOBAL-BODY-CANARY"
 make_skill "$TEAM/skills/team-global" "team-global" "Team team-global skill." "TEAM-TEAM-GLOBAL-BODY-CANARY"
+make_skill "$TEAM/skills/team-only" "team-only" "Team only skill." "TEAM-ONLY-BODY-CANARY"
 make_skill "$TEAM/skills/cloud" "cloud" "Team cloud skill." "TEAM-CLOUD-BODY-CANARY"
 make_skill "$TEAM/skills/team-bad" "team-bad" "" "TEAM-BAD-BODY-CANARY"
 make_skill "$TEAM/skills/nested/inner" "inner" "Nested team skill." "TEAM-NESTED-BODY-CANARY"
 make_skill "$TEAM/skills/.hidden" "hidden-team" "Hidden team skill." "TEAM-HIDDEN-BODY-CANARY"
 ln -s "$TEAM/skills/team-only" "$TEAM/skills/team-link"
+
+make_skill "$WORKFLOW/user-global" "user-global" "Workflow user-global skill." "WORKFLOW-USER-GLOBAL-BODY-CANARY"
+make_skill "$USER/user-global" "user-global" "User user-global skill." "USER-USER-GLOBAL-BODY-CANARY"
+make_skill "$USER/user-only" "user-only" "User only skill." "USER-ONLY-BODY-CANARY"
+make_skill "$USER/user-team" "user-team" "User team skill." "USER-TEAM-BODY-CANARY"
+make_skill "$TEAM/skills/user-team" "user-team" "Team team skill." "TEAM-USER-TEAM-BODY-CANARY"
 
 frontmatter_value() {
     local file="$1" key="$2"
@@ -65,49 +74,64 @@ discover() {
 
 MODULES="cloud data load-context"
 
+name_in() {
+    local list="$1" name="$2"
+    printf '%s\n' "$list" | awk -F'|' -v n="$name" '$1 == "SKILL" && $2 == n { found = 1 } END { exit(found ? 0 : 1) }'
+}
+
 build_index() {
-    local global_lines team_lines project_lines name
-    global_lines="$(discover "$GLOBAL" global)"
+    local workflow_lines user_lines team_lines project_lines name kind
+    workflow_lines="$(discover "$WORKFLOW" workflow)"
+    user_lines="$(discover "$USER" user)"
     team_lines="$(discover "$TEAM/skills" team)"
     project_lines="$(discover "$PROJECT/ai/skills" project)"
 
     while IFS='|' read -r kind name _ _ _; do
         [ "$kind" = "SKILL" ] || continue
-        printf '%s\n' "$team_lines" | awk -F'|' -v n="$name" '$1 == "SKILL" && $2 == n { found = 1 } END { exit(found ? 0 : 1) }' \
-            && printf 'REPORT|override|%s\n' "$name"
-        printf '%s\n' "$global_lines" | awk -F'|' -v n="$name" '$1 == "SKILL" && $2 == n { found = 1 } END { exit(found ? 0 : 1) }' \
-            && printf 'REPORT|override|%s\n' "$name"
+        name_in "$team_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
+        name_in "$user_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
+        name_in "$workflow_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
     done < <(printf '%s\n' "$project_lines")
 
     while IFS='|' read -r kind name _ _ _; do
         [ "$kind" = "SKILL" ] || continue
-        printf '%s\n' "$global_lines" | awk -F'|' -v n="$name" '$1 == "SKILL" && $2 == n { found = 1 } END { exit(found ? 0 : 1) }' \
-            && printf 'REPORT|override|%s\n' "$name"
+        name_in "$project_lines" "$name" && continue
+        name_in "$user_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
+        name_in "$workflow_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
     done < <(printf '%s\n' "$team_lines")
 
-    printf '%s\n' "$global_lines" | awk -F'|' -v tlist="$team_lines" -v plist="$project_lines" '
-        $1 == "SKILL" {
-            split(tlist, t, "\n")
-            for (i in t) { split(t[i], f, "|"); if (f[1] == "SKILL" && f[2] == $2) next }
-            split(plist, p, "\n")
-            for (i in p) { split(p[i], f, "|"); if (f[1] == "SKILL" && f[2] == $2) next }
-            print
-        }
-        $1 != "SKILL" { print }
-    '
-    printf '%s\n' "$team_lines" | awk -F'|' -v plist="$project_lines" '
-        $1 == "SKILL" {
-            split(plist, p, "\n")
-            for (i in p) { split(p[i], f, "|"); if (f[1] == "SKILL" && f[2] == $2) next }
-            print
-        }
-        $1 != "SKILL" { print }
-    '
+    while IFS='|' read -r kind name _ _ _; do
+        [ "$kind" = "SKILL" ] || continue
+        name_in "$project_lines" "$name" && continue
+        name_in "$team_lines" "$name" && continue
+        name_in "$workflow_lines" "$name" && printf 'REPORT|override|%s\n' "$name"
+    done < <(printf '%s\n' "$user_lines")
+
     printf '%s\n' "$project_lines"
+    printf '%s\n' "$team_lines" | while IFS='|' read -r kind name desc dir scope; do
+        if [ "$kind" = "SKILL" ]; then name_in "$project_lines" "$name" && continue; fi
+        printf '%s\n' "$kind|$name|$desc|$dir|$scope"
+    done
+    printf '%s\n' "$user_lines" | while IFS='|' read -r kind name desc dir scope; do
+        if [ "$kind" = "SKILL" ]; then
+            name_in "$project_lines" "$name" && continue
+            name_in "$team_lines" "$name" && continue
+        fi
+        printf '%s\n' "$kind|$name|$desc|$dir|$scope"
+    done
+    printf '%s\n' "$workflow_lines" | while IFS='|' read -r kind name desc dir scope; do
+        if [ "$kind" = "SKILL" ]; then
+            name_in "$project_lines" "$name" && continue
+            name_in "$team_lines" "$name" && continue
+            name_in "$user_lines" "$name" && continue
+        fi
+        printf '%s\n' "$kind|$name|$desc|$dir|$scope"
+    done
+
     while IFS='|' read -r kind name _ _ _; do
         [ "$kind" = "SKILL" ] || continue
         case " $MODULES " in *" $name "*) printf 'REPORT|collision with a policy or procedure name|%s\n' "$name" ;; esac
-    done < <(printf '%s\n' "$team_lines" "$project_lines")
+    done < <(printf '%s\n' "$project_lines" "$team_lines" "$user_lines" "$workflow_lines")
 }
 
 fail=0
@@ -116,13 +140,20 @@ check() { if ! printf '%s\n' "$index" | grep -q "$1"; then echo "FAIL: $2"; fail
 refute() { if printf '%s\n' "$index" | grep -q "$1"; then echo "FAIL: $2"; fail=1; fi; }
 
 check 'SKILL|alpha|Project alpha skill.|.*/project/ai/skills/alpha|project' "project alpha is not indexed"
-check 'REPORT|override|alpha' "the project-over-team-and-global override is not reported"
-refute 'SKILL|alpha|Global alpha skill.' "global alpha is still indexed after the override"
+check 'REPORT|override|alpha' "the project-over-lower-scopes override is not reported"
+refute 'SKILL|alpha|Workflow alpha skill.' "workflow alpha is still indexed after the override"
+refute 'SKILL|alpha|User alpha skill.' "user alpha is still indexed after the override"
 refute 'SKILL|alpha|Team alpha skill.' "team alpha is still indexed after the project override"
 check 'SKILL|team-only|Team only skill.|.*/team/skills/team-only|team' "team-only is not indexed"
-check 'SKILL|team-global|Team team-global skill.|.*/team/skills/team-global|team' "team does not override global"
-refute 'SKILL|team-global|Global team-global skill.' "global team-global is still indexed after the team override"
-check 'REPORT|override|team-global' "the team-over-global override is not reported"
+check 'SKILL|team-global|Team team-global skill.|.*/team/skills/team-global|team' "team does not override the lower scopes"
+refute 'SKILL|team-global|Workflow team-global skill.' "workflow team-global is still indexed after the team override"
+refute 'SKILL|team-global|User team-global skill.' "user team-global is still indexed after the team override"
+check 'REPORT|override|team-global' "the team-over-lower-scopes override is not reported"
+check 'SKILL|user-only|User only skill.|.*/user/user-only|user' "user-only is not indexed"
+check 'SKILL|user-global|User user-global skill.|.*/user/user-global|user' "user does not override workflow"
+refute 'SKILL|user-global|Workflow user-global skill.' "workflow user-global is still indexed after the user override"
+check 'SKILL|user-team|Team team skill.|.*/team/skills/user-team|team' "team does not override user"
+refute 'SKILL|user-team|User team skill.' "user team skill is still indexed after the team override"
 check 'SKILL|beta|Project beta skill.' "project beta is not indexed"
 check 'REPORT|collision with a policy or procedure name|cloud' "cross-type collision is not reported"
 check 'REPORT|missing description|.*/gamma' "missing description is not reported"
@@ -141,7 +172,8 @@ require_in() {
     if ! grep -q "$2" "$ROOT/$1"; then echo "FAIL: $3"; fail=1; fi
 }
 require_in "AGENTS.md" "STEP-SKILLS-INDEX" "AGENTS.md does not define STEP-SKILLS-INDEX."
-require_in "AGENTS.md" "Global AI Skills Directory" "AGENTS.md does not name the global skills directory."
+require_in "AGENTS.md" "Workflow AI Skills Directory" "AGENTS.md does not name the workflow skills directory."
+require_in "AGENTS.md" "User AI Skills Directory" "AGENTS.md does not name the user skills directory."
 require_in "AGENTS.md" "Project AI Skills Directory" "AGENTS.md does not name the project skills directory."
 require_in "AGENTS.md" "use skill <name>" "AGENTS.md does not dispatch use skill."
 require_in "ai/procedures/load-context.md" "200 characters" "load-context does not cap the skill description."
@@ -153,17 +185,17 @@ require_in "ai/policies/ai-policy-common.md" "the user is responsible" "the comm
 require_in "ai/procedures/write-checkpoint.md" "package names" "the checkpoint does not record package names."
 require_in "ai/procedures/repair-knowledge-files.md" "never edits a skill package" "the repair boundary does not exclude skills."
 require_in "AGENTS.md" "configured team root" "AGENTS.md does not name the configured team skills root."
-require_in "ai/procedures/load-context.md" "configured team skills root" "load-context does not name the configured team skills root."
+require_in "ai/procedures/load-context.md" "Team AI Skills Directory" "load-context does not name the team skills root."
 require_in "ai/procedures/load-context.md" "skip and report a hidden entry, symlink" "load-context does not require reporting a hidden or symlink entry."
 require_in "ai/policies/ai-policy-common.md" "or the configured" "the common policy does not name the team skills root in the Skills section."
-require_in "ai/policies/ai-policy-common.md" "Apply the precedence project, then team, then global" "the common policy lacks the team precedence."
+require_in "ai/policies/ai-policy-common.md" "Apply the precedence project, then team, then user, then workflow" "the common policy lacks the four-scope precedence."
 require_in "ai/policies/ai-policy-team-knowledge.md" "skills/" "the team policy lacks the skills pointer."
-require_in "ai/procedures/post-compaction-recovery.md" "configured team root" "post-compaction does not name the team root."
-require_in "ai/procedures/write-checkpoint.md" "configured team root" "the checkpoint does not name the team root."
+require_in "ai/procedures/post-compaction-recovery.md" "project, team, user, and workflow skill roots" "post-compaction does not name the four roots."
+require_in "ai/procedures/write-checkpoint.md" "project, team, user, and workflow skill roots" "the checkpoint does not name the four roots."
 require_in "ai/procedures/repair-knowledge-files.md" "any skills root" "the repair boundary does not cover every skills root."
-require_in "docs/announcements/v7.2.0.md" "# v7.2.0" "the v7.2.0 announcement is missing."
-require_in "README.md" "v7.2.0" "README banner does not name v7.2.0."
-require_in "README.md" "docs/announcements/v7.2.0.md" "README banner does not link the v7.2.0 announcement."
+require_in "docs/announcements/v7.7.0.md" "# v7.7.0" "the v7.7.0 announcement is missing."
+require_in "README.md" "v7.7.0" "README banner does not name v7.7.0."
+require_in "README.md" "docs/announcements/v7.7.0.md" "README banner does not link the v7.7.0 announcement."
 
 KANBAN="$ROOT/ai/skills/kanban-board/SKILL.md"
 if [ -f "$KANBAN" ]; then
@@ -187,5 +219,5 @@ if [ "$fail" -ne 0 ]; then
     echo "FAILED: skills index fixture."
     exit 1
 fi
-echo "PASSED: skills index fixture (three roots, package, frontmatter, one-level, overrides, collision, description, no body, 16 KB)."
+echo "PASSED: skills index fixture (four roots, package, frontmatter, one-level, overrides, collision, description, no body, 16 KB)."
 exit 0

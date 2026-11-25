@@ -9,8 +9,8 @@ File-manipulation tools on Windows require absolute paths (`C:\path\to\file`).
 
 ## Manual setup
 
-- Manually create your **Global User AI Directory** structure. The default is `[HOME]/.ai/`, resolved from `Global User AI Directory` in `ai-customization.md`.
-- Create a personal settings file (e.g., `global-user-settings.md`) in the **Global AI Settings Directory**. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
+- Manually create your **User AI Directory** structure. The default is `[HOME]/.ai/`, resolved from `User AI Directory` in `ai-customization.md`.
+- Create a personal settings file (e.g., `user-settings.md`) in the **User AI Settings Directory**. This file holds your personal preferences, tool configurations, and cross-project context that the AI fully loads at every session start.
 - **Reading the protocol**: Open `AGENTS.md` with the assistant's built-in file-read tool. If a client hides a git-ignored path, use the reported fallback in `AGENTS.md`; never treat the file as unreadable.
 
 ## Kilo Code Setup
@@ -36,7 +36,7 @@ Simple-AI-Workflow/              Your Project/
 |-- support-files/
 ```
 
-The clone holds the workflow, the policy and procedure store, and the global skills. The project copies `AGENTS.md` and `ai-customization.md`. The procedure modules stay in the clone and load from `(Global AI Workflow Directory)/ai/procedures/`.
+The clone holds the workflow, the policy and procedure store, and the workflow skills. The project copies `AGENTS.md` and `ai-customization.md`. The procedure modules stay in the clone and load from `(Workflow AI Directory)/ai/procedures/`.
 
 ## Updating an Existing Project
 

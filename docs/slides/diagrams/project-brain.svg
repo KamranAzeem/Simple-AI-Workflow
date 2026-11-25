@@ -40,7 +40,7 @@
     <text x="86" y="388">│   └── progress.md</text>
     <text x="86" y="418">├── daily-checkpoints/</text>
     <text x="86" y="448">├── shared/</text>
-    <text x="86" y="478">│   ├── project-knowledge/</text>
+    <text x="86" y="478">│   ├── knowledge/</text>
     <text x="86" y="508">│   └── handoffs/</text>
     <text x="86" y="538">├── issues/</text>
     <text x="86" y="568">├── plans/</text>
@@ -68,7 +68,7 @@
   <rect x="810" y="420" width="8" height="104" rx="4" fill="#0090C1"/>
   <text x="842" y="460" font-family="Lato, Arial, sans-serif" font-size="14" font-weight="700" fill="#007AA3" letter-spacing="2">KNOWLEDGE</text>
   <text x="842" y="494" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">What we learned.</text>
-  <text x="1180" y="494" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">shared/project-knowledge/</text>
+  <text x="1180" y="494" font-family="Lato, Arial, sans-serif" font-size="18" fill="#6B7A82">ai/knowledge/</text>
 
   <rect x="810" y="540" width="740" height="104" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <rect x="810" y="540" width="8" height="104" rx="4" fill="#0090C1"/>

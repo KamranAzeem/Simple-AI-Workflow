@@ -4,11 +4,11 @@
 
 ## Context
 
-The workflow prefers local sources before the model's own recall, the web, or official docs. Project Knowledge is indexed by filename at boot and loaded on demand. Global Knowledge follows the same model. The source-precedence rule is part of this lesson.
+The workflow prefers local sources before the model's own recall, the web, or official docs. Project Knowledge is indexed by filename at boot and loaded on demand. User Knowledge follows the same model. The source-precedence rule is part of this lesson.
 
 ## Rule or Fix
 
-- Search the project files, Project Knowledge, Global Knowledge, the live environment, and cloned repositories first.
+- Search the project files, Project Knowledge, User Knowledge, the live environment, and cloned repositories first.
 - Use a bounded probe: read the index, open the likely candidates, then escalate.
 - Use filename and domain matching, not embeddings, vector stores, or chunking.
 - Load a knowledge file in full only when a task needs it.
@@ -19,7 +19,7 @@ The workflow prefers local sources before the model's own recall, the web, or of
 - Local sources reflect the project and the live environment.
 - A bounded probe avoids a token sink.
 - Filename indexing keeps boot context small.
-- Project Knowledge takes precedence over Global Knowledge.
+- Project Knowledge takes precedence over Team Knowledge, which takes precedence over User Knowledge.
 
 ## Verify
 

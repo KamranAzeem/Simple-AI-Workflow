@@ -32,13 +32,13 @@ Use one step at a time, in order. After each step, wait for AI to finish before 
 - Copy `AGENTS.md` from the global Simple-AI-Workflow repository to your example project directory. `AGENTS.md` itself stays unchanged.
 - For later updates, use `support-files/sync-agents-md.sh` or `sync-agents-md.ps1`. The script updates existing `AGENTS.md` files and checks or creates `ai-customization.md`; a manual copy updates only `AGENTS.md`.
 - Copy `docs/ai-customization.md` from the clone to `ai-customization.md` at your example project root.
-- Open `ai-customization.md` and set **Global AI Workflow Directory** to the absolute path of your clone (**"full/absolute path"**):
+- Open `ai-customization.md` and set **Workflow AI Directory** to the absolute path of your clone (**"full/absolute path"**):
   - Linux/macOS example: `/home/YourName/Projects/Personal/Simple-AI-Workflow/`
   - GitBash on Windows example: `/c/Users/YourName/Projects/Personal/Simple-AI-Workflow/`
   - Windows example: `C:\Users\YourName\Projects\Personal\Simple-AI-Workflow\`
   - Ensure the path reflects your actual global repository location.
 - Verify the policy files exist under that path (check that `ai/policies/ai-policy-meta.md` and `ai/policies/ai-policy-common.md` are accessible).
-- Optional: create `global-user-settings.md` in `<Global User AI Directory>/settings/` (default `~/.ai/settings/`) to give the AI persistent context about your skills, preferences, and tooling. Use `docs/global-user-settings.md` from this repository as a starting template.
+- Optional: create `user-settings.md` in `<User AI Directory>/settings/` (default `~/.ai/settings/`) to give the AI persistent context about your skills, preferences, and tooling. Use `docs/user-settings.md` from this repository as a starting template.
 
 ### 4. Verification Checklist
 
@@ -49,7 +49,7 @@ Before starting Step 1, confirm:
 - [ ] You can open a chat window in the IDE and send prompts.
 - [ ] Simple-AI-Workflow repository is cloned to a global location.
 - [ ] AGENTS.md is copied to your example project directory.
-- [ ] `ai-customization.md` is copied to the project root and its Global AI Workflow Directory points to your clone.
+- [ ] `ai-customization.md` is copied to the project root and its Workflow AI Directory points to your clone.
 
 Once all prerequisites are met, proceed to Step 1.
 
@@ -200,12 +200,12 @@ Expected outcome:
 Send this prompt:
 
 ```text
-Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/shared/project-knowledge: minimal-page-pattern.md and branch-squash-merge-pattern.md. Start each knowledge file with the self-contained header from ai-policy-common.md, then use Context, Rule or Fix, Why, and Verify. Keep each file self-standing, with no pointers to other files. Show paths.
+Create ai/shared/handoffs/sample.md (objective, state, next step, criteria) and two files in ai/knowledge: minimal-page-pattern.md and branch-squash-merge-pattern.md. Start each knowledge file with the self-contained header from ai-policy-common.md, then use Context, Rule or Fix, Why, and Verify. Keep each file self-standing, with no pointers to other files. Show paths.
 ```
 
 Expected outcome:
 
-- 1 handoff + 2 project-knowledge files created.
+- 1 handoff + 2 Project Knowledge files created.
 - Each knowledge file starts with the self-contained header, uses Context, Rule or Fix, Why, and Verify, and stands on its own.
 
 The user then inspects the newly created files, and uses the handoff file to create a new task for AI.

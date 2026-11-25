@@ -9,7 +9,7 @@
 #      step reference, remains in the live protocol files.
 #   3. Path conformance: no live protocol file hardcodes a protocol-tree policy
 #      path. A policy file is named without a directory and resolved from the
-#      Global AI Policies Directory.
+#      Workflow AI Policies Directory.
 #   4. Order conformance: the two work-item procedures exist exactly once, the
 #      ordered close phrases stay out of the pointer documents, and the Merge
 #      Policy section is present in the customization template and sync scripts.
@@ -97,7 +97,7 @@ fi
 # --- conformance: no protocol-tree policy paths in live protocol files ---
 path_hits="$(grep -nE 'ai/policies/ai-policy-[a-z0-9-]+\.md' "${LIVE_FILES[@]}" 2>/dev/null || true)"
 if [ -n "$path_hits" ]; then
-    echo "FAIL: hardcoded policy path found; name the file and the Global AI Policies Directory:"
+    echo "FAIL: hardcoded policy path found; name the file and the Workflow AI Policies Directory:"
     printf '%s\n' "$path_hits"
     fail=1
 fi
@@ -111,7 +111,7 @@ for proc in MANAGE-ISSUES IMPLEMENT-PLAN; do
     fi
 done
 
-for f in ai/policies/ai-policy-common.md ai/shared/project-knowledge/issue-template.md docs/workflow-guide.md README.md docs/ai-agent-collaboration.md; do
+for f in ai/policies/ai-policy-common.md ai/knowledge/issue-template.md docs/workflow-guide.md README.md docs/ai-agent-collaboration.md; do
     for phrase in "Squash-merge to trunk" "Run the checkpoint on the branch" "Attach the final plan" "Replace the active plan link" "replace its link with"; do
         if grep -Fiq "$phrase" "$f" 2>/dev/null; then
             echo "FAIL: ordered close phrase '$phrase' found in $f; the order belongs only in the procedure modules."

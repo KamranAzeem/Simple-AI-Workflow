@@ -15,7 +15,7 @@ Govern the optional shared team knowledge store and its publish path.
 
 ## Scope
 
-- Apply this policy when the **Team AI Knowledge Directory** is configured and when PROCEDURE KNOWLEDGE-PUBLISH runs.
+- Apply this policy when the **Team AI Directory** is configured and when PROCEDURE KNOWLEDGE-PUBLISH runs.
 - This policy owns the team scope, the store shape, the frontmatter, the precedence, the Class A rule, the ownership and retirement, the limits, and the no-block behavior.
 - The knowledge contract keeps the file standards and the body sections.
 - The outbound content scrub contract keeps the destination classes and the secret removal.
@@ -23,7 +23,7 @@ Govern the optional shared team knowledge store and its publish path.
 ## Team Knowledge Protocol
 
 - Treat the team store as the third knowledge scope.
-- Apply the precedence order: project knowledge, then team knowledge, then personal global knowledge.
+- Apply the precedence order: project knowledge, then team knowledge, then user knowledge.
 - Read every matching file at task start.
 - Report a conflict; do not resolve it silently.
 - Keep the team store optional; an unconfigured project behaves exactly as today.
@@ -32,21 +32,22 @@ Govern the optional shared team knowledge store and its publish path.
 
 ## Configuration
 
-- Read **Team AI Knowledge Directory** from the **Project Customization File**.
+- Read **Team AI Directory** from the **Project Customization File**.
 - Read **Team AI Knowledge Repository** from the same file.
-- Expand `~` and `[HOME]` in the directory.
-- Treat an absent directory key as not configured.
+- Derive **Team AI Knowledge Directory** as `<Team AI Directory>/knowledge/` and **Team AI Skills Directory** as `<Team AI Directory>/skills/`.
+- Expand `~` and `[HOME]` in the root.
+- Treat an absent root key as not configured.
 - Treat an absent repository key as the local clone's `origin`.
 - Never write either key; the user sets them.
 
 ## Store Shape
 
-- Store one lesson per file under `team-knowledge/`, flat.
+- Store one lesson per file under `knowledge/`, flat.
 - Use the filename as the lesson id.
 - Use lowercase kebab case with six or fewer hyphen-separated segments.
-- Keep a retired lesson in `team-knowledge/` with `status: retired` and `superseded_by: <filename>`.
+- Keep a retired lesson in `knowledge/` with `status: retired` and `superseded_by: <filename>`.
 - Do not scaffold the store; the team creates the repository, its `README.md`, and its `CONTRIBUTING.md`.
-- Allow a `skills/` directory for team skill packages; the common Skills section owns the package rules.
+- Allow the **Team AI Skills Directory** for team skill packages; the common Skills section owns the package rules.
 - Reject a rename that breaks a reference.
 
 ## Frontmatter
@@ -107,7 +108,7 @@ superseded_by:
 
 ## Boot Behavior
 
-- Index filenames, paths, and apparent domains only.
+- Index `knowledge/` filenames, paths, and apparent domains only.
 - Report `[PENDING]` with the reason when the store is missing or unreadable.
 - Continue the load on a `[PENDING]` store.
 - Report `none` when the key is absent.

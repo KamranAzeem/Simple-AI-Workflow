@@ -1436,3 +1436,15 @@ A review verdict binds to the reviewed artifact's SHA-256. After fixes, one delt
 Context: a verdict could approve one revision while a later edit shipped without a matching verification, and the sequencing rules lived only in a verification note.
 
 Consequences: the code-review policy owns the operative rules; the ADR is the decision record; the verification runbook keeps the commands and checks, not a second copy.
+
+## 2026-11-25: Four scopes replace the global wording
+
+The protocol uses four scope names: Workflow, User, Team, and Project. A workflow key names the clone. A user key names the configured user directory. A team key names the configured team repository. A project name keeps the `Project` prefix or the `ai/` anchor.
+
+The key set is `Workflow AI Directory`, `Workflow AI Policies Directory`, `Workflow AI Skills Directory`, `User AI Directory`, `User AI Knowledge Directory`, `User AI Skills Directory`, `User AI Settings Directory`, `User AI Backups Directory`, `Team AI Directory`, `Team AI Knowledge Directory`, `Team AI Skills Directory`, `Team AI Knowledge Repository`, and the existing project keys. The customization root key for the team store is `Team AI Directory`; the knowledge and skills directories are derived from it.
+
+The storage roots are `<Workflow AI Directory>/ai/skills/`, `<User AI Directory>/knowledge/`, `<User AI Directory>/skills/`, `<User AI Directory>/settings/`, `<User AI Directory>/backups/`, `<Team AI Directory>/knowledge/`, `<Team AI Directory>/skills/`, and `<Project>/ai/knowledge/`. The project coordination file and handoffs stay under `ai/shared/`. The user repair backup directories `knowledge-repair-backups/` and `settings-repair-backups/` stay top-level and are documented exceptions to the four-store rule.
+
+The sync script migrates the project, user, and team stores after a verified backup, merges with deterministic collision suffixes, never creates a symlink, refuses a symlink at the customization path, and leaves the team repository uncommitted. The boot reads a legacy layout read-only and warns once per root. The old keys are removed with no key alias window. The old trigger phrases remain as v7.7.x aliases and are removed in v7.8.0. Historical records keep their original vocabulary.
+
+Consequences: `ai/shared/project-knowledge/` becomes `ai/knowledge/`; the user `global-knowledge/` becomes `knowledge/`; the team `team-knowledge/` and `lessons/` become `knowledge/`; `ai-policy-global-settings.md` becomes `ai-policy-user-settings.md`; `repair-global-settings.md` becomes `repair-user-settings.md`; `docs/global-user-settings.md` becomes `docs/user-settings.md`; the settings file `global-user-settings.md` becomes `user-settings.md`; and the skill precedence is project, then team, then user, then workflow. The policy count stays 25, the procedure count stays 16, and the trigger count grows only by the v7.7.x aliases.

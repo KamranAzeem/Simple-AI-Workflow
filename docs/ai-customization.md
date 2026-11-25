@@ -6,19 +6,19 @@
 
 <!-- Set this to the absolute path of your Simple-AI-Workflow clone. -->
 
-**Global AI Workflow Directory**: /path/to/Simple-AI-Workflow
+**Workflow AI Directory**: /path/to/Simple-AI-Workflow
 
-**Global User AI Directory**: [HOME]/.ai/
+**User AI Directory**: [HOME]/.ai/
 
 **Default Shell**: bash
 
 <!-- Optional team knowledge store. The directory is a read-only local clone or mount; the repository is the publish remote. -->
 <!--
-**Team AI Knowledge Directory**: /path/to/team-alpha
+**Team AI Directory**: /path/to/team-alpha
 **Team AI Knowledge Repository**: git@example.com:team/team-alpha.git
 -->
 
-<!-- Global User AI Directory defaults to [HOME]/.ai/. Default Shell is optional; use bash, zsh, pwsh, or git-bash. The matching native path goes in the global settings file as Default Shell Path. -->
+<!-- User AI Directory defaults to [HOME]/.ai/. Default Shell is optional; use bash, zsh, pwsh, or git-bash. The matching native path goes in the user settings file as Default Shell Path. -->
 
 See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md> for help.
 
@@ -57,7 +57,7 @@ Examples: gdpr, soc2, hipaa, iso-27001, pci-dss, ccpa
 
 <!-- Optional. Record where your design documents live:
      - design-docs/ : the documents live beside your code (recommended)
-     - ai/shared/project-knowledge/ : the older location, under ai/
+     - ai/knowledge/ : the fallback location, under ai/
      Leave this section out and the AI detects the location from your project. -->
 
 **Location**: design-docs/

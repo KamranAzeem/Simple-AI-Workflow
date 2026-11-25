@@ -18,7 +18,7 @@
   <text x="96" y="300" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Thin. Read-only. A pointer.</text>
   <g font-family="Lato, Arial, sans-serif" font-size="25" fill="#505962">
     <text x="96" y="356">The boot entry point.</text>
-    <text x="96" y="396">Points at the Global AI Workflow Directory.</text>
+    <text x="96" y="396">Points at the Workflow AI Directory.</text>
     <text x="96" y="436">Asks the assistant to read the policy.</text>
     <text x="96" y="476">Does not store project context.</text>
   </g>
@@ -36,7 +36,7 @@
     <text x="856" y="396">Active Traits: system architect.</text>
     <text x="856" y="436">Required Compliance: soc2, iso-27001.</text>
     <text x="856" y="476">Design docs and merge policy.</text>
-    <text x="856" y="516">Global User AI Directory: ~/.ai/.</text>
+    <text x="856" y="516">User AI Directory: ~/.ai/.</text>
   </g>
   <rect x="856" y="548" width="648" height="132" rx="14" fill="#E6F5FA"/>
   <text x="880" y="588" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">Local. Git-ignored.</text>

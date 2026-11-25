@@ -2,11 +2,11 @@
 
 This guide explains how to interact with AI assistants in this repository and how to manage the AI state tracking files.
 
-## 1. Project Knowledge (`ai/shared/project-knowledge/`)
+## 1. Project Knowledge (`ai/knowledge/`)
 
 All persistent AI reasoning, style guides, and project-specific patterns are stored here.
 
-- **Location**: `/ai/shared/project-knowledge/` (Git-ignored)
+- **Location**: `/ai/knowledge/` (Git-ignored)
 - **Status**: Non-version-controlled. Each contributor builds their own project knowledge base.
 - **Usage**: Add Markdown files for permanent guidance (e.g., `css-architecture.md`, `style-guide.md`).
 - **Policy**: AI assistants treat this directory as the source of truth for repository standards.
@@ -19,11 +19,11 @@ Without a protocol, each assistant keeps its own state in its own hidden directo
 
 ![The black box and the fixed layout](slides/diagrams/blackbox-state.svg)
 
-## 2. Global Knowledge (Cross-Project)
+## 2. User Knowledge (Cross-Project)
 
 Lessons learned, architectural patterns, and reusable snippets that apply across all your repositories.
 
-- **Location**: `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`; the global user directory is configurable in `ai-customization.md`)
+- **Location**: `<User AI Directory>/knowledge/` (default `~/.ai/knowledge/`; the user directory is configurable in `ai-customization.md`)
 - **Status**: Personal persistent memory that follows you into every project.
 - **Usage**: Indexed at initialization (index-at-boot, load-on-demand) under the same Token Rationing model as **Project Knowledge**; see **[Section 13: Token Rationing & JIT Context Loading](#13-token-rationing--jit-context-loading)**.
 - **Policy**: AI assistants use this to ensure consistency and reuse best practices from your previous work. Use descriptive filenames so each file is easy to identify; the filename is also the lookup key for index-only Global and Project Knowledge. See **[Use Verbose File Names for Knowledge and Notes](../README.md)**.
@@ -68,9 +68,9 @@ What the protocol does enforce around Git:
 - **Conventional commits**: follow the project's commit conventions (for example `feature:`, `fix:`, `chore:`, `docs:`).
 - **PR review**: peer review can target a named pull request; the AI fetches the latest refs and diffs the PR's source against its target, not the local working tree (see [Section 12](#12-peer-review-mode)).
 
-The AI does not rely on commit history to rebuild project context. If you want a decision or design recorded, it belongs in `ai/shared/project-knowledge/` or the daily checkpoints, not in the state files.
+The AI does not rely on commit history to rebuild project context. If you want a decision or design recorded, it belongs in `ai/knowledge/` or the daily checkpoints, not in the state files.
 
-For a recommended global Git setup (identity, CRLF handling, and a readable `git lg` alias), see the Git Configuration section in the [global user settings template](global-user-settings.md).
+For a recommended Git setup (identity, CRLF handling, and a readable `git lg` alias), see the Git Configuration section in the [user settings template](user-settings.md).
 
 ### Agent Collaboration
 
@@ -123,7 +123,7 @@ Models with lower instruction-following capability (e.g., smaller or "lite" mode
 - **Immutable Loading**: The context-loading sequence is explicitly flagged as **READ-ONLY**, preventing "instruction drift" during bootstrap.
 - **No-Overwrite Mandates**: The context-loading sequence forbids overwriting existing files, ensuring project history is never accidentally wiped.
 - **PWD-Only Scope**: The AI is restricted to loading `AGENTS.md` and scanning the `ai/` directory from the current working directory only: prevents cross-project context leakage and ensures each project maintains its own isolated AI state.
-- **Recursive Discovery**: AI uses the built-in glob and listing on the **Global User AI Directory** to find all settings and knowledge subdirectories.
+- **Recursive Discovery**: AI uses the built-in glob and listing on the **User AI Directory** to find the settings, knowledge, skills, and backups subdirectories.
 - **Proof-of-Load Summary**: The AI must explicitly list all Settings files fully loaded and Knowledge files indexed, providing empirical evidence of a successful bootstrap.
 - **Update Check**: The AI compares your workflow clone with its remote at load time and tells you when a pull is available. It never pulls for you.
 
@@ -180,7 +180,7 @@ The setup guide, `post-compaction-reload-trigger-setup.md`, lists optional per-a
 To prevent the loss of project context due to accidental overwrites or "hallucinations" from less capable models, the workflow provides a backup mechanism that is triggered **on demand** when you say "backup ai" or "backup ai state".
 
 - **Native Commands**: The backup uses native CLI tools (`tar` on Linux/Bash, `Compress-Archive` on PowerShell) embedded directly in the `create-backup` procedure module in the clone's `ai/procedures/`.
-- **Global Storage**: Archives are stored in `<Global User AI Directory>/backups/` (default `~/.ai/backups/`) and are uniquely identified by their project name and timestamp.
+- **User Storage**: Archives are stored in `<User AI Directory>/backups/` (default `~/.ai/backups/`) and are uniquely identified by their project name and timestamp.
 - **Not automatic**: Backups are **not** part of the checkpoint procedure (the `write-checkpoint` module). They are a separate procedure (the `create-backup` module) invoked only by explicit user request.
 
 ### Benefits
@@ -238,7 +238,7 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 
 ### How it works
 
-1. The AI reads the code-review policy (`ai-policy-code-review.md`) from the **Global AI Policies Directory** for its reviewer role definition.
+1. The AI reads the code-review policy (`ai-policy-code-review.md`) from the **Workflow AI Policies Directory** for its reviewer role definition.
 2. For a named PR, it first fetches the latest remote refs, resolves the PR's source and target branches, and diffs source against target, not the local working tree.
 3. It scans the diffed files (PR review) or the files you specify (general review), or the entire repository by default (excluding `ai/`, `tmp/`, and dependency directories).
 4. When the reviewed file is read by an AI (`AGENTS.md`, policy files, handoff templates), it also checks agent readability: hierarchy, completion criteria, leading words, negation, sediment, and sprawl.
@@ -277,19 +277,19 @@ Every Critical, Major, and Minor finding blocks approval. Suggestion stays optio
 
 ## 13. Token Rationing & JIT Context Loading
 
-At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets. **Global Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
+At boot (the "load context" procedure), the AI fully loads the small, always-relevant context: settings, the common policy, and every policy referenced in `ai-customization.md`. It applies **Token Rationing** to the knowledge sets. **User Knowledge** and **Project Knowledge** are indexed at boot and read on demand.
 
 The boot discovery is scoped. The AI lists only the boot roots and applies the boot exclusion list. It never lists or reads secrets, artifacts, code-review reports, notes, pending items, plans, closed issues, `.git`, archives, or backups. The output is bounded at 16 KB. When a root would exceed it, the AI prints the counts and queries the remainder on demand. The latest checkpoint is read once. The boot builds the index with built-in tools and reports `index-source=builtin`. The optional `support-files/index-protocol.sh` helper is for maintainer and release checks.
 
-A global policy that declares triggers is indexed by filename, trigger line, and headings. Its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral. It is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
+A workflow policy that declares triggers is indexed by filename, trigger line, and headings. Its body loads only when a phrase selects it. A project policy is still loaded at boot by the existing project-policy rule. The index is ephemeral. It is rebuilt at load context, post-compaction recovery, and checkpoint re-affirmation.
 
 Note: always use the full phrase `"load context using AGENTS.md protocol"`. A bare `"load context"` loads the assistant's own hidden memory, not your `AGENTS.md`. Naming `AGENTS.md` is what makes the assistant read your protocol and your files. The README explains this under "Common instructions".
 
 ### How it works
 
-1. **Global Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`). It records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name. The filename is the lookup key.
+1. **User Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `<User AI Directory>/knowledge/` (default `~/.ai/knowledge/`). It records a reference index: paths, filenames, and apparent technical domains. Full text is read only when a task needs it. Keep each file to one domain with a descriptive name. The filename is the lookup key.
 2. **Active Policies: full load**: the AI loads the full text of every policy referenced in `ai-customization.md`. Policies govern behaviour. The AI cannot reliably map a task to a policy it has only seen by name, so policies are never index-only.
-3. **Project Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `ai/shared/project-knowledge/`. It records a reference index: paths, filenames, and apparent technical domains. These files can be large (for example historical repo-scan snapshots), so their full text is read only when a task requires it.
+3. **Project Knowledge: index only (Token Rationing)**: the AI uses the built-in glob and listing under `ai/knowledge/`. It records a reference index: paths, filenames, and apparent technical domains. These files can be large (for example historical repo-scan snapshots), so their full text is read only when a task requires it.
 
 ### Benefits
 
@@ -299,7 +299,7 @@ Note: always use the full phrase `"load context using AGENTS.md protocol"`. A ba
 
 ### The MoE analogy
 
-A Mixture-of-Experts model routes each token to a few experts. Total parameters stay resident. Active parameters per token stay low. It saves compute per token, not prompt tokens, and it costs memory and routing. The protocol uses the same routing idea for context. The boot set is the common policy plus the Active Expertise, while knowledge and skills are indexed and opened on demand. A trigger loads a global policy's body. Then a skill description match loads a skill body. The protocol's routing saves context tokens, not per-token compute. The router here is you, a trigger, or the Active Expertise, not a learned gate. A wrong route can miss a rule, so the common policy stays always on.
+A Mixture-of-Experts model routes each token to a few experts. Total parameters stay resident. Active parameters per token stay low. It saves compute per token, not prompt tokens, and it costs memory and routing. The protocol uses the same routing idea for context. The boot set is the common policy plus the Active Expertise, while knowledge and skills are indexed and opened on demand. A trigger loads a workflow policy's body. Then a skill description match loads a skill body. The protocol's routing saves context tokens, not per-token compute. The router here is you, a trigger, or the Active Expertise, not a learned gate. A wrong route can miss a rule, so the common policy stays always on.
 
 ### Boot-time staleness check
 
@@ -343,7 +343,7 @@ In the same transaction as the state files, every checkpoint also appends an ent
 One `"checkpoint"` runs every upkeep step, so you do not run them separately:
 
 - The three state files (one atomic write) and the daily diary.
-- One capture pass, then Project Knowledge, then Global Knowledge.
+- One capture pass, then Project Knowledge, then User Knowledge.
 - A report-only pass that flags stale items. It flags an `in-progress/` ticket with no live branch, and a `tickets/` file whose live tracker state is Done. It flags an executed plan left in `ai/plans/` and finished investigation evidence in the artifacts area. It also flags the per-store knowledge count at 50 or more. It flags knowledge files older than 90 days whose domain matches an active expertise. It flags a knowledge file with a missing header, a table, or more than 15 KB. The repair deletes. The checkpoint only reports.
 - A grouped summary in chat, one line per step.
 
@@ -390,7 +390,7 @@ Design documents live beside your code in `design-docs/`, with simple lowercase 
 - `delivery-ledger.md`
 - `adr-<nnn>-<short-description>.md`
 
-If you have not migrated yet, they live under `ai/shared/project-knowledge/` with a project token, for example `payment-gateway-app-prd.md`.
+If you have not migrated yet, they live under `ai/knowledge/` with a project token, for example `payment-gateway-app-prd.md`.
 
 At the start of each session, the AI checks for these documents and prompts you to create any that are missing. To write or update them, say `"update design documents"`; the AI proposes each change, challenges the design decisions, and shows a diff before it writes. It updates the delivery ledger when a design document changes, never at checkpoint.
 
@@ -398,7 +398,7 @@ At the start of each session, the AI checks for these documents and prompts you 
 
 Two procedures own the work. The `manage-issues` procedure module in the clone's `ai/procedures/` files, lists, closes, or reopens a ticket, and writes and reviews a plan on request. The `implement-plan` module delivers an approved plan. Each request ends at its own step: a ticket-only request does not cascade into planning, and a plan request does not open a branch.
 
-Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's directory is its status; an external ticket's state is its status. Create a ticket with `"file an issue"` using `ai/shared/project-knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
+Tickets live under `open/`, `in-progress/`, and `closed/`. A local ticket's directory is its status; an external ticket's state is its status. Create a ticket with `"file an issue"` using `ai/knowledge/issue-template.md`. Tickets may also live in an external tracker you have connected.
 
 An idea is a ticket with `IssueType: Idea`. File it with `"file an idea"`, grill it, then continue the normal steps or close it with a dated `Won't fix` note. The checkpoint discussed-idea line remains the backstop for an idea that is not yet filed.
 
@@ -434,7 +434,7 @@ The first release covers external ticket creation, plan-entry comments, close or
 
 - `"perform a codebase examination of <directory | git repo>"`
 - `"process my notes directory and remove the notes that are already implemented; for the ones that remain, add a short clarifying comment or a suggestion."`
-- `"process my plans directory and find all plans that are fully implemented. If there are any, extract the useful knowledge and save it under ai/shared/project-knowledge/."`
+- `"process my plans directory and find all plans that are fully implemented. If there are any, extract the useful knowledge and save it under ai/knowledge/."`
 - `"find any stale files under plans, artifacts, or notes and tell me about them without deleting anything."`
 - `"process the artifacts directory and remove any stale files."`
 - `"process my project knowledge and find any stale files, then update or remove them; where it helps, rename them with better, verbose kebab-cased names for easier indexing."`
@@ -481,7 +481,7 @@ The AI never signs its output as an AI, model, or harness, and never uses a gene
 
 1. Your project git identity (`git config user.name` / `user.email`).
 2. Your global `~/.gitconfig`.
-3. Your global settings file (`Name` and `Email`), for anyone who does not use git.
+3. Your user settings file (`Name` and `Email`), for anyone who does not use git.
 
 At bootstrap and at each `"load context"`, if no global `.gitconfig` exists, the AI offers to create one from the common policy template; if the repository's config is inadequate, it suggests fixing it. It never writes without your approval.
 
@@ -493,11 +493,11 @@ One policy in `ai/policies/ai-policy-common.md` (`Markdown Output`) governs ever
 
 Design documents live beside your code in `design-docs/`, never under `ai/`. The chain is notes, vision, PRD, HLD, LLD (with acceptance criteria), risk and gap analysis, ADRs, and the Delivery Ledger. A single repo keeps them at the project root; a multi-repo project root keeps the solution documents and a rollup at the root, and each component's documents in its own repo. Depth is proportional: small and medium work needs context plus acceptance criteria, while large and architectural work gets the full set. The AI indexes every `design-docs/` at startup, and again when you run post-compaction recovery.
 
-To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/shared/project-knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.
+To write or update a document, say `"update design documents"`, optionally with what it concerns, for example `"update design documents related to the payment gateway app"`. The AI writes in the location your project uses and never moves files between locations. If your documents are still under `ai/knowledge/`, say `"migrate design docs"` to move them; that trigger is the only cross-location mover, and migration is optional.
 
 ## 23. Knowledge File Standards and Repair
 
-Every file in `ai/shared/project-knowledge/` and `<Global User AI Directory>/global-knowledge/` (default `~/.ai/global-knowledge/`) starts with this header, as the first thing in the file:
+Every file in `ai/knowledge/` and `<User AI Directory>/knowledge/` (default `~/.ai/knowledge/`) starts with this header, as the first thing in the file:
 
 > **Knowledge file.** This file stands on its own. Keep the facts, rules, reasons, and checks that belong to it; remove bookkeeping and duplicates. Run `repair knowledge files` when it passes 15 KB.
 
@@ -525,7 +525,7 @@ Run it once after you upgrade. Add `global` if you keep global knowledge. The ch
 
 ### Team knowledge
 
-The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Knowledge Directory` in `ai-customization.md` to the local clone, and `Team AI Knowledge Repository` to the publish remote. The boot indexes `team-knowledge/` by filename only. It reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, team, then personal global.
+The team store is optional and lives in its own Git repository or read-only mount. Set `Team AI Directory` in `ai-customization.md` to the local clone, and `Team AI Knowledge Repository` to the publish remote. The boot indexes `knowledge/` by filename only. It reports `none` when unset, or `[PENDING]` and continues when the path is missing. At task start the order is project, then team, then user.
 
 Team lessons use the team frontmatter and the Context, Rule or Fix, Why, and Verify body, not the local knowledge header. They are Class A: names and infrastructure detail stay; secrets never do. The local sensitive-names list is not applied to team lessons. Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, dedupes by hash and title, writes the lesson on a branch, and opens a pull request. It never merges.
 
@@ -543,7 +543,7 @@ Skills can be part of any workflow, but they are not the workflow. A project tha
 
 - **Global**: `ai/skills/` in the workflow clone. These skills travel with the workflow.
 - **Project**: `ai/skills/` at your project root. These are local to the project.
-- **Team**: `<Team AI Knowledge Directory>/skills/` when the team store is configured. These skills are shared and reviewed by the team.
+- **Team**: `<Team AI Directory>/skills/` when the team store is configured. These skills are shared and reviewed by the team.
 - A project skill replaces a team skill. A team skill replaces a global skill. The AI reports the override.
 
 ### The package shape
@@ -584,7 +584,7 @@ The protocol does not scan a skill for trust. You are responsible for the source
 
 ### Team skills
 
-The team skills root is optional. Set `Team AI Knowledge Directory` in `ai-customization.md`. The AI indexes `skills/` with the same package shape and one shared 16 KB index. The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Precedence is project, then team, then global. A description match loads the body only. A helper still needs explicit approval. To contribute, copy the package into `skills/` and open a PR. One reviewer merges. To retire, remove it in a reviewed PR. Git history is the record.
+The team skills root is optional. Set `Team AI Directory` in `ai-customization.md`. The AI indexes `skills/` with the same package shape and one shared 16 KB index. The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify review at boot. Precedence is project, then team, then user, then workflow. A description match loads the body only. A helper still needs explicit approval. To contribute, copy the package into `skills/` and open a PR. One reviewer merges. To retire, remove it in a reviewed PR. Git history is the record.
 
 ### Maintenance
 
