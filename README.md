@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.4.0 (2026-11-25).** The team knowledge store now keeps its lessons under `team-knowledge/`, matching the other two knowledge scopes. Read the announcement: [docs/announcements/v7.4.0.md](docs/announcements/v7.4.0.md). |
+| **v7.5.0 (2026-11-25).** Every Critical, Major, and Minor review finding now blocks approval through one gate owned by the code-review policy. Read the announcement: [docs/announcements/v7.5.0.md](docs/announcements/v7.5.0.md). |
 
 # Simple AI Workflow
 

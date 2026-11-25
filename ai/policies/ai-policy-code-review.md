@@ -36,7 +36,7 @@ Activated by the run-peer-review procedure module in the clone's `ai/procedures/
 A review is not complete when only the new or changed lines have been read. Default behavior, for any review including a PR review:
 
 1. **Review the diff.** Read the literal added, removed, and changed lines.
-2. **Examine the full file(s) or module(s) the diff touches.** Pre-existing bugs, dead code, or policy violations sitting next to the change are in scope even if this change did not introduce them. Report them separately from the diff findings. They do not block this change's verdict, but they must be surfaced, not skipped.
+2. **Examine the full file(s) or module(s) the diff touches.** Pre-existing bugs, dead code, or policy violations sitting next to the change are examined even if this change did not introduce them. Report them separately from the diff findings. See the blocking review gate for the scope rule.
 3. **Check live or runtime state relevant to what the code represents, when access and tooling allow.** Static text cannot show drift between declared and actual state. Examples by domain:
    - Infrastructure as code: deployed resource configuration, network topology, DNS records, private endpoints, current firewall or NSG rules.
    - Database changes: the live schema, not just the migration script.
@@ -71,8 +71,21 @@ This discipline applies across domains. The live-state and telemetry sources var
 
 - **Critical**: blocks commit. Security vulnerability, data loss risk, broken core functionality.
 - **Major**: fix before commit. Policy violation, logic error, significant quality issue.
-- **Minor**: fix when convenient. Style, naming, minor duplication.
+- **Minor**: fix before approval. Style, naming, minor duplication.
 - **Suggestion**: optional. Refactor idea, alternative approach.
+
+### Blocking Review Gate
+
+- Treat every Critical, Major, and Minor finding as blocking.
+- Keep Suggestion optional; never relabel a defect as a Suggestion.
+- Keep no cap and no demotion.
+- Stay read-only; the author fixes every finding.
+- Define the diff scope as the changed lines.
+- Define the reviewed-file scope as the changed code paths in the touched files.
+- Define the ticket scope as the behaviors named in the ticket.
+- A finding inside the diff scope, the reviewed-file scope, or the ticket scope blocks approval; a valid finding inside the diff scope or the reviewed-file scope but outside the ticket scope defers to a new ticket only with the user's explicit approval, and the verdict stays CHANGES REQUESTED until then.
+- A finding outside all three scopes is surfaced and does not block the verdict.
+- Close a false positive only by an evidence-backed rebuttal the reviewer accepts, or by the user's decision after the evidence.
 
 ---
 

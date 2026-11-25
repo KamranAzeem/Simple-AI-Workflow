@@ -29,7 +29,7 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 12 open and 138 closed as of 2026-11-25.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 12 open, 1 in-progress, and 138 closed as of 2026-11-25.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
 - `ai/shared/project-knowledge/`: 14 durable project lessons, the issue template, and this map.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
@@ -50,16 +50,16 @@
 
 ### Plan-quality surface
 
-- `ai/policies/ai-policy-issue-management.md`: the `### Plan` rules, the `## Close Sequence` requirement, the critical-and-major review gate, and the work-item invariants.
+- `ai/policies/ai-policy-issue-management.md`: the `### Plan` rules, the `## Close Sequence` requirement, the uniform Critical, Major, and Minor gate, and the work-item invariants.
 - `ai/policies/ai-policy-code-review.md`: the reviewer role, the Critical/Major/Minor/Suggestion severity scale, and the procedural-completeness dimension.
 - `ai/policies/ai-policy-design-docs.md`: the proportional-depth rule.
-- `ai/procedures/manage-issues.md`, `implement-plan.md`, `create-handoff.md`: the enforcement points that currently name only Critical and Major.
+- `ai/procedures/manage-issues.md`, `implement-plan.md`, `create-handoff.md`: the enforcement points that cite the blocking review gate.
 - `docs/workflow-guide.md`: the user-facing plan, review, and close-sequence descriptions.
 - `tests/test-issue-policy.sh`: the existing issue/plan/close-sequence assertions. Extend it to avoid a new test count.
 - `tests/test-docs-audit.sh`: the docs assertions, including the two-step approval sentence.
 - `design-docs/protocol-decisions.md`: the ADR store for the plan-quality change.
 - `ai/shared/project-knowledge/protocol-verification-toolchain.md`: the quality gate and the verification commands.
-- The plan-quality ticket chooses B: the code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is pending.
+- The code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is live.
 
 ### Handoff surface
 

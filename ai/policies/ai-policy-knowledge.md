@@ -139,6 +139,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Convert every table row to a flat bullet; preserve a row that has no home and report it.
 - Add no new claim; report a correction.
 - Run an independent review of the old and new files and require an `APPROVED` verdict.
+- Apply the blocking review gate in `ai-policy-code-review.md`.
 - On `CHANGES REQUESTED`, fix and re-review; if it cannot pass without content loss, leave the old file unchanged and report.
 - Require no human approval beyond the trigger; the `repair knowledge files` trigger is the approval.
 - Replace a file only after verification and an `APPROVED` review.

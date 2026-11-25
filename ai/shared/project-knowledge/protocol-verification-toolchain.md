@@ -97,4 +97,4 @@ Run these checks from the project root after a change to the protocol, a policy,
 - `shellcheck` is installed at `/usr/bin/shellcheck`; run it on changed shell scripts.
 - The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.
 - A fixture that asserts a repository count must derive it from the live tree; a hardcoded count goes stale when a new test lands.
-- The all-findings rule is a proposal; the plan-quality ticket chooses the uniform gate, and the current policy fixes only Critical and Major until the plan lands.
+- The uniform Critical, Major, and Minor gate is live.

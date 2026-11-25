@@ -21,15 +21,15 @@
 [2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file.
 [2026-11-19] Released v6.10.0 and published its GitHub release: the built-in-first boot, the read-only index helper, and the ADR entry are live; master `64b0c61`; the feature branch is deleted.
 [2026-11-19] Ran the full codebase examination over `docs/`, `tests/`, and `support-files/`; the ticket `ai/issues/closed/codebase-examination-docs-tests-support.md`; F1-F7, with F5 withdrawn.
-[2026-11-19] Fixed the examination findings and released v6.10.1: the settings template, the support README, the fallback/archive/skills tests, the helper archive pattern, and the ADR symlink note; master `df54e07`; the fix branch is deleted.
+[2026-11-19] Released v6.10.1: settings template, support README, fallback/archive/skills tests, helper archive, ADR symlink note. Full text in the 2026-11-25 diary.
 [2026-11-19] Planned the user-global skills root: `ai/plans/user-global-skills-root.md`; review-51 CHANGES REQUESTED, review-52 APPROVED; the implementation is next.
 [2026-11-19] Set `Default Shell Path: /usr/bin/bash` and made the Kilo bash permissions `*python3 *`, `*python *`, and `*` all ask.
 [2026-11-19] Fixed GitHub #11: the boot builds its index with the built-in reader, glob, and search; the optional helper is off the boot path; the proof reports `index-source=builtin`; review-57 APPROVED.
-[2026-11-19] Updated the index contract, support README, common policy, project knowledge, validator anchors, four docs, README banner, v6.10.2 announcement, and the ADR supersession; fixed the helper's empty-glob and shadowed-trigger cases.
+[2026-11-19] Updated the index contract, common policy, knowledge, validator anchors, docs, banner, v6.10.2 announcement, and ADR; fixed helper edge cases. Full text in the 2026-11-25 diary.
 [2026-11-19] Verified the fix: suite 25/25, protocol 8/8, authoring and triggers PASSED, markdownlint 0, shellcheck 0; counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors.
 [2026-11-19] Merged GitHub #11 to master as `2f3a081`, tagged `v6.10.2`, published the GitHub Release, deleted the fix branch, and closed the issue.
 [2026-11-19] Post-merge verification on master: suite 25/25, protocol 8/8, counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; the plan entry is on the issue and the plan file is removed.
-[2026-11-19] Documented the opt-in report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; corrected the rule wording, numbering, and checkpoint placement; review-61 APPROVED; suite 25/25, reference test PASS, markdownlint 0.
+[2026-11-19] Documented the report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; review-61 APPROVED; suite 25/25, markdownlint 0. Full text in the 2026-11-25 diary.
 [2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.
 [2026-11-19] Merged and closed GitHub #12 after the earlier checkpoint; the report-anomalies docs are live; no release.
 [2026-11-19] GitHub #8 delivered: backup scripts, 17-case test, support README restructure, ADR, v6.11.0 announcement; review-63 APPROVED; suite 26/26. Full text in the 2026-11-25 diary.
@@ -37,7 +37,7 @@
 [2026-11-19] Fixed the global-settings fixture to derive the test count from `tests/test-*.sh`; the post-merge suite is green at 26/26.
 [2026-11-19] Dropped the user-global skills root: the third root adds a second meaning of global; the ticket is closed with the plan attached, the plan file is removed, and the two-root model stays.
 [2026-11-19] Pruned the open issue backlog: 13 closed, 2 merged, 8 kept; the open tracker is 8.
-[2026-11-19] Fixed the sync-agents-md.ps1 -WhatIf migration bug; added `tests/verify-powershell-scripts.ps1`; the VM run passed every check; the host suite 26/26, the protocol validator, and markdownlint green; the issue is closed with the plan attached.
+[2026-11-19] Fixed sync-agents-md.ps1 -WhatIf; added `tests/verify-powershell-scripts.ps1`; suite 26/26, validator, markdownlint; issue closed. Full text in the 2026-11-25 diary.
 [2026-11-19] Merged the PowerShell scripts fix to trunk and removed the item from the backlog; the sync `-WhatIf` guard and the Windows verification script are live; suite 26/26, protocol 8/8, markdownlint 0.
 [2026-11-19] Landed the backlog prune and the skills-root drop as their own change: 15 tickets closed, 2 merged, 8 kept, and the lesson on the global-versus-user split added.
 [2026-11-19] Repaired two post-merge defects: an MD044 proper-name hit in a progress entry and three empty mandatory directories removed by a stash round-trip.
@@ -86,11 +86,11 @@
 [2026-11-22] Review-85 APPROVED; suite 30/30, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 18 docs; the replace-Cline ticket closed; no release.
 [2026-11-22] Closed the docs audit ticket with the plan attached; removed the plan file; the slide deck is next.
 [2026-11-22] Merged the docs audit and the README origin to master, deleted the branch, and pushed; no release; 18 docs; 30/30; 8 open, 0 in-progress.
-[2026-11-22] Captured the slide deck requirements: the Architect narrative, the full feature coverage plus a list slide, the team/no-team split, the knowledge and skills diagram, the pair-programming objective, local Markdown first, and the manual preview before closing.
+[2026-11-22] Slide deck requirements: Architect narrative, full coverage, team split, knowledge/skills diagram, local Markdown first, manual preview. Full text in the 2026-11-25 diary.
 [2026-11-22] Opened feature/slide-deck-refresh, moved the slide deck ticket to in-progress, and wrote the plan with the 22-slide storyboard, the 8 assets, the preview, the renderer, the 31st test, and the docs count updates.
 [2026-11-22] Plan reviews 86-89 APPROVED; the first joint review found the axe crop, small type, the "every session" overclaim, the tree layout, the proof heading, and the multi-assistant wording; the fixes are applied.
 [2026-11-22] 28-slide deck and assets delivered: axe photo, 7 diagrams, reveal.js preview, headless-Chrome renderer, slides fixture, 31-test updates; suite 31/31; review-93 APPROVED. Full text in the 2026-11-25 diary.
-[2026-11-22] Expanded the slide deck to 37 main slides plus a 15-slide full policy and procedure catalog; added the AI ladder, the two root files, compliance, quality, token discipline, Git safety, 25 SVGs, 1.6rem type, and 78/88vh diagrams.
+[2026-11-22] Expanded the deck to 37 main slides plus a 15-slide catalog; added the AI ladder, root files, compliance, quality, token, Git safety, 25 SVGs, 1.6rem type. Full text in the 2026-11-25 diary.
 [2026-11-22] Peer reviews 90-93: 90 CHANGES REQUESTED, 91-93 APPROVED; fixed the team and close wording, the out-of-band cases, tree continuation lines, dense-diagram type, and the knowledge and team gate diagrams.
 [2026-11-22] Final deck validation: suite 31/31, protocol 8/8, markdownlint 0, shellcheck 0, 25 SVGs valid, 52 slides rendered; Gate 1 review, the Google Slides update, and Gate 2 remain.
 [2026-11-22] Wrote the project knowledge lesson on the slide deck visual system; the project store is 14 lessons plus the template.
@@ -101,7 +101,7 @@
 [2026-11-24] Closed the ticket with the plan attached; review-94 CHANGES REQUESTED, review-95 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
 [2026-11-24] Released v7.2.1 and published the GitHub Release; the announcement and README banner are live.
 [2026-11-24] Restored the empty ai/pending directory after the stash round-trip and re-validated before delivery; the release-practices entry stays at "prepared" because post-merge commits are forbidden.
-[2026-11-24] Delivered the notes documentation and slides batch: the one-shot guidance, the ticket/issue/support request table, the no-vibe framing, the blackbox state section, the wave-surfer first slide, the skills layer, and the compaction phenomenon.
+[2026-11-24] Delivered notes and slides: one-shot guidance, ticket/issue/support table, no-vibe framing, blackbox state, wave-surfer, skills layer, compaction. Full text in the 2026-11-25 diary.
 [2026-11-24] Closed the seven Documentation tickets with the plan attached; review-96 CHANGES REQUESTED, review-97 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
 [2026-11-24] The two Feature tickets, idea intake and the Kanban skill, remain open; no release.
 [2026-11-24] Delivered the read-only Kanban example skill at `ai/skills/kanban-board/`; the guide Section 24 and the deck appendix document it.
@@ -132,14 +132,14 @@
 [2026-11-24] Merged the customization-tracking fix 868c816: tracked customization, loader acceptance, guide and ADR; review-116 APPROVED.
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
 [2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
-[2026-11-24] Investigated `slide-deck-review-speed`: the audit covers HTML overflow in 2.97s, the SVGs meet the 24-unit floor, and review-115 used changed-only inspection; trimmed the ticket to S and dropped Playwright and the browser-in-suite check.
+[2026-11-24] Investigated `slide-deck-review-speed`: audit 2.97s, 24-unit SVG floor, review-115 changed-only; trimmed to S; dropped Playwright. Full text in the 2026-11-25 diary.
 [2026-11-24] Recommended the presentation split (policy, procedure, skill) and deferred presentation-policy and slide-deck-review-speed at the user's request; recorded layout, type-control, and build-slides-html.sh; no plan or branch.
 [2026-11-24] Attached the executed config plan to its closed ticket under `## Implementation Plan`, verified the copy, and deleted the loose plan file; `ai/plans/` now holds only `.gitkeep`.
 [2026-11-24] Filed the team-knowledge directory and repository naming ticket (P3/M) with the rename scope, the live file list, and the migration questions.
-[2026-11-24] Grilled the ticket to seven decisions: team-named repository, sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, and minor release; recorded the decisions and the local fixture.
+[2026-11-24] Grilled the team-named repo: sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, minor release. Full text in the 2026-11-25 diary.
 [2026-11-24] Fixed the external team fixture lesson with the team frontmatter and body; uncommitted there; the skills root was left empty.
 [2026-11-24] Wrote ai/plans/team-knowledge-directory-and-repo-naming.md (220 lines); ran 13 reviews review-117 to review-129; the plan was not approved (CHANGES REQUESTED, 3 Major) after a 96-minute review loop; no branch or commit.
-[2026-11-25] Renamed the team store to team-knowledge/ across the policy, publish procedure, boot index, docs, deck note, diagram, fixture, guard, validator, and ADR; split the naming convention and the report-only check to team-repository-naming-convention.md.
+[2026-11-25] Renamed the team store to team-knowledge/ across policy, publish, boot, docs, deck, fixture, validator, and ADR; split the naming check. Full text in the 2026-11-25 diary.
 [2026-11-25] Cut the team-knowledge plan from 220 lines to an S note; review-130 APPROVED; implemented with review-131 APPROVED; suite 31/31, validator 8/8, markdownlint 0 on 14 files, shellcheck 0, audit 59/59; slide 40 PNG checked.
 [2026-11-25] Prepared v7.4.0 on feature/team-knowledge-directory-rename; the release text is approved; checkpointed the gate and stash restore; no merge/tag.
 [2026-11-25] Committed the parked backlog and five follow-up tickets on chore/commit-backlog-and-release-status; v7.4.0, v7.3.0, and v7.2.1 marked published; suite 31/31, validator 8/8, markdownlint 0; no release.
@@ -151,3 +151,5 @@
 [2026-11-25] Examined the repo and filled plan-quality-rules.md with the uniform review gate (B); added the codebase skeleton map; recorded the handoff proposal; no implementation.
 [2026-11-25] Planned plan-quality-rules: the broad plan ran six review rounds and was cut to the core uniform review gate; review-143 APPROVED; deferred rules in plan-quality-follow-up-rules.md.
 [2026-11-25] Recorded the review-sequencing lesson: bind the verdict to the artifact hash, approve only with no open findings, and run one delta verification after fixes.
+[2026-11-25] Committed the planning records and bound the plan approval with review-144; moved plan-quality-rules.md to in-progress.
+[2026-11-25] Implemented and reviewed the core uniform review gate; closed plan-quality-rules.md with the plan attached; review-145 APPROVED; suite 31/31, validator 8/8, index 25/16/54; v7.5.0 pending.

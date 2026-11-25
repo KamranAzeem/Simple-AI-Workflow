@@ -18,6 +18,10 @@ LEARNING="$ROOT/docs/example-learning-session-runbook.md"
 COMPARED="$ROOT/docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md"
 GUIDE="$ROOT/docs/workflow-guide.md"
 README="$ROOT/README.md"
+ANNOUNCE="$ROOT/docs/announcements/v7.5.0.md"
+DECISIONS="$ROOT/design-docs/protocol-decisions.md"
+TOOLCHAIN="$ROOT/ai/shared/project-knowledge/protocol-verification-toolchain.md"
+MAP="$ROOT/ai/shared/project-knowledge/codebase-skeleton-map-simple-ai-workflow.md"
 
 fail=0
 
@@ -140,6 +144,32 @@ present "$GUIDE" "dated \`Won't fix\` note" "guide states the idea close"
 present "$GUIDE" "checkpoint discussed-idea line remains the backstop" "guide keeps the checkpoint backstop"
 present "$GUIDE" "The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's \`## Close Sequence\`" "guide states the two-step approval"
 present "$GUIDE" "This guide describes the protocol. The protocol modules" "guide states the protocol modules are authoritative"
+present "$GUIDE" "- **Minor**: fix before approval." "guide makes Minor blocking"
+present "$GUIDE" "Every Critical, Major, and Minor finding blocks approval." "guide states the uniform gate"
+present "$GUIDE" "an expectation, not a cap" "guide calls the round range an expectation"
+absent "$GUIDE" "fix when convenient" "guide drops the old Minor wording"
+exists "docs/announcements/v7.5.0.md"
+present "$ANNOUNCE" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.5.0" "announcement records the release URL"
+present "$README" "docs/announcements/v7.5.0.md" "README points at the release announcement"
+present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
+present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
+present "$DECISIONS" "This supersedes the 2026-10-28 rule that fixes only Critical and Major." "ADR store records the supersession"
+present "$TOOLCHAIN" "The uniform Critical, Major, and Minor gate is live." "toolchain note says the gate is live"
+absent "$TOOLCHAIN" "The all-findings rule is a proposal" "toolchain note drops the proposal caveat"
+present "$MAP" "the uniform Critical, Major, and Minor gate" "map names the uniform gate"
+absent "$MAP" "the critical-and-major review gate" "map drops the old gate name"
+absent "$MAP" "currently name only Critical and Major" "map drops the old enforcement wording"
+absent "$MAP" "the implementation is pending" "map drops the pending wording"
+
+if git -C "$ROOT" rev-parse --verify master >/dev/null 2>&1; then
+    if git -C "$ROOT" diff --diff-filter=A --name-only master...HEAD | grep -q '^tests/test-.*\.sh$'; then
+        fail_case "no new test file is added"
+    else
+        pass "no new test file is added"
+    fi
+else
+    pass "no master ref; added-test check skipped"
+fi
 
 order="$(awk '/\| Ticket \|/{t=NR} /\| Issue \|/{i=NR} /\| Support request \|/{s=NR} END{if (t && i && s && t < i && i < s) print "ok"; else print "bad"}' "$GUIDE")"
 if [ "$order" = "ok" ]; then

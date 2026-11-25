@@ -19,6 +19,6 @@
 7. **STEP-BACKUP-SETTINGS**: Write the manifest and the project copies to `ai/artifacts/settings-repair-<date>/`, and copy the global files to `<Global User AI Directory>/settings-repair-backups/<date>/`.
 8. **STEP-WRITE-SETTINGS-CANDIDATE**: Write the candidate: consolidate, apply the canonical keys, split `Identity` from `Profile`, verify the tools, trim, redact, and drop the garbage.
 9. **STEP-VERIFY-SETTINGS-CANDIDATE**: Verify every item, the identity keys, the canonical keys, the verified tools, the redaction, the size, and that no other store changed.
-10. **STEP-REVIEW-SETTINGS-REPAIR**: Run the independent review and require an `APPROVED` verdict. On `CHANGES REQUESTED`, fix and re-review.
+10. **STEP-REVIEW-SETTINGS-REPAIR**: Run the independent review and require an `APPROVED` verdict. Load `ai-policy-code-review.md` and apply its blocking review gate. On `CHANGES REQUESTED`, fix and re-review.
 11. **STEP-REPLACE-SETTINGS-REPAIR**: Replace only the files with a complete manifest and an `APPROVED` review. Leave the other files unchanged, and restore the backup on failure.
 12. **STEP-REPORT-SETTINGS-REPAIR**: Report the files, the merges, the trims, the tool changes, the preserved items, the manifest and backup paths, the counts, and any overage. Delete the temporary candidate.

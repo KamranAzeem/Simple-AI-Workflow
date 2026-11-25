@@ -87,11 +87,10 @@ Apply these rules to every work item.
 - Validate design and architecture decisions with the user during planning.
 - Run independent peer review on every plan automatically.
 - Use the severity definitions in the code-review contract (`## Severity Classifications`).
-- Fix every Critical finding.
-- Fix every Major finding.
+- Apply the blocking review gate in `ai-policy-code-review.md` to the plan review.
 - Re-review after each fix.
 - Announce the plan ready only after an `APPROVED` verdict.
-- Implement only a plan with no Critical or Major finding.
+- Implement only a plan that passed the blocking review gate.
 - Record each review round and verdict in the plan's Peer Review Log.
 
 ### Work-Item Invariants
@@ -102,7 +101,7 @@ Apply these rules to every work item.
 - Allow several commits on the branch; deliver one squash commit to trunk.
 - Run the terminal gate before any merge claim: resolve the base ref from the plan, confirm the branch is at least one commit ahead, and confirm the tree is clean.
 - Report a zero-commit branch or a dirty tree as unfinished work.
-- Fix every Critical and Major finding from the implementation peer review before the commit.
+- Apply the blocking review gate in `ai-policy-code-review.md` to the implementation peer review before the commit.
 - Attach the plan to the ticket before deleting the plan file.
 - Write the checkpoint on the branch before the commit.
 - Close the ticket with the merged change: move a local ticket to `closed/` in the branch commit, and close an external ticket when the merge lands.

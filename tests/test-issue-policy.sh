@@ -13,6 +13,13 @@ MANAGE="$ROOT/ai/procedures/manage-issues.md"
 IMPLEMENT="$ROOT/ai/procedures/implement-plan.md"
 LOADCTX="$ROOT/ai/procedures/load-context.md"
 TEMPLATE="$ROOT/ai/shared/project-knowledge/issue-template.md"
+CODEREVIEW="$ROOT/ai/policies/ai-policy-code-review.md"
+HANDOFF="$ROOT/ai/procedures/create-handoff.md"
+REPAIR_KNOWLEDGE="$ROOT/ai/procedures/repair-knowledge-files.md"
+REPAIR_SETTINGS="$ROOT/ai/procedures/repair-global-settings.md"
+DESIGN="$ROOT/ai/policies/ai-policy-design-docs.md"
+KNOWLEDGE="$ROOT/ai/policies/ai-policy-knowledge.md"
+GLOBALSET="$ROOT/ai/policies/ai-policy-global-settings.md"
 fail=0
 
 present() {
@@ -62,6 +69,39 @@ if awk '/^## Triggers/{on=1;next} /^## /{on=0} on' "$MANAGE" | grep -qE 'new ide
 else
     printf 'PASS the idea close variants stay in the H1\n'
 fi
+
+present "$CODEREVIEW" "### Blocking Review Gate" "code-review policy owns the blocking gate"
+present "$CODEREVIEW" "- **Minor**: fix before approval." "code-review policy makes Minor blocking"
+present "$CODEREVIEW" "Treat every Critical, Major, and Minor finding as blocking." "gate blocks every severity"
+present "$CODEREVIEW" "Keep Suggestion optional; never relabel a defect as a Suggestion." "gate keeps Suggestion optional"
+present "$CODEREVIEW" "Keep no cap and no demotion." "gate has no cap and no demotion"
+present "$CODEREVIEW" "Close a false positive only by an evidence-backed rebuttal the reviewer accepts, or by the user's decision after the evidence." "gate owns the false-positive path"
+present "$CODEREVIEW" "A finding inside the diff scope, the reviewed-file scope, or the ticket scope blocks approval; a valid finding inside the diff scope or the reviewed-file scope but outside the ticket scope defers to a new ticket only with the user's explicit approval, and the verdict stays CHANGES REQUESTED until then." "gate orders the scope outcomes"
+present "$CODEREVIEW" "A finding outside all three scopes is surfaced and does not block the verdict." "gate surfaces the out-of-scope finding"
+present "$CODEREVIEW" "Stay read-only; the author fixes every finding." "gate keeps the reviewer read-only"
+present "$CODEREVIEW" "the changed lines" "gate defines the diff scope"
+present "$CODEREVIEW" "the changed code paths in the touched files" "gate defines the reviewed-file scope"
+present "$CODEREVIEW" "the behaviors named in the ticket" "gate defines the ticket scope"
+present "$CODEREVIEW" "See the blocking review gate for the scope rule." "pre-existing findings point at the gate"
+present "$CODEREVIEW" "diff scope" "gate names the diff scope"
+present "$CODEREVIEW" "reviewed-file scope" "gate names the reviewed-file scope"
+present "$CODEREVIEW" "ticket scope" "gate names the ticket scope"
+absent "$CODEREVIEW" "do not block this change's verdict" "old non-blocking sentence is gone"
+absent "$CODEREVIEW" "fix when convenient" "old Minor wording is gone"
+
+for f in "$ISSUE" "$MANAGE" "$IMPLEMENT" "$HANDOFF" "$REPAIR_KNOWLEDGE" "$REPAIR_SETTINGS" "$DESIGN" "$KNOWLEDGE" "$GLOBALSET"; do
+    base="$(basename "$f")"
+    present "$f" "blocking review gate" "$base cites the blocking review gate"
+    present "$f" "ai-policy-code-review.md" "$base names the code-review policy"
+done
+
+for f in "$ISSUE" "$MANAGE" "$IMPLEMENT" "$HANDOFF"; do
+    base="$(basename "$f")"
+    absent "$f" "Critical and Major finding" "$base drops the Critical and Major list"
+    absent "$f" "Critical or Major finding" "$base drops the Critical or Major list"
+    absent "$f" "Fix every Critical finding." "$base drops the Critical-only rule"
+    absent "$f" "Fix every Major finding." "$base drops the Major-only rule"
+done
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: issue-management plug-in fixture."

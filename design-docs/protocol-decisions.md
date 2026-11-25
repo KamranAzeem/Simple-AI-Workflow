@@ -1412,3 +1412,11 @@ Consequences: the `.gitignore` entry is removed from the workflow repository; lo
 ## 2026-11-24: The team store directory is team-knowledge
 
 The team store keeps one flat lesson per file under `team-knowledge/`, matching `global-knowledge/` and `project-knowledge/`. The filename stays the id. This supersedes only the `lessons/` location clause of the 2026-11-22 flat-lessons decision; the flat-file and filename-id rules stand. The repository naming convention and the report-only check are a separate decision.
+
+## 2026-11-25: The code-review policy owns the uniform blocking gate
+
+The code-review policy owns one blocking gate: every Critical, Major, and Minor finding is fixed before approval, with no cap and no demotion; Suggestion stays optional; the reviewer stays read-only. The gate defines the diff scope as the changed lines, the reviewed-file scope as the changed code paths in the touched files, and the ticket scope as the behaviors named in the ticket. A finding inside any scope blocks approval; a valid finding outside the ticket scope but inside the diff or reviewed-file scope defers only with the user's explicit approval. The issue policy, the procedure layer, the design, knowledge, and global-settings policies, and the guide cite the gate. This supersedes the 2026-10-28 rule that fixes only Critical and Major.
+
+## 2026-11-25: The core gate ships alone
+
+The plan template, the assertion floor, the proportional-depth alignment, and the clean-tree policy are deferred to a separate follow-up ticket; this change carries only the uniform gate. The broad plan ran six review rounds on the deferred rules, so the core gate ships alone.

@@ -254,7 +254,7 @@ The AI immediately switches to a **Strict Peer Reviewer** role. It does not writ
 
 ### Why multiple review rounds are normal
 
-The AI reviews the **full file set** on every pass, not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality.
+The AI reviews the **full file set** on every pass, not just the latest diff. This means it can surface issues that were present before your fix, newly introduced issues, and patterns that only become visible after earlier findings are resolved. This is fundamentally different from diff-based automated review tools (like GitHub Copilot PR review), which only see the new diff on each push and therefore require many more rounds to converge. Expect 2–4 rounds for a thorough review; this is the intended workflow, not a sign of poor code quality. This is an expectation, not a cap.
 
 ### Compared to GitHub Copilot PR reviewer
 
@@ -268,10 +268,12 @@ Say `"done reviewing"`, get an **APPROVED** verdict, make a commit, or, for a PR
 
 - **Critical**: blocks commit (security, data loss, broken functionality)
 - **Major**: fix before commit (policy violations, logic errors)
-- **Minor**: fix when convenient (style, naming)
+- **Minor**: fix before approval.
 - **Suggestions**: optional improvements
 - **Not Checked**: what was out of scope or not verified (other files, live telemetry, and so on), stated plainly rather than omitted
 - **Verdict**: APPROVED or CHANGES REQUESTED
+
+Every Critical, Major, and Minor finding blocks approval. Suggestion stays optional, and the gate has no cap and no demotion.
 
 ## 13. Token Rationing & JIT Context Loading
 

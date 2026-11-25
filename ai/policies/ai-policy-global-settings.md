@@ -93,6 +93,7 @@ Non-normative example of the canonical structure:
 - Stop a dry run after the manifest report.
 - Verify no item is lost, the secrets are redacted, the identity keys are intact, and the tools are verified.
 - Run the independent review and require `APPROVED`.
+- Apply the blocking review gate in `ai-policy-code-review.md`.
 - Fix every finding and re-review.
 - Leave a file unchanged when it cannot pass without content loss.
 - Replace only an approved file.

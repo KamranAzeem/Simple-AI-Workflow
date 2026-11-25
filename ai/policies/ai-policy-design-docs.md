@@ -47,6 +47,7 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 
 - Documents form a chain; each feeds the next: notes, vision, PRD, HLD, LLD with acceptance criteria, risk and gap analysis, ADRs, and the delivery ledger.
 - Work one document at a time. Before creating the next, run a gap analysis and peer review on the existing ones and resolve every finding.
+- Apply the blocking review gate in `ai-policy-code-review.md` to that peer review.
 - Never skip from notes or vision to implementation.
 
 ## Requirement Gathering
