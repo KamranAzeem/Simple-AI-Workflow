@@ -1428,3 +1428,11 @@ The issue policy owns one plan template with the assertion floor: each acceptanc
 ## 2026-11-25: The checkpoint report shows the current position
 
 The checkpoint report prints a `Current position` block before the transaction log. `Next up` lists the active item first, then the remaining open items from `ai/state/next-steps.md`; it lists all when ten or fewer, otherwise the active item plus a count and the `next-steps.md` pointer. `Last active` names the newest progress entry. The transaction log remains the delta, and the state files remain canonical.
+
+## 2026-11-25: Review verdicts bind to the artifact hash
+
+A review verdict binds to the reviewed artifact's SHA-256. After fixes, one delta verification covers the changes. A post-approval edit invalidates the approval and needs a new hash and a delta verification. A new post-approval finding becomes a follow-up ticket unless it is a regression. The existing blocking gate owns the zero-open rule.
+
+Context: a verdict could approve one revision while a later edit shipped without a matching verification, and the sequencing rules lived only in a verification note.
+
+Consequences: the code-review policy owns the operative rules; the ADR is the decision record; the verification runbook keeps the commands and checks, not a second copy.

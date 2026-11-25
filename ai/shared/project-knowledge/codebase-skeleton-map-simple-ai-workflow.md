@@ -29,7 +29,7 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 11 open, 0 in-progress, and 141 closed as of 2026-11-25.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 11 open, 0 in-progress, and 142 closed as of 2026-11-25.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
 - `ai/shared/project-knowledge/`: 14 durable project lessons, the issue template, and this map.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
@@ -57,9 +57,9 @@
 - `docs/workflow-guide.md`: the user-facing plan, review, and close-sequence descriptions.
 - `tests/test-issue-policy.sh`: the existing issue/plan/close-sequence assertions. Extend it to avoid a new test count.
 - `tests/test-docs-audit.sh`: the docs assertions, including the two-step approval sentence.
-- `design-docs/protocol-decisions.md`: the ADR store for the plan-quality change.
-- `ai/shared/project-knowledge/protocol-verification-toolchain.md`: the quality gate and the verification commands.
-- The code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is live.
+- `design-docs/protocol-decisions.md`: the ADR store for the plan-quality and review-sequencing changes.
+- `ai/shared/project-knowledge/protocol-verification-toolchain.md`: the verification commands and caveats.
+- The code-review policy owns a uniform Critical, Major, and Minor gate and the review-verdict binding rules; the implementation is live.
 - The plan template, assertion floor, depth, and clean-tree gate are live. The follow-up ticket is closed.
 
 ### Handoff surface

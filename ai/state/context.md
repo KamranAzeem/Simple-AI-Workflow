@@ -14,23 +14,23 @@
 
 ## Current Status
 
-- **Milestone**: v7.6.1 is live; the checkpoint Current position block is live; no active implementation.
+- **Milestone**: v7.6.2 is implemented and reviewed; the review-sequencing rules are policy/ADR-owned; v7.6.2 ship is next.
 - **Team knowledge**: the rename to `team-knowledge/` is live; the repository naming convention was dropped as Won't fix; the in-repo layout is currently `team-knowledge/` and its sibling `skills/`.
 - **Validator**: 8/8; authoring passes; suite 31/31; 25 policies, 16 procedures, 54 triggers, 0 conflicts, 0 errors.
 - **State files**: shared budget 30,720 bytes; today's file 2026-11-25 exists; twenty-eight progress items condensed.
 - **Project knowledge**: 16 files (14 lessons, the template, the codebase map); global knowledge 28 files; both under the 50-file threshold.
-- **Project issues**: 11 open, 0 in-progress; plan-quality, the follow-up, and the checkpoint report are closed; scope-naming, presets, and init follow.
+- **Project issues**: 11 open, 0 in-progress, 142 closed; plan-quality, the follow-up, the checkpoint report, and the review-sequencing issue are closed; scope-naming, presets, and init follow.
 
 ## Active Working Context
 
-- **Objective**: the scope vocabulary next; then the presets and the init script.
+- **Objective**: ship v7.6.2; then the scope vocabulary, the presets, and the init script.
 - **Plan-quality (closed, P2/M)**: the uniform gate is live at review-145; the closed tickets carry the template, assertion floor, depth, and clean-tree decisions.
 - **Plan-quality follow-up (closed, P2/M)**: implemented at review-147; the plan is attached; v7.6.0 is live.
-- **Review sequencing**: bind the verdict to the artifact hash; approve only with no open findings; run one delta verification after fixes; pointer to protocol-verification-toolchain.md.
+- **Review sequencing (closed, P3/S)**: the code-review policy owns the hash binding, delta verification, post-approval invalidation, and follow-up; the ADR records the decision; v7.6.2 is ready.
 - **Checkpoint report (closed, P3/S)**: the Current position block is live at review-149; v7.6.1 is live.
 - **Scope vocabulary (open, P2/XL)**: the owner-prefix model, directory layout, no-symlink migration, sync/init, and the future same-root read/write and worktree-sharing scenario are recorded.
 - **Scope vocabulary open items**: release level, alias window, legacy alias, backup target, role switch name, and handoff directory remain open.
-- **Release**: v7.6.1 is live; the release URL is in the v7.6.1 announcement.
+- **Release**: v7.6.1 is live; v7.6.2 is ready to ship.
 - **Team store**: optional; no production store is configured; the local fixture is `~/Projects/infrastructure-team-alpha/`.
 - **Team skills**: the optional third root is live since v7.2.0.
 - **Skills**: 1 global package (`kanban-board`); 0 project packages; a team root is indexed only when configured.

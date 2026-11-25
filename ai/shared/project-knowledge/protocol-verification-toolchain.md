@@ -29,17 +29,8 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Lint every new markdown file, not only the edited files.
 - Run the protocol validator after any operation that can remove untracked directories, such as a stash round-trip; it asserts the mandatory directory set.
 
-### Quality Gate
+### Current Facts
 
-- Fix every Critical, Major, and Minor review finding before approval.
-- Do not cap review rounds or demote a finding to a note or checklist.
-- Treat one behavioral assertion per acceptance criterion as a floor, not a cap.
-- Keep a plan delta-only but complete; the owning procedure must cover every close action.
-- Bind every review verdict to the reviewed artifact's SHA-256.
-- Approve only with zero open Critical, Major, or Minor findings.
-- Fix every finding, then run one delta verification; do not reopen scope.
-- A post-approval edit invalidates the approval; a new hash needs a delta verification.
-- A new post-approval finding becomes a follow-up ticket unless it is a regression.
 - The plan template, S/M light path, and clean-tree baseline are live.
 - A migration needs a dry run, a backup, idempotent moves, a destination check, and restore on failure.
 - Preserve custom paths, stop on ambiguity, and never let boot move or delete a store.
@@ -63,8 +54,6 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Markdownlint catches structural defects before review.
 - The user docs drift when a unit adds a policy, procedure, fixture, or trigger; the README, the slides, the validation doc, and the compared doc are the drift points.
 - The slides fixture checks the Architect story, the six groups, the three roots, the two dials, the knowledge and skills map, the team gate, the axe and SVG assets, the derived counts, and the local preview and renderer.
-- End-users rely on the protocol's output quality; a hidden finding becomes their defect.
-- A round cap rewards declaring the design frozen early.
 - A migration that guesses can destroy user data.
 
 ## Verify

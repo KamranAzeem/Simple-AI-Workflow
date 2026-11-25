@@ -99,6 +99,11 @@ present "$CODEREVIEW" "reviewed-file scope" "gate names the reviewed-file scope"
 present "$CODEREVIEW" "ticket scope" "gate names the ticket scope"
 absent "$CODEREVIEW" "do not block this change's verdict" "old non-blocking sentence is gone"
 absent "$CODEREVIEW" "fix when convenient" "old Minor wording is gone"
+present "$CODEREVIEW" "### Verdict and Delta Verification" "code-review policy owns the verdict binding"
+present "$CODEREVIEW" "Bind every review verdict to the reviewed artifact's SHA-256." "gate binds the verdict to the hash"
+present "$CODEREVIEW" "Fix every finding, then run one delta verification; do not reopen scope." "gate requires one delta verification"
+present "$CODEREVIEW" "Treat a post-approval edit as invalidating the approval; hash the new artifact for a delta verification." "gate invalidates a post-approval edit"
+present "$CODEREVIEW" "File a new post-approval finding as a follow-up ticket unless it is a regression." "gate treats a new post-approval finding as a follow-up"
 
 for f in "$ISSUE" "$MANAGE" "$IMPLEMENT" "$HANDOFF" "$REPAIR_KNOWLEDGE" "$REPAIR_SETTINGS" "$DESIGN" "$KNOWLEDGE" "$GLOBALSET"; do
     base="$(basename "$f")"

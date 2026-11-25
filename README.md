@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.6.1 (2026-11-25).** The checkpoint report now shows the current position before the transaction log: the active next step, the open items when ten or fewer, and the last active item. Read the announcement: [docs/announcements/v7.6.1.md](docs/announcements/v7.6.1.md). |
+| **v7.6.2 (2026-11-25).** The review-sequencing rules now live in the code-review policy and the ADR store; the verification runbook keeps the commands and checks. Read the announcement: [docs/announcements/v7.6.2.md](docs/announcements/v7.6.2.md). |
 
 # Simple AI Workflow
 

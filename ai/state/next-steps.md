@@ -17,8 +17,9 @@
 - Verify the team knowledge publish path against a live store when one is configured.
 - File the Google Slides update and physical Gate 2 as a separate issue.
 - Confirm whether any harness now offers a reliable post-compaction hook; update the manual-recovery docs if one appears.
-- Sync the updated AGENTS.md into downstream projects after the v7.6.1 release.
+- Sync the updated AGENTS.md into downstream projects after the v7.6.2 release.
 - Resume the presentation policy only on the user's request; design layout and type control first.
 - Resume the trimmed slide review speed scope only on the user's request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
 - Plan the scope normalization; settle the release and alias window; presets next; init after.
+- Ship v7.6.2: merge, tag, and publish the review-sequencing release.
