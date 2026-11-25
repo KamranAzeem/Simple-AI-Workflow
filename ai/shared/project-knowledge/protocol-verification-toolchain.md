@@ -35,6 +35,11 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Do not cap review rounds or demote a finding to a note or checklist.
 - Treat one behavioral assertion per acceptance criterion as a floor, not a cap.
 - Keep a plan delta-only but complete; the owning procedure must cover every close action.
+- Bind every review verdict to the reviewed artifact's SHA-256.
+- Approve only with zero open Critical, Major, or Minor findings.
+- Fix every finding, then run one delta verification; do not reopen scope.
+- A post-approval edit invalidates the approval; a new hash needs a delta verification.
+- A new post-approval finding becomes a follow-up ticket unless it is a regression.
 - A migration needs a dry run, a backup, idempotent moves, a destination check, and restore on failure.
 - Preserve custom paths, stop on ambiguity, and never let boot move or delete a store.
 - Init refuses a partial root and never overwrites an existing root file.
@@ -92,4 +97,4 @@ Run these checks from the project root after a change to the protocol, a policy,
 - `shellcheck` is installed at `/usr/bin/shellcheck`; run it on changed shell scripts.
 - The repo has `core.fileMode=false`; record an executable bit with `git update-index --chmod=+x <file>`.
 - A fixture that asserts a repository count must derive it from the live tree; a hardcoded count goes stale when a new test lands.
-- The all-findings rule is a proposal; the current policy fixes only Critical and Major.
+- The all-findings rule is a proposal; the plan-quality ticket chooses the uniform gate, and the current policy fixes only Critical and Major until the plan lands.

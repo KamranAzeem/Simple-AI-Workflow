@@ -107,3 +107,13 @@ Source: the user's decision on 2026-11-25 and the rejected `plan-review-loop-bud
 - None. The bad-finding path is confirmed, the uniform gate is chosen, and the release is v7.5.0 if this lands before the naming work.
 
 Source: the 2026-11-25 grilling, the `plan-review-loop-budget.md` close record, and the repository examination on 2026-11-25.
+
+2026-11-25
+
+Plan: `ai/plans/plan-quality-rules-and-uniform-review-gate.md` (M, light path). Peer review pending.
+
+Baseline wording clarification: the baseline chore commit carries the current planning records, including this ticket's plan entry. After it, the plan file is the only expected untracked path.
+
+2026-11-25
+
+Scope cut to the core uniform review gate after six review rounds on the broad plan. The plan template, assertion floor, depth alignment, and clean-tree gate move to `ai/issues/open/plan-quality-follow-up-rules.md`. The acceptance criteria for those four rules are tracked there.

@@ -59,6 +59,7 @@
 - `tests/test-docs-audit.sh`: the docs assertions, including the two-step approval sentence.
 - `design-docs/protocol-decisions.md`: the ADR store for the plan-quality change.
 - `ai/shared/project-knowledge/protocol-verification-toolchain.md`: the quality gate and the verification commands.
+- The plan-quality ticket chooses B: the code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is pending.
 
 ### Handoff surface
 
