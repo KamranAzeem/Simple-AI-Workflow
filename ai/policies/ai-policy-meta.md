@@ -16,7 +16,7 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 
 - Apply this policy to `AGENTS.md`, files under `ai/`, `README.md`, and `docs/`.
 - Apply this policy to `support-files/` in the protocol repository.
-- Resolve every `support-files/` path and the `design-docs/protocol-decisions.md` path from the **Global AI Workflow Directory**.
+- Resolve every `support-files/` path and the `design-docs/protocol-decisions.md` path from the **Workflow AI Directory**.
 - Treat those files as protocol-repository content that does not exist in a user project.
 - Do not apply this policy to domain guidance owned by another policy.
 

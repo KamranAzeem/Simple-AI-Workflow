@@ -15,7 +15,7 @@ Govern the design document chain, types, naming, location, and delivery ledger.
 
 ## Scope
 
-- Apply this policy to design documents in `design-docs/` and in the `ai/shared/project-knowledge/` fallback.
+- Apply this policy to design documents in `design-docs/` and in the `ai/knowledge/` fallback.
 - Exempt acceptance specs under `design-docs/specs/`; the owning procedure or test work writes and updates them, and they are not design documents.
 - This policy owns document types, naming, creation, update, extraction, migration, and the delivery ledger.
 - It does not own knowledge file standards, state files, or issue tickets.
@@ -71,7 +71,7 @@ Acceptance criteria are coupled to the LLD. They are not a separate document typ
 - Suffix form only. The doc type is the last token, in lowercase.
 - Migrated (`design-docs/`): the simple name, with no project token.
   - `vision.md`, `prd.md`, `hld.md`, `lld.md`, `risk-and-gap-analysis.md`, `delivery-ledger.md`, `adr-001-<short>.md`.
-- Not migrated (`ai/shared/project-knowledge/`): a project or component token precedes the doc type.
+- Not migrated (`ai/knowledge/`): a project or component token precedes the doc type.
   - `payment-gateway-app-prd.md`, `kubernetes-setup-hld.md`.
 
 ## Discovery and Scope

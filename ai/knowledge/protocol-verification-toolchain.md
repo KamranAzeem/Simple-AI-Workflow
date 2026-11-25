@@ -19,6 +19,8 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Run the trigger fixture with `bash tests/test-trigger-rules.sh`.
 - Run the boot fixture with `bash tests/test-load-context-boot.sh`.
 - Run the sync fixture with `bash tests/test-sync-agents-md.sh`.
+- Run the path probe fixture with `bash tests/test-path-probe.sh`.
+- Run the scope migration fixture with `bash tests/test-scope-migration.sh`.
 - Run the outbound content scrub fixture with `bash tests/test-outbound-content-scrub.sh`.
 - Run the handoff fixture with `bash tests/test-create-handoff.sh`.
 - Run the policy loading fixture with `bash tests/test-policy-load-paths.sh`.
@@ -33,6 +35,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - The plan template, S/M light path, and clean-tree baseline are live.
 - A migration needs a dry run, a backup, idempotent moves, a destination check, and restore on failure.
+- The v7.7.0 scope migration moves the project store to `ai/knowledge/`, the user store to `knowledge/`, the team store to `knowledge/`, and the settings file to `user-settings.md`; it refuses a customization symlink and never creates a store beside a populated old one.
 - Preserve custom paths, stop on ambiguity, and never let boot move or delete a store.
 - Init refuses a partial root and never overwrites an existing root file.
 
@@ -40,8 +43,8 @@ Run these checks from the project root after a change to the protocol, a policy,
 
 - The protocol validator checks the hardening anchors, configuration, directory structure, board, a policy directory scan with a floor of 25, the knowledge anchors and legacy-phrase guard, the skills keys and anchors, git safety, and checkpoint cycle.
 - The authoring validator checks the guard, marker order, title, purpose, scope, references, procedure metadata, trigger uniqueness, `## Triggers` shape, and the optional `## Loading` contract; it permits only the two shared steps in the thin `AGENTS.md`. It ignores heading-like lines inside fenced code blocks when it builds the index and checks the policy and procedure shape.
-- The loading contract has four modes: `boot`, `trigger`, `procedure`, and `expertise`. One path per policy; a non-trigger mode forbids triggers; `Load in:` takes the lowercase procedure file stem. An absent `## Loading` keeps the legacy load. The declaration governs global policies; a project policy keeps the legacy boot load. The validator checks syntax and placement; the fixture resolves every declared path.
-- The index oracle prints the declared loading mode and the scope (`global` or `project`).
+- The loading contract has four modes: `boot`, `trigger`, `procedure`, and `expertise`. One path per policy; a non-trigger mode forbids triggers; `Load in:` takes the lowercase procedure file stem. An absent `## Loading` keeps the legacy load. The declaration governs workflow policies; a project policy keeps the legacy boot load. The validator checks syntax and placement; the fixture resolves every declared path.
+- The index oracle prints the declared loading mode and the scope (`workflow` or `project`).
 - The common policy is the invariant layer: outside the canonical state-file header blocks it names no policy file, its References lists only `AGENTS.md` and the procedure layer, and its title is `# AI Policy: Common Guardrails`. A plug-in may reference the common policy; the reverse is forbidden.
 - The outbound content scrub is the first extracted plug-in: `ai-policy-outbound-content-scrub.md`, trigger `outbound content scrub`, `Mode: trigger`, loaded explicitly by MANAGE-ISSUES, IMPLEMENT-PLAN, and CREATE-HANDOFF. The common policy keeps the heading and the generic invariant.
 - The knowledge protocols and file standards are `ai-policy-knowledge.md`, trigger `knowledge file standards`, `Mode: trigger`, loaded explicitly by LOAD-CONTEXT, WRITE-CHECKPOINT, and REPAIR-KNOWLEDGE-FILES. The common policy keeps the settings full load, the boot index invariant, and the contract pointer.
@@ -50,7 +53,7 @@ Run these checks from the project root after a change to the protocol, a policy,
 - The thinking modes are `ai-policy-thinking-modes.md`, triggers `grill me` and `brainstorm`, `Mode: trigger`, loaded explicitly by MANAGE-ISSUES planning and IMPLEMENT-PLAN preflight. The common policy keeps the thinking-modes invariant and the Pre-Work Gate points at the contract.
 - The legacy rewrites declare `Mode: expertise` and add an anchor fixture; Linux, accounting, career, Windows, and academic are done, and `tests/test-linux-policy.sh`, `tests/test-accounting-policy.sh`, `tests/test-career-policy.sh`, `tests/test-windows-policy.sh`, and `tests/test-academic-policy.sh` pin their loading and key rules. The five legacy children are complete; the coding-baseline standards stay in the common policy, and that unit is resolved.
 - The reference test confirms that every procedure, step, tier, and load item resolves, and that the work-item order appears only in `AGENTS.md`.
-- The skills fixture checks the three roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project-over-team and team-over-global overrides, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
+- The skills fixture checks the four roots, the package and frontmatter, the one-level rule, hidden and symlink skip, the project-over-team, team-over-user, and user-over-workflow overrides, the collision report, the 200-character description, the no-body rule, and the 16 KB bound.
 - Markdownlint catches structural defects before review.
 - The user docs drift when a unit adds a policy, procedure, fixture, or trigger; the README, the slides, the validation doc, and the compared doc are the drift points.
 - The slides fixture checks the Architect story, the six groups, the three roots, the two dials, the knowledge and skills map, the team gate, the axe and SVG assets, the derived counts, and the local preview and renderer.
@@ -69,10 +72,12 @@ Run these checks from the project root after a change to the protocol, a policy,
 - Confirm the docs audit fixture prints `PASSED`.
 - Confirm the slides fixture prints `PASSED`.
 - Confirm the boot fixture prints `PASSED`.
+- Confirm the path probe fixture prints `PASSED`.
+- Confirm the scope migration fixture prints `PASSED`.
 - Confirm the loader fixture prints `PASSED`, the shape wrapper prints `PASSED`, and the boundary fixture prints `PASSED`.
 - Confirm the trigger fixture prints `PASS`.
 - Confirm markdownlint reports `0 issues`.
-- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 31 test scripts, 54 triggers, and the floor of 25.
+- Confirm the user docs counts: 25 policies (12 domain and 13 protocol), 16 procedures, 33 test scripts, 58 triggers, and the floor of 25.
 - A review verdict lists no open Critical, Major, or Minor finding.
 - A migration test proves every source file reached the destination and a dry run matches the real run.
 - A partial target is refused, not guessed.

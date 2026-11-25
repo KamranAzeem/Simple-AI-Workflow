@@ -3,7 +3,7 @@
 - **Status**: Pending
 - **Assigned To**: [Agent Name]
 - **Goal**: Implement the site header.
-- **Requirements**: Use component-scoped CSS per `ai/shared/project-knowledge/css-architecture.md`. Ensure responsive design.
+- **Requirements**: Use component-scoped CSS per `ai/knowledge/css-architecture.md`. Ensure responsive design.
 - **Reference**: `src/index.html`
 
 ## Verification

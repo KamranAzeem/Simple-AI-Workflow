@@ -50,7 +50,7 @@ require_in "ai/procedures/load-context.md" "Token Rationing" "Token Rationing st
 require_in "ai/procedures/load-context.md" "STEP-KNOWLEDGE-INDEXING" "STEP-KNOWLEDGE-INDEXING missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-POLICY-LOADING" "STEP-POLICY-LOADING missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-WORKFLOW-VERSION-CHECK" "STEP-WORKFLOW-VERSION-CHECK missing from ai/procedures/load-context.md."
-require_in "ai/procedures/load-context.md" "Global AI Knowledge Directory" "Global AI Knowledge Directory reference missing from ai/procedures/load-context.md."
+require_in "ai/procedures/load-context.md" "User AI Knowledge Directory" "User AI Knowledge Directory reference missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "ITEM PROTOCOL-INDEX" "ITEM PROTOCOL-INDEX missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "Boot Scan Exclusions" "Boot Scan Exclusions reference missing from ai/procedures/load-context.md."
 require_in "ai/procedures/load-context.md" "STEP-STATE-FILE-PROOF-OF-READ" "STEP-STATE-FILE-PROOF-OF-READ missing from ai/procedures/load-context.md."
@@ -69,11 +69,11 @@ require_in "AGENTS.md" 'use skill <name>' "use skill dispatch missing from AGENT
 require_in "ai/procedures/load-context.md" "ITEM SKILLS-INDEX" "ITEM SKILLS-INDEX missing from ai/procedures/load-context.md."
 require_in "ai/policies/ai-policy-common.md" '^## Skills$' "Skills section missing from ai-policy-common.md."
 require_in "ai/policies/ai-policy-common.md" "or the configured" "the common Skills section does not name the team root."
-require_in "ai/policies/ai-policy-common.md" "Apply the precedence project, then team, then global" "the common Skills section lacks the team precedence."
+require_in "ai/policies/ai-policy-common.md" "Apply the precedence project, then team, then user, then workflow" "the common Skills section lacks the four-scope precedence."
 require_in "ai/policies/ai-policy-team-knowledge.md" "skills/" "the team policy lacks the skills pointer."
-require_in "ai/policies/ai-policy-team-knowledge.md" "team-knowledge/" "the team policy lacks the team-knowledge path."
-require_in "ai/procedures/load-context.md" "team-knowledge/" "the boot step lacks the team-knowledge path."
-require_in "ai/procedures/load-context.md" "configured team skills root" "load-context lacks the configured team skills root."
+require_in "ai/policies/ai-policy-team-knowledge.md" "knowledge/" "the team policy lacks the knowledge path."
+require_in "ai/procedures/load-context.md" "active team knowledge root" "the boot step lacks the active team knowledge root."
+require_in "ai/procedures/load-context.md" "project, team, user, and workflow skill roots" "load-context lacks the four skill roots."
 require_in "AGENTS.md" "configured team root" "AGENTS.md lacks the configured team skills root."
 require_in "ai/policies/ai-policy-common.md" '^## Outbound Content Scrub$' "Outbound Content Scrub section missing from ai-policy-common.md."
 require_in "ai/policies/ai-policy-handoff.md" '^## Valid Handoff$' "Valid Handoff section missing from ai-policy-handoff.md."
@@ -119,15 +119,18 @@ echo "Hardening anchors verified."
 # 2. Configuration Mapping
 echo "[2/8] Verifying configuration entries..."
 CONFIG_KEYS=(
-    "Global AI Workflow Directory"
-    "Global User AI Directory"
-    "Global AI Policies Directory"
-    "Global AI Knowledge Directory"
-    "Global AI Skills Directory"
+    "Workflow AI Directory"
+    "User AI Directory"
+    "Workflow AI Policies Directory"
+    "Workflow AI Skills Directory"
+    "User AI Knowledge Directory"
+    "User AI Skills Directory"
+    "User AI Backups Directory"
+    "User AI Settings Directory"
+    "Team AI Directory"
     "Team AI Knowledge Directory"
+    "Team AI Skills Directory"
     "Team AI Knowledge Repository"
-    "Global AI Backups Directory"
-    "Global AI Settings Directory"
     "Project Artifacts Directory"
     "Project Code Review Reports Directory"
     "Project Compliance Policies Directory"
@@ -163,19 +166,19 @@ echo "Configuration mapping verified."
 
 # 3. Global Structure
 echo "[3/8] Verifying global directory structure..."
-GLOBAL_DIR="$(sed -n 's/^\*\*Global User AI Directory\*\*:[[:space:]]*//p' ai-customization.md 2>/dev/null | head -1 | tr -d '`' | sed 's/[[:space:]]*$//')"
-GLOBAL_DIR="${GLOBAL_DIR/#\~/$HOME}"
-GLOBAL_DIR="${GLOBAL_DIR//\[HOME\]/$HOME}"
-GLOBAL_DIR="${GLOBAL_DIR//%USERPROFILE%/$HOME}"
-[ -n "$GLOBAL_DIR" ] || GLOBAL_DIR="$HOME/.ai"
+USER_DIR="$(sed -n 's/^\*\*User AI Directory\*\*:[[:space:]]*//p' ai-customization.md 2>/dev/null | head -1 | tr -d '`' | sed 's/[[:space:]]*$//')"
+USER_DIR="${USER_DIR/#\~/$HOME}"
+USER_DIR="${USER_DIR//\[HOME\]/$HOME}"
+USER_DIR="${USER_DIR//%USERPROFILE%/$HOME}"
+[ -n "$USER_DIR" ] || USER_DIR="$HOME/.ai"
 
-GLOBAL_SUBS=("settings" "global-knowledge" "backups")
-for sub in "${GLOBAL_SUBS[@]}"; do
-    if [ ! -d "$GLOBAL_DIR/$sub" ]; then
-        echo "Warning: Global subdirectory $GLOBAL_DIR/$sub missing."
+USER_SUBS=("settings" "knowledge" "skills" "backups")
+for sub in "${USER_SUBS[@]}"; do
+    if [ ! -d "$USER_DIR/$sub" ]; then
+        echo "Warning: User subdirectory $USER_DIR/$sub missing."
     fi
 done
-echo "Global structure checked."
+echo "User structure checked."
 
 warn_state_header() {
     echo "[WARNING] State-file health is degraded and work quality is at risk. Run \"repair state files\" now."
@@ -319,7 +322,7 @@ PROJECT_SUBS=(
     "artifacts" "code-review-reports" "daily-checkpoints" "issues"
     "issues/open" "issues/in-progress" "issues/closed" "notes"
     "pending" "plans" "policies" "policies/compliance" "secrets"
-    "shared" "shared/handoffs" "shared/project-knowledge" "skills" "state"
+    "shared" "shared/handoffs" "knowledge" "skills" "state"
 )
 for sub in "${PROJECT_SUBS[@]}"; do
     if [ ! -d "ai/$sub" ]; then
@@ -331,8 +334,8 @@ if find ai/issues -maxdepth 1 -type f -name '*.md' | grep -q .; then
     echo "Error: ticket files must live under ai/issues/{open,in-progress,closed}/, not directly under ai/issues/."
     exit 1
 fi
-if [ ! -f "ai/shared/project-knowledge/issue-template.md" ]; then
-    echo "Error: Mandatory issue template ai/shared/project-knowledge/issue-template.md missing."
+if [ ! -f "ai/knowledge/issue-template.md" ]; then
+    echo "Error: Mandatory issue template ai/knowledge/issue-template.md missing."
     exit 1
 fi
 HEADER_FAILED=0
@@ -432,10 +435,23 @@ if ! grep -q "ai/" .gitignore; then
 fi
 echo "Git safety verified."
 
+# 7b. Scope migration surface
+for probe in support-files/path-probe.sh support-files/path-probe.ps1; do
+    if [ ! -f "$probe" ]; then
+        echo "Error: Missing scope migration support file: $probe"
+        exit 1
+    fi
+done
+if grep -nE 'ln -s|New-Item -ItemType SymbolicLink|mklink' support-files/sync-agents-md.sh support-files/sync-agents-md.ps1 \
+    | grep -vE 'LEGACY-GLOBAL|never|no symlink|No symlink|refus' >/dev/null; then
+    echo "Error: the sync migration path contains a symlink creation command."
+    exit 1
+fi
+
 # 8. Checkpoint & Backup Cycle
 echo "[8/8] Testing Checkpoint & Backup cycle..."
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M)
-BACKUP_DIR="$GLOBAL_DIR/backups"
+BACKUP_DIR="$USER_DIR/backups"
 TEST_BACKUP="$BACKUP_DIR/VALIDATION_TEST_$TIMESTAMP.tar.gz"
 
 # Simulate Checkpoint File

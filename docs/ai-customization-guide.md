@@ -6,14 +6,14 @@ The `ai-customization.md` file is the **"Single Dial"** for tailoring your AI as
 
 The `## AI Workflow Configuration` section holds the paths and the shell. It is read before the first named command.
 
-- **`Global AI Workflow Directory`**: your clone of Simple-AI-Workflow. This entry is mandatory.
-- **`Global User AI Directory`**: where the global settings, global knowledge, and backups live. The default is `[HOME]/.ai/`. Use `[HOME]` on Linux and macOS, or `%USERPROFILE%` on Windows, and resolve it to an absolute path.
+- **`Workflow AI Directory`**: your clone of Simple-AI-Workflow. This entry is mandatory.
+- **`User AI Directory`**: where the user settings, knowledge, skills, and backups live. The default is `[HOME]/.ai/`. Use `[HOME]` on Linux and macOS, or `%USERPROFILE%` on Windows, and resolve it to an absolute path.
 - **`Default Shell`**: optional. Use `bash`, `zsh`, `pwsh`, or `git-bash`. Leave it out to keep your current shell behavior. The key names the interpreter for named commands; the optional index helper runs with `bash` when a maintainer invokes it.
-- **`Default Shell Path`**: set in the global settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins.
-- **`Team AI Knowledge Directory`**: optional. The local clone or mount of the shared team knowledge store. The boot indexes it read-only; an absent key behaves exactly as today.
+- **`Default Shell Path`**: set in the user settings file, not here. It is the native OS path to the named shell, for example `/bin/bash` or `C:\Program Files\Git\bin\bash.exe`. The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins.
+- **`Team AI Directory`**: optional. The local clone or mount of the shared team repository. The boot derives `knowledge/` and `skills/`, indexes them read-only, and an absent key behaves exactly as today.
 - **`Team AI Knowledge Repository`**: optional. The publish remote for team lessons. An absent key falls back to the clone's `origin`.
 
-The boot reads the customization first, then the whole settings directory, then runs the first named command. Absent keys keep the default directory and the current shell.
+The boot reads the customization first, then the whole user settings directory, then runs the first named command. Absent keys keep the default directory and the current shell.
 
 **Tracking**: the customization is the project's dial. The workflow repository tracks its own copy so a clone boots without a setup step. The bootstrap ignores the file by default in new projects; a project may track it instead, for example when the whole team shares the dial. The loader accepts either state.
 
@@ -25,7 +25,7 @@ Different projects require different expertise (Cloud vs. Frontend), different b
 
 ## 1. Composing Expertise (Technical Roles)
 
-Use the `## Active Expertise` section to load domain-specific policies from the `ai/policies/` directory in your clone (resolved through **Global AI Workflow Directory**).
+Use the `## Active Expertise` section to load domain-specific policies from the `ai/policies/` directory in your clone (resolved through **Workflow AI Directory**).
 
 **Example:**
 
@@ -61,10 +61,11 @@ A policy without `## Loading` keeps today's behavior. A non-trigger mode forbids
 
 The team knowledge store is optional. It is a Git repository or a read-only mount that a team shares.
 
-- Set `Team AI Knowledge Directory` to the local clone or mount.
+- Set `Team AI Directory` to the local clone or mount.
 - Set `Team AI Knowledge Repository` to the publish remote when it differs from the clone's `origin`.
-- Keep lessons in `team-knowledge/<lesson-name>.md`. The filename is the id.
-- Precedence is project knowledge, then team knowledge, then personal global knowledge.
+- The store is `<Team AI Directory>/knowledge/`, and team skills are `<Team AI Directory>/skills/`.
+- Keep lessons in `knowledge/<lesson-name>.md`. The filename is the id.
+- Precedence is project knowledge, then team knowledge, then user knowledge.
 - Team lessons are Class A: names and infrastructure detail stay, and secrets never do. The local sensitive-names list is not applied to team lessons; repository access is the privacy control.
 - Say `"update team knowledge"` or `"publish to team knowledge"` to contribute one lesson. The AI removes secrets, checks for duplicates, writes the lesson on a branch, and opens a pull request. It never merges.
 
@@ -148,7 +149,7 @@ Use the optional `## Design Docs` section to record where your design documents 
 Two values are recognized:
 
 - `design-docs/`: the documents live beside your code, so they are version-controlled and travel with it.
-- `ai/shared/project-knowledge/`: the documents live under `ai/`, the older location.
+- `ai/knowledge/`: the documents live under `ai/`, the fallback location before migration to `design-docs/`.
 
 This section is optional, and it is normally written for you. Say `"update design documents"` and ask the AI to record your choice. If you have not decided, the AI detects the location from your project and asks when it is unclear.
 

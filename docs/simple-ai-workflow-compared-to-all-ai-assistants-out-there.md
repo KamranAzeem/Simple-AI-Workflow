@@ -81,16 +81,16 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | What you need | Copilot | Claude | ChatGPT | Cursor | Simple AI Workflow |
 |---|---|---|---|---|---|
 | Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
-| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules | `<Global User AI Directory>/settings/global-user-settings.md` |
+| User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules | `<User AI Directory>/settings/user-settings.md` |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
 | Domain expertise / rules | `.github/skills/`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (25 policies) |
 | Progress tracking | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
 | Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
 | Current state | None | None | None | None | `ai/state/context.md` |
-| Project knowledge | None | Uploaded files | Uploaded files | None | `ai/shared/project-knowledge/` |
+| Project knowledge | None | Uploaded files | Uploaded files | None | `ai/knowledge/` |
 | Team lessons and skills | None | None | None | None | the optional team knowledge store |
 | Skills on demand | `.github/skills/` | None | Custom GPTs | None | `ai/skills/<name>/SKILL.md` and the team store's `skills/` |
-| Lessons across projects | `~/.claude/CLAUDE.md` (manual) | `~/.claude/CLAUDE.md` | Memory (opaque) | None | `<Global User AI Directory>/global-knowledge/` |
+| Lessons across projects | `~/.claude/CLAUDE.md` (manual) | `~/.claude/CLAUDE.md` | Memory (opaque) | None | `<User AI Directory>/knowledge/` |
 | Handoffs | None | None | None | None | `ai/shared/handoffs/` |
 | Post-summary recovery | `PreCompact` warning only | None | None | None | Post-Compaction Recovery procedure (manual; no harness hook currently fires it) |
 | Compliance enforcement | None | None | None | None | the compliance policies, applied by the AI |
@@ -119,14 +119,16 @@ ai/
 │   ├── next-steps.md     ← what comes next
 │   └── context.md        ← where things stand right now
 ├── policies/            ← the project policies (optional)
+├── knowledge/           ← decisions, findings, architecture notes
 ├── shared/
-│   ├── project-knowledge/   ← decisions, findings, architecture notes
-│   └── handoffs/            ← task transfers between sessions
+│   └── handoffs/        ← task transfers between sessions
 └── daily-checkpoints/   ← timestamped save points
 
-<Global User AI Directory>/   (default ~/.ai/)
+<User AI Directory>/   (default ~/.ai/)
+├── knowledge/           ← lessons that apply across all projects
+├── skills/              ← personal skill packages
 ├── settings/            ← your personal preferences and tools
-└── global-knowledge/    ← lessons that apply across all projects
+└── backups/             ← your backups
 ```
 
 No hidden directories. No cloud accounts to log into. No mystery format. Every file is plain Markdown. You can read it, edit it, and understand it without documentation.

@@ -15,7 +15,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Push the default branch and the tag: `git push origin <default-branch> && git push origin vX.Y.Z`.
 - Draft the announcement, the banner, and the GitHub release body in a temp file first.
 - Show the exact draft to the user and wait for the user's edits and approval before writing the final files or publishing.
-- Write in the user's first-person voice from the global settings (`### Voice`, `### Structure`, and `### Words and Phrases to Avoid`).
+- Write in the user's first-person voice from the user settings (`### Voice`, `### Structure`, and `### Words and Phrases to Avoid`).
 - Put the reason before the detail in the announcement.
 - Explain each internal term in plain words the first time it appears, and do not write a changelog.
 - Never invent an event, feeling, or reason the user did not state.

@@ -83,7 +83,7 @@ SHADOW="$WORK/shadow"
 mkdir -p "$SHADOW/ai/policies"
 write_policy "$SHADOW/ai/policies/ai-policy-common.md" "Common Fixture"
 out="$(run_helper "$SHADOW")"
-g="$(module_line "$out" policy global common)"
+g="$(module_line "$out" policy workflow common)"
 p="$(module_line "$out" policy project common)"
 if [ "$(field "$g" 8)" = "effective=shadowed:common" ]; then pass "the global common is shadowed"; else fail_case "the global common is not shadowed"; fi
 if [ "$(field "$p" 8)" = "effective=yes" ]; then pass "the project common stays effective"; else fail_case "the project common effective field is wrong"; fi
@@ -94,7 +94,7 @@ mkdir -p "$CONFLICT/ai/policies"
 write_policy "$CONFLICT/ai/policies/ai-policy-sample.md" "Sample" "cloud standards"
 out="$(run_helper "$CONFLICT")"
 s="$(module_line "$out" policy project sample)"
-c="$(module_line "$out" policy global cloud)"
+c="$(module_line "$out" policy workflow cloud)"
 if [ "$(field "$s" 9)" = "conflict=duplicate:cloud" ]; then pass "the project sample reports the duplicate"; else fail_case "the project sample conflict is wrong"; fi
 if [ "$(field "$c" 9)" = "conflict=duplicate:sample" ]; then pass "the global cloud reports the duplicate"; else fail_case "the global cloud conflict is wrong"; fi
 assert_contains "$out" 'conflicts=1' "the dev conflict count is preserved"
@@ -104,7 +104,7 @@ SAMENAME="$WORK/samename"
 mkdir -p "$SAMENAME/ai/policies"
 write_policy "$SAMENAME/ai/policies/ai-policy-cloud.md" "Cloud Fixture" "cloud standards"
 out="$(run_helper "$SAMENAME")"
-g="$(module_line "$out" policy global cloud)"
+g="$(module_line "$out" policy workflow cloud)"
 p="$(module_line "$out" policy project cloud)"
 if [ "$(field "$g" 8)" = "effective=shadowed:cloud" ]; then pass "the same-name global is shadowed"; else fail_case "the same-name global is not shadowed"; fi
 if [ "$(field "$p" 9)" = "conflict=none" ]; then pass "the same-name replacement has no conflict"; else fail_case "the same-name replacement conflict is wrong"; fi
@@ -118,7 +118,7 @@ write_policy "$RESERVED/ai/policies/ai-policy-cloud.md" "Cloud Shadow"
 write_policy "$RESERVED/ai/policies/ai-policy-sample.md" "Sample" "cloud standards"
 out="$(run_helper "$RESERVED")"
 s="$(module_line "$out" policy project sample)"
-c="$(module_line "$out" policy global cloud)"
+c="$(module_line "$out" policy workflow cloud)"
 sc="$(module_line "$out" policy project cloud)"
 if [ "$(field "$s" 9)" = "conflict=duplicate:cloud" ]; then pass "the reserved-trigger user names the shadowed global"; else fail_case "the reserved-trigger user conflict is wrong"; fi
 if [ "$(field "$c" 9)" = "conflict=duplicate:sample" ]; then pass "the shadowed global names the reserved-trigger user"; else fail_case "the shadowed global conflict is wrong"; fi

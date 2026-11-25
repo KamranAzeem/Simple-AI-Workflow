@@ -254,7 +254,7 @@ The project's memory, the personal store, and the central rulebook.
 
 ![The two dials](slides/diagrams/two-scopes.svg)
 
-<!-- Speaker notes: Global settings live in ~/.ai/settings/global-user-settings.md: identity, tools, shell, communication, and cross-project lessons. ai-customization.md holds the workflow directory, active expertise, traits, compliance, design docs, merge policy, and optional team keys. Load context reads both. The global file shapes the assistant. The project file shapes the work. -->
+<!-- Speaker notes: User settings live in ~/.ai/settings/user-settings.md: identity, tools, shell, communication, and cross-project lessons. ai-customization.md holds the workflow directory, active expertise, traits, compliance, design docs, merge policy, and optional team keys. Load context reads both. The user file shapes the assistant. The project file shapes the work. -->
 
 ---
 
@@ -435,8 +435,8 @@ The claims are inspectable.
 
 ## The repository is the proof
 
-- It has 25 policies, 16 procedures, and 54 triggers.
-- It has 31 tests, 18 user-facing docs, and hundreds of review reports.
+- It has 25 policies, 16 procedures, and 58 triggers.
+- It has 33 tests, 18 user-facing docs, and hundreds of review reports.
 - It has a public issue tracker, daily checkpoints, and release notes.
 - Every change went through the same plan, review, and checkpoint shape.
 
@@ -458,7 +458,7 @@ The proof is not a benchmark. It is the repository.
 
 ![Knowledge and skills](slides/diagrams/knowledge-skills.svg)
 
-<!-- Speaker notes: This is the team column of the map. Team knowledge lives in team-knowledge/ and is indexed by filename. Team skills live in skills/ and are indexed by name and description. The two keys are Team AI Knowledge Directory and Team AI Knowledge Repository. Precedence is project, then team, then global. The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify the review at boot. Repository access is the privacy control. -->
+<!-- Speaker notes: This is the team column of the map. Team knowledge lives in knowledge/ and is indexed by filename. Team skills live in skills/ and are indexed by name and description. The root key is Team AI Directory; Team AI Knowledge Directory, Team AI Skills Directory, and Team AI Knowledge Repository are derived or configured. Precedence is project, then team, then user, then workflow. The team repository's one-reviewer PR gate and access control are the trust boundary. The protocol does not verify the review at boot. Repository access is the privacy control. -->
 
 ---
 
@@ -525,12 +525,12 @@ Bootstrap once, then keep every project on the same rulebook.
 - **bootstrap-project**: creates the project layer, the `.gitignore` entries, the state skeleton, and the first load.
 - **sync script**: propagates the clone's `AGENTS.md` update to every project.
 - **common policy**: the always-on guardrails: precedence, investigation, communication, git, compliance, and state.
-- **global-settings policy**: identity, tools, shell, and cross-project preferences.
-- **repair-global-settings**: heals the global settings files when they drift.
+- **user-settings policy**: identity, tools, shell, and cross-project preferences.
+- **repair-user-settings**: heals the user settings files when they drift.
 - **Custom policy**: clone a domain policy, tailor it, and keep it in the central policy directory.
 - **Active expertise**: load a domain policy: cloud, API, web, data, DBA, observability, Linux, Windows, or mobile.
 
-<!-- Speaker notes: Each item here is a real policy, procedure, or root file. The setup layer is small: two root files, a bootstrap, a sync script, the common guardrails, and the global settings. The domain policies are the shelf behind Active Expertise. -->
+<!-- Speaker notes: Each item here is a real policy, procedure, or root file. The setup layer is small: two root files, a bootstrap, a sync script, the common guardrails, and the user settings. The domain policies are the shelf behind Active Expertise. -->
 
 ---
 
@@ -653,7 +653,7 @@ State, knowledge, and settings.
 
 - **repair-state-files**: reorders, trims, restores headers, and never drops an unfinished next step.
 - **repair-knowledge-files**: audits, backs up, writes a candidate, reviews, and restores on failure.
-- **repair-global-settings**: heals the global settings files.
+- **repair-user-settings**: heals the user settings files.
 - **State-file health**: the shared budget, the line cap, and the daily archive.
 - **Knowledge standards**: 10 KB soft target, 15 KB cleanup, and the 50-file review threshold.
 - **Atomic writes**: progress, next steps, and context, in that order.
@@ -683,7 +683,7 @@ Backup, recovery, token, and meta.
 
 Optional shared memory.
 
-- **`team-knowledge` policy**: the team store, team lessons, precedence, and the trust boundary.
+- **team knowledge policy**: the team store, team lessons, precedence, and the trust boundary.
 - **knowledge-publish**: writes a lesson on a branch and opens a PR; the AI never merges.
 - **Team skills**: a shared `skills/` root with the same package shape and one-reviewer merge.
 - **Handoff policy**: parallel work with a solid, independent handoff.

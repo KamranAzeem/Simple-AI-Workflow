@@ -4,7 +4,7 @@
 
 ## Context
 
-- The tool ladder, the git-ignore readability rule, the shell preference, and the configurable global user directory are live.
+- The tool ladder, the git-ignore readability rule, the shell preference, and the configurable user AI directory are live.
 - The runtime file-operation rule is unconditional: Python or another runtime never searches, creates, appends to, or edits a file; the built-in tool is required.
 - A policy rule alone does not stop a runtime file write; the harness permission is the hard stop.
 
@@ -43,7 +43,7 @@
 - Rule shapes: a three-rung ladder, an operation map, a session inventory, named exceptions, and a do-no-harm clause. Chosen: the ladder plus the do-no-harm clause; dropped the inventory step.
 - Placement: the common policy, a new policy, the bootstrap router, or the customization file. Chosen: the common policy, because the rule applies to every task.
 - Git-ignore rule: keep the shell mandate, add an exception clause, or rewrite with a role-based heading. Chosen: rewrite, with no path list.
-- Shell preference: customization only, global settings only, or both with a project override. Chosen: customization first, global settings fallback, project override.
+- Shell preference: customization only, user settings only, or both with a project override. Chosen: customization first, user settings fallback, project override.
 - Session inventory: keep or drop. Chosen: drop, because the harness already lists the tools.
 - The built-in-first rule and the boot shell mandates conflicted; the mandates were removed and the helper left the boot path.
 
@@ -75,7 +75,7 @@
 
 ### Shell preference
 
-- `Default Shell` in the customization names the shell; `Default Shell Path` in the global settings carries the native path.
+- `Default Shell` in the customization names the shell; `Default Shell Path` in the user settings carries the native path.
 - The boot reads the customization first, then the whole settings directory, then the first named command.
 - The path wins over the name; a mismatch or a missing shell is reported, and the boot continues with built-ins. Absent keys keep the current behavior.
 - The optional index helper runs with `bash` when a maintainer invokes it, regardless of `Default Shell`.
@@ -84,7 +84,7 @@
 
 - The boot index is built with built-in reads and the helper is optional.
 - The file-edit rule covers content edits; the named commands are the named exceptions, and the index helper is optional.
-- The global knowledge lookup uses the built-in search when it can reach the path; the runner form is the ladder exception.
+- The user knowledge lookup uses the built-in search when it can reach the path; the runner form is the ladder exception.
 - A purpose-built tool handles quoting, encoding, diffs, and approvals better than a shell command.
 - The shell is a user preference, not a project rule. It must be read before the first command.
 - A session inventory would add output and no guarantee. The harness already lists its tools.

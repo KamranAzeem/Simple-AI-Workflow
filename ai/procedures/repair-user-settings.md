@@ -1,22 +1,25 @@
-# PROCEDURE REPAIR-GLOBAL-SETTINGS: Repair the global settings files
+# PROCEDURE REPAIR-USER-SETTINGS: Repair the user settings files
 
 ## Triggers
 
+- repair user settings
+- tidy user settings
+- heal user settings
 - repair global settings
 - tidy global settings
 - heal global settings
 
-**Boundaries**: repairs the **Global AI Settings Directory** only. It never touches the knowledge stores, the state files, or the project tree; the artifacts and the report are the only project writes.
+**Boundaries**: repairs the **User AI Settings Directory** only. It never touches the knowledge stores, the state files, or the project tree; the artifacts and the report are the only project writes. The previous trigger phrases are v7.7.x aliases and are removed in v7.8.0.
 
 **Failure rule**: preserve rather than corrupt. When the manifest is incomplete or an item has no disposition, leave that file unchanged, report the conflict, and continue with the other files.
 
-1. **STEP-LOAD-SETTINGS-RULES**: Load `ai-policy-global-settings.md` in full.
-2. **STEP-RESOLVE-SETTINGS-SCOPE**: Read `dry run` after the trigger. If it is absent, target every file in the **Global AI Settings Directory**.
+1. **STEP-LOAD-SETTINGS-RULES**: Load `ai-policy-user-settings.md` in full.
+2. **STEP-RESOLVE-SETTINGS-SCOPE**: Read `dry run` after the trigger. If it is absent, target every file in the **User AI Settings Directory**.
 3. **STEP-INDEX-SETTINGS-CORPUS**: Index the settings files and read each selected file in full.
 4. **STEP-AUDIT-SETTINGS**: Audit the sections, keys, prose, duplicates, secrets, size, tools, sensitive names, and identity fields. Write nothing.
 5. **STEP-BUILD-SETTINGS-MANIFEST**: Build one row per item with the section and line as the old ID, the old location, the new location, the disposition, and a one-line reason. Leave a file with an item that has no disposition unchanged and report it.
 6. **STEP-DRY-RUN-SETTINGS-REPAIR**: On `dry run`, report the dispositions and stop; write and replace nothing.
-7. **STEP-BACKUP-SETTINGS**: Write the manifest and the project copies to `ai/artifacts/settings-repair-<date>/`, and copy the global files to `<Global User AI Directory>/settings-repair-backups/<date>/`.
+7. **STEP-BACKUP-SETTINGS**: Write the manifest and the project copies to `ai/artifacts/settings-repair-<date>/`, and copy the user files to `<User AI Directory>/settings-repair-backups/<date>/`.
 8. **STEP-WRITE-SETTINGS-CANDIDATE**: Write the candidate: consolidate, apply the canonical keys, split `Identity` from `Profile`, verify the tools, trim, redact, and drop the garbage.
 9. **STEP-VERIFY-SETTINGS-CANDIDATE**: Verify every item, the identity keys, the canonical keys, the verified tools, the redaction, the size, and that no other store changed.
 10. **STEP-REVIEW-SETTINGS-REPAIR**: Run the independent review and require an `APPROVED` verdict. Load `ai-policy-code-review.md` and apply its blocking review gate. On `CHANGES REQUESTED`, fix and re-review.

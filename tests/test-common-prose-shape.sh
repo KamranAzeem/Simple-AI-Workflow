@@ -70,7 +70,7 @@ done <<< "$clean"
 [ "$bad_prose" -eq 0 ] && pass 'no prose outside rules'
 
 # --- compatibility anchors ---
-for anchor in '## Skills' '200 characters' 'the user is responsible' '## Outbound Content Scrub' 'The outbound-content-scrub contract owns' '## Knowledge Invariant' 'Global AI Settings Directory' '## Issue Invariant' '## Design Invariant' 'the thinking-modes contract' '## State File Ownership Protocol' '### Canonical State-File Headers' '## Markdown Output' 'Humanized Output'; do
+for anchor in '## Skills' '200 characters' 'the user is responsible' '## Outbound Content Scrub' 'The outbound-content-scrub contract owns' '## Knowledge Invariant' 'User AI Settings Directory' '## Issue Invariant' '## Design Invariant' 'the thinking-modes contract' '## State File Ownership Protocol' '### Canonical State-File Headers' '## Markdown Output' 'Humanized Output'; do
     if printf '%s\n' "$clean" | grep -qF "$anchor"; then
         :
     else

@@ -18,28 +18,28 @@ Govern the knowledge stores and the knowledge file standards.
 
 ## Scope
 
-- Apply this policy to the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory**, and to every knowledge file in either store.
+- Apply this policy to the **User AI Knowledge Directory** and the **Project AI Knowledge Directory**, and to every knowledge file in either store.
 - Treat the configured team store as a third scope owned by `ai-policy-team-knowledge.md`.
-- This policy owns the global and project protocols, the ticket file scope, the file standards, the lookup, the retirement, the header literal, and the repair conservation contract.
+- This policy owns the user and project protocols, the ticket file scope, the file standards, the lookup, the retirement, the header literal, and the repair conservation contract.
 - The common policy keeps the settings full load and the boot index invariant.
 
-## Global Knowledge Protocol
+## User Knowledge Protocol
 
-- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **Global AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. The filename is the JIT lookup key; apply the naming, split, and lookup rules in `## Knowledge File Standards`; accept the one-file lookup trade-off. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
+- **Bootstrapping & Load Context: Knowledge (JIT Index)**: Files in the **User AI Knowledge Directory** are indexed at boot, not read in full. Indexing records filenames, paths, and apparent technical domains; a file is read in full only when a task needs it. The filename is the JIT lookup key; apply the naming, split, and lookup rules in `## Knowledge File Standards`; accept the one-file lookup trade-off. This mirrors the Project Knowledge Protocol; Token Rationing governs both.
 - **Store size**: apply the 50-file review threshold in `## Knowledge File Standards`.
-- **Content Integrity**: The agent MUST NOT modify files within the **Global User AI Directory** unless explicitly instructed by the user. The explicit `repair knowledge files` trigger is that instruction for the global repair; the repair asks no further question.
-- **Normalization**: Treat Global Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
-- **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's capture step collects these; the global step promotes them and confirms "nothing to add" when none qualify.
-- **Format**: Apply `## Knowledge File Standards` to every global knowledge file.
+- **Content Integrity**: The agent MUST NOT modify files within the **User AI Directory** unless explicitly instructed by the user. The explicit `repair knowledge files` trigger is that instruction for the user repair; accept the old scope word as a v7.7.x alias in the repair scope word. The repair asks no further question.
+- **Normalization**: Treat User Knowledge files as "lessons learned" to inform problem-solving, not as authoritative codebase logic.
+- **What belongs here**: only genuinely cross-project, reusable lessons (a tool's behavior, a pattern that generalizes, a portable fix). Project-specific material belongs in Project Knowledge. The checkpoint's capture step collects these; the user step promotes them and confirms "nothing to add" when none qualify.
+- **Format**: Apply `## Knowledge File Standards` to every user knowledge file.
 
 ## Project Knowledge Protocol
 
 - **Bootstrapping & Load Context**: Upon session initiation or when executing "load context" commands, the agent MUST index all files in the **Project AI Knowledge Directory** as defined in the knowledge loading step of the load-context procedure module. Indexing means recording filenames, paths, and apparent technical domains: **DO NOT** read the full content of any Project Knowledge file at boot time. Full content is loaded on demand when an active task explicitly requires that specific knowledge. This indexing step is mandatory and must not be merged with the settings and state loading step.
-- **Bounded staleness**: Flag a Global Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the commit date for tracked files when `git` is available, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a Global Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
-- **Precedence**: Project Knowledge takes precedence over Global Knowledge when there is a conflict, because it is scoped to the specific project's architecture, decisions, and constraints.
+- **Bounded staleness**: Flag a User Knowledge or Project Knowledge file at boot when its indexed domain matches an active expertise domain and its age exceeds 90 days. Use metadata only for age: the commit date for tracked files when `git` is available, or the modified time otherwise. Report flagged files, one line each. The flag is advisory. At task start, re-check the index against the task's keywords. Verify a flagged file against current state and policies when a task loads it. Never read a User Knowledge or Project Knowledge file at boot for staleness. The checkpoint's housekeeping step reuses this same flag, report-only.
+- **Precedence**: Project Knowledge takes precedence over Team Knowledge, which takes precedence over User Knowledge, when there is a conflict. Project Knowledge is scoped to the project's architecture, decisions, and constraints; the team policy owns the team store.
 - **Content Integrity**: The agent MUST update Project Knowledge files during checkpoints (see the checkpoint knowledge update steps in the write-checkpoint procedure module) to capture new decisions, resolved issues, and technical findings. The explicit `repair knowledge files` trigger is the approval for that repair's merges, trims, restructures, backups, and removals; the repair asks no further question. The agent MUST NOT delete or restructure Project Knowledge files otherwise.
 - **Store size, lookup, and retirement**: apply the 50-file review threshold, the task-to-filename lookup, and the retirement rules in `## Knowledge File Standards`.
-- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from Global Knowledge which is treated as "lessons learned."
+- **Normalization**: Treat Project Knowledge as **authoritative** for this project's context: it reflects actual decisions made, not general advice. This differs from User Knowledge which is treated as "lessons learned."
 - **Format**: Apply `## Knowledge File Standards` to every project knowledge file.
 
 ### Ticket File Scope
@@ -62,9 +62,9 @@ All such content belongs in named project knowledge files. When creating or upda
 
 ## Knowledge File Standards
 
-- Apply this section to every knowledge file in the **Global AI Knowledge Directory** and the **Project AI Knowledge Directory**.
+- Apply this section to every knowledge file in the **User AI Knowledge Directory** and the **Project AI Knowledge Directory**.
 - Exempt `issue-template.md` from this section.
-- Exempt a design document under `ai/shared/project-knowledge/` from this section; the design-docs contract owns it.
+- Exempt a design document under `ai/knowledge/` from this section; the design-docs contract owns it.
 - Use one descriptive H1 per knowledge file.
 - Include `## Context`, `## Rule or Fix`, `## Why`, and `## Verify`.
 - Include `## Caveats` only when a limitation exists.
@@ -79,7 +79,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Do not point at another knowledge file, code file, doc, policy, artifact, backup, or state file.
 - Treat a domain command, a system path, or a path that a checklist step writes or edits as content, not a cross-file pointer.
 - Do not write a raw secret.
-- Do not write an identifying name in a global knowledge file.
+- Do not write an identifying name in a user knowledge file.
 - Keep an identifying name in a project knowledge file outside git; a tracked knowledge file follows the commit guardrail.
 - Define an identifying name as a person, client, employer, or customer; a technology vendor or product name is content.
 - Use 10,000 bytes as a soft target; never let it override completeness.
@@ -91,7 +91,7 @@ All such content belongs in named project knowledge files. When creating or upda
 - Merge a file under 3,000 bytes into its nearest topic file.
 - Use 50 knowledge files per store as a review threshold. The checkpoint reports the count; at 50 or more, it recommends a repair. A new topic is never blocked.
 - Split a file over 15,000 bytes after cleanup by task topic. Keep a checklist in one file and report a file that cannot be split.
-- Store a cross-project lesson in the global store and its project-specific application in the project store; do not duplicate the same lesson in both. Keep the project store authoritative on a conflict.
+- Store a cross-project lesson in the user store and its project-specific application in the project store; do not duplicate the same lesson in both. Keep the project store authoritative on a conflict.
 - Put a per-PR or per-ticket review finding into one topic rules file; do not keep it as its own knowledge file.
 - Keep a generated inventory or deliverable in the project artifacts area or a design document; it is not a knowledge file.
 - Check the header before writing a knowledge file; see `### Knowledge File Header`.
@@ -101,7 +101,7 @@ All such content belongs in named project knowledge files. When creating or upda
 
 - At task start, match the task's tool and domain to the indexed filenames of both stores.
 - Read every matching file in full before acting.
-- Search the global store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, `tmp`, and archive entries.
+- Search the user store with the built-in search when it can reach the path; otherwise use the runner's listing and search forms with absolute paths (ladder bullet 9), skipping hidden, `tmp`, and archive entries.
 
 ### Knowledge Retirement
 
@@ -144,7 +144,8 @@ All such content belongs in named project knowledge files. When creating or upda
 - Require no human approval beyond the trigger; the `repair knowledge files` trigger is the approval.
 - Replace a file only after verification and an `APPROVED` review.
 - Delete the temporary candidate after replacement or abort.
-- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old global file to `<Global User AI Directory>/knowledge-repair-backups/<date>/global/` before the first change.
+- Copy the full old project file to `ai/artifacts/knowledge-repair-<date>/project/` and the full old user file to `<User AI Directory>/knowledge-repair-backups/<date>/user/` before the first change.
+- Treat `<User AI Directory>/knowledge-repair-backups/` as a documented exception to the four-store rule.
 - Write the manifest to `ai/artifacts/knowledge-repair-<date>/manifest.md` only for a non-dry run.
 - Stop a dry run after the manifest report; write and replace nothing.
 - Restore the backup on failure.
@@ -159,8 +160,8 @@ All such content belongs in named project knowledge files. When creating or upda
 - Search the settings, issues, handoffs, and ticket files for pointers to a renamed or deleted file; update project-owned pointers and report a user-space settings pointer.
 - Keep a checklist in one file.
 - Remove a raw secret in both stores.
-- Keep an identifying name in a project file; remove it from a global file.
-- Record the manifest, project backup, and global backup paths in the checkpoint and diary.
+- Keep an identifying name in a project file; remove it from a user file.
+- Record the manifest, project backup, and user backup paths in the checkpoint and diary.
 
 ## References
 

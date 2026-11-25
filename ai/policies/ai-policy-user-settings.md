@@ -4,18 +4,18 @@ The AI Assistant must not edit, rewrite, regenerate, or replace this file. All e
 
 <!-- AI-ASSISTANT: READ-ONLY START -->
 
-# AI Policy: Global User Settings
+# AI Policy: User Settings
 
-Govern the canonical structure, the consolidation, and the repair of the global user settings files.
+Govern the canonical structure, the consolidation, and the repair of the user settings files.
 
 ## Loading
 
 - Mode: procedure
-- Load in: repair-global-settings
+- Load in: repair-user-settings
 
 ## Scope
 
-- Apply this policy to every file in the **Global AI Settings Directory**.
+- Apply this policy to every file in the **User AI Settings Directory**.
 - This policy owns the canonical keys, the consolidation, the tool verification, the redaction, the conservation rules, the review gate, and the backup.
 - It does not own knowledge files, state files, or the project tree.
 
@@ -32,7 +32,7 @@ Govern the canonical structure, the consolidation, and the repair of the global 
 - Drop `Style Sources` and the `Git Conventions` pointer sentence.
 - Keep the user's git override under `Operating Instructions`.
 - Rename `Sensitive Names To Never Commit` to `Sensitive Names`.
-- Update `docs/global-user-settings.md`, `ai/procedures/load-context.md`, and `support-files/validate-protocol.sh` in the same change when a canonical key changes.
+- Update `docs/user-settings.md`, `ai/procedures/load-context.md`, and `support-files/validate-protocol.sh` in the same change when a canonical key changes.
 
 ## Example
 
@@ -76,7 +76,8 @@ Non-normative example of the canonical structure:
 
 ## Repair Rules
 
-- Run only on the `repair global settings` trigger; the trigger is the approval.
+- Run only on the `repair user settings` trigger; the trigger is the approval.
+- Accept `repair global settings` as a v7.7.x alias; remove the alias in v7.8.0.
 - Redact every secret from the report and the manifest; never print one.
 - Never copy a `Sensitive Names` entry into the manifest, the report, or a commit; record only the count.
 - Verify every tool with `command -v` on Linux and macOS, and `Get-Command` on Windows.
@@ -89,7 +90,8 @@ Non-normative example of the canonical structure:
 - Merge a file under 3,000 bytes into its nearest topic.
 - Split only a file over 8,000 bytes, and by topic only.
 - Leave a compact file byte-for-byte unchanged; a second run is a no-op.
-- Back up before the first write: the manifest and project copies in `ai/artifacts/settings-repair-<date>/`, the global copy in `<Global User AI Directory>/settings-repair-backups/<date>/`.
+- Back up before the first write: the manifest and project copies in `ai/artifacts/settings-repair-<date>/`, the user copy in `<User AI Directory>/settings-repair-backups/<date>/`.
+- Treat `<User AI Directory>/settings-repair-backups/` as a documented exception to the four-store rule.
 - Stop a dry run after the manifest report.
 - Verify no item is lost, the secrets are redacted, the identity keys are intact, and the tools are verified.
 - Run the independent review and require `APPROVED`.
@@ -106,7 +108,7 @@ Non-normative example of the canonical structure:
 
 - `ai-policy-common.md` (`## Author Identity and Attribution`, `## Universal Operational Guardrails`).
 - `ai-policy-knowledge.md` (`### Knowledge Repair Conservation Contract`).
-- `ai/procedures/repair-global-settings.md`.
-- `docs/global-user-settings.md`.
+- `ai/procedures/repair-user-settings.md`.
+- `docs/user-settings.md`.
 
 <!-- AI-ASSISTANT: READ-ONLY END -->

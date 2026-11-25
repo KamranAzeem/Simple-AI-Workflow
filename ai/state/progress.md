@@ -164,3 +164,4 @@
 [2026-11-25] Created the retire-protocol-verification-toolchain issue and recorded the later knowledge-store audit request.
 [2026-11-25] Created the checkpoint-next-steps issue; confirmed the rename decisions: v7.7.0, no alias, keep ai/shared/, user-owned backup, role switch in presets; the rename ticket is plan-ready.
 [2026-11-25] Planned the scope normalization; reviews 152-156 APPROVED; plan ready at ai/plans/scope-normalization-and-knowledge-layout.md; v7.7.0; no branch or commit.
+[2026-11-25] Implemented v7.7.0 scope normalization: four scopes, unprefixed knowledge stores, verified backup migration, four skill roots, path probes, trigger aliases, docs/ADR/announcement, review-157 APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck clean; release pending.

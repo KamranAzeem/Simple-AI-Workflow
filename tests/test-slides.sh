@@ -93,7 +93,7 @@ for phrase in \
     "Multiple assistants, turn by turn" \
     "Five minutes to the first loop" \
     "workflow clone" \
-    "global settings" \
+    "user settings" \
     "ai-customization.md" \
     "Part 1: Concepts" \
     "An AI assistant is a brain, a memory, and your tools" \
@@ -146,7 +146,7 @@ for phrase in \
     "load-context" \
     "run-peer-review" \
     "outbound-content-scrub" \
-    "team-knowledge" \
+    "team knowledge" \
     "Required Compliance" \
     "create-handoff" \
     "knowledge-publish" \
@@ -156,9 +156,9 @@ for phrase in \
     present "$DECK" "$phrase" "deck names: $phrase"
 done
 
-present "$DECK" "Team knowledge lives in team-knowledge/ and is indexed by filename." "deck note uses the team-knowledge path"
+present "$DECK" "Team knowledge lives in knowledge/ and is indexed by filename." "deck note uses the knowledge path"
 absent "$DECK" "Team knowledge lives in lessons/ and is indexed by filename." "deck drops the lessons path"
-present "$ROOT/docs/slides/diagrams/knowledge-skills.svg" "team-knowledge/" "the knowledge and skills diagram uses the team-knowledge path"
+present "$ROOT/docs/slides/diagrams/knowledge-skills.svg" "team/knowledge/" "the knowledge and skills diagram uses the team knowledge path"
 
 if awk '/^---$/{exit} {print}' "$DECK" | grep -qF "Think like a wave surfer"; then
     pass "first slide sets the training framing"
@@ -187,7 +187,7 @@ else
 fi
 present "$GUIDE" "The MoE analogy" "the guide carries the MoE note"
 present "$GUIDE" "saves context tokens" "the guide states the context saving"
-present "$GUIDE" "A trigger loads a global policy's body" "the guide names the trigger route"
+present "$GUIDE" "A trigger loads a workflow policy's body" "the guide names the trigger route"
 present "$GUIDE" "a skill description match loads a skill body" "the guide names the skill route"
 present "$ROOT/support-files/build-slides-html.sh" "docs/slides/simple-ai-workflow-slides.html" "the build script targets docs/slides/simple-ai-workflow-slides.html"
 present "$RENDER" "PORT=\"\${PORT:-8765}\"" "the renderer defaults to the confirmed port"
@@ -198,10 +198,10 @@ for group in "Setup" "Daily loop" "Memory" "Quality" "Delivery" "Maintenance" "T
 done
 
 for policy in \
-    "common policy" "global-settings policy" "Meta policy" "Knowledge policy" \
+    "common policy" "user-settings policy" "Meta policy" "Knowledge policy" \
     "Design-docs policy" "Issue-management policy" "Coding-baseline policy" \
     "Code-review policy" "Codebase-examination policy" "Thinking-modes policy" \
-    "Handoff policy" "outbound-content-scrub" "team-knowledge" \
+    "Handoff policy" "outbound-content-scrub" "team knowledge policy" \
     "Academic research" "Accounting" "API backend" "Career coaching" "Cloud" \
     "Data" "DBA" "Linux admin" "Mobile apps" "Observability" "Web frontend" "Windows admin"; do
     present "$DECK" "$policy" "catalog policy: $policy"
@@ -211,12 +211,12 @@ for procedure in \
     "bootstrap-project" "load-context" "manage-issues" "implement-plan" \
     "write-checkpoint" "run-peer-review" "examine-codebase" "update-design-docs" \
     "migrate-design-docs" "repair-state-files" "repair-knowledge-files" \
-    "repair-global-settings" "create-backup" "create-handoff" \
+    "repair-user-settings" "create-backup" "create-handoff" \
     "post-compaction-recovery" "knowledge-publish"; do
     present "$DECK" "$procedure" "catalog procedure: $procedure"
 done
 
-for term in "project" "global" "team" "knowledge" "skill" "road trip" "turn by turn" "brain" "tools" "context window" "out-of-band" "local"; do
+for term in "project" "user" "team" "knowledge" "skill" "road trip" "turn by turn" "brain" "tools" "context window" "out-of-band" "local"; do
     present_ci "$DECK" "$term" "deck names: $term"
 done
 

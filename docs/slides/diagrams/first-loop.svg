@@ -26,9 +26,8 @@
   <rect x="360" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="410" cy="270" r="22" fill="#0090C1"/><text x="410" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">2</text>
   <text x="450" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Create ~/.ai</text>
-  <text x="396" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">settings,</text>
-  <text x="396" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">global-knowledge,</text>
-  <text x="396" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">backups.</text>
+  <text x="396" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">settings, knowledge,</text>
+  <text x="396" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">skills, backups.</text>
 
   <rect x="660" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="710" cy="270" r="22" fill="#0090C1"/><text x="710" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">3</text>
@@ -40,9 +39,9 @@
   <rect x="960" y="220" width="280" height="360" rx="22" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <circle cx="1010" cy="270" r="22" fill="#0090C1"/><text x="1010" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">4</text>
   <text x="1050" y="280" font-family="Lato, Arial, sans-serif" font-size="28" font-weight="700" fill="#2B3A42">Set keys</text>
-  <text x="996" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Global AI</text>
-  <text x="996" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Workflow Directory</text>
-  <text x="996" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">and User Directory.</text>
+  <text x="996" y="340" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Workflow AI</text>
+  <text x="996" y="374" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">Directory and</text>
+  <text x="996" y="408" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">User Directory.</text>
 
   <rect x="1260" y="220" width="280" height="360" rx="22" fill="#E6F5FA" stroke="#0090C1" stroke-width="2"/>
   <circle cx="1310" cy="270" r="22" fill="#0090C1"/><text x="1310" y="279" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#FFFFFF">5</text>

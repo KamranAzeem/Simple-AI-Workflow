@@ -93,7 +93,7 @@ function sort_conf(s,  n, a, i, j, tmp, out) {
     head[n] = $7
     eff[n] = "yes"
     conf[n] = ""
-    if (!project_is_workflow && $2 == "global" && index(source[n], project_root "/ai/policies/") == 1) {
+    if (!project_is_workflow && $2 == "workflow" && index(source[n], project_root "/ai/policies/") == 1) {
         scope[n] = "project"
     }
     t = trig[n]
@@ -113,7 +113,7 @@ END {
     for (i = 1; i <= n; i++) {
         if (scope[i] != "project" || type[i] != "policy") continue
         for (j = 1; j <= n; j++) {
-            if (scope[j] == "global" && type[j] == "policy" && name[j] == name[i]) {
+            if (scope[j] == "workflow" && type[j] == "policy" && name[j] == name[i]) {
                 eff[j] = "shadowed:" name[i]
             }
         }
@@ -121,8 +121,8 @@ END {
     for (i = 1; i <= n; i++) {
         for (j = i + 1; j <= n; j++) {
             if (type[i] == "policy" && type[j] == "policy" && name[i] == name[j] &&
-                ((scope[i] == "global" && eff[i] == "shadowed:" name[j]) ||
-                 (scope[j] == "global" && eff[j] == "shadowed:" name[i]))) continue
+                ((scope[i] == "workflow" && eff[i] == "shadowed:" name[j]) ||
+                 (scope[j] == "workflow" && eff[j] == "shadowed:" name[i]))) continue
             for (x = 1; x <= tc[i]; x++) {
                 for (y = 1; y <= tc[j]; y++) {
                     a = tn[i, x]

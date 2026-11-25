@@ -67,7 +67,7 @@ $legacy = @'
 
 ## AI Workflow Configuration
 
-- **Global AI Workflow Directory**: C:\Old\Workflow\
+**Global AI Workflow Directory**: C:\Old\Workflow\
 '@
 Set-Content -Path (Join-Path $old 'ai\ai-customization.md') -Value $legacy
 $pruned = Join-Path $projects 'proj-new\node_modules\fake-project'
@@ -91,6 +91,7 @@ Write-Host $syncText
 Check 'sync real exits 0' ($syncRc -eq 0)
 Check 'sync real moves the old file' ((-not (Test-Path -LiteralPath (Join-Path $old 'ai\ai-customization.md'))) -and (Test-Path -LiteralPath (Join-Path $old 'ai-customization.md')))
 Check 'sync real adds Merge Policy' ((Get-Content -Raw -Path (Join-Path $old 'ai-customization.md')) -match '(?m)^## Merge Policy')
+Check 'sync real rewrites the workflow key' ((Get-Content -Raw -Path (Join-Path $old 'ai-customization.md')) -match '\*\*Workflow AI Directory\*\*')
 Check 'sync real creates the new project config' (Test-Path -LiteralPath (Join-Path $new 'ai-customization.md'))
 
 Write-Host "=== backup -WhatIf ==="

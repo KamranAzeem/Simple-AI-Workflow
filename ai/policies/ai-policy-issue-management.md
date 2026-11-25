@@ -145,7 +145,7 @@ Each acceptance criterion has at least one behavioral assertion. More are allowe
 - Verify a clean tree and the baseline path list before opening the implementation branch.
 - Put release documentation in the branch; tag the release commit after the merge; publish the GitHub Release after the tag.
 - Treat the work item as complete only when the ticket is closed with the plan attached, the checkpoint is written, the branch is merged and deleted, the trunk is pushed, and the release is tagged and published when the work carries a release.
-- Use the template at `ai/shared/project-knowledge/issue-template.md`; create it when missing and never overwrite it.
+- Use the template at `ai/knowledge/issue-template.md`; create it when missing and never overwrite it.
 
 ## References
 

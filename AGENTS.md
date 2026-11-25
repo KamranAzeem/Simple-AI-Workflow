@@ -19,22 +19,27 @@ This is the single startup entry point for all AI assistants in this repository.
 
 **Path Normalization & Inference Rules**:
 
-- **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `/c/Users/username` on Gitbash, `C:\Users\username` on Windows CMD or PowerShell ).
-- **Dynamic Paths**: All paths below are derived from **Global AI Workflow Directory** (resolved at boot from **Project Customization File**) and **Global User AI Directory**. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
-- **Policy Path Resolution**: A policy file named without a directory resolves from the **Global AI Policies Directory**.
+- **[HOME] Resolution**: AI MUST resolve `[HOME]` to the absolute home directory of the current user (e.g., `/home/username` on Linux, `/c/Users/username` on Gitbash, `C:\Users\username` on Windows CMD or PowerShell).
+- **Four Scopes**: Workflow is the clone; User is the configured user directory; Team is the configured team repository; Project is the project root.
+- **Dynamic Paths**: All paths below are derived from **Workflow AI Directory**, **User AI Directory**, and **Team AI Directory** (resolved from the **Project Customization File**) and **User AI Directory**. AI MUST concatenate the Base Directory with the relative path to form absolute paths.
+- **Policy Path Resolution**: A policy file named without a directory resolves from the **Workflow AI Policies Directory**.
 - **Project Policy Directory**: Read from the **Project AI Policies Directory** only when the instruction names that directory or names a user custom policy.
 
 <!-- Human user must not touch/modify the lines below -->
 
-**Global AI Workflow Directory**: resolved from **Project Customization File** at boot
-**Global User AI Directory**: resolved from **Project Customization File** at boot; default `[HOME]/.ai/`
-**Global AI Policies Directory**: (Global AI Workflow Directory)/ai/policies/
-**Global AI Knowledge Directory**: (Global User AI Directory)/global-knowledge/
-**Global AI Backups Directory**: (Global User AI Directory)/backups/
-**Global AI Settings Directory**: (Global User AI Directory)/settings/
-**Global AI Skills Directory**: (Global AI Workflow Directory)/ai/skills/
-**Team AI Knowledge Directory**: resolved from **Project Customization File** at boot when present
+**Workflow AI Directory**: resolved from **Project Customization File** at boot
+**User AI Directory**: resolved from **Project Customization File** at boot; default `[HOME]/.ai/`
+**Team AI Directory**: resolved from **Project Customization File** at boot when present
 **Team AI Knowledge Repository**: resolved from **Project Customization File** at boot when present
+
+**Workflow AI Policies Directory**: (Workflow AI Directory)/ai/policies/
+**Workflow AI Skills Directory**: (Workflow AI Directory)/ai/skills/
+**User AI Knowledge Directory**: (User AI Directory)/knowledge/
+**User AI Settings Directory**: (User AI Directory)/settings/
+**User AI Backups Directory**: (User AI Directory)/backups/
+**User AI Skills Directory**: (User AI Directory)/skills/
+**Team AI Knowledge Directory**: (Team AI Directory)/knowledge/
+**Team AI Skills Directory**: (Team AI Directory)/skills/
 **Project AI Skills Directory**: `ai/skills/`
 
 **Project Artifacts Directory**: `ai/artifacts/`
@@ -45,7 +50,7 @@ This is the single startup entry point for all AI assistants in this repository.
 **Project Daily Checkpoints Directory**: `ai/daily-checkpoints/`
 **Project Handoffs Directory**: `ai/shared/handoffs/`
 **Project Issues Directory**: `ai/issues/`
-**Project AI Knowledge Directory**: `ai/shared/project-knowledge/`
+**Project AI Knowledge Directory**: `ai/knowledge/`
 **Project Notes Directory**: `ai/notes/`
 **Project Pending Directory**: `ai/pending/`
 **Project Plans Directory**: `ai/plans/`
@@ -58,9 +63,12 @@ This is the single startup entry point for all AI assistants in this repository.
 
 The following short forms are recognized as equivalents to their canonical directives:
 
-- "Global Knowledge" ↔ **Global AI Knowledge Directory**
+- "User Knowledge" ↔ **User AI Knowledge Directory**
 - "Project Knowledge" ↔ **Project AI Knowledge Directory**
 - "Team Knowledge" ↔ **Team AI Knowledge Directory**
+- "Workflow Policies" ↔ **Workflow AI Policies Directory**
+- "Workflow Skills" ↔ **Workflow AI Skills Directory**
+- "User Settings" ↔ **User AI Settings Directory**
 
 ---
 
@@ -87,12 +95,12 @@ The following short forms are recognized as equivalents to their canonical direc
 - **Context Protection**: Treat **Project AI State Files** as read-only during bootstrap and context loading. During **PROCEDURE POST-COMPACTION-RECOVERY**, these files must not be read at all.
 - **State File Single-Writer**: The project-root orchestrator is the only writer of the state files. The common policy owns the mechanics.
 - **Branch Gating**: Obtain explicit human approval before any state-changing Git operation on `master` or `main`.
-- **Protocol Developer Mode**: When PWD matches the **Global AI Workflow Directory**, you are the protocol maintainer. This is the sanctioned exception to Self-Modification: you maintain these files, not merely read them. Before changing a protocol file (`AGENTS.md`, a policy, a procedure, a validator script, or any file under `ai/`), fully load `protocol-decisions.md` from `(Global AI Workflow Directory)/design-docs/`, and get explicit human approval before committing.
+- **Protocol Developer Mode**: When PWD matches the **Workflow AI Directory**, you are the protocol maintainer. This is the sanctioned exception to Self-Modification: you maintain these files, not merely read them. Before changing a protocol file (`AGENTS.md`, a policy, a procedure, a validator script, or any file under `ai/`), fully load `protocol-decisions.md` from `(Workflow AI Directory)/design-docs/`, and get explicit human approval before committing.
 - **End-User Perspective**: Write every path and file reference in a policy file from the end-user's project root, not from this repository's internal tree. See the "No markdown hyperlinks in policy files" entry in `protocol-decisions.md`.
-- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`, except that STEP-POLICY-LOADING also loads every project policy from the **Project AI Policies Directory**. STEP-TEAM-KNOWLEDGE-INDEX loads `ai-policy-team-knowledge.md` only when the **Team AI Knowledge Directory** is configured and readable. Do not load every global policy as body text; the global policy directory is the distribution tree.
+- **Policy Loading Set**: During context loading and post-compaction recovery, load only `ai-policy-common.md` plus the policies named under `## Active Expertise`, except that STEP-POLICY-LOADING also loads every project policy from the **Project AI Policies Directory**. STEP-TEAM-KNOWLEDGE-INDEX loads `ai-policy-team-knowledge.md` only when the **Team AI Directory** is configured and readable. Do not load every workflow policy as body text; the workflow policy directory is the distribution tree.
 - **Session Resume (Compacted Context)**: When a session starts from a compacted summary or is compacted mid-session, the user runs **PROCEDURE POST-COMPACTION-RECOVERY** manually; no harness hook fires it today. Run it before answering when the user asks. Signals: "Compacted conversation", a `<conversation-summary>` block, or a machine-generated multi-section summary you did not write.
 - **Archive File Exclusion**: Every shell listing in this protocol excludes compressed and archive files. With `find`, use `! -name '*.tar*' ! -name '*.zip'`; with `ls`, filter with `grep -v '\.tar\|\.zip'`; with `Get-ChildItem`, filter the same names.
-- **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **Global AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
+- **Backup Directory Exclusion**: Never scan, list, read, or reference files inside the **User AI Backups Directory** (`~/.ai/backups/`). Backups are user-space artifacts and are not part of the active project state.
 
 ### Boot Scan Exclusions
 
@@ -103,7 +111,7 @@ The following short forms are recognized as equivalents to their canonical direc
 ## Shared Protocol Steps
 
 - STEP-PROTOCOL-INDEX: Rebuild the module index from the live files and record it in working context. Defined in PROCEDURE LOAD-CONTEXT.
-- STEP-SKILLS-INDEX: Build the ephemeral skills index from both local skill roots and the configured team root; read no body and write no file. Defined in PROCEDURE LOAD-CONTEXT.
+- STEP-SKILLS-INDEX: Build an ephemeral skills index from both local skill roots, the user root, and the configured team root; read no body and write no file. Defined in PROCEDURE LOAD-CONTEXT.
 
 ## Protocol Dispatch
 
@@ -140,10 +148,10 @@ The following short forms are recognized as equivalents to their canonical direc
 
 ## TIER TRIGGERED-PROCEDURES
 
-Procedure modules live in `(Global AI Workflow Directory)/ai/procedures/`, one file per procedure. Run `STEP-PROTOCOL-INDEX` to list them. `AGENTS.md` carries no procedure body and no static procedure list.
+Procedure modules live in `(Workflow AI Directory)/ai/procedures/`, one file per procedure. Run `STEP-PROTOCOL-INDEX` to list them. `AGENTS.md` carries no procedure body and no static procedure list.
 
 ## TIER APPENDIX
 
-See `(Global AI Workflow Directory)/docs/setup.md` for Windows path formats and the manual setup.
+See `(Workflow AI Directory)/docs/setup.md` for Windows path formats and the manual setup.
 
 <!-- END_IMMUTABLE_PROTOCOL -->

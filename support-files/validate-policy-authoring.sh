@@ -570,7 +570,7 @@ index_mode() {
         source="$file"
         canon="$(cd -P "$(dirname "$file")" 2>/dev/null && pwd)/$(basename "$file")"
         case "$canon" in
-            "$script_root"/ai/policies/*|"$script_root"/ai/procedures/*) scope=global ;;
+            "$script_root"/ai/policies/*|"$script_root"/ai/procedures/*) scope=workflow ;;
             *) scope=project ;;
         esac
         mode="$(awk '

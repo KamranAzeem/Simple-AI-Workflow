@@ -48,7 +48,7 @@
   <text x="1450" y="462" text-anchor="end" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">the work, in the open</text>
 
   <rect x="900" y="506" width="580" height="70" rx="14" fill="#E6F5FA"/>
-  <text x="930" y="550" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">ai/shared/project-knowledge/</text>
+  <text x="930" y="550" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">ai/knowledge/</text>
   <text x="1450" y="550" text-anchor="end" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">lessons</text>
 
   <rect x="900" y="594" width="580" height="70" rx="14" fill="#E6F5FA"/>

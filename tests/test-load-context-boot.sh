@@ -13,8 +13,8 @@ HOME="$WORK/home"
 PROJECT="$WORK/project"
 export HOME
 
-mkdir -p "$HOME/.ai/settings" "$HOME/.ai/global-knowledge" "$HOME/.ai/backups"
-mkdir -p "$PROJECT/ai"/{state,shared/project-knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies,skills}
+mkdir -p "$HOME/.ai/settings" "$HOME/.ai/knowledge" "$HOME/.ai/skills" "$HOME/.ai/backups"
+mkdir -p "$PROJECT/ai"/{state,knowledge,shared/handoffs,issues/open,issues/in-progress,issues/closed,secrets,artifacts,code-review-reports,notes,pending,plans,daily-checkpoints,policies,skills}
 mkdir -p "$PROJECT/design-docs/.git" "$PROJECT/ai/policies/.canaryhidden" "$PROJECT/ai/policies/tmp" "$PROJECT/ai/skills/example"
 printf -- '---\nname: example\ndescription: Example skill.\n---\n' > "$PROJECT/ai/skills/example/SKILL.md"
 
@@ -23,8 +23,8 @@ for d in secrets artifacts code-review-reports notes pending plans; do
 done
 printf 'canary-boot\n' > "$PROJECT/ai/issues/closed/canary-closed.txt"
 printf 'canary-boot\n' > "$PROJECT/design-docs/.git/canary-git.txt"
-printf 'settings\n' > "$HOME/.ai/settings/global-user-settings.md"
-printf 'knowledge\n' > "$HOME/.ai/global-knowledge/global-topic.md"
+printf 'settings\n' > "$HOME/.ai/settings/user-settings.md"
+printf 'knowledge\n' > "$HOME/.ai/knowledge/user-topic.md"
 printf 'state\n' > "$PROJECT/ai/state/context.md"
 printf 'state\n' > "$PROJECT/ai/state/progress.md"
 printf 'state\n' > "$PROJECT/ai/state/next-steps.md"
@@ -58,10 +58,10 @@ absent() {
 }
 
 P="$ROOT/ai/procedures/load-context.md"
-for anchor in "index-source=builtin" "[PENDING]" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "Global Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "Global AI Skills Directory" "STEP-POLICY-LOADING"; do
+for anchor in "index-source=builtin" "[PENDING]" "age-source=commit|mtime" "STEP-STATE-FILE-PROOF-OF-READ" "User Knowledge files" "NOT loaded here" "Author identity" "update design documents" "Boot Scan Exclusions" "16 KB" "STEP-SKILLS-INDEX" "Workflow AI Skills Directory" "STEP-POLICY-LOADING" "path-probe.sh" "User AI Knowledge Directory" "Workflow AI Directory"; do
     present "$P" "$anchor" "procedure anchor: $anchor"
 done
-for old in "index-source=helper" "index-source=fallback" 'bash "<Global AI Workflow Directory>/support-files/index-protocol.sh"'; do
+for old in "index-source=helper" "index-source=fallback" 'bash "<Workflow AI Directory>/support-files/index-protocol.sh"'; do
     absent "$P" "$old" "old helper boot anchor: $old"
 done
 # shellcheck disable=SC2016

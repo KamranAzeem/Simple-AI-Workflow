@@ -40,8 +40,8 @@ prepare() {
     root="$(mktemp -d /tmp/kilo/knowledge-repair-fixture.XXXXXX)"
     project="$root/project"
     home="$root/home"
-    pk="$project/ai/shared/project-knowledge"
-    gk="$home/.ai/global-knowledge"
+    pk="$project/ai/knowledge"
+    gk="$home/.ai/knowledge"
     mkdir -p "$pk/tickets" "$gk" "$project/ai/state" "$project/ai/daily-checkpoints" \
         "$project/ai/artifacts" "$home/.ai/settings"
 
@@ -81,8 +81,8 @@ prepare() {
         done
     done
 
-    printf '# User Settings\n\n- Knowledge pointer: ai/shared/project-knowledge/postgresql-operations.md\n' \
-        > "$home/.ai/settings/global-user-settings.md"
+    printf '# User Settings\n\n- Knowledge pointer: ai/knowledge/postgresql-operations.md\n' \
+        > "$home/.ai/settings/user-settings.md"
 
     echo "$root"
 }
@@ -92,10 +92,10 @@ simulate() {
     root="$1"
     project="$root/project"
     home="$root/home"
-    pk="$project/ai/shared/project-knowledge"
-    gk="$home/.ai/global-knowledge"
+    pk="$project/ai/knowledge"
+    gk="$home/.ai/knowledge"
     art="$project/ai/artifacts/knowledge-repair-$ART_DATE"
-    gback="$home/.ai/knowledge-repair-backups/$ART_DATE/global"
+    gback="$home/.ai/knowledge-repair-backups/$ART_DATE/user"
     mkdir -p "$art/project" "$gback"
     cp -a "$pk/." "$art/project/"
     cp -a "$gk/." "$gback/"
@@ -137,7 +137,7 @@ simulate() {
     done
     printf '\n## Why\n\n- The merged lessons belong to one topic.\n\n## Verify\n\n- Confirm the merged rules.\n' >> "$target"
 
-    printf 'dangling pointer: ai/shared/project-knowledge/postgresql-operations.md (settings)\n' > "$art/pointers.txt"
+    printf 'dangling pointer: ai/knowledge/postgresql-operations.md (settings)\n' > "$art/pointers.txt"
     after="$(knowledge_count "$pk")"
 
     {
@@ -145,7 +145,7 @@ simulate() {
         printf -- '- postgresql-operations.md: split by topic\n'
         printf -- '- small-*.md and the backup command: merged\n'
         printf -- '- incident-only.md: removed as incident evidence; rule merged\n'
-        printf -- '- postgresql-restore-and-pitr.md: merged into global\n'
+        printf -- '- postgresql-restore-and-pitr.md: merged into user\n'
         printf -- '- pr-review-123.md: folded into a topic file\n'
         printf -- '- ado-repository-inventory.md: moved to artifacts\n'
         printf -- '- tickets/t-1.md: retired\n'
@@ -154,7 +154,7 @@ simulate() {
         printf -- '- settings pointer: reported\n'
     } > "$art/manifest.md"
 
-    printf '# Project Context\n\n## Current Status\n\n- Knowledge repair: before %s files, after %s files.\n- Manifest: %s\n- Project backup: %s\n- Global backup: %s\n' \
+    printf '# Project Context\n\n## Current Status\n\n- Knowledge repair: before %s files, after %s files.\n- Manifest: %s\n- Project backup: %s\n- User backup: %s\n' \
         "$before" "$after" "$art/manifest.md" "$art/project/" "$gback/" > "$project/ai/state/context.md"
     printf '# Daily Checkpoint %s\n\n## Knowledge repair\n\n- Before: %s files\n- After: %s files\n- Manifest: %s\n' \
         "$ART_DATE" "$before" "$after" "$art/manifest.md" > "$project/ai/daily-checkpoints/$ART_DATE.md"
@@ -172,10 +172,10 @@ verify() {
     root="$1"
     project="$root/project"
     home="$root/home"
-    pk="$project/ai/shared/project-knowledge"
-    gk="$home/.ai/global-knowledge"
+    pk="$project/ai/knowledge"
+    gk="$home/.ai/knowledge"
     art="$project/ai/artifacts/knowledge-repair-$ART_DATE"
-    gback="$home/.ai/knowledge-repair-backups/$ART_DATE/global"
+    gback="$home/.ai/knowledge-repair-backups/$ART_DATE/user"
 
     count="$(knowledge_count "$pk")"
     [ "$count" -le 50 ] || fail "store count $count is over 50"
@@ -192,7 +192,7 @@ verify() {
     ! grep -R -q 'Only narrative' "$pk" || fail "incident evidence remains"
     ! grep -R -q 'Incident narrative' "$pk" || fail "split evidence remains"
 
-    [ -f "$gk/postgresql-restore-and-pitr.md" ] || fail "global duplicate missing"
+    [ -f "$gk/postgresql-restore-and-pitr.md" ] || fail "user duplicate missing"
     [ ! -f "$pk/postgresql-restore-and-pitr.md" ] || fail "project duplicate remains"
     [ ! -f "$pk/pr-review-123.md" ] || fail "per-PR file remains"
     [ -f "$project/ai/artifacts/ado-repository-inventory.md" ] || fail "inventory not moved"
@@ -206,7 +206,7 @@ verify() {
     grep -q 'split by topic' "$art/manifest.md" || fail "split disposition missing"
     grep -q 'retired' "$art/manifest.md" || fail "retirement disposition missing"
     [ -f "$art/project/postgresql-operations.md" ] || fail "project backup missing"
-    [ -f "$gback/postgresql-restore-and-pitr.md" ] || fail "global backup missing"
+    [ -f "$gback/postgresql-restore-and-pitr.md" ] || fail "user backup missing"
     ! find "$art" -name '*candidate*' | grep -q . || fail "candidate left behind"
 
     grep -q '### Knowledge Lookup' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "Knowledge Lookup missing"
@@ -215,7 +215,7 @@ verify() {
     grep -q '50 knowledge files per store' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "review threshold missing"
     grep -q '3,000 bytes' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "merge floor missing"
     grep -q '## Knowledge Invariant' "$REPO/ai/policies/ai-policy-common.md" || fail "common knowledge invariant missing"
-    grep -q 'Global AI Settings Directory' "$REPO/ai/policies/ai-policy-common.md" || fail "common settings invariant missing"
+    grep -q 'User AI Settings Directory' "$REPO/ai/policies/ai-policy-common.md" || fail "common settings invariant missing"
     grep -q -- '- knowledge file standards' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "knowledge trigger missing"
     grep -q -- '- Mode: trigger' "$REPO/ai/policies/ai-policy-knowledge.md" || fail "knowledge loading mode missing"
     grep -q 'ai-policy-knowledge.md' "$REPO/ai/procedures/load-context.md" || fail "load-context does not load the knowledge plug-in"
