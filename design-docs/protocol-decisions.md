@@ -1424,3 +1424,7 @@ The plan template, the assertion floor, the proportional-depth alignment, and th
 ## 2026-11-25: The deferred plan-quality rules land
 
 The issue policy owns one plan template with the assertion floor: each acceptance criterion has at least one behavioral assertion, more are allowed, and the number is not capped. S and M use the light path; L and XL use the full set. The clean-tree baseline replaces the core plan's "user handles the records" rule: the AI commits the current planning records, including the plan and ticket, after the implementation request; that request plus the plan's Close Sequence is the explicit approval for the protected-branch commit. A narrow no-pre-work exception permits only that baseline commit and lives in the issue policy next to the no-pre-work rule. `PROCEDURE IMPLEMENT-PLAN` checks the baseline path list and a clean tree before opening the branch.
+
+## 2026-11-25: The checkpoint report shows the current position
+
+The checkpoint report prints a `Current position` block before the transaction log. `Next up` lists the active item first, then the remaining open items from `ai/state/next-steps.md`; it lists all when ten or fewer, otherwise the active item plus a count and the `next-steps.md` pointer. `Last active` names the newest progress entry. The transaction log remains the delta, and the state files remain canonical.

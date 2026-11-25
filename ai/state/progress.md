@@ -157,3 +157,4 @@
 [2026-11-25] Planned and implemented the plan-quality follow-up (reviews 146/147); the template, assertion floor, depth, and clean-tree gate are live in v7.6.0. Full text in the 2026-11-25 diary.
 [2026-11-25] Released v7.6.0 and published the public GitHub Release; the plan-quality follow-up rules are live.
 [2026-11-25] Recorded the future same-root multi-assistant read/write scenario and the worktree limitation in the scope-normalization ticket; no parallel assistants or worktrees exist.
+[2026-11-25] Implemented the checkpoint Current position block; review-149 APPROVED; suite 31/31, validator 8/8, index 25/16/54; v7.6.1 pending.

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.6.0 (2026-11-25).** The plan-quality follow-up rules are live: one plan template with the assertion floor, the S/M light path, and the clean-tree baseline gate. Read the announcement: [docs/announcements/v7.6.0.md](docs/announcements/v7.6.0.md). |
+| **v7.6.1 (2026-11-25).** The checkpoint report now shows the current position before the transaction log: the active next step, the open items when ten or fewer, and the last active item. Read the announcement: [docs/announcements/v7.6.1.md](docs/announcements/v7.6.1.md). |
 
 # Simple AI Workflow
 

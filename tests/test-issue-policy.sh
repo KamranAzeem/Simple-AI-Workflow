@@ -20,6 +20,7 @@ REPAIR_SETTINGS="$ROOT/ai/procedures/repair-global-settings.md"
 DESIGN="$ROOT/ai/policies/ai-policy-design-docs.md"
 KNOWLEDGE="$ROOT/ai/policies/ai-policy-knowledge.md"
 GLOBALSET="$ROOT/ai/policies/ai-policy-global-settings.md"
+CHECKPOINT="$ROOT/ai/procedures/write-checkpoint.md"
 fail=0
 
 present() {
@@ -147,6 +148,12 @@ present "$MANAGE" "Plan Template" "manage-issues cites the plan template"
 present "$IMPLEMENT" "Plan Template" "implement-plan checks the plan template"
 present "$IMPLEMENT" "baseline" "implement-plan checks the baseline"
 present "$IMPLEMENT" "Verify the tree is clean" "implement-plan checks the clean tree"
+present "$CHECKPOINT" "Current position" "checkpoint report names the current position block"
+present "$CHECKPOINT" "Next up" "checkpoint report names the next-up list"
+present "$CHECKPOINT" "Last active" "checkpoint report names the last-active item"
+present "$CHECKPOINT" "ten or fewer" "checkpoint report caps the full list at ten"
+present "$CHECKPOINT" "otherwise list the active item plus a count" "checkpoint report has the count fallback"
+present "$CHECKPOINT" "The transaction log remains the delta." "checkpoint report keeps the delta log"
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: issue-management plug-in fixture."
