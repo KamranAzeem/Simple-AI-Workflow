@@ -44,7 +44,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Split the team repository naming convention and the optional report-only check into a separate ticket; no helper ships in this release.
 - Counts stay 25 policies, 16 procedures, 54 triggers; suite 31/31, validator 8/8.
 - Upgrade action: pull, run the sync script, restart the session; if you keep a team store, rename its `lessons/` directory to `team-knowledge/` and update its links.
-- Release prepared on 2026-11-25; publication follows the approval.
+- Published 2026-11-25.
 
 ### v7.3.1 (2026-11-24)
 
@@ -61,7 +61,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Clarify the two-step delivery approval in the guide, README, deck, and common policy; the docs describe the protocol and the modules govern.
 - The trigger count is 54.
 - No new procedure; `manage-issues` gains one trigger and H1 close variants, while `implement-plan` and `write-checkpoint` are unchanged.
-- Release prepared on 2026-11-24; publication follows the merge approval.
+- Published 2026-11-24.
 
 ### v7.2.1 (2026-11-24)
 
@@ -71,7 +71,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 - Add the decision entry and the tests that reject the automatic claim.
 - No reload step changes; the no-state-file rule stands.
 - Upgrade action: pull, run the sync script, and restart the session; type `"run post-compaction recovery procedure"` after each compaction.
-- Release prepared on 2026-11-24; publication follows the merge approval.
+- Published 2026-11-24.
 
 ### v7.2.0 (2026-11-22)
 

@@ -46,3 +46,4 @@ The deck teaches and then serves as a reference. A uniform type scale and a comp
 
 - Google Slides may not preserve the SVG's internal type rules; check each inserted diagram at its final size and adjust it there.
 - Dense diagrams may keep a smaller scale only as a recorded exception with the slide and the reason; uniformity is the target, not one identical size for every label.
+- `support-files/audit-slides.sh` measures HTML element boxes only; it sees each SVG as one image. Inspect the rendered PNGs for SVG-internal overlap, clipping, and margins.

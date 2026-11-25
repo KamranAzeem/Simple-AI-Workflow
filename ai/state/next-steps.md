@@ -18,9 +18,6 @@
 - File the Google Slides update and physical Gate 2 as a separate issue.
 - Confirm whether any harness now offers a reliable post-compaction hook; update the manual-recovery docs if one appears.
 - Sync the updated AGENTS.md into downstream projects after the v7.4.0 release.
-- Refresh the v7.2.1 and v7.3.0 release-practices lines from "prepared" at the next release-doc touch.
 - Resume the presentation policy only on the user's request; design layout and type control first.
 - Resume the trimmed slide review speed scope only on the user's request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
-- Restore the pre-rename stash after the v7.4.0 delivery; the deleted config plan stays deleted.
-- Publish v7.4.0 after the terminal gate and merge.

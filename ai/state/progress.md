@@ -145,3 +145,4 @@
 [2026-11-25] Renamed the team store to team-knowledge/ across the policy, publish procedure, boot index, docs, deck note, diagram, fixture, guard, validator, and ADR; split the naming convention and the report-only check to team-repository-naming-convention.md.
 [2026-11-25] Cut the team-knowledge plan from 220 lines to an S note; review-130 APPROVED; implemented with review-131 APPROVED; suite 31/31, validator 8/8, markdownlint 0 on 14 files, shellcheck 0, audit 59/59; slide 40 PNG checked.
 [2026-11-25] Prepared v7.4.0 on feature/team-knowledge-directory-rename; the release text is approved; the checkpoint records the gate and the stash restore; no merge or tag yet.
+[2026-11-25] Committed the parked backlog and the five follow-up tickets on chore/commit-backlog-and-release-status; marked v7.4.0, v7.3.0, and v7.2.1 published; suite 31/31, validator 8/8, markdownlint 0; no release.
