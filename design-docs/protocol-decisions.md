@@ -266,6 +266,7 @@ Curated record of the protocol's design decisions, oldest first. Session bookkee
 - 2026-11-26: The v7.7.x trigger aliases are retired at v7.11.0
 - 2026-11-26: Docs-only changes may land without a release
 - 2026-11-26: The ADR store carries a checked index
+- 2026-11-26: Grilling uses a frontier, numbered questions, and a facts-decisions split
 <!-- ADR-INDEX:END -->
 
 ## 2026-05-21: Knowledge loading is a dedicated load-context step
@@ -1888,3 +1889,11 @@ The store carries a marked index of its dated headings at the top, and `tests/te
 Context: the store has hundreds of dated entries and no navigation aid. A checked mirror keeps the store as one file and the full-load rule unchanged.
 
 Consequences: every new decision adds one `- YYYY-MM-DD: Title` line to the block. The docs audit fails on a stale index, a missing or extra line, or a duplicate dated heading. No generator script is kept. The release is v7.11.1, PATCH.
+
+## 2026-11-26: Grilling uses a frontier, numbered questions, and a facts-decisions split
+
+The grilling mode asks a round of only the decisions whose prerequisites are settled, numbers each question with a short title and a recommended answer, and keeps facts with the agent and decisions with the user.
+
+Context: the earlier grilling text left the frontier implicit, allowed dependent questions in one round, and did not separate facts from decisions. The Pre-Work Gate item 3 said one decision at a time, which conflicted with rounds.
+
+Consequences: `ai-policy-thinking-modes.md` and `ai-policy-common.md` carry the rules; the release is v7.12.0, MINOR. The policy text names no external source. No glossary, ADR writing during grilling, skill family, or mandatory sub-agent.

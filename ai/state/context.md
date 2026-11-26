@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.12.0 prepared; grilling uses frontier rounds and numbered questions.
+- **Milestone**: v7.12.0 live; grilling uses frontier rounds and numbered questions.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 7 open, 0 in-progress, 159 closed; the grilling ticket is closed, the Azure idea is open.
-- **Release**: v7.12.0 prepared; v7.11.1 is the prior release.
+- **Release**: v7.12.0 is live; v7.11.1 is the prior release.
 
 ## Active Working Context
 
