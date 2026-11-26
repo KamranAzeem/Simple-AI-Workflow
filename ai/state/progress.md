@@ -158,8 +158,9 @@
 [2026-11-25] Planned the scope normalization; reviews 152-156 APPROVED; plan ready at ai/plans/scope-normalization-and-knowledge-layout.md; v7.7.0; no branch or commit.
 [2026-11-25] Implemented v7.7.0 scope normalization; review-157 APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck 0. Full text in the 2026-11-26 diary.
 [2026-11-25] Released v7.7.0; review-157 delta verified; validator 8/8, suite 33/33, markdownlint 0, shellcheck 0; PowerShell unrun. Full text in the 2026-11-26 diary.
-[2026-11-26] Implemented the checkpoint report split: status-only Current position, [NEXT-STEPS] queue with ticket paths and the ten-item rule, separate log; review-159/160 APPROVED; suite 33/33, validator 8/8; no release; ticket closed.
+[2026-11-26] Implemented the checkpoint report split; review-159/160 APPROVED. Full text in the 2026-11-26 diary.
 [2026-11-26] Merged the checkpoint report fix; post-merge validator 8/8 and fixtures pass; no release.
 [2026-11-26] Replaced the bracketed queue with a plain full Next steps list; reviews 161/162 APPROVED; no release.
 [2026-11-26] Merged the plain list; validator 8/8.
-[2026-11-26] Retired the verification runbook and the verdict-hash rules; commands live in the meta policy and the scripts; reviews 163/164 APPROVED; suite 33/33, validator 8/8, index 25/16/58, markdownlint 0, shellcheck 0; v7.7.1 prepared.
+[2026-11-26] Retired the verification runbook and verdict-hash rules; reviews 163/164 APPROVED; v7.7.1 released. Full text in the 2026-11-26 diary.
+[2026-11-26] Created the slide authoring pipeline ticket; added D2, mmdc, and Chrome paths plus the Puppeteer config to the user settings; D2 and mmdc smoke tests pass; no plan yet.

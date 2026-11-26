@@ -14,15 +14,15 @@
 
 ## Current Status
 
-- **Milestone**: v7.7.1 prepared; verification retirement.
+- **Milestone**: v7.7.1 live; slide pipeline ticket opened.
 - **Validation**: validator 8/8; suite 33/33; index 25/16/58; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 16 files, user 28, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 10 open, 0 in-progress, 145 closed; the scope, checkpoint-report, and verification-retirement tickets are closed.
-- **Release**: v7.7.0 is live; v7.7.1 is prepared, no release yet.
+- **Issues**: 11 open, 0 in-progress, 145 closed; the slide pipeline ticket is open.
+- **Release**: v7.7.1 is live; the prior release is v7.7.0.
 
 ## Active Working Context
 
-- **Objective**: merge and release v7.7.1, migrate the live User AI Directory, sync downstream projects, then continue the open queue.
+- **Objective**: plan the slide authoring pipeline and deck refresh, migrate the live User AI Directory, sync downstream projects, then continue the open queue.
 - **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
-- **Open queue**: presets and init, young learner, and deferred slide work.
+- **Open queue**: slide pipeline, presets and init, young learner, and deferred slide work.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

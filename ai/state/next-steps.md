@@ -27,3 +27,4 @@
 - Implement the customization presets on request; init follows.
 - Audit the Project Knowledge the protocol relies on.
 - Retire the user-space review-verdict-binding lesson with `repair knowledge files user`.
+- Plan `ai/issues/open/slide-authoring-pipeline-and-deck-refresh.md`.
