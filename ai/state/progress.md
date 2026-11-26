@@ -170,3 +170,5 @@
 [2026-11-26] Fixed the checkpoint transaction log: removed the stale [NEXT-STEPS] line; the plain Next steps is the only queue; reviews 169/170 APPROVED; v7.8.1 prepared.
 [2026-11-26] Grilled and scoped the customization presets: 8 roles, the Active Expertise sets, 3 new traits, soc2/iso pre-fill for five, docs/examples/customization-presets, a MINOR release; the ticket records the decisions; plan next.
 [2026-11-26] Delivered the customization presets (v7.8.2): eight role files, three traits, guide section 11, slide/README/template sync, new fixture, five ADRs; validator 8/8, suite 34/34; reviews 175/176.
+[2026-11-26] Released v7.8.2 (public URL 200); post-merge validator 8/8; no post-release code changes.
+[2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
