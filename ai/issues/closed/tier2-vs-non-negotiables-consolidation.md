@@ -27,7 +27,16 @@ Acceptance criteria:
 - `AGENTS.md` and the common policy both stay lean.
 - Validator anchors updated as needed and green.
 
-Background: `ai/shared/project-knowledge/protocol-routing-principle.md`.
+Background: `ai/knowledge/protocol-routing-principle.md`.
+
+---
+
+2026-11-26
+The project knowledge audit reconfirmed this gap: the caveat in `ai/knowledge/protocol-routing-principle.md` still records that the two always-on layers lack consolidation. No duplicate ticket was filed; the stale background pointer above is corrected.
+
+---
+2026-11-26
+Closed as obsolete. The 2026-08-31 ADRs (`design-docs/protocol-decisions.md:587-593`) chose the two-layer division, and the Level 0 precedence (`AGENTS.md:139`) confirms it. The residual index drift is tracked in `ai/issues/open/non-negotiables-index-enforcement.md`. The earlier "reconfirmed this gap" note relied on a stale caveat; the new ticket corrects the caveat and the record.
 
 ---
 

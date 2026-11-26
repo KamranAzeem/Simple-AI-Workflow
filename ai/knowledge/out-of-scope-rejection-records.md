@@ -4,30 +4,30 @@
 
 ## Context
 
-A rejected request can return months later. Without a record, the next session reopens the same debate and spends the same effort. A named rejection record preserves the decision and its reason.
+A rejected request can return months later. Without a record, the next session reopens the same debate and spends the same effort. A dated ticket note preserves the decision and its reason.
 
 ## Rule or Fix
 
-- Write one named record for each rejected request.
-- Record the request, the reason for rejection, and the decision.
-- Check the rejection records when a similar request enters triage.
-- Point the new request at the prior record.
-- Revisit the record only with new evidence or a changed constraint.
+- Record a rejected request as a dated `Won't fix` note on its closed ticket.
+- Put the request, the reason for rejection, and the decision in the note.
+- Check the closed tickets and their notes when a similar request enters triage.
+- Point the new request at the prior ticket.
+- Revisit the note only with new evidence or a changed constraint.
 
 ## Why
 
-- The record prevents re-litigating a settled decision.
-- It preserves the reason that a short ticket comment would lose.
-- It makes the prior rejection visible during triage.
+- The note prevents re-litigating a settled decision.
+- It preserves the reason that a terse close would lose.
+- It makes the prior rejection visible in the closed tickets.
 
 ## Verify
 
-- Confirm a returning request finds its prior record.
-- Confirm the record states the request, reason, and decision.
-- Confirm the triage path checks the records before reopening the work.
+- Confirm a returning request finds its prior ticket and note.
+- Confirm the note states the request, reason, and decision.
+- Confirm triage checks the closed tickets before reopening the work.
 
 ## Caveats
 
-- Do not use a record as a blanket refusal.
+- Do not use a note as a blanket refusal.
 - A changed constraint or new evidence can justify a new decision.
-- The record is not a substitute for the issue tracker.
+- An open ticket is not a rejection; the note belongs on a closed ticket.

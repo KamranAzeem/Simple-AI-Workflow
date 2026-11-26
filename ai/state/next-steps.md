@@ -18,9 +18,8 @@
 - Confirm a reliable post-compaction hook; update the manual-recovery docs if one appears.
 - Sync AGENTS.md and the v7.7.0 layout into downstream projects.
 - Migrate the live User AI Directory with a dry run, then the real sync.
-- Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
-- Audit the Project Knowledge the protocol relies on.
 - Plan the young learner policy after folding the locked design into the ticket; Linux first, Windows later. `ai/issues/open/young-learner-programming-teacher-policy.md`
-- Merge the reviewed Azure exercise pack after approval; the closed ticket carries the plan.
+- Enforce the Non-Negotiables index. `ai/issues/open/non-negotiables-index-enforcement.md`
+- Plan a full knowledge repair to merge the 12 under-3KB lessons.
 

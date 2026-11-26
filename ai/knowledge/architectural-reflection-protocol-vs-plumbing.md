@@ -12,7 +12,7 @@ A policy-driven bootstrap turns AI chat into governance as code. The protocol is
 - Load only the policies the project needs.
 - Keep policy files short and mandatory.
 - Keep lessons in the knowledge stores.
-- Use Analyze, Plan, Stop to hold the AI to the task.
+- Use the intent gate and the plan approval to hold the AI to the task.
 - Index knowledge by filename and load it on demand.
 
 ## Why
@@ -21,7 +21,7 @@ A policy-driven bootstrap turns AI chat into governance as code. The protocol is
 - A small loaded set saves startup tokens.
 - The token ROI is high: the rules force safety, compliance, and architectural correctness by design.
 - A separate knowledge store keeps the rules short.
-- Analyze, Plan, Stop prevents unrequested work.
+- The intent gate and the plan approval prevent unrequested work.
 - Filename indexing keeps the active context small.
 - The protocol is version-controlled, portable, and audit-ready.
 

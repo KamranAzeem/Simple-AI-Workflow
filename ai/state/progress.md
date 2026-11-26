@@ -97,7 +97,7 @@
 [2026-11-24] Delivered the post-compaction manual fix across the procedure, always-on rule, guide, slides, setup, comparison, README, and knowledge note. Full text in the 2026-11-25 diary.
 [2026-11-24] Closed the ticket with the plan attached; review-94 CHANGES REQUESTED, review-95 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
 [2026-11-24] Released v7.2.1 and published the GitHub Release; the announcement and README banner are live.
-[2026-11-24] Restored the empty ai/pending directory after the stash round-trip and re-validated before delivery; the release-practices entry stays at "prepared" because post-merge commits are forbidden.
+[2026-11-24] Restored the empty ai/pending directory; release-practices stays at prepared because post-merge commits are forbidden. Diary: 2026-11-26.
 [2026-11-24] Delivered notes and slides: one-shot guidance, ticket/issue/support table, no-vibe framing, blackbox state, wave-surfer, skills layer, compaction. Full text in the 2026-11-25 diary.
 [2026-11-24] Closed the seven Documentation tickets with the plan attached; review-96 CHANGES REQUESTED, review-97 APPROVED; suite 31/31, validator 8/8, markdownlint 0, shellcheck 0.
 [2026-11-24] The two Feature tickets, idea intake and the Kanban skill, remain open; no release.
@@ -123,7 +123,7 @@
 [2026-11-24] Processed deck notes 93+: six-level ladder with level 2 editor chat, root customer-joe, model card centered; suite 31/31. Full text in the 2026-11-25 diary.
 [2026-11-24] Revised the ladder to six levels with level 2 marked and levels 3-5 unlabelled (multiple assistants, MCPs, agentic/swarm); rebuilt; audit 0 overflow; suite 31/31.
 [2026-11-24] Refined the daily-loop and quality-loop arrows: 3px strokes, 5-unit markers, edge-connected endpoints, smooth curves; rebuilt; audit 0; suite 31/31.
-[2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
+[2026-11-24] review-115 APPROVED (0 Critical/Major/Minor); re-rendered 59 PNGs; suite 31/31; validator 8/8; audit 0. Diary: 2026-11-26.
 [2026-11-24] Prepared v7.3.1; closed the deck review ticket with the plan attached. Diary: 2026-11-26.
 [2026-11-24] Delivered v7.3.1: squash-merged, deleted the review and token branches, pushed, tagged, and published the GitHub Release; validator 8/8. Full text in the 2026-11-25 diary.
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
@@ -196,4 +196,7 @@
 [2026-11-26] Planned and reviewed the plan-review ADR check: reviews 203/204 APPROVED; PATCH v7.12.1.
 [2026-11-26] Implemented the plan-review ADR check; suite 35/35; review 205 APPROVED; v7.12.1 prepared.
 [2026-11-26] Released v7.12.1 (public URL 200); post-merge validator 8/8 and index 55/0/0; no post-release code changes.
-[2026-11-26] Delivered the Azure companion-architect exercise pack: six labs, prerequisites, safety, two reference Bicep templates, a 36th fixture, README and deck updates; reviews 210/211; suite 36/36; merge pending. Full text in the 2026-11-26 diary.
+[2026-11-26] Delivered the Azure exercise pack (six labs, two Bicep templates, 36th fixture); reviews 210/211; suite 36/36. Diary: 2026-11-26.
+[2026-11-26] Merged the Azure companion-architect exercise pack to master; the post-merge validator is 8/8 and the tree is clean; no release.
+[2026-11-26] Audited and repaired project knowledge (findings 1-3; review-212 APPROVED); deleted the stray migration backup. Diary: 2026-11-26.
+[2026-11-26] Closed the always-on consolidation ticket as superseded by the 2026-08-31 ADRs and filed `non-negotiables-index-enforcement.md`. Diary: 2026-11-26.
