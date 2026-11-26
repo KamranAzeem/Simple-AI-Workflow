@@ -28,6 +28,7 @@ ANNOUNCE77="$ROOT/docs/announcements/v7.7.0.md"
 ANNOUNCE771="$ROOT/docs/announcements/v7.7.1.md"
 ANNOUNCE780="$ROOT/docs/announcements/v7.8.0.md"
 ANNOUNCE781="$ROOT/docs/announcements/v7.8.1.md"
+ANNOUNCE782="$ROOT/docs/announcements/v7.8.2.md"
 
 fail=0
 
@@ -94,6 +95,10 @@ for doc in \
     docs/simple-ai-workflow-compared-to-all-ai-assistants-out-there.md \
     docs/ai-provider-selection-guide.md; do
     exists "$doc"
+done
+
+for preset in cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer; do
+    exists "docs/examples/customization-presets/$preset.md"
 done
 
 present "$PROVIDER" "Kilo Code" "provider guide names Kilo Code"
@@ -168,7 +173,9 @@ exists "docs/announcements/v7.8.0.md"
 present "$ANNOUNCE780" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.8.0" "v7.8.0 announcement records the release URL"
 exists "docs/announcements/v7.8.1.md"
 present "$ANNOUNCE781" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.8.1" "v7.8.1 announcement records the release URL"
-present "$README" "docs/announcements/v7.8.1.md" "README points at the v7.8.1 release announcement"
+exists "docs/announcements/v7.8.2.md"
+present "$ANNOUNCE782" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.8.2" "v7.8.2 announcement records the release URL"
+present "$README" "docs/announcements/v7.8.2.md" "README points at the v7.8.2 release announcement"
 present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"

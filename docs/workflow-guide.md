@@ -219,7 +219,7 @@ Vibe coding is not acceptable. It accepts code because the code looks plausible,
 The `ai-customization.md` file at the project root is the **"Single Dial"** for tailoring the AI to your project. It supports three configuration sections:
 
 - **Active Expertise**: Load domain-specific policies (e.g., `cloud`, `api-backend`, `web-frontend`, `dba`, `observability`, `linux-system-admin`, `windows-system-admin`).
-- **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, and Teacher/Trainer.
+- **Active Traits**: Select one behavioral persona from the curated catalog in [`ai-customization-guide.md`](ai-customization-guide.md). Available traits include System Architect, System Integrator, Senior DBA, Observability Architect, Code Reviewer, Security Specialist, Teacher/Trainer, Platform Engineer, Software Developer, and Data Engineer.
 - **Required Compliance**: Activate regulatory standards (e.g., `gdpr`, `soc2`, `hipaa`, `iso-27001`) using AI built-in knowledge: no on-disk compliance files needed.
 
 Policies may also declare their own trigger phrases. Say `"cloud standards"` and the cloud policy loads for the session without an Active Expertise entry. The trigger list is rebuilt at load context and never written to disk. A triggered policy does not survive a compaction; say the phrase again. `"use policy <name>"` loads a policy by its Active Expertise name. The same Directive versus Inquiry rule decides whether a phrase runs.

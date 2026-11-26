@@ -1490,3 +1490,43 @@ The checkpoint transaction log records only the progress and context state-file 
 Context: the marker collided with the queue label. After the queue became a plain list, the marker survived only as a delta, which the user read as a stale queue on every checkpoint.
 
 Consequences: the log prints `[PROGRESS]` and `[CONTEXT]` only; the report prints `Current position`, the plain `Next steps`, then the log; the checkpoint test asserts the marker is absent.
+
+## 2026-11-26: Customization presets are full variants under docs/examples/customization-presets/
+
+Eight full `ai-customization.md` variants live under `docs/examples/customization-presets/`, one per role. Each preset carries the workflow placeholders, one suggested trait, the `design-docs/` location, and the `auto` merge mode. A preset is a copy-paste starting point, not a policy file; the protocol modules stay authoritative. The existing combined full-stack example stays as a separate multi-component scenario.
+
+Context: the base template required hand-editing every section, and the init ticket needs named presets to consume.
+
+Consequences: a new project copies one file and changes the workflow path; the preset contract is documentation, so no policy, procedure, or trigger changes.
+
+## 2026-11-26: Three traits join the catalog for the presets
+
+Platform Engineer, Software Developer, and Data Engineer join the customization guide trait catalog. The eight roles map to System Architect, System Integrator, Software Developer, Platform Engineer, Senior DBA, Data Engineer, and Security Specialist; web and mobile share Software Developer.
+
+Context: the eight role presets need traits that the seven-trait catalog did not provide.
+
+Consequences: the guide, the workflow guide summary, the slide appendix, and the presets use the same trait names; no policy change is needed because traits are customization text.
+
+## 2026-11-26: The preset slugs are the init preset identifiers
+
+The eight lowercase kebab slugs are frozen as the preset identifiers: cloud-architect, solution-architect, web-developer, mobile-developer, platform-engineer, dba, data-engineer, security-engineer. The init ticket consumes a preset by a role switch and keeps the switch name open.
+
+Context: the init mode needs stable names, and the switch name is still an open point in that ticket.
+
+Consequences: a later slug rename is a breaking change for init; init stays out of scope for this change.
+
+## 2026-11-26: Preset compliance is a suggestion, not a determination
+
+The cloud-architect, solution-architect, platform-engineer, data-engineer, and security-engineer presets pre-fill soc2 and iso-27001. The web-developer, mobile-developer, and dba presets leave compliance empty with a comment. A preset never claims a project is compliant; the AI applies its built-in knowledge of every listed standard.
+
+Context: compliance depends on the project and the data it handles.
+
+Consequences: the section comment tells the user to confirm or change the entries.
+
+## 2026-11-26: Documentation-only additions ship as a PATCH
+
+A change that adds documentation, examples, or fixtures without a policy, procedure, trigger, or runtime behavior change ships as a PATCH. Behavior changes still take MINOR, and breaking changes still take MAJOR.
+
+Context: successive MINOR releases for docs-only work inflate the version number and add no semantic-versioning value. The user asked for the lowest conservative number.
+
+Consequences: the customization presets ship as v7.8.2; a docs-only change does not open a MINOR line.

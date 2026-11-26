@@ -86,6 +86,11 @@ Use the `## Active Traits` section to define *how* the AI should behave. These a
 - **Code Reviewer**: Look for security vulnerabilities, performance bottlenecks, and coding standard violations.
 - **Security Specialist**: Minimize attack surface. Enforce least privilege, check for exposed secrets, align with OWASP/CIS benchmarks.
 - **Teacher/Trainer**: Explain the 'why' behind every 'how'. Break down complex tasks into teachable steps.
+- **Platform Engineer**: Build and operate the shared platform: Kubernetes, CI/CD, infrastructure as code, and observability. Optimize for reliability, repeatability, least privilege, and self-service.
+- **Software Developer**: Build and change application code across web and mobile components. Follow the project's existing stack and conventions, write the failing test first, and keep changes inside the requested scope.
+- **Data Engineer**: Design and operate data pipelines, storage, and models. Prioritize correctness, idempotence, schema evolution, and cost-aware batch and streaming flows.
+
+See [Presets by Role](#11-presets-by-role) for ready-made files that pair one trait with an expertise set and a compliance suggestion.
 
 **Example:**
 
@@ -265,6 +270,27 @@ Copy the rule into `ai-customization.md`. The `### Rule:` block needs a top-leve
 Include the tag, the step or file involved, and what the AI did. A short line such as "F2: the index helper hung for five minutes in step 2" gives enough to start. Scrub names, internal paths, and secrets before you post.
 
 ---
+
+## 11. Presets by Role
+
+Presets are ready-to-copy `ai-customization.md` files for common roles. Each one is a full variant with the workflow placeholders, one suggested trait, the `design-docs/` location, and the `auto` merge mode. The files live in `docs/examples/customization-presets/`.
+
+To use one, copy `<role>.md` to your project root as `ai-customization.md`, set **Workflow AI Directory** to your clone, then adjust the expertise, trait, or compliance entries for the project. A preset is a starting point, not a policy. The protocol modules remain authoritative.
+
+The role slugs are the preset identifiers the future `--init` mode consumes. The compliance entries are suggestions; confirm them for your project.
+
+| Role | Active Expertise | Suggested trait | Compliance |
+| --- | --- | --- | --- |
+| `cloud-architect` | `cloud`, `api-backend`, `data`, `dba`, `web-frontend`, `observability` | System Architect | `soc2`, `iso-27001` |
+| `solution-architect` | `cloud`, `api-backend`, `data`, `dba`, `web-frontend`, `mobile-apps` | System Integrator | `soc2`, `iso-27001` |
+| `web-developer` | `web-frontend`, `api-backend`, `coding-baseline` | Software Developer | None pre-filled |
+| `mobile-developer` | `mobile-apps`, `api-backend`, `coding-baseline` | Software Developer | None pre-filled |
+| `platform-engineer` | `cloud`, `linux-system-admin`, `windows-system-admin`, `observability` | Platform Engineer | `soc2`, `iso-27001` |
+| `dba` | `dba`, `data` | Senior DBA | None pre-filled |
+| `data-engineer` | `data`, `dba`, `cloud` | Data Engineer | `soc2`, `iso-27001` |
+| `security-engineer` | `coding-baseline`, `observability`, `cloud` | Security Specialist | `soc2`, `iso-27001` |
+
+See [the full-stack example](examples/full-stack-web-mobile-ai-customization.md) for a combined multi-component configuration.
 
 ## Best Practices
 

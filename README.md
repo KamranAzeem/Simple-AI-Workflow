@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.8.1 (2026-11-26).** The checkpoint report's transaction log no longer carries a stale next-steps line; the plain Next steps list is the only queue. Read the announcement: [docs/announcements/v7.8.1.md](docs/announcements/v7.8.1.md). |
+| **v7.8.2 (2026-11-26).** Ready-made customization presets for eight roles are in the docs. Read the announcement: [docs/announcements/v7.8.2.md](docs/announcements/v7.8.2.md). |
 
 # Simple AI Workflow
 
@@ -199,6 +199,7 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 
 - [Workflow guide](docs/workflow-guide.md): the reference manual.
 - [AI Customization Guide](docs/ai-customization-guide.md): expertise, traits, compliance, merge policy.
+- [Customization presets by role](docs/examples/customization-presets/): ready-to-copy starting points for eight roles.
 - [Setup](docs/setup.md): Windows paths, the manual steps, and updates.
 - [Compliance guide](docs/compliance-guide.md).
 - [How policies work](docs/how-policies-work-in-this-workflow.md).
@@ -216,4 +217,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.8.0 include no temporary aliases.
+The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.8.2 include no temporary aliases.

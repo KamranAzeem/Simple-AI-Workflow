@@ -11,6 +11,7 @@ The workflow uses semantic versioning. GitHub Releases is the authoritative chan
 ### Versioning and announcement
 
 - Use `MAJOR.MINOR.PATCH`.
+- Use the lowest conservative version. A docs-only change with no policy, procedure, trigger, or runtime behavior change ships as a PATCH. Use MINOR for behavior changes and MAJOR for breaking changes.
 - Create an annotated tag after the merge: `git tag -a vX.Y.Z -m "summary"`.
 - Push the default branch and the tag: `git push origin <default-branch> && git push origin vX.Y.Z`.
 - Draft the announcement, the banner, and the GitHub release body in a temp file first.

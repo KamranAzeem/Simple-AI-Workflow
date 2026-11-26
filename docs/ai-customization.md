@@ -26,7 +26,8 @@ See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customi
 
 ## Active Expertise
 <!-- List technical domains to load from the global policies directory. -->
-<!-- Available: cloud, api-backend, web-frontend, data, dba, observability, Linux-system-admin, windows-system-admin, mobile-apps, accounting, academic-researcher, career-coaching, meta -->
+<!-- markdownlint-disable-next-line MD044 -->
+<!-- Available: cloud, api-backend, web-frontend, data, dba, observability, linux-system-admin, windows-system-admin, mobile-apps, coding-baseline, accounting, academic-researcher, career-coaching, meta -->
 
 - web-frontend
 

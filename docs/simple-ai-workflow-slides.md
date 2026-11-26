@@ -436,7 +436,7 @@ The claims are inspectable.
 ## The repository is the proof
 
 - It has 26 policies, 16 procedures, and 59 triggers.
-- It has 33 tests, 18 user-facing docs, and hundreds of review reports.
+- It has 34 tests, 18 user-facing docs, and hundreds of review reports.
 - It has a public issue tracker, daily checkpoints, and release notes.
 - Every change went through the same plan, review, and checkpoint shape.
 
@@ -739,7 +739,8 @@ The full policy shelf.
 The behavioral layer and the task layer.
 
 - **Traits**: system architect, system integrator, senior DBA, observability architect,\
-  code reviewer, security specialist, teacher.
+  code reviewer, security specialist, teacher, platform engineer, software developer,\
+  data engineer.
 - **Skills**: narrow, on-demand task packages; project, user, team, and workflow roots.
 - **Example skill**: `kanban-board` renders the three issue directories as a read-only table.
 - **Precedence**: project, then team, then user, then workflow.

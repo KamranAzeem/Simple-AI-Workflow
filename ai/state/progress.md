@@ -169,3 +169,4 @@
 [2026-11-26] Retired the user-space review-verdict-binding lesson; user store 28 to 27; the other 27 unchanged; manifest and backup recorded; reviews 167/168 APPROVED.
 [2026-11-26] Fixed the checkpoint transaction log: removed the stale [NEXT-STEPS] line; the plain Next steps is the only queue; reviews 169/170 APPROVED; v7.8.1 prepared.
 [2026-11-26] Grilled and scoped the customization presets: 8 roles, the Active Expertise sets, 3 new traits, soc2/iso pre-fill for five, docs/examples/customization-presets, a MINOR release; the ticket records the decisions; plan next.
+[2026-11-26] Delivered the customization presets (v7.8.2): eight role files, three traits, guide section 11, slide/README/template sync, new fixture, five ADRs; validator 8/8, suite 34/34; reviews 175/176.
