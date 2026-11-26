@@ -1,0 +1,29 @@
+# name|status|source|reason
+compaction|legacy||guide diagram; keep the existing SVG
+ai-ladder|legacy||deck six-level ladder; keep the existing SVG
+six-jobs|legacy||hand-authored; text-term update; conversion deferred
+knowledge-skills|legacy||hand-authored; text-term update; conversion deferred
+three-roots|legacy||dense file tree; text-term update only; conversion pending
+two-scopes|legacy||dense two-column layout; text-term update only; conversion pending
+ai-nutshell|legacy||pre-pipeline hand-authored; conversion pending
+architect-peer|legacy||pre-pipeline hand-authored; conversion pending
+architect-solution|legacy||pre-pipeline hand-authored; conversion pending
+before-after|legacy||pre-pipeline hand-authored; conversion pending
+blackbox-state|legacy||pre-pipeline hand-authored; conversion pending
+compliance|legacy||pre-pipeline hand-authored; conversion pending
+context-window|legacy||pre-pipeline hand-authored; conversion pending
+daily-loop|legacy||pre-pipeline hand-authored; conversion pending
+first-loop|legacy||pre-pipeline hand-authored; conversion pending
+git-safety|legacy||pre-pipeline hand-authored; conversion pending
+is-isnot|legacy||pre-pipeline hand-authored; conversion pending
+memory-gap|legacy||pre-pipeline hand-authored; conversion pending
+moe-routing|legacy||pre-pipeline hand-authored; conversion pending
+out-of-band|legacy||pre-pipeline hand-authored; conversion pending
+project-brain|legacy||pre-pipeline hand-authored; conversion pending
+quality-loop|legacy||pre-pipeline hand-authored; conversion pending
+road-trip|legacy||pre-pipeline hand-authored; conversion pending
+root-files|legacy||pre-pipeline hand-authored; conversion pending
+skills-layers|legacy||pre-pipeline hand-authored; conversion pending
+straight-vs-zigzag|legacy||pre-pipeline hand-authored; conversion pending
+team-gate|legacy||pre-pipeline hand-authored; conversion pending
+team-publish|legacy||pre-pipeline hand-authored; conversion pending

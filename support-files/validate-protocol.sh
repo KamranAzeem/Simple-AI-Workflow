@@ -374,7 +374,7 @@ fi
 echo "Coordination Board verified."
 
 # 6. Policy Baseline
-POLICY_FLOOR=25
+POLICY_FLOOR=26
 POLICY_COUNT="$(find ai/policies -maxdepth 1 -type f -name 'ai-policy-*.md' | wc -l | tr -d ' ')"
 echo "[6/8] Verifying policy baseline ($POLICY_COUNT modular policies, floor $POLICY_FLOOR)..."
 # NOTE: Do NOT run filesystem link-resolution checks against ai/policies/ or AGENTS.md.

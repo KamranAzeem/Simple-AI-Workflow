@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.7.1 (2026-11-26).** The verification runbook and the unenforced verdict-hash rule are retired. The gate commands live in the meta policy and the scripts. Read the announcement: [docs/announcements/v7.7.1.md](docs/announcements/v7.7.1.md). |
+| **v7.8.0 (2026-11-26).** The presentation policy and the D2/Mermaid diagram pipeline are in. The compaction diagram and the six-level ladder keep their existing SVGs. Read the announcement: [docs/announcements/v7.8.0.md](docs/announcements/v7.8.0.md). |
 
 # Simple AI Workflow
 
@@ -216,4 +216,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 25 policies and 16 procedures are the fixed background. The 58 triggers in v7.7.0 include the temporary old-phrase aliases; the aliases are removed in v7.8.0.
+The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.8.0 include no temporary aliases.

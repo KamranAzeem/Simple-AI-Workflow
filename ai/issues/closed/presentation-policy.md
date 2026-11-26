@@ -51,3 +51,9 @@ Reasons:
 - The toolchain needs a decision too; the user questions whether `support-files/build-slides-html.sh` earns its place.
 
 The procedure and any skill proposed for presentations wait for this policy. No procedure ticket is filed yet.
+
+---
+
+2026-11-26
+
+Superseded by `slide-authoring-pipeline-and-deck-refresh` and v7.8.0. The standard is `ai-policy-presentation.md` with the `presentation standards` trigger.

@@ -9,7 +9,7 @@ The slide deck is the canonical Markdown story, with its SVGs beside it. The HTM
 ## Rule or Fix
 
 - Use 2.4rem body and 1.9rem appendix type on the deck; the title slide is 1.5rem, the section prompts 1.8rem, the section list 1.65rem, and the diagram-slide title 3.3rem with a 1.9rem subtitle.
-- Render diagram slides at 84vh and pure diagrams at 98vh. Keep every SVG label at 24 units or above; when a dense diagram cannot fit that floor, record the exception with the slide and the reason in the findings log.
+- Render diagram slides at 84vh and pure diagrams at 98vh. Keep every generated diagram label at 32 units or above; a legacy SVG stays at 24 until converted; a dense diagram that cannot fit the floor keeps a recorded exception.
 - Use three acts: Concepts, The Workflow, Proof; keep the optional team act behind a gate. Put a section divider before each act.
 - Make the slide title the assertion. Put a caption inside the SVG only when it adds a different idea; do not repeat the slide title in the SVG.
 - When a diagram carries the slide, remove the bullet list and the paragraph. The HTML deck gives the image 98vh only when the slide has an SVG and no text; a title or a list keeps the diagram-slide height.
@@ -18,7 +18,8 @@ The slide deck is the canonical Markdown story, with its SVGs beside it. The HTM
 - Format each catalog line as a bold policy or procedure name, a colon, and one sentence.
 - Keep one idea per story slide; use a full-slide diagram instead of a small image on a sparse slide.
 - Use the teal and slate palette and the axe photo; do not add stock art.
-- Enlarge SVG text with a style block of attribute selectors. Raise each label to 24 units or above, and fix the layout rather than shrinking the whole diagram; a dense diagram that cannot meet the floor keeps a recorded exception.
+- Generate a new or changed diagram from a D2 or Mermaid source and set the 32-unit floor in the source theme, not a post-layout style override. A legacy SVG keeps 24 until it is converted.
+- Keep one source per diagram in `docs/slides/diagrams/src/`; record it as source-backed or legacy in `docs/slides/diagrams/manifest.tsv`; never hand-edit a generated SVG; rebuild a PPTX-origin diagram in D2 with the PPTX as the reference, or export it.
 - Read the reveal.js hash as zero-based: `#/32` is the 33rd slide, and its rendered PNG is `slide-33.png`.
 - Check every rendered PNG for overlap after a type or layout change.
 - Treat the Markdown as canonical and Google Slides as a manual copy after Gate 1.
@@ -36,7 +37,8 @@ The deck teaches and then serves as a reference. A uniform type scale and a comp
 
 ## Verify
 
-- Run `bash tests/test-slides.sh`; the fixture checks the story, the catalog groups, all 25 policies, all 16 procedures, the SVG assets, the HTML deck, and the renderer.
+- Run `bash tests/test-slides.sh`; the fixture checks the story, the catalog groups, all 26 policies, all 16 procedures, the diagram manifest and the 32 floor, the SVG assets, the HTML deck, and the renderer.
+- Run `bash support-files/build-slide-diagrams.sh`; the source-backed diagrams regenerate and the 32 floor holds.
 - Run `bash support-files/audit-slides.sh`; a clean deck reports 59 audited and 0 overflow.
 - Run `bash support-files/render-slides-preview.sh` and inspect the PNGs; `#/32` maps to `slide-33.png`.
 - Confirm 2.4rem body and 1.9rem appendix type, 84vh/98vh diagram sizes, and every SVG label at 24 units or above or recorded as an exception.
@@ -47,3 +49,4 @@ The deck teaches and then serves as a reference. A uniform type scale and a comp
 - Google Slides may not preserve the SVG's internal type rules; check each inserted diagram at its final size and adjust it there.
 - Dense diagrams may keep a smaller scale only as a recorded exception with the slide and the reason; uniformity is the target, not one identical size for every label.
 - The slide audit measures HTML element boxes only; it sees each SVG as one image. Inspect the rendered PNGs for SVG-internal overlap, clipping, and margins.
+- The D2 or Mermaid source is the editable record; the SVG is generated. The deck displays the SVG at its final size, so check the font-to-canvas ratio on the rendered slide.

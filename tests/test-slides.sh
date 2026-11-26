@@ -80,7 +80,7 @@ for phrase in \
     "Checkpoint" \
     "project's memory" \
     "Two dials" \
-    "Three scopes, two kinds of memory" \
+    "Knowledge and skills: the roots and the precedence" \
     "Sharpening the axe" \
     "Six jobs, one protocol" \
     "This is not about going faster" \
@@ -201,7 +201,7 @@ for policy in \
     "common policy" "user-settings policy" "Meta policy" "Knowledge policy" \
     "Design-docs policy" "Issue-management policy" "Coding-baseline policy" \
     "Code-review policy" "Codebase-examination policy" "Thinking-modes policy" \
-    "Handoff policy" "outbound-content-scrub" "team knowledge policy" \
+    "Handoff policy" "outbound-content-scrub" "team knowledge policy" "Presentation policy" \
     "Academic research" "Accounting" "API backend" "Career coaching" "Cloud" \
     "Data" "DBA" "Linux admin" "Mobile apps" "Observability" "Web frontend" "Windows admin"; do
     present "$DECK" "$policy" "catalog policy: $policy"
@@ -253,6 +253,45 @@ done
 
 for check in "$policies policies" "$procedures procedures" "$triggers triggers" "$tests tests" "$docs user-facing docs"; do
     present "$DECK" "$check" "deck count: $check"
+done
+
+MANIFEST="$ROOT/docs/slides/diagrams/manifest.tsv"
+if [ ! -f "$MANIFEST" ]; then
+    fail_case "diagram manifest is missing"
+else
+    pass "diagram manifest exists"
+fi
+while IFS='|' read -r name status source reason; do
+    case "$name" in
+        ''|'#'*) continue ;;
+    esac
+    out="$ROOT/docs/slides/diagrams/$name.svg"
+    if [ ! -f "$out" ]; then
+        fail_case "diagram output missing: $name"
+    fi
+    if [ "$status" = "source" ]; then
+        src="$ROOT/docs/slides/diagrams/src/$source"
+        if [ ! -f "$src" ]; then
+            fail_case "diagram source missing: $source"
+        fi
+        if grep -oE 'font-size:[ ]*[0-9]+px' "$out" | tr -cd '0-9\n' | awk '{if ($1 + 0 < 32) bad=1} END{exit bad?0:1}'; then
+            fail_case "generated diagram font below 32: $name"
+        else
+            pass "generated diagram keeps the 32 floor: $name"
+        fi
+    elif [ "$status" = "legacy" ]; then
+        if [ -z "$reason" ]; then
+            fail_case "legacy diagram without a reason: $name"
+        fi
+    else
+        fail_case "unknown diagram status: $name"
+    fi
+done < "$MANIFEST"
+for ref in $(grep -oE 'slides/diagrams/[a-z0-9-]+\.svg' "$DECK" | sort -u); do
+    name="$(basename "$ref" .svg)"
+    if ! grep -qE "^$name\|" "$MANIFEST"; then
+        fail_case "diagram reference not in the manifest: $name"
+    fi
 done
 
 for asset in \

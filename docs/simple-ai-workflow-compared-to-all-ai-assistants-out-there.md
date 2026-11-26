@@ -83,7 +83,7 @@ Here is how the concepts from each tool map to Simple AI Workflow.
 | Project-level instructions | `.github/copilot-instructions.md` | `CLAUDE.md` | Custom instructions (global) | `.cursor/rules` | `AGENTS.md` |
 | User preferences (cross-project) | `/memories/` (user scope) | `~/.claude/CLAUDE.md` | Custom instructions (global) | User rules | `<User AI Directory>/settings/user-settings.md` |
 | Per-project customization | No standard equivalent | No standard equivalent | Projects | None | `ai-customization.md` |
-| Domain expertise / rules | `.github/skills/`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (25 policies) |
+| Domain expertise / rules | `.github/skills/`, `.instructions.md` | `CLAUDE.md` sections | Custom GPTs | `.cursor/rules` sections | `ai/policies/ai-policy-*.md` (26 policies) |
 | Progress tracking | None | Claude Projects history | Projects | None | `ai/state/progress.md` |
 | Pending tasks | None | None | None | None | `ai/state/next-steps.md` |
 | Current state | None | None | None | None | `ai/state/context.md` |

@@ -26,6 +26,7 @@ DECISIONS="$ROOT/design-docs/protocol-decisions.md"
 MAP="$ROOT/ai/knowledge/codebase-skeleton-map-simple-ai-workflow.md"
 ANNOUNCE77="$ROOT/docs/announcements/v7.7.0.md"
 ANNOUNCE771="$ROOT/docs/announcements/v7.7.1.md"
+ANNOUNCE780="$ROOT/docs/announcements/v7.8.0.md"
 
 fail=0
 
@@ -162,7 +163,9 @@ present "$ANNOUNCE77" "scope-migration-<date>" "v7.7.0 announcement names the ba
 present "$ANNOUNCE77" "removed in v7.8.0" "v7.7.0 announcement names the alias window"
 exists "docs/announcements/v7.7.1.md"
 present "$ANNOUNCE771" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.7.1" "v7.7.1 announcement records the release URL"
-present "$README" "docs/announcements/v7.7.1.md" "README points at the v7.7.1 release announcement"
+exists "docs/announcements/v7.8.0.md"
+present "$ANNOUNCE780" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.8.0" "v7.8.0 announcement records the release URL"
+present "$README" "docs/announcements/v7.8.0.md" "README points at the v7.8.0 release announcement"
 present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
@@ -203,6 +206,10 @@ present "$DECISIONS" "The per-fixture verification runbook is retired" "ADR reco
 present "$DECISIONS" "The verdict-hash rules are retired" "ADR records the hash retirement"
 present "$DECISIONS" "The repository records executable bits explicitly" "ADR records the file-mode constraint"
 present "$DECISIONS" "git update-index --chmod=+x" "ADR records the exec-bit command"
+present "$DECISIONS" "Slides use a code-driven diagram pipeline and a presentation policy" "ADR records the slide pipeline"
+present "$DECISIONS" "D2 is the default" "ADR records D2"
+present "$DECISIONS" "ai-policy-presentation.md" "ADR records the presentation policy"
+present "$DECISIONS" "32-unit font floor" "ADR records the diagram font floor"
 present "$ANNOUNCE62" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.6.2" "v7.6.2 announcement records the release URL"
 adr="$(awk '/^## 2026-11-25: Review verdicts bind to the artifact hash/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
 if printf '%s\n' "$adr" | grep -qiE 'commit|branch|plan|report'; then

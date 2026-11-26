@@ -18,7 +18,7 @@
     text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Where everything lives</title>
-  <desc id="desc">The global store and the workflow clone on the left, the project root tree on the right.</desc>
+  <desc id="desc">The user store and the workflow clone on the left, the project root tree on the right.</desc>
   <defs>
     <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
       <feDropShadow dx="0" dy="8" stdDeviation="14" flood-color="#22313A" flood-opacity="0.08"/>
@@ -90,5 +90,5 @@
 
   <rect x="60" y="800" width="1480" height="64" rx="18" fill="#E6F5FA"/>
   <text x="92" y="830" font-family="Lato, Arial, sans-serif" font-size="22" font-weight="700" fill="#007AA3">Load context reads all three.</text>
-  <text x="92" y="860" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">The project tree is the memory. The clone is the rulebook. The global store is you.</text>
+  <text x="92" y="860" font-family="Lato, Arial, sans-serif" font-size="20" fill="#505962">The project tree is the memory. The clone is the rulebook. The user store is you.</text>
 </svg>

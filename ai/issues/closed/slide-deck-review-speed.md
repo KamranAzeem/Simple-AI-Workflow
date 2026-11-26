@@ -61,3 +61,9 @@ Deferred by the user with the presentation policy. Do not plan or implement unti
 
 - The trimmed scope above stays the agreed scope when work resumes.
 - The user also questions whether `support-files/build-slides-html.sh` earns its place; leave it unchanged until this ticket resumes.
+
+---
+
+2026-11-26
+
+Superseded by v7.8.0. The trimmed scope lives in the presentation policy and the pipeline: the static guard, the subset render, the audit-first loop, and the 32-unit floor.

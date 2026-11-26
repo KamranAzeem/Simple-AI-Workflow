@@ -247,6 +247,11 @@ This file contains the universal operating rules for all AI assistants in this r
 - Do not scan a skill for trust or record a trust decision.
 - Note: the user is responsible for the source of a skill.
 
+## Presentation
+
+- Every slide deck follows one presentation standard.
+- The presentation policy owns the narrative, layout, type, source, diagram, and review rules.
+
 ## Issue Invariant
 
 - Treat one unit of work as one ticket in the local tracker, or in the user's external tracker when one is connected.

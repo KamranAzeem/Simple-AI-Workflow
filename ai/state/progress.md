@@ -164,3 +164,4 @@
 [2026-11-26] Merged the plain list; validator 8/8.
 [2026-11-26] Retired the verification runbook and verdict-hash rules; reviews 163/164 APPROVED; v7.7.1 released. Full text in the 2026-11-26 diary.
 [2026-11-26] Created the slide authoring pipeline ticket; added D2, mmdc, and Chrome paths plus the Puppeteer config to the user settings; D2 and mmdc smoke tests pass; no plan yet.
+[2026-11-26] Added the presentation policy and the D2/Mermaid pipeline; kept the guide's compaction SVG and the deck's six-level ladder; refreshed the deck terms and counts; suite 33/33, validator 8/8, index 26/16/59; reviews 165/166 APPROVED; v7.8.0 prepared.

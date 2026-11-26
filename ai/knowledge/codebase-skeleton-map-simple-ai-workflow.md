@@ -25,11 +25,11 @@
 
 ### `ai/`
 
-- `ai/policies/`: 25 policy modules: 12 domain and 13 protocol. The protocol set includes the common, meta, issue, code-review, design-docs, knowledge, handoff, user-settings, team-knowledge, outbound-scrub, thinking-modes, codebase-examination, and coding-baseline policies.
+- `ai/policies/`: 26 policy modules: 12 domain and 14 protocol. The protocol set includes the common, meta, issue, code-review, design-docs, knowledge, handoff, user-settings, team-knowledge, outbound-scrub, thinking-modes, codebase-examination, coding-baseline, and presentation policies.
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 11 open, 0 in-progress, and 145 closed as of 2026-11-26.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 8 open, 0 in-progress, and 148 closed as of 2026-11-26.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
 - `ai/knowledge/`: 14 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.

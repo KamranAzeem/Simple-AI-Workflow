@@ -68,7 +68,7 @@ present "$TPL" '**Email**' "template identity email label"
 absent "$TPL" "Style Sources" "template drops Style Sources"
 absent "$TPL" "Universal git conventions live" "template drops the git pointer"
 
-present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=25" "validator floor is 25"
+present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=26" "validator floor is 26"
 
 # Simulated consolidation over a bloated fixture.
 WORK="$(mktemp -d)"

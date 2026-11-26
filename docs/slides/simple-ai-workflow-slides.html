@@ -218,7 +218,7 @@ The protocol, step by step.
 
 ![Two small files](slides/diagrams/root-files.svg)
 
-<!-- Speaker notes: This is the anatomy of AGENTS.md, brought current. The root file is thin and read-only, and it points at the global workflow directory. It never stores project context. The customization file is the project dial: expertise, traits, compliance, design docs, merge policy, and optional team keys. Bootstrap keeps both out of Git. The clone holds the rulebook, so syncing a new AGENTS.md is cheap. -->
+<!-- Speaker notes: This is the anatomy of AGENTS.md, brought current. The root file is thin and read-only, and it points at the workflow directory. It never stores project context. The customization file is the project dial: expertise, traits, compliance, design docs, merge policy, and optional team keys. Bootstrap keeps both out of Git. The clone holds the rulebook, so syncing a new AGENTS.md is cheap. -->
 
 ---
 
@@ -335,7 +335,7 @@ The project's memory, the personal store, and the central rulebook.
 
 ![The three roots](slides/diagrams/three-roots.svg)
 
-<!-- Speaker notes: I keep three roots. Project ai/ holds state, diary, issues, plans, knowledge, handoffs, policies, skills, notes, artifacts, reviews, secrets, and pending. Global ~/.ai/ holds settings, global knowledge, and backups. The clone holds policies, procedures, global skills, and docs. Load context reads all three. The project tree is the memory. The clone is the rulebook. The global store is you. This clear layout is a core strength. State is visible, portable, and auditable. -->
+<!-- Speaker notes: I keep the workflow, user, project, and optional team scopes. The project ai/ holds state, diary, issues, plans, knowledge, handoffs, policies, skills, notes, artifacts, reviews, secrets, and pending. The user root ~/.ai/ holds settings, knowledge, skills, and backups. The team root holds team knowledge and skills when configured. The clone holds policies, procedures, workflow skills, and docs. Load context reads the roots. The project tree is the memory. The clone is the rulebook. The user store is you. This clear layout is a core strength. State is visible, portable, and auditable. -->
 
 ---
 
@@ -357,11 +357,11 @@ List a standard in `ai-customization.md`. The AI applies the controls and the ev
 
 ---
 
-## Three scopes, two kinds of memory
+## Knowledge and skills: the roots and the precedence
 
 ![Knowledge and skills](slides/diagrams/knowledge-skills.svg)
 
-<!-- Speaker notes: Knowledge has three scopes: project lessons, global lessons, and optional team lessons. Skills have the same three scopes: project packages, global packages, and optional team packages. Precedence is project, then team, then global. Both are indexed at boot and loaded only when a task needs them. The team column is dashed for a reason. A solo project stops at the first two. -->
+<!-- Speaker notes: Knowledge has three scopes: project lessons, user lessons, and optional team lessons. Skills have four roots: project, team, user, and workflow. Precedence is project, then team, then user, then workflow. Both are indexed at boot and loaded only when a task needs them. The team column is dashed for a reason. A solo project stops at the project and user roots. -->
 
 ---
 
@@ -524,7 +524,7 @@ The claims are inspectable.
 
 ## The repository is the proof
 
-- It has 25 policies, 16 procedures, and 58 triggers.
+- It has 26 policies, 16 procedures, and 59 triggers.
 - It has 33 tests, 18 user-facing docs, and hundreds of review reports.
 - It has a public issue tracker, daily checkpoints, and release notes.
 - Every change went through the same plan, review, and checkpoint shape.
@@ -648,7 +648,7 @@ The project brain, written in plain text.
 - **Daily checkpoints**: the diary and the only archive; one file per day, one section per checkpoint.
 - **Knowledge policy**: the header, the Context/Rule/Why/Verify shape, 10/15 KB targets, and the 50-file threshold.
 - **Project knowledge**: durable lessons, indexed at boot and read only when a task needs them.
-- **Global knowledge**: cross-project lessons with identifying names removed.
+- **User knowledge**: cross-project lessons with identifying names removed.
 - **Knowledge-publish**: writes one lesson to the team store on a branch and opens a PR.
 
 <!-- Speaker notes: The memory layer is all plain text. The state files are summaries, not runbooks. The diary is the only archive. Knowledge is indexed at boot and read when a task needs it. The knowledge policy owns the header, the shape, the size targets, and the 50-file threshold. -->
@@ -665,7 +665,7 @@ Design, recovery, and repair.
 - **post-compaction-recovery**: reloads the rules when you run it after a summary; no harness hook currently fires it.
 - **repair-knowledge-files**: audits and repairs the stores with a conservation manifest.
 - **repair-state-files**: reorders, trims, restores headers, and never drops an unfinished next step.
-- **Knowledge standards**: one lesson in one place; a project or global store; no pointers.
+- **Knowledge standards**: one lesson in one place; a project, user, or team store; no pointers.
 
 <!-- Speaker notes: The design chain is the intent layer. The repair procedures are the maintenance layer. Run post-compaction recovery after a summary. It reloads the rules without the stale state. Knowledge standards keep one lesson in one place. -->
 
@@ -731,6 +731,7 @@ Scrub, handoffs, and multiple assistants.
 - **Multiple assistants**: turn by turn, with the state as the handoff.
 - **Parallel handoffs**: only when the handoff is solid and completely independent.
 - **Team merge mode**: a pull request and one reviewer; the AI never merges.
+- **Presentation policy**: the slide standard for narrative, layout, type, diagram sources, and review.
 
 <!-- Speaker notes: The outbound scrub is the privacy gate for anything that leaves the project. The handoff policy is the authorization and verification contract. Multiple assistants work turn by turn. Parallel handoffs need real independence. -->
 
@@ -778,7 +779,7 @@ Optional shared memory.
 - **Handoff policy**: parallel work with a solid, independent handoff.
 - **Coordination board**: announce, claim, complete, and clear.
 - **Trust boundary**: repository access and one reviewer; the protocol does not verify review at boot.
-- **Precedence**: project, then team, then global.
+- **Precedence**: project, then team, then user, then workflow.
 
 <!-- Speaker notes: The team layer is optional. The team store is a Git repository. One reviewer is the trust boundary. The protocol does not verify the review at boot. Repository access is the privacy control. -->
 
@@ -828,9 +829,9 @@ The behavioral layer and the task layer.
 
 - **Traits**: system architect, system integrator, senior DBA, observability architect,\
   code reviewer, security specialist, teacher.
-- **Skills**: narrow, on-demand task packages; project, global, and team roots.
+- **Skills**: narrow, on-demand task packages; project, user, team, and workflow roots.
 - **Example skill**: `kanban-board` renders the three issue directories as a read-only table.
-- **Precedence**: project, then team, then global.
+- **Precedence**: project, then team, then user, then workflow.
 - **Activation**: `"use skill <name>"` or a single best description match.
 - **Trigger index**: rebuilt at boot; a triggered policy does not survive compaction.
 - **Custom policy**: clone and tailor; keep it in the central policy directory.

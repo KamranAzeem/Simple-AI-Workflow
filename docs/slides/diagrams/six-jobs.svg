@@ -32,7 +32,7 @@
   <rect x="1080" y="200" width="8" height="250" rx="4" fill="#0090C1"/>
   <text x="1116" y="250" font-family="Lato, Arial, sans-serif" font-size="30" font-weight="700" fill="#2B3A42">Memory</text>
   <text x="1116" y="296" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">state and diary</text>
-  <text x="1116" y="332" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">project and global knowledge</text>
+  <text x="1116" y="332" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">project, user, and team knowledge</text>
   <text x="1116" y="368" font-family="Lato, Arial, sans-serif" font-size="24" fill="#505962">handoffs and skills</text>
   <text x="1116" y="414" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">The project's brain.</text>
 

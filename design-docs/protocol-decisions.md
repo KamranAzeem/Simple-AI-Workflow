@@ -1472,3 +1472,13 @@ The repository runs with `core.fileMode=false`. A maintainer records an executab
 Context: the fact had no home outside the retired verification runbook.
 
 Consequences: a new executable script needs the explicit index update; the sync and backup scripts are unchanged.
+
+## 2026-11-26: Slides use a code-driven diagram pipeline and a presentation policy
+
+The slide deck uses code-driven diagram sources. D2 is the default; Mermaid is an approved exception for sequence or flow diagrams that D2 handles poorly. Every new or changed diagram has a source in `docs/slides/diagrams/src/`, a manifest entry, and a generated SVG. The manifest marks untouched SVGs as legacy with a reason. Generated diagrams use a 32-unit font floor; legacy SVGs keep 24 until converted. A diagram already carried by the guide keeps its existing SVG; do not redraw it. The deck's six-level ladder keeps its existing SVG. The Markdown deck is canonical; the HTML is generated. The review loop is a static guard, a build, a render, and an inspection of changed or flagged slides only.
+
+A new `ai-policy-presentation.md` states the standard, with `Mode: trigger` and the `presentation standards` trigger. The workflow policy floor becomes 26 and the trigger count becomes 59. The project-specific visual system stays in `ai/knowledge/slide-deck-visual-system.md`.
+
+Context: the hand-authored SVGs have absolute coordinates and 76 labels at 24px, so raising the font collides. The deck has no source-to-output build, the compaction SVG is a hand redraw, and the full review took 47 minutes. The user wants the fastest path with low token use.
+
+Consequences: the deck is rebuilt on the new sources; the old presentation-policy and slide-deck-review-speed tickets are superseded; the count surfaces move to 26 policies and 59 triggers; the next slide work starts from the standard, not a discussion.

@@ -124,7 +124,7 @@ index_rc=$?
 summary="$(printf '%s\n' "$index_out" | grep '^summary|' | tail -1)"
 if [ "$index_rc" -eq 0 ] && [ -n "$summary" ]; then
     pass "index oracle accepts the module set"
-    for field in "modules=41" "policies=25" "procedures=16" "triggers=58" "conflicts=0" "errors=0"; do
+    for field in "modules=42" "policies=26" "procedures=16" "triggers=59" "conflicts=0" "errors=0"; do
         if printf '%s\n' "$summary" | grep -qF "$field"; then
             pass "index reports $field"
         else
@@ -186,7 +186,7 @@ present "$ROOT/design-docs/protocol-decisions.md" "Team skills are deferred" "AD
 present "$ROOT/docs/ai-customization.md" "Team AI Directory" "customization template has the team root key"
 present "$ROOT/docs/ai-customization.md" "Team AI Knowledge Repository" "customization template has the team repository key"
 present "$ROOT/docs/announcements/v7.1.0.md" "# v7.1.0" "release announcement exists"
-present "$MAIN_VALIDATOR" "POLICY_FLOOR=25" "validator policy floor is 25"
+present "$MAIN_VALIDATOR" "POLICY_FLOOR=26" "validator policy floor is 26"
 present "$MAIN_VALIDATOR" "Team AI Directory" "validator checks the team root key"
 present "$MAIN_VALIDATOR" "Team AI Knowledge Repository" "validator checks the team repository key"
 present "$MAIN_VALIDATOR" '"knowledge"' "validator checks the user knowledge path"

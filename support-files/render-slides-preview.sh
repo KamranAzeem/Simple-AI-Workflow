@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Render the Markdown deck to per-slide PNGs for the AI's own review.
-# Usage: ./support-files/render-slides-preview.sh
+# Usage: ./support-files/render-slides-preview.sh [slide ... | start end]
 # Requires: python3, curl, and Google Chrome. No installation and no network beyond the preview CDN.
 
 set -u
@@ -43,8 +43,17 @@ if [ "$ready" -ne 1 ]; then
     exit 1
 fi
 
+declare -a targets=()
+if [ "$#" -eq 0 ]; then
+    mapfile -t targets < <(seq 1 "$slides")
+elif [ "$#" -eq 2 ] && [[ "$1" =~ ^[0-9]+$ ]] && [[ "$2" =~ ^[0-9]+$ ]]; then
+    mapfile -t targets < <(seq "$1" "$2")
+else
+    targets=("$@")
+fi
+
 fail=0
-for i in $(seq 1 "$slides"); do
+for i in "${targets[@]}"; do
     output="$OUT/slide-$(printf '%02d' "$i").png"
     if "$CHROME" --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
         --disable-dev-shm-usage --force-device-scale-factor=1 \
@@ -63,4 +72,4 @@ if [ "$fail" -ne 0 ]; then
     echo "Some slides failed; see $OUT" >&2
     exit 1
 fi
-printf 'Rendered %s slides to %s\n' "$slides" "$OUT"
+printf 'Rendered %s slides to %s\n' "${#targets[@]}" "$OUT"

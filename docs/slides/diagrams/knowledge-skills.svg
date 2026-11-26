@@ -18,7 +18,7 @@
     text[font-size="14"] { font-size: 24px; }
   </style>
   <title id="title">Knowledge and skills follow the same scopes</title>
-  <desc id="desc">A matrix of project, global, and optional team knowledge and skills.</desc>
+  <desc id="desc">A matrix of project, user, and optional team knowledge and skills.</desc>
   <defs>
     <filter id="shadow" x="-15%" y="-15%" width="130%" height="130%">
       <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#22313A" flood-opacity="0.07"/>
@@ -30,12 +30,12 @@
   <rect width="1600" height="900" fill="#F7FAFB"/>
 
   <text x="80" y="80" font-family="Lato, Arial, sans-serif" font-size="42" font-weight="700" fill="#2B3A42">Knowledge and skills follow the same scopes</text>
-  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Project, global, and optional team knowledge and skills.</text>
+  <text x="80" y="118" font-family="Lato, Arial, sans-serif" font-size="21" fill="#6B7A82">Project, user, and optional team knowledge and skills.</text>
   <rect x="80" y="138" width="86" height="5" rx="2.5" fill="#0090C1"/>
 
   <text x="70" y="208" font-family="Lato, Arial, sans-serif" font-size="20" fill="#6B7A82">SCOPE</text>
   <text x="326" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Project</text>
-  <text x="801" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Global</text>
+  <text x="801" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">User</text>
   <text x="1206" y="208" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#2B3A42">Team</text>
   <line x1="1200" y1="220" x2="1560" y2="220" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="8 6"/>
 
@@ -69,7 +69,7 @@
 
   <rect x="775" y="470" width="390" height="160" rx="18" fill="#FFFFFF" stroke="#DCE8EC" filter="url(#shadow)"/>
   <text x="801" y="516" font-family="monospace" font-size="18" fill="#0090C1" font-weight="700">(clone)/ai/skills/</text>
-  <text x="801" y="560" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Global skills</text>
+  <text x="801" y="560" font-family="Lato, Arial, sans-serif" font-size="21" font-weight="700" fill="#2B3A42">Workflow skills</text>
   <text x="801" y="592" font-family="Lato, Arial, sans-serif" font-size="17" fill="#6B7A82">Shared task packages.</text>
 
   <rect x="1180" y="470" width="380" height="160" rx="18" fill="#FBFCFC" stroke="#9BAAB2" stroke-width="2" stroke-dasharray="10 8"/>
@@ -80,7 +80,7 @@
   <text x="1486" y="503" text-anchor="middle" font-family="Lato, Arial, sans-serif" font-size="24" font-weight="700" fill="#007AA3">OPTIONAL</text>
 
   <rect x="70" y="690" width="1490" height="64" rx="18" fill="#E6F5FA"/>
-  <text x="100" y="729" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">Precedence: project, then team, then global.</text>
+  <text x="100" y="729" font-family="Lato, Arial, sans-serif" font-size="20" font-weight="700" fill="#007AA3">Precedence: project, then team, then user, then workflow.</text>
   <text x="650" y="729" font-family="Lato, Arial, sans-serif" font-size="19" fill="#505962">Indexed at boot by name only. A body is read only when a task needs it.</text>
 
   <text x="80" y="796" font-family="Lato, Arial, sans-serif" font-size="22" fill="#6B7A82">The team column is optional. A solo project stops at the first two.</text>
