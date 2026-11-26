@@ -46,3 +46,7 @@ The active item read `Plan the scope normalization` and did not name `ai/issues/
 - The queue had 11 items; the active rename ticket was paraphrased as `Plan the scope normalization`, and the other 10 were reduced to a count.
 - The fix is a report-format change, not a state-model change.
 - No plan or branch exists yet.
+
+## Plan
+
+- 2026-11-26: Plan written at `ai/plans/checkpoint-next-steps-reporting.md`; review-158 CHANGES REQUESTED; revised for the user's `[NEXT-STEPS]` label and no release; review-159 APPROVED. Ready for implementation under the user's `continue working` instruction.
