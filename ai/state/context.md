@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.12.1 prepared; the plan review catches a missing protocol ADR.
+- **Milestone**: v7.12.1 live; the plan review catches a missing protocol ADR.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 7 open, 0 in-progress, 160 closed; the plan-review ticket is closed, the Azure idea is open.
-- **Release**: v7.12.1 prepared; v7.12.0 is the prior release.
+- **Release**: v7.12.1 is live; v7.12.0 is the prior release.
 
 ## Active Working Context
 
