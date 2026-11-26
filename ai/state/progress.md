@@ -27,7 +27,7 @@
 [2026-11-19] Updated the index contract, common policy, knowledge, validator anchors, docs, banner, v6.10.2 announcement, and ADR; fixed helper edge cases. Full text in the 2026-11-25 diary.
 [2026-11-19] Verified the fix: suite 25/25, protocol 8/8, authoring and triggers PASSED, markdownlint 0, shellcheck 0; counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors.
 [2026-11-19] Merged GitHub #11 to master as `2f3a081`, tagged `v6.10.2`, published the GitHub Release, deleted the fix branch, and closed the issue.
-[2026-11-19] Post-merge verification on master: suite 25/25, protocol 8/8, counts 39 modules, 24 policies, 15 procedures, 50 triggers, 0 conflicts, 0 errors; the plan entry is on the issue and the plan file is removed.
+[2026-11-19] Post-merge verification: suite 25/25, protocol 8/8, 39 modules, 50 triggers; the plan entry is on the issue and the plan file is removed. Full text in the 2026-11-26 diary.
 [2026-11-19] Documented the report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; review-61 APPROVED; suite 25/25, markdownlint 0. Full text in the 2026-11-25 diary.
 [2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.
 [2026-11-19] Merged and closed GitHub #12 after the earlier checkpoint; the report-anomalies docs are live; no release.
@@ -120,7 +120,7 @@
 [2026-11-24] Applied the user's 2.4rem choice: 2.4rem story, 1.9rem appendix, 84vh titled and 98vh image-only diagrams; the audit leaves slides 15, 27, and 34 to trim.
 [2026-11-24] Updated the visual system and test sizes; the slide fixture failed on four trimmed phrases; filed the slide-deck review speed issue. Full text in the 2026-11-25 diary.
 [2026-11-24] Trimmed slides 15, 27, and 34 (12-line tree, axe bullet removed and quote shortened, compaction 77vh); updated the four stale fixture phrases; rebuilt the HTML; audit 0 overflow; suite 31/31.
-[2026-11-24] Notes 93+ processed: ladder rebuilt with level 2 editor chat, root renamed customer-joe, Idea bullet removed, quality loop reordered, model card centered; audit 0; suite 31/31. Full text in the 2026-11-25 diary.
+[2026-11-24] Processed deck notes 93+: six-level ladder with level 2 editor chat, root customer-joe, model card centered; suite 31/31. Full text in the 2026-11-25 diary.
 [2026-11-24] Revised the ladder to six levels with level 2 marked and levels 3-5 unlabelled (multiple assistants, MCPs, agentic/swarm); rebuilt; audit 0 overflow; suite 31/31.
 [2026-11-24] Refined the daily-loop and quality-loop arrows: 3px strokes, 5-unit markers, edge-connected endpoints, smooth curves; rebuilt; audit 0; suite 31/31.
 [2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
@@ -128,7 +128,7 @@
 [2026-11-24] Delivered v7.3.1: squash-merged, deleted the review and token branches, pushed, tagged, and published the GitHub Release; validator 8/8. Full text in the 2026-11-25 diary.
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
 [2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
-[2026-11-24] Recommended the presentation split (policy, procedure, skill); deferred presentation-policy and slide-deck-review-speed; recorded layout, type-control, build-slides-html.sh. Full text in the 2026-11-25 diary.
+[2026-11-24] Recommended the presentation split; deferred presentation-policy and slide-deck-review-speed; recorded the layout, type control, and build-slides-html.sh. Full text in the 2026-11-25 diary.
 [2026-11-24] Attached the executed config plan to its closed ticket under `## Implementation Plan`, verified the copy, and deleted the loose plan file; `ai/plans/` now holds only `.gitkeep`.
 [2026-11-24] Filed the team-knowledge directory and repository naming ticket (P3/M) with the rename scope, the live file list, and the migration questions.
 [2026-11-24] Grilled the team-named repo: sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, minor release. Full text in the 2026-11-25 diary.
@@ -164,11 +164,11 @@
 [2026-11-26] Merged the plain list; validator 8/8.
 [2026-11-26] Retired the verification runbook and verdict-hash rules; reviews 163/164 APPROVED; v7.7.1 released. Full text in the 2026-11-26 diary.
 [2026-11-26] Created the slide authoring pipeline ticket; added D2, mmdc, and Chrome paths plus the Puppeteer config to the user settings; D2 and mmdc smoke tests pass; no plan yet.
-[2026-11-26] Added the presentation policy and the D2/Mermaid pipeline; kept the guide's compaction SVG and the deck's six-level ladder; refreshed the deck terms and counts; suite 33/33, validator 8/8, index 26/16/59; reviews 165/166 APPROVED; v7.8.0 prepared.
+[2026-11-26] Added the presentation policy and the D2/Mermaid pipeline; refreshed the deck terms and counts to 26/16/59; reviews 165/166 APPROVED; v7.8.0 prepared. Full text in the 2026-11-26 diary.
 [2026-11-26] Released v7.8.0 (public URL verified, post-merge validator 8/8); dropped the live Google Slides deck update and physical Gate 2 from the queue at the user's request.
 [2026-11-26] Retired the user-space review-verdict-binding lesson; user store 28 to 27; the other 27 unchanged; manifest and backup recorded; reviews 167/168 APPROVED.
 [2026-11-26] Fixed the checkpoint transaction log: removed the stale [NEXT-STEPS] line; the plain Next steps is the only queue; reviews 169/170 APPROVED; v7.8.1 prepared.
-[2026-11-26] Grilled and scoped the customization presets: 8 roles, the Active Expertise sets, 3 new traits, soc2/iso pre-fill for five, docs/examples/customization-presets, a MINOR release; the ticket records the decisions; plan next.
+[2026-11-26] Grilled and scoped the customization presets: 8 roles, 3 new traits, soc2/iso pre-fill for five, presets under docs/examples; MINOR release; plan next. Full text in the 2026-11-26 diary.
 [2026-11-26] Delivered the customization presets (v7.8.2): eight role files, three traits, guide section 11, slide/README/template sync, new fixture, five ADRs; validator 8/8, suite 34/34; reviews 175/176.
 [2026-11-26] Released v7.8.2 (public URL 200); post-merge validator 8/8; no post-release code changes.
 [2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
@@ -177,3 +177,6 @@
 [2026-11-26] Checkpoint after v7.9.0: state current; the handoff is reconciled; validator 8/8; the queue starts with the User AI Directory migration.
 [2026-11-26] Filed sync-list-presets-live-directory.md; accepted the live-directory design and the docs/directory consistency test; supersedes ADR-002.
 [2026-11-26] Implemented live --list-presets (v7.10.0): live directory role source, no fixed list, consistency test, docs, 35-script suite, review-190 APPROVED.
+[2026-11-26] Released v7.10.0 (public URL 200); live role list shipped; post-merge validator 8/8; no post-release code changes.
+[2026-11-26] Loaded context per AGENTS.md: clone up to date; headers healthy; index 42 modules, 59 triggers; 6 open issues; state over the advisory budget.
+[2026-11-26] Grilled the young learner ticket and locked the design: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types, Linux-first; plan next.

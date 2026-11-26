@@ -14,15 +14,16 @@
 
 ## Current Status
 
-- **Milestone**: v7.10.0 prepared; live role list shipped.
+- **Milestone**: v7.10.0 live; live role list shipped.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 6 open, 0 in-progress, 152 closed; the sync list-presets issue is closed.
-- **Release**: v7.10.0 is prepared; v7.9.0 is the prior release.
+- **Release**: v7.10.0 is live; v7.9.0 is the prior release.
 
 ## Active Working Context
 
-- **Objective**: merge and release v7.10.0, then migrate the live User AI Directory, sync downstream projects, and continue the open queue.
-- **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
+- **Objective**: plan the young learner policy from the locked design, then migrate the live User AI Directory and sync downstream projects.
+- **Live user store**: active store `~/.ai/knowledge/` (27 files); no old-layout fallback present; confirm the migration item is done.
 - **Open queue**: young learner and the docs/issue queue.
+- **Young learner design**: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types; decisions in the 2026-11-26 diary.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

@@ -21,3 +21,4 @@
 - Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Audit the Project Knowledge the protocol relies on.
+- Plan the young learner policy after folding the locked design into the ticket; Linux first, Windows later. `ai/issues/open/young-learner-programming-teacher-policy.md`
