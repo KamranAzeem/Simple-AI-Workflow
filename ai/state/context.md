@@ -27,5 +27,6 @@
 - **Open queue**: F6, then the young learner and the migration.
 - **Alias retirement**: 4 v7.7.x triggers removed; the index reports 55 triggers; details in the closed F1 ticket and the 2026-11-26 diary.
 - **Docs batch**: F2 to F5 closed; the validation doc and spec use `workflow`; the map is refreshed; docs-only changes may land without a release.
+- **State repair**: 83 progress entries condensed into the 2026-11-26 diary; the shared budget is clear.
 - **Young learner design**: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types; decisions in the 2026-11-26 diary.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

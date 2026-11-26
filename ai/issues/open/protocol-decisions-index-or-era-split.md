@@ -29,3 +29,7 @@ Acceptance criteria:
 ---
 2026-11-26
 Filed from the 2026-11-26 codebase examination. Evidence group O1. No secret or identifying name present.
+
+---
+2026-11-26
+Plan: `ai/plans/protocol-decisions-index.md` (M). Decision: in-file checked index, no generator, no era split, PATCH v7.11.1 for the meta-policy line. Peer review pending; no branch yet.
