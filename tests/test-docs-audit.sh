@@ -34,6 +34,7 @@ ANNOUNCE782="$ROOT/docs/announcements/v7.8.2.md"
 ANNOUNCE790="$ROOT/docs/announcements/v7.9.0.md"
 ANNOUNCE7100="$ROOT/docs/announcements/v7.10.0.md"
 ANNOUNCE7110="$ROOT/docs/announcements/v7.11.0.md"
+ANNOUNCE7111="$ROOT/docs/announcements/v7.11.1.md"
 
 fail=0
 
@@ -182,11 +183,32 @@ exists "docs/announcements/v7.10.0.md"
 present "$ANNOUNCE7100" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.10.0" "v7.10.0 announcement records the release URL"
 exists "docs/announcements/v7.11.0.md"
 present "$ANNOUNCE7110" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.11.0" "v7.11.0 announcement records the release URL"
-present "$README" "docs/announcements/v7.11.0.md" "README points at the v7.11.0 release announcement"
+exists "docs/announcements/v7.11.1.md"
+present "$ANNOUNCE7111" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.11.1" "v7.11.1 announcement records the release URL"
+present "$README" "docs/announcements/v7.11.1.md" "README points at the v7.11.1 release announcement"
 present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
 present "$DECISIONS" "This supersedes the 2026-10-28 rule that fixes only Critical and Major." "ADR store records the supersession"
+
+# --- ADR index mirrors the dated headings ---
+adr_headings="$(grep -E '^## [0-9]{4}-[0-9]{2}-[0-9]{2}:' "$DECISIONS")"
+adr_index="$(awk '/<!-- ADR-INDEX:START -->/{f=1;next}/<!-- ADR-INDEX:END -->/{f=0}f' "$DECISIONS")"
+adr_expected="$(printf '%s\n' "$adr_headings" | sed 's/^## /- /')"
+if [ -n "$adr_headings" ] && [ "$adr_index" = "$adr_expected" ]; then
+    pass "ADR index mirrors the dated headings"
+else
+    fail_case "ADR index is stale or incomplete"
+    printf '%s\n' "$adr_expected" | diff - <(printf '%s\n' "$adr_index") | sed -n '1,8p'
+fi
+adr_dups="$(printf '%s\n' "$adr_headings" | sort | uniq -d)"
+if [ -z "$adr_dups" ]; then
+    pass "ADR store has no duplicate dated headings"
+else
+    fail_case "ADR store has duplicate dated headings"
+    printf '%s\n' "$adr_dups"
+fi
+
 present "$VALIDATION" "workflow" "validation doc uses the workflow scope token"
 absent "$VALIDATION" "global" "validation doc drops the global scope token"
 present "$SPEC" "|workflow|" "spec asserts the workflow scope token"

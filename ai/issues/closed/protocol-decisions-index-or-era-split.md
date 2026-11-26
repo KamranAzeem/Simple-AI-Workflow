@@ -1,12 +1,50 @@
+Reported: 2026-11-26
+Reporter: Kamran Azeem
+IssueType: Improvement/Refactor
+Severity: Human-to-decide (AI estimate: P3)
+Size: Human-to-decide (AI estimate: M)
+Label:
+URL:
+Summary: The 184 KB protocol decision store has no index or era split and is full-loaded before every protocol change.
+
+Description:
+
+- `design-docs/protocol-decisions.md` is 1,600 lines and 184,582 bytes with 260 dated entries.
+- There is no table of contents, index, or era split.
+- `ai-policy-meta.md:42` requires a full load before any protocol change, so every protocol edit pays roughly 46K tokens to read the store.
+- The store is append-only and internally consistent, with no duplicate dated headings.
+- This is an observation and a design decision, not a defect.
+
+Resolution options:
+
+- Add a table of contents of dated entries at the top.
+- Split by year or era into linked files, preserving the append-only history.
+- Keep one file and accept the load cost.
+
+Acceptance criteria:
+
+- The chosen structure keeps every decision reachable and the append-only rule intact.
+- A maintainer can find a decision without reading the whole store.
+
+---
+2026-11-26
+Filed from the 2026-11-26 codebase examination. Evidence group O1. No secret or identifying name present.
+
+---
+2026-11-26
+Plan attached below. Plan reviews 198 (CHANGES REQUESTED, fixed) and 199 (APPROVED); implementation review 200 APPROVED. Closed in the ADR-index branch; release v7.11.1.
+
+## Implementation Plan
+
 # Plan: Add a checked index to the protocol decision store
 
 ## Goal
 
-Add a marked index at the top of `design-docs/protocol-decisions.md`, mirror the 260 dated headings into it, enforce the mirror with a check in `tests/test-docs-audit.sh`, and record the rule in `ai-policy-meta.md`. Keep one file, leave the full-load policy unchanged, and ship PATCH v7.11.1.
+Add a marked index at the top of `design-docs/protocol-decisions.md`, mirror the dated headings into it, enforce the mirror with a check in `tests/test-docs-audit.sh`, and record the rule in `ai-policy-meta.md`. Keep one file, leave the full-load policy unchanged, and ship PATCH v7.11.1.
 
 ## Evidence
 
-- `design-docs/protocol-decisions.md` is 1,600 lines, 184,582 bytes, and 260 dated `## YYYY-MM-DD: Title` entries. It has no index.
+- `design-docs/protocol-decisions.md` is 1,600 lines and 184,582 bytes, with 262 dated `## YYYY-MM-DD: Title` entries at planning and 263 after the new entry. It has no index.
 - `ai-policies/ai-policy-meta.md:42` requires a full load before a protocol change, so every protocol edit reads the whole store.
 - `tests/test-docs-audit.sh` already sets `DECISIONS="$ROOT/design-docs/protocol-decisions.md"` and has the `pass` and `fail_case` helpers.
 - No test currently checks for duplicate dated headings or a stale index.
@@ -18,7 +56,7 @@ M. Context plus acceptance criteria; no HLD or LLD is required.
 
 ## Context
 
-The store is hard to navigate at 260 entries. The user chose the in-file index over an era split because a split would require changing `ai-policy-meta.md` to load only the current era, and an older superseded decision could be missed. The index is the navigation aid; the full-load rule stays. The check is the gate; no generator script is kept.
+The store is hard to navigate at 262 entries. The user chose the in-file index over an era split because a split would require changing `ai-policy-meta.md` to load only the current era, and an older superseded decision could be missed. The index is the navigation aid; the full-load rule stays. The check is the gate; no generator script is kept.
 
 Out of scope: the era split, any change to the full-load rule, any change to the index format beyond `- YYYY-MM-DD: Title`, and any tooling that rewrites the store automatically.
 
@@ -37,7 +75,7 @@ Out of scope: the era split, any change to the full-load rule, any change to the
     - `<!-- ADR-INDEX:START -->`
     - one `- YYYY-MM-DD: Title` line per dated heading, in document order
     - `<!-- ADR-INDEX:END -->`
-  - Build the initial block once from the 260 headings. Do not add a generator script.
+  - Build the initial block once from the live headings. Do not add a generator script.
   - Append the new ADR entry for this decision at the end and add its index line.
 - `tests/test-docs-audit.sh`: add the ADR index check:
   - extract `^## YYYY-MM-DD:` headings in file order;

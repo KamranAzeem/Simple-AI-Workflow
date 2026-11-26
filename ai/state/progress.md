@@ -186,3 +186,5 @@
 [2026-11-26] Planned and reviewed the F2 to F5 docs batch: reviews 195/196 APPROVED; no release.
 [2026-11-26] Implemented the F2 to F5 docs batch: workflow token, map refresh, bash usage lines, README index, docs-only release rule; suite 35/35; review 197 APPROVED; no release.
 [2026-11-26] Repaired the state files: 83 progress entries condensed into the 2026-11-26 diary; the shared budget is clear.
+[2026-11-26] Planned and reviewed the ADR index: reviews 198/199 APPROVED; PATCH v7.11.1.
+[2026-11-26] Implemented the ADR index and the docs-audit gate; suite 35/35; review 200 APPROVED; v7.11.1 prepared.

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.11.0 (2026-11-26).** The four v7.7.x trigger aliases are retired; the protocol now ships 55 triggers. Read the announcement: [docs/announcements/v7.11.0.md](docs/announcements/v7.11.0.md). |
+| **v7.11.1 (2026-11-26).** The protocol decision store now carries a checked index. Read the announcement: [docs/announcements/v7.11.1.md](docs/announcements/v7.11.1.md). |
 
 # Simple AI Workflow
 
@@ -220,4 +220,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 26 policies and 16 procedures are the fixed background. The 55 triggers in v7.11.0 include no temporary aliases.
+The 26 policies and 16 procedures are the fixed background. The 55 triggers in v7.11.1 include no temporary aliases.

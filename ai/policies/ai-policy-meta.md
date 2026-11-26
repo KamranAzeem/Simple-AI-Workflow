@@ -40,6 +40,7 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 - Present a summary and a proposed commit message.
 - Treat the approved plan and the implement request as the human approval for staging, committing, merging, pushing, opening a pull request, releasing, and the external writes the work names.
 - Apply the ADR entry rule in `design-docs/protocol-decisions.md` to every protocol or policy change.
+- Append the new decision and its `ADR-INDEX` line; the docs-audit fixture fails on a stale index.
 
 ## Forbidden Actions
 

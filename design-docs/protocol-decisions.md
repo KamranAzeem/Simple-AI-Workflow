@@ -2,6 +2,272 @@
 
 Curated record of the protocol's design decisions, oldest first. Session bookkeeping, commit and branch details, and review counts have been removed. Each entry states the decision.
 
+<!-- ADR-INDEX:START -->
+- 2026-05-21: Knowledge loading is a dedicated load-context step
+- 2026-05-21: Git-ignore reminders at the point of use
+- 2026-05-21: Checkpoint always updates project knowledge
+- 2026-05-21: Backup is a native command, not a script
+- 2026-05-21: The validation script is portable
+- 2026-05-21: User-facing docs avoid internal protocol labels
+- 2026-05-21: Triggered procedures live with their peers
+- 2026-05-21: Scripts write BOM-free files on PowerShell
+- 2026-05-21: Peer review is a dedicated policy with a report location
+- 2026-05-21: The README title is "Simple AI Workflow"
+- 2026-05-21: Settings live only in the global user directory
+- 2026-05-21: code-review is a triggered mode, not an expertise
+- 2026-06-18: No AI metadata comment headers in files
+- 2026-06-18: The validator checks the current protocol surface
+- 2026-06-18: READ-ONLY guards on every policy file
+- 2026-06-18: Full form for "load context" at session start
+- 2026-06-18: Settings are full-loaded; knowledge is just-in-time indexed
+- 2026-06-19: No markdown hyperlinks in policy files
+- 2026-06-19: Protocol Developer Mode loads the decision store first
+- 2026-06-19: Configuration anchors are the single source of path truth
+- 2026-06-22: Descriptive file naming for AI-generated artifacts
+- 2026-06-22: Codebase examination is a triggered procedure
+- 2026-06-22: The shared directory is tracked in git
+- 2026-06-29: State files are read fresh, with observable proof
+- 2026-06-30: Operational files are full-loaded at boot
+- 2026-06-30: State files have a single writer, and checkpoints write memory to disk
+- 2026-06-30: Single-writer ownership is by session, not by role label
+- 2026-07-04: The customization file lives at the project root
+- 2026-07-04: Humanized Output rules in the common policy
+- 2026-07-04: Domain policies for accounting and academic research
+- 2026-07-04: Flexible expertise-name resolution
+- 2026-07-04: The compliance directory is not scanned separately
+- 2026-07-04: The structural audit checks the customization gitignore entry
+- 2026-07-04: Sync scripts auto-migrate the customization file
+- 2026-07-04: No boilerplate duplication across domain policies
+- 2026-07-04: Load context reports missing items; bootstrap creates them
+- 2026-07-04: Archive and backup exclusions
+- 2026-07-25: Career coaching is one consolidated policy
+- 2026-07-25: The academic-researcher policy is international and domain-neutral
+- 2026-07-28: "PR review" triggers the peer-review procedure
+- 2026-07-28: Reviews do not narrow to the diff
+- 2026-07-28: No invented facts
+- 2026-07-28: READ-ONLY markers enforced on every policy file
+- 2026-07-28: Post-compaction recovery cannot be silently skipped
+- 2026-07-28: Identify the recovery procedure by title, not by letter
+- 2026-07-28: The recovery procedure announces itself with a sentinel
+- 2026-07-28: The reload trigger lives outside the repository
+- 2026-07-31: The recovery procedure is renamed Post-Compaction Recovery
+- 2026-07-31: Post-compaction recovery is a purely additive reload
+- 2026-07-31: Compaction signals are syntactic
+- 2026-07-31: A PreCompact hook re-arms the procedure
+- 2026-07-31: The load report covers all customization sections
+- 2026-07-31: Configuration anchors are bold everywhere
+- 2026-08-05: Policy files do not use procedure letters or step numbers
+- 2026-08-08: State files live in `ai/state/`
+- 2026-08-09: Writing style is a distilled guide in global knowledge
+- 2026-08-09: Custom-policy discovery in the policies directory is intentional
+- 2026-08-22: Protocol Developer Mode loads only active-expertise policies
+- 2026-08-24: Full reads and no truncated evidence
+- 2026-08-24: External system mutations need explicit approval
+- 2026-08-24: The state-file model is per file, not global append-only
+- 2026-08-25: Pre-Work Gate before any work item
+- 2026-08-25: Acceptance criteria are the work-item contract
+- 2026-08-25: Full file reads are an unconditional mandate
+- 2026-08-25: Non-Negotiables index in the common policy
+- 2026-08-25: Quality findings are phrased by intent, not metrics
+- 2026-08-25: Agree on shared understanding before building
+- 2026-08-25: The ubiquitous-language file idea is dropped
+- 2026-08-25: Root-only protocol files
+- 2026-08-25: Markdown lint tooling
+- 2026-08-31: Ubiquitous language and ontology are dropped
+- 2026-08-31: Evidence-based investigation is default behavior
+- 2026-08-31: `AGENTS.md` is a router, not a catalog
+- 2026-08-31: Evidence-proposal items evaluated
+- 2026-08-31: The design-document chain has a review gate
+- 2026-08-31: The protocol's own design docs are deferred
+- 2026-09-09: The checkpoint procedure writes the daily checkpoint file
+- 2026-09-09: `ai/issues/` is a formal project directory
+- 2026-09-10: Issue filenames carry only status and slug
+- 2026-09-10: Recorded commit-hash lag is expected
+- 2026-09-10: Stale transient status notes are removed from this store
+- 2026-09-17: Issue status is the directory location
+- 2026-09-19: State-File Model v2
+- 2026-09-19: The Investigation Contract has a self-consistency check
+- 2026-09-19: Backlog triage decisions
+- 2026-09-19: Ticket background lives in Project Knowledge
+- 2026-09-19: Agent document review folds into the peer-review policy
+- 2026-09-19: Policy instructions are concise and what-focused
+- 2026-09-20: Call-a-friend and help-a-friend decisions
+- 2026-09-21: README overhaul decisions
+- 2026-09-21: "Untried is not impossible"
+- 2026-09-22: Sensitive identifiers purged from history
+- 2026-09-22: Bounded boot-time staleness heuristic
+- 2026-09-22: No pre-work commits
+- 2026-09-22: Documentation cleanup decisions
+- 2026-10-06: Global Knowledge returns to just-in-time indexing
+- 2026-10-06: Procedures, steps, and tiers have stable names
+- 2026-10-06: Friendly release announcements live in `docs/announcements`
+- 2026-10-12: Issue-management policy upgrade
+- 2026-10-12: ADR entries are self-contained
+- 2026-10-12: Markdown Output policy consolidated
+- 2026-10-12: Tables are banned in protocol files, allowed in user-facing docs
+- 2026-10-12: Author identity and identifying names
+- 2026-10-12: Grilling mode
+- 2026-10-12: Brainstorming mode
+- 2026-10-12: Design documentation standards
+- 2026-10-12: Design docs location and boot indexing
+- 2026-10-12: The protocol ADR store relocated
+- 2026-10-12: The decision store holds decisions only
+- 2026-10-12: Open the branch before editing
+- 2026-10-13: A plan is not a design document
+- 2026-10-13: Markdown lint ignores local-only directories
+- 2026-10-13: No em dashes in the shipped and living files
+- 2026-10-13: pull.rebase is a recommendation; defaultBranch is never overridden
+- 2026-10-13: Universal writing rules live in the common policy
+- 2026-10-13: One "checkpoint" runs all upkeep
+- 2026-10-15: User-facing docs explain why the full trigger phrase is required
+- 2026-10-15: The update design documents procedure
+- 2026-10-18: Procedure and policy authoring standard
+- 2026-10-21: The code authoring policy ships before the plugin
+- 2026-10-21: The coding policy renames and makes telemetry opt-in
+- 2026-10-21: The coding policy gains an operational baseline
+- 2026-10-21: The coding policy becomes a thin core with pointers
+- 2026-10-21: The coding base policy dispatches to the domain policies
+- 2026-10-21: The coding baseline policy defaults telemetry on for production code
+- 2026-10-21: The observability policy absorbs the emission rules
+- 2026-10-21: The common policy and coding-baseline state their ownership boundary
+- 2026-10-21: The web-frontend policy follows the authoring standard
+- 2026-10-21: The API backend policy follows the authoring standard
+- 2026-10-21: The data policy follows the authoring standard
+- 2026-10-21: The DBA policy follows the authoring standard
+- 2026-10-21: The cloud policy follows the authoring standard
+- 2026-10-21: The mobile-apps policy follows the authoring standard
+- 2026-10-21: The coding-baseline references point at the migrated sections
+- 2026-10-27: Canonical state-file headers are visible, exact, and repairable
+- 2026-10-27: State-file size figures are soft targets
+- 2026-10-27: Designated literal runtime blocks are normative artifacts
+- 2026-10-27: Matt Pocock backlog drops
+- 2026-10-27: AGENTS.md opens with a visible protocol banner
+- 2026-10-28: Local work uses one branch and one squash commit
+- 2026-10-28: Plans carry evidence and automatic peer review
+- 2026-10-29: Knowledge files share one standard and one visible header
+- 2026-10-29: One knowledge capture pass feeds both stores
+- 2026-10-29: Knowledge repair is conservation-gated
+- 2026-10-29: Knowledge files use a 100-line soft target
+- 2026-10-29: Knowledge enforcement uses the existing checklist
+- 2026-10-29: The project corpus is repaired on the branch; global knowledge stays local
+- 2026-10-29: The coding coverage map retires to the coding policy references
+- 2026-10-29: v5.4.0 is one release
+- 2026-10-29: Knowledge standards exempt non-lesson artifacts
+- 2026-10-29: Knowledge files use size-based limits
+- 2026-10-29: Knowledge repair never splits
+- 2026-10-29: Knowledge files are self-standing
+- 2026-10-29: Knowledge repair is autonomous with a safety abort
+- 2026-10-29: Sensitive names are scoped by store
+- 2026-10-29: v5.4.1 is a patch release
+- 2026-10-29: v5.4.1 supersedes the line and split decisions
+- 2026-10-29: The repair trigger is the approval
+- 2026-10-31: Work items have a terminal state and a bound close sequence
+- 2026-10-31: Feature-branch approval covers commits and pushes
+- 2026-10-31: AI state lives only under the project root ai/
+- 2026-10-31: Reviews check procedural completeness on plans and close claims
+- 2026-10-31: Planning does not open a feature branch
+- 2026-10-31: Implementation opens the branch and moves the ticket
+- 2026-10-31: The branch-before-edit rule exempts planning artifacts
+- 2026-11-03: Policy references resolve from the Global AI Policies Directory
+- 2026-11-03: Work-item delivery lives in two procedures, with merge modes
+- 2026-11-07: Load context reports workflow-clone freshness
+- 2026-11-08: Policy trigger declarations and the shared namespace
+- 2026-11-08: Trigger index, dispatch, and failure behavior
+- 2026-11-08: Procedure modules, session semantics, and staged delivery
+- 2026-11-08: Trigger model invariants and change rule
+- 2026-11-09: INV-016 amendment for procedure triggers
+- 2026-11-09: Load-context boot discovery is targeted, bounded, and OS-agnostic
+- 2026-11-09: Knowledge stores use topic files, a 50-file review threshold, evidence deletion, retirement, and a lookup rule
+- 2026-11-09: Skills are a separate on-demand layer with drop-in packages
+- 2026-11-13: Outbound content scrub uses two destination classes and an unconditional secret rule
+- 2026-11-13: Handoffs use a dedicated policy, a creation review, and a single-writer-safe autonomy
+- 2026-11-16: Policy loading is a declared, checked contract
+- 2026-11-16: The common policy never names a policy file
+- 2026-11-16: The outbound content scrub is the first extracted plug-in
+- 2026-11-16: The knowledge protocols and file standards are a trigger-loaded plug-in
+- 2026-11-16: The issue management protocol is a trigger-loaded plug-in
+- 2026-11-16: The design documentation standards merge into the design-docs policy
+- 2026-11-16: The thinking modes are a trigger-loaded plug-in
+- 2026-11-16: The Linux legacy policy is rewritten and declares its expertise loading
+- 2026-11-16: The accounting legacy policy is rewritten and declares its expertise loading
+- 2026-11-16: The career coaching legacy policy is rewritten and declares its expertise loading
+- 2026-11-16: The Windows system administration legacy policy is rewritten and declares its expertise loading
+- 2026-11-16: The academic research legacy policy is rewritten and declares its expertise loading
+- 2026-11-16: The universal engineering and testing standards stay in the common policy
+- 2026-11-18: Twelve policies declare their loading path and the common policy is exempt
+- 2026-11-18: The common policy becomes rules-only and keeps its rationale in the ADR ledger
+- 2026-11-19: The checkpoint records a discussed idea in next-steps
+- 2026-11-19: The global user directory and the default shell are configurable
+- 2026-11-19: The global settings get a repair procedure
+- 2026-11-19: The tool ladder forbids a runtime for file operations
+- 2026-11-19: One read-only index helper and a built-in-first boot
+- 2026-11-19: The boot builds its own index and the helper is optional
+- 2026-11-19: Out-of-band backup scripts complement the native backup
+- 2026-11-20: State files share one 30 KB budget and live items are condensed
+- 2026-11-20: Backup scripts stream progress, prune heavy trees, and gate permission checks by platform
+- 2026-11-22: Team Knowledge is the third knowledge scope
+- 2026-11-22: The team store is a Git repository with a publish PR
+- 2026-11-22: Team lessons are flat files named by their id
+- 2026-11-22: Team lessons are Class A and never keep secrets
+- 2026-11-22: The team index is filename-only and degrades
+- 2026-11-22: Precedence is project, team, then personal global
+- 2026-11-22: The team policy is procedure-loaded with one boot exception
+- 2026-11-22: Team skills are deferred
+- 2026-11-22: The common Knowledge Invariant names the configured team store
+- 2026-11-22: The team skills root reuses the team store
+- 2026-11-22: The common Skills section owns the team skills rules
+- 2026-11-22: Team skills are consumption only
+- 2026-11-22: The team repository is the team skills trust boundary
+- 2026-11-22: Skill precedence is project, team, global
+- 2026-11-22: The team skills index lives in the skills step
+- 2026-11-22: Team skills keep the same auto-match and gate helpers
+- 2026-11-22: Removal is team skill retirement
+- 2026-11-22: A personal skills root stays deferred
+- 2026-11-22: Team skills ship in v7.2.0
+- 2026-11-24: Post-compaction recovery is manual, not automatic
+- 2026-11-24: The implementation request approves the plan's close sequence
+- 2026-11-24: The docs describe the protocol and the modules govern
+- 2026-11-24: A tracked customization is valid
+- 2026-11-24: The team store directory is team-knowledge
+- 2026-11-25: The code-review policy owns the uniform blocking gate
+- 2026-11-25: The core gate ships alone
+- 2026-11-25: The deferred plan-quality rules land
+- 2026-11-25: The checkpoint report shows the current position
+- 2026-11-25: Review verdicts bind to the artifact hash
+- 2026-11-25: Four scopes replace the global wording
+- 2026-11-26: The checkpoint queue is separate from the current position
+- 2026-11-26: The checkpoint next steps are a plain list
+- 2026-11-26: The verification runbook and the verdict-hash rules are retired
+- 2026-11-26: The repository records executable bits explicitly
+- 2026-11-26: Slides use a code-driven diagram pipeline and a presentation policy
+- 2026-11-26: The checkpoint transaction log carries no next-steps line
+- 2026-11-26: Customization presets are full variants under docs/examples/customization-presets/
+- 2026-11-26: Three traits join the catalog for the presets
+- 2026-11-26: The preset slugs are the init preset identifiers
+- 2026-11-26: Preset compliance is a suggestion, not a determination
+- 2026-11-26: Documentation-only additions ship as a PATCH
+- 2026-11-26: Init is a mode of the existing sync script
+- 2026-11-26: The eight slugs are a fixed published whitelist
+- 2026-11-26: A target inside the workflow clone is validation, exit 2
+- 2026-11-26: A symlink root path is validation, exit 2
+- 2026-11-26: Init always sources AGENTS.md from the clone root
+- 2026-11-26: The workflow path is the resolved clone path
+- 2026-11-26: Same-directory temp files, rename, and rollback
+- 2026-11-26: The preset contract forbids the Default Shell key
+- 2026-11-26: This task ships no TSV manifest
+- 2026-11-26: Release v7.9.0 as MINOR
+- 2026-11-26: Tests use a new init fixture
+- 2026-11-26: The presets directory is the single source of truth for roles
+- 2026-11-26: The missing-preset integrity check moves to a consistency test
+- 2026-11-26: A missing or empty presets directory is a packaging error
+- 2026-11-26: --list-presets is a standalone command
+- 2026-11-26: The guide table is the documented list
+- 2026-11-26: Release v7.10.0 as MINOR
+- 2026-11-26: The v7.7.x trigger aliases are retired at v7.11.0
+- 2026-11-26: Docs-only changes may land without a release
+- 2026-11-26: The ADR store carries a checked index
+<!-- ADR-INDEX:END -->
+
 ## 2026-05-21: Knowledge loading is a dedicated load-context step
 
 Project-knowledge loading is its own numbered step in the load-context procedure, marked "do not merge" with the earlier step, rather than a trailing sentence appended to it. A trailing sentence is silently skipped; a dedicated numbered step is not.
@@ -1614,3 +1880,11 @@ A docs-only change with no policy, procedure, trigger, or runtime behavior chang
 Context: the written rule said a docs-only change ships as a PATCH, but the README restructure and the docs audit landed without a release. The F2 to F5 batch is the first to follow the new rule.
 
 Consequences: a docs-only change runs markdownlint, the validators, and the suite, and records the change in the merge commit and the checkpoint. This batch also records the workflow scope token in the policy-loading spec and the validation doc, and the `bash` command convention in the script usage lines and the two referencing modules. No tag and no GitHub Release.
+
+## 2026-11-26: The ADR store carries a checked index
+
+The store carries a marked index of its dated headings at the top, and `tests/test-docs-audit.sh` fails when the index and the headings differ.
+
+Context: the store has hundreds of dated entries and no navigation aid. A checked mirror keeps the store as one file and the full-load rule unchanged.
+
+Consequences: every new decision adds one `- YYYY-MM-DD: Title` line to the block. The docs audit fails on a stale index, a missing or extra line, or a duplicate dated heading. No generator script is kept. The release is v7.11.1, PATCH.
