@@ -20,5 +20,5 @@
 - Migrate the live User AI Directory with a dry run, then the real sync.
 - Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
-- Implement the customization presets on request; init follows.
+- Plan the customization presets from the 2026-11-26 grilling (eight roles); init follows.
 - Audit the Project Knowledge the protocol relies on.

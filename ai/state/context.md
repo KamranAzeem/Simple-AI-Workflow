@@ -14,15 +14,15 @@
 
 ## Current Status
 
-- **Milestone**: v7.8.1 prepared; checkpoint log fix.
+- **Milestone**: v7.8.1 live; customization presets scoped.
 - **Validation**: validator 8/8; suite 33/33; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 16 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 8 open, 0 in-progress, 149 closed; the checkpoint transaction log fix is closed.
-- **Release**: v7.8.1 is prepared; v7.8.0 is live.
+- **Release**: v7.8.1 is live; v7.8.0 is the prior release.
 
 ## Active Working Context
 
-- **Objective**: migrate the live User AI Directory, sync downstream projects, then continue the open queue.
+- **Objective**: plan and implement the customization presets, then migrate the live User AI Directory, sync downstream projects, and continue the open queue.
 - **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
-- **Open queue**: presets and init, and young learner.
+- **Open queue**: init after the presets, and young learner.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

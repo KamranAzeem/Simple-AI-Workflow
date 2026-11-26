@@ -168,3 +168,4 @@
 [2026-11-26] Released v7.8.0 (public URL verified, post-merge validator 8/8); dropped the live Google Slides deck update and physical Gate 2 from the queue at the user's request.
 [2026-11-26] Retired the user-space review-verdict-binding lesson; user store 28 to 27; the other 27 unchanged; manifest and backup recorded; reviews 167/168 APPROVED.
 [2026-11-26] Fixed the checkpoint transaction log: removed the stale [NEXT-STEPS] line; the plain Next steps is the only queue; reviews 169/170 APPROVED; v7.8.1 prepared.
+[2026-11-26] Grilled and scoped the customization presets: 8 roles, the Active Expertise sets, 3 new traits, soc2/iso pre-fill for five, docs/examples/customization-presets, a MINOR release; the ticket records the decisions; plan next.
