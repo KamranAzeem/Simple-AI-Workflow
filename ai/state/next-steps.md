@@ -14,14 +14,17 @@
 ## Pending
 
 - Refresh the state-file headers in each existing project after v7.0.0.
-- Verify the team knowledge publish path against a live store when one is configured.
+- Verify the team publish path against a live store when one is configured.
 - File the Google Slides update and physical Gate 2 as a separate issue.
-- Confirm whether any harness now offers a reliable post-compaction hook; update the manual-recovery docs if one appears.
-- Sync the updated AGENTS.md and the v7.7.0 knowledge layout into downstream projects.
-- Resume the presentation policy only on the user's request; design layout and type control first.
-- Resume the trimmed slide review speed scope only on the user's request.
+- Confirm a reliable post-compaction hook; update the manual-recovery docs if one appears.
+- Sync AGENTS.md and the v7.7.0 layout into downstream projects.
+- Migrate the live User AI Directory with a dry run, then the real sync.
+- Decide whether to delete the stray scope-migration backup from the test run.
+- Run `repair state files` to clear the advisory overage.
+- Install or locate PowerShell to run the PowerShell fixtures.
+- Resume the presentation policy only on request; design layout and type control first.
+- Resume the trimmed slide review speed scope only on request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
-- Implement the customization presets on the user's request; init follows.
+- Implement the customization presets on request; init follows.
 - Consume and retire the protocol-verification-toolchain knowledge file.
-- Audit the project-knowledge files the protocol secretly relies on.
-- Fix the checkpoint next-steps reporting and ticket visibility.
+- Audit the Project Knowledge the protocol relies on.

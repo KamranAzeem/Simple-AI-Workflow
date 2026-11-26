@@ -154,11 +154,82 @@ present "$IMPLEMENT" "Plan Template" "implement-plan checks the plan template"
 present "$IMPLEMENT" "baseline" "implement-plan checks the baseline"
 present "$IMPLEMENT" "Verify the tree is clean" "implement-plan checks the clean tree"
 present "$CHECKPOINT" "Current position" "checkpoint report names the current position block"
-present "$CHECKPOINT" "Next up" "checkpoint report names the next-up list"
+present "$CHECKPOINT" "[NEXT-STEPS]" "checkpoint report names the next-steps section"
+present "$CHECKPOINT" "The block carries no \`Next up\` and no remaining queue." "checkpoint keeps the queue out of the current position"
 present "$CHECKPOINT" "Last active" "checkpoint report names the last-active item"
-present "$CHECKPOINT" "ten or fewer" "checkpoint report caps the full list at ten"
-present "$CHECKPOINT" "otherwise list the active item plus a count" "checkpoint report has the count fallback"
-present "$CHECKPOINT" "The transaction log remains the delta." "checkpoint report keeps the delta log"
+present "$CHECKPOINT" "Name the ticket path or slug" "checkpoint report names ticket-backed items"
+present "$CHECKPOINT" "ten or fewer remain" "checkpoint report caps the full list at ten"
+present "$CHECKPOINT" "otherwise list a count and the \`ai/state/next-steps.md\` pointer" "checkpoint report has the count fallback"
+present "$CHECKPOINT" "The transaction log remains the delta" "checkpoint report keeps the delta log"
+absent "$CHECKPOINT" '`Next up` lists the active item first' "checkpoint report drops the old next-up clause"
+
+report_contract() {
+    local total="$1" active="$2" i
+    printf 'Current position:\n'
+    printf -- '- Milestone: fixture\n'
+    printf -- '- Last active: fixture entry\n'
+    printf '[NEXT-STEPS]\n'
+    printf -- '- Active: %s\n' "$active"
+    if [ "$total" -le 10 ]; then
+        i=2
+        while [ "$i" -le "$total" ]; do
+            printf -- '- Remaining: item-%02d\n' "$i"
+            i=$((i + 1))
+        done
+    else
+        printf -- '- Remaining: %d more open items in ai/state/next-steps.md\n' "$((total - 1))"
+    fi
+    printf '[PROGRESS] Added: "fixture"\n'
+    printf '[NEXT-STEPS] Removed: "none" | Added: "fixture"\n'
+}
+
+active_path="ai/issues/open/checkpoint-next-steps-reporting.md"
+report_10="$(report_contract 10 "$active_path")"
+report_11="$(report_contract 11 "$active_path")"
+
+if printf '%s\n' "$report_10" | grep -qF -- "- Remaining: item-09" \
+    && printf '%s\n' "$report_10" | grep -qF -- "- Remaining: item-10"; then
+    printf 'PASS %s\n' "checkpoint contract lists all ten items"
+else
+    printf 'FAIL %s\n' "checkpoint contract lists all ten items"
+    fail=1
+fi
+if printf '%s\n' "$report_11" | grep -qF -- "- Remaining: 10 more open items in ai/state/next-steps.md" \
+    && ! printf '%s\n' "$report_11" | grep -qF -- "item-11"; then
+    printf 'PASS %s\n' "checkpoint contract uses the count and pointer over ten"
+else
+    printf 'FAIL %s\n' "checkpoint contract uses the count and pointer over ten"
+    fail=1
+fi
+if printf '%s\n' "$report_10" | grep -qF -- "- Active: $active_path"; then
+    printf 'PASS %s\n' "checkpoint contract names the active ticket"
+else
+    printf 'FAIL %s\n' "checkpoint contract names the active ticket"
+    fail=1
+fi
+current_line="$(printf '%s\n' "$report_10" | grep -n -m1 -F 'Current position' | cut -d: -f1)"
+next_line="$(printf '%s\n' "$report_10" | grep -n -m1 -F '[NEXT-STEPS]' | cut -d: -f1)"
+progress_line="$(printf '%s\n' "$report_10" | grep -n -m1 -F '[PROGRESS]' | cut -d: -f1)"
+next_log_line="$(printf '%s\n' "$report_10" | grep -n -m1 -F '[NEXT-STEPS] Removed' | cut -d: -f1)"
+if [ "$current_line" -lt "$next_line" ] && [ "$next_line" -lt "$progress_line" ] && [ "$progress_line" -lt "$next_log_line" ]; then
+    printf 'PASS %s\n' "checkpoint contract keeps the queue before the separate log"
+else
+    printf 'FAIL %s\n' "checkpoint contract keeps the queue before the separate log"
+    fail=1
+fi
+current_block="$(printf '%s\n' "$report_10" | sed -n '1,/^\[NEXT-STEPS\]$/p' | sed '$d')"
+if ! printf '%s\n' "$current_block" | grep -qE 'Next up|Remaining'; then
+    printf 'PASS %s\n' "checkpoint current position carries no queue"
+else
+    printf 'FAIL %s\n' "checkpoint current position carries no queue"
+    fail=1
+fi
+if [ "$(printf '%s\n' "$report_10" | grep -c '^\[NEXT-STEPS\]')" -eq 2 ]; then
+    printf 'PASS %s\n' "checkpoint contract shows the queue and the log separately"
+else
+    printf 'FAIL %s\n' "checkpoint contract shows the queue and the log separately"
+    fail=1
+fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: issue-management plug-in fixture."

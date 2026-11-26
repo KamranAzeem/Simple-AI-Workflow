@@ -31,7 +31,7 @@
 - `ai/daily-checkpoints/`: the diary and the only archive.
 - `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 12 open, 1 in-progress, and 142 closed as of 2026-11-25.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
-- `ai/knowledge/`: 14 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
+- `ai/knowledge/`: 15 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
 - `ai/skills/`: one skill package, `kanban-board`, plus `.gitkeep`.
 - `ai/code-review-reports/`, `ai/artifacts/`, `ai/notes/`, `ai/pending/`, `ai/secrets/`: local-only working areas. Boot excludes them except the report and artifact procedures that own them.

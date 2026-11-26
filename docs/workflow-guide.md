@@ -326,7 +326,7 @@ Each state file starts with the canonical header block from the common policy. T
 The checkpoint procedure uses an atomic write sequence. This prevents partial or inconsistent state.
 
 1. **Sequential Writes**: state is written in strict order: `ai/state/progress.md` (past), then `ai/state/next-steps.md` (future), then `ai/state/context.md` (present). Never in a different order.
-2. **Transaction Log**: every checkpoint outputs a standardized confirmation block in the chat window. It shows exactly what was written to each file and what values changed. Before the log, a `Current position` block names the active next step, the remaining open items when ten or fewer (otherwise the active item and a count), and the last active item.
+2. **Transaction Log**: every checkpoint outputs a standardized confirmation block in the chat window. It shows exactly what was written to each file and what values changed. Before the log, print a `Current position` block with the milestone or status and the last active item only. Then print a distinct `[NEXT-STEPS]` section: the active item first, with its ticket path or slug when one exists, then every remaining open item when ten or fewer remain, otherwise a count and the `ai/state/next-steps.md` pointer. The transaction log follows and remains the delta; its `[NEXT-STEPS]` line is not the queue display.
 3. **Abort on Missing Data**: if the AI lacks the information needed to update all three files correctly, the write transaction aborts entirely. The gap is reported to you.
 
 ### Daily Checkpoint File

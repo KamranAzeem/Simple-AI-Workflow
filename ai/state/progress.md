@@ -21,7 +21,6 @@
 [2026-11-19] Closed the built-in-first ticket with the plan attached and removed the plan file.
 [2026-11-19] Released v6.10.0 and published its GitHub release: the built-in-first boot, the read-only index helper, and the ADR entry are live; master `64b0c61`; the feature branch is deleted.
 [2026-11-19] Ran the full codebase examination over `docs/`, `tests/`, and `support-files/`; the ticket `ai/issues/closed/codebase-examination-docs-tests-support.md`; F1-F7, with F5 withdrawn.
-[2026-11-19] Released v6.10.1: settings template, support README, fallback/archive/skills tests, helper archive, ADR symlink note. Full text in the 2026-11-25 diary.
 [2026-11-19] Planned the user-global skills root: `ai/plans/user-global-skills-root.md`; review-51 CHANGES REQUESTED, review-52 APPROVED; the implementation is next.
 [2026-11-19] Set `Default Shell Path: /usr/bin/bash` and made the Kilo bash permissions `*python3 *`, `*python *`, and `*` all ask.
 [2026-11-19] Fixed GitHub #11: the boot builds its index with the built-in reader, glob, and search; the optional helper is off the boot path; the proof reports `index-source=builtin`; review-57 APPROVED.
@@ -32,7 +31,6 @@
 [2026-11-19] Documented the report-anomalies rule in `README.md` and `docs/ai-customization-guide.md`; review-61 APPROVED; suite 25/25, markdownlint 0. Full text in the 2026-11-25 diary.
 [2026-11-19] Posted the plan to GitHub #12 and updated the comment with the final peer-review log; the plan file is removed; the docs change is prepared; merge pending approval.
 [2026-11-19] Merged and closed GitHub #12 after the earlier checkpoint; the report-anomalies docs are live; no release.
-[2026-11-19] GitHub #8 delivered: backup scripts, 17-case test, support README restructure, ADR, v6.11.0 announcement; review-63 APPROVED; suite 26/26. Full text in the 2026-11-25 diary.
 [2026-11-19] Merged GitHub #8, tagged `v6.11.0`, published the release, and closed the issue; the backup scripts are live.
 [2026-11-19] Fixed the global-settings fixture to derive the test count from `tests/test-*.sh`; the post-merge suite is green at 26/26.
 [2026-11-19] Dropped the user-global skills root: the third root adds a second meaning of global; the ticket is closed with the plan attached, the plan file is removed, and the two-root model stays.
@@ -82,7 +80,6 @@
 [2026-11-22] Closed the README ticket with the plan attached; removed the plan file; the docs guide audit is next; the slide deck follows; no release.
 [2026-11-22] Merged the README restructure to master, deleted the branch, and pushed; no release; the README is live; 10 open, 0 in-progress.
 [2026-11-22] Post-merge verification: master matches origin; the README ticket is closed; the docs guide audit is next; the slide deck follows.
-[2026-11-22] Docs guide audit delivered: retired 3 docs, added Kilo Code setup and facts, updated README index, added fixture; review-85 APPROVED; suite 30/30. Full text in the 2026-11-25 diary.
 [2026-11-22] Review-85 APPROVED; suite 30/30, protocol 8/8, authoring PASSED, markdownlint 0, shellcheck 0; 18 docs; the replace-Cline ticket closed; no release.
 [2026-11-22] Closed the docs audit ticket with the plan attached; removed the plan file; the slide deck is next.
 [2026-11-22] Merged the docs audit and the README origin to master, deleted the branch, and pushed; no release; 18 docs; 30/30; 8 open, 0 in-progress.
@@ -129,19 +126,14 @@
 [2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
 [2026-11-24] Prepared v7.3.1 with the announcement, README banner, and release-practices entry; the user approved the draft; closed the deck review ticket with the plan attached and removed the plan file.
 [2026-11-24] Delivered v7.3.1: squash-merged, deleted the review and token branches, pushed, tagged, and published the GitHub Release; validator 8/8. Full text in the 2026-11-25 diary.
-[2026-11-24] Merged the customization-tracking fix: tracked customization, loader acceptance, guide and ADR; review-116 APPROVED. Full text in the 2026-11-25 diary.
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
 [2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
-[2026-11-24] Investigated `slide-deck-review-speed`: audit 2.97s, 24-unit SVG floor, review-115 changed-only; trimmed to S; dropped Playwright. Full text in the 2026-11-25 diary.
 [2026-11-24] Recommended the presentation split (policy, procedure, skill); deferred presentation-policy and slide-deck-review-speed; recorded layout, type-control, build-slides-html.sh. Full text in the 2026-11-25 diary.
 [2026-11-24] Attached the executed config plan to its closed ticket under `## Implementation Plan`, verified the copy, and deleted the loose plan file; `ai/plans/` now holds only `.gitkeep`.
 [2026-11-24] Filed the team-knowledge directory and repository naming ticket (P3/M) with the rename scope, the live file list, and the migration questions.
 [2026-11-24] Grilled the team-named repo: sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, minor release. Full text in the 2026-11-25 diary.
 [2026-11-24] Fixed the external team fixture lesson with the team frontmatter and body; uncommitted there; the skills root was left empty.
-[2026-11-24] Wrote ai/plans/team-knowledge-directory-and-repo-naming.md (220 lines); 13 reviews 117-129; not approved after a 96-minute loop; no branch. Full text in the 2026-11-25 diary.
 [2026-11-25] Renamed the team store to team-knowledge/ across policy, publish, boot, docs, deck, fixture, validator, and ADR; split the naming check. Full text in the 2026-11-25 diary.
-[2026-11-25] Cut the team-knowledge plan to an S note; review-130/131 APPROVED; suite 31/31, validator 8/8, markdownlint 0, audit 59/59. Full text in the 2026-11-25 diary.
-[2026-11-25] Prepared v7.4.0; release text approved; checkpointed the gate and stash restore; no merge/tag. Full text in the 2026-11-25 diary.
 [2026-11-25] Committed the parked backlog and five follow-up tickets on chore/commit-backlog-and-release-status; v7.4.0, v7.3.0, and v7.2.1 marked published; suite 31/31, validator 8/8, markdownlint 0; no release.
 [2026-11-25] Delivered the backlog and release-status correction; the post-merge validator is 8/8; 13 open, 0 in-progress; no release.
 [2026-11-25] Repaired release-practices (15,650 to 2,948) and both stores: project 15, global 29 to 27; review-134/135 APPROVED; suite 31/31. Full text in the 2026-11-25 diary.
@@ -165,3 +157,5 @@
 [2026-11-25] Created the checkpoint-next-steps issue; confirmed the rename decisions: v7.7.0, no alias, keep ai/shared/, user-owned backup, role switch in presets; the rename ticket is plan-ready.
 [2026-11-25] Planned the scope normalization; reviews 152-156 APPROVED; plan ready at ai/plans/scope-normalization-and-knowledge-layout.md; v7.7.0; no branch or commit.
 [2026-11-25] Implemented v7.7.0 scope normalization: four scopes, unprefixed knowledge stores, verified backup migration, four skill roots, path probes, trigger aliases, docs/ADR/announcement, review-157 APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck clean; release pending.
+[2026-11-25] Released v7.7.0 and published the GitHub Release; tag and master pushed; feature branch deleted; review-157 delta verified (release URL and close records only); release notes carry the verification; validator 8/8, suite 33/33, markdownlint 0, shellcheck 0; PowerShell unrun (no pwsh).
+[2026-11-26] Implemented the checkpoint report split: status-only Current position, distinct [NEXT-STEPS] queue with ticket paths and the ten-item rule, separate transaction log; review-159 plan and review-160 implementation APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck 0; no release; ticket closed.
