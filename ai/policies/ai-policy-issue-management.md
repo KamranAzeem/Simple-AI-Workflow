@@ -79,7 +79,7 @@ Apply these rules to every work item.
 - Record sources, commands, results, confirmed facts, and open questions in the evidence section.
 - Use context plus acceptance criteria for an `S` or `M` ticket.
 - Use an HLD and an LLD with acceptance criteria for an `L` or `XL` ticket.
-- Keep the HLD, LLD, and ADR content inside the plan file.
+- Keep the HLD, LLD, and plan-local ADR content inside the plan file. A plan that changes `AGENTS.md`, a policy, or a procedure also applies the meta policy's ADR entry rule.
 - Record each design decision as an ADR.
 - Keep the plan concise.
 - Set the plan depth by the Pre-Work Gate.

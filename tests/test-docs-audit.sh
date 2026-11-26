@@ -36,6 +36,7 @@ ANNOUNCE7100="$ROOT/docs/announcements/v7.10.0.md"
 ANNOUNCE7110="$ROOT/docs/announcements/v7.11.0.md"
 ANNOUNCE7111="$ROOT/docs/announcements/v7.11.1.md"
 ANNOUNCE7120="$ROOT/docs/announcements/v7.12.0.md"
+ANNOUNCE7121="$ROOT/docs/announcements/v7.12.1.md"
 
 fail=0
 
@@ -188,7 +189,9 @@ exists "docs/announcements/v7.11.1.md"
 present "$ANNOUNCE7111" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.11.1" "v7.11.1 announcement records the release URL"
 exists "docs/announcements/v7.12.0.md"
 present "$ANNOUNCE7120" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.12.0" "v7.12.0 announcement records the release URL"
-present "$README" "docs/announcements/v7.12.0.md" "README points at the v7.12.0 release announcement"
+exists "docs/announcements/v7.12.1.md"
+present "$ANNOUNCE7121" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.12.1" "v7.12.1 announcement records the release URL"
+present "$README" "docs/announcements/v7.12.1.md" "README points at the v7.12.1 release announcement"
 present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
@@ -265,7 +268,7 @@ else
     pass "ADR entry has no version-control or plan dependency"
 fi
 
-retirement="$(awk '/The verification runbook and the verdict-hash rules are retired/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
+retirement="$(awk '/^## .*The verification runbook and the verdict-hash rules are retired/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
 if printf '%s\n' "$retirement" | grep -qiE 'commit|branch|plan|report'; then
     fail_case "retirement ADR has no version-control or plan dependency"
 else

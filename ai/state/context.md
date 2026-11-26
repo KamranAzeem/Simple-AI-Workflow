@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.12.0 live; grilling uses frontier rounds and numbered questions.
+- **Milestone**: v7.12.1 prepared; the plan review catches a missing protocol ADR.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 7 open, 0 in-progress, 159 closed; the grilling ticket is closed, the Azure idea is open.
-- **Release**: v7.12.0 is live; v7.11.1 is the prior release.
+- **Issues**: 7 open, 0 in-progress, 160 closed; the plan-review ticket is closed, the Azure idea is open.
+- **Release**: v7.12.1 prepared; v7.12.0 is the prior release.
 
 ## Active Working Context
 
@@ -26,5 +26,6 @@
 - **Live user store**: active store `~/.ai/knowledge/` (27 files); no old-layout fallback present; confirm the migration item is done.
 - **Open queue**: Azure exercises grilling; young learner parked; migration items.
 - **Grilling**: frontier rounds, numbered questions, facts/decisions; details in the closed grilling ticket.
+- **Plan review**: a policy or procedure change carries the protocol ADR entry; a missing entry is Major.
 - **Young learner design**: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types; decisions in the 2026-11-26 diary.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

@@ -267,6 +267,7 @@ Curated record of the protocol's design decisions, oldest first. Session bookkee
 - 2026-11-26: Docs-only changes may land without a release
 - 2026-11-26: The ADR store carries a checked index
 - 2026-11-26: Grilling uses a frontier, numbered questions, and a facts-decisions split
+- 2026-11-26: A policy change plan carries the protocol ADR entry
 <!-- ADR-INDEX:END -->
 
 ## 2026-05-21: Knowledge loading is a dedicated load-context step
@@ -1897,3 +1898,11 @@ The grilling mode asks a round of only the decisions whose prerequisites are set
 Context: the earlier grilling text left the frontier implicit, allowed dependent questions in one round, and did not separate facts from decisions. The Pre-Work Gate item 3 said one decision at a time, which conflicted with rounds.
 
 Consequences: `ai-policy-thinking-modes.md` and `ai-policy-common.md` carry the rules; the release is v7.12.0, MINOR. The policy text names no external source. No glossary, ADR writing during grilling, skill family, or mandatory sub-agent.
+
+## 2026-11-26: A policy change plan carries the protocol ADR entry
+
+The plan rules distinguish plan-local ADR content from the protocol decision store, and the plan review confirms the meta policy's ADR entry rule for any policy or procedure change.
+
+Context: the grilling change shipped without the entry because the plan-local ADR section looked sufficient; the checkpoint caught it.
+
+Consequences: `ai-policy-issue-management.md` and `ai-policy-code-review.md` point to the meta rule; no module or trigger is added. The release is v7.12.1, PATCH.

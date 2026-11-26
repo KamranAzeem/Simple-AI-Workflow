@@ -193,3 +193,5 @@
 [2026-11-26] Planned and reviewed the grilling sharpening: review 201 APPROVED; MINOR v7.12.0.
 [2026-11-26] Implemented the grilling sharpening; review 202 APPROVED; v7.12.0 prepared.
 [2026-11-26] Released v7.12.0 (public URL 200); the grilling sharpening merged to master; post-merge validator 8/8 and index 55/0/0; no post-release code changes.
+[2026-11-26] Planned and reviewed the plan-review ADR check: reviews 203/204 APPROVED; PATCH v7.12.1.
+[2026-11-26] Implemented the plan-review ADR check; suite 35/35; review 205 APPROVED; v7.12.1 prepared.
