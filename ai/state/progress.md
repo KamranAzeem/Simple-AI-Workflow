@@ -182,3 +182,4 @@
 [2026-11-26] Grilled the young learner ticket and locked the design: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types, Linux-first; plan next.
 [2026-11-26] Planned and reviewed the legacy alias retirement: reviews 191/192 APPROVED; v7.11.0 MINOR.
 [2026-11-26] Implemented and reviewed the alias retirement: index 55/0/0, suite 35/35, validators and lint clean; reviews 193/194 APPROVED; v7.11.0 prepared.
+[2026-11-26] Released v7.11.0 (public URL 200); the alias retirement merged to master; post-merge validator 8/8 and index 55/0/0; no post-release code changes.

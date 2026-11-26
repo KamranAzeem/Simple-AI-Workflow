@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.11.0 prepared; the four v7.7.x trigger aliases are retired.
+- **Milestone**: v7.11.0 live; the four v7.7.x trigger aliases are retired.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 11 open, 0 in-progress, 153 closed; F1 is closed, F2 to F6 are open.
-- **Release**: v7.11.0 prepared; v7.10.0 is the prior release.
+- **Release**: v7.11.0 is live; v7.10.0 is the prior release.
 
 ## Active Working Context
 

@@ -28,3 +28,7 @@ Acceptance criteria:
 ---
 2026-11-26
 Filed from the 2026-11-26 codebase examination. Evidence group F5. No secret or identifying name present.
+
+---
+2026-11-26
+Plan: `ai/plans/docs-batch-f2-to-f5.md` (M), batched with F2 to F5. Plan reviews 195 (CHANGES REQUESTED, fixed) and 196 (APPROVED). No branch; the tickets stay open until the implement request.
