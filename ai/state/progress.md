@@ -161,3 +161,4 @@
 [2026-11-26] Implemented the checkpoint report split: status-only Current position, [NEXT-STEPS] queue with ticket paths and the ten-item rule, separate log; review-159/160 APPROVED; suite 33/33, validator 8/8; no release; ticket closed.
 [2026-11-26] Merged the checkpoint report fix; post-merge validator 8/8 and fixtures pass; no release.
 [2026-11-26] Replaced the bracketed queue with a plain full Next steps list; reviews 161/162 APPROVED; no release.
+[2026-11-26] Merged the plain list; validator 8/8.

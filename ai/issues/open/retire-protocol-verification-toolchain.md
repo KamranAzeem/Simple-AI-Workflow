@@ -5,57 +5,73 @@ Severity: Human-to-decide (AI estimate: P3)
 Size: Human-to-decide (AI estimate: M)
 Label:
 URL:
-Summary: Consume the protocol-verification-toolchain knowledge file into the protocol only where necessary, then remove it
+Summary: Retire the verification runbook and the unenforced verdict-hash rules, and move the gate commands into the protocol
 
 Description:
 
 ## Problem
 
-The user wants to remove `ai/shared/project-knowledge/protocol-verification-toolchain.md` from the knowledge store. The file is a 90-line, 8,897-byte runbook, not a policy, but the dev suite and the map still depend on it. The protocol modules do not name or load it. The necessary content should be consumed into the protocol and the rest dropped, not copied wholesale.
+The user wants `ai/knowledge/protocol-verification-toolchain.md` removed. It is a 95-line, 9,439-byte runbook, not a policy, and the protocol must not depend on `docs/`. Consume the useful content into protocol surfaces; drop the rest.
+
+The same change removes `### Verdict and Delta Verification` from `ai-policy-code-review.md`. The rule is one day old, unenforced, and unused: no script checks a review hash, the report template has no hash field, and 0 of 442 review reports record one. It adds ceremony without a check. The blocking gate and the iteration protocol remain the review contract.
+
+## Decisions
+
+- Consume into protocol surfaces only. No new `docs/` content and no docs dependency.
+- Drop the per-fixture command list. `tests/run-all.sh` runs every `test-*.sh`; add one full-suite rule to `ai-policy-meta.md`.
+- Keep the existing validator, authoring, and trigger commands in `ai-policy-meta.md`; drop the duplicates.
+- Drop the migration facts (the ADR and `load-context.md` own them), the init facts (no `--init` exists), the plan-quality facts (the issue policy and ADR own them), the Why block, the Verify counts, and the duplicated caveats.
+- Keep `core.fileMode=false` as one ADR entry. Keep the live-tree count rule and the stash re-validation rule as one `ai-policy-meta.md` Enforcement line each.
+- Delete the map lines at `ai/knowledge/codebase-skeleton-map-simple-ai-workflow.md:61-62`.
+- Remove the verdict-hash section and its four assertions. Keep the old ADR as history; append a superseding ADR.
+- Retire the user-space lesson `~/.ai/knowledge/review-verdict-binding.md` through `repair knowledge files user`, outside this repo change.
+- Release: PATCH.
 
 ## Current dependencies
 
-- `tests/test-docs-audit.sh:26` names the file; lines 160-161 and 199 require the live-gate fact and the plan-quality fact; the new review-sequencing absence checks also target it.
-- `tests/test-global-settings-repair-fixture.sh:71-75` reads the policy, procedure, test, and trigger counts from it.
-- `ai/shared/project-knowledge/codebase-skeleton-map-simple-ai-workflow.md:61` lists it.
-- The boot's project-knowledge index includes it; the checkpoint project-knowledge step can update it. No `AGENTS.md`, policy, or procedure names it.
-- Closed tickets, the closed plan, the daily checkpoints, and the review reports mention the old path as history. Do not rewrite them.
+- `tests/test-docs-audit.sh:26` and `:167-168`, `:200-205`, `:213` pin the knowledge file; remove them. The live-gate and plan-quality facts stay asserted against the ADR, the guide, and the map.
+- `tests/test-user-settings-repair-fixture.sh:72-76` reads counts from the file; remove them. The derived counts stay covered by `tests/test-slides.sh` and `tests/test-readme-shape.sh`.
+- `ai/knowledge/codebase-skeleton-map-simple-ai-workflow.md:61-62` names the file and the verdict-hash rules; update both.
+- `tests/test-issue-policy.sh:103-106` pins the four hash clauses; remove them.
+- `design-docs/protocol-decisions.md:1432` is the old ADR; append a superseding entry.
+- No `AGENTS.md`, policy, or procedure names the knowledge file.
 
-## Content inventory
+## Content disposition
 
-- Header and Context.
-- The command list: protocol validator, authoring, reference, knowledge, skills, README, docs, slides, trigger, boot, sync, scrub, handoff, policy load, policy shape, common boundary, full suite, markdownlint, new-file lint, and the stash validator.
-- Current Facts: the plan template, S/M light path, clean-tree baseline; migration and init rules.
-- Why: the validator, index, fixture, plugin, skills, and docs details.
-- Verify: 8/8; PASSED; 16 procedures, 129 steps, 4 tiers, 13 items; 25 policies (12 domain and 13 protocol), 16 procedures, 31 test scripts, 54 triggers, floor 25; the review verdict; migration; init.
-- Caveats: lint ignores; markdownlint path; triggers and loading live; specs separate; shellcheck path; `core.fileMode`; fixture counts; the uniform gate.
+- Commands: drop, except one full-suite rule in `ai-policy-meta.md`.
+- Current facts: drop; all owned elsewhere.
+- Why: drop; every fact is pinned by a policy, fixture, or ADR.
+- Verify counts: drop; the validator and suite are the oracle.
+- Caveats: drop the duplicates; keep `core.fileMode=false` in the ADR and the two meta rules.
+- Knowledge file: delete.
+- Map lines: delete.
+- Verdict-hash section: delete.
 
 ## Desired outcome
 
-- Classify every block as move, derive, or drop. Move only what the protocol needs. Do not move the whole file and do not create a replacement knowledge file.
-- The likely home for the commands and environment caveats is `docs/protocol-validation-system.md`; the test counts should be derived by the tests or read from the live index, not copied.
-- The plan-quality facts already live in the issue policy and ADR. The migration and init facts belong in their owning policy, procedure, or doc. The review rules already live in the code-review policy and ADR. Drop the duplicates and the stale review remnants.
-- Delete the file, remove the map line, update the project-knowledge count, and update the two fixtures so they no longer reference it.
-- Add a guard that the protocol modules, docs, tests, and map do not name the removed file. Exclude closed history and the daily diary.
-- Decide the release in the plan. A PATCH is likely.
+- No knowledge file and no docs dependency. The protocol owns every surviving rule and command.
+- The code-review policy keeps the blocking gate and the iteration protocol, without the hash section.
+- The map no longer names the file, and the next checkpoint records the knowledge-store count. The suite and the validator stay green.
 
 ## Acceptance criteria
 
-- Every content block has a recorded disposition, and the final diff contains no unmoved required content. Assertion: the plan's disposition list and the diff.
-- The file is absent; the map line is gone; the project-knowledge count drops by one; the boot index no longer lists it. Assertion: `test ! -e`, `rg` on the map, and the count.
-- `tests/test-docs-audit.sh` and `tests/test-global-settings-repair-fixture.sh` no longer reference the file; the count checks derive from the live tree or the index; the suite passes 31/31. Assertion: `rg` and the suite.
-- The necessary commands and caveats live in the named doc or owning protocol surface without duplication or stale counts. Assertion: the docs/content check and the suite.
-- No `AGENTS.md`, policy, procedure, doc, test, or map names the old path; closed history is excluded. Assertion: a repo `rg` guard.
-- The full gate passes. Assertion: protocol 8/8, authoring, suite 31/31, markdownlint 0, index 25/16/54.
+- The file is absent and the boot index no longer lists it. Assertion: `test ! -e` and `tests/test-load-context-boot.sh` passes.
+- The map no longer names the file or the verdict-hash rules. Assertion: `rg` on the map.
+- The code-review policy has no `### Verdict and Delta Verification`; the blocking gate and the iteration protocol remain. Assertion: `rg` and `tests/test-issue-policy.sh`.
+- The four hash assertions are gone; the suite passes 33/33; no new test script. Assertion: `rg`, `tests/run-all.sh`, and the test count.
+- The knowledge-file count assertions are gone; the derived counts stay covered by `tests/test-slides.sh` and `tests/test-readme-shape.sh`. Assertion: `rg` on the fixture and both fixtures pass.
+- Every content block has a recorded disposition; the diff carries no unmoved required content. Assertion: the plan's disposition list and the diff.
+- The no-reference guard covers `AGENTS.md`, policies, procedures, docs, tests, and the map, excluding closed history and checkpoints. Assertion: the guard fails on a reference and passes on the tree.
+- The full gate passes: protocol 8/8, authoring, suite 33/33, markdownlint 0, index 25/16/58.
 - The release is tagged and published if the plan carries one. Assertion: the release URL.
 
 ## Out of scope
 
-- The broad audit of other knowledge files. The follow-on is recorded below and is a separate future ticket.
-- Moving command lists into a policy. Policies hold rules, not runbooks.
+- Changing the blocking gate, severity, report format, iteration protocol, or review dimensions.
 - Rewriting closed tickets, the daily diary, or historical review reports.
-- The review-sequencing rules; they are already policy and ADR owned.
-- General knowledge-store cleanup beyond this file.
+- The broad audit of other knowledge files; it stays a separate future ticket.
+- Moving command lists into a policy. Policies hold rules, not runbooks; the full-suite rule is a rule.
+- General knowledge-store cleanup beyond this file and the user-space lesson.
 
 ## Follow-on audit
 
@@ -63,7 +79,12 @@ The user wants a later audit of other project-knowledge files that the protocol,
 
 ## Notes
 
-- The protocol modules do not reference the file today. The explicit dependencies are the two fixtures and the map.
-- The file is 90 lines and 8,897 bytes, under the 15 KB knowledge trigger.
+- The knowledge file is 95 lines and 9,439 bytes, under the 15 KB knowledge trigger.
 - The old path appears in closed history and the daily checkpoint; that is history, not an operational reference.
-- No plan or branch exists yet. This ticket stays in `open/`.
+- No branch exists yet. This ticket stays in `open/`.
+
+---
+
+2026-11-26
+
+Plan: `ai/plans/retire-verification-runbook-and-verdict-hash.md`.
