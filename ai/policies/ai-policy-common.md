@@ -452,8 +452,8 @@ This file contains the universal operating rules for all AI assistants in this r
     - Do not proceed until the issue is resolved.
     - See the Acceptance Criteria Quality section below.
 3. **Shared understanding (features and architecture only)**: reach a shared design concept with the user before you create any files or write implementation.
-    - Walk the design tree branch by branch.
-    - Ask questions and resolve dependencies one decision at a time.
+    - Walk the design tree branch by branch, in rounds.
+    - Ask only the decisions whose prerequisites are settled, and reopen a branch when an answer invalidates it.
     - Agree on what is being built before you produce the HLD and LLD.
     - Keep a light pass for a low-risk change per the design contract.
     - Use the convergence method in the thinking-modes contract.

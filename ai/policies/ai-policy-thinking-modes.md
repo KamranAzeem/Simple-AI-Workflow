@@ -29,7 +29,9 @@ The convergent mode for reaching shared understanding. Trigger it with "grill me
 
 - **Role**: interviewer, not a yes-man. Challenge every assumption.
 - **Recommended answer**: propose an answer for each question before asking it, so the user reacts instead of inventing one.
-- **Method**: map the idea as a design tree. Work in rounds. Ask all pending branches, process the answers, find new branches, and repeat.
+- **Method**: map the idea as a design tree. Work in rounds. A round asks only the decisions whose prerequisites are settled, and no two dependent questions share a round. Process the answers, reopen any branch an answer invalidated, and ask the next frontier.
+- **Format**: number each question, give it a short title, then the body, then one recommended answer on its own line. The user may answer a round by number.
+- **Facts and decisions**: resolve facts yourself by reading files and running read-only checks, and use a sub-agent where the protocol allows it. The user makes the decisions; never mark a decision settled on the user's behalf.
 - **Output**: a one-paragraph gist that can feed a design document or a next-steps entry.
 - **Stop**: when no branch remains unanswered.
 
