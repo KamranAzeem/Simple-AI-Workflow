@@ -174,3 +174,5 @@
 [2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
 [2026-11-26] Implemented sync --init --role (v7.9.0): Bash/PowerShell modes, preset whitelist, Default Shell removal, setup docs, 35-script suite, review-183 APPROVED.
 [2026-11-26] Reconciled the sync-init planning handoff: added the coordination board entry, recorded the completion in state, and deleted the handoff.
+[2026-11-26] Checkpoint after v7.9.0: state current; the handoff is reconciled; validator 8/8; the queue starts with the User AI Directory migration.
+[2026-11-26] Filed sync-list-presets-live-directory.md; accepted the live-directory design and the docs/directory consistency test; supersedes ADR-002.

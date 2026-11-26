@@ -17,12 +17,12 @@
 - **Milestone**: v7.9.0 live; sync init shipped.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 6 open, 0 in-progress, 151 closed; the sync-init ticket is closed.
+- **Issues**: 7 open, 0 in-progress, 151 closed; the sync list-presets issue is open.
 - **Release**: v7.9.0 is live; v7.8.2 is the prior release.
 
 ## Active Working Context
 
 - **Objective**: migrate the live User AI Directory, sync downstream projects, and continue the open queue.
 - **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
-- **Open queue**: young learner and the docs/issue queue.
+- **Open queue**: the sync list-presets issue, young learner, and the docs/issue queue.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.
