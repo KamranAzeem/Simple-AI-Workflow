@@ -166,3 +166,4 @@
 [2026-11-26] Created the slide authoring pipeline ticket; added D2, mmdc, and Chrome paths plus the Puppeteer config to the user settings; D2 and mmdc smoke tests pass; no plan yet.
 [2026-11-26] Added the presentation policy and the D2/Mermaid pipeline; kept the guide's compaction SVG and the deck's six-level ladder; refreshed the deck terms and counts; suite 33/33, validator 8/8, index 26/16/59; reviews 165/166 APPROVED; v7.8.0 prepared.
 [2026-11-26] Released v7.8.0 (public URL verified, post-merge validator 8/8); dropped the live Google Slides deck update and physical Gate 2 from the queue at the user's request.
+[2026-11-26] Retired the user-space review-verdict-binding lesson; user store 28 to 27; the other 27 unchanged; manifest and backup recorded; reviews 167/168 APPROVED.
