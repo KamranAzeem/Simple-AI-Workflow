@@ -1574,3 +1574,27 @@ Init adds a new CLI mode and changes script behavior, so it is a behavior change
 ## 2026-11-26: Tests use a new init fixture
 
 The init scenarios are large enough to justify their own fixture. The existing sync fixture keeps its 14 cases and stays focused. The suite grows from 34 to 35 scripts. The slide appendix test count moves with it.
+
+## 2026-11-26: The presets directory is the single source of truth for roles
+
+Both scripts derive the role list and validation from the live `docs/examples/customization-presets/` directory. No fixed role list remains. Context: the fixed list duplicated the directory and required edits in both scripts for every preset change. Consequences: `--list-presets` is accurate by construction; ADR-002 is superseded; the scripts carry only the `web-developer` usage example.
+
+## 2026-11-26: The missing-preset integrity check moves to a consistency test
+
+A removed preset is an unknown role at runtime, and a docs and directory consistency test fails when the guide table, the setup example, and the directory disagree. Context: a live list has no independent promise to compare against, so a single missing preset cannot be a runtime packaging error. Consequences: a missing or extra preset is caught before release, which is stronger than a runtime check; the runtime exit code for a removed preset is 2.
+
+## 2026-11-26: A missing or empty presets directory is a packaging error
+
+A missing directory, or a directory with no valid preset, prints a packaging error and exits 1. Context: a broken install is still distinguishable from a user typo even without a fixed list. Consequences: `--list-presets` and `--role` both fail clearly on a broken install; a symlink preset is also a packaging error (exit 1) and is omitted from the live list.
+
+## 2026-11-26: --list-presets is a standalone command
+
+`--list-presets` and `-ListPresets` print the live list and exit 0, and combining them with any other option is a usage error (exit 2). Context: a discovery command should not silently ignore a half-written init command. Consequences: the behavior is easy to document and test in both languages.
+
+## 2026-11-26: The guide table is the documented list
+
+The guide table and the setup example are the documented roles, and a consistency test compares them with the live directory. Context: the directory is the runtime source, and the docs must not promise a file that is absent or omit a shipped file. Consequences: a preset addition or removal requires a matching docs change; the test enforces it.
+
+## 2026-11-26: Release v7.10.0 as MINOR
+
+The release is v7.10.0. Context: this adds a CLI command and changes role validation, so it is a behavior change under the docs-only PATCH rule. Consequences: a new announcement and README banner; no policy, procedure, or trigger change.

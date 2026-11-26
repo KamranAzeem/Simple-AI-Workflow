@@ -277,7 +277,7 @@ Presets are ready-to-copy `ai-customization.md` files for common roles. Each one
 
 To use one, copy `<role>.md` to your project root as `ai-customization.md`, set **Workflow AI Directory** to your clone, then adjust the expertise, trait, or compliance entries for the project. A preset is a starting point, not a policy. The protocol modules remain authoritative.
 
-The role slugs are the preset identifiers the `--init` mode consumes. The compliance entries are suggestions; confirm them for your project.
+The role slugs are the preset identifiers the `--init` mode consumes. The live presets directory is the source; this table documents it. The compliance entries are suggestions; confirm them for your project.
 
 To scaffold a new project from one of these presets, see [Initialize a new project](setup.md#initialize-a-new-project).
 

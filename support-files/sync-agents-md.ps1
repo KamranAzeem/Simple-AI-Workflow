@@ -6,12 +6,13 @@
 .DESCRIPTION
   Sync mode recursively finds AGENTS.md under a target root and migrates the
   project, user, and team knowledge stores. Init mode writes only AGENTS.md and
-  ai-customization.md into a new project root from a role preset. -WhatIf prints
-  every action and writes nothing.
+  ai-customization.md into a new project root from a role preset. -ListPresets
+  prints the live preset slugs. -WhatIf prints every action and writes nothing.
 
 .USAGE
   ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
   ./sync-agents-md.ps1 -Init -TargetPath C:\Projects\New -Role web-developer
+  ./sync-agents-md.ps1 -ListPresets
 #>
 
 param(
@@ -19,6 +20,7 @@ param(
   [string]$TargetPath = ".",
   [switch]$Init,
   [string]$Role = "",
+  [switch]$ListPresets,
   [switch]$WhatIf
 )
 
@@ -27,9 +29,42 @@ Set-StrictMode -Version Latest
 $scriptDir = $PSScriptRoot
 $workflowDir = Split-Path -Parent $scriptDir
 $workflowDirFull = (Get-Item -LiteralPath $workflowDir -Force).FullName.TrimEnd([char[]]@('\', '/'))
+$presetsDir = Join-Path -Path $workflowDirFull -ChildPath 'docs/examples/customization-presets'
 
-function Get-InitRoles {
-  return @('cloud-architect','solution-architect','web-developer','mobile-developer','platform-engineer','dba','data-engineer','security-engineer')
+function Get-LivePresets {
+  if (-not (Test-Path -LiteralPath $presetsDir -PathType Container)) { return $null }
+  $names = @(Get-ChildItem -LiteralPath $presetsDir -File -Filter '*.md' -ErrorAction SilentlyContinue |
+    Where-Object { -not ($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint) } |
+    ForEach-Object { $_.BaseName })
+  [Array]::Sort($names, [System.StringComparer]::Ordinal)
+  return $names
+}
+
+function Get-PresetsError {
+  if (-not (Test-Path -LiteralPath $presetsDir -PathType Container)) {
+    Write-Error "Presets directory not found: $presetsDir"
+    return 1
+  }
+  $live = @(Get-LivePresets)
+  if ($live.Count -eq 0) {
+    Write-Error "No presets found in $presetsDir"
+    return 1
+  }
+  return 0
+}
+
+function Write-PresetsHint {
+  if (-not (Test-Path -LiteralPath $presetsDir -PathType Container)) {
+    Write-Error "Presets directory not found: $presetsDir"
+  } else {
+    $live = @(Get-LivePresets)
+    if ($live.Count -eq 0) {
+      Write-Error "No presets found in $presetsDir"
+    } else {
+      Write-Error "Available presets: $($live -join ' ')"
+    }
+  }
+  Write-Error 'See docs/ai-customization-guide.md#11-presets-by-role'
 }
 
 function Test-UnderWorkflow {
@@ -40,24 +75,16 @@ function Test-UnderWorkflow {
   return $full.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)
 }
 
-function Test-InitRole {
-  param([string]$RoleValue)
-  if ([string]::IsNullOrWhiteSpace($RoleValue)) { return $false }
-  if ($RoleValue -cnotmatch '^[a-z0-9-]+$') { return $false }
-  return ((Get-InitRoles) -ccontains $RoleValue)
-}
-
 function Get-InitPresetPath {
   param([string]$RoleValue)
-  return (Join-Path -Path (Join-Path -Path $workflowDirFull -ChildPath 'docs/examples/customization-presets') -ChildPath ($RoleValue + '.md'))
+  return (Join-Path -Path $presetsDir -ChildPath ($RoleValue + '.md'))
 }
 
 function Get-InitPresetContent {
   param([string]$RoleValue, [string]$PresetPath)
   $item = Get-Item -LiteralPath $PresetPath -Force -ErrorAction SilentlyContinue
   if ($null -eq $item) {
-    Write-Error "Missing preset file for role $RoleValue`: $PresetPath"
-    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    Write-Error "Invalid preset file for role $RoleValue`: $PresetPath"
     return $null
   }
   if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
@@ -65,8 +92,7 @@ function Get-InitPresetContent {
     return $null
   }
   if (-not (Test-Path -LiteralPath $PresetPath -PathType Leaf)) {
-    Write-Error "Missing preset file for role $RoleValue`: $PresetPath"
-    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    Write-Error "Invalid preset file for role $RoleValue`: $PresetPath"
     return $null
   }
   $content = [System.IO.File]::ReadAllText($PresetPath)
@@ -129,17 +155,34 @@ function Invoke-Init {
     [bool]$DryRun
   )
   if ($SourceBound) { Write-Error '--source is not allowed with --init.'; return 2 }
-  if (-not $RoleBound -or [string]::IsNullOrWhiteSpace($RoleValue)) { Write-Error '--role is required with --init.'; return 2 }
+  if (-not $RoleBound -or [string]::IsNullOrWhiteSpace($RoleValue)) { Write-Error '--role is required with --init.'; Write-PresetsHint; return 2 }
   if (-not $TargetBound) { Write-Error '--target-path is required with --init.'; return 2 }
   if (-not (Test-Path -LiteralPath $TargetValue -PathType Container)) { Write-Error "Target path is not a directory: $TargetValue"; return 2 }
   try { $targetAbs = (Resolve-Path -LiteralPath $TargetValue -ErrorAction Stop).Path } catch { Write-Error "Target path cannot be accessed: $TargetValue"; return 2 }
   if (Test-UnderWorkflow -Path $targetAbs) { Write-Error "Target is the workflow clone or inside it: $targetAbs"; return 2 }
-  if (-not (Test-InitRole -RoleValue $RoleValue)) {
+  if ($RoleValue -cnotmatch '^[a-z0-9-]+$') {
     Write-Error "Unknown role: $RoleValue"
-    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    Write-PresetsHint
     return 2
   }
+  $presetsError = Get-PresetsError
+  if ($presetsError -ne 0) { return $presetsError }
   $preset = Get-InitPresetPath -RoleValue $RoleValue
+  $presetItem = Get-Item -LiteralPath $preset -Force -ErrorAction SilentlyContinue
+  if ($null -eq $presetItem) {
+    Write-Error "Unknown role: $RoleValue"
+    Write-PresetsHint
+    return 2
+  }
+  if (($presetItem.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+    Write-Error "Invalid preset file for role $RoleValue`: $preset"
+    return 1
+  }
+  if (-not (Test-Path -LiteralPath $preset -PathType Leaf)) {
+    Write-Error "Unknown role: $RoleValue"
+    Write-PresetsHint
+    return 2
+  }
   $content = Get-InitPresetContent -RoleValue $RoleValue -PresetPath $preset
   if ($null -eq $content) { return 1 }
   $src = Join-Path -Path $workflowDirFull -ChildPath 'AGENTS.md'
@@ -194,6 +237,19 @@ function Invoke-Init {
   Write-Host "Initialized $targetAbs"
   Write-Host "Next: run `"bootstrap using AGENTS.md protocol`" in $targetAbs."
   return 0
+}
+
+if ($ListPresets) {
+  $other = @($PSBoundParameters.Keys | Where-Object { $_ -ne 'ListPresets' })
+  if ($other.Count -gt 0) {
+    Write-Error '--list-presets cannot be combined with other options.'
+    exit 2
+  }
+  $presetsError = Get-PresetsError
+  if ($presetsError -ne 0) { exit $presetsError }
+  $live = @(Get-LivePresets)
+  $live | ForEach-Object { Write-Output $_ }
+  exit 0
 }
 
 if ($Init) {

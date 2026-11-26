@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.9.0 (2026-11-26).** The sync scripts gain an `--init` mode that scaffolds a new project from a role preset. Read the announcement: [docs/announcements/v7.9.0.md](docs/announcements/v7.9.0.md). |
+| **v7.10.0 (2026-11-26).** The sync scripts read the role list live from the presets directory and add `--list-presets`. Read the announcement: [docs/announcements/v7.10.0.md](docs/announcements/v7.10.0.md). |
 
 # Simple AI Workflow
 
@@ -199,7 +199,7 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 
 - [Workflow guide](docs/workflow-guide.md): the reference manual.
 - [AI Customization Guide](docs/ai-customization-guide.md): expertise, traits, compliance, merge policy.
-- [Customization presets by role](docs/examples/customization-presets/): ready-to-copy starting points for eight roles.
+- [Customization presets by role](docs/examples/customization-presets/): ready-to-copy starting points for the roles in the presets directory.
 - [Setup](docs/setup.md): Windows paths, the manual steps, and updates.
 - [Compliance guide](docs/compliance-guide.md).
 - [How policies work](docs/how-policies-work-in-this-workflow.md).
@@ -217,4 +217,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.9.0 include no temporary aliases.
+The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.10.0 include no temporary aliases.

@@ -8,27 +8,70 @@ usage() {
   cat <<EOF
 Usage: $0 --source PATH --target-path PATH [--dry-run]
        $0 --init --target-path DIR --role SLUG [--dry-run]
+       $0 --list-presets
 
-  --source      : path to the canonical AGENTS.md (required for sync).
-  --target-path : directory to search for AGENTS.md files (sync), or the new project root (init).
-  --init        : initialize a new project from a role preset.
-  --role        : preset slug, required with --init.
-  --dry-run     : show every backup, move, or write without making changes.
+  --source        : path to the canonical AGENTS.md (required for sync).
+  --target-path   : directory to search for AGENTS.md files (sync), or the new project root (init).
+  --init          : initialize a new project from a role preset.
+  --role          : preset slug, required with --init. The live preset directory is the source.
+  --list-presets  : print the live preset slugs and exit.
+  --dry-run       : show every backup, move, or write without making changes.
 
 Examples:
   $0 --source ../AGENTS.md --target-path /projects --dry-run
   $0 --source ./AGENTS.md --target-path ~/Projects
   $0 --init --target-path /projects/new --role web-developer
+  $0 --list-presets
 EOF
+}
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+WORKFLOW_DIR=$(dirname "$SCRIPT_DIR")
+PRESETS_DIR="$WORKFLOW_DIR/docs/examples/customization-presets"
+
+list_live_presets() {
+  [ -d "$PRESETS_DIR" ] || return 1
+  local f
+  for f in "$PRESETS_DIR"/*.md; do
+    [ -f "$f" ] || continue
+    [ -L "$f" ] && continue
+    basename "$f" .md
+  done | LC_ALL=C sort
+}
+
+ensure_presets_available() {
+  if [ ! -d "$PRESETS_DIR" ]; then
+    echo "Presets directory not found: $PRESETS_DIR" >&2
+    return 1
+  fi
+  if [ -z "$(list_live_presets)" ]; then
+    echo "No presets found in $PRESETS_DIR" >&2
+    return 1
+  fi
+  return 0
+}
+
+print_presets_hint() {
+  if [ ! -d "$PRESETS_DIR" ]; then
+    echo "Presets directory not found: $PRESETS_DIR" >&2
+  elif [ -z "$(list_live_presets)" ]; then
+    echo "No presets found in $PRESETS_DIR" >&2
+  else
+    echo "Available presets: $(list_live_presets | tr '\n' ' ' | sed 's/ $//')" >&2
+  fi
+  echo "See docs/ai-customization-guide.md#11-presets-by-role" >&2
 }
 
 SOURCE=""
 TARGET_PATH=""
 DRY_RUN=0
 INIT=0
+LIST_PRESETS=0
+HELP=0
 ROLE=""
 ROLE_SET=0
 SOURCE_SET=0
+TARGET_SET=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -37,19 +80,37 @@ while [[ $# -gt 0 ]]; do
       SOURCE="$2"; SOURCE_SET=1; shift 2;;
     --target-path)
       if [ $# -lt 2 ] || [[ "$2" == --* ]]; then echo "Missing value for --target-path" >&2; usage; exit 2; fi
-      TARGET_PATH="$2"; shift 2;;
+      TARGET_PATH="$2"; TARGET_SET=1; shift 2;;
     --init) INIT=1; shift 1;;
     --role)
-      if [ $# -lt 2 ] || [[ "$2" == --* ]]; then echo "Missing value for --role" >&2; usage; exit 2; fi
+      if [ $# -lt 2 ] || [[ "$2" == --* ]]; then
+        echo "Missing value for --role" >&2
+        print_presets_hint
+        usage
+        exit 2
+      fi
       ROLE="$2"; ROLE_SET=1; shift 2;;
+    --list-presets) LIST_PRESETS=1; shift 1;;
     --dry-run) DRY_RUN=1; shift 1;;
-    -h|--help) usage; exit 0;;
+    -h|--help) HELP=1; shift 1;;
     *) echo "Unknown arg: $1" >&2; usage; exit 2;;
   esac
 done
 
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
-WORKFLOW_DIR=$(dirname "$SCRIPT_DIR")
+if [ "$LIST_PRESETS" -eq 1 ]; then
+  if [ "$INIT" -eq 1 ] || [ "$SOURCE_SET" -eq 1 ] || [ "$ROLE_SET" -eq 1 ] || [ "$TARGET_SET" -eq 1 ] || [ "$DRY_RUN" -eq 1 ] || [ "$HELP" -eq 1 ]; then
+    echo "--list-presets cannot be combined with other options." >&2
+    exit 2
+  fi
+  ensure_presets_available || exit 1
+  list_live_presets
+  exit 0
+fi
+
+if [ "$HELP" -eq 1 ]; then
+  usage
+  exit 0
+fi
 
 is_under_workflow() {
   local dir="$1"
@@ -60,17 +121,11 @@ is_under_workflow() {
   done
 }
 
-INIT_ROLES="cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer"
-
 init_validate_role() {
   case "$ROLE" in
     ''|*[!a-z0-9-]*) return 1;;
   esac
-  local r
-  for r in $INIT_ROLES; do
-    [ "$r" = "$ROLE" ] && return 0
-  done
-  return 1
+  return 0
 }
 
 init_check_preset() {
@@ -80,8 +135,7 @@ init_check_preset() {
     return 1
   fi
   if [ ! -f "$preset" ]; then
-    echo "Missing preset file for role $ROLE: $preset" >&2
-    echo "Available presets: $INIT_ROLES" >&2
+    echo "Invalid preset file for role $ROLE: $preset" >&2
     return 1
   fi
   if grep -q '^\*\*Default Shell\*\*:' "$preset"; then
@@ -132,6 +186,7 @@ run_init() {
   fi
   if [ "$ROLE_SET" -eq 0 ] || [ -z "$ROLE" ]; then
     echo "--role is required with --init." >&2
+    print_presets_hint
     return 2
   fi
   if [ -z "$TARGET_PATH" ]; then
@@ -152,11 +207,23 @@ run_init() {
   fi
   if ! init_validate_role; then
     echo "Unknown role: $ROLE" >&2
-    echo "Available presets: $INIT_ROLES" >&2
+    print_presets_hint
     return 2
   fi
+  if ! ensure_presets_available; then
+    return 1
+  fi
   local preset src agents custom agents_tmp custom_tmp rc
-  preset="$WORKFLOW_DIR/docs/examples/customization-presets/$ROLE.md"
+  preset="$PRESETS_DIR/$ROLE.md"
+  if [ -L "$preset" ]; then
+    echo "Invalid preset file for role $ROLE: $preset" >&2
+    return 1
+  fi
+  if [ ! -f "$preset" ]; then
+    echo "Unknown role: $ROLE" >&2
+    print_presets_hint
+    return 2
+  fi
   if ! init_check_preset "$preset"; then
     return 1
   fi

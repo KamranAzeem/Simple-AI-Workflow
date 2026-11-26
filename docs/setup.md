@@ -48,6 +48,8 @@ Use `--init` to scaffold a new project root from a role preset. Init writes only
    - Windows PowerShell: `.\support-files\sync-agents-md.ps1 -Init -TargetPath 'C:\Users\<you>\Projects\new-project' -Role web-developer`
 3. Start an AI session in the new project and run `"bootstrap using AGENTS.md protocol"`.
 
+To see the available roles, run `./support-files/sync-agents-md.sh --list-presets` (Bash) or `.\support-files\sync-agents-md.ps1 -ListPresets` (PowerShell). The list reads the live `docs/examples/customization-presets/` directory; the guide table documents the same roles.
+
 Add `--dry-run` (Bash) or `-WhatIf` (PowerShell) to preview the two writes.
 
 The target directory may contain other files and subdirectories. Init refuses when `AGENTS.md` or `ai-customization.md` already exists, when either path is a symlink, when the target is the workflow clone or inside it, or when the target is not a directory. Init exits 0 on success, 2 for validation errors, and 1 when it refuses an existing project or a packaging check fails.

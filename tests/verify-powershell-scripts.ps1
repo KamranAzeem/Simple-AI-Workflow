@@ -94,6 +94,22 @@ Check 'sync real adds Merge Policy' ((Get-Content -Raw -Path (Join-Path $old 'ai
 Check 'sync real rewrites the workflow key' ((Get-Content -Raw -Path (Join-Path $old 'ai-customization.md')) -match '\*\*Workflow AI Directory\*\*')
 Check 'sync real creates the new project config' (Test-Path -LiteralPath (Join-Path $new 'ai-customization.md'))
 
+Write-Host "=== list presets ==="
+$listOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -ListPresets 2>&1
+$listRc = $LASTEXITCODE
+$listText = Read-Output $listOut
+Write-Host $listText
+Check 'list exits 0' ($listRc -eq 0)
+Check 'list includes web-developer' ($listText -match 'web-developer')
+$presetDir = Join-Path $WorkflowDir 'docs\examples\customization-presets'
+$dirNames = @(Get-ChildItem -LiteralPath $presetDir -Filter '*.md' -File | Where-Object { -not ($_.Attributes -band [System.IO.FileAttributes]::ReparsePoint) } | ForEach-Object { $_.BaseName })
+[Array]::Sort($dirNames, [System.StringComparer]::Ordinal)
+Check 'list matches the live directory' ($listText -eq ($dirNames -join "`n"))
+$listOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -ListPresets -Init 2>&1
+$listRc = $LASTEXITCODE
+Check 'list with init exits 2' ($listRc -eq 2)
+Check 'list with init message' ((Read-Output $listOut) -match 'cannot be combined')
+
 Write-Host "=== init ==="
 $initTarget = Join-Path $TestRoot 'init-project'
 New-Item -ItemType Directory -Force -Path $initTarget | Out-Null
@@ -135,11 +151,22 @@ $initText = Read-Output $initOut
 Check 'init unknown role exits 2' ($initRc -eq 2)
 Check 'init unknown role names it' ($initText -match 'Unknown role: not-a-role')
 Check 'init unknown role lists presets' ($initText -match 'Available presets: .*security-engineer')
+Check 'init unknown role guide reference' ($initText -match '11-presets-by-role')
 $initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initUnknown -Role Web-Developer 2>&1
 $initRc = $LASTEXITCODE
 $initText = Read-Output $initOut
 Check 'init uppercase role exits 2' ($initRc -eq 2)
 Check 'init uppercase role is unknown' ($initText -match 'Unknown role: Web-Developer')
+
+Write-Host "=== init without role ==="
+$initNoRole = Join-Path $TestRoot 'init-no-role'
+New-Item -ItemType Directory -Force -Path $initNoRole | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initNoRole 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init without role exits 2' ($initRc -eq 2)
+Check 'init without role lists presets' ($initText -match 'Available presets:')
+Check 'init without role guide reference' ($initText -match '11-presets-by-role')
 
 Write-Host "=== init target inside clone ==="
 $initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath (Join-Path $WorkflowDir 'support-files') -Role web-developer 2>&1
@@ -148,7 +175,7 @@ $initText = Read-Output $initOut
 Check 'init inside clone exits 2' ($initRc -eq 2)
 Check 'init inside clone names it' ($initText -match 'Target is the workflow clone or inside it')
 
-Write-Host "=== init missing preset (copied clone) ==="
+Write-Host "=== init removed preset (copied clone) ==="
 $spaceClone = Join-Path $TestRoot 'clone with space'
 New-Item -ItemType Directory -Force -Path (Join-Path $spaceClone 'support-files'), (Join-Path $spaceClone 'docs\examples\customization-presets') | Out-Null
 Copy-Item -LiteralPath $sync -Destination (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -Force
@@ -160,8 +187,19 @@ New-Item -ItemType Directory -Force -Path $initMissing | Out-Null
 $initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -Init -TargetPath $initMissing -Role dba 2>&1
 $initRc = $LASTEXITCODE
 $initText = Read-Output $initOut
-Check 'init missing preset exits 1' ($initRc -eq 1)
-Check 'init missing preset names it' ($initText -match 'Missing preset file for role dba')
+Check 'init removed preset exits 2' ($initRc -eq 2)
+Check 'init removed preset is unknown' ($initText -match 'Unknown role: dba')
+Check 'init removed preset lists the live set' ($initText -match 'Available presets:')
+Check 'init removed preset guide reference' ($initText -match '11-presets-by-role')
+
+Write-Host "=== init temp preset (copied clone) ==="
+Copy-Item -LiteralPath (Join-Path $spaceClone 'docs\examples\customization-presets\web-developer.md') -Destination (Join-Path $spaceClone 'docs\examples\customization-presets\temp-role.md') -Force
+$listOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -ListPresets 2>&1
+Check 'temp preset appears in the list' ((Read-Output $listOut) -match 'temp-role')
+$initTemp = Join-Path $TestRoot 'init-temp'
+New-Item -ItemType Directory -Force -Path $initTemp | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -Init -TargetPath $initTemp -Role temp-role 2>&1
+Check 'temp preset init exits 0' ($LASTEXITCODE -eq 0)
 
 Write-Host "=== init symlink refusal ==="
 $initLink = Join-Path $TestRoot 'init-link'

@@ -176,3 +176,4 @@
 [2026-11-26] Reconciled the sync-init planning handoff: added the coordination board entry, recorded the completion in state, and deleted the handoff.
 [2026-11-26] Checkpoint after v7.9.0: state current; the handoff is reconciled; validator 8/8; the queue starts with the User AI Directory migration.
 [2026-11-26] Filed sync-list-presets-live-directory.md; accepted the live-directory design and the docs/directory consistency test; supersedes ADR-002.
+[2026-11-26] Implemented live --list-presets (v7.10.0): live directory role source, no fixed list, consistency test, docs, 35-script suite, review-190 APPROVED.

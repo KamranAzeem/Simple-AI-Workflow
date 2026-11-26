@@ -38,7 +38,8 @@ run_args() {
   printf '%s\n' "$rc"
 }
 
-roles="cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer"
+live_list=$(for f in "$PRESETS"/*.md; do [ -f "$f" ] || continue; [ -L "$f" ] && continue; basename "$f" .md; done | LC_ALL=C sort)
+roles=$(printf '%s\n' "$live_list" | tr '\n' ' ' | sed 's/ $//')
 
 expected_customization() {
   local role="$1" dest="$2"
@@ -62,7 +63,62 @@ run_clone() {
   printf '%s\n' "$rc"
 }
 
-# --- Case 1: all eight roles scaffold ---
+run_clone_list() {
+  local clone="$1"
+  set +e
+  bash "$clone/support-files/sync-agents-md.sh" --list-presets > "$LOG" 2>&1
+  local rc=$?
+  set -e
+  printf '%s\n' "$rc"
+}
+
+# --- Case 0: live list and standalone rules ---
+rc=$(run_args --list-presets)
+expect "list exits 0" test "$rc" -eq 0
+expect "list matches the live directory" test "$(cat "$LOG")" = "$live_list"
+rc=$(run_args --list-presets --help)
+expect "list with help exits 2" test "$rc" -eq 2
+expect "list with help message" grep -qF -- '--list-presets cannot be combined with other options.' "$LOG"
+rc=$(run_args --list-presets --init)
+expect "list with init exits 2" test "$rc" -eq 2
+expect "list with init message" grep -qF -- '--list-presets cannot be combined with other options.' "$LOG"
+rc=$(run_args --list-presets --source "$ROOT/AGENTS.md")
+expect "list with source exits 2" test "$rc" -eq 2
+rc=$(run_args --list-presets --target-path "$WORK/list-target")
+expect "list with target exits 2" test "$rc" -eq 2
+rc=$(run_args --list-presets --target-path "")
+expect "list with empty target exits 2" test "$rc" -eq 2
+expect "list with empty target message" grep -qF -- '--list-presets cannot be combined with other options.' "$LOG"
+rc=$(run_args --list-presets --role web-developer)
+expect "list with role exits 2" test "$rc" -eq 2
+rc=$(run_args --list-presets --dry-run)
+expect "list with dry-run exits 2" test "$rc" -eq 2
+
+clone_missing_dir="$WORK/clone missing dir"
+make_clone "$clone_missing_dir"
+rm -rf "$clone_missing_dir/docs/examples/customization-presets"
+rc=$(run_clone_list "$clone_missing_dir")
+expect "missing presets dir list exits 1" test "$rc" -eq 1
+expect "missing presets dir named" grep -qF 'Presets directory not found:' "$LOG"
+t="$WORK/clone-missing-dir-target"; mkdir -p "$t"
+rc=$(run_clone "$clone_missing_dir" --target-path "$t" --role web-developer)
+expect "missing presets dir role exits 1" test "$rc" -eq 1
+expect "missing presets dir role named" grep -qF 'Presets directory not found:' "$LOG"
+expect "missing presets dir role writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
+
+clone_empty="$WORK/clone empty dir"
+make_clone "$clone_empty"
+rm -f "$clone_empty/docs/examples/customization-presets"/*.md
+rc=$(run_clone_list "$clone_empty")
+expect "empty presets list exits 1" test "$rc" -eq 1
+expect "empty presets named" grep -qF 'No presets found in' "$LOG"
+t="$WORK/clone-empty-target"; mkdir -p "$t"
+rc=$(run_clone "$clone_empty" --target-path "$t" --role web-developer)
+expect "empty presets role exits 1" test "$rc" -eq 1
+expect "empty presets role message" grep -qF 'No presets found in' "$LOG"
+expect "empty presets role writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
+
+# --- Case 1: all live roles scaffold ---
 for role in $roles; do
   t="$WORK/roles/$role"
   mkdir -p "$t/sub"
@@ -151,7 +207,8 @@ t="$WORK/unknown"; mkdir -p "$t"
 rc=$(run_init "$t" --role not-a-role)
 expect "unknown role exits 2" test "$rc" -eq 2
 expect "unknown role named" grep -qF 'Unknown role: not-a-role' "$LOG"
-expect "unknown role lists presets" grep -qF 'Available presets: cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer' "$LOG"
+expect "unknown role lists presets" grep -qF "Available presets: $roles" "$LOG"
+expect "unknown role guide reference" grep -qF '11-presets-by-role' "$LOG"
 expect "unknown role writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
 
 # --- Case 9: path traversal values ---
@@ -184,9 +241,16 @@ expect "non-directory target named" grep -qF "Target path is not a directory: $W
 
 # --- Case 12: missing and wrong-mode arguments ---
 t="$WORK/args"; mkdir -p "$t"
+rc=$(run_args --init --role --target-path "$t")
+expect "missing role value exits 2" test "$rc" -eq 2
+expect "missing role value named" grep -qF 'Missing value for --role' "$LOG"
+expect "missing role value lists presets" grep -qF "Available presets: $roles" "$LOG"
+expect "missing role value guide reference" grep -qF '11-presets-by-role' "$LOG"
 rc=$(run_args --init --target-path "$t")
 expect "init without role exits 2" test "$rc" -eq 2
 expect "init without role message" grep -qF -- '--role is required with --init.' "$LOG"
+expect "init without role lists presets" grep -qF "Available presets: $roles" "$LOG"
+expect "init without role guide reference" grep -qF '11-presets-by-role' "$LOG"
 rc=$(run_args --init --role web-developer)
 expect "init without target exits 2" test "$rc" -eq 2
 expect "init without target message" grep -qF -- '--target-path is required with --init.' "$LOG"
@@ -235,17 +299,28 @@ rc=$(run_clone "$clone" --target-path "$t" --role web-developer)
 expect "copied clone success exits 0" test "$rc" -eq 0
 expect "copied clone workflow path" grep -qF "**Workflow AI Directory**: $clone" "$t/ai-customization.md"
 
-clone2="$WORK/clone missing preset"
+clone2="$WORK/clone removed preset"
 make_clone "$clone2"; rm "$clone2/docs/examples/customization-presets/dba.md"
-t="$WORK/copied-missing-preset"; mkdir -p "$t"
+t="$WORK/copied-removed-preset"; mkdir -p "$t"
+clone2_roles=$(for f in "$clone2/docs/examples/customization-presets"/*.md; do [ -f "$f" ] || continue; [ -L "$f" ] && continue; basename "$f" .md; done | LC_ALL=C sort | tr '\n' ' ' | sed 's/ $//')
 clone_before=$(find "$clone2" -type f -exec sha256sum {} \; | sort)
 rc=$(run_clone "$clone2" --target-path "$t" --role dba)
 clone_after=$(find "$clone2" -type f -exec sha256sum {} \; | sort)
-expect "missing preset exits 1" test "$rc" -eq 1
-expect "missing preset named" grep -qF 'Missing preset file for role dba' "$LOG"
-expect "missing preset lists presets" grep -qF 'Available presets: cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer' "$LOG"
-expect "missing preset writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
-expect "missing preset keeps the clone unchanged" test "$clone_before" = "$clone_after"
+expect "removed preset exits 2" test "$rc" -eq 2
+expect "removed preset is unknown" grep -qF 'Unknown role: dba' "$LOG"
+expect "removed preset lists the live set" grep -qF "Available presets: $clone2_roles" "$LOG"
+expect "removed preset writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
+expect "removed preset keeps the clone unchanged" test "$clone_before" = "$clone_after"
+
+clone_add="$WORK/clone add preset"
+make_clone "$clone_add"
+cp "$clone_add/docs/examples/customization-presets/web-developer.md" "$clone_add/docs/examples/customization-presets/temp-role.md"
+rc=$(run_clone_list "$clone_add")
+expect "temp preset appears in the list" grep -qxF 'temp-role' "$LOG"
+t="$WORK/copied-temp-target"; mkdir -p "$t"
+rc=$(run_clone "$clone_add" --target-path "$t" --role temp-role)
+expect "temp preset init exits 0" test "$rc" -eq 0
+expect "temp preset init writes customization" test -f "$t/ai-customization.md"
 
 clone3="$WORK/clone symlink preset"
 make_clone "$clone3"; printf 'x\n' > "$clone3/real-preset"; rm "$clone3/docs/examples/customization-presets/security-engineer.md"; ln -s "$clone3/real-preset" "$clone3/docs/examples/customization-presets/security-engineer.md"
@@ -254,6 +329,10 @@ rc=$(run_clone "$clone3" --target-path "$t" --role security-engineer)
 expect "symlink preset exits 1" test "$rc" -eq 1
 expect "symlink preset named" grep -qF 'Invalid preset file for role security-engineer' "$LOG"
 expect "symlink preset writes nothing" neither "$t/AGENTS.md" "$t/ai-customization.md"
+rc=$(run_clone_list "$clone3")
+expect "symlink preset list exits 0" test "$rc" -eq 0
+expect "symlink preset omitted from list" absent "$LOG" 'security-engineer'
+expect "symlink preset list keeps another role" grep -qxF 'web-developer' "$LOG"
 
 clone4="$WORK/clone no placeholder"
 make_clone "$clone4"; printf '# no placeholder\n' > "$clone4/docs/examples/customization-presets/web-developer.md"
@@ -301,12 +380,31 @@ expect "template has no Default Shell" absent "$ROOT/docs/ai-customization.md" '
 expect "presets have no Default Shell" bash -c "! grep -q '\\*\\*Default Shell\\*\\*:' '$PRESETS'/*.md"
 expect "guide keeps the optional key" grep -qF "**\`Default Shell\`**" "$ROOT/docs/ai-customization-guide.md"
 
-# --- Case 17: static Bash/PowerShell parity ---
-for slug in $roles; do
-  expect "bash lists $slug" grep -qF "$slug" "$SCRIPT"
-  expect "pwsh lists $slug" grep -qF "$slug" "$PS_SCRIPT"
+expect "setup lists the live command" grep -qF -- '--list-presets' "$ROOT/docs/setup.md"
+expect "setup says the list is live" grep -qF 'reads the live' "$ROOT/docs/setup.md"
+expect "guide says the live directory is the source" grep -qF 'The live presets directory is the source' "$ROOT/docs/ai-customization-guide.md"
+btick=$(printf '\140')
+guide_roles=$(grep -oE "^\| ${btick}[a-z0-9-]+${btick}" "$ROOT/docs/ai-customization-guide.md" | sed "s/^| ${btick}//; s/${btick}\$//" | LC_ALL=C sort)
+expect "guide table matches the live presets" test "$guide_roles" = "$live_list"
+setup_roles=$(grep -oE -- '--role [a-z0-9-]+' "$ROOT/docs/setup.md" | awk '{print $2}' | sort -u)
+expect "setup has an example role" test -n "$setup_roles"
+for r in $setup_roles; do
+  expect "setup example $r is live" grep -qxF "$r" <<< "$live_list"
 done
-for msg in 'Unknown role' 'Missing preset file' '--source is not allowed with --init.' '--role is only valid with --init.' 'Default Shell' 'Refusing to initialize:'; do
+
+# --- Case 17: no fixed list, usage, and static parity ---
+for slug in $live_list; do
+  [ "$slug" = "web-developer" ] && continue
+  expect "bash does not fix $slug" absent "$SCRIPT" "$slug"
+  expect "pwsh does not fix $slug" absent "$PS_SCRIPT" "$slug"
+done
+bash_usage=$(sed -n '/^usage()/,/^EOF$/p' "$SCRIPT")
+ps_help=$(sed -n '1,/^#>/p' "$PS_SCRIPT")
+expect "bash usage lists --list-presets" grep -qF -- '--list-presets' <<< "$bash_usage"
+expect "pwsh help lists -ListPresets" grep -qF -- '-ListPresets' <<< "$ps_help"
+expect "bash usage keeps the web-developer example" grep -qF 'web-developer' <<< "$bash_usage"
+expect "pwsh help keeps the web-developer example" grep -qF 'web-developer' <<< "$ps_help"
+for msg in 'Unknown role' 'Invalid preset file' 'Presets directory not found' 'No presets found' '--list-presets cannot be combined' '--source is not allowed with --init.' '--role is only valid with --init.' 'Default Shell' 'Refusing to initialize:'; do
   expect "bash message $msg" grep -qF -- "$msg" "$SCRIPT"
   expect "pwsh message $msg" grep -qF -- "$msg" "$PS_SCRIPT"
 done

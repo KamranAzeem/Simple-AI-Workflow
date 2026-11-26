@@ -21,4 +21,3 @@
 - Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Audit the Project Knowledge the protocol relies on.
-- Plan the sync `--list-presets` live-directory issue (sync-list-presets-live-directory).
