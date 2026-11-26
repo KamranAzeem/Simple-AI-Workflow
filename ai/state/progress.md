@@ -158,4 +158,6 @@
 [2026-11-25] Planned the scope normalization; reviews 152-156 APPROVED; plan ready at ai/plans/scope-normalization-and-knowledge-layout.md; v7.7.0; no branch or commit.
 [2026-11-25] Implemented v7.7.0 scope normalization: four scopes, unprefixed knowledge stores, verified backup migration, four skill roots, path probes, trigger aliases, docs/ADR/announcement, review-157 APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck clean; release pending.
 [2026-11-25] Released v7.7.0 and published the GitHub Release; tag and master pushed; feature branch deleted; review-157 delta verified (release URL and close records only); release notes carry the verification; validator 8/8, suite 33/33, markdownlint 0, shellcheck 0; PowerShell unrun (no pwsh).
-[2026-11-26] Implemented the checkpoint report split: status-only Current position, distinct [NEXT-STEPS] queue with ticket paths and the ten-item rule, separate transaction log; review-159 plan and review-160 implementation APPROVED; suite 33/33, validator 8/8, markdownlint 0, shellcheck 0; no release; ticket closed.
+[2026-11-26] Implemented the checkpoint report split: status-only Current position, [NEXT-STEPS] queue with ticket paths and the ten-item rule, separate log; review-159/160 APPROVED; suite 33/33, validator 8/8; no release; ticket closed.
+[2026-11-26] Merged the checkpoint report fix; post-merge validator 8/8 and fixtures pass; no release.
+[2026-11-26] Replaced the bracketed queue with a plain full Next steps list; reviews 161/162 APPROVED; no release.

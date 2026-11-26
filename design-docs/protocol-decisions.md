@@ -1452,3 +1452,7 @@ Consequences: `ai/shared/project-knowledge/` becomes `ai/knowledge/`; the user `
 ## 2026-11-26: The checkpoint queue is separate from the current position
 
 The checkpoint report separates status from the queue. `Current position` carries the milestone or status and `Last active` only. A distinct `[NEXT-STEPS]` section follows: `Active` names the active item first and its ticket path or slug, and `Remaining` lists every other open item when ten or fewer remain, otherwise a count and the `ai/state/next-steps.md` pointer. The transaction log remains separate; its `[NEXT-STEPS]` line is a delta, not the queue display. This supersedes the 2026-11-25 layout that put `Next up` and the remaining items inside `Current position`.
+
+## 2026-11-26: The checkpoint next steps are a plain list
+
+The checkpoint report uses a plain `Next steps` heading, not the `[NEXT-STEPS]` marker. It lists every open item from `ai/state/next-steps.md` in order, with no cap, and names the ticket path or slug for every ticket-backed item. The transaction log stays separate and keeps the `[NEXT-STEPS]` delta line. This supersedes the `[NEXT-STEPS]` queue and the ten-item cap in the 2026-11-26 layout. The user rejected the doubled marker and the count-only queue as hard to read; a readable full list is the chosen trade-off.

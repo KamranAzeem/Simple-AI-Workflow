@@ -67,9 +67,7 @@
     - Deletion stays with the repair; the checkpoint only reports.
 8. **STEP-CHECKPOINT-REPORT**: Print one grouped summary of the checkpoint, one line per step, using `updated`, `nothing to add`, or `failed`.
     - Print a `Current position` block: the milestone or status and `Last active` naming the newest progress entry. The block carries no `Next up` and no remaining queue.
-    - Print a distinct `[NEXT-STEPS]` section immediately after it:
-        - `Active`: the active item first. Name the ticket path or slug for every ticket-backed item, relative to the project root, for example `ai/issues/open/checkpoint-next-steps-reporting.md`.
-        - `Remaining`: list every other open item when ten or fewer remain; otherwise list a count and the `ai/state/next-steps.md` pointer.
+    - Print a distinct `Next steps` section immediately after it. List every open item from `ai/state/next-steps.md` in order, with no cap. Name the ticket path or slug for every ticket-backed item, relative to the project root, for example `ai/issues/open/checkpoint-next-steps-reporting.md`.
     - Then print the state-file transaction log from STEP-TRANSACTION-LOG. The transaction log remains the delta; its `[NEXT-STEPS]` line is not the queue display.
     - The report is printed in chat only; the diary keeps the narrative.
 9. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:

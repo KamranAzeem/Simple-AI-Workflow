@@ -14,7 +14,7 @@
 
 ## Current Status
 
-- **Milestone**: v7.7.0 is live; the checkpoint report split is on `master`; no release for the split.
+- **Milestone**: v7.7.0 is live; the checkpoint report uses a plain `Next steps` list; no release.
 - **Validation**: validator 8/8 with two user-subdir warnings until the live sync; suite 33/33; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 17 files, user 28, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 11 open, 0 in-progress, 144 closed; the scope and checkpoint-report tickets are closed.
