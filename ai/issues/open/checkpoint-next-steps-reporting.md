@@ -165,3 +165,7 @@ The ADR entry to add to `design-docs/protocol-decisions.md` is `## 2026-11-26: T
 ---
 2026-11-26
 Implemented the checkpoint report split: status-only `Current position`, a distinct `[NEXT-STEPS]` queue with ticket paths and the ten-item rule, and a separate transaction log. Review-160 APPROVED against diff SHA-256 `5f9e1e0c6b54a238ce1f188b09301c31862ed38a46de934fe3ab8950edd8cbb6`. Suite 33/33, validator 8/8, markdownlint 0, shellcheck 0. No release. Branch `checkpoint-next-steps-reporting`; merge to `master`.
+
+## Reopen
+
+- 2026-11-26: The `[NEXT-STEPS]` queue and the count-only remaining list are rejected. Replace them with a plain `Next steps` list of every open item, with ticket paths; keep the transaction log separate and use `[NEXT-STEPS]` only in the log. Follow-up plan: `ai/plans/checkpoint-report-plain-queue.md`.
