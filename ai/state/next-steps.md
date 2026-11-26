@@ -20,6 +20,5 @@
 - Migrate the live User AI Directory with a dry run, then the real sync.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Plan the young learner policy after folding the locked design into the ticket; Linux first, Windows later. `ai/issues/open/young-learner-programming-teacher-policy.md`
-- Enforce the Non-Negotiables index. `ai/issues/open/non-negotiables-index-enforcement.md`
 - Plan a full knowledge repair to merge the 12 under-3KB lessons.
 

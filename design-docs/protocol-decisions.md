@@ -268,6 +268,7 @@ Curated record of the protocol's design decisions, oldest first. Session bookkee
 - 2026-11-26: The ADR store carries a checked index
 - 2026-11-26: Grilling uses a frontier, numbered questions, and a facts-decisions split
 - 2026-11-26: A policy change plan carries the protocol ADR entry
+- 2026-11-26: The Non-Negotiables index has no fixed count
 <!-- ADR-INDEX:END -->
 
 ## 2026-05-21: Knowledge loading is a dedicated load-context step
@@ -1906,3 +1907,11 @@ The plan rules distinguish plan-local ADR content from the protocol decision sto
 Context: the grilling change shipped without the entry because the plan-local ADR section looked sufficient; the checkpoint caught it.
 
 Consequences: `ai-policy-issue-management.md` and `ai-policy-code-review.md` point to the meta rule; no module or trigger is added. The release is v7.12.1, PATCH.
+
+## 2026-11-26: The Non-Negotiables index has no fixed count
+
+The common policy's Non-Negotiables section is an index, not a rule store. It has no fixed item count. Each item names its rule. It carries at most one short gloss and points at the owning section. An item never repeats another layer's mandate text or its operational mechanics.
+
+Context: the 2026-08-25 entry capped the index at six and listed six. Three always-on rules were added later. The cap and the list fell out of step. Two items also repeated the `AGENTS.md` full-read and no-truncation mandates.
+
+Consequences: Items 2 and 3 point at Full File Reads and No Sliced Evidence. Both live in `AGENTS.md`. The section stays under 3,000 bytes. `tests/test-policy-shape.sh` rejects a restating item. The 2026-08-25 entry stays as history. The release is v7.12.2, PATCH.

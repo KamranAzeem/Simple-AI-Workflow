@@ -200,3 +200,4 @@
 [2026-11-26] Merged the Azure companion-architect exercise pack to master; the post-merge validator is 8/8 and the tree is clean; no release.
 [2026-11-26] Audited and repaired project knowledge (findings 1-3; review-212 APPROVED); deleted the stray migration backup. Diary: 2026-11-26.
 [2026-11-26] Closed the always-on consolidation ticket as superseded by the 2026-08-31 ADRs and filed `non-negotiables-index-enforcement.md`. Diary: 2026-11-26.
+[2026-11-26] Enforced the Non-Negotiables index: items 2 and 3 point at their owners, the cap is retired by ADR, the caveat is resolved, and a fixture rejects copied or paraphrased text; v7.12.2 prepared. Diary: 2026-11-26.

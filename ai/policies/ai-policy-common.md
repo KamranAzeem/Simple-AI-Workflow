@@ -23,8 +23,8 @@ This file contains the universal operating rules for all AI assistants in this r
 ## Non-Negotiables (read first, apply always)
 
 1. **Evidence-Based Investigation** (the top Non-Negotiable): investigate before you assert and accept no claim without a source; see the Investigation Contract below.
-2. **Full file reads.** Read every file you reason about in full, line 1 to EOF, and re-read from disk when a task needs it again (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES).
-3. **No truncated evidence.** Never pipe investigation output through `head`, `tail`, or `-N` limits; count first, then read it all (Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES).
+2. **Full file reads.** See Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES.
+3. **No truncated evidence.** See No Sliced Evidence in `AGENTS.md` TIER READ-FIRST-RULES.
 4. **Approval before side effects.** Ask before deleting files, installing packages, writing to git, or posting to any external system (Universal Operational Guardrails below).
 5. **Secrets before commit.** Scan the staged changes for secrets and for names that identify a person, company, or organization before any `git add` or `git commit` (Universal Operational Guardrails below).
 6. **Outbound scrub before outbound.** Apply `## Outbound Content Scrub` before any artifact leaves the project (Outbound Content Scrub below).

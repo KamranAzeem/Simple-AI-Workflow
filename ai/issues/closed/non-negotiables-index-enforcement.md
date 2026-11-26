@@ -1,10 +1,91 @@
+Reported: 2026-11-26
+Reporter: Kamran Azeem / Kilo (deepseek-flash)
+IssueType: Improvement/Refactor
+Severity: Human-to-decide (AI estimate: P3)
+Size: Human-to-decide (AI estimate: M)
+Label:
+URL:
+Summary: Enforce the decided always-on division: make the Non-Negotiables index reference-only, reconcile its cap, correct the stale caveat, and guard the shape with a fixture
+
+Description:
+
+The two-layer always-on design is already decided. The 2026-08-31 ADRs (`design-docs/protocol-decisions.md:587-593`) put the universal read-first rules in `AGENTS.md` and their detailed contracts in the common policy, with the short rule pointing at the contract. The 2026-08-25 ADR (`design-docs/protocol-decisions.md:557-559`) made the common-policy Non-Negotiables a short index of rules that have their own owners. The Level 0 precedence (`AGENTS.md:139`) names both layers.
+
+The implementation drifted from that decision. Four points, in order:
+
+1. Make the index reference-only.
+   - Current items 2 and 3 restate the mandates (`ai/policies/ai-policy-common.md:26-27`): "Read every file ... in full, line 1 to EOF" and "Never pipe ... through `head`, `tail`, or `-N`".
+   - The 2026-08-31 ADR says full reads and no-truncation are "referenced, not restated".
+   - Change item 2 to: "**Full file reads.** See Full File Reads in `AGENTS.md` TIER READ-FIRST-RULES."
+   - Change item 3 to: "**No truncated evidence.** See No Sliced Evidence in `AGENTS.md` TIER READ-FIRST-RULES." The current pointer wrongly names Full File Reads.
+   - Keep the other seven items; they already point at their owners.
+
+2. Reconcile the cap.
+   - The index has nine items (`ai/policies/ai-policy-common.md:25-33`); the 2026-08-25 ADR caps it at six and lists six (`design-docs/protocol-decisions.md:559`). Later features added outbound, author identity, and no AI identity without amending the cap.
+   - Recommended: retire the fixed numeric cap. Add one superseding ADR entry: the index has no fixed count; each item is one line, names the rule, and points at its owning section; no restatement; the section stays short. The six-item entry stays as history.
+   - Alternative: trim to six. It means dropping outbound and author-identity items or merging distinct rules; not recommended because they are high-cost always-on rules.
+   - The plan confirms the choice before the edit.
+
+3. Correct the stale caveat.
+   - `ai/knowledge/protocol-routing-principle.md:32` says the two layers still "claim an always-on role" and "the consolidation is unresolved".
+   - That contradicts the ADRs and the precedence. Replace it with the resolved division: `AGENTS.md` holds the universal read-first rules; the common policy owns their detailed contracts and indexes them; the two-layer pattern is deliberate and only for universal always-on mechanics.
+   - The earlier audit finding and the consolidation ticket's dated "reconfirmed" note relied on that caveat. The close note on that ticket records the correction.
+
+4. Guard the shape with a fixture.
+   - Extend `tests/test-policy-shape.sh`, so the suite stays at 36 and the deck count does not move again.
+   - Assert the Non-Negotiables section exists; each item is one line; item 2 contains the Full File Reads pointer and not the mandate text; item 3 contains the No Sliced Evidence pointer and not the truncated-evidence text; no item exceeds 240 characters.
+   - If the plan keeps a numeric cap, assert the exact count instead.
+
+Out of scope:
+
+- Moving rules between the layers, changing the precedence, or editing the `AGENTS.md` mandates.
+- The content of the other seven index items and their owner sections.
+- Any trigger, loading, or procedure change.
+- The historical ADR entries and the old ticket's history.
+
+Acceptance criteria:
+
+- AC-1: Items 2 and 3 are reference-only, and item 3 points to No Sliced Evidence; the mandate text is gone.
+- AC-2: One superseding ADR entry records the cap decision, and no ADR/index contradiction remains.
+- AC-3: The routing caveat states the division and no longer contains "unresolved"; the old ticket's close note records the correction.
+- AC-4: `tests/test-policy-shape.sh` fails when item 2 or 3 restates the mandate, and passes on the repaired tree; the suite stays 36/36, the validator 8/8, markdownlint 0.
+- AC-5: The old consolidation ticket is closed as obsolete with a dated note citing the 2026-08-31 ADRs.
+- AC-6: No behavior change; the rules and the precedence are unchanged.
+
+Verification:
+
+- `bash tests/test-policy-shape.sh`
+- `bash tests/run-all.sh` (36/36)
+- `bash support-files/validate-protocol.sh` (8/8)
+- `markdownlint-cli2` on the common policy, the ADR store, the knowledge file, and both tickets
+- `grep -n 'unresolved' ai/knowledge/protocol-routing-principle.md` returns nothing
+- Read the repaired index and confirm each item points at its owner.
+
+Decisions for the plan:
+
+- Cap: retire the numeric cap (recommended) or trim to six.
+- Guard home: extend `tests/test-policy-shape.sh` (recommended) or add a new fixture, which moves the deck count.
+- ADR: add a new superseding entry; load `design-docs/protocol-decisions.md` first in Protocol Developer Mode.
+
+---
+
+2026-11-26
+Filed from the evidence-based investigation of `ai/issues/closed/tier2-vs-non-negotiables-consolidation.md`; that ticket closes as obsolete, citing the 2026-08-31 ADRs.
+
+---
+
+2026-11-26
+Plan attached below.
+
+## Implementation Plan
+
 # Plan: Non-Negotiables index enforcement
 
 ## Goal
 
 Bring the common-policy Non-Negotiables index back in line with the decided two-layer always-on design: make items 2 and 3 reference-only, retire the fixed numeric cap with a superseding ADR, correct the stale routing caveat, and guard the index shape with an executable fixture.
 
-Ticket: `ai/issues/open/non-negotiables-index-enforcement.md`.
+Ticket: `ai/issues/in-progress/non-negotiables-index-enforcement.md`.
 
 ## Evidence
 
@@ -51,16 +132,16 @@ Plan-local ADRs only; the protocol ADR entry is a separate delta required by `ai
 - `design-docs/protocol-decisions.md`: insert one ADR-INDEX line after line 270, `- 2026-11-26: The Non-Negotiables index has no fixed count`.
 - `design-docs/protocol-decisions.md` EOF: append one dated section with the heading `## 2026-11-26: The Non-Negotiables index has no fixed count`, recording D1 and D2, with Context and Consequences, and naming the superseded 2026-08-25 entry.
 - `ai/knowledge/protocol-routing-principle.md:32`: replace the caveat with the resolved division: `AGENTS.md` holds the universal read-first rules, the common policy owns their contracts and indexes them, and the pattern is deliberate and only for universal always-on mechanics.
-- `tests/test-policy-shape.sh`: add `check_non_negotiables <file>` with a positive run on the real policy, a negative copy whose item 2 restates `line 1 to EOF`, and a negative copy whose item 3 restates the truncation mechanics. Assert the 3,000-byte bound, the pointer targets, one line per item, and the 240-character item bound.
+- `tests/test-policy-shape.sh`: add `check_non_negotiables <file>` with a positive run on the real policy, negative copies for a copied item 2, a copied item 3, and a paraphrased restatement. Assert the exact pointer lines with backticks stripped, the 3,000-byte bound, one line per item, and the 240-character item bound.
 - `docs/announcements/v7.12.2.md`: new announcement in the user's voice.
 - `README.md:3` and `README.md:224`: point the banner at the v7.12.2 announcement and update the trigger-count line version.
 - `tests/test-readme-shape.sh:85`: expect the v7.12.2 banner.
 - `tests/test-docs-audit.sh`: add the `v7.12.2` announcement variable, existence check, and content check, and update the README pointer assertion at line 194 from `v7.12.1.md` to `v7.12.2.md`, including its assertion label text.
-- `ai/issues/open/non-negotiables-index-enforcement.md`: append the dated plan entry at planning; move to `closed/` with the plan attached at close.
+- `ai/issues/in-progress/non-negotiables-index-enforcement.md`: append the dated plan entry at planning; move to `closed/` with the plan attached at close.
 
 ## Acceptance Criteria
 
-- **AC-1**: Items 2 and 3 are reference-only, and item 3 points to No Sliced Evidence. Assertion: the fixture passes on the repaired file, rejects `line 1 to EOF` in item 2, and rejects `head`, `tail`, or `-N` in item 3.
+- **AC-1**: Items 2 and 3 are reference-only, and item 3 points to No Sliced Evidence. Assertion: the fixture passes on the repaired file and rejects a copied or paraphrased item 2 or item 3.
 - **AC-2**: One superseding ADR entry records D1 and D2, its ADR-INDEX line mirrors the heading, and the entry names the superseded 2026-08-25 entry. Assertion: `grep` for `no fixed count`, `at most one short gloss`, and `2026-08-25` in the new section, plus `bash tests/test-docs-audit.sh`.
 - **AC-3**: The caveat states the division and does not contain `unresolved`. Assertion: `grep` finds `universal read-first rules` and `only for universal always-on mechanics`, and finds no `unresolved`.
 - **AC-4**: `tests/test-policy-shape.sh` fails on each negative copy and passes on the repaired tree; suite 36/36; validator 8/8; markdownlint 0.
@@ -89,7 +170,7 @@ Plan-local ADRs only; the protocol ADR entry is a separate delta required by `ai
 
 ## Risks and Rollback
 
-- Risk: the fixture hardcodes wording, so a later legitimate reword of items 2 or 3 fails the test. Mitigation: assert the pointer target and the absence of the mandate strings, not the full sentence.
+- Risk: the fixture hardcodes wording, so a later legitimate reword of items 2 or 3 fails the test. Mitigation: assert the exact item lines, and update the test in the same change as any legitimate reword.
 - Risk: the 3,000-byte section bound flags a legitimate growth. Mitigation: it is generous for nine one-line items and reports the size.
 - Risk: the version-pinned release tests drift. Mitigation: the docs audit and the README shape test are gates, and they run in verification.
 - Risk: the baseline mixes the prior session's review-212 knowledge repair with this planning record. Mitigation: the Close Sequence names every path and states the repair is already approved and not touched by the implementation branch.
@@ -102,7 +183,7 @@ Plan-local ADRs only; the protocol ADR entry is a separate delta required by `ai
 - Merge mode: direct, per `ai-customization.md` `Merge Mode: direct`. Deliver one squash commit to `master`.
 - Baseline: one chore commit on `master` before the branch, containing `ai/issues/open/non-negotiables-index-enforcement.md`, the moved `ai/issues/closed/tier2-vs-non-negotiables-consolidation.md`, `ai/plans/non-negotiables-index-enforcement.md`, the prior session's `ai/state/` and `ai/daily-checkpoints/2026-11-26.md` updates, and the prior session's review-212 approved knowledge repair (`ai/knowledge/architectural-reflection-protocol-vs-plumbing.md`, `ai/knowledge/out-of-scope-rejection-records.md`, and the rename to `ai/knowledge/local-first-knowledge-retrieval.md`). The implementation branch does not touch the knowledge repair.
 - Branch: `feature/non-negotiables-index-enforcement`, created after the baseline and a clean-tree check.
-- Ticket: `ai/issues/open/non-negotiables-index-enforcement.md`, moved to `closed/` in the branch commit with this plan appended before the plan file is deleted.
+- Ticket: `ai/issues/in-progress/non-negotiables-index-enforcement.md` at review, moved to `closed/` in the branch commit with this plan appended before the plan file is deleted.
 - Release: PATCH `v7.12.2`. Draft the announcement, the README banner, and the GitHub release body in a temp file, show the exact draft to the user, and wait for approval before writing the final files or publishing (`ai/knowledge/release-practices.md:17-18`). Then write `docs/announcements/v7.12.2.md`, point `README.md:3` at it, update `README.md:224`, `tests/test-readme-shape.sh:85`, and `tests/test-docs-audit.sh` including line 194; tag `v7.12.2` after the merge; push `master` and the tag; publish the public GitHub Release.
 - Evidence: plan review APPROVED, implementation review APPROVED, validator 8/8, authoring validator pass, suite 36/36, docs audit pass, README shape test pass, markdownlint 0, clean tree at the terminal gate.
 - Terminal gate: the branch is at least one commit ahead of `master`, the tree is clean, and no post-merge repository change is made.

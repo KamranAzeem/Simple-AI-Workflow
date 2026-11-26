@@ -29,4 +29,4 @@
 
 ## Caveats
 
-- The two always-on layers both claim an always-on role; the consolidation is unresolved.
+- The two always-on layers are deliberate. `AGENTS.md` holds the universal read-first rules. The common policy owns their detailed contracts and indexes them. The pattern applies only for universal always-on mechanics.
