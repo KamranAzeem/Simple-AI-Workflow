@@ -1530,3 +1530,47 @@ A change that adds documentation, examples, or fixtures without a policy, proced
 Context: successive MINOR releases for docs-only work inflate the version number and add no semantic-versioning value. The user asked for the lowest conservative number.
 
 Consequences: the customization presets ship as v7.8.2; a docs-only change does not open a MINOR line.
+
+## 2026-11-26: Init is a mode of the existing sync script
+
+Init shares the workflow resolution, the exclusion logic, and the user-facing style with sync. A separate script would duplicate them and risk drift. One script per language keeps parity and one help surface.
+
+## 2026-11-26: The eight slugs are a fixed published whitelist
+
+A slug outside the eight is an unknown role and exits 2. A known slug whose preset file is absent is a packaging error and exits 1. Deriving the whitelist only from the files would collapse the missing-preset case into unknown role and lose the required packaging test. The fixture pins the whitelist against the files.
+
+## 2026-11-26: A target inside the workflow clone is validation, exit 2
+
+The check runs before any write and rejects an invalid target location, like a non-directory target. It is not a state conflict. This keeps exit 1 for a target that is otherwise valid but already initialized.
+
+## 2026-11-26: A symlink root path is validation, exit 2
+
+The settled exit-code line lists symlink under validation. A regular existing root path is a state conflict and exits 1. When both root paths exist, a symlink wins the exit code and every existing path is named.
+
+## 2026-11-26: Init always sources AGENTS.md from the clone root
+
+`--source` is rejected in init mode. The workflow clone root is the only source, so a user cannot scaffold from an arbitrary file and blur the trust boundary.
+
+## 2026-11-26: The workflow path is the resolved clone path
+
+The transform replaces the preset placeholder with the physical clone path. It does not add a trailing slash and does not expand `[HOME]`. The loader owns the user directory expansion.
+
+## 2026-11-26: Same-directory temp files, rename, and rollback
+
+Temp files in the target directory keep the rename on one filesystem. The first rename lands `AGENTS.md`. If the second rename fails, the first file and both temps are removed. The root paths are re-checked just before the renames to narrow the race window.
+
+## 2026-11-26: The preset contract forbids the Default Shell key
+
+The key is removed from the eight presets and the template. Init also rejects a preset that still carries it, so a packaging regression cannot reach a new project. The guide keeps the optional key for manual use.
+
+## 2026-11-26: This task ships no TSV manifest
+
+The preset map, migration paths, and key renames stay in the scripts. The shared TSV manifest, its schema, and its parity test are deferred to a separate issue. No TSV file is created here.
+
+## 2026-11-26: Release v7.9.0 as MINOR
+
+Init adds a new CLI mode and changes script behavior, so it is a behavior change. The docs-only PATCH rule does not apply. The release is `v7.9.0`.
+
+## 2026-11-26: Tests use a new init fixture
+
+The init scenarios are large enough to justify their own fixture. The existing sync fixture keeps its 14 cases and stays focused. The suite grows from 34 to 35 scripts. The slide appendix test count moves with it.

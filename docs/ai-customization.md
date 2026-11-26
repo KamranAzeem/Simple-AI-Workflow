@@ -10,15 +10,13 @@
 
 **User AI Directory**: [HOME]/.ai/
 
-**Default Shell**: bash
-
 <!-- Optional team knowledge store. The directory is a read-only local clone or mount; the repository is the publish remote. -->
 <!--
 **Team AI Directory**: /path/to/team-alpha
 **Team AI Knowledge Repository**: git@example.com:team/team-alpha.git
 -->
 
-<!-- User AI Directory defaults to [HOME]/.ai/. Default Shell is optional; use bash, zsh, pwsh, or git-bash. The matching native path goes in the user settings file as Default Shell Path. -->
+<!-- User AI Directory defaults to [HOME]/.ai/. -->
 
 See <https://github.com/kamranazeem/Simple-AI-Workflow/blob/main/docs/ai-customization-guide.md> for help.
 

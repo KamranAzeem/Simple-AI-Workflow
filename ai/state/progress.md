@@ -172,3 +172,4 @@
 [2026-11-26] Delivered the customization presets (v7.8.2): eight role files, three traits, guide section 11, slide/README/template sync, new fixture, five ADRs; validator 8/8, suite 34/34; reviews 175/176.
 [2026-11-26] Released v7.8.2 (public URL 200); post-merge validator 8/8; no post-release code changes.
 [2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
+[2026-11-26] Implemented sync --init --role (v7.9.0): Bash/PowerShell modes, preset whitelist, Default Shell removal, setup docs, 35-script suite, review-183 APPROVED.

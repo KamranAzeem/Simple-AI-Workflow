@@ -1,26 +1,210 @@
 <#
 .SYNOPSIS
-  Sync AGENTS.md into initialized project directories and migrate the project,
-  user, and team knowledge stores to the scope-normalized layout.
+  Sync AGENTS.md into initialized project directories, or initialize a new
+  project from a role preset.
 
 .DESCRIPTION
-  Recursively finds AGENTS.md under a target root. An initialized project has
-  AGENTS.md plus ai-customization.md or ai/ai-customization.md. The script
-  rewrites the old customization keys, backs up and moves the stores, and
-  leaves the team repository uncommitted. -WhatIf prints every action and
-  writes nothing.
+  Sync mode recursively finds AGENTS.md under a target root and migrates the
+  project, user, and team knowledge stores. Init mode writes only AGENTS.md and
+  ai-customization.md into a new project root from a role preset. -WhatIf prints
+  every action and writes nothing.
 
 .USAGE
   ./sync-agents-md.ps1 -Source ../AGENTS.md -TargetPath C:\Projects -WhatIf
+  ./sync-agents-md.ps1 -Init -TargetPath C:\Projects\New -Role web-developer
 #>
 
 param(
   [string]$Source = "./AGENTS.md",
   [string]$TargetPath = ".",
+  [switch]$Init,
+  [string]$Role = "",
   [switch]$WhatIf
 )
 
 Set-StrictMode -Version Latest
+
+$scriptDir = $PSScriptRoot
+$workflowDir = Split-Path -Parent $scriptDir
+$workflowDirFull = (Get-Item -LiteralPath $workflowDir -Force).FullName.TrimEnd([char[]]@('\', '/'))
+
+function Get-InitRoles {
+  return @('cloud-architect','solution-architect','web-developer','mobile-developer','platform-engineer','dba','data-engineer','security-engineer')
+}
+
+function Test-UnderWorkflow {
+  param([string]$Path)
+  $full = (Get-Item -LiteralPath $Path -Force).FullName.TrimEnd([char[]]@('\', '/'))
+  if ($full.Equals($workflowDirFull, [System.StringComparison]::OrdinalIgnoreCase)) { return $true }
+  $prefix = $workflowDirFull + [System.IO.Path]::DirectorySeparatorChar
+  return $full.StartsWith($prefix, [System.StringComparison]::OrdinalIgnoreCase)
+}
+
+function Test-InitRole {
+  param([string]$RoleValue)
+  if ([string]::IsNullOrWhiteSpace($RoleValue)) { return $false }
+  if ($RoleValue -cnotmatch '^[a-z0-9-]+$') { return $false }
+  return ((Get-InitRoles) -ccontains $RoleValue)
+}
+
+function Get-InitPresetPath {
+  param([string]$RoleValue)
+  return (Join-Path -Path (Join-Path -Path $workflowDirFull -ChildPath 'docs/examples/customization-presets') -ChildPath ($RoleValue + '.md'))
+}
+
+function Get-InitPresetContent {
+  param([string]$RoleValue, [string]$PresetPath)
+  $item = Get-Item -LiteralPath $PresetPath -Force -ErrorAction SilentlyContinue
+  if ($null -eq $item) {
+    Write-Error "Missing preset file for role $RoleValue`: $PresetPath"
+    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    return $null
+  }
+  if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+    Write-Error "Invalid preset file for role $RoleValue`: $PresetPath"
+    return $null
+  }
+  if (-not (Test-Path -LiteralPath $PresetPath -PathType Leaf)) {
+    Write-Error "Missing preset file for role $RoleValue`: $PresetPath"
+    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    return $null
+  }
+  $content = [System.IO.File]::ReadAllText($PresetPath)
+  if ($content -match '(?m)^\*\*Default Shell\*\*:') {
+    Write-Error "Preset contains a forbidden Default Shell key: $PresetPath"
+    return $null
+  }
+  $placeholders = [regex]::Matches($content, '(?m)^\*\*Workflow AI Directory\*\*: /path/to/Simple-AI-Workflow$')
+  if ($placeholders.Count -eq 0) {
+    Write-Error "Preset is missing the workflow placeholder: $PresetPath"
+    return $null
+  }
+  if ($placeholders.Count -gt 1) {
+    Write-Error "Preset has a duplicate workflow placeholder: $PresetPath"
+    return $null
+  }
+  return $content
+}
+
+function Convert-InitPreset {
+  param([string]$Content)
+  $replacement = ('**Workflow AI Directory**: ' + $workflowDirFull).Replace('$', '$$')
+  return [regex]::Replace($Content, '(?m)^\*\*Workflow AI Directory\*\*: /path/to/Simple-AI-Workflow$', $replacement)
+}
+
+function Test-InitRootPaths {
+  param([string]$TargetRoot)
+  $paths = @((Join-Path -Path $TargetRoot -ChildPath 'AGENTS.md'), (Join-Path -Path $TargetRoot -ChildPath 'ai-customization.md'))
+  $code = 0
+  foreach ($p in $paths) {
+    $item = Get-Item -LiteralPath $p -Force -ErrorAction SilentlyContinue
+    if ($null -eq $item) { continue }
+    if (($item.Attributes -band [System.IO.FileAttributes]::ReparsePoint) -ne 0) {
+      Write-Error "Refusing to initialize: $p is a symlink."
+      $code = 2
+    } else {
+      Write-Error "Refusing to initialize: $p already exists."
+      if ($code -eq 0) { $code = 1 }
+    }
+  }
+  return $code
+}
+
+function Set-InitUnixMode {
+  param([string]$Path)
+  if ($PSVersionTable.PSVersion.Major -lt 6) { return }
+  try {
+    $mode = [System.IO.UnixFileMode]::UserRead -bor [System.IO.UnixFileMode]::UserWrite -bor [System.IO.UnixFileMode]::GroupRead -bor [System.IO.UnixFileMode]::OtherRead
+    [System.IO.File]::SetUnixFileMode($Path, $mode)
+  } catch { }
+}
+
+function Invoke-Init {
+  param(
+    [bool]$SourceBound,
+    [bool]$RoleBound,
+    [bool]$TargetBound,
+    [string]$RoleValue,
+    [string]$TargetValue,
+    [bool]$DryRun
+  )
+  if ($SourceBound) { Write-Error '--source is not allowed with --init.'; return 2 }
+  if (-not $RoleBound -or [string]::IsNullOrWhiteSpace($RoleValue)) { Write-Error '--role is required with --init.'; return 2 }
+  if (-not $TargetBound) { Write-Error '--target-path is required with --init.'; return 2 }
+  if (-not (Test-Path -LiteralPath $TargetValue -PathType Container)) { Write-Error "Target path is not a directory: $TargetValue"; return 2 }
+  try { $targetAbs = (Resolve-Path -LiteralPath $TargetValue -ErrorAction Stop).Path } catch { Write-Error "Target path cannot be accessed: $TargetValue"; return 2 }
+  if (Test-UnderWorkflow -Path $targetAbs) { Write-Error "Target is the workflow clone or inside it: $targetAbs"; return 2 }
+  if (-not (Test-InitRole -RoleValue $RoleValue)) {
+    Write-Error "Unknown role: $RoleValue"
+    Write-Error "Available presets: $((Get-InitRoles) -join ' ')"
+    return 2
+  }
+  $preset = Get-InitPresetPath -RoleValue $RoleValue
+  $content = Get-InitPresetContent -RoleValue $RoleValue -PresetPath $preset
+  if ($null -eq $content) { return 1 }
+  $src = Join-Path -Path $workflowDirFull -ChildPath 'AGENTS.md'
+  if (-not (Test-Path -LiteralPath $src -PathType Leaf)) { Write-Error "Missing canonical AGENTS.md: $src"; return 1 }
+  $agents = Join-Path -Path $targetAbs -ChildPath 'AGENTS.md'
+  $custom = Join-Path -Path $targetAbs -ChildPath 'ai-customization.md'
+  $code = Test-InitRootPaths -TargetRoot $targetAbs
+  if ($code -ne 0) { return $code }
+  if ($DryRun) {
+    Write-Host "Dry run: would initialize $targetAbs"
+    Write-Host "Would write: $agents"
+    Write-Host "Would write: $custom"
+    Write-Host "Next: run `"bootstrap using AGENTS.md protocol`" in $targetAbs."
+    return 0
+  }
+  $agentsTemp = Join-Path -Path $targetAbs -ChildPath ('.agents.' + [guid]::NewGuid().ToString('N'))
+  $customTemp = Join-Path -Path $targetAbs -ChildPath ('.custom.' + [guid]::NewGuid().ToString('N'))
+  try {
+    [System.IO.File]::Copy($src, $agentsTemp, $false)
+    [System.IO.File]::WriteAllText($customTemp, (Convert-InitPreset -Content $content), [System.Text.UTF8Encoding]::new($false))
+    Set-InitUnixMode -Path $agentsTemp
+    Set-InitUnixMode -Path $customTemp
+  } catch {
+    Remove-Item -LiteralPath $agentsTemp -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $customTemp -Force -ErrorAction SilentlyContinue
+    Write-Error "Initialization failed: $($_.Exception.Message)"
+    return 1
+  }
+  $code = Test-InitRootPaths -TargetRoot $targetAbs
+  if ($code -ne 0) {
+    Remove-Item -LiteralPath $agentsTemp -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $customTemp -Force -ErrorAction SilentlyContinue
+    return $code
+  }
+  try {
+    [System.IO.File]::Move($agentsTemp, $agents)
+  } catch {
+    Remove-Item -LiteralPath $agentsTemp -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $customTemp -Force -ErrorAction SilentlyContinue
+    Write-Error "Initialization failed: $($_.Exception.Message)"
+    return 1
+  }
+  try {
+    [System.IO.File]::Move($customTemp, $custom)
+  } catch {
+    Remove-Item -LiteralPath $agents -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $agentsTemp -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $customTemp -Force -ErrorAction SilentlyContinue
+    Write-Error "Initialization failed: $($_.Exception.Message)"
+    return 1
+  }
+  Write-Host "Initialized $targetAbs"
+  Write-Host "Next: run `"bootstrap using AGENTS.md protocol`" in $targetAbs."
+  return 0
+}
+
+if ($Init) {
+  $initCode = Invoke-Init -SourceBound $PSBoundParameters.ContainsKey('Source') -RoleBound $PSBoundParameters.ContainsKey('Role') -TargetBound $PSBoundParameters.ContainsKey('TargetPath') -RoleValue $Role -TargetValue $TargetPath -DryRun ([bool]$WhatIf)
+  exit $initCode
+}
+
+if ($PSBoundParameters.ContainsKey('Role')) {
+  Write-Error '--role is only valid with --init.'
+  exit 2
+}
 
 if (-not (Test-Path -Path $Source -PathType Leaf)) {
   Write-Error "Source AGENTS.md not found: $Source"
@@ -39,9 +223,6 @@ try {
   exit 2
 }
 
-$scriptDir = $PSScriptRoot
-$workflowDir = Split-Path -Parent $scriptDir
-$workflowDirFull = (Get-Item -LiteralPath $workflowDir -Force).FullName.TrimEnd([char[]]@('\', '/'))
 $migrationDate = Get-Date -Format 'yyyy-MM-dd'
 $sepChars = [char[]]@([System.IO.Path]::DirectorySeparatorChar, [System.IO.Path]::AltDirectorySeparatorChar)
 

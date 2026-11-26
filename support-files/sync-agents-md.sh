@@ -7,34 +7,224 @@ set -euo pipefail
 usage() {
   cat <<EOF
 Usage: $0 --source PATH --target-path PATH [--dry-run]
+       $0 --init --target-path DIR --role SLUG [--dry-run]
 
-  --source      : path to the canonical AGENTS.md (required).
-  --target-path : directory to search for AGENTS.md files to update (required).
-  --dry-run     : show every backup and move without making changes.
+  --source      : path to the canonical AGENTS.md (required for sync).
+  --target-path : directory to search for AGENTS.md files (sync), or the new project root (init).
+  --init        : initialize a new project from a role preset.
+  --role        : preset slug, required with --init.
+  --dry-run     : show every backup, move, or write without making changes.
 
 Examples:
   $0 --source ../AGENTS.md --target-path /projects --dry-run
   $0 --source ./AGENTS.md --target-path ~/Projects
+  $0 --init --target-path /projects/new --role web-developer
 EOF
 }
 
 SOURCE=""
 TARGET_PATH=""
 DRY_RUN=0
+INIT=0
+ROLE=""
+ROLE_SET=0
+SOURCE_SET=0
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --source)
       if [ $# -lt 2 ] || [[ "$2" == --* ]]; then echo "Missing value for --source" >&2; usage; exit 2; fi
-      SOURCE="$2"; shift 2;;
+      SOURCE="$2"; SOURCE_SET=1; shift 2;;
     --target-path)
       if [ $# -lt 2 ] || [[ "$2" == --* ]]; then echo "Missing value for --target-path" >&2; usage; exit 2; fi
       TARGET_PATH="$2"; shift 2;;
+    --init) INIT=1; shift 1;;
+    --role)
+      if [ $# -lt 2 ] || [[ "$2" == --* ]]; then echo "Missing value for --role" >&2; usage; exit 2; fi
+      ROLE="$2"; ROLE_SET=1; shift 2;;
     --dry-run) DRY_RUN=1; shift 1;;
     -h|--help) usage; exit 0;;
     *) echo "Unknown arg: $1" >&2; usage; exit 2;;
   esac
 done
+
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
+WORKFLOW_DIR=$(dirname "$SCRIPT_DIR")
+
+is_under_workflow() {
+  local dir="$1"
+  while :; do
+    [ "$dir" -ef "$WORKFLOW_DIR" ] && return 0
+    [ "$dir" = "/" ] && return 1
+    dir=$(dirname "$dir")
+  done
+}
+
+INIT_ROLES="cloud-architect solution-architect web-developer mobile-developer platform-engineer dba data-engineer security-engineer"
+
+init_validate_role() {
+  case "$ROLE" in
+    ''|*[!a-z0-9-]*) return 1;;
+  esac
+  local r
+  for r in $INIT_ROLES; do
+    [ "$r" = "$ROLE" ] && return 0
+  done
+  return 1
+}
+
+init_check_preset() {
+  local preset="$1"
+  if [ -L "$preset" ]; then
+    echo "Invalid preset file for role $ROLE: $preset" >&2
+    return 1
+  fi
+  if [ ! -f "$preset" ]; then
+    echo "Missing preset file for role $ROLE: $preset" >&2
+    echo "Available presets: $INIT_ROLES" >&2
+    return 1
+  fi
+  if grep -q '^\*\*Default Shell\*\*:' "$preset"; then
+    echo "Preset contains a forbidden Default Shell key: $preset" >&2
+    return 1
+  fi
+  local count
+  count=$(grep -cxF '**Workflow AI Directory**: /path/to/Simple-AI-Workflow' "$preset" || true)
+  if [ "$count" -eq 0 ]; then
+    echo "Preset is missing the workflow placeholder: $preset" >&2
+    return 1
+  fi
+  if [ "$count" -gt 1 ]; then
+    echo "Preset has a duplicate workflow placeholder: $preset" >&2
+    return 1
+  fi
+  return 0
+}
+
+init_transform() {
+  local preset="$1"
+  awk -v wf="$WORKFLOW_DIR" '
+    $0 == "**Workflow AI Directory**: /path/to/Simple-AI-Workflow" { print "**Workflow AI Directory**: " wf; next }
+    { print }
+  ' "$preset"
+}
+
+init_root_check() {
+  local agents="$TARGET_ABS/AGENTS.md"
+  local custom="$TARGET_ABS/ai-customization.md"
+  local p code=0
+  for p in "$agents" "$custom"; do
+    if [ -L "$p" ]; then
+      echo "Refusing to initialize: $p is a symlink." >&2
+      code=2
+    elif [ -e "$p" ]; then
+      echo "Refusing to initialize: $p already exists." >&2
+      [ "$code" -eq 0 ] && code=1
+    fi
+  done
+  return "$code"
+}
+
+run_init() {
+  if [ "$SOURCE_SET" -eq 1 ]; then
+    echo "--source is not allowed with --init." >&2
+    return 2
+  fi
+  if [ "$ROLE_SET" -eq 0 ] || [ -z "$ROLE" ]; then
+    echo "--role is required with --init." >&2
+    return 2
+  fi
+  if [ -z "$TARGET_PATH" ]; then
+    echo "--target-path is required with --init." >&2
+    return 2
+  fi
+  if [ ! -d "$TARGET_PATH" ]; then
+    echo "Target path is not a directory: $TARGET_PATH" >&2
+    return 2
+  fi
+  if ! TARGET_ABS=$(cd "$TARGET_PATH" && pwd -P); then
+    echo "Target path cannot be accessed: $TARGET_PATH" >&2
+    return 2
+  fi
+  if is_under_workflow "$TARGET_ABS"; then
+    echo "Target is the workflow clone or inside it: $TARGET_ABS" >&2
+    return 2
+  fi
+  if ! init_validate_role; then
+    echo "Unknown role: $ROLE" >&2
+    echo "Available presets: $INIT_ROLES" >&2
+    return 2
+  fi
+  local preset src agents custom agents_tmp custom_tmp rc
+  preset="$WORKFLOW_DIR/docs/examples/customization-presets/$ROLE.md"
+  if ! init_check_preset "$preset"; then
+    return 1
+  fi
+  src="$WORKFLOW_DIR/AGENTS.md"
+  if [ ! -f "$src" ]; then
+    echo "Missing canonical AGENTS.md: $src" >&2
+    return 1
+  fi
+  agents="$TARGET_ABS/AGENTS.md"
+  custom="$TARGET_ABS/ai-customization.md"
+  if init_root_check; then rc=0; else rc=$?; fi
+  if [ "$rc" -ne 0 ]; then
+    return "$rc"
+  fi
+  if [ "$DRY_RUN" -eq 1 ]; then
+    echo "Dry run: would initialize $TARGET_ABS"
+    echo "Would write: $agents"
+    echo "Would write: $custom"
+    echo "Next: run \"bootstrap using AGENTS.md protocol\" in $TARGET_ABS."
+    return 0
+  fi
+  agents_tmp=$(mktemp "$TARGET_ABS/.agents.XXXXXX") || { echo "Initialization failed: cannot create temp file" >&2; return 1; }
+  custom_tmp=$(mktemp "$TARGET_ABS/.custom.XXXXXX") || { rm -f "$agents_tmp"; echo "Initialization failed: cannot create temp file" >&2; return 1; }
+  if ! cp "$src" "$agents_tmp"; then
+    rm -f "$agents_tmp" "$custom_tmp"
+    echo "Initialization failed: cannot copy AGENTS.md" >&2
+    return 1
+  fi
+  if ! init_transform "$preset" > "$custom_tmp"; then
+    rm -f "$agents_tmp" "$custom_tmp"
+    echo "Initialization failed: cannot write ai-customization.md" >&2
+    return 1
+  fi
+  if ! chmod 0644 "$agents_tmp" "$custom_tmp"; then
+    rm -f "$agents_tmp" "$custom_tmp"
+    echo "Initialization failed: cannot set file mode" >&2
+    return 1
+  fi
+  if init_root_check; then rc=0; else rc=$?; fi
+  if [ "$rc" -ne 0 ]; then
+    rm -f "$agents_tmp" "$custom_tmp"
+    return "$rc"
+  fi
+  if ! mv "$agents_tmp" "$agents"; then
+    rm -f "$agents_tmp" "$custom_tmp"
+    echo "Initialization failed: cannot write $agents" >&2
+    return 1
+  fi
+  if ! mv "$custom_tmp" "$custom"; then
+    rm -f "$agents" "$agents_tmp" "$custom_tmp"
+    echo "Initialization failed: cannot write $custom" >&2
+    return 1
+  fi
+  echo "Initialized $TARGET_ABS"
+  echo "Next: run \"bootstrap using AGENTS.md protocol\" in $TARGET_ABS."
+  return 0
+}
+
+if [ "$INIT" -eq 1 ]; then
+  run_init
+  exit $?
+fi
+
+if [ "$ROLE_SET" -eq 1 ]; then
+  echo "--role is only valid with --init." >&2
+  usage
+  exit 2
+fi
 
 if [ -z "$SOURCE" ] || [ -z "$TARGET_PATH" ]; then
   echo "Both --source and --target-path are required." >&2
@@ -56,19 +246,8 @@ if ! TARGET_ABS=$(cd "$TARGET_PATH" && pwd -P); then
   echo "Target path cannot be accessed: $TARGET_PATH" >&2
   exit 2
 fi
-SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)
-WORKFLOW_DIR=$(dirname "$SCRIPT_DIR")
 MIGRATION_DATE=$(date +%Y-%m-%d)
 PATH_PROBE="$SCRIPT_DIR/path-probe.sh"
-
-is_under_workflow() {
-  local dir="$1"
-  while :; do
-    [ "$dir" -ef "$WORKFLOW_DIR" ] && return 0
-    [ "$dir" = "/" ] && return 1
-    dir=$(dirname "$dir")
-  done
-}
 
 if ! is_under_workflow "$(dirname "$SRC_ABS")"; then
   echo "Warning: source $SRC_ABS is outside the workflow clone $WORKFLOW_DIR; the clone root still drives the config and exclusion." >&2

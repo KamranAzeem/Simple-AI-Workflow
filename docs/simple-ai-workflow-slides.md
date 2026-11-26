@@ -436,7 +436,7 @@ The claims are inspectable.
 ## The repository is the proof
 
 - It has 26 policies, 16 procedures, and 59 triggers.
-- It has 34 tests, 18 user-facing docs, and hundreds of review reports.
+- It has 35 tests, 18 user-facing docs, and hundreds of review reports.
 - It has a public issue tracker, daily checkpoints, and release notes.
 - Every change went through the same plan, review, and checkpoint shape.
 

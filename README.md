@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.8.2 (2026-11-26).** Ready-made customization presets for eight roles are in the docs. Read the announcement: [docs/announcements/v7.8.2.md](docs/announcements/v7.8.2.md). |
+| **v7.9.0 (2026-11-26).** The sync scripts gain an `--init` mode that scaffolds a new project from a role preset. Read the announcement: [docs/announcements/v7.9.0.md](docs/announcements/v7.9.0.md). |
 
 # Simple AI Workflow
 
@@ -217,4 +217,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.8.2 include no temporary aliases.
+The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.9.0 include no temporary aliases.

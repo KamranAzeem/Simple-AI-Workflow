@@ -38,6 +38,20 @@ Simple-AI-Workflow/              Your Project/
 
 The clone holds the workflow, the policy and procedure store, and the workflow skills. The project copies `AGENTS.md` and `ai-customization.md`. The procedure modules stay in the clone and load from `(Workflow AI Directory)/ai/procedures/`.
 
+## Initialize a new project
+
+Use `--init` to scaffold a new project root from a role preset. Init writes only `AGENTS.md` and `ai-customization.md`; it creates no `ai/` directory, copies no skills, and does not run bootstrap.
+
+1. Pick a role from the [presets table](ai-customization-guide.md#11-presets-by-role).
+2. Run init from the clone:
+   - Linux or Git Bash: `./support-files/sync-agents-md.sh --init --target-path ~/Projects/new-project --role web-developer`
+   - Windows PowerShell: `.\support-files\sync-agents-md.ps1 -Init -TargetPath 'C:\Users\<you>\Projects\new-project' -Role web-developer`
+3. Start an AI session in the new project and run `"bootstrap using AGENTS.md protocol"`.
+
+Add `--dry-run` (Bash) or `-WhatIf` (PowerShell) to preview the two writes.
+
+The target directory may contain other files and subdirectories. Init refuses when `AGENTS.md` or `ai-customization.md` already exists, when either path is a symlink, when the target is the workflow clone or inside it, or when the target is not a directory. Init exits 0 on success, 2 for validation errors, and 1 when it refuses an existing project or a packaging check fails.
+
 ## Updating an Existing Project
 
 1. Run a checkpoint in the project and close the assistant.
@@ -48,4 +62,4 @@ The clone holds the workflow, the policy and procedure store, and the workflow s
 4. Reopen the project and run `"load context using AGENTS.md protocol"`.
 5. Run `"repair knowledge files"` once in each project; add `global` for the global store.
 
-The sync script updates `AGENTS.md`, checks or creates `ai-customization.md`, adds `## Merge Policy` when it is missing, and migrates the state layout. It does not create `AGENTS.md` for a new project, and it does not copy skills.
+The sync script updates `AGENTS.md`, checks or creates `ai-customization.md`, adds `## Merge Policy` when it is missing, and migrates the state layout. Sync does not create `AGENTS.md` for a new project; use `--init` for that. The sync script does not copy skills.

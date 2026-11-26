@@ -10,8 +10,6 @@
 
 **User AI Directory**: [HOME]/.ai/
 
-**Default Shell**: bash
-
 ## Active Expertise
 
 - web-frontend

@@ -94,6 +94,95 @@ Check 'sync real adds Merge Policy' ((Get-Content -Raw -Path (Join-Path $old 'ai
 Check 'sync real rewrites the workflow key' ((Get-Content -Raw -Path (Join-Path $old 'ai-customization.md')) -match '\*\*Workflow AI Directory\*\*')
 Check 'sync real creates the new project config' (Test-Path -LiteralPath (Join-Path $new 'ai-customization.md'))
 
+Write-Host "=== init ==="
+$initTarget = Join-Path $TestRoot 'init-project'
+New-Item -ItemType Directory -Force -Path $initTarget | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initTarget -Role web-developer 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Write-Host $initText
+Check 'init exits 0' ($initRc -eq 0)
+Check 'init writes AGENTS.md' (Test-Path -LiteralPath (Join-Path $initTarget 'AGENTS.md'))
+Check 'init writes ai-customization.md' (Test-Path -LiteralPath (Join-Path $initTarget 'ai-customization.md'))
+Check 'init creates no ai directory' (-not (Test-Path -LiteralPath (Join-Path $initTarget 'ai')))
+Check 'init writes no Default Shell' (-not ((Get-Content -Raw -Path (Join-Path $initTarget 'ai-customization.md')) -match '\*\*Default Shell\*\*:'))
+Check 'init substitutes the workflow path' ((Get-Content -Raw -Path (Join-Path $initTarget 'ai-customization.md')) -match [regex]::Escape("**Workflow AI Directory**: $WorkflowDir"))
+Check 'init copies AGENTS.md' ((Get-Content -Raw -Path (Join-Path $initTarget 'AGENTS.md')) -eq (Get-Content -Raw -Path $agents))
+
+Write-Host "=== init -WhatIf ==="
+$initDry = Join-Path $TestRoot 'init-dry'
+New-Item -ItemType Directory -Force -Path $initDry | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initDry -Role web-developer -WhatIf 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init -WhatIf exits 0' ($initRc -eq 0)
+Check 'init -WhatIf writes nothing' ((-not (Test-Path -LiteralPath (Join-Path $initDry 'AGENTS.md'))) -and (-not (Test-Path -LiteralPath (Join-Path $initDry 'ai-customization.md'))))
+Check 'init -WhatIf lists the writes' ($initText -match 'Would write:')
+
+Write-Host "=== init existing target ==="
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initTarget -Role web-developer 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init existing target exits 1' ($initRc -eq 1)
+Check 'init existing target names the file' ($initText -match 'Refusing to initialize:')
+
+Write-Host "=== init unknown role ==="
+$initUnknown = Join-Path $TestRoot 'init-unknown'
+New-Item -ItemType Directory -Force -Path $initUnknown | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initUnknown -Role not-a-role 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init unknown role exits 2' ($initRc -eq 2)
+Check 'init unknown role names it' ($initText -match 'Unknown role: not-a-role')
+Check 'init unknown role lists presets' ($initText -match 'Available presets: .*security-engineer')
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initUnknown -Role Web-Developer 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init uppercase role exits 2' ($initRc -eq 2)
+Check 'init uppercase role is unknown' ($initText -match 'Unknown role: Web-Developer')
+
+Write-Host "=== init target inside clone ==="
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath (Join-Path $WorkflowDir 'support-files') -Role web-developer 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init inside clone exits 2' ($initRc -eq 2)
+Check 'init inside clone names it' ($initText -match 'Target is the workflow clone or inside it')
+
+Write-Host "=== init missing preset (copied clone) ==="
+$spaceClone = Join-Path $TestRoot 'clone with space'
+New-Item -ItemType Directory -Force -Path (Join-Path $spaceClone 'support-files'), (Join-Path $spaceClone 'docs\examples\customization-presets') | Out-Null
+Copy-Item -LiteralPath $sync -Destination (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -Force
+Copy-Item -LiteralPath $agents -Destination (Join-Path $spaceClone 'AGENTS.md') -Force
+Copy-Item -Path (Join-Path (Join-Path $WorkflowDir 'docs\examples\customization-presets') '*.md') -Destination (Join-Path $spaceClone 'docs\examples\customization-presets') -Force
+Remove-Item -LiteralPath (Join-Path $spaceClone 'docs\examples\customization-presets\dba.md') -Force
+$initMissing = Join-Path $TestRoot 'init-missing'
+New-Item -ItemType Directory -Force -Path $initMissing | Out-Null
+$initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $spaceClone 'support-files\sync-agents-md.ps1') -Init -TargetPath $initMissing -Role dba 2>&1
+$initRc = $LASTEXITCODE
+$initText = Read-Output $initOut
+Check 'init missing preset exits 1' ($initRc -eq 1)
+Check 'init missing preset names it' ($initText -match 'Missing preset file for role dba')
+
+Write-Host "=== init symlink refusal ==="
+$initLink = Join-Path $TestRoot 'init-link'
+New-Item -ItemType Directory -Force -Path $initLink | Out-Null
+$linkTarget = Join-Path $TestRoot 'link-target.txt'
+Set-Content -Path $linkTarget -Value 'link target'
+$linkCreated = $false
+try {
+  New-Item -ItemType SymbolicLink -Path (Join-Path $initLink 'AGENTS.md') -Target $linkTarget -ErrorAction Stop | Out-Null
+  $linkCreated = $true
+} catch { }
+if ($linkCreated) {
+  $initOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $sync -Init -TargetPath $initLink -Role web-developer 2>&1
+  $initRc = $LASTEXITCODE
+  $initText = Read-Output $initOut
+  Check 'init symlink exits 2' ($initRc -eq 2)
+  Check 'init symlink names it' ($initText -match 'is a symlink')
+} else {
+  Write-Host 'SKIP: init symlink case (platform cannot create symlinks)'
+}
+
 Write-Host "=== backup -WhatIf ==="
 $backOut = & $pwsh -NoProfile -ExecutionPolicy Bypass -File $backup -TargetPath $projects -BackupDir $backups -WhatIf 2>&1
 $backRc = $LASTEXITCODE
