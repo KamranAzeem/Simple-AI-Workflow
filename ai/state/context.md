@@ -14,16 +14,15 @@
 
 ## Current Status
 
-- **Milestone**: v7.9.0 prepared; sync init implemented.
-- **Validation**: validator 8/8; suite 34/34; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
+- **Milestone**: v7.9.0 live; sync init shipped.
+- **Validation**: validator 8/8; suite 35/35; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 7 open, 0 in-progress, 150 closed; the customization presets are closed.
-- **Release**: v7.9.0 is prepared; v7.8.2 is the prior release.
+- **Issues**: 6 open, 0 in-progress, 151 closed; the sync-init ticket is closed.
+- **Release**: v7.9.0 is live; v7.8.2 is the prior release.
 
 ## Active Working Context
 
-- **Objective**: merge and release v7.9.0, then migrate the live User AI Directory, sync downstream projects, and continue the open queue.
+- **Objective**: migrate the live User AI Directory, sync downstream projects, and continue the open queue.
 - **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
-- **Open queue**: board reconciliation, young learner, and the docs/issue queue.
-- **Handoff**: the planning handoff's board entry is missing; reconcile and delete it after the state record.
+- **Open queue**: young learner and the docs/issue queue.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

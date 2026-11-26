@@ -24,6 +24,7 @@ reading each other's state files.
 
 - [Kilo] [2026-11-22T00:44Z] — DONE: grilled `ai/issues/open/shared-team-knowledge-store.md`; plan at `ai/plans/team-knowledge-store.md`; review-76 APPROVED. No branch, no implementation.
 - [Kilo] [2026-11-22T19:05Z] — DONE: implemented and released the team knowledge store v7.1.0; review-79 APPROVED; ticket closed with the plan attached.
+- [Kilo handoff-executor] [2026-11-26T15:26Z] — DONE: planned the sync-init role presets; plan review-181 APPROVED; the plan is attached to the closed ticket; no implementation, branch, commit, or state write by the receiver.
 
 ## Protocol
 

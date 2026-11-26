@@ -173,3 +173,4 @@
 [2026-11-26] Released v7.8.2 (public URL 200); post-merge validator 8/8; no post-release code changes.
 [2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
 [2026-11-26] Implemented sync --init --role (v7.9.0): Bash/PowerShell modes, preset whitelist, Default Shell removal, setup docs, 35-script suite, review-183 APPROVED.
+[2026-11-26] Reconciled the sync-init planning handoff: added the coordination board entry, recorded the completion in state, and deleted the handoff.

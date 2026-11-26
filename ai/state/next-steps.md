@@ -21,4 +21,3 @@
 - Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Audit the Project Knowledge the protocol relies on.
-- Reconcile the sync-init planning handoff: add the missing coordination board entry, record it in state, then delete the handoff.
