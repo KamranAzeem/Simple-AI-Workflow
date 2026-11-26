@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Audit every slide for content overflow and content outside the safe margins.
 # This is the deterministic check; the visual review only inspects the flagged slides.
-# Usage: ./support-files/audit-slides.sh
+# Usage: bash support-files/audit-slides.sh
 set -u
 export LC_ALL=C
 

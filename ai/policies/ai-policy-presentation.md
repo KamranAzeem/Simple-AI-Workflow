@@ -56,7 +56,7 @@ Apply one presentation standard to every slide deck and its diagrams.
 - Use Mermaid only for a flow or sequence that D2 handles poorly.
 - Keep one source per diagram in `docs/slides/diagrams/src/`.
 - Record each diagram as source-backed or legacy with a reason in `docs/slides/diagrams/manifest.tsv`.
-- Generate the SVG with `support-files/build-slide-diagrams.sh`.
+- Generate the SVG with `bash support-files/build-slide-diagrams.sh`.
 - Never hand-edit a generated SVG.
 - Keep a diagram that the guide already carries; do not redraw it.
 - Keep the deck's six-level ladder as the ladder standard.

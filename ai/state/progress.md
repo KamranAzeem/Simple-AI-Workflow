@@ -183,3 +183,5 @@
 [2026-11-26] Planned and reviewed the legacy alias retirement: reviews 191/192 APPROVED; v7.11.0 MINOR.
 [2026-11-26] Implemented and reviewed the alias retirement: index 55/0/0, suite 35/35, validators and lint clean; reviews 193/194 APPROVED; v7.11.0 prepared.
 [2026-11-26] Released v7.11.0 (public URL 200); the alias retirement merged to master; post-merge validator 8/8 and index 55/0/0; no post-release code changes.
+[2026-11-26] Planned and reviewed the F2 to F5 docs batch: reviews 195/196 APPROVED; no release.
+[2026-11-26] Implemented the F2 to F5 docs batch: workflow token, map refresh, bash usage lines, README index, docs-only release rule; suite 35/35; review 197 APPROVED; no release.

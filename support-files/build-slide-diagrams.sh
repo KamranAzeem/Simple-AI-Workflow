@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build the source-backed slide diagrams from docs/slides/diagrams/src.
-# Usage: D2_BIN=/path/to/d2 ./support-files/build-slide-diagrams.sh
+# Usage: D2_BIN=/path/to/d2 bash support-files/build-slide-diagrams.sh
 # The manifest records each diagram as source-backed or legacy with a reason.
 
 set -euo pipefail

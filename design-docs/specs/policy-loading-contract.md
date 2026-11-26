@@ -6,7 +6,7 @@
 - An absent `## Loading` keeps the legacy load behavior, and triggers continue to work as before.
 - A `Mode: trigger` policy carries at least one `## Triggers` bullet. Every other mode carries none.
 - A `Mode: procedure` policy carries `- Load in: <procedure-file-stem>`, and the named procedure module exists. No other mode carries `Load in:`.
-- The declaration governs global policies, where these paths already exist. A project policy keeps the legacy boot load.
+- The declaration governs workflow policies, where these paths already exist. A project policy keeps the legacy boot load.
 - A procedure may load a policy explicitly; the declaration states the self-declared path, not an exclusive one.
 
 ## Preconditions
@@ -29,7 +29,7 @@
 - Each valid fixture exits 0.
 - Each invalid fixture exits 1 with its `invalid loading block: <reason>` line.
 - `--index` prints `mode=boot` and `|project|` for the project fixture.
-- `--index` prints `mode=legacy` and `|global|` for a repository policy without a declaration.
+- `--index` prints `mode=legacy` and `|workflow|` for a repository policy without a declaration.
 - Every `Load in:` resolves to `ai/procedures/<stem>.md`.
 - Every `ai-policy-*.md` named in a procedure module exists.
 

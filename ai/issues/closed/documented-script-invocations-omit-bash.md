@@ -35,4 +35,4 @@ Filed from the 2026-11-26 codebase examination. Evidence group F4. No secret or 
 
 ---
 2026-11-26
-Plan: `ai/plans/docs-batch-f2-to-f5.md` (M), batched with F2 to F5. Plan reviews 195 (CHANGES REQUESTED, fixed) and 196 (APPROVED). No branch; the tickets stay open until the implement request.
+Closed in the docs batch; the plan is attached to the F2 ticket `ai/issues/closed/stale-global-scope-token-in-validation-doc-and-spec.md`. Implementation review 197 APPROVED. No release.

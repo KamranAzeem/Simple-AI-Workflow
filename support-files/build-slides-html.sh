@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Build docs/slides/simple-ai-workflow-slides.html from the canonical Markdown deck.
-# Usage: ./support-files/build-slides-html.sh [output]
+# Usage: bash support-files/build-slides-html.sh [output]
 # The default output is docs/slides/simple-ai-workflow-slides.html.
 
 set -eu

@@ -29,9 +29,9 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 8 open, 0 in-progress, and 148 closed as of 2026-11-26.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 7 open, 0 in-progress, and 157 closed as of 2026-11-26.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
-- `ai/knowledge/`: 14 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
+- `ai/knowledge/`: 16 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
 - `ai/skills/`: one skill package, `kanban-board`, plus `.gitkeep`.
 - `ai/code-review-reports/`, `ai/artifacts/`, `ai/notes/`, `ai/pending/`, `ai/secrets/`: local-only working areas. Boot excludes them except the report and artifact procedures that own them.
@@ -70,7 +70,6 @@
 - `support-files/backup-ai.sh` and `.ps1`: `ai/state` plus `ai/shared` as the project marker.
 - `tests/test-load-context-boot.sh`, `test-backup-ai.sh`, `test-protocol-references.sh`, `test-create-handoff.sh`, `test-knowledge-repair-fixture.sh`.
 - `docs/workflow-guide.md`, `docs/multi-agent-runbook.md`, `docs/ai-customization-guide.md`, `docs/examples/handoffs/`, and the slide diagrams.
-- `ai/issues/in-progress/global-to-workflow-policy-terminology.md`: the owner ticket for the scope and directory migration.
 
 ## Why
 
@@ -87,6 +86,6 @@
 
 ## Caveats
 
-- Counts and line references are a snapshot at 2026-11-25. They drift when tickets, tests, or policies are added.
+- Counts and line references are a snapshot at 2026-11-26. They drift when tickets, tests, or policies are added.
 - This map is not a rule source. The owning policy or procedure governs a conflict.
 - The v7.7.0 migration moved the project store to `ai/knowledge/`, the user store to `knowledge/`, and the team store to `knowledge/`. The map reflects the new layout.

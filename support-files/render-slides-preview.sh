@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Render the Markdown deck to per-slide PNGs for the AI's own review.
-# Usage: ./support-files/render-slides-preview.sh [slide ... | start end]
+# Usage: bash support-files/render-slides-preview.sh [slide ... | start end]
 # Requires: python3, curl, and Google Chrome. No installation and no network beyond the preview CDN.
 
 set -u

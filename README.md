@@ -204,6 +204,9 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [Compliance guide](docs/compliance-guide.md).
 - [How policies work](docs/how-policies-work-in-this-workflow.md).
 - [Policy influence on AI work](docs/policy-influence-on-ai-work.md).
+- [Custom policy how-to](docs/custom-policy-howto.md).
+- [Mobile apps policy guide](docs/ai-policy-mobile-apps-guide.md).
+- [Post-compaction reload trigger setup](docs/post-compaction-reload-trigger-setup.md).
 - [Protocol validation](docs/protocol-validation-system.md).
 - [Codebase examination](docs/codebase-examination-guide.md).
 - [AI provider selection](docs/ai-provider-selection-guide.md): choosing a provider and the Kilo Code path.

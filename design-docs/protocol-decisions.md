@@ -1606,3 +1606,11 @@ The four v7.7.x aliases are removed: `update global knowledge`, `repair global s
 Context: the v7.7.0 rename promised removal in v7.8.0. The aliases survived v7.8.0 through v7.10.0, and the README said no temporary aliases remained.
 
 Consequences: `write-checkpoint.md` and `repair-user-settings.md` lose the alias triggers; `ai-policy-user-settings.md`, `scope-vocabulary-and-storage-roots.md`, `trigger-phrase-naming.md`, the README migration table, the workflow guide, both slides files, and the fixture assertions move to 55 or drop the alias. The v7.7.0 announcement stays as history. The release is v7.11.0, MINOR.
+
+## 2026-11-26: Docs-only changes may land without a release
+
+A docs-only change with no policy, procedure, trigger, or runtime behavior change may land without a release. `release-practices.md` records the rule.
+
+Context: the written rule said a docs-only change ships as a PATCH, but the README restructure and the docs audit landed without a release. The F2 to F5 batch is the first to follow the new rule.
+
+Consequences: a docs-only change runs markdownlint, the validators, and the suite, and records the change in the merge commit and the checkpoint. This batch also records the workflow scope token in the policy-loading spec and the validation doc, and the `bash` command convention in the script usage lines and the two referencing modules. No tag and no GitHub Release.
