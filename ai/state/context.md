@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.11.1 prepared; the ADR store carries a checked index.
+- **Milestone**: v7.11.1 live; the ADR store carries a checked index.
 - **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
 - **Issues**: 6 open, 0 in-progress, 158 closed; F6 is closed.
-- **Release**: v7.11.1 prepared; v7.11.0 is the prior release.
+- **Release**: v7.11.1 is live; v7.11.0 is the prior release.
 
 ## Active Working Context
 
@@ -26,5 +26,6 @@
 - **Live user store**: active store `~/.ai/knowledge/` (27 files); no old-layout fallback present; confirm the migration item is done.
 - **Open queue**: young learner and the migration.
 - **ADR index**: the store carries a checked index; the docs-audit gate fails on drift; details in the closed F6 ticket.
+- **Skeleton map**: count-free; live counts are in the state context and the live tree.
 - **Young learner design**: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types; decisions in the 2026-11-26 diary.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

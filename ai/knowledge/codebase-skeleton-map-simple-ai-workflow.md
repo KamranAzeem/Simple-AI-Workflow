@@ -25,13 +25,13 @@
 
 ### `ai/`
 
-- `ai/policies/`: 26 policy modules: 12 domain and 14 protocol. The protocol set includes the common, meta, issue, code-review, design-docs, knowledge, handoff, user-settings, team-knowledge, outbound-scrub, thinking-modes, codebase-examination, coding-baseline, and presentation policies.
-- `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
+- `ai/policies/`: the policy modules, split into the domain set and the protocol set. The protocol set includes the common, meta, issue, code-review, design-docs, knowledge, handoff, user-settings, team-knowledge, outbound-scrub, thinking-modes, codebase-examination, coding-baseline, and presentation policies.
+- `ai/procedures/`: the procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 7 open, 0 in-progress, and 157 closed as of 2026-11-26.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
-- `ai/knowledge/`: 16 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
+- `ai/knowledge/`: the durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
 - `ai/skills/`: one skill package, `kanban-board`, plus `.gitkeep`.
 - `ai/code-review-reports/`, `ai/artifacts/`, `ai/notes/`, `ai/pending/`, `ai/secrets/`: local-only working areas. Boot excludes them except the report and artifact procedures that own them.
@@ -79,13 +79,13 @@
 
 ## Verify
 
-- Recount the live tree before trusting a count: policies, procedures, tests, Project Knowledge, User Knowledge, design docs, open tickets, and skills.
+- The live tree is the source of truth for counts: policies, procedures, tests, Project Knowledge, User Knowledge, design docs, open tickets, and skills.
 - Run `support-files/validate-protocol.sh`; it asserts the mandatory paths and the coordination file.
 - Run `tests/run-all.sh`; the suite is the executable contract for the scripts and docs.
 - Recheck a cited line before editing; policy and procedure line numbers move when a section is added.
 
 ## Caveats
 
-- Counts and line references are a snapshot at 2026-11-26. They drift when tickets, tests, or policies are added.
+- Line references are a snapshot at 2026-11-26 and drift when files move. The live tree is the source of truth for counts.
 - This map is not a rule source. The owning policy or procedure governs a conflict.
 - The v7.7.0 migration moved the project store to `ai/knowledge/`, the user store to `knowledge/`, and the team store to `knowledge/`. The map reflects the new layout.

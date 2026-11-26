@@ -188,3 +188,5 @@
 [2026-11-26] Repaired the state files: 83 progress entries condensed into the 2026-11-26 diary; the shared budget is clear.
 [2026-11-26] Planned and reviewed the ADR index: reviews 198/199 APPROVED; PATCH v7.11.1.
 [2026-11-26] Implemented the ADR index and the docs-audit gate; suite 35/35; review 200 APPROVED; v7.11.1 prepared.
+[2026-11-26] Released v7.11.1 (public URL 200); the ADR index merged to master; post-merge validator 8/8 and index 55/0/0; no post-release code changes.
+[2026-11-26] Removed the volatile counts from the skeleton map; the map is navigation and the live tree is the count source.
