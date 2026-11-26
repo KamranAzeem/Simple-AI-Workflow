@@ -16,7 +16,7 @@
 - `ai-customization.md`: the project's workflow path, user path, active expertise, traits, compliance, design-docs location, and merge mode.
 - `ai/`: the project's state, tickets, plans, knowledge, skills, and local artifacts.
 - `design-docs/`: the protocol's ADR store and acceptance-spec templates.
-- `docs/`: the user-facing guides, examples, personas, announcements, and the slide deck.
+- `docs/`: the user-facing guides, examples, personas, announcements, the slide deck, and the Azure exercise pack.
 - `support-files/`: the sync scripts, validators, index helper, backup helpers, and slide tools.
 - `tests/`: the fixture suite. `tests/run-all.sh` runs every `test-*.sh`; the knowledge fixture runs fully only with `--all`.
 - `README.md`, `LICENSE.md`, `.gitignore`, `.markdownlint-cli2.jsonc`: project metadata and lint settings.
@@ -45,6 +45,7 @@
 - `support-files/sync-agents-md.sh` and `.ps1` -> `AGENTS.md` and the policy/procedure tree.
 - `tests/*` -> policies, procedures, docs, and support scripts.
 - `docs/*` -> the policies and procedures they describe. The protocol modules are authoritative.
+- `docs/exercises/azure-companion-architect/*` -> the README docs index and `tests/test-azure-exercises.sh`; the pack depends on no policy or procedure.
 - `design-docs/protocol-decisions.md` -> the decisions that bind policy and procedure changes.
 - `ai/state/*` -> the current work. `ai/daily-checkpoints/*` -> the archive. `ai/knowledge/*` -> durable lessons. `ai/shared/coordination.md` -> multi-agent awareness.
 

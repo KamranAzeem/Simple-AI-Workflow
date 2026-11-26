@@ -119,12 +119,12 @@
 [2026-11-24] Implemented the full deck review: 59-slide visual pass, 59-note and guide voice rewrite, 24-unit labels, catalog colon, SVG fixes, tests. Full text in the 2026-11-25 diary.
 [2026-11-24] Applied the user's 2.4rem choice: 2.4rem story, 1.9rem appendix, 84vh titled and 98vh image-only diagrams; the audit leaves slides 15, 27, and 34 to trim.
 [2026-11-24] Updated the visual system and test sizes; the slide fixture failed on four trimmed phrases; filed the slide-deck review speed issue. Full text in the 2026-11-25 diary.
-[2026-11-24] Trimmed slides 15, 27, and 34 (12-line tree, axe bullet removed and quote shortened, compaction 77vh); updated the four stale fixture phrases; rebuilt the HTML; audit 0 overflow; suite 31/31.
+[2026-11-24] Trimmed slides 15, 27, and 34; updated four fixture phrases; rebuilt the HTML; audit 0; suite 31/31. Diary: 2026-11-26.
 [2026-11-24] Processed deck notes 93+: six-level ladder with level 2 editor chat, root customer-joe, model card centered; suite 31/31. Full text in the 2026-11-25 diary.
 [2026-11-24] Revised the ladder to six levels with level 2 marked and levels 3-5 unlabelled (multiple assistants, MCPs, agentic/swarm); rebuilt; audit 0 overflow; suite 31/31.
 [2026-11-24] Refined the daily-loop and quality-loop arrows: 3px strokes, 5-unit markers, edge-connected endpoints, smooth curves; rebuilt; audit 0; suite 31/31.
 [2026-11-24] Ran review-115: APPROVED (0 Critical, 0 Major, 0 Minor; 3 Suggestions); re-rendered 59 PNGs; fixed the axe quote, findings headers, and plan thresholds; suite 31/31; validator 8/8; audit 0.
-[2026-11-24] Prepared v7.3.1 with the announcement, README banner, and release-practices entry; the user approved the draft; closed the deck review ticket with the plan attached and removed the plan file.
+[2026-11-24] Prepared v7.3.1; closed the deck review ticket with the plan attached. Diary: 2026-11-26.
 [2026-11-24] Delivered v7.3.1: squash-merged, deleted the review and token branches, pushed, tagged, and published the GitHub Release; validator 8/8. Full text in the 2026-11-25 diary.
 [2026-11-24] Removed the Report anomalies and Proactive Peer Review rules from the customization at the user's request; 16616ee and 306c3eb; validator 8/8.
 [2026-11-24] Loaded context; the workflow clone is up to date; the state headers, the 28,076-byte budget, and the 54-trigger index are healthy.
@@ -138,7 +138,7 @@
 [2026-11-25] Delivered the backlog and release-status correction; the post-merge validator is 8/8; 13 open, 0 in-progress; no release.
 [2026-11-25] Repaired release-practices (15,650 to 2,948) and both stores: project 15, global 29 to 27; review-134/135 APPROVED; suite 31/31. Full text in the 2026-11-25 diary.
 [2026-11-25] Dropped team-repository-naming-convention.md as Won't fix; a team chooses the repository name and host; the in-repo team-knowledge/ and skills/ layout stays; open issues 13 to 12.
-[2026-11-25] Broadened global-to-workflow-policy-terminology.md (owner-prefix scopes, ai/knowledge, no-symlink sync/init); updated the scaffolding and presets tickets; markdownlint 0. Full text in the 2026-11-25 diary.
+[2026-11-25] Broadened global-to-workflow-policy-terminology.md (owner-prefix scopes, ai/knowledge, no-symlink sync/init); updated the scaffolding and presets tickets. Diary: 2026-11-25.
 [2026-11-25] Closed plan-review-loop-budget.md as Won't fix; opened plan-quality-rules.md with the all-findings gate; no implementation.
 [2026-11-25] Examined the repo and filled plan-quality-rules.md with the uniform review gate (B); added the codebase skeleton map; recorded the handoff proposal; no implementation.
 [2026-11-25] Planned plan-quality-rules: the broad plan ran six review rounds and was cut to the core uniform review gate; review-143 APPROVED; deferred rules in plan-quality-follow-up-rules.md.
@@ -169,7 +169,7 @@
 [2026-11-26] Retired the user-space review-verdict-binding lesson; user store 28 to 27; the other 27 unchanged; manifest and backup recorded; reviews 167/168 APPROVED.
 [2026-11-26] Fixed the checkpoint transaction log: removed the stale [NEXT-STEPS] line; the plain Next steps is the only queue; reviews 169/170 APPROVED; v7.8.1 prepared.
 [2026-11-26] Grilled and scoped the customization presets: 8 roles, 3 new traits, soc2/iso pre-fill for five, presets under docs/examples; MINOR release; plan next. Full text in the 2026-11-26 diary.
-[2026-11-26] Delivered the customization presets (v7.8.2): eight role files, three traits, guide section 11, slide/README/template sync, new fixture, five ADRs; validator 8/8, suite 34/34; reviews 175/176.
+[2026-11-26] Delivered the customization presets v7.8.2 (eight roles, three traits, five ADRs); validator 8/8, suite 34/34; reviews 175/176. Diary: 2026-11-26.
 [2026-11-26] Released v7.8.2 (public URL 200); post-merge validator 8/8; no post-release code changes.
 [2026-11-26] Sync-init planning handoff completed: plan at ai/plans/sync-script-init-scaffolding.md, review-181 APPROVED; the receiver did not update the coordination board; reconciliation is queued.
 [2026-11-26] Implemented sync --init --role (v7.9.0): Bash/PowerShell modes, preset whitelist, Default Shell removal, setup docs, 35-script suite, review-183 APPROVED.
@@ -196,3 +196,4 @@
 [2026-11-26] Planned and reviewed the plan-review ADR check: reviews 203/204 APPROVED; PATCH v7.12.1.
 [2026-11-26] Implemented the plan-review ADR check; suite 35/35; review 205 APPROVED; v7.12.1 prepared.
 [2026-11-26] Released v7.12.1 (public URL 200); post-merge validator 8/8 and index 55/0/0; no post-release code changes.
+[2026-11-26] Delivered the Azure companion-architect exercise pack: six labs, prerequisites, safety, two reference Bicep templates, a 36th fixture, README and deck updates; reviews 210/211; suite 36/36; merge pending. Full text in the 2026-11-26 diary.

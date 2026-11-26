@@ -14,18 +14,18 @@
 
 ## Current Status
 
-- **Milestone**: v7.12.1 live; the plan review catches a missing protocol ADR.
-- **Validation**: validator 8/8; suite 35/35; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
+- **Milestone**: v7.12.1 live; the Azure exercise pack is implemented and reviewed, awaiting the merge.
+- **Validation**: validator 8/8; suite 36/36; index 26/16/55; markdownlint 0; shellcheck 0; PowerShell not run; Bicep build `[PENDING]`.
 - **Stores**: project 18 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 7 open, 0 in-progress, 160 closed; the plan-review ticket is closed, the Azure idea is open.
-- **Release**: v7.12.1 is live; v7.12.0 is the prior release.
+- **Issues**: 6 open, 0 in-progress, 161 closed; the Azure exercises ticket is closed with the plan attached.
+- **Release**: v7.12.1 is live; the pack is docs-only with no release.
 
 ## Active Working Context
 
-- **Objective**: grill the Azure companion-architect exercises idea, then plan it; the young learner is parked; the migration items remain.
+- **Objective**: merge the reviewed Azure exercise pack after approval; then plan the young learner; the migration items remain.
 - **Live user store**: active store `~/.ai/knowledge/` (27 files); no old-layout fallback present; confirm the migration item is done.
-- **Open queue**: Azure exercises grilling; young learner parked; migration items.
-- **Grilling**: frontier rounds, numbered questions, facts/decisions; details in the closed grilling ticket.
+- **Open queue**: Azure pack merge; young learner plan; migration items.
+- **Azure pack**: labs 1-3 are cloud-free; lab 3 is a static Bicep review; the what-if gate is in lab 4; details in the attached plan.
 - **Plan review**: a policy or procedure change carries the protocol ADR entry; a missing entry is Major.
 - **Young learner design**: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types; decisions in the 2026-11-26 diary.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

@@ -215,6 +215,7 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [Personas](docs/personas/): example traits for an architect reviewer, a mentor, and a security specialist.
 - [Skills example](docs/examples/skills/example-skill/SKILL.md).
 - [Examples](docs/examples/): customizations, handoffs, knowledge, and skills.
+- [Azure companion-architect exercises](docs/exercises/azure-companion-architect/index.md): six labs that teach the AI as a companion architect.
 - [Full slide deck (Google Slides, live)](https://docs.google.com/presentation/d/1BC-nLimx3fASWiHohiTiNQSeTKolHDM_AJiCt-IrhKU/edit?usp=drive_link), under a Creative Commons license.
 - [Markdown slides](docs/simple-ai-workflow-slides.md).
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).

@@ -21,6 +21,6 @@
 - Decide whether to delete the stray scope-migration backup from the test run.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Audit the Project Knowledge the protocol relies on.
-- Grill the Azure companion-architect exercises idea with the sharpened method. `ai/issues/open/azure-companion-architect-exercises.md`
 - Plan the young learner policy after folding the locked design into the ticket; Linux first, Windows later. `ai/issues/open/young-learner-programming-teacher-policy.md`
+- Merge the reviewed Azure exercise pack after approval; the closed ticket carries the plan.
 
