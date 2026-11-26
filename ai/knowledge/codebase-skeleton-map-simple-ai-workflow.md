@@ -29,9 +29,9 @@
 - `ai/procedures/`: 16 procedure modules. Each owns a trigger phrase and an ordered step sequence.
 - `ai/state/`: the three canonical state files. Single-writer; read-only at boot and forbidden during post-compaction recovery.
 - `ai/daily-checkpoints/`: the diary and the only archive.
-- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 12 open, 1 in-progress, and 142 closed as of 2026-11-25.
+- `ai/issues/`: tickets by status. `open/`, `in-progress/`, and `closed/`; 10 open, 0 in-progress, and 145 closed as of 2026-11-26.
 - `ai/plans/`: active plan files. Only `.gitkeep` when no plan is active.
-- `ai/knowledge/`: 15 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
+- `ai/knowledge/`: 14 durable project lessons, the issue template, and this map. `ai/shared/` keeps the coordination board and handoffs only.
 - `ai/shared/coordination.md`: the multi-agent awareness board. Handoffs are in `ai/shared/handoffs/`.
 - `ai/skills/`: one skill package, `kanban-board`, plus `.gitkeep`.
 - `ai/code-review-reports/`, `ai/artifacts/`, `ai/notes/`, `ai/pending/`, `ai/secrets/`: local-only working areas. Boot excludes them except the report and artifact procedures that own them.
@@ -58,8 +58,7 @@
 - `tests/test-issue-policy.sh`: the existing issue/plan/close-sequence assertions. Extend it to avoid a new test count.
 - `tests/test-docs-audit.sh`: the docs assertions, including the two-step approval sentence.
 - `design-docs/protocol-decisions.md`: the ADR store for the plan-quality and review-sequencing changes.
-- `ai/knowledge/protocol-verification-toolchain.md`: the verification commands and caveats.
-- The code-review policy owns a uniform Critical, Major, and Minor gate and the review-verdict binding rules; the implementation is live.
+- The code-review policy owns a uniform Critical, Major, and Minor gate; the implementation is live.
 - The plan template, assertion floor, depth, and clean-tree gate are live. The follow-up ticket is closed.
 
 ### Handoff surface

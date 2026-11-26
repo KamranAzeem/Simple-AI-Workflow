@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.7.0 (2026-11-25).** The four scopes are Workflow, User, Team, and Project. Knowledge stores move to unprefixed `knowledge/` directories, and one sync run migrates them with a backup. Read the announcement: [docs/announcements/v7.7.0.md](docs/announcements/v7.7.0.md). |
+| **v7.7.1 (2026-11-26).** The verification runbook and the unenforced verdict-hash rule are retired. The gate commands live in the meta policy and the scripts. Read the announcement: [docs/announcements/v7.7.1.md](docs/announcements/v7.7.1.md). |
 
 # Simple AI Workflow
 
@@ -12,7 +12,7 @@ Simple AI Workflow is a small set of plain files that gives your AI assistant a 
 
 <!-- LEGACY-GLOBAL-START -->
 
-The old keys and paths below are removed by the sync migration. There is no key alias window. Old trigger phrases stay as aliases for v7.7.x only.
+The old keys and paths below are removed by the sync migration. There is no key alias window. Old trigger phrases stay as aliases for v7.7.x only. Read the [v7.7.0 announcement](docs/announcements/v7.7.0.md) for the full migration map.
 
 | Old key or path | New key or path | Sync migrates it | Backup location | Manual action |
 | --- | --- | --- | --- | --- |

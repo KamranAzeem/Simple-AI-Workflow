@@ -36,6 +36,7 @@ Govern AI behavior when maintaining this repository and the protocol itself.
 - Run `support-files/validate-protocol.sh`.
 - Run `support-files/validate-policy-authoring.sh` on each changed `AGENTS.md`, policy file, or procedure module.
 - Run `support-files/validate-policy-authoring.sh --triggers AGENTS.md $(find ai/policies ai/procedures -name '*.md' -print)` after a trigger change.
+- Run the full dev suite with `bash tests/run-all.sh` before a merge or release.
 - Present a summary and a proposed commit message.
 - Treat the approved plan and the implement request as the human approval for staging, committing, merging, pushing, opening a pull request, releasing, and the external writes the work names.
 - Apply the ADR entry rule in `design-docs/protocol-decisions.md` to every protocol or policy change.
@@ -183,6 +184,8 @@ This section defines how to write and edit `AGENTS.md`, policy files, and proced
 - Migrate a non-compliant policy only when the policy is touched.
 - Rewrite every touched policy section to this standard.
 - Do not rewrite the whole policy corpus in one pass.
+- Derive a fixture's repository count from the live tree.
+- Re-run `support-files/validate-protocol.sh` after an operation that can remove untracked directories, such as a stash round-trip.
 
 ### Standard References
 

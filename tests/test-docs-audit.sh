@@ -23,9 +23,9 @@ ANNOUNCE6="$ROOT/docs/announcements/v7.6.0.md"
 ANNOUNCE61="$ROOT/docs/announcements/v7.6.1.md"
 ANNOUNCE62="$ROOT/docs/announcements/v7.6.2.md"
 DECISIONS="$ROOT/design-docs/protocol-decisions.md"
-TOOLCHAIN="$ROOT/ai/knowledge/protocol-verification-toolchain.md"
 MAP="$ROOT/ai/knowledge/codebase-skeleton-map-simple-ai-workflow.md"
 ANNOUNCE77="$ROOT/docs/announcements/v7.7.0.md"
+ANNOUNCE771="$ROOT/docs/announcements/v7.7.1.md"
 
 fail=0
 
@@ -160,12 +160,13 @@ present "$README" "## Path migration in v7.7.0" "README has the v7.7.0 migration
 present "$ANNOUNCE77" "## Migration map" "v7.7.0 announcement has the migration map"
 present "$ANNOUNCE77" "scope-migration-<date>" "v7.7.0 announcement names the backups"
 present "$ANNOUNCE77" "removed in v7.8.0" "v7.7.0 announcement names the alias window"
+exists "docs/announcements/v7.7.1.md"
+present "$ANNOUNCE771" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.7.1" "v7.7.1 announcement records the release URL"
+present "$README" "docs/announcements/v7.7.1.md" "README points at the v7.7.1 release announcement"
 present "$DECISIONS" "## 2026-11-25: Four scopes replace the global wording" "ADR store records the scope decision"
 present "$DECISIONS" "## 2026-11-25: The code-review policy owns the uniform blocking gate" "ADR store records the gate owner"
 present "$DECISIONS" "## 2026-11-25: The core gate ships alone" "ADR store records the scope cut"
 present "$DECISIONS" "This supersedes the 2026-10-28 rule that fixes only Critical and Major." "ADR store records the supersession"
-present "$TOOLCHAIN" "The uniform Critical, Major, and Minor gate is live." "toolchain note says the gate is live"
-absent "$TOOLCHAIN" "The all-findings rule is a proposal" "toolchain note drops the proposal caveat"
 present "$MAP" "the uniform Critical, Major, and Minor gate" "map names the uniform gate"
 absent "$MAP" "the critical-and-major review gate" "map drops the old gate name"
 absent "$MAP" "currently name only Critical and Major" "map drops the old enforcement wording"
@@ -197,12 +198,11 @@ present "$DECISIONS" "## 2026-11-25: Review verdicts bind to the artifact hash" 
 present "$DECISIONS" "A review verdict binds to the reviewed artifact's SHA-256." "ADR records the hash binding"
 present "$DECISIONS" "A post-approval edit invalidates the approval" "ADR records the post-approval invalidation"
 present "$DECISIONS" "becomes a follow-up ticket unless it is a regression" "ADR records the follow-up rule"
-absent "$TOOLCHAIN" "### Quality Gate" "toolchain drops the duplicate quality gate"
-absent "$TOOLCHAIN" "Bind every review verdict" "toolchain drops the sequencing duplicate"
-absent "$TOOLCHAIN" "ai-policy-code-review.md" "toolchain does not point at the code-review policy"
-absent "$TOOLCHAIN" "protocol-decisions.md" "toolchain does not point at the ADR store"
-present "$TOOLCHAIN" "# Protocol Verification Toolchain" "toolchain keeps its header"
-present "$TOOLCHAIN" "Run the protocol validator" "toolchain keeps the validator command"
+present "$DECISIONS" "The verification runbook and the verdict-hash rules are retired" "ADR records the retirement"
+present "$DECISIONS" "The per-fixture verification runbook is retired" "ADR records the runbook retirement"
+present "$DECISIONS" "The verdict-hash rules are retired" "ADR records the hash retirement"
+present "$DECISIONS" "The repository records executable bits explicitly" "ADR records the file-mode constraint"
+present "$DECISIONS" "git update-index --chmod=+x" "ADR records the exec-bit command"
 present "$ANNOUNCE62" "https://github.com/KamranAzeem/Simple-AI-Workflow/releases/tag/v7.6.2" "v7.6.2 announcement records the release URL"
 adr="$(awk '/^## 2026-11-25: Review verdicts bind to the artifact hash/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
 if printf '%s\n' "$adr" | grep -qiE 'commit|branch|plan|report'; then
@@ -210,7 +210,13 @@ if printf '%s\n' "$adr" | grep -qiE 'commit|branch|plan|report'; then
 else
     pass "ADR entry has no version-control or plan dependency"
 fi
-present "$TOOLCHAIN" "The plan template, S/M light path, and clean-tree baseline are live." "toolchain note names the follow-up rules"
+
+retirement="$(awk '/The verification runbook and the verdict-hash rules are retired/{on=1; print; next} on && /^## /{exit} on' "$DECISIONS")"
+if printf '%s\n' "$retirement" | grep -qiE 'commit|branch|plan|report'; then
+    fail_case "retirement ADR has no version-control or plan dependency"
+else
+    pass "retirement ADR has no version-control or plan dependency"
+fi
 present "$MAP" "The plan template, assertion floor, depth, and clean-tree gate are live." "map names the follow-up rules"
 
 for new_test in tests/test-path-probe.sh tests/test-scope-migration.sh; do
@@ -236,6 +242,17 @@ present "$README" "docs/personas/" "README docs index links the personas"
 absent "$README" "docs/vscode-cline-provider-setup-for-beginners.md" "README drops the Cline guide"
 absent "$README" "docs/protocol-name-migration-map" "README drops the migration map"
 absent "$README" "docs/ai-agent-collaboration.md" "README drops the collaboration notes"
+
+if grep -rIl "protocol-verification-toolchain" \
+    --exclude=test-docs-audit.sh \
+    --exclude-dir=closed \
+    --exclude-dir=daily-checkpoints \
+    --exclude-dir=code-review-reports \
+    "$ROOT/AGENTS.md" "$ROOT/ai/policies" "$ROOT/ai/procedures" "$ROOT/docs" "$ROOT/tests" "$ROOT/ai/knowledge" >/dev/null; then
+    fail_case "the retired verification runbook is still named"
+else
+    pass "the retired verification runbook is not named"
+fi
 
 if [ "$fail" -ne 0 ]; then
     echo "FAILED: docs audit fixture."

@@ -82,7 +82,7 @@ present "$README" "## Works with any assistant" "README has the secondary multi-
 present "$README" "25 policies" "README states the policy count"
 present "$README" "16 procedures" "README states the procedure count"
 present "$README" "58 triggers" "README states the trigger count"
-present "$README" "v7.7.0" "README banner names v7.7.0"
+present "$README" "v7.7.1" "README banner names v7.7.1"
 present "$README" "The implementation request is the approval for the branch, the commits, the push, and the close sequence named in the plan's \`## Close Sequence\`" "README states the two-step approval"
 present "$README" "This page describes the protocol. The protocol modules" "README states the protocol modules are authoritative"
 present "$README" "## Docs and slides" "README has the docs index"

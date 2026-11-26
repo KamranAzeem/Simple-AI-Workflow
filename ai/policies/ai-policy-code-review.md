@@ -87,13 +87,6 @@ This discipline applies across domains. The live-state and telemetry sources var
 - A finding outside all three scopes is surfaced and does not block the verdict.
 - Close a false positive only by an evidence-backed rebuttal the reviewer accepts, or by the user's decision after the evidence.
 
-### Verdict and Delta Verification
-
-- Bind every review verdict to the reviewed artifact's SHA-256.
-- Fix every finding, then run one delta verification; do not reopen scope.
-- Treat a post-approval edit as invalidating the approval; hash the new artifact for a delta verification.
-- File a new post-approval finding as a follow-up ticket unless it is a regression.
-
 ---
 
 ## Report Format

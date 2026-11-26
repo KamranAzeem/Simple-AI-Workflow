@@ -1456,3 +1456,19 @@ The checkpoint report separates status from the queue. `Current position` carrie
 ## 2026-11-26: The checkpoint next steps are a plain list
 
 The checkpoint report uses a plain `Next steps` heading, not the `[NEXT-STEPS]` marker. It lists every open item from `ai/state/next-steps.md` in order, with no cap, and names the ticket path or slug for every ticket-backed item. The transaction log stays separate and keeps the `[NEXT-STEPS]` delta line. This supersedes the `[NEXT-STEPS]` queue and the ten-item cap in the 2026-11-26 layout. The user rejected the doubled marker and the count-only queue as hard to read; a readable full list is the chosen trade-off.
+
+## 2026-11-26: The verification runbook and the verdict-hash rules are retired
+
+The per-fixture verification runbook is retired. The full-dev-suite rule lives in `ai-policy-meta.md`; the per-fixture commands stay in the scripts and `tests/run-all.sh`, and the per-fixture list is not copied. No command list moves into `docs/`, and the protocol gains no docs dependency. The verdict-hash rules are retired: the code-review policy keeps the blocking gate and the iteration protocol, and no hash or post-approval invalidation rule remains.
+
+Context: the runbook duplicated commands and counts already owned by policies, procedures, ADRs, and tests. The hash rule was one day old, no script or record field enforced it, and none of the 442 review files recorded a hash.
+
+Consequences: `ai/knowledge/protocol-verification-toolchain.md` is deleted; the map no longer names it; `### Verdict and Delta Verification` is removed; the blocking gate and the iteration protocol remain the review contract; the user-space lesson is retired separately. The old hash ADR remains as history, and this entry supersedes its runbook consequence.
+
+## 2026-11-26: The repository records executable bits explicitly
+
+The repository runs with `core.fileMode=false`. A maintainer records an executable bit with `git update-index --chmod=+x <file>`.
+
+Context: the fact had no home outside the retired verification runbook.
+
+Consequences: a new executable script needs the explicit index update; the sync and backup scripts are unchanged.

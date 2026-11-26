@@ -14,15 +14,15 @@
 
 ## Current Status
 
-- **Milestone**: v7.7.0 live; plain checkpoint list.
-- **Validation**: validator 8/8 with two user-subdir warnings until the live sync; suite 33/33; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
-- **Stores**: project 17 files, user 28, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 11 open, 0 in-progress, 144 closed; the scope and checkpoint-report tickets are closed.
-- **Release**: v7.7.0 is live; release notes carry review-157; the report split has no release.
+- **Milestone**: v7.7.1 prepared; verification retirement.
+- **Validation**: validator 8/8; suite 33/33; index 25/16/58; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
+- **Stores**: project 16 files, user 28, team when configured; `ai/shared/` keeps coordination and handoffs.
+- **Issues**: 10 open, 0 in-progress, 145 closed; the scope, checkpoint-report, and verification-retirement tickets are closed.
+- **Release**: v7.7.0 is live; v7.7.1 is prepared, no release yet.
 
 ## Active Working Context
 
-- **Objective**: migrate the live User AI Directory, sync downstream projects, then repair the state files and continue the open queue.
+- **Objective**: merge and release v7.7.1, migrate the live User AI Directory, sync downstream projects, then continue the open queue.
 - **Live user store**: old layout; run the sync with `--dry-run`, then for real; the accidental test backup remains under `~/.ai/backups/scope-migration-2026-11-25/`.
-- **Open queue**: toolchain retirement, presets and init, young learner, and deferred slide work.
+- **Open queue**: presets and init, young learner, and deferred slide work.
 - **Skills**: 1 workflow package (`kanban-board`), 0 project packages, user root live; team skills only when configured.

@@ -20,11 +20,10 @@
 - Sync AGENTS.md and the v7.7.0 layout into downstream projects.
 - Migrate the live User AI Directory with a dry run, then the real sync.
 - Decide whether to delete the stray scope-migration backup from the test run.
-- Run `repair state files` to clear the advisory overage.
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Resume the presentation policy only on request; design layout and type control first.
 - Resume the trimmed slide review speed scope only on request.
 - Decide whether `support-files/build-slides-html.sh` earns its place when the slide work resumes.
 - Implement the customization presets on request; init follows.
-- Consume and retire the protocol-verification-toolchain knowledge file.
 - Audit the Project Knowledge the protocol relies on.
+- Retire the user-space review-verdict-binding lesson with `repair knowledge files user`.

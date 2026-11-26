@@ -69,11 +69,6 @@ absent "$TPL" "Style Sources" "template drops Style Sources"
 absent "$TPL" "Universal git conventions live" "template drops the git pointer"
 
 present "$ROOT/support-files/validate-protocol.sh" "POLICY_FLOOR=25" "validator floor is 25"
-present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "25 policies (12 domain and 13 protocol)" "toolchain note policy count"
-present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "16 procedures" "toolchain note procedure count"
-test_count=$(find "$ROOT/tests" -maxdepth 1 -name 'test-*.sh' -print | wc -l | tr -d ' ')
-present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "$test_count test scripts" "toolchain note test count"
-present "$ROOT/ai/knowledge/protocol-verification-toolchain.md" "58 triggers" "toolchain note trigger count"
 
 # Simulated consolidation over a bloated fixture.
 WORK="$(mktemp -d)"
