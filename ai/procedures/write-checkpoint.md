@@ -24,7 +24,6 @@
         3. 📂 `ai/state/context.md` (The Present): Maintain a `## Current Status` dashboard and an `## Active Working Context` section, both edited in place, with no chronological history and no git metadata. Keep live decisions and findings to short one-liners with a pointer to Project Knowledge. Record the skills count and the package names in `## Active Working Context`; the housekeeping step reports a package name that is not in the previous list; hash-based change detection is out of v1. Do not duplicate completed tasks (`ai/state/progress.md`) or pending tasks (`ai/state/next-steps.md`). Remove a resolved item only after its record is in the diary.
     - **STEP-TRANSACTION-LOG**: Every time you save state or finish a checkpoint execution loop, append a standardized transaction summary directly into your chat output using this exact text format:
         - [PROGRESS] Added: "[Brief description of what was completed]"
-        - [NEXT-STEPS] Removed: "[Task]" | Added: "[New immediate actionable items]"
         - [CONTEXT] Updated: "variable_name: old_value" -> "variable_name: new_value"
     - **STEP-ABORT-ON-MISSING-DATA**: If you lack the required information to accurately align all three files, abort the write transaction entirely. Halt execution, roll back the proposed memory state, and flag the missing variable to the human user.
 2. **STEP-DAILY-CHECKPOINT-FILE**: In the same transaction as the state files above, append this checkpoint to **Project Daily Checkpoints Directory**. This is the write side of the Source-of-Truth Order and the State File Proof-of-Read check in `ai-policy-common.md`: both already expect a current checkpoint file at this point; this step is what keeps it current.
@@ -68,7 +67,7 @@
 8. **STEP-CHECKPOINT-REPORT**: Print one grouped summary of the checkpoint, one line per step, using `updated`, `nothing to add`, or `failed`.
     - Print a `Current position` block: the milestone or status and `Last active` naming the newest progress entry. The block carries no `Next up` and no remaining queue.
     - Print a distinct `Next steps` section immediately after it. List every open item from `ai/state/next-steps.md` in order, with no cap. Name the ticket path or slug for every ticket-backed item, relative to the project root, for example `ai/issues/open/checkpoint-next-steps-reporting.md`.
-    - Then print the state-file transaction log from STEP-TRANSACTION-LOG. The transaction log remains the delta; its `[NEXT-STEPS]` line is not the queue display.
+    - Then print the state-file transaction log from STEP-TRANSACTION-LOG. The transaction log remains the delta for the progress and context files; the `Next steps` section is the only queue display, and the log carries no next-steps line.
     - The report is printed in chat only; the diary keeps the narrative.
 9. **STEP-CONTEXT-RE-AFFIRMATION (condition-gated)**: A checkpoint normally runs mid-session when policies and knowledge are already in context, so a blanket reload is unnecessary and wasteful. Perform a reload **only** when the active context has been compacted since the last full load, or when you are otherwise unsure the operational files are still loaded. This is the same reload that **PROCEDURE POST-COMPACTION-RECOVERY** performs:
     - Announce: **[Re-affirming key files into context after checkpoint...]**

@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.8.0 (2026-11-26).** The presentation policy and the D2/Mermaid diagram pipeline are in. The compaction diagram and the six-level ladder keep their existing SVGs. Read the announcement: [docs/announcements/v7.8.0.md](docs/announcements/v7.8.0.md). |
+| **v7.8.1 (2026-11-26).** The checkpoint report's transaction log no longer carries a stale next-steps line; the plain Next steps list is the only queue. Read the announcement: [docs/announcements/v7.8.1.md](docs/announcements/v7.8.1.md). |
 
 # Simple AI Workflow
 

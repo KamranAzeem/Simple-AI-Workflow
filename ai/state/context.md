@@ -14,11 +14,11 @@
 
 ## Current Status
 
-- **Milestone**: v7.8.0 live; presentation standard.
+- **Milestone**: v7.8.1 prepared; checkpoint log fix.
 - **Validation**: validator 8/8; suite 33/33; index 26/16/59; markdownlint 0; shellcheck 0; PowerShell not run because `pwsh` is absent.
 - **Stores**: project 16 files, user 27, team when configured; `ai/shared/` keeps coordination and handoffs.
-- **Issues**: 8 open, 0 in-progress, 148 closed; the slide pipeline, presentation policy, and slide review speed are closed.
-- **Release**: v7.8.0 is live; v7.7.1 is the prior release.
+- **Issues**: 8 open, 0 in-progress, 149 closed; the checkpoint transaction log fix is closed.
+- **Release**: v7.8.1 is prepared; v7.8.0 is live.
 
 ## Active Working Context
 

@@ -1482,3 +1482,11 @@ A new `ai-policy-presentation.md` states the standard, with `Mode: trigger` and 
 Context: the hand-authored SVGs have absolute coordinates and 76 labels at 24px, so raising the font collides. The deck has no source-to-output build, the compaction SVG is a hand redraw, and the full review took 47 minutes. The user wants the fastest path with low token use.
 
 Consequences: the deck is rebuilt on the new sources; the old presentation-policy and slide-deck-review-speed tickets are superseded; the count surfaces move to 26 policies and 59 triggers; the next slide work starts from the standard, not a discussion.
+
+## 2026-11-26: The checkpoint transaction log carries no next-steps line
+
+The checkpoint transaction log records only the progress and context state-file deltas. The plain `Next steps` section is the only queue display, and the log carries no next-steps line. The `[NEXT-STEPS]` marker is removed from the procedure, the guide, and the tests. This supersedes the `[NEXT-STEPS]` delta line in the two 2026-11-26 checkpoint entries; the plain queue stands.
+
+Context: the marker collided with the queue label. After the queue became a plain list, the marker survived only as a delta, which the user read as a stale queue on every checkpoint.
+
+Consequences: the log prints `[PROGRESS]` and `[CONTEXT]` only; the report prints `Current position`, the plain `Next steps`, then the log; the checkpoint test asserts the marker is absent.

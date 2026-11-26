@@ -157,6 +157,7 @@ present "$CHECKPOINT" "Name the ticket path or slug" "checkpoint report names ti
 present "$CHECKPOINT" "The transaction log remains the delta" "checkpoint report keeps the delta log"
 absent "$CHECKPOINT" 'Print a distinct `[NEXT-STEPS]` section' "checkpoint report drops the bracketed queue"
 absent "$CHECKPOINT" "ten or fewer remain" "checkpoint report drops the ten-item rule"
+absent "$CHECKPOINT" "[NEXT-STEPS]" "checkpoint report drops the next-steps log marker"
 
 report_contract() {
     local i active
@@ -175,7 +176,6 @@ report_contract() {
         i=$((i + 1))
     done
     printf '[PROGRESS] Added: "fixture"\n'
-    printf '[NEXT-STEPS] Removed: "none" | Added: "fixture"\n'
     printf '[CONTEXT] Updated: "none"\n'
 }
 
@@ -199,8 +199,7 @@ fi
 current_line="$(printf '%s\n' "$report" | grep -n -m1 -F 'Current position' | cut -d: -f1)"
 next_line="$(printf '%s\n' "$report" | grep -n -m1 -F 'Next steps' | cut -d: -f1)"
 progress_line="$(printf '%s\n' "$report" | grep -n -m1 -F '[PROGRESS]' | cut -d: -f1)"
-next_log_line="$(printf '%s\n' "$report" | grep -n -m1 -F '[NEXT-STEPS] Removed' | cut -d: -f1)"
-if [ "$current_line" -lt "$next_line" ] && [ "$next_line" -lt "$progress_line" ] && [ "$progress_line" -lt "$next_log_line" ]; then
+if [ "$current_line" -lt "$next_line" ] && [ "$next_line" -lt "$progress_line" ]; then
     printf 'PASS %s\n' "checkpoint contract keeps the list before the separate log"
 else
     printf 'FAIL %s\n' "checkpoint contract keeps the list before the separate log"
@@ -213,10 +212,10 @@ else
     printf 'FAIL %s\n' "checkpoint current position carries no queue"
     fail=1
 fi
-if [ "$(printf '%s\n' "$report" | grep -c '^\[NEXT-STEPS\]')" -eq 1 ]; then
-    printf 'PASS %s\n' "checkpoint contract uses the marker only in the log"
+if [ "$(printf '%s\n' "$report" | grep -c '^\[NEXT-STEPS\]')" -eq 0 ]; then
+    printf 'PASS %s\n' "checkpoint contract has no next-steps marker"
 else
-    printf 'FAIL %s\n' "checkpoint contract uses the marker only in the log"
+    printf 'FAIL %s\n' "checkpoint contract has no next-steps marker"
     fail=1
 fi
 
