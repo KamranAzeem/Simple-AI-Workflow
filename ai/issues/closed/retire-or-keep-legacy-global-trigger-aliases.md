@@ -1,3 +1,54 @@
+Reported: 2026-11-26
+Reporter: Kamran Azeem
+IssueType: Defect/Bugfix
+Severity: Human-to-decide (AI estimate: P2)
+Size: Human-to-decide (AI estimate: M)
+Label:
+URL:
+Summary: The v7.7.x global trigger aliases are still declared at v7.10.0, and the README says no temporary aliases remain.
+
+Description:
+
+The v7.7.0 scope rename promised to remove the old `global` trigger phrases in v7.8.0. They are still declared at v7.10.0.
+
+- `ai/procedures/write-checkpoint.md:8` declares `- update global knowledge`.
+- `ai/procedures/repair-user-settings.md:8` declares `- repair global settings`.
+- `ai/procedures/repair-user-settings.md:9` declares `- tidy global settings`.
+- `ai/procedures/repair-user-settings.md:10` declares `- heal global settings`.
+- `README.md:220` says "The 59 triggers in v7.10.0 include no temporary aliases."
+
+The stale removal notices:
+
+- `README.md:35` and `README.md:36` say removed in v7.8.0.
+- `docs/announcements/v7.7.0.md:41`, `:42`, and `:60` say removed in v7.8.0.
+- `ai/policies/ai-policy-user-settings.md:80` says "remove the alias in v7.8.0".
+- `ai/procedures/repair-user-settings.md:12` says the phrases are removed in v7.8.0.
+- `ai/knowledge/scope-vocabulary-and-storage-roots.md:35` says removed in v7.8.0.
+- `ai/knowledge/trigger-phrase-naming.md:14` says remove the alias in the next minor.
+
+The live trigger count of 59 includes these four aliases. Removing them yields 55. `tests/test-readme-shape.sh:84` asserts the README says "59 triggers". `docs/simple-ai-workflow-slides.md:438` and `docs/slides/simple-ai-workflow-slides.html:527` also state 59.
+
+Resolution options:
+
+- Remove the four alias triggers, update the trigger count to 55 in `README.md`, both slides files, and `tests/test-readme-shape.sh`, and delete the stale removal notices.
+- Or record a new decision that keeps the aliases, then fix the README claim and the v7.8.0 removal wording.
+
+Acceptance criteria:
+
+- One option is chosen and recorded.
+- Every trigger count in the README, the slides, and the tests matches the live `--index` summary.
+- No document claims a removal that has not happened.
+
+---
+2026-11-26
+Filed from the 2026-11-26 codebase examination. Evidence group F1. No secret or identifying name present.
+
+---
+2026-11-26
+Plan attached below. Reviews: plan 191 (CHANGES REQUESTED, fixed) and 192 (APPROVED); implementation 193 (CHANGES REQUESTED, fixed) and 194 (APPROVED). Implemented on `feature/retire-legacy-global-trigger-aliases`; the index reports 55 triggers, 0 conflicts, and 0 errors; the suite passes 35 of 35. Release v7.11.0.
+
+## Implementation Plan
+
 # Plan: Retire the legacy global trigger aliases
 
 ## Goal
@@ -112,6 +163,8 @@ PowerShell fixtures remain PENDING when `pwsh` is absent, as today.
 
 - 2026-11-26, review-191: CHANGES REQUESTED. One Major (the rollback violated the no-post-merge rule) and three Minor (the `global promotion` wording, the out-of-scope wording for `trigger-phrase-naming.md`, and the missing post-merge release verification). All fixed. One Suggestion accepted (the slide-count note in AC-5).
 - 2026-11-26, review-192: APPROVED after the fixes.
+- 2026-11-26, implementation review-193: CHANGES REQUESTED. Two Minor: the announcement counted the overdue releases wrongly, and the baseline wording named a gitignored review report. Both fixed.
+- 2026-11-26, implementation review-194: APPROVED after the fixes.
 
 ## Risks and Rollback
 
@@ -125,7 +178,7 @@ PowerShell fixtures remain PENDING when `pwsh` is absent, as today.
 - Repo: `/home/kamran/Projects/Personal/Simple-AI-Workflow`, origin `git@github.com:KamranAzeem/Simple-AI-Workflow.git`.
 - Base ref: `master`, the repository default branch.
 - Merge mode: direct, per `ai-customization.md` `Merge Mode: direct`. Deliver one squash commit to `master`.
-- Baseline: commit the plan, the review report, and the ticket update as a chore baseline on `master` before opening the branch. The approved plan plus the implement request is the approval for this baseline and for the merge named here.
+- Baseline: commit the plan and the ticket update as a chore baseline on `master` before opening the branch; the review reports stay local because `ai/code-review-reports/` is gitignored. The approved plan plus the implement request is the approval for this baseline and for the merge named here.
 - Branch: `feature/retire-legacy-global-trigger-aliases`.
 - Ticket: move `ai/issues/open/retire-or-keep-legacy-global-trigger-aliases.md` to `ai/issues/closed/` in the branch commit, with the plan attached under `## Implementation Plan`.
 - Release: v7.11.0, MINOR. Write `docs/announcements/v7.11.0.md`, point the README banner at it, tag `v7.11.0` after the merge, push `master` and the tag, and publish the public GitHub Release.

@@ -22,3 +22,5 @@
 - Install or locate PowerShell to run the PowerShell fixtures.
 - Audit the Project Knowledge the protocol relies on.
 - Plan the young learner policy after folding the locked design into the ticket; Linux first, Windows later. `ai/issues/open/young-learner-programming-teacher-policy.md`
+- Plan and land the F2 to F5 docs batch with no release, plus the docs-only release-practices amendment. `ai/issues/open/`
+- Then the protocol-decisions index or era split. `ai/issues/open/protocol-decisions-index-or-era-split.md`

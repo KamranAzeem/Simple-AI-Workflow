@@ -11,7 +11,7 @@ A new trigger phrase competes with the existing command family. A vague phrase s
 - Name a store trigger after the scope and the existing family: `update team knowledge`, `update project knowledge`, `update user knowledge`.
 - Prefer the verb the sibling triggers use, and keep the scope noun in the phrase.
 - Add a natural variant only when it reads as a close form, for example `publish to team knowledge`.
-- Keep the previous phrase as a v7.7.x alias only when a rename needs one; remove the alias in the next minor.
+- Keep the previous phrase as an alias only when a rename needs one; remove the alias in the next minor.
 - Keep the trigger namespace free of duplicates and whole-word containment; run the authoring validator index.
 
 ## Why

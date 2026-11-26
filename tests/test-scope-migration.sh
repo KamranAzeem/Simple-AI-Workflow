@@ -86,11 +86,11 @@ done
 
 # --- trigger aliases and removal note ---
 present ai/procedures/repair-user-settings.md "- repair user settings" "new settings trigger"
-present ai/procedures/repair-user-settings.md "- repair global settings" "legacy settings trigger"
+absent ai/procedures/repair-user-settings.md "- repair global settings" "legacy settings trigger removed"
 present ai/procedures/write-checkpoint.md "- update user knowledge" "new knowledge trigger"
-present ai/procedures/write-checkpoint.md "- update global knowledge" "legacy knowledge trigger"
-present docs/announcements/v7.7.0.md "removed in v7.8.0" "announcement names the alias removal"
-present ai/procedures/repair-user-settings.md "removed in v7.8.0" "procedure names the alias removal"
+absent ai/procedures/write-checkpoint.md "- update global knowledge" "legacy knowledge trigger removed"
+present docs/announcements/v7.7.0.md "removed in v7.8.0" "announcement keeps the historical alias removal date"
+absent ai/procedures/repair-user-settings.md "removed in v7.8.0" "procedure drops the stale alias removal note"
 
 # --- index scope token ---
 present support-files/validate-policy-authoring.sh "scope=workflow" "authoring validator reports workflow scope"

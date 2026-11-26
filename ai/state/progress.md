@@ -47,7 +47,7 @@
 [2026-11-20] Post-release verification on master: release URL live, #13 closed, working tree clean at the release; the shared budget, the condense pipeline, and the number-free headers are live.
 [2026-11-20] Filed the backup defect ticket: the Bash script walks 92,657 directories silently, and the Windows owner-only check deletes good archives; the Windows cause is confirmed.
 [2026-11-20] Filed the shared team knowledge store ticket with the full brainstorm: transports, store shape, contribution, consumption, governance, shortlist, and open questions.
-[2026-11-20] Hardened backup-ai.sh and backup-ai.ps1: streamed discovery, per-project progress, pruned heavy dirs, kept archives when the ACL check is unavailable; review-74 APPROVED. Full text in the 2026-11-25 diary.
+[2026-11-20] Hardened backup-ai.sh and backup-ai.ps1: streamed discovery, per-project progress, heavy-dir pruning, archive retention; review-74 APPROVED. Full text in the 2026-11-25 diary.
 [2026-11-20] Extended `tests/test-backup-ai.sh` to 22 cases and the Windows verification script with progress, summary, and prune checks; the backup test passes 57 checks.
 [2026-11-20] Squash-merged v7.0.1 to master as `ec0d31c`, deleted the branch, pushed, tagged, and published the release; the backup ticket is closed with the plan attached.
 [2026-11-20] Post-release verification: release URL live, tree clean, and the backup hardening is live on master.
@@ -86,9 +86,9 @@
 [2026-11-22] Slide deck requirements: Architect narrative, full coverage, team split, knowledge/skills diagram, local Markdown first, manual preview. Full text in the 2026-11-25 diary.
 [2026-11-22] Opened the slide deck branch, moved the ticket to in-progress, and wrote the plan: 22-slide storyboard, 8 assets, preview, renderer, 31st test, docs counts. Full text in the 2026-11-25 diary.
 [2026-11-22] Plan reviews 86-89 APPROVED; fixed the axe crop, small type, "every session" overclaim, tree layout, proof heading, multi-assistant wording. Full text in the 2026-11-25 diary.
-[2026-11-22] 28-slide deck and assets delivered: axe photo, 7 diagrams, reveal.js preview, headless-Chrome renderer, slides fixture, 31-test updates; suite 31/31; review-93 APPROVED. Full text in the 2026-11-25 diary.
+[2026-11-22] Delivered the 28-slide deck and assets: axe photo, 7 diagrams, reveal.js preview, headless-Chrome renderer; suite 31/31; review-93 APPROVED. Full text in the 2026-11-25 diary.
 [2026-11-22] Expanded the deck to 37 main slides plus a 15-slide catalog; added the AI ladder, root files, compliance, quality, token, Git safety, 25 SVGs, 1.6rem type. Full text in the 2026-11-25 diary.
-[2026-11-22] Peer reviews 90-93: 90 CHANGES REQUESTED, 91-93 APPROVED; fixed the team and close wording, the out-of-band cases, tree continuation lines, dense-diagram type, and the knowledge and team gate diagrams.
+[2026-11-22] Peer reviews 90-93: 90 CHANGES REQUESTED, 91-93 APPROVED; fixed the team, close, out-of-band, tree, diagram, and gate wording. Full text in the 2026-11-25 diary.
 [2026-11-22] Final deck validation: suite 31/31, protocol 8/8, markdownlint 0, shellcheck 0, 25 SVGs valid, 52 slides rendered; Gate 1 review, the Google Slides update, and Gate 2 remain.
 [2026-11-22] Wrote the project knowledge lesson on the slide deck visual system; the project store is 14 lessons plus the template.
 [2026-11-23] Closed the slide deck ticket on the Markdown scope: 52 slides, review-93 APPROVED, suite 31/31; the plan is attached, Google Slides and Gate 2 are deferred to a separate issue.
@@ -134,11 +134,11 @@
 [2026-11-24] Grilled the team-named repo: sibling `team-knowledge/` and `skills/`, report-only check, one repo per team, clean rename, deck in scope, minor release. Full text in the 2026-11-25 diary.
 [2026-11-24] Fixed the external team fixture lesson with the team frontmatter and body; uncommitted there; the skills root was left empty.
 [2026-11-25] Renamed the team store to team-knowledge/ across policy, publish, boot, docs, deck, fixture, validator, and ADR; split the naming check. Full text in the 2026-11-25 diary.
-[2026-11-25] Committed the parked backlog and five follow-up tickets on chore/commit-backlog-and-release-status; v7.4.0, v7.3.0, and v7.2.1 marked published; suite 31/31, validator 8/8, markdownlint 0; no release.
+[2026-11-25] Committed the parked backlog and five follow-up tickets; v7.4.0, v7.3.0, and v7.2.1 marked published; suite 31/31, validator 8/8. Full text in the 2026-11-25 diary.
 [2026-11-25] Delivered the backlog and release-status correction; the post-merge validator is 8/8; 13 open, 0 in-progress; no release.
 [2026-11-25] Repaired release-practices (15,650 to 2,948) and both stores: project 15, global 29 to 27; review-134/135 APPROVED; suite 31/31. Full text in the 2026-11-25 diary.
 [2026-11-25] Dropped team-repository-naming-convention.md as Won't fix; a team chooses the repository name and host; the in-repo team-knowledge/ and skills/ layout stays; open issues 13 to 12.
-[2026-11-25] Broadened global-to-workflow-policy-terminology.md (owner-prefix scopes, ai/knowledge, no-symlink sync/init); updated sync-script-init-scaffolding.md and customization-presets-per-role.md; markdownlint 0.
+[2026-11-25] Broadened global-to-workflow-policy-terminology.md (owner-prefix scopes, ai/knowledge, no-symlink sync/init); updated the scaffolding and presets tickets; markdownlint 0. Full text in the 2026-11-25 diary.
 [2026-11-25] Closed plan-review-loop-budget.md as Won't fix; opened plan-quality-rules.md with the all-findings gate; no implementation.
 [2026-11-25] Examined the repo and filled plan-quality-rules.md with the uniform review gate (B); added the codebase skeleton map; recorded the handoff proposal; no implementation.
 [2026-11-25] Planned plan-quality-rules: the broad plan ran six review rounds and was cut to the core uniform review gate; review-143 APPROVED; deferred rules in plan-quality-follow-up-rules.md.
@@ -180,3 +180,5 @@
 [2026-11-26] Released v7.10.0 (public URL 200); live role list shipped; post-merge validator 8/8; no post-release code changes.
 [2026-11-26] Loaded context per AGENTS.md: clone up to date; headers healthy; index 42 modules, 59 triggers; 6 open issues; state over the advisory budget.
 [2026-11-26] Grilled the young learner ticket and locked the design: distribution policy plus lesson skill, dialect-first, Python-target transpiler, explicit types, Linux-first; plan next.
+[2026-11-26] Planned and reviewed the legacy alias retirement: reviews 191/192 APPROVED; v7.11.0 MINOR.
+[2026-11-26] Implemented and reviewed the alias retirement: index 55/0/0, suite 35/35, validators and lint clean; reviews 193/194 APPROVED; v7.11.0 prepared.

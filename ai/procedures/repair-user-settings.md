@@ -5,11 +5,8 @@
 - repair user settings
 - tidy user settings
 - heal user settings
-- repair global settings
-- tidy global settings
-- heal global settings
 
-**Boundaries**: repairs the **User AI Settings Directory** only. It never touches the knowledge stores, the state files, or the project tree; the artifacts and the report are the only project writes. The previous trigger phrases are v7.7.x aliases and are removed in v7.8.0.
+**Boundaries**: repairs the **User AI Settings Directory** only. It never touches the knowledge stores, the state files, or the project tree; the artifacts and the report are the only project writes.
 
 **Failure rule**: preserve rather than corrupt. When the manifest is incomplete or an item has no disposition, leave that file unchanged, report the conflict, and continue with the other files.
 

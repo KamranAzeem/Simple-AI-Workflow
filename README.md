@@ -1,6 +1,6 @@
 | Announcement |
 | --- |
-| **v7.10.0 (2026-11-26).** The sync scripts read the role list live from the presets directory and add `--list-presets`. Read the announcement: [docs/announcements/v7.10.0.md](docs/announcements/v7.10.0.md). |
+| **v7.11.0 (2026-11-26).** The four v7.7.x trigger aliases are retired; the protocol now ships 55 triggers. Read the announcement: [docs/announcements/v7.11.0.md](docs/announcements/v7.11.0.md). |
 
 # Simple AI Workflow
 
@@ -12,7 +12,7 @@ Simple AI Workflow is a small set of plain files that gives your AI assistant a 
 
 <!-- LEGACY-GLOBAL-START -->
 
-The old keys and paths below are removed by the sync migration. There is no key alias window. Old trigger phrases stay as aliases for v7.7.x only. Read the [v7.7.0 announcement](docs/announcements/v7.7.0.md) for the full migration map.
+The old keys and paths below are removed by the sync migration. There is no key alias window. Old trigger phrases stayed as aliases through v7.10.0 and are removed in v7.11.0. Read the [v7.7.0 announcement](docs/announcements/v7.7.0.md) for the full migration map.
 
 | Old key or path | New key or path | Sync migrates it | Backup location | Manual action |
 | --- | --- | --- | --- | --- |
@@ -32,8 +32,8 @@ The old keys and paths below are removed by the sync migration. There is no key 
 | `<Team AI Directory>/team-knowledge/` and `lessons/` | `<Team AI Directory>/knowledge/` | Yes, team store move | `<User AI Directory>/backups/scope-migration-<date>/team/` | Commit or open a PR in the team repository |
 | `<User AI Directory>/settings/global-user-settings.md` | `<User AI Directory>/settings/user-settings.md` | Yes, file move | `<User AI Directory>/backups/scope-migration-<date>/user/` | None |
 | `ai-policy-global-settings.md` | `ai-policy-user-settings.md` | No, shipped file | None | Pull the new clone |
-| `repair global settings` triggers | `repair user settings` triggers | No, trigger alias | None | The old triggers work through v7.7.x and are removed in v7.8.0 |
-| `update global knowledge` trigger | `update user knowledge` trigger | No, trigger alias | None | The old trigger works through v7.7.x and is removed in v7.8.0 |
+| `repair global settings` triggers | `repair user settings` triggers | No, trigger alias | None | Removed in v7.11.0; use the new triggers |
+| `update global knowledge` trigger | `update user knowledge` trigger | No, trigger alias | None | Removed in v7.11.0; use the new trigger |
 | `knowledge-repair-backups/` and `settings-repair-backups/` | Unchanged, top-level user directories | No, exempt | Already user-owned | None |
 
 Run the sync in preview first:
@@ -217,4 +217,4 @@ I built this for myself, to stop improvising with AI. The idea started with my f
 - [HTML slides](docs/slides/simple-ai-workflow-slides.html).
 - [Release announcements](docs/announcements/).
 
-The 26 policies and 16 procedures are the fixed background. The 59 triggers in v7.10.0 include no temporary aliases.
+The 26 policies and 16 procedures are the fixed background. The 55 triggers in v7.11.0 include no temporary aliases.

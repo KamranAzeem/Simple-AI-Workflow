@@ -1598,3 +1598,11 @@ The guide table and the setup example are the documented roles, and a consistenc
 ## 2026-11-26: Release v7.10.0 as MINOR
 
 The release is v7.10.0. Context: this adds a CLI command and changes role validation, so it is a behavior change under the docs-only PATCH rule. Consequences: a new announcement and README banner; no policy, procedure, or trigger change.
+
+## 2026-11-26: The v7.7.x trigger aliases are retired at v7.11.0
+
+The four v7.7.x aliases are removed: `update global knowledge`, `repair global settings`, `tidy global settings`, and `heal global settings`. The live trigger count is 55.
+
+Context: the v7.7.0 rename promised removal in v7.8.0. The aliases survived v7.8.0 through v7.10.0, and the README said no temporary aliases remained.
+
+Consequences: `write-checkpoint.md` and `repair-user-settings.md` lose the alias triggers; `ai-policy-user-settings.md`, `scope-vocabulary-and-storage-roots.md`, `trigger-phrase-naming.md`, the README migration table, the workflow guide, both slides files, and the fixture assertions move to 55 or drop the alias. The v7.7.0 announcement stays as history. The release is v7.11.0, MINOR.

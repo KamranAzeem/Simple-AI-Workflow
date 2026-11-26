@@ -77,7 +77,6 @@ Non-normative example of the canonical structure:
 ## Repair Rules
 
 - Run only on the `repair user settings` trigger; the trigger is the approval.
-- Accept `repair global settings` as a v7.7.x alias; remove the alias in v7.8.0.
 - Redact every secret from the report and the manifest; never print one.
 - Never copy a `Sensitive Names` entry into the manifest, the report, or a commit; record only the count.
 - Verify every tool with `command -v` on Linux and macOS, and `Get-Command` on Windows.

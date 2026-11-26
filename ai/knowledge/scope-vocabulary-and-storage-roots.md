@@ -32,7 +32,6 @@ The protocol has four scopes: Workflow, User, Team, and Project. Each scope has 
 - Git's own global configuration (`~/.gitconfig`, `git config --global`) keeps the word "global" because it is the tool's term.
 - Generic English such as "global search" or "global variable" keeps the word.
 - Historical records, closed tickets, old checkpoints, and old ADR entries keep their original vocabulary.
-- The previous trigger phrases remain as v7.7.x aliases and are removed in v7.8.0.
 
 ### The storage boundary
 

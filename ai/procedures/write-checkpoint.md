@@ -5,9 +5,8 @@
 - checkpoint
 - update project knowledge
 - update user knowledge
-- update global knowledge
 
-**Single-step aliases**: `update project knowledge` runs `STEP-KNOWLEDGE-CAPTURE` and `STEP-PROJECT-KNOWLEDGE-UPDATE`; `update user knowledge` runs those two steps and `STEP-USER-KNOWLEDGE-UPDATE`; the previous wording is a v7.7.x alias; skip the rest.
+**Single-step aliases**: `update project knowledge` runs `STEP-KNOWLEDGE-CAPTURE` and `STEP-PROJECT-KNOWLEDGE-UPDATE`; `update user knowledge` runs those two steps and `STEP-USER-KNOWLEDGE-UPDATE`; skip the rest.
 
 **Boundaries**: this procedure never reads or writes design documents; a separate, confirmation-gated procedure handles those. It never runs git or suggests a commit.
 

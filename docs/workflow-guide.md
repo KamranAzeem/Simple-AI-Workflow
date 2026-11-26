@@ -347,7 +347,7 @@ One `"checkpoint"` runs every upkeep step, so you do not run them separately:
 - A report-only pass that flags stale items. It flags an `in-progress/` ticket with no live branch, and a `tickets/` file whose live tracker state is Done. It flags an executed plan left in `ai/plans/` and finished investigation evidence in the artifacts area. It also flags the per-store knowledge count at 50 or more. It flags knowledge files older than 90 days whose domain matches an active expertise. It flags a knowledge file with a missing header, a table, or more than 15 KB. The repair deletes. The checkpoint only reports.
 - A grouped summary in chat, one line per step.
 
-Two single-step triggers remain. `"update project knowledge"` runs the capture and the project store. `"update global knowledge"` runs the capture, the project store, and the global promotion. A checkpoint never runs git and never touches design documents. Design docs are handled only by a separate, confirmation-gated procedure.
+Two single-step triggers remain. `"update project knowledge"` runs the capture and the project store. `"update user knowledge"` runs the capture, the project store, and the user promotion. A checkpoint never runs git and never touches design documents. Design docs are handled only by a separate, confirmation-gated procedure.
 
 The checkpoint checks the knowledge header before it writes. It never edits a knowledge file. If you upgraded, run `"repair knowledge files"` once; see section 23.
 
@@ -609,7 +609,7 @@ These are the phrases you type in your AI chat to drive the workflow.
 | Close or list tickets | `"close issue <ticket file or #N>"`, `"list issues"` |
 | Back up the `ai/` directory | `"backup ai"` |
 | Update project knowledge with recent findings | `"update project knowledge"` |
-| Something applies beyond this project | `"update global knowledge"` |
+| Something applies beyond this project | `"update user knowledge"` |
 | Contribute a lesson to the team knowledge store | `"update team knowledge"` |
 | Load a skill for one task | `"use skill <name>"` |
 | Clean up knowledge files | `"repair knowledge files"` |

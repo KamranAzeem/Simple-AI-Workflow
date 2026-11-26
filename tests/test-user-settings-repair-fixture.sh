@@ -52,7 +52,7 @@ present "$PROC" "# PROCEDURE REPAIR-USER-SETTINGS" "procedure title"
 present "$PROC" "- repair user settings" "procedure trigger"
 present "$PROC" "- tidy user settings" "procedure tidy trigger"
 present "$PROC" "- heal user settings" "procedure heal trigger"
-present "$PROC" "- repair global settings" "procedure legacy alias"
+absent "$PROC" "- repair global settings" "procedure drops the legacy alias"
 present "$PROC" "STEP-BACKUP-SETTINGS" "procedure backup step"
 present "$PROC" "STEP-REVIEW-SETTINGS-REPAIR" "procedure review step"
 
