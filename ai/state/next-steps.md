@@ -15,7 +15,6 @@
 
 - Refresh the state-file headers in each existing project after v7.0.0.
 - Verify the team publish path against a live store when one is configured.
-- File the Google Slides update and physical Gate 2 as a separate issue.
 - Confirm a reliable post-compaction hook; update the manual-recovery docs if one appears.
 - Sync AGENTS.md and the v7.7.0 layout into downstream projects.
 - Migrate the live User AI Directory with a dry run, then the real sync.
